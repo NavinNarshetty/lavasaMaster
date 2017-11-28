@@ -7454,9 +7454,18 @@ h1.forgot-space {
 }
 
 .specialSetting {
-    .loading {
-        width: 204px;
+    width:200px;
+    margin: 0 auto;
+    height:200px;
+    border-radius: 100%;
+    overflow: hidden;
+    img{
+        width: 100%;
         height: auto;
+    }
+    .loading {
+        width: 200px;
+        height: 200px;
     }
 }
 

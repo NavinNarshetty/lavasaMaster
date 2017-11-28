@@ -183,8 +183,8 @@
             </div>
             <div class="col-md-offset-1 col-md-10">
                 <div class="sport-slider mt40">
-                    <flex-slider class="carousel" flex-slide="sportDetails in schoolSports | orderBy:'name' track by $index" animation="slide"
-                        item-width="140" item-margin="60">
+                    <flex-slider class="carousel" flex-slide="sportDetails in schoolSports | orderBy:'name' track by $index" slideshow="false" animation="slide"
+                        item-width="200" item-margin="40">
                         <li>
                             <a>
                                 <div class="sports-participate text-center">
@@ -259,7 +259,7 @@
                     <div class="school-sec" ui-sref="student-profile({id:data._id})">
                         <!-- <img src="img/sf-cl.png" alt="" class="mt-min-18"> -->
                         <div class="stu-img text-center sf-relative specialSetting loadingSchoolProfile">
-                            <img ng-src="{{data.profilePic | serverimage2}}" alt="" class="">
+                            <img ng-src="{{data.profilePic | serverimage2:200:200:'cover'}}" alt="" class="">
                             <!-- <div class="sigh-pro sf-absulate">
                                 <img src="img/sf-right.png" alt="">
                             </div> -->
@@ -340,7 +340,7 @@
                                     <h4 class="text-up color-blue display-inline">age group</h4>
                                     <div class="display-inline">
                                         <div class="sfa-select">
-                                            <select class="select" ng-change="callReload(ageValue,'age');" ng-model="ageValue" ng-options="item for item in agegroup | orderBy">
+                                            <select class="select" ng-change="callReload(ageValue,'age');" ng-model="ageValue" ng-options="item for item in agegroup">
                                                 <option value=""></option>
                                             </select>
                                             <span class="only-border"></span>
@@ -352,15 +352,15 @@
                                 <div class="col-md-3 mt15" ng-repeat="data in schoolStats.players | orderBy: 'name'" ng-if="schoolStats.players.length > 0">
                                     <a ui-sref="student-profile({id:data.athleteId})">
                                         <div class="school-sec">
-                                            <img ng-src="img/sf-cl.png" alt="" class="mt-min-18" ng-if="data.isCl">
+                                            <!-- <img ng-src="img/sf-cl.png" alt="" class="mt-min-18"> -->
                                             <div class="stu-img text-center sf-relative specialSetting">
-                                                <img ng-src="{{data.profilePic | serverimage2}}" alt="">
+                                                <img ng-src="{{data.profilePic | serverimage2:200:200:'cover'}}" alt="">
                                                 <!-- <div class="sigh-pro sf-absulate">
                                                     <img src="img/sf-right.png" alt="">
                                                 </div> -->
                                             </div>
                                             <div class="stu-name text-center">
-                                                <h4 class="color-orange text-up font-semi">{{data.name | shorten:20}}</h4>
+                                                <h4 class="color-orange text-up font-semi" title="{{data.name}}">{{data.name | shorten:8}}</h4>
                                             </div>
                                             <div class="stu-id text-center">
                                                 <h4 class="color-blue">SFA ID: {{data.sfaId}}</h4>
@@ -392,7 +392,7 @@
                                     <h4 class="text-up color-blue display-inline">gender</h4>
                                     <div class="display-inline">
                                         <div class="sfa-select">
-                                            <select class="select" ng-change="callReloadStat(genderValue,'gender');" ng-model="genderValue" ng-options="item for item in gender | orderBy">
+                                            <select class="select" ng-change="callReloadStat(genderStat,'gender');" ng-model="genderStat" ng-options="item for item in gender | orderBy">
                                             </select>
                                             <span class="only-border"></span>
                                         </div>
@@ -402,18 +402,18 @@
                                     <h4 class="text-up color-blue display-inline">age group</h4>
                                     <div class="display-inline">
                                         <div class="sfa-select">
-                                            <select class="select" ng-change="callReloadStat(ageValue,'age');" ng-model="ageValue" ng-options="item for item in agegroup | orderBy">
+                                            <select class="select" ng-change="callReloadStat(ageStat,'age');" ng-model="ageStat" ng-options="item for item in agegroup">
                                                 <option value=""></option>
                                             </select>
                                             <span class="only-border"></span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3 col-sm-4 col-xs-12 text-c-m">
+                                <div class="col-md-6 col-sm-4 col-xs-12 text-c-m">
                                     <h4 class="text-up color-blue display-inline">category</h4>
                                     <div class="display-inline">
                                         <div class="sfa-select">
-                                            <select class="select" ng-change="callReloadStat(eventValue,'event');" ng-model="eventValue" ng-options="item for item in eventCategory | orderBy">
+                                            <select class="select" ng-change="callReloadStat(eventStat,'event');" ng-model="eventStat" ng-options="item for item in eventCategory | orderBy">
                                                 <option value=""></option>
                                             </select>
                                             <span class="only-border"></span>
@@ -485,7 +485,7 @@
                                                 <!-- DO NOT DELETE -->
                                                 <!-- <tr  ng-repeat="stat in schoolStats"> -->
                                                 <!-- DO NOT DELETE -->
-                                                <tr class="other-bg" ng-repeat="stat in schoolStats.match">
+                                                <tr class="other-bg" ng-repeat="stat in schoolStats.match | orderBy:'sportslist'">
                                                     <td>
                                                         <span>{{stat.year}}</span>
                                                     </td>

@@ -218,7 +218,6 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
     TemplateService.title = "School Profile"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
     var year = new Date();
-    $scope.resString = $stateParams.id.substr(0, 4);
     $scope.filter = {};
     $scope.schooldata = {};
     $scope.sportsStudentGender = {};
@@ -230,6 +229,7 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
     } else {
         $scope.filterStatistics.school = $stateParams.id;
     }
+    // $scope.filterStatistics.school = $stateParams.id;
     $scope.filterStatistics.pagenumber = 1;
     $scope.filterStatistics.pagesize = 8;
     $scope.table = {};
@@ -243,7 +243,7 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
     } else {
         $scope.schoolData.school = $stateParams.id;
     }
-
+    // $scope.schoolData.school = $stateParams.id;
     $scope.schoolData.maxSize = 8;
     // $scope.allYears = NavigationService.getAllYears();
     configService.getDetail(function (data) {
@@ -337,7 +337,6 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
                     schoolSport = schoolSport + 1;
                 });
 
-                console.log('before', $scope.getSchoolProfile.registerSport);
                 if (schoolSport == $scope.getSchoolProfile.registerSport.length) {
                     _.each($scope.getSchoolProfile.registerSport, function (n, key) {
                         var sportArr = [];
@@ -356,17 +355,9 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
                             $scope.sportObj = _.findIndex($scope.getSchoolProfile.registerSport, ['name', sportName[0]]);
                         }
                         if ($scope.sportObj != key && $scope.sportObj != -1) {
-                            console.log('before assign each to main',
-                                n.name, n.maleCount);
-                            console.log('before assign each to main',
-                                n.name, n.femaleCount);
-                            console.log('before assign to main', $scope.getSchoolProfile.registerSport[$scope.sportObj].maleCount);
-                            console.log('before assign to main', $scope.getSchoolProfile.registerSport[$scope.sportObj].femaleCount);
                             $scope.getSchoolProfile.registerSport[$scope.sportObj].subCategory.push(n.subCategory[0]);
                             $scope.getSchoolProfile.registerSport[$scope.sportObj].maleCount = $scope.getSchoolProfile.registerSport[$scope.sportObj].maleCount + n.maleCount;
                             $scope.getSchoolProfile.registerSport[$scope.sportObj].femaleCount = $scope.getSchoolProfile.registerSport[$scope.sportObj].femaleCount + n.femaleCount;
-                            console.log('after assign to main', $scope.getSchoolProfile.registerSport[$scope.sportObj].maleCount);
-                            console.log('after assign to main', $scope.getSchoolProfile.registerSport[$scope.sportObj].femaleCount);
                             n.removeElement = true;
                         } else if ($scope.sportObj != key && $scope.sportObj == -1) {
                             if (n.name == 'Table Tennis Doubles') {
@@ -383,7 +374,6 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
                     });
                 }
                 if (subArrLength >= $scope.getSchoolProfile.registerSport.length) {
-                    console.log('Final', $scope.getSchoolProfile.registerSport);
                     $scope.schoolSports = $scope.getSchoolProfile.registerSport;
                 }
 
@@ -423,7 +413,7 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
                 {
                     $scope.getSchoolProfile = '';
                     $scope.schoolSports = '';
-                    console.log("Error while fetching School Profile.");
+                    // console.log("Error while fetching School Profile.");
                 }
             }
         });
@@ -434,7 +424,7 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
         $scope.constraints = {};
         $scope.constraints.school = schoolId;
         NavigationService.getAwardsCertificate($scope.constraints, function (data) {
-            console.log(data);
+            // console.log(data);
             if (data.value) {
                 _.each(data.data, function (key) {
                     window.open($scope.url + '/pdf/' + key.url, '_blank');
@@ -449,15 +439,16 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
             $scope.classa = "active-list";
             $scope.classb = '';
             $scope.classc = '';
+            $scope.getSchoolAthlete();
         } else if (a == 2) {
             $scope.classa = '';
             $scope.classb = "active-list";
             $scope.classc = "";
-
         } else {
             $scope.classa = '';
             $scope.classb = '';
             $scope.classc = "active-list";
+            $scope.getSchoolStats();
         }
     };
     // $scope.onChangeContingentYear = function () {
@@ -504,7 +495,7 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
         NavigationService.getAgeGroupsAndEvents({
             name: $scope.filter.sport.name
         }, function (response) {
-            console.log(response);
+            // console.log(response);
             if (response.value) {
                 $scope.agegroup = response.data.ageGroups;
                 $scope.agegroup.unshift('All');
@@ -561,9 +552,9 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
             //     console.log('STATS AND PLAYERS:', response);
             if (response.value) {
                 $scope.schoolStats = response.data;
-                console.log('initial', $scope.schoolStats.players.length);
+                // console.log('initial', $scope.schoolStats.players.length);
                 $scope.schoolStats.players = _.uniqBy($scope.schoolStats.players, 'sfaId');
-                console.log($scope.schoolStats.players.length);
+                // console.log($scope.schoolStats.players.length);
             } else {
                 $scope.schoolStats = [];
             }
@@ -587,19 +578,25 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
     };
     $scope.selectSport = function (selected) {
         // console.log(selected);
-        $scope.filterStatistics = {};
-        $scope.schoolStats = [];
-        $scope.sportContingent.showContingent = true;
-        $scope.statsDetail = selected;
-        $scope.filter.sport = selected;
-        $scope.filterStatistics.sportsListSubCategory = selected.subCategory;
-        $scope.filterStatistics.age = '';
-        $scope.filterStatistics.gender = '';
-        $scope.tabchange('player', 1);
-        $scope.getSchoolStats();
-        $scope.getSchoolAthlete();
-        $scope.getDrawFormats();
-        $scope.getSportAgeGroup();
+        if(_.isEmpty($scope.filterStatistics.sportsListSubCategory)){
+            $scope.filterStatistics = {};
+            $scope.schoolStats = [];
+            $scope.sportContingent.showContingent = true;
+            $scope.statsDetail = selected;
+            $scope.filter.sport = selected;
+            $scope.filterStatistics.sportsListSubCategory = selected.subCategory;
+            $scope.filterStatistics.age = '';
+            $scope.filterStatistics.gender = '';
+            $scope.filterStatistics.event = '';
+            $scope.tabchange('player', 1);
+            $scope.getDrawFormats();
+            $scope.getSportAgeGroup();
+        } else {
+            $scope.filterStatistics = {};
+            $scope.sportContingent = {};
+            $scope.filter.sport = {};
+            delete $scope.statsDetail;
+        }
         // $scope.filter.sport = selected;
         // $scope.agegroup = [];
         // $scope.filterStatistics.year = _.clone($scope.filter.year);
