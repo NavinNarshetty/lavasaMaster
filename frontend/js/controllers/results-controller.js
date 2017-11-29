@@ -172,6 +172,9 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
   $scope.medalFilter = {
     name: $scope.sportFilter.name,
   }
+  $scope.filter={
+    year: "2017"
+  }
   // MEDAL FILTER OPTIONS END
   // VARIABLE INITITALISE END
 
@@ -194,6 +197,13 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
     console.log($scope.selectEvent, 'selected event');
   }
   // SELECT CITY FILTER END
+  // SELECT YEAR FILTER
+  $scope.loadResult = function(year){
+    if (year == '2015' || year == '2016') {
+        window.open("https://mumbai.sfanow.in/school-ranking", '_self');
+    }
+  }
+  // SELECT YEAR FILTER END
   // VIEW MEDAL WINNER
   $scope.showMedalWinner = function () {
     if ($scope.showAllMedalWinner == true) {

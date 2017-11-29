@@ -665,6 +665,35 @@ $bg-color-female: #ffdea8 !default;
     }
 }
 // DROPDOWN TABLE
+// RESULT DROPDOWN TABLE
+.result-dropdownselect{
+  padding-right: 20px;
+  position: relative;
+  background-color: transparent;
+  color: $sport-success;
+  font-size: 24px;
+  &:after{
+    content: '\f107';
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: 24px;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    @include transform(translateY(-50%));
+  }
+  .select{
+    border: none;
+    background-color: transparent;
+    text-transform: uppercase;
+    @include appearance(none);
+
+    option{
+      font-size: 14px;
+      color: #000;
+    }
+  }
+}
+// RESULT DROPDOWN TABLE END
 .schoolrank-details{
   .table{
     margin: 0;
@@ -679,7 +708,6 @@ $bg-color-female: #ffdea8 !default;
     }
   }
 }
-
 // DROPDOWN TABLE END
 // DROPDOWN END
 .custom-toggle {
