@@ -59,12 +59,15 @@
                                     <tr ng-repeat="player in team.players track by $index">
                                         <td colspan="8">
                                             <div class="teamselect-name">
-                                                <p class="clearfix m-clear">{{match.teams[teamIndex].studentTeam[$index].studentId.firstName}} {{match.teams[teamIndex].studentTeam[$index].studentId.surname}}</p>
+                                                <p class="clearfix m-clear">{{match.teams[teamIndex].studentTeam[$index].studentId.sfaId}} - {{match.teams[teamIndex].studentTeam[$index].studentId.firstName}}
+                                                    {{match.teams[teamIndex].studentTeam[$index].studentId.surname}}
+                                                </p>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="relate teamselect-jersey">
-                                                <input type="number" placeholder="0" ng-model="player.jerseyNo" min="0" placeholder="0" max="999" class="score-number teamscore-number display-inline form-control" limit-to-max>
+                                                <input type="number" placeholder="0" ng-model="player.jerseyNo" min="0" placeholder="0" max="999" class="score-number teamscore-number display-inline form-control"
+                                                    limit-to-max>
                                             </div>
                                         </td>
                                         <td>
