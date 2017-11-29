@@ -3048,7 +3048,7 @@ var model = {
                                     prevMatch: final.finalPrevious[i]
                                 }
                             };
-                            console.log("matchData", final.mainData[row]);
+                            console.log("matchData", final.matchData[row]);
                             console.log("row round", final.matchData[row].round);
                             if (final.matchData[row].round != "Third Place") {
                                 Match.update({
