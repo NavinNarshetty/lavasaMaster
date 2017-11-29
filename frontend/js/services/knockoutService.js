@@ -199,7 +199,7 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
       } else if (result.resultKabaddi) {
         result.globalResult = result.resultKabaddi;
       } else {
-        toastr.error("New Team Sport Found", 'Error Message');
+        console.log("New Team Sport Found");
       }
       //function resutLeagueCumKnockout to  Teamsport result 
       this.resutLeagueCumKnockout(result);
@@ -209,7 +209,7 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
       if (result.resultFencing) {
         result.globalResultIndividual = result.resultFencing;
       } else {
-        toastr.error("New Individual Sport found in League-cum-knockout", 'Error Message');
+        console.log("New Individual Sport found in League-cum-knockout");
       }
       this.resutLeagueCumKnockoutIndividual(result);
 
