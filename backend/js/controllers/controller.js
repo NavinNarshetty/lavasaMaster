@@ -4403,7 +4403,14 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
                 $scope.maxRow = data.data.options.count;
             });
         }
-        $scope.viewTable();
+        $scope.updateTable = function () {
+            // $scope.url = "Medal/getAllMedals";
+            $scope.url = "Result/getSchool";
+            $scope.formData = '';
+            NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+                console.log("Hi", data);
+            });
+        }
         $scope.confDel = function (data) {
             $scope.id = data;
             $scope.modalInstance = $uibModal.open({
