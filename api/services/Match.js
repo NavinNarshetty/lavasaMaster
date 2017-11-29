@@ -3444,7 +3444,7 @@ var model = {
                 } else {
                     data.isLeagueKnockout = true;
                     data.sport = singleData[0].success.sport;
-                    Match.addPreviousMatch(data, function (err, sportData) {
+                    Match.addPreviousMatchUpdate(data, function (err, sportData) {
                         callback(null, singleData);
                     });
                 }
