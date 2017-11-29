@@ -12142,7 +12142,7 @@ var model = {
                                     }
                                 }
                             }
-                            console.log("updateObj", updateObj, "updateObj1", updateObj);
+                            console.log("updateObj", updateObj, "updateObj1", updateObj1);
                             if (!_.isEmpty(updateObj) && !_.isEmpty(updateObj1)) {
                                 async.parallel([
                                     function (callback) {
