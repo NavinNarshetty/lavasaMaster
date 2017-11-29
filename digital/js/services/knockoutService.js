@@ -85,125 +85,132 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
 
   };
 
-  //for league-knockout
+  //===================Start of sorting result of league-cum-knockout==================
+  //resutLeagueCumKnockout() for Team Sport
+  this.resutLeagueCumKnockout = function (result) {
+    console.log("result", result);
+    _.each(result.opponentsTeam, function (team, index) {
+      if (result.globalResult) {
+        if (result.globalResult !== undefined) {
+          if (team._id === result.globalResult.winner.player) {
+            team.isWinner = true;
+          }
+          result.status = result.globalResult.status;
+          result.isNoMatch = result.globalResult.isNoMatch;
+          result.isDraw = result.globalResult.isDraw;
+        }
+        if (result.globalResult !== undefined && result.globalResult.teams) {
+          _.each(result.globalResult.teams, function (n) {
+            n.walkover = NavigationService.Boolean(n.walkover);
+            n.noShow = NavigationService.Boolean(n.noShow);
+            team.finalPoint = result.globalResult.teams[index].teamResults.finalPoints;
+
+          });
+          var tempWakover = _.find(result.globalResult.teams, ['walkover', true]);
+          var tempNoshow = _.find(result.globalResult.teams, ['noShow', true]);
+          if (tempWakover) {
+            result.walkover = tempWakover.walkover;
+          } else {
+            result.walkover = false;
+          }
+          if (tempNoshow) {
+            result.noShow = tempNoshow.noShow;
+          } else {
+            result.noShow = false;
+          }
+
+        }
+      }
+    });
+  };
+  //End of resutLeagueCumKnockout() 
+
+  //resutLeagueCumKnockoutIndividual() for Individual Sport
+  this.resutLeagueCumKnockoutIndividual = function (result) {
+    _.each(result.opponentsSingle, function (player, index) {
+      if (player && player.athleteId != null) {
+        player.fullName = player.athleteId.firstName + ' ' + player.athleteId.surname;
+        if (player.athleteId.school && player.athleteId.school != null) {
+          player.schoolName = player.athleteId.school.name;
+        } else {
+          player.schoolName = player.athleteId.atheleteSchoolName;
+        }
+
+      }
+      if (result.globalResultIndividual !== undefined) {
+        if (player._id === result.globalResultIndividual.winner.opponentsSingle) {
+          player.isWinner = true;
+        } else {
+          player.isWinner = false;
+        }
+        result.isNoMatch = result.globalResultIndividual.isNoMatch;
+        result.isDraw = result.globalResultIndividual.isDraw;
+        result.status = result.globalResultIndividual.status;
+      }
+      if (result.globalResultIndividual !== undefined && result.globalResultIndividual.players) {
+        _.each(result.globalResultIndividual.players, function (n) {
+          n.walkover = NavigationService.Boolean(n.walkover);
+          n.noShow = NavigationService.Boolean(n.noShow);
+          player.finalPoint = result.globalResultIndividual.players[index].finalPoints;
+
+        });
+        var tempWakover = _.find(result.globalResultIndividual.players, ['walkover', true]);
+        var tempNoshow = _.find(result.globalResultIndividual.players, ['noShow', true]);
+        if (tempWakover) {
+          result.walkover = tempWakover.walkover;
+        } else {
+          result.walkover = false;
+        }
+        if (tempNoshow) {
+          result.noShow = tempNoshow.noShow;
+        } else {
+          result.noShow = false;
+        }
+
+      }
+    });
+
+
+  };
+  //End of resutLeagueCumKnockoutIndividual() 
   this.sortLeagueKnockoutResult = function (result) {
     if (result.opponentsTeam.length > 0) {
-      _.each(result.opponentsTeam, function (team, index) {
-        if (result.resultFootball !== undefined) {
-          if (team._id === result.resultFootball.winner.player) {
-            team.isWinner = true;
-          }
-        } else if (result.resultHockey !== undefined) {
-          if (team._id === result.resultHockey.winner.player) {
-            team.isWinner = true;
-          }
-        }
-        if (result.resultFootball !== undefined && result.resultFootball.teams) {
-          _.each(result.resultFootball.teams, function (n) {
-            n.walkover = NavigationService.Boolean(n.walkover);
-            n.noShow = NavigationService.Boolean(n.noShow);
-            team.finalPoint = result.resultFootball.teams[index].teamResults.finalPoints;
+      //for opponentsTeam
+      if (result.resultFootball) {
+        result.globalResult = result.resultFootball;
+      } else if (result.resultHockey) {
+        result.globalResult = result.resultHockey;
+      } else if (result.resultVolleyball) {
+        result.globalResult = result.resultVolleyball;
+      } else if (result.resultBasketball) {
+        result.globalResult = result.resultBasketball;
+      } else if (result.resultHandball) {
+        result.globalResult = result.resultHandball;
+      } else if (result.resultWaterPolo) {
+        result.globalResult = result.resultWaterPolo;
+      } else if (result.resultKabaddi) {
+        result.globalResult = result.resultKabaddi;
+      } else {
+        console.log("New Team Sport Found");
+      }
+      //function resutLeagueCumKnockout to  Teamsport result 
+      this.resutLeagueCumKnockout(result);
 
-          });
-          var tempWakover = _.find(result.resultFootball.teams, ['walkover', true]);
-          var tempNoshow = _.find(result.resultFootball.teams, ['noShow', true]);
-          if (tempWakover) {
-            result.walkover = tempWakover.walkover;
-          } else {
-            result.walkover = false;
-          }
-          if (tempNoshow) {
-            result.noShow = tempNoshow.noShow;
-          } else {
-            result.noShow = false;
-          }
-
-        }
-
-        if (result.resultHockey !== undefined && result.resultHockey.teams) {
-          _.each(result.resultHockey.teams, function (n) {
-            n.walkover = NavigationService.Boolean(n.walkover);
-            n.noShow = NavigationService.Boolean(n.noShow);
-            team.finalPoint = result.resultHockey.teams[index].teamResults.finalPoints;
-
-          });
-          var tempWakover = _.find(result.resultHockey.teams, ['walkover', true]);
-          var tempNoshow = _.find(result.resultHockey.teams, ['noShow', true]);
-          if (tempWakover) {
-            result.walkover = tempWakover.walkover;
-          } else {
-            result.walkover = false;
-          }
-          if (tempNoshow) {
-            result.noShow = tempNoshow.noShow;
-          } else {
-            result.noShow = false;
-          }
-
-        }
-
-      });
     } else if (result.opponentsSingle.length > 0) {
-      console.log(result.resultFencing, "result.resultFencing ");
-      _.each(result.opponentsSingle, function (player, index) {
-        if (player && player.athleteId != null) {
-          player.fullName = player.athleteId.firstName + ' ' + player.athleteId.surname;
-          if (player.athleteId.school && player.athleteId.school != null) {
-            player.schoolName = player.athleteId.school.name;
-          } else {
-            player.schoolName = player.athleteId.atheleteSchoolName;
-          }
+      //for opponentsSingle
+      if (result.resultFencing) {
+        result.globalResultIndividual = result.resultFencing;
+      } else {
+        console.log("New Individual Sport found in League-cum-knockout");
+      }
+      this.resutLeagueCumKnockoutIndividual(result);
 
-        }
-        if (result.resultFencing !== undefined) {
-          if (player._id === result.resultFencing.winner.opponentsSingle) {
-            player.isWinner = true;
-          } else {
-            player.isWinner = false;
-          }
-        }
-        if (result.resultFencing !== undefined && result.resultFencing.players) {
-          _.each(result.resultFencing.players, function (n) {
-            n.walkover = NavigationService.Boolean(n.walkover);
-            n.noShow = NavigationService.Boolean(n.noShow);
-            player.finalPoint = result.resultFencing.players[index].finalPoints;
-
-          });
-          var tempWakover = _.find(result.resultFencing.players, ['walkover', true]);
-          var tempNoshow = _.find(result.resultFencing.players, ['noShow', true]);
-          if (tempWakover) {
-            result.walkover = tempWakover.walkover;
-          } else {
-            result.walkover = false;
-          }
-          if (tempNoshow) {
-            result.noShow = tempNoshow.noShow;
-          } else {
-            result.noShow = false;
-          }
-
-        }
-      });
     }
-    if (result.resultFootball) {
-      console.log("im in resultfootball");
-      result.isNoMatch = result.resultFootball.isNoMatch;
-      result.isDraw = result.resultFootball.isDraw;
-      result.status = result.resultFootball.status;
-    } else if (result.resultFencing) {
-      console.log("im in result fencing");
-      result.isNoMatch = result.resultFencing.isNoMatch;
-      result.isDraw = result.resultFencing.isDraw;
-      result.status = result.resultFencing.status;
 
-    } else if (result.resultHockey) {
-      result.isNoMatch = result.resultHockey.isNoMatch;
-      result.isDraw = result.resultHockey.isDraw;
-      result.status = result.resultHockey.status;
-    }
 
     return result;
   };
+  //===================End of sorting result of league-cum-knockout==================
 
   this.scrollTo = function (destination, type) {
     if (type == 'id') {
