@@ -3096,7 +3096,7 @@ var model = {
                                     Match.update({
                                         sport: data.sport,
                                         round: {
-                                            $regex: "third place",
+                                            $regex: "final",
                                             $options: "i"
                                         }
                                     }, updateObj).exec(
