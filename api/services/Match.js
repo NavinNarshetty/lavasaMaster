@@ -3048,6 +3048,7 @@ var model = {
                                     prevMatch: final.finalPrevious[i]
                                 }
                             };
+                            console.log("matchData", final.mainData[row]);
                             console.log("row round", final.matchData[row].round);
                             if (final.matchData[row].round != "Third Place") {
                                 Match.update({
@@ -3055,17 +3056,10 @@ var model = {
                                 }, updateObj).exec(
                                     function (err, match) {
                                         console.log("updated");
-                                        // callback(null, final);
                                     });
 
                             }
-                            if (final.matchData[row].round == "Third Place") {
-                                i--;
-                            } else {
-                                i++;
-                            }
-                            console.log("i-----", i);
-                            // console.log("i++", i);
+                            i++;
                             row++;
                             callback(null, final);
                         },
