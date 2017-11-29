@@ -3048,6 +3048,7 @@ var model = {
                                     prevMatch: final.finalPrevious[i]
                                 }
                             };
+                            console.log("row round", final.matchData[row].round);
                             // console.log("row", row, "rangeTotal", rangeTotal);
                             if (final.matchData[row].round != "Third Place") {
                                 Match.update({
@@ -3057,9 +3058,10 @@ var model = {
                                         console.log("updated");
                                     });
                                 i++;
+                                row++;
+                            } else {
+                                row++;
                             }
-
-                            row++;
                             callback(null, final);
                         },
                         function (err) {
@@ -3442,7 +3444,7 @@ var model = {
                 } else {
                     data.isLeagueKnockout = true;
                     data.sport = singleData[0].success.sport;
-                    Match.addPreviousMatch(data, function (err, sportData) {
+                    Match.addPreviousMatchUpdate(data, function (err, sportData) {
                         callback(null, singleData);
                     });
                 }
