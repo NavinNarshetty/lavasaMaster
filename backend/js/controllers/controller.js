@@ -4403,6 +4403,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
                 $scope.maxRow = data.data.options.count;
             });
         }
+        $scope.viewTable();
         $scope.updateTable = function () {
             // $scope.url = "Medal/getAllMedals";
             $scope.url = "Result/getSchool";
