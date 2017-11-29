@@ -190,6 +190,9 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
         result.globalResult = result.resultWaterPolo;
       } else if (result.resultKabaddi) {
         result.globalResult = result.resultKabaddi;
+      } else if (result.resultsCombat) {
+        result.globalResult = result.resultsCombat;
+
       } else {
         console.log("New Team Sport Found");
       }
