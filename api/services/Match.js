@@ -3095,10 +3095,7 @@ var model = {
                                     console.log("updateObj", updateObj);
                                     Match.update({
                                         sport: data.sport,
-                                        round: {
-                                            $regex: "final",
-                                            $options: "i"
-                                        }
+                                        round: "Final"
                                     }, updateObj).exec(
                                         function (err, match) {
                                             console.log("match", match);
