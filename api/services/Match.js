@@ -1909,7 +1909,7 @@ var model = {
                                 });
                         },
                         function (err, singleData) {
-                            callback(null, singleData)
+                            callback(null, singleData);
                         });
                 },
             ],
@@ -2109,7 +2109,7 @@ var model = {
                 function (found, callback) {
                     var sportArry = [];
                     _.each(found.sport, function (n) {
-                        if (data.sport.equals(n)) {
+                        if (data.sport === n.toString()) {
                             sportArry.push(param.sportId);
                         } else {
                             sportArry.push(n);
