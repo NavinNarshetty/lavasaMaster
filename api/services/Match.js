@@ -3061,10 +3061,11 @@ var model = {
                             }
                             if (final.matchData[row].round == "Third Place") {
                                 i--;
+                            } else {
+                                i++;
                             }
-                            console.log("i--", i);
-                            i++;
-                            console.log("i++", i);
+                            console.log("i-----", i);
+                            // console.log("i++", i);
                             row++;
                             callback(null, final);
                         },
