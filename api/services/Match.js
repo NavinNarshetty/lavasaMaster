@@ -3050,14 +3050,13 @@ var model = {
                             };
                             console.log("matchData", final.matchData[row]);
                             console.log("row round", final.matchData[row].round);
-                            if (final.matchData[row].round != "Third Place") {
+                            if (final.matchData[row].round != "Final") {
                                 Match.update({
                                     _id: id
                                 }, updateObj).exec(
                                     function (err, match) {
                                         console.log("updated");
                                     });
-
                             }
                             i++;
                             row++;
@@ -3073,11 +3072,11 @@ var model = {
                         Match.findOne({
                             sport: data.sport,
                             $or: [{
-                                round: "Final"
+                                round: "Third Place"
                             }, {
-                                round: "final"
+                                round: "third place"
                             }, {
-                                round: "FINAL"
+                                round: "THIRD PLACE"
                             }]
                         }).lean().exec(function (err, found) {
                             if (err) {
