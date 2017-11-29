@@ -122,6 +122,7 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
         }
       }
     });
+    return result;
   };
   //End of resutLeagueCumKnockout() 
 
@@ -169,6 +170,7 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
 
       }
     });
+    return result;
 
 
   };
