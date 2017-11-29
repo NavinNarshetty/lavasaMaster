@@ -3056,11 +3056,13 @@ var model = {
                                 }, updateObj).exec(
                                     function (err, match) {
                                         console.log("updated");
+                                        callback(null, final);
                                     });
                                 i++;
                                 row++;
+                            } else {
+                                callback(null, final);
                             }
-                            callback(null, final);
                         },
                         function (err) {
                             callback(null, final);
