@@ -167,7 +167,26 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
     $scope.currentMatch.sport = {};
     $scope.currentMatch.sport = $scope.oneSportDetail;
     $scope.currentMatch.sportName = $scope.currentMatch.sport.sportslist.sportsListSubCategory.name;
-    $scope.currentMatch.result = $scope.currentMatch.resultFootball;
+    // $scope.currentMatch.result = $scope.currentMatch.resultFootball;
+    if ($scope.currentMatch.resultFootball) {
+      $scope.currentMatch.result = $scope.currentMatch.resultFootball;
+    } else if ($scope.currentMatch.resultHockey) {
+      $scope.currentMatch.result = $scope.currentMatch.resultHockey;
+    } else if ($scope.currentMatch.resultFencing) {
+      $scope.currentMatch.result = $scope.currentMatch.resultFencing;
+    } else if ($scope.currentMatch.resultVolleyball) {
+      $scope.currentMatch.result = $scope.currentMatch.resultVolleyball;
+    } else if ($scope.currentMatch.resultBasketball) {
+      $scope.currentMatch.result = $scope.currentMatch.resultBasketball;
+    } else if ($scope.currentMatch.resultHandball) {
+      $scope.currentMatch.result = $scope.currentMatch.resultHandball;
+    } else if ($scope.currentMatch.resultWaterPolo) {
+      $scope.currentMatch.result = $scope.currentMatch.resultWaterPolo;
+    } else if ($scope.currentMatch.resultKabaddi) {
+      $scope.currentMatch.result = $scope.currentMatch.resultKabaddi;
+    } else if ($scope.currentMatch.resultsCombat) {
+      $scope.currentMatch.result = $scope.currentMatch.resultsCombat;
+    }
     modal = $uibModal.open({
       animation: true,
       scope: $scope,
