@@ -3041,7 +3041,7 @@ var model = {
                     var row = 0;
                     var ThirdPlace = [];
                     async.eachSeries(final.finalPrevious, function (singleData, callback) {
-                            console.log("finalPrevious", singleData, "row", final.matchData[row]._id);
+                            console.log("i", i, "row", final.matchData[row]._id);
                             var id = final.matchData[row]._id;
                             var updateObj = {
                                 $set: {
@@ -3049,20 +3049,24 @@ var model = {
                                 }
                             };
                             console.log("row round", final.matchData[row].round);
-                            // console.log("row", row, "rangeTotal", rangeTotal);
                             if (final.matchData[row].round != "Third Place") {
                                 Match.update({
                                     _id: id
                                 }, updateObj).exec(
                                     function (err, match) {
                                         console.log("updated");
-                                        callback(null, final);
+                                        // callback(null, final);
                                     });
-                                i++;
-                                row++;
-                            } else {
-                                callback(null, final);
+
                             }
+                            if (final.matchData[row].round == "Third Place") {
+                                i--;
+                            }
+                            console.log("i--", i);
+                            i++;
+                            console.log("i++", i);
+                            row++;
+                            callback(null, final);
                         },
                         function (err) {
                             callback(null, final);
