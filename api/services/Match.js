@@ -3048,6 +3048,7 @@ var model = {
                                     prevMatch: final.finalPrevious[i]
                                 }
                             };
+                            console.log("row round", final.matchData[row].round);
                             // console.log("row", row, "rangeTotal", rangeTotal);
                             if (final.matchData[row].round != "Third Place") {
                                 Match.update({
@@ -3061,8 +3062,6 @@ var model = {
                             } else {
                                 row++;
                             }
-
-
                             callback(null, final);
                         },
                         function (err) {
