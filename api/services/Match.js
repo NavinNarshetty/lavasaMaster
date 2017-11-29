@@ -3006,6 +3006,7 @@ var model = {
                 },
                 function (found, callback) {
                     if (data.thirdPlace == 'yes') {
+                        // var round = found[0].round.toLowerCase();
                         thirdPlaceCount = 0;
                     } else {
                         thirdPlaceCount = 1;
@@ -3055,8 +3056,9 @@ var model = {
                                     function (err, match) {
                                         console.log("updated");
                                     });
+                                i++;
                             }
-                            i++;
+
                             row++;
                             callback(null, final);
                         },
@@ -11075,7 +11077,6 @@ var model = {
                                                             callback(null, singleData);
                                                         }
                                                     });
-                                                // callback(null, singleData);
                                             }
                                         }
                                     }
@@ -11595,22 +11596,6 @@ var model = {
         var updateObj = {};
         var updateObj1 = {};
         async.waterfall([
-                // function (callback) {
-                //     Match.findOne({
-                //         matchId: data.matchId
-                //     }).exec(function (err, found) {
-                //         if (err) {
-                //             callback(err, null);
-                //         } else {
-                //             if (_.isEmpty(found)) {
-                //                 callback(null, []);
-                //             } else {
-                //                 console.log("match found", found);
-                //                 callback(null, found);
-                //             }
-                //         }
-                //     });
-                // },
                 function (callback) {
                     if (data.resultFootball) {
                         var matchObj = {
@@ -11695,7 +11680,6 @@ var model = {
                                 } else {
                                     data.isKnockout = false;
                                 }
-                                // console.log("data.isTeam", data.isNoMatch);
                                 data._id = found._id;
                                 data.found = found;
                                 callback(null, found);
@@ -12217,8 +12201,6 @@ var model = {
                                             }
                                         }
                                     });
-                            } else {
-                                // callback(null, found);
                             }
                         }
                     } else {
