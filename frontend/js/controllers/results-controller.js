@@ -150,7 +150,7 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
     }
   };
   // FILTER OPTIONS END
-
+  // CONFIG SET
   configService.getDetail(function (data) {
     $scope.state = data.state;
     $scope.year = data.year;
@@ -160,7 +160,7 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
     $scope.type = data.type;
     $scope.getFilterOptions(data);
   });
-
+  // CONFIG SET END
   // VARIABLE INITITALISE
   $scope.showEventFilter = false;
   $scope.defaultEvent = "sfa mumbai 2015-16";
@@ -182,21 +182,6 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
   $scope.log = function () {
     console.log($scope.sportFilter, 'filter');
   };
-  // SELECT CITY FILTER
-  $scope.viewEvent = function () {
-    if ($scope.showEventFilter == false) {
-      $scope.showEventFilter = true;
-    } else {
-      $scope.showEventFilter = false;
-    }
-  }
-  $scope.selectEvent = function (event) {
-    $scope.selectEvent = event;
-    $scope.defaultEvent = event;
-    $scope.viewEvent();
-    console.log($scope.selectEvent, 'selected event');
-  }
-  // SELECT CITY FILTER END
   // SELECT YEAR FILTER
   $scope.loadResult = function(year){
     if (year == '2015' || year == '2016') {
