@@ -3092,7 +3092,7 @@ var model = {
                                             prevMatch: found.prevMatch
                                         }
                                     };
-                                    console.log("updateObj", updateObj)
+                                    console.log("updateObj", updateObj);
                                     Match.update({
                                         sport: data.sport,
                                         round: {
