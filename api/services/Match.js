@@ -11696,6 +11696,7 @@ var model = {
                                 if (_.isEmpty(found)) {
                                     callback(null, []);
                                 } else {
+                                    console.log("prev", found);
                                     callback(null, found);
                                 }
                             }
@@ -12141,6 +12142,7 @@ var model = {
                                     }
                                 }
                             }
+                            console.log("updateObj", updateObj, "updateObj1", updateObj);
                             if (!_.isEmpty(updateObj) && !_.isEmpty(updateObj1)) {
                                 async.parallel([
                                     function (callback) {
