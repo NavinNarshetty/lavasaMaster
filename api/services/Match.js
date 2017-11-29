@@ -11860,8 +11860,8 @@ var model = {
                                     }
                                 } else if (data.isTeam == true && !_.isEmpty(found[0].opponentsTeam) && !_.isEmpty(found[1].opponentsTeam)) {
                                     if (found[0].opponentsTeam.length == 1 && found[1].opponentsTeam.length == 1) {
-                                        var playerId = found[0].opponentsTeam[0];
-                                        var playerId1 = found[1].opponentsTeam[0];
+                                        var playerId = found[1].opponentsTeam[0];
+                                        var playerId1 = found[0].opponentsTeam[0];
                                         winPlayer.push(playerId);
                                         lostPlayer.push(playerId1);
                                         if (data.found.resultFootball && data.found.resultFootball.status == 'IsCompleted' && data.found.resultFootball.isNoMatch == false) {
