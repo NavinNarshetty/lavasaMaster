@@ -3057,9 +3057,12 @@ var model = {
                                         console.log("updated");
                                     });
                                 i++;
+                                row++;
+                            } else {
+                                row++;
                             }
 
-                            row++;
+
                             callback(null, final);
                         },
                         function (err) {
