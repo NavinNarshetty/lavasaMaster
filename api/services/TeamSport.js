@@ -960,7 +960,7 @@ var model = {
 
     },
 
-    generateExcel: function (res) {
+    oldgenerateExcel: function (res) {
         async.waterfall([
                 function (callback) {
                     var pipeLine = TeamSport.getTeamPipeLine();
@@ -1078,6 +1078,117 @@ var model = {
                     } else {
                         callback(null, excelData);
                     }
+                }
+            });
+    },
+
+    generateExcel: function (res) {
+        async.waterfall([
+                function (callback) {
+                    var pipeLine = TeamSport.getTeamPipeLine();
+                    TeamSport.aggregate(pipeLine, function (err, complete) {
+                        if (err) {
+                            callback(err, "error in mongoose");
+                        } else {
+                            if (_.isEmpty(complete)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, complete);
+                            }
+                        }
+                    });
+                },
+                function (complete, callback) {
+                    console.log(complete);
+                    var excelData = [];
+                    _.each(complete, function (mainData) {
+                        var obj = {};
+                        obj.year = new Date().getFullYear();
+                        obj.Teamid = mainData.teamId;
+                        obj.SchoolName = mainData.schoolName;
+                        obj.TeamName = mainData.name;
+                        obj.Sport = mainData.sport.sportslist.name;
+                        obj.Gender = mainData.sport.gender;
+                        obj.AgeGroup = mainData.sport.ageGroup.name;
+
+                        var StudentTeam;
+                        var count = 0;
+                        var Captain;
+                        var GoalKeeper;
+                        _.each(mainData.studentTeam, function (n) {
+                            var name;
+                            Athelete.findOne({
+                                _id: n.studentId
+                            }).exec(function (err, found) {
+                                if (found) {
+                                    if (found.middleName) {
+                                        name = found.firstName + " " + found.middleName + " " + found.surname;
+                                    } else {
+                                        name = found.firstName + " " + found.surname;
+                                    }
+                                    name = found.sfaId + " - " + name;
+                                    if (n.isCaptain == true) {
+                                        Captain = name;
+                                    }
+
+                                    if (n.isGoalKeeper == true) {
+                                        GoalKeeper = name;
+                                    }
+                                    if (count == 0) {
+                                        StudentTeam = name;
+                                    } else {
+                                        StudentTeam = StudentTeam + " , " + name;
+                                    }
+                                    count++;
+                                    obj.Captain = Captain;
+                                    obj.GoalKeeper = GoalKeeper;
+                                    obj.All_Players = StudentTeam;
+                                    obj.createdBy = mainData.createdBy;
+
+                                    if (mainData.nominatedSchoolName) {
+                                        obj.nominatedSchoolName = mainData.nominatedSchoolName;
+                                    } else {
+                                        obj.nominatedSchoolName = "";
+                                    }
+                                    if (mainData.nominatedContactDetails) {
+                                        obj.nominatedContactDetails = mainData.nominatedContactDetails;
+                                    } else {
+                                        obj.nominatedContactDetails = "";
+                                    }
+                                    if (mainData.nominatedEmailId) {
+                                        obj.nominatedEmailId = mainData.nominatedEmailId;
+                                    } else {
+                                        obj.nominatedEmailId = "";
+                                    }
+                                    if (mainData.isVideoAnalysis) {
+                                        obj.isVideoAnalysis = mainData.isVideoAnalysis;
+                                    } else {
+                                        obj.isVideoAnalysis = "";
+                                    }
+                                } else {
+                                    obj.Captain = "";
+                                    obj.GoalKeeper = "";
+                                    obj.All_Players = "";
+                                    obj.createdBy = mainData.createdBy;
+                                    obj.nominatedSchoolName = "";
+                                    obj.nominatedContactDetails = "";
+                                    obj.nominatedEmailId = "";
+                                    obj.isVideoAnalysis = "";
+
+                                }
+                            });
+                        });
+                        excelData.push(obj);
+                    });
+                    callback(null, excelData);
+                },
+            ],
+            function (err, excelData) {
+                if (err) {
+                    console.log(err);
+                    res.callback(null, []);
+                } else if (excelData) {
+                    Config.generateExcelOld("TeamSport", excelData, res);
                 }
             });
     },

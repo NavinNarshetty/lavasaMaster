@@ -577,7 +577,7 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
         });
     };
     $scope.selectSport = function (selected) {
-        // console.log(selected);
+        console.log(selected);
         if(_.isEmpty($scope.filterStatistics.sportsListSubCategory)){
             $scope.filterStatistics = {};
             $scope.schoolStats = [];
@@ -592,10 +592,25 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
             $scope.getDrawFormats();
             $scope.getSportAgeGroup();
         } else {
-            $scope.filterStatistics = {};
-            $scope.sportContingent = {};
-            $scope.filter.sport = {};
-            delete $scope.statsDetail;
+            if(selected.name === $scope.statsDetail.name){
+                $scope.filterStatistics = {};
+                $scope.sportContingent = {};
+                $scope.filter.sport = {};
+                delete $scope.statsDetail;
+            }else{
+                $scope.filterStatistics = {};
+                $scope.schoolStats = [];
+                $scope.sportContingent.showContingent = true;
+                $scope.statsDetail = selected;
+                $scope.filter.sport = selected;
+                $scope.filterStatistics.sportsListSubCategory = selected.subCategory;
+                $scope.filterStatistics.age = '';
+                $scope.filterStatistics.gender = '';
+                $scope.filterStatistics.event = '';
+                $scope.tabchange('player', 1);
+                // $scope.getDrawFormats();
+                // $scope.getSportAgeGroup();
+            }
         }
         // $scope.filter.sport = selected;
         // $scope.agegroup = [];
