@@ -3057,11 +3057,10 @@ var model = {
                                     function (err, match) {
                                         console.log("updated");
                                     });
-                                i++;
-                                row++;
-                            } else {
-                                row++;
+
                             }
+                            i++;
+                            row++;
                             callback(null, final);
                         },
                         function (err) {
