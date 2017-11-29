@@ -11057,7 +11057,9 @@ var model = {
                                             } else {
                                                 var obj = {
                                                     $set: {
-                                                        round: paramData.round
+                                                        round: paramData.round,
+                                                        scheduleDate: paramData.scheduleDate,
+                                                        scheduleTime: paramData.scheduleTime
                                                     }
                                                 }
                                                 Match.update({
@@ -11073,7 +11075,7 @@ var model = {
                                                             callback(null, singleData);
                                                         }
                                                     });
-                                                callback(null, singleData);
+                                                // callback(null, singleData);
                                             }
                                         }
                                     }
