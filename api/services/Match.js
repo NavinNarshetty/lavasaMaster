@@ -1902,7 +1902,7 @@ var model = {
                                 ],
                                 function (err, results) {
                                     if (err || _.isEmpty(results)) {
-                                        callback(err, null);
+                                        callback(null, results);
                                     } else {
                                         callback(null, results);
                                     }
@@ -1915,7 +1915,7 @@ var model = {
             ],
             function (err, results) {
                 if (err || _.isEmpty(results)) {
-                    callback(err, null);
+                    callback(null, results);
                 } else {
                     callback(null, results);
                 }

@@ -3269,7 +3269,7 @@ var model = {
                         },
                         function (found, callback) {
                             if (found.isTeam == false) {
-                                console.log("found", found);
+                                // console.log("found", found);
                                 var pipeLine = Profile.getAthleteStatAggregatePipeline(data);
                                 var newPipeLine = _.cloneDeep(pipeLine);
                                 if (_.isEmpty(data.age) && _.isEmpty(data.gender) && _.isEmpty(data.event)) {
@@ -4160,7 +4160,7 @@ var model = {
                                     if (err) {
                                         callback(err, "error in mongoose");
                                     } else {
-                                        async.each(matchData, function (singleData, callback) {
+                                        async.eachSeries(matchData, function (singleData, callback) {
                                                 var stats = {};
                                                 stats.year = new Date(singleData.createdAt).getFullYear();
                                                 stats.ageGroup = singleData.sport.ageGroup.name;
@@ -4404,12 +4404,13 @@ var model = {
                                                 } else if (singleData.resultHeat) {
                                                     var i = 0;
                                                     var result;
-                                                    async.each(singleData.resultHeat.players, function (n, callback) {
+                                                    async.eachSeries(singleData.resultHeat.players, function (n, callback) {
                                                         if (n.id) {
+                                                            console.log("n", n);
                                                             IndividualSport.findOne({
                                                                 _id: n.id
                                                             }).lean().deepPopulate("athleteId.school").exec(function (err, found) {
-
+                                                                console.log("found", found);
                                                                 if (found.athleteId.middleName) {
                                                                     var name = found.athleteId.firstName + " " + found.athleteId.middleName + " " + found.athleteId.surname;
                                                                 } else {
@@ -4713,7 +4714,7 @@ var model = {
                                     }
                                 });
                             } else {
-                                console.log("found in else", found);
+                                // console.log("found in else", found);
                                 var pipeLine = Profile.getAthleteStatAggregatePipeline(data);
                                 var newPipeLine = _.cloneDeep(pipeLine);
                                 if (_.isEmpty(data.age) && _.isEmpty(data.gender) && _.isEmpty(data.event)) {
