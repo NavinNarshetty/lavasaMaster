@@ -185,16 +185,19 @@
                                                     </div>
                                                 </td>
                                                 <td class="champions-table-td">
-                                                    <div class="champions-upload-time" ng-if="schedule.uploadTime">
+                                                    <div class="champions-upload-time text-left" ng-if="schedule.uploadTime">
                                                         <span>{{schedule.uploadTime}}</span>
+                                                    </div>
+                                                    <div class="champions-upload-time text-left" ng-if="schedule.orderPlayText">
+                                                        <span>{{schedule.orderPlayText}}</span>
                                                     </div>
                                                     <div class="championsschdule-pdfbutton text-left" ng-repeat="pdf in schedule.pdfDetail track by $index">
                                                         <a href="{{pdf.trustedURL}}" target="_new" ng-if="pdf.pdfType !=='resultlink'">
-                                                                    <span ng-class="{'champions-draw-orange':pdf.pdfType =='schedulePdf' || pdf.pdfType =='order','champions-result-green':pdf.pdfType == 'resultPdf'}">
+                                                                    <span ng-class="{'champions-draw-orange':pdf.pdfName}">
                                                                                     {{pdf.textHeader}}
                                                                     </span>
                                                                 </a>
-                                                        <a href="{{pdf.resultLink}}" target="_new" ng-if="pdf.pdfType =='resultlink'" class="champions-result-green">
+                                                        <a href="{{pdf.resultLink}}" target="_new" ng-if="pdf.pdfType =='resultlink'" ng-class="{'champions-draw-orange':pdf.pdfName}">
                                                                     {{pdf.textHeader}}
                                                         </a>
                                                     </div>
