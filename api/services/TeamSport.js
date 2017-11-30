@@ -960,7 +960,7 @@ var model = {
 
     },
 
-    oldgenerateExcel: function (res) {
+    generateExcel: function (res) {
         async.waterfall([
                 function (callback) {
                     var pipeLine = TeamSport.getTeamPipeLine();
@@ -1004,7 +1004,7 @@ var model = {
                                     } else {
                                         name = found.firstName + " " + found.surname;
                                     }
-                                    name = found.sfaId + " - " + name;
+                                    name = found.sfaId + " - " + name + " - " + found.mobile;
                                     if (n.isCaptain == true) {
                                         Captain = name;
                                     }
@@ -1082,7 +1082,7 @@ var model = {
             });
     },
 
-    generateExcel: function (res) {
+    oldgenerateExcel: function (res) {
         async.waterfall([
                 function (callback) {
                     var pipeLine = TeamSport.getTeamPipeLine();
