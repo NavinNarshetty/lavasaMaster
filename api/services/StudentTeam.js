@@ -22,11 +22,11 @@ var schema = new Schema({
 
 schema.plugin(deepPopulate, {
     populate: {
-        'teamId': {
+        "teamId": {
             select: '_id name teamId school schoolName'
         },
-        'studentId': {
-            select: '_id firstName middleName sfaId surname school athleteSchoolName'
+        "studentId": {
+            select: '_id firstName middleName sfaId surname school athleteSchoolName gender email mobile'
         },
         'studentId.school': {
             select: 'name'
