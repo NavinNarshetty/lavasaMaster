@@ -766,6 +766,15 @@ var model = {
                             profile.schoolName = found.schoolName;
                             profile.schoolLogo = found.schoolLogo;
                             profile.sfaId = found.sfaID;
+                            if (found.schoolAddressLine2) {
+                                profile.address = found.schoolAddress + " " + found.schoolAddressLine2 + " " + found.city + " " + found.pinCode;
+                            } else {
+                                profile.address = found.schoolAddress + " " + found.city + " " + found.pinCode;
+                            }
+                            profile.board = found.affiliatedBoard;
+                            profile.status = found.status;
+                            profile.sportsDepartment = found.sportsDepartment;
+                            profile.contactPerson = found.contactPerson;
                             callback(null, matchData);
                         }
                     });
@@ -929,7 +938,7 @@ var model = {
                     // });
                     profile.registerSport = registerSport;
                     // profile.totalAthlete = uniqSport;
-                    profile.count = uniqSport.length;
+                    // profile.count = uniqSport.length;
                     callback(null, profile);
                 },
                 function (profile, callback) {
@@ -6728,6 +6737,10 @@ var model = {
             function (err) {
                 callback(null, profile);
             });
+    },
+
+    getSchoolBio: function (data, callback) {
+
     }
 
 };
