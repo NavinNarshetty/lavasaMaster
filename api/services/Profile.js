@@ -779,6 +779,11 @@ var model = {
                             sport.medals = [];
                             sport.teamData = teamSportData;
                             sport.individualData = matchData;
+                            // var testSport = [].concat.apply([], [
+                            //     teamSportData,
+                            //     matchData
+                            // ]);
+                            // profile.testSport = testSport;
                             async.waterfall([
                                     function (callback) {
                                         async.each(teamSportData, function (team, callback) {
@@ -830,7 +835,7 @@ var model = {
                     });
                 },
                 function (sport, callback) {
-                    console.log("sport", sport.medals);
+                    // console.log("sport", sport.medals);
                     var medalsUnique = _.uniqBy(sport.medals, function (item) {
                         return JSON.stringify(item);
                     });
@@ -857,11 +862,13 @@ var model = {
                                         team.inactiveimage = n.sportsListSubCategory.inactiveimage;
                                         team.image = n.sportsListSubCategory.image;
                                         team.school = n.schoolName;
+                                        team.athlete = n.studentTeam.studentId._id;
+                                        team.athleteSfaId = n.studentTeam.studentId.sfaId;
                                         teams.push(team);
                                     });
                                     return {
                                         name: name,
-                                        team: teams,
+                                        players: teams,
                                         count: values.length
                                     };
                                 }).value();
@@ -890,11 +897,13 @@ var model = {
                                         } else {
                                             team.school = n.athleteId.school;
                                         }
+                                        team.athlete = n.athleteId._id;
+                                        team.athleteSfaId = n.athleteId.sfaId;
                                         teams.push(team);
                                     });
                                     return {
                                         name: name,
-                                        individual: teams,
+                                        players: teams,
                                         count: values.length
                                     };
                                 }).value();
@@ -908,7 +917,18 @@ var model = {
                         teamGroup,
                         individualGroup
                     ]);
+                    // var athleteTotal = [];
+                    // _.each(registerSport, function (item) {
+                    //     _.each(item.gender[0].players, function (n) {
+                    //         athleteTotal.push(n.athlete);
+                    //     });
+                    // });
+                    // var uniqSport = _.uniqBy(athleteTotal, function (item) {
+                    //     return JSON.stringify(item);
+                    // });
                     profile.registerSport = registerSport;
+                    // profile.totalAthlete = uniqSport;
+                    profile.count = uniqSport.length;
                     callback(null, profile);
                 },
                 function (profile, callback) {

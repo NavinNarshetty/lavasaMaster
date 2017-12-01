@@ -73,7 +73,7 @@ var model = {
 
     getSchoolByRanks: function (callback) {
         Rank.find().sort(Rank.sortingOrder).lean().exec(function (err, data) {
-            var sportsToMerge = ['Tennis', 'Badminton','Table Tennis', 'Athletics', 'Swimming']
+            var sportsToMerge = ['Tennis', 'Badminton', 'Table Tennis', 'Athletics', 'Swimming']
             var sportsFound = [];
             var arr = [];
 
@@ -83,7 +83,7 @@ var model = {
 
 
                     singleData[sportName] = _.filter(singleData.sportData, function (sport) {
-                        console.log(sport.name.indexOf(sportName) == 0);
+                        // console.log(sport.name.indexOf(sportName) == 0);
                         if (sport.name.indexOf(sportName) != -1 && !sport.name.indexOf(sportName) > 0) {
                             return sport;
                         }
@@ -120,9 +120,9 @@ var model = {
                             obj.totalPoints += n.totalPoints;
                             var o = {};
                             o[n.name] = n._id;
-                            console.log("o", o);
+                            // console.log("o", o);
                             obj._ids = _.assign(obj._ids, o);
-                            console.log("obj", obj);
+                            // console.log("obj", obj);
                             if (n && n.medals && n.medals['bronze']) {
                                 obj.medals['bronze'].count += n.medals['bronze'].count;
                                 obj.medals['bronze'].points += n.medals['bronze'].points;
@@ -156,13 +156,6 @@ var model = {
             }, function (err, result) {
                 callback(null, result);
             });
-
-
-            // if(err){
-            //     callback(err,null);
-            // }else{
-            //     callback(null,data);
-            // }
         });
     },
 
