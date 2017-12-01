@@ -276,7 +276,8 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
             if ($scope.matchDetails.teams.length == 1) {
                 toastr.error('Minimum 2 Players required to start scoring');
             } else {
-                if (formData.matchPhoto.length == 0) {
+                if (!formData) {
+                    // formData.matchPhoto.length == 0
                     toastr.error('Please upload match photo.', 'Data Incomplete');
                 } else {
                     $scope.matchResult = {
