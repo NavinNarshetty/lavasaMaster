@@ -765,6 +765,7 @@ var model = {
                         } else {
                             profile.schoolName = found.schoolName;
                             profile.schoolLogo = found.schoolLogo;
+                            profile.sfaId = found.sfaID;
                             callback(null, matchData);
                         }
                     });
