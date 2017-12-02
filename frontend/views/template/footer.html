@@ -108,8 +108,8 @@
             <ul class="padding0">
               <!-- MUMBAI -->
               <li ng-repeat="champions in mumbaiChampion track by $index" ng-if="selectedCity !=='hyderabad'">
-                <label class="footer-champ-header">{{champions.name}}</label>
-                <ul class="padding0" ng-if="champions.name != 'school championship'">
+                <label class="footer-champ-header" hidden>{{champions.name}}</label>
+                <ul class="padding0" ng-if="champions.name != 'school championship'" hidden>
                   <li ng-repeat="detail in champions.champDetail track by $index">
                     <a href="{{registerCollege}}/{{detail.link}}" target="_new">
                       {{detail.name}}
@@ -162,7 +162,7 @@
                 </a>
               </li>
               <li ng-repeat="profile in sfamumbaiProfile track by $index" ng-if="selectedCity !=='hyderabad'">
-                <label class="footer-champ-header">{{profile.name}}</label>
+                <label class="footer-champ-header" hidden>{{profile.name}}</label>
                 <ul class="padding0">
                   <li ng-repeat="detail in profile.detail track by $index">
                     <a href="{{registerSchool}}/{{detail.link}}" target="_new">
@@ -176,7 +176,7 @@
                   </li>
 
               </li>
-              <li ng-repeat="profileC in profileCollege track by $index" ng-if="selectedCity !=='hyderabad'">
+              <li ng-repeat="profileC in profileCollege track by $index" ng-if="selectedCity !=='hyderabad'" hidden>
                 <label class="footer-champ-header">{{profileC.name}}</label>
                 <ul class="padding0">
                   <li ng-repeat="detail in profileC.detail track by $index">
@@ -196,10 +196,10 @@
         <!-- PROFILE END -->
 
 
-        <!-- RESULTS -->
         <div class="col-md-3">
           <div class="f-list">
-            <span class="color-yellow1" ng-if="selectedCity !=='hyderabad'">RESULTS</span>
+            <!-- RESULTS -->
+            <span style="color:#27b465" ng-if="selectedCity !=='hyderabad'">RESULTS</span>
             <!-- RESULTS HOLDER -->
             <!-- MUMBAI -->
             <ul class="padding0" ng-if="selectedCity !=='hyderabad'">
@@ -208,7 +208,7 @@
                   2017 SCHOOL RANKING
                 </a>
               </li>
-              <li>
+              <li hidden>
                 <a href="{{registerCollege}}/results" target="_new">
                   2017 COLLEGE RANKING
                 </a>
@@ -217,14 +217,16 @@
             <div class="gallery-mumbai">
               <span style="color:#27b465" ng-if="selectedCity !=='hyderabad'">GALLERY</span>
               <!-- RESULTS HOLDER -->
-              <!-- MUMBAI -->
+
+              <!-- MUMBAI GALLERY -->
+
               <ul class="padding0" ng-if="selectedCity !=='hyderabad'">
                 <li>
                   <a href="{{registerSchool}}/media-gallery" target="_new">
                     SCHOOL
                   </a>
                 </li>
-                <li>
+                <li hidden>
                   <a href="{{registerCollege}}/media-gallery" target="_new">
                     COLLEGE
                   </a>
@@ -232,9 +234,9 @@
               </ul>
               <!-- MUMBAI END -->
             </div>
+            <!-- MUMBAI MEDIA PRESS -->
             <div class="mediapress-mumbai">
               <span style="color:#27b465" ng-if="selectedCity !=='hyderabad'">PRESS & MEDIA</span>
-              <!-- RESULTS HOLDER -->
               <!-- MUMBAI -->
               <ul class="padding0" ng-if="selectedCity !=='hyderabad'">
                 <li>
@@ -242,7 +244,7 @@
                     SCHOOL
                   </a>
                 </li>
-                <li>
+                <li hidden>
                   <a href="{{registerCollege}}/media-press" target="_new">
                     COLLEGE
                   </a>
@@ -250,6 +252,8 @@
               </ul>
               <!-- MUMBAI END -->
             </div>
+            <!-- MUMBAI MEDIA PRESS END -->
+
 
 
             <ul class="padding0" ng-if="selectedCity ==='hyderabad'">

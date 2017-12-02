@@ -78,7 +78,7 @@
                                             <p class="m-clear" style="font-size:12px;">PREVIOUS CHAMPIONSHIP</p>
                                         </a>
                                     </li>
-                                    <li ng-if="selectedCity !== 'hyderabad'">
+                                    <li ng-if="selectedCity !== 'hyderabad'" class="hide">
                                         <div class="profile-sub-header text-uppercase text-center">
                                             <label for="">College</label>
                                         </div>
@@ -179,7 +179,7 @@
                                         <a href="{{registerSchool}}/media-gallery " target="_blank ">
                                             <span>SCHOOL</span>
                                         </a>
-                                        <a href="{{registerCollege}}/media-gallery " target="_blank ">
+                                        <a href="{{registerCollege}}/media-gallery " class="hide" target="_blank ">
                                             <span>COLLEGE</span>
                                         </a>
                                     </li>
@@ -209,7 +209,7 @@
                                         <a href="{{registerSchool}}/media-press " target="_blank ">
                                             <span>SCHOOL</span>
                                         </a>
-                                        <a href="{{registerCollege}}/media-press " target="_blank ">
+                                        <a href="{{registerCollege}}/media-press " class="hide" target="_blank ">
                                             <span>COLLEGE</span>
                                         </a>
                                     </li>
@@ -301,7 +301,8 @@
                                             <a href="{{registerSchool}}/faq " target="_blank ">FAQs</a>
                                         </li>
                                     </ul>
-                                    <ul class="display-inline typeList " ng-if="selectedCity !='hyderabad' ">
+                                    <ul class="hide" ng-if="selectedCity !='hyderabad' ">
+                                        <!-- display-inline typeList -->
                                         <li>
                                             <a>COLLEGE CHAMPIONSHIP</a>
                                         </li>
@@ -380,16 +381,16 @@
                                     <li>
                                         <a href="{{registerSchool}}/team " target="_blank ">2017 TEAMS</a>
                                     </li>
-                                    <li>
+                                    <li class="hide">
                                         <label for="">COLLEGE</label>
                                     </li>
-                                    <li>
+                                    <li class="hide">
                                         <a href="{{registerCollege}}students " target="_blank "> 2017 ATHLETES</a>
                                     </li>
-                                    <li>
+                                    <li class="hide">
                                         <a href="{{registerCollege}}school " target="_blank "> 2017 COLLEGE</a>
                                     </li>
-                                    <li>
+                                    <li class="hide">
                                         <a href="{{registerCollege}}team " target="_blank ">2017 TEAMS</a>
                                     </li>
                                     <!-- <li>
@@ -461,7 +462,7 @@
                                     <li>
                                         <a href="{{registerSchool}}/media-gallery" target="_blank ">SCHOOL</a>
                                     </li>
-                                    <li>
+                                    <li class="hide">
                                         <a href="{{registerCollege}}/media-gallery" target="_blank ">COLLEGE</a>
                                     </li>
                                 </ul>
@@ -488,7 +489,7 @@
                                     <li>
                                         <a href="{{linkForAll}}school" target="_blank " ui-sref="school-ranking">SCHOOL</a>
                                     </li>
-                                    <li>
+                                    <li class="hide">
                                         <a href="{{linkForAll}}college" target="_blank " ui-sref="champions">COLLEGE</a>
                                     </li>
                                 </ul>
@@ -528,11 +529,11 @@
                         <button type="button " name="button " class="btn btn-sfatop " ng-mouseenter="optionss=!optionss
                                   " ng-model="checkboxs ">
                             <span ng-if="selectedCity==='Hyderabad'">LIVE</span> SFA {{selectedCity | capitalize}} {{eventYear}}</button>
-                            <div class="on-mouse-hover hidden-xs hidden-sm specialCase specialCase2" ng-mouseenter="optionss=true " ng-mouseleave="optionss=false "
+                        <div class="on-mouse-hover hidden-xs hidden-sm specialCase specialCase2" ng-mouseenter="optionss=true " ng-mouseleave="optionss=false "
                             ng-show="optionss || checkboxs ">
                             <!-- <div class="on-mouse-hover "> -->
                             <div class="bg-head curve-head-mum after2 newList hidden-xs hidden-sm ">
-        
+
                                 <!-- <ul class="list-unstyled ls "> -->
                                 <ul class="display-inline typeList ">
                                     <li>
@@ -580,7 +581,8 @@
                                         <a href="{{registerSchool}}/faq " target="_blank ">FAQs</a>
                                     </li>
                                 </ul>
-                                <ul class="display-inline typeList " ng-if="selectedCity !='hyderabad' ">
+                                <ul class="hide" ng-if="selectedCity !='hyderabad' ">
+                                    <!-- display-inline typeList -->
                                     <li>
                                         <p>COLLEGE CHAMPIONSHIP</p>
                                     </li>
@@ -678,7 +680,8 @@
                                     <a href="{{registerSchool}}/faq " target="_blank ">FAQs</a>
                                 </li>
                             </ul>
-                            <ul class="typeList " ng-if="selectedCity !='hyderabad' ">
+                            <ul class="hide" ng-if="selectedCity !='hyderabad' ">
+                                <!-- typeList -->
                                 <li>
                                     <a>COLLEGE CHAMPIONSHIP</a>
                                 </li>
@@ -735,7 +738,7 @@
                                   " ng-model="checkboxs ">SFA {{selectedCity | capitalize}} {{eventYear}}</button>
                     </div>
                 </div>
-               
+
             </div>
 
 
