@@ -1264,3 +1264,10 @@ header {
   margin-bottom: 5px;
 }
 // ROTATE IMAGE DIRECTIVE  END
+
+.selection-modalcontent{
+  .modal-body{
+      height: calc(100vh - 200px);
+      overflow-y: auto;
+  }
+}
