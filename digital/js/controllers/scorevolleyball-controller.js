@@ -16,6 +16,7 @@ myApp.controller('VolleyballScoreCtrl', function ($scope, TemplateService, Navig
   $scope.setDelete = {
     value: 0
   };
+  $scope.btnDisable = false;
   // INITIALISE VARIABLES END
 
   // CLEAVE FUNCTION OPTIONS
@@ -519,8 +520,8 @@ myApp.controller('VolleyballScoreCtrl', function ($scope, TemplateService, Navig
       $rootScope.modalInstance = $uibModal.open({
         animation: true,
         scope: $scope,
-        // backdrop: 'static',
-        // keyboard: false,
+        backdrop: 'static',
+        keyboard: false,
         templateUrl: 'views/modal/confirmcomplete.html',
         windowClass: 'completematch-modal'
       })
@@ -528,6 +529,7 @@ myApp.controller('VolleyballScoreCtrl', function ($scope, TemplateService, Navig
   };
   $scope.matchComplete = function () {
     if ($scope.match.resultVolleyball) {
+      $scope.btnDisable = true;
       _.each($scope.match.resultVolleyball.teams, function (n, nkey) {
         if (n.teamResults.block == "") {
           n.teamResults.block = 0;
@@ -556,24 +558,28 @@ myApp.controller('VolleyballScoreCtrl', function ($scope, TemplateService, Navig
       if ($stateParams.drawFormat === 'League cum Knockout') {
         NavigationService.saveFootball($scope.matchResult, function (data) {
           if (data.value == true) {
+            $scope.btnDisable = false;
             $state.go('league-knockoutTeam', {
               drawFormat: $stateParams.drawFormat,
               id: $stateParams.sport
             });
             console.log('save success');
           } else {
+            $scope.btnDisable = false;
             toastr.error('Data save failed. Please try again.', 'Save Error');
           }
         });
       } else {
         NavigationService.saveMatch($scope.matchResult, function (data) {
           if (data.value == true) {
+            $scope.btnDisable = false;
             $state.go('knockout-team', {
               drawFormat: $stateParams.drawFormat,
               id: $stateParams.sport
             });
             console.log('save success');
           } else {
+            $scope.btnDisable = false;
             toastr.error('Data save failed. Please try again.', 'Save Error');
           }
         });

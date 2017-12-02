@@ -9,6 +9,7 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
     $scope.stateParam = $stateParams;
     $scope.matchId=$stateParams.id;
     $scope.matchData = {};
+    $scope.btnDisable = false;
     // INITIALISE VARIABLES END
 
     // CLEAVE FUNCTION OPTIONS
@@ -569,6 +570,7 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
     // FOR LEAGUE END
     $scope.matchComplete = function(){
       if ($scope.match.resultFootball) {
+        $scope.btnDisable = true;
         _.each($scope.match.resultFootball.teams, function(n, nkey){
           if(n.teamResults.totalShots == ""){
             n.teamResults.totalShots = 0;
@@ -609,6 +611,7 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
           $interval.cancel(promise);
           NavigationService.saveFootball($scope.matchResult, function(data){
             if(data.value == true){
+              $scope.btnDisable = false;
               $state.go('league-knockoutTeam', {
                 drawFormat: $stateParams.drawFormat,
                 id: $stateParams.sport
@@ -616,6 +619,7 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
               console.log('save success');
             } else{
               // alert('fail save');
+              $scope.btnDisable = false;
               toastr.error('Data save failed. Please try again or check your internet connection.', 'Save Error');
             }
           });

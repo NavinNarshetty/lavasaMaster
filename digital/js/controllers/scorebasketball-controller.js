@@ -13,6 +13,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
   var playerScoreModal;
   var penaltyShootoutModal;
   var resultVar;
+  $scope.btnDisable = false;
 
   var initPage = function () {
     $scope.template = TemplateService.getHTML("content/" + $scope.matchData.html);
@@ -328,17 +329,21 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
     }
 
     $scope.matchComplete = function () {
+      $scope.btnDisable = true;
       $scope.match[resultVar].status = "IsCompleted";
+      flag = '3';
       $interval.cancel(promise);
       console.log("resultVar", $scope.match[resultVar]);
       _.each($scope.match[resultVar].teams, function (team, tk) {
         team = ResultSportInitialization.nullOrEmptyTo0($scope.match.sportsName, team);
         if ($scope.match[resultVar].teams.length - 1 == tk) {
+          console.log("in tk", flag);
           console.log("resultVar", $scope.match[resultVar]);
            save();
+           $scope.btnDisable = false;
         }
       });
-     
+
       completeMatchModal.close();
     };
 
