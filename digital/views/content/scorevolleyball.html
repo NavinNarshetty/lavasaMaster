@@ -186,7 +186,7 @@
                             <div class="match-selectwinner text-left">
                                 <label for="matchWinnerPlayer" class="text-uppercase">Select Winner</label>
                                 <!-- UI SELECT -->
-                                <ui-select id="matchWinnerPlayer" ng-model="match.resultVolleyball.winner.player" theme="bootstrap">
+                                <ui-select id="matchWinnerPlayer" ng-model="match.resultVolleyball.winner.player" theme="bootstrap" ng-disabled="match.resultVolleyball.isDraw == true">
                                     <ui-select-match placeholder="Select Winner"> {{$select.selected.schoolName}}</ui-select-match>
                                     <ui-select-choices repeat="team._id as team in match.teams | filter: $select.search">
                                         <p class="opponentsingle-selector">{{team.schoolName}}</p>
@@ -195,6 +195,17 @@
                                 <!-- UI SELECT END -->
                             </div>
                         </div>
+                        <!-- MATCH DRAW -->
+                        <div class="col-md-2 col-sm-6" ng-if="match.stage == 'League'">
+                          <div class="text-left draw-checkbox">
+                            <label for="match.resultVolleyball.isDraw">For Draw Match</label>
+                            <div class="custom-checkbox" ng-class="{'custom-checkbox-checked': match.resultVolleyball.isDraw == true}" ng-model="match.resultVolleyball.isDraw"
+                              ng-click="matchDraw()" id="match.resultVolleyball.isDraw">
+                              <span class="fa fa-check get-center pointer"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- MATCH DRAW END -->
                     </div>
                 </div>
                 <!-- RESULT SELECTS END -->

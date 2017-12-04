@@ -404,6 +404,16 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
   })
   // AUTO SAVE FUNCTION END
 
+  // MATCH DRAW
+  $scope.matchDraw = function(){
+    if ($scope.match[resultVar].isDraw == false) {
+      $scope.match[resultVar].isDraw = true;
+    } else {
+      $scope.match[resultVar].isDraw = false;
+    }
+  }
+  // MATCH DRAW END
+
   // $scope.matchComplete = function () {
   //   if ($scope.match.resultVolleyball) {
   //     $scope.match.resultVolleyball.status = "IsCompleted";

@@ -178,7 +178,7 @@
               <div class="match-selectwinner text-left">
                 <label for="matchWinnerPlayer" class="text-uppercase">Select Winner</label>
                 <!-- UI SELECT -->
-                <ui-select id="matchWinnerPlayer" ng-model="match.resultKabaddi.winner.player" theme="bootstrap">
+                <ui-select id="matchWinnerPlayer" ng-model="match.resultKabaddi.winner.player" theme="bootstrap" ng-disabled="match.resultKabaddi.isDraw == true">
                   <ui-select-match placeholder="Select Winner"> {{$select.selected.schoolName}}</ui-select-match>
                   <ui-select-choices repeat="team._id as team in match.teams | filter: $select.search">
                     <p class="opponentsingle-selector">{{team.schoolName}}</p>
@@ -187,12 +187,17 @@
                 <!-- UI SELECT END -->
               </div>
             </div>
-            <!--<div class="col-md-4 col-sm-6">
-              <div class="text-left">
-                <label for="">For Penalties</label>
-                <button class="btn btn-scoring btn-green-outline" ng-click="modalPenaltyShootout()">Penalty Shootouts</button>
+            <!-- MATCH DRAW -->
+            <div class="col-md-2 col-sm-6" ng-if="match.stage == 'League'">
+              <div class="text-left draw-checkbox">
+                <label for="match.resultKabaddi.isDraw">For Draw Match</label>
+                <div class="custom-checkbox" ng-class="{'custom-checkbox-checked': match.resultKabaddi.isDraw == true}" ng-model="match.resultKabaddi.isDraw"
+                  ng-click="matchDraw()" id="match.resultKabaddi.isDraw">
+                  <span class="fa fa-check get-center pointer"></span>
+                </div>
               </div>
-            </div>-->
+            </div>
+            <!-- MATCH DRAW END -->
           </div>
         </div>
         <!-- RESULT SELECTS END -->

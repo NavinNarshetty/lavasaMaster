@@ -172,6 +172,7 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                                     "status": "",
                                     "winner": {},
                                     "isNoMatch": false,
+                                    "isDraw": false
                                 }
                                 _.each($scope.matchDetails.teams, function (n, key) {
                                     $scope.formData.teams[key] = {

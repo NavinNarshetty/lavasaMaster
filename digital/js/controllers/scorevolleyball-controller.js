@@ -136,6 +136,15 @@ myApp.controller('VolleyballScoreCtrl', function ($scope, TemplateService, Navig
     }
   }
   // SAVE PLAYING TEAM END
+  // MATCH DRAW
+  $scope.matchDraw = function(){
+    if ($scope.match.resultVolleyball.isDraw == false) {
+      $scope.match.resultVolleyball.isDraw = true;
+    } else {
+      $scope.match.resultVolleyball.isDraw = false;
+    }
+  }
+  // MATCH DRAW END
   // TEAM SCORE INCREMENT
   $scope.incrementTeamPoint = function (team, point) {
     $scope.team = team;

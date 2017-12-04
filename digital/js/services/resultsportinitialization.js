@@ -87,7 +87,8 @@ myApp.factory('ResultSportInitialization', function () {
                 coach: "",
                 schoolName: team.schoolName,
                 teamResults: {},
-                players: []
+                players: [],
+                isDraw: false
             };
             switch (sportName) {
                 case "Basketball":
@@ -350,7 +351,7 @@ myApp.factory('ResultSportInitialization', function () {
 
 
         },
-        //for getting result variable that sport contains ends     
+        //for getting result variable that sport contains ends
 
         getFormattedObject: function (isArray) {
             var obj = {
