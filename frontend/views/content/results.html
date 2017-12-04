@@ -1,4 +1,4 @@
-<div class="resultpage">
+  <div class="resultpage">
   <div class="container">
 
     <!-- RESULT TITLE SECTION -->
@@ -43,7 +43,7 @@
                 </div>
               </th>
               <th>
-                <div class="text-uppercase text-center">
+                <div class="text-uppercase text-center resulttable-medal">
                   <div class="result-tablemedal">
                     <img ng-src="{{'gold'|medalicon:'white'}}" alt="Gold Medals" class="img-responsive">
                   </div>
@@ -51,7 +51,7 @@
                 </div>
               </th>
               <th>
-                <div class="text-uppercase text-center">
+                <div class="text-uppercase text-center resulttable-medal">
                   <div class="result-tablemedal">
                     <img ng-src="{{'silver'|medalicon:'white'}}" alt="Silver Medals" class="img-responsive">
                   </div>
@@ -59,7 +59,7 @@
                 </div>
               </th>
               <th>
-                <div class="text-uppercase text-center">
+                <div class="text-uppercase text-center resulttable-medal">
                   <div class="result-tablemedal">
                     <img ng-src="{{'bronze'|medalicon:'white'}}" alt="Bronze Medals" class="img-responsive">
                   </div>
@@ -82,7 +82,7 @@
                 </div>
               </td>
               <td>
-                <div class="text-left">
+                <div class="text-left resulttable-schoolname">
                   {{school.name}}
                 </div>
               </td>
@@ -256,7 +256,7 @@
               <a class="btn-viewmore" ng-click="viewMoreSport(sportTable.showTable);" ng-if="sportTable.length>5">View
                 <span ng-if="sportTable.showTable == true">Full</span>
                 <span ng-if="sportTable.showTable == false">Less</span> Ranking Table</a>
-              <!--<a class="btn-viewmore" ng-click="showMedalWinner();" ng-if="medalWinners">View <span ng-if="!showAllMedalWinner">All</span> <span ng-if="showAllMedalWinner">Less</span> Medal Winners</a>-->
+              <a class="btn-viewmore" ng-click="showMedalWinner();" ng-if="medalWinners">View <span ng-if="!showAllMedalWinner">All</span> <span ng-if="showAllMedalWinner">Less</span> Medal Winners</a>
             </div>
           </div>
           <div class="col-md-5 col-sm-12 col-xs-12" ng-if="risingAthletes.length>0">
@@ -343,7 +343,7 @@
               <p>You can also view medal winners by selecting the specific gender, age and event category</p>
               <div class="row">
                 <!-- GENDER FILTER -->
-                <div class="col-md-3 col-sm-4 col-xs-6">
+                <div class="col-md-3 col-sm-4 col-xs-12">
                   <label class="sportfilter-label">Gender</label>
                   <div class="sportfilter-select">
                     <ui-select name="selectsporttype" ng-model="medalFilter.gender" theme="bootstrap" on-select="getMedalWinners();">
@@ -358,7 +358,7 @@
                 </div>
                 <!-- GENDER FILTER -->
                 <!-- AGE FILTER -->
-                <div class="col-md-3 col-sm-4 col-xs-6">
+                <div class="col-md-3 col-sm-4 col-xs-12">
                   <label class="sportfilter-label">Age</label>
                   <div class="sportfilter-select">
                     <ui-select name="selectsporttype" ng-model="medalFilter.age" theme="bootstrap" on-select="getMedalWinners();">
@@ -373,7 +373,7 @@
                 </div>
                 <!-- AGE FILTER -->
                 <!-- AGE FILTER -->
-                <div class="col-md-3 col-sm-4 col-xs-6">
+                <div class="col-md-3 col-sm-4 col-xs-12">
                   <label class="sportfilter-label">Event</label>
                   <div class="sportfilter-select">
                     <ui-select name="selectsporttype" ng-model="medalFilter.event" theme="bootstrap" on-select="getMedalWinners();">
@@ -388,7 +388,7 @@
                 </div>
                 <!-- AGE FILTER -->
                 <!-- CLEAR MEDAL FILTER -->
-                <div class="col-md-3 col-sm-4 col-xs-6">
+                <div class="col-md-3 col-sm-4 col-xs-12">
                   <div class="text-right">
                     <a ng-click="clearMedalFilter();"><span class="fa fa-close"></span> Clear Filter</a>
                 </div>
@@ -409,23 +409,26 @@
                   <!-- <pre>{{medalWinner|json}}</pre> -->
                 </p>
                 <div class="viewall-winnerrow">
-                  <div class="row" ng-if="medalWinner.male" ng-repeat="winner in medalWinner.male track by $index">
-                    <div class="col-md-4 col-sm-6 col-xs-12"  ng-repeat= "player in winner.medals| orderBy:'medalOrder' track by $index">
+                  <div class="row " ng-if="medalWinner.male" ng-repeat="winner in medalWinner.male track by $index">
+                    <div class="col-md-12">
+                      <p class="text-uppercase">Male</p>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12"  ng-repeat="player in winner.medals| orderBy:'medalOrder' track by $index">
                       <!-- <pre>{{player|json}}</pre> -->
-                      <div class="allmedal-winnercard " >
+                      <div class="allmedal-winnercard ">
                         <div class="allmedal-medalholder">
                           <img ng-src="{{player.medal|medalicon:'blue'}}" alt="{{player.medal}} Medal" class="img-responsive">
                         </div>
                         <div class="allmedal-profilepic" ng-if="player.profile">
                           <img ng-src="{{player.profile|serverimage2:60:60:'cover'}}" alt="{{winner.sfaId}} - {{winner.name}} | {{winner.school}}" class="img-responsive">
                         </div>
-                        <div class="allmedal-studentdetails">
+                        <div class="allmedal-studentdetails ">
                           <!-- <pre>{{player|json}}</pre> -->
-                          <div class="" ng-if="player.sfaId">
+                          <div class="pointer" ng-if="player.sfaId" ui-sref="student-profile({id:player.athleteId})">
                             <p class="allmedal-studentname">{{player.participantName}}</p>
                             <p class="allmedal-studentschool">{{player.school}}</p>
                           </div>
-                          <div class="" ng-if="player.TeamId">
+                          <div class="" ng-if="player.TeamId" ng-click="medalSchoolRedirect(player);" ng-class="{'pointer': player.schoolId}">
                             <p class="allmedal-studentname">{{player.TeamId}}</p>
                             <p class="allmedal-studentschool">{{player.school}}</p>
                           </div>
@@ -433,7 +436,10 @@
                       </div>
                     </div>
                   </div>
-                  <div class="row" ng-if="medalWinner.female" ng-repeat="winner in medalWinner.female track by $index">
+                  <div class="row " ng-if="medalWinner.female" ng-repeat="winner in medalWinner.female track by $index">
+                    <div class="col-md-12">
+                      <p class="text-uppercase">Female</p>
+                    </div>
                     <div class="col-md-4 col-sm-6 col-xs-12"  ng-repeat= "player in winner.medals| orderBy:'medalOrder' track by $index">
                       <!-- <pre>{{player|json}}</pre> -->
                       <div class="allmedal-winnercard " >
@@ -443,12 +449,12 @@
                         <div class="allmedal-profilepic" ng-if="player.profile">
                           <img ng-src="{{player.profile|serverimage2:60:60:'cover'}}" alt="{{winner.sfaId}} - {{winner.name}} | {{winner.school}}" class="img-responsive">
                         </div>
-                        <div class="allmedal-studentdetails">
-                          <div class="" ng-if="player.sfaId">
+                        <div class="allmedal-studentdetails ">
+                          <div class="pointer" ng-if="player.sfaId" ui-sref="student-profile({id:player.athleteId})">
                             <p class="allmedal-studentname">{{player.participantName}}</p>
                             <p class="allmedal-studentschool">{{player.school}}</p>
                           </div>
-                          <div class="" ng-if="player.TeamId">
+                          <div class="" ng-if="player.TeamId" ng-click="medalSchoolRedirect(player);" ng-class="{'pointer': player.schoolId}">
                             <p class="allmedal-studentname">{{player.TeamId}}</p>
                             <p class="allmedal-studentschool">{{player.school}}</p>
                           </div>

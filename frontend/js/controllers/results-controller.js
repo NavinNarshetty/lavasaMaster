@@ -1,6 +1,6 @@
 myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $rootScope, $uibModal, $timeout, knockoutService, configService) {
   $scope.template = TemplateService.getHTML("content/results.html");
-  TemplateService.title = "Direct Final"; //This is the Title of the Website
+  TemplateService.title = "Results"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
 
   // FILTER OPTIONS
@@ -286,6 +286,15 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
     console.log($scope.medalFilter, 'clear');
   }
   // CLEAR FILTER END
+  $scope.medalSchoolRedirect = function(player){
+    if(player.schoolId){
+      $state.go('school-profile', {
+        id: player.schoolId
+      })
+    } else {
+      console.log("noid");
+    }
+  }
   // FUNCTIONS END
 
   // APIS

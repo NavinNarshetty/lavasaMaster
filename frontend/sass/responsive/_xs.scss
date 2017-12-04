@@ -21,11 +21,50 @@
       width: 15px;
     }
     //  ATHLETE PROFILE CARD END
+    // RESULT PAGE
     .resultsport-topplayer {
         width: auto;
         margin-right: 0;
         float: none;
     }
+    .resultsport-viewmedalwinner{
+      .btn-viewmore{
+        display: block;
+      }
+    }
+    .allmedal-winnercard{
+      .allmedal-studentdetails{
+        width: calc(100% - 85px);
+      }
+    }
+    .result-titlesection{
+      .result-title{
+        font-size: 30px;
+      }
+    }
+    .result-schooltitle{
+      h3{
+        font-size: 18px;
+      }
+    }
+    .schoolranktable-head{
+      h3{
+        font-size: 18px;
+      }
+    }
+    .result-sportfilter{
+      .sportfilter-select{
+        width: 100%;
+      }
+    }
+    .allmedal-studentname{
+      font-size: 12px;
+    }
+    .resulttable-schoolname{
+      width: 180px;
+      white-space: normal;
+    }
+    // RESULT PAGE END
     // MATCH CENTER
     .matchcenter-modal{
       .racquet-setscore .scoring-set{

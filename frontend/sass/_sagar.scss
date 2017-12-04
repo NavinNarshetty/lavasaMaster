@@ -828,6 +828,7 @@ $bg-color-female: #ffcd7b !default;
     color: $sport-primary;
     font-size: 14px;
     font-weight: 700;
+    word-break: break-word;
 }
 
 .allmedal-studentschool {
@@ -1697,7 +1698,7 @@ $tickerDuration: 60s;
   text-transform: uppercase;
 }
 .sportfilter-select {
-  width: 250px;
+  width: 100%;
   padding: 0 10px;
   display: inline-block;
   vertical-align: middle;
@@ -1756,6 +1757,12 @@ $tickerDuration: 60s;
     }
   }
   // CUSTOM FILTER UI SELECT END
+}
+
+.result-sportfilter{
+  .sportfilter-select{
+    width: 250px;
+  }
 }
 // RESULTS PAGE END
 

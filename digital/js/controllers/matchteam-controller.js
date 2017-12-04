@@ -319,7 +319,11 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                                         });
                                         break;
                                     case "Football":
-                                        $state.go("scorefootball");
+                                        $state.go("scorefootball",  {
+                                            drawFormat: $stateParams.drawFormat,
+                                            sport: $stateParams.sport,
+                                            id: $scope.matchData.matchId
+                                        });
                                         break;
                                     case "Basketball":
                                     case 'Hockey':
@@ -348,7 +352,11 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                                         });
                                         break;
                                     case "Football":
-                                        $state.go("scorefootball");
+                                        $state.go("scorefootball", {
+                                            drawFormat: $stateParams.drawFormat,
+                                            sport: $stateParams.sport,
+                                            id: $scope.matchData.matchId
+                                        });
                                         break;
                                     case "Basketball":
                                     case 'Hockey':
