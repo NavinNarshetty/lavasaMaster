@@ -9,7 +9,7 @@
                             <h3 class="sport-type-head d-fjalla-one">SFA Championship 2017-18</h3>
                             <!-- <p hidden>To view Draws & Schedules of your match kindly select the relevent categories to get results.
                             </p> -->
-                            <p ng-if="sfaCity == 'Mumbai'">Draws and Schedules published below.</p>
+                            <h5 ng-if="sfaCity == 'Mumbai'" class="pointer" ui-sref='livescore' style="color:#0a1a72;font-weight:bold;font-size:16px;text-decoration:underline;">Click Here for Live Score.</h5>
                             <!-- <a ng-if="sfaCity == 'Hyderabad'" ng-click="downloadPdf('badminton')">
                                 <p class="champions-bold">Click here to download <span class="text-uppercase">Badminton Draws & Schedule</span>.</p>
                             </a>
@@ -148,7 +148,7 @@
                 <div class="row">
                     <div class="col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-10 col-xs-12">
 
-                        <div class="championship-scheduletitle">
+                        <div class="championship-scheduletitle" hidden>
                             <h2 class="text-center text-capitalize d-fjalla-one m-clear" hidden>Championship schedule</h2>
                         </div>
                         <div class="row">

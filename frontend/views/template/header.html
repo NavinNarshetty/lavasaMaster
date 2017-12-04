@@ -45,7 +45,7 @@
                                 <!-- PROFILE HEADER END -->
                                 <!-- PROFILE DROPDOWN -->
                                 <ul class="dropdown-menu sf-absulate blue-menus header-profile">
-                                    <li class="ver-top">
+                                    <li class="ver-top text-center">
                                         <div class="profile-sub-header text-uppercase text-center">
                                             <label for="">School</label>
                                         </div>
@@ -73,9 +73,17 @@
                                             <span>2017</span>
                                             <span>TEAMS</span>
                                         </a>
-                                        <a href="{{linkForAll}}students" target="_blank" ng-if="selectedCity !== 'hyderabad'">
-                                            <p class="m-clear" style="font-size:12px;">VIEW PROFILE FROM</p>
-                                            <p class="m-clear" style="font-size:12px;">PREVIOUS CHAMPIONSHIP</p>
+                                        <div class="profile-sub-header text-uppercase text-center" ng-if="selectedCity !== 'hyderabad'">
+                                            <label for="">PREVIOUS PROFILE</label>
+                                        </div>
+                                        <a href="{{linkForAll}}students" ng-if="selectedCity !== 'hyderabad'">
+                                            <span>ATHLETES</span>
+                                        </a>
+                                        <a href="{{linkForAll}}school" ng-if="selectedCity !== 'hyderabad'">
+                                            <span>SCHOOLS</span>
+                                        </a>
+                                        <a href="{{linkForAll}}team" ng-if="selectedCity !== 'hyderabad'">
+                                            <span>TEAMS</span>
                                         </a>
                                     </li>
                                     <li ng-if="selectedCity !== 'hyderabad'" class="hide">
@@ -252,16 +260,19 @@
                                 </div>
                                 <a ng-if="selectedCity!=='hyderabad'" class="dropdown-toggle mb25 " data-toggle="dropdown" ng-mouseenter="optionss=!optionss"
                                     ng-model="checkboxs ">
-                                    <span ng-if="selectedCity==='Hyderabad'">LIVE</span> SFA {{selectedCity | capitalize}} {{eventYear}}
+                                    <span ng-if="selectedCity!=='hyderabad'">LIVE</span> SFA {{selectedCity | capitalize}} {{eventYear}}
                                 </a>
                                 <ul class="dropdown-menu cl-pr forSm typePlace ">
                                     <ul class="display-inline typeList ">
                                         <li>
                                             <a>SCHOOL CHAMPIONSHIP</a>
                                         </li>
-                                        <!-- <li>
-                                            <a href="{{linkForAll}}/liveupdates " style="color:#5aeba4 !important" target="_blank ">LIVE UPDATES</a>
-                                        </li> -->
+                                        <li ng-if="selectedCity!=='hyderabad'">
+                                            <a href="{{linkForAll}}liveupdates " style="color:#5aeba4 !important" target="_blank ">LIVE UPDATES</a>
+                                        </li>
+                                        <li ng-if="selectedCity !=='hyderabad'">
+                                            <a href="{{registerSchool}}/livescore" style="color:#5aeba4 !important">LIVE SCORES</a>
+                                        </li>
                                         <li ng-if="!registerSchool ">
                                             <a ui-sref="championship "> ABOUT CHAMPIONSHIP</a>
                                         </li>
@@ -380,6 +391,18 @@
                                     </li>
                                     <li>
                                         <a href="{{registerSchool}}/team " target="_blank ">2017 TEAMS</a>
+                                    </li>
+                                    <li>
+                                        <label>PREVIOUS PROFILE</label>
+                                    </li>
+                                    <li>
+                                        <a href="{{linkForAll}}students">ATHLETES</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{linkForAll}}school">SCHOOLS</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{linkForAll}}team">TEAMS</a>
                                     </li>
                                     <li class="hide">
                                         <label for="">COLLEGE</label>
@@ -528,7 +551,7 @@
                     <div class="sfa-mum " ng-if="selectedCity!=='hyderabad'">
                         <button type="button " name="button " class="btn btn-sfatop " ng-mouseenter="optionss=!optionss
                                   " ng-model="checkboxs ">
-                            <span ng-if="selectedCity==='Hyderabad'">LIVE</span> SFA {{selectedCity | capitalize}} {{eventYear}}</button>
+                            <span ng-if="selectedCity !=='Hyderabad'">LIVE</span> <span class="hide">SFA</span>  {{selectedCity | capitalize}} {{eventYear}}</button>
                         <div class="on-mouse-hover hidden-xs hidden-sm specialCase specialCase2" ng-mouseenter="optionss=true " ng-mouseleave="optionss=false "
                             ng-show="optionss || checkboxs ">
                             <!-- <div class="on-mouse-hover "> -->
@@ -539,9 +562,12 @@
                                     <li>
                                         <p>SCHOOL CHAMPIONSHIP</p>
                                     </li>
-                                    <!-- <li>
-                                        <a href="{{linkForAll}}/liveupdates " style="color:#5aeba4 !important" target="_blank ">LIVE UPDATES</a>
-                                    </li> -->
+                                    <li ng-if="selectedCity !=='hyderabad'">
+                                        <a href="{{linkForAll}}liveupdates " style="color:#5aeba4 !important" target="_blank ">LIVE UPDATES</a>
+                                    </li>
+                                    <li ng-if="selectedCity !=='hyderabad'">
+                                        <a href="{{registerSchool}}/livescore" style="color:#5aeba4 !important">LIVE SCORES</a>
+                                    </li>
                                     <li ng-if="!registerSchool ">
                                         <a ui-sref="championship "> ABOUT CHAMPIONSHIP</a>
                                     </li>
@@ -630,7 +656,7 @@
                         <a class="dropdown-toggle mb25 " data-toggle="dropdown">
                             <div class="sfa-mum sfa-mum-m ">
                                 <button type="button" name="button " class="btn btn-sfatop margin0 " ng-mouseenter="optionss=!optionss">
-                                    <span ng-if="selectedCity==='Hyderabad'">LIVE</span> SFA {{selectedCity | capitalize}} {{eventYear}}</button>
+                                    <span ng-if="selectedCity !=='hyderabad'">LIVE</span> <span class="hide">SFA</span> {{selectedCity | capitalize}} {{eventYear}}</button>
                             </div>
                         </a>
                         <ul class="dropdown-menu text-center cl-pr placingDrop typePlacing ">
@@ -638,9 +664,12 @@
                                 <li>
                                     <a>SCHOOL CHAMPIONSHIP</a>
                                 </li>
-                                <!-- <li class="live-update-color">
-                                    <a href="{{linkForAll}}/liveupdates " style="color:#5aeba4 !important" target="_blank ">LIVE UPDATES</a>
-                                </li> -->
+                                <li class="live-update-color" ng-if="selectedCity !=='hyderabad'">
+                                    <a href="{{linkForAll}}liveupdates " style="color:#5aeba4 !important" target="_blank ">LIVE UPDATES</a>
+                                </li>
+                                <li ng-if="selectedCity !=='hyderabad'">
+                                    <a href="{{registerSchool}}/livescore" style="color:#5aeba4 !important">LIVE SCORE</a>
+                                </li>
                                 <li ng-if="!registerSchool ">
                                     <a ui-sref="championship "> ABOUT CHAMPIONSHIP</a>
                                 </li>

@@ -118,8 +118,14 @@
                 </ul>
                 <ul class="padding0" ng-if="champions.name == 'school championship'">
                   <li ng-repeat="detail in champions.champDetail track by $index">
-                    <a href="{{registerSchool}}/{{detail.link}}" target="_new">
+                    <a href="{{registerSchool}}/{{detail.link}}" target="_new" ng-if="!detail.live && !detail.score">
                       {{detail.name}}
+                    </a>
+                    <a style="color:#27b465" href="{{linkForAll}}liveupdates" target="_new" ng-if="detail.live">
+                        {{detail.name}}
+                    </a>
+                    <a style="color:#27b465" href="{{registerSchool}}/{{detail.link}}" target="_new" ng-if="detail.score">
+                        {{detail.name}}
                     </a>
                   </li>
                 </ul>
@@ -169,11 +175,16 @@
                       <span>{{detail.name}}</span>
                     </a>
                   </li>
-                  <li style="font-size:12px;">
-                    <a href="{{linkForAll}}students" target="_new">
-                      <span>view profile from previous championship</span>
-                    </a>
+                  <li>
+                    <span class="footer-header-color">Previous Profile</span>
                   </li>
+                  <li><a href="{{linkForAll}}students">ATHLETES</a></li>
+                  <li><a href="{{linkForAll}}school">SCHOOLS</a></li>
+                  <li><a href="{{linkForAll}}team">TEAMS</a></li>
+
+
+
+              </li>
 
               </li>
               <li ng-repeat="profileC in profileCollege track by $index" ng-if="selectedCity !=='hyderabad'" hidden>

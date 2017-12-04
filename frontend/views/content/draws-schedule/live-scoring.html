@@ -1,0 +1,275 @@
+<div class="chamionshipschedule-page">
+  <!-- VIEW DRAW FORM CARD -->
+  <section>
+    <div class="championsip-draws">
+      <div class="container">
+        <div class="row championshipdraw-cardrow">
+          <div class="col-md-offset-3 col-md-6">
+            <div class="championship-drawstitle">
+              <h3 class="sport-type-head d-fjalla-one">SFA Championship 2017-18</h3>
+              <!-- <p hidden>To view Draws & Schedules of your match kindly select the relevent categories to get results.
+                            </p> -->
+              <p ng-if="sfaCity == 'Mumbai'" hidden>Draws and Schedules published below.</p>
+              <!-- <a ng-if="sfaCity == 'Hyderabad'" ng-click="downloadPdf('badminton')">
+                                <p class="champions-bold">Click here to download <span class="text-uppercase">Badminton Draws & Schedule</span>.</p>
+                            </a>
+                            <a ng-if="sfaCity == 'Hyderabad'" ng-click="downloadPdf('kabaddi')">
+                                <p class="champions-bold">Click here to download <span class="text-uppercase">Kabaddi Draws & Schedule</span>.</p>
+                            </a>
+                            <p ng-if="sfaCity == 'Hyderabad'">Draws & Schedule for other sports will be available shortly.</p> -->
+            </div>
+            <div class="championshipdraw-card ">
+              <form name=championshipDrawsForm class="championshipdraw-card-form">
+                <!-- SPORT -->
+                <div class="form-group">
+                  <div class="display-inline championshipdraw-card-lable">
+                    <label for="">Sport</label>
+                  </div>
+
+                  <div class="display-inline championshipdraw-card-dropdown">
+                    <ui-select name="selectsporttype" ng-model="formData.sportId" theme="bootstrap" ng-change="sportName($select.selected.name,formData.sportId)"
+                      required>
+                      <ui-select-match placeholder="Select Sport">{{$select.selected.name}}</ui-select-match>
+                      <ui-select-choices repeat="sport._id as sport in sportList | filter: $select.search">
+                        <div>
+                          <p>{{sport.name}}</p>
+                        </div>
+                      </ui-select-choices>
+                    </ui-select>
+                    <span class="label label-danger pull-right" ng-if="championshipDrawsForm.selectsporttype.$invalid && championshipDrawsForm.selectsporttype.$touched">Please Enter Sport</span>
+                  </div>
+                </div>
+                <!-- SPORT END -->
+                <!-- EVENT start -->
+                <div class="form-group">
+                  <div class="display-inline championshipdraw-card-lable">
+                    <label for="">Event</label>
+                  </div>
+
+                  <div class="display-inline championshipdraw-card-dropdown">
+                    <ui-select name="eventBySport" ng-model="formData.sportslist" theme="bootstrap" ng-change="sportName($select.selected.name);getAgeOrWeightsByEvent($select.selected)"
+                      required>
+
+                      <ui-select-match placeholder="Select Event">{{$select.selected.name}}</ui-select-match>
+                      <ui-select-choices repeat="sport._id as sport in getAllBySport | filter: $select.search">
+                        <div>
+                          <p>{{sport.name}}</p>
+                        </div>
+                      </ui-select-choices>
+                    </ui-select>
+                    <!-- <div class="error-msg" ng-if="championshipDrawsForm.eventBySport.$invalid && championshipDrawsForm.eventBySport.$touched">Please Enter Event Type*</div> -->
+                    <span class="label label-danger pull-right" ng-if="championshipDrawsForm.eventBySport.$invalid && championshipDrawsForm.eventBySport.$touched">Please Enter Event</span>
+                  </div>
+                </div>
+                <!-- EVENT end -->
+                <!-- GENDER -->
+                <div class="form-group">
+                  <div class="display-inline championshipdraw-card-lable">
+                    <label for="">Gender</label>
+                  </div>
+                  <div class="display-inline championshipdraw-card-dropdown">
+                    <!-- <ui-select ng-model="item.selected" theme="bootstrap"> -->
+                    <ui-select name="gender" ng-model="formData.gender" theme="bootstrap" required>
+                      <ui-select-match placeholder="Select Gender">{{$select.selected|firstcapitalize}}</ui-select-match>
+                      <ui-select-choices repeat="item in genderList | filter: $select.search">
+                        <div>
+                          <p>{{item |firstcapitalize}}</p>
+                        </div>
+                      </ui-select-choices>
+                    </ui-select>
+                    <span class="label label-danger pull-right" ng-if="championshipDrawsForm.gender.$invalid && championshipDrawsForm.gender.$touched">Please Enter Gender</span>
+                  </div>
+                </div>
+                <!-- GENDER END -->
+                <!-- AGE GROUP -->
+                <div class="form-group" ng-if="ageGroups.length>0">
+                  <div class="display-inline championshipdraw-card-lable">
+                    <label for="">Age Group</label>
+                  </div>
+
+                  <div class="display-inline championshipdraw-card-dropdown">
+                    <ui-select name="agegroup" ng-model="formData.ageGroup" theme="bootstrap" required>
+                      <ui-select-match placeholder="Select Age Group">{{$select.selected.ageGroupName}}</ui-select-match>
+                      <ui-select-choices repeat="age.ageGroupId  as age in ageGroups | filter: $select.search">
+                        <div>
+                          <p>{{age.ageGroupName}}</p>
+
+                        </div>
+
+                      </ui-select-choices>
+                    </ui-select>
+                    <span class="label label-danger pull-right" ng-if="championshipDrawsForm.agegroup.$invalid && championshipDrawsForm.agegroup.$touched">Please Enter Age</span>
+                  </div>
+
+                </div>
+                <!-- AGE GROUP END -->
+                <!-- EVENT -->
+                <div class="form-group" ng-if="showWeight && allWeights.length>0">
+                  <div class="display-inline championshipdraw-card-lable">
+                    <label for="">Weight</label>
+                  </div>
+                  <div class="display-inline championshipdraw-card-dropdown">
+                    <ui-select name="weight" ng-model="formData.weight" theme="bootstrap" required>
+                      <ui-select-match placeholder="Select Weight">{{$select.selected.weightName}}</ui-select-match>
+                      <ui-select-choices repeat="weight.weightId as weight in allWeights | filter: $select.search">
+                        <div>
+                          <p>{{weight.weightName}}</p>
+                        </div>
+                      </ui-select-choices>
+                    </ui-select>
+                    <span class="label label-danger pull-right" ng-if="championshipDrawsForm.weight.$invalid && championshipDrawsForm.weight.$touched">Please Enter Age</span>
+                  </div>
+
+                </div>
+                <!-- EVENT -->
+                <!-- VIEW DRAW BUTTON -->
+
+                <!---->
+                <div class="championshipdraw-card-lable display-inline">
+
+                </div>
+                <div class=" championshipdraw-card-dropdown display-inline">
+
+                  <button class="btn championshipdraw-card-btn" ng-click="viewDraw(formData);" ng-disabled="championshipDrawsForm.$invalid">View Draw</button>
+                </div>
+                <!-- VIEW DRAW BUTTON -->
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- VIEW DRAW FORM CARD END -->
+  <!-- CHAMPIONSHIP SCHEDULE -->
+  <section hidden>
+    <div class="championship-schedule championship-schedule-line mb-50">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-10 col-xs-12">
+
+            <div class="championship-scheduletitle">
+              <h2 class="text-center text-capitalize d-fjalla-one m-clear" hidden>Championship schedule</h2>
+            </div>
+            <div class="row">
+              <!-- TABLE -->
+              <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
+                <div class="championshipschedule-tableholder ">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th colspan="3" class="hidden-xs ">
+                          <h2 class="m-clear d-fjalla-one">Championship Schedule</h2>
+                        </th>
+                        <th colspan="2" class="visible-xs d-fjalla-one">Championship Schedule </th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="schedule in scheduleData | orderBy:'sport.name' track by $index">
+                        <td class="champions-table-td">
+                          <div class="schedulesport-name">
+                            {{schedule.sport.name}}
+                          </div>
+                          <div class="visible-xs">
+                            <div class="schedulesport-dates" ng-if="schedule.scheduleDate">
+                              <span>{{schedule.scheduleDate}}</span>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="champions-table-td hidden-xs">
+                          <div class="table2-championstable">
+                            <div class="schedulesport-dates" ng-if="schedule.scheduleDate">
+                              <span>{{schedule.scheduleDate}}</span>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="champions-table-td">
+                          <div class="champions-upload-time text-left" ng-if="schedule.uploadTime">
+                            <span>{{schedule.uploadTime}}</span>
+                          </div>
+                          <div class="champions-upload-time text-left" ng-if="schedule.orderPlayText">
+                            <span>{{schedule.orderPlayText}}</span>
+                          </div>
+                          <div class="championsschdule-pdfbutton text-left" ng-repeat="pdf in schedule.pdfDetail track by $index">
+                            <a href="{{pdf.trustedURL}}" target="_new" ng-if="pdf.pdfType !=='resultlink'">
+                                                                    <span ng-class="{'champions-draw-orange':pdf.pdfName}">
+                                                                                    {{pdf.textHeader}}
+                                                                    </span>
+                                                                </a>
+                            <a href="{{pdf.resultLink}}" target="_new" ng-if="pdf.pdfType =='resultlink'" ng-class="{'champions-draw-orange':pdf.pdfName}">
+                                                                    {{pdf.textHeader}}
+                                                        </a>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- TABLE END -->
+              <!-- TABLE 2 -->
+              <div class="col-md-5 col-sm-6 col-xs-12" hidden>
+                <div class="championshipschedule-tableholder tale-responsive">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Sport </th>
+                        <th>Dates</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="schedule in scheduleData2 track by $index">
+                        <td ng-class="{'champions-height-odd':!schedule.sport}" class="champions-table-td">
+                          <div class="schedulesport-name">
+                            {{schedule.sport.name}}
+                          </div>
+                        </td>
+                        <td ng-class="{'champions-height-odd':!schedule.sport}" class="champions-table-td">
+                          <div class="table2-championstable">
+                            <div class="schedulesport-dates">
+                              <span>{{schedule.scheduleDate}}</span>
+                            </div>
+                            <div class="championsschdule-pdfbutton" ng-repeat="pdf in schedule.pdfDetail track by $index">
+                              <a href="{{pdf.trustedURL}}" target="_new" ng-if="pdf.pdfType !=='resultlink'">
+                                                                        <span ng-class="{'champions-draw-orange':pdf.pdfType =='schedulePdf' || pdf.pdfType =='order','champions-result-green':pdf.pdfType == 'resultPdf'}" ng-if="schedule.pdfDetail">
+                                                                        {{pdf.textHeader}}
+                                                                        </span>
+                                                            </a>
+                              <a href="{{pdf.resultLink}}" target="_new" ng-if="pdf.pdfType =='resultlink'" class="champions-result-green">
+                                                                {{pdf.textHeader}}
+                                                            </a>
+                            </div>
+                            <div class="champions-upload-time" ng-if="schedule.uploadTime">
+                              <span>{{schedule.uploadTime}}</span>
+                            </div>
+                          </div>
+
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- TABLE 2 END -->
+            </div>
+            <div class="row">
+              <div class="col-md-offset-1 col-md-11 col-sm-12 col-xs-12">
+                <div class="">
+                  <p class="m-clear">
+                    *SFA shall keep you informed in-case there is any change of dates.
+                  </p>
+                  <!-- <p class="m-clear" ng-if="isCollege == false &&sfaCity == 'Mumbai'">*Football qualifiers will be held in November. Dates will be announced soon.</p> -->
+                  <!-- <p class="m-clear">*The final draws and schedules for all sports will be published on the 8th November 2017.</p> -->
+                  <!-- <p ng-if="sfaCity == 'Mumbai'">*The final draws and schedules publishing date for all sports will be announced soon.</p> -->
+                  <p ng-if="sfaCity == 'Hyderabad'">*The final draws and schedules for all sports will be published on the 8th November 2017.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- CHAMPIONSHIP SCHEDULE END -->
+</div>

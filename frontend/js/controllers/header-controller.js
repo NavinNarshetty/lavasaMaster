@@ -310,7 +310,7 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
     } else if (window.location.host == "ahmedabadschool.sfanow.in" || window.location.host == "ahmedabadcollege.sfanow.in") {
         $scope.selectedCity = 'ahmedabad';
     } else {
-        $scope.selectedCity = 'hyderabad';
+        $scope.selectedCity = 'mumbai';
     }
 
     if (window.location.origin != globalLinkSchoolRegister) {
@@ -561,6 +561,14 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
         champDetail: [{
             name: 'about championship',
             link: 'championship'
+        }, {
+            name: 'live updates',
+            link: 'liveupdates',
+            live: 'true'
+        }, {
+            name: 'live scores',
+            link: 'livescore',
+            score: 'live'
         }, {
             name: 'register',
             link: 'register'

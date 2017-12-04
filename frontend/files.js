@@ -93,6 +93,7 @@ module.exports = [
   'frontend/js/controllers/draws-schedule/qf-knockoutController.js',
   'frontend/js/controllers/draws-schedule/time-trialController.js',
   'frontend/js/controllers/draws-schedule/championshipschedule.js',
+  'frontend/js/controllers/draws-schedule/livescoring.js',
   'frontend/js/controllers/draws-schedule/knockout.js',
   'frontend/js/controllers/draws-schedule/swissleague.js',
   'frontend/js/controllers/profile/school.js',

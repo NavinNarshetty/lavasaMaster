@@ -412,6 +412,12 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'ChampionshipScheduleCtrl'
         })
+        // MUMBAI LIVE SCORE
+        .state('livescore', {
+            url: "/livescore",
+            templateUrl: tempateURL,
+            controller: 'LiveScoringCtrl'
+        })
         .state('heats', {
             url: "/heats/:id/:sportName",
             templateUrl: tempateURL,
