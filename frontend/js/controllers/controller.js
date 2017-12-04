@@ -190,7 +190,7 @@ myApp.controller('ChampionsCtrl', function ($scope, TemplateService, NavigationS
 
 });
 
-myApp.controller('ChampionshipCtrl', function ($scope, TemplateService, NavigationService, $timeout, configService) {
+myApp.controller('ChampionshipCtrl', function ($scope, TemplateService, NavigationService, $timeout, configService, $uibModal) {
     //Used to name the .html file
     $scope.template = TemplateService.getHTML("content/championship.html");
     TemplateService.title = "Championship"; //This is the Title of the Website
@@ -205,4 +205,15 @@ myApp.controller('ChampionshipCtrl', function ($scope, TemplateService, Navigati
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;
     });
+
+    $scope.sfaFund = function () {
+        $scope.sfafundModal = $uibModal.open({
+            animation: true,
+            scope: $scope,
+            backdrop: 'static',
+            keyboard: false,
+            size: 'lg',
+            templateUrl: "views/modal/sfafund.html"
+        });
+    }
 });

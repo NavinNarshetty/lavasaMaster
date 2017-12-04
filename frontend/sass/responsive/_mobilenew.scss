@@ -180,7 +180,21 @@
   .hyderabad-sporticonholder .sport-icon-championship li {
     padding: 1px;
     margin: 0px 0px;
+  } // NEW SFA FUND MODAL
+  .sfa-fund-content {
+    font-size: 12px;
   }
+  .sfa-fund-header {
+    h4 {
+      font-size: 16px;
+    }
+  }
+  .mobile-order {
+    padding: 10px;
+  }
+  .sfa-fund-modal .sfa-fundpd40 {
+    padding-left: 10px;
+  } // NEW SFA FUND MODAL END
 }
 
 @media screen and (max-width: 400px) {

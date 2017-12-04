@@ -1495,7 +1495,7 @@ img.fancybox-image {
             .bottom {
                 // opacity: 1; //                     width:100px !important;
                 display: block;
-                margin:0 auto;
+                margin: 0 auto;
             }
             figcaption {
                 color: $brand-primary;
@@ -7959,3 +7959,37 @@ h1.forgot-space {
 }
 
 // FOOTER CSS END
+// NEW MODAL ON CHAMPIONSHIP
+.sfa-fund {
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.sfa-fund-modal {
+    .sfa-fund-header {
+        margin-top: 30px;
+    }
+    .sfa-fundpd40 {
+        padding-left: 25px;
+    }
+    .sfa-fund-ul {
+        padding: 10px;
+        padding-top: 0px;
+        list-style-type: lower-alpha;
+        li {
+            padding-left: 10px;
+            margin: 5px 0px;
+        }
+    }
+    .sfa-fund-close {
+        cursor: pointer;
+    }
+    .sfafund-sake {
+        margin-top: 30px;
+        margin-bottom: 0px;
+    }
+}
+
+// NEW MODAL ON CHAMPIONSHIP END
