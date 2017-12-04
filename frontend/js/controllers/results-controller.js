@@ -168,6 +168,7 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
   $scope.sportFilter = {
     name: "Archery"
   };
+  $scope.sportName = "Archery";
   // MEDAL FILTER OPTIONS
   $scope.medalFilter = {
     name: $scope.sportFilter.name,
@@ -404,12 +405,14 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
     NavigationService.getSchoolBySport($scope.sportFilter, function (data) {
       var data = data.data;
       if (data.value == true) {
+        $scope.sportName = $scope.sportFilter.name;
         $scope.sportTable = data.data.table;
         $scope.risingAthletes = data.data.risingAthletes;
-        if(data.data.medalWinners){
-          $scope.medalWinners = data.data.medalWinners;
-          $scope.medalWinners = _.groupBy($scope.medalWinners, 'name');
-        }
+        // if(data.data.medalWinners){
+        //   $scope.medalWinners = data.data.medalWinners;
+        //   $scope.medalWinners = _.groupBy($scope.medalWinners, 'name');
+        // }
+        $scope.medalWinners = {};
         $scope.sportTable.tableLimit = 5;
         $scope.sportTable.showTable = true;
         _.each($scope.risingAthletes, function (n) {
