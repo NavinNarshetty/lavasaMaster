@@ -592,8 +592,23 @@ var controller = {
                             Match.generateExcelQualifying(req.body, res);
                         } else if (req.body.resultType == "qualifying-knockout" && req.body.excelType == "knockout") {
                             Match.generateExcelQualifyingKnockout(req.body, res);
-                        } else if (req.body.resultType == "league-cum-knockout" && req.body.playerType == "team") {
+                        } else if (req.body.resultType == "league-cum-knockout" && req.body.playerType == "team" && req.body.playerSpecific == "no") {
                             Match.generateLeagueKnockout(req.body, res);
+                        } else if (req.body.resultType == "league-cum-knockout" && req.body.playerType == "team" && req.body.playerSpecific == "yes") {
+                            var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
+                            Match.find({
+                                sport: data.sport
+                            }).lean().deepPopulate(deepSearch).exec(function (err, match) {
+                                if (err) {
+                                    res.callback(err, null);
+                                } else {
+                                    if (_.isEmpty(match)) {
+                                        res.callback(null, []);
+                                    } else {
+                                        Match.generateExcelKnockoutPlayerSpecific(req.body, match, res);
+                                    }
+                                }
+                            });
                         } else if (req.body.resultType == "league-cum-knockout" && req.body.playerType == "individual") {
                             Match.generateLeagueKnockoutFencing(req.body, res);
                         } else if (req.body.resultType == "swiss-league") {

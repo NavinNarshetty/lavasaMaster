@@ -3841,8 +3841,12 @@ var model = {
                         Match.generateExcelKnockoutIndividual(match, function (err, singleData) {
                             Config.generateExcel("KnockoutIndividual", singleData, res);
                         });
-                    } else if (data.playerType == "team") {
+                    } else if (data.playerType == "team" && data.playerSpecific == "no") {
                         Match.generateExcelKnockoutTeam(match, function (err, singleData) {
+                            Config.generateExcel("KnockoutIndividual", singleData, res);
+                        });
+                    } else if (data.playerType == "team" && data.playerSpecific == "yes") {
+                        Match.generateExcelKnockoutPlayerSpecific(data, match, function (err, singleData) {
                             Config.generateExcel("KnockoutIndividual", singleData, res);
                         });
                     } else {
@@ -4885,9 +4889,52 @@ var model = {
 
     },
 
-    generateExcelKnockoutPlayerSpecific: function (match, callback) {
-        async.concatSeries(match, function (mainData, callback) {
+    generateExcelKnockoutPlayerSpecific: function (data, match, callback) {
+        var count = 0;
+        var excelData = [];
+        async.each(match, function (mainData, callback) {
                 var obj = {};
+                var temp = {};
+                if (count == 0) {
+                    if (mainData.resultBasketball) {
+
+                        async.waterfall([
+                                function (callback) {
+                                    _.each(mainData.resultBasketball.teams[0].players, function (n) {
+                                        temp.matchId = mainData.matchId;
+                                        temp.team1 = mainData.resultBasketball.teams[0].teamId;
+                                    });
+                                },
+
+                                function (callback) {
+                                    _.each(mainData.resultBasketball.teams[1].players, function (n) {
+
+                                    });
+                                }
+                            ],
+                            function (err, results) {
+                                if (err || _.isEmpty(results)) {
+                                    callback(null, results);
+                                } else {
+                                    callback(null, results);
+                                }
+                            });
+
+                    } else if (mainData.resultVolleyball) {
+
+                    } else if (mainData.resultFootball) {
+
+                    } else if (mainData.resultHandball) {
+
+                    } else if (mainData.resultKabaddi) {
+
+                    } else if (mainData.resultHockey) {
+
+                    }
+                    count++;
+                } else {
+                    count--;
+                }
                 callback(null, obj);
 
             },
@@ -12103,11 +12150,11 @@ var model = {
                                         if (data.found.opponentsTeam[0].equals(data.found.resultFootball.winner.player)) {
                                             lostPlayer.push(data.found.opponentsTeam[1]);
                                             winPlayer.push(data.found.resultFootball.winner.player);
-                                            // console.log("player", winPlayer);
+                                            console.log("player", winPlayer);
                                         } else {
                                             lostPlayer.push(data.found.opponentsTeam[0]);
                                             winPlayer.push(data.found.resultFootball.winner.player);
-                                            // console.log("player", winPlayer);
+                                            console.log("player", winPlayer);
                                         }
                                         updateObj = {
                                             $set: {
@@ -12123,11 +12170,11 @@ var model = {
                                         if (data.found.opponentsTeam[0].equals(data.found.resultBasketball.winner.player)) {
                                             lostPlayer.push(data.found.opponentsTeam[1]);
                                             winPlayer.push(data.found.resultBasketball.winner.player);
-                                            // console.log("player", winPlayer);
+                                            console.log("player", winPlayer);
                                         } else {
                                             lostPlayer.push(data.found.opponentsTeam[0]);
                                             winPlayer.push(data.found.resultBasketball.winner.player);
-                                            // console.log("player", winPlayer);
+                                            console.log("player", winPlayer);
                                         }
                                         updateObj = {
                                             $set: {
@@ -12143,11 +12190,11 @@ var model = {
                                         if (data.found.opponentsTeam[0].equals(data.found.resultHandball.winner.player)) {
                                             lostPlayer.push(data.found.opponentsTeam[1]);
                                             winPlayer.push(data.found.resultHandball.winner.player);
-                                            // console.log("player", winPlayer);
+                                            console.log("player", winPlayer);
                                         } else {
                                             lostPlayer.push(data.found.opponentsTeam[0]);
                                             winPlayer.push(data.found.resultHandball.winner.player);
-                                            // console.log("player", winPlayer);
+                                            console.log("player", winPlayer);
                                         }
                                         updateObj = {
                                             $set: {
@@ -12163,11 +12210,11 @@ var model = {
                                         if (data.found.opponentsTeam[0].equals(data.found.resultHockey.winner.player)) {
                                             lostPlayer.push(data.found.opponentsTeam[1]);
                                             winPlayer.push(data.found.resultHockey.winner.player);
-                                            // console.log("player", winPlayer);
+                                            console.log("player", winPlayer);
                                         } else {
                                             lostPlayer.push(data.found.opponentsTeam[0]);
                                             winPlayer.push(data.found.resultHockey.winner.player);
-                                            // console.log("player", winPlayer);
+                                            console.log("player", winPlayer);
                                         }
                                         updateObj = {
                                             $set: {
@@ -12183,11 +12230,11 @@ var model = {
                                         if (data.found.opponentsTeam[0].equals(data.found.resultKabaddi.winner.player)) {
                                             lostPlayer.push(data.found.opponentsTeam[1]);
                                             winPlayer.push(data.found.resultKabaddi.winner.player);
-                                            // console.log("player", winPlayer);
+                                            console.log("player", winPlayer);
                                         } else {
                                             lostPlayer.push(data.found.opponentsTeam[0]);
                                             winPlayer.push(data.found.resultKabaddi.winner.player);
-                                            // console.log("player", winPlayer);
+                                            console.log("player", winPlayer);
                                         }
                                         updateObj = {
                                             $set: {
@@ -12203,11 +12250,11 @@ var model = {
                                         if (data.found.opponentsTeam[0].equals(data.found.resultVolleyball.winner.player)) {
                                             lostPlayer.push(data.found.opponentsTeam[1]);
                                             winPlayer.push(data.found.resultVolleyball.winner.player);
-                                            // console.log("player", winPlayer);
+                                            console.log("player", winPlayer);
                                         } else {
                                             lostPlayer.push(data.found.opponentsTeam[0]);
                                             winPlayer.push(data.found.resultVolleyball.winner.player);
-                                            // console.log("player", winPlayer);
+                                            console.log("player", winPlayer);
                                         }
                                         updateObj = {
                                             $set: {
@@ -12223,11 +12270,11 @@ var model = {
                                         if (data.found.opponentsTeam[0].equals(data.found.resultWaterPolo.winner.player)) {
                                             lostPlayer.push(data.found.opponentsTeam[1]);
                                             winPlayer.push(data.found.resultWaterPolo.winner.player);
-                                            // console.log("player", winPlayer);
+                                            console.log("player", winPlayer);
                                         } else {
                                             lostPlayer.push(data.found.opponentsTeam[0]);
                                             winPlayer.push(data.found.resultWaterPolo.winner.player);
-                                            // console.log("player", winPlayer);
+                                            console.log("player", winPlayer);
                                         }
                                         updateObj = {
                                             $set: {
@@ -12243,11 +12290,11 @@ var model = {
                                         if (data.found.opponentsTeam[0].equals(data.found.resultsCombat.winner.player)) {
                                             lostPlayer.push(data.found.opponentsTeam[1]);
                                             winPlayer.push(data.found.resultsCombat.winner.player);
-                                            // console.log("player", winPlayer);
+                                            console.log("player", winPlayer);
                                         } else {
                                             lostPlayer.push(data.found.opponentsTeam[0]);
                                             winPlayer.push(data.found.resultsCombat.winner.player);
-                                            // console.log("player", winPlayer);
+                                            console.log("player", winPlayer);
                                         }
                                         updateObj = {
                                             $set: {
@@ -12272,11 +12319,11 @@ var model = {
                                             if (data.found.opponentsTeam[0].equals(data.found.resultFootball.winner.player)) {
                                                 lostPlayer.push(data.found.opponentsTeam[1]);
                                                 winPlayer.push(data.found.resultFootball.winner.player);
-                                                // console.log("player", winPlayer);
+                                                console.log("player", winPlayer);
                                             } else {
                                                 lostPlayer.push(data.found.opponentsTeam[0]);
                                                 winPlayer.push(data.found.resultFootball.winner.player);
-                                                // console.log("player", winPlayer);
+                                                console.log("player", winPlayer);
                                             }
                                             updateObj = {
                                                 $set: {
@@ -12292,11 +12339,11 @@ var model = {
                                             if (data.found.opponentsTeam[0].equals(data.found.resultBasketball.winner.player)) {
                                                 lostPlayer.push(data.found.opponentsTeam[1]);
                                                 winPlayer.push(data.found.resultBasketball.winner.player);
-                                                // console.log("player", winPlayer);
+                                                console.log("player", winPlayer);
                                             } else {
                                                 lostPlayer.push(data.found.opponentsTeam[0]);
                                                 winPlayer.push(data.found.resultBasketball.winner.player);
-                                                // console.log("player", winPlayer);
+                                                console.log("player", winPlayer);
                                             }
                                             updateObj = {
                                                 $set: {
@@ -12312,11 +12359,11 @@ var model = {
                                             if (data.found.opponentsTeam[0].equals(data.found.resultHandball.winner.player)) {
                                                 lostPlayer.push(data.found.opponentsTeam[1]);
                                                 winPlayer.push(data.found.resultHandball.winner.player);
-                                                // console.log("player", winPlayer);
+                                                console.log("player", winPlayer);
                                             } else {
                                                 lostPlayer.push(data.found.opponentsTeam[0]);
                                                 winPlayer.push(data.found.resultHandball.winner.player);
-                                                // console.log("player", winPlayer);
+                                                console.log("player", winPlayer);
                                             }
                                             updateObj = {
                                                 $set: {
@@ -12332,11 +12379,11 @@ var model = {
                                             if (data.found.opponentsTeam[0].equals(data.found.resultHockey.winner.player)) {
                                                 lostPlayer.push(data.found.opponentsTeam[1]);
                                                 winPlayer.push(data.found.resultHockey.winner.player);
-                                                // console.log("player", winPlayer);
+                                                console.log("player", winPlayer);
                                             } else {
                                                 lostPlayer.push(data.found.opponentsTeam[0]);
                                                 winPlayer.push(data.found.resultHockey.winner.player);
-                                                // console.log("player", winPlayer);
+                                                console.log("player", winPlayer);
                                             }
                                             updateObj = {
                                                 $set: {
@@ -12352,11 +12399,11 @@ var model = {
                                             if (data.found.opponentsTeam[0].equals(data.found.resultKabaddi.winner.player)) {
                                                 lostPlayer.push(data.found.opponentsTeam[1]);
                                                 winPlayer.push(data.found.resultKabaddi.winner.player);
-                                                // console.log("player", winPlayer);
+                                                console.log("player", winPlayer);
                                             } else {
                                                 lostPlayer.push(data.found.opponentsTeam[0]);
                                                 winPlayer.push(data.found.resultKabaddi.winner.player);
-                                                // console.log("player", winPlayer);
+                                                console.log("player", winPlayer);
                                             }
                                             updateObj = {
                                                 $set: {
@@ -12372,11 +12419,11 @@ var model = {
                                             if (data.found.opponentsTeam[0].equals(data.found.resultVolleyball.winner.player)) {
                                                 lostPlayer.push(data.found.opponentsTeam[1]);
                                                 winPlayer.push(data.found.resultVolleyball.winner.player);
-                                                // console.log("player", winPlayer);
+                                                console.log("player", winPlayer);
                                             } else {
                                                 lostPlayer.push(data.found.opponentsTeam[0]);
                                                 winPlayer.push(data.found.resultVolleyball.winner.player);
-                                                // console.log("player", winPlayer);
+                                                console.log("player", winPlayer);
                                             }
                                             updateObj = {
                                                 $set: {
@@ -12392,11 +12439,11 @@ var model = {
                                             if (data.found.opponentsTeam[0].equals(data.found.resultWaterPolo.winner.player)) {
                                                 lostPlayer.push(data.found.opponentsTeam[1]);
                                                 winPlayer.push(data.found.resultWaterPolo.winner.player);
-                                                // console.log("player", winPlayer);
+                                                console.log("player", winPlayer);
                                             } else {
                                                 lostPlayer.push(data.found.opponentsTeam[0]);
                                                 winPlayer.push(data.found.resultWaterPolo.winner.player);
-                                                // console.log("player", winPlayer);
+                                                console.log("player", winPlayer);
                                             }
                                             updateObj = {
                                                 $set: {
@@ -12412,11 +12459,11 @@ var model = {
                                             if (data.found.opponentsTeam[0].equals(data.found.resultsCombat.winner.player)) {
                                                 lostPlayer.push(data.found.opponentsTeam[1]);
                                                 winPlayer.push(data.found.resultsCombat.winner.player);
-                                                // console.log("player", winPlayer);
+                                                console.log("player", winPlayer);
                                             } else {
                                                 lostPlayer.push(data.found.opponentsTeam[0]);
                                                 winPlayer.push(data.found.resultsCombat.winner.player);
-                                                // console.log("player", winPlayer);
+                                                console.log("player", winPlayer);
                                             }
                                             updateObj = {
                                                 $set: {
@@ -12436,7 +12483,7 @@ var model = {
                                     }
                                 }
                             } else {
-                                // console.log("in found", found, "data", data);
+                                console.log("in found", found, "data", data);
                                 if (data.isTeam == true && _.isEmpty(found[0].opponentsTeam)) {
                                     if (data.found.resultFootball && data.found.resultFootball.status == 'IsCompleted' && data.found.resultFootball.isNoMatch == false) {
                                         winPlayer.push(data.found.resultFootball.winner.player);
@@ -12506,13 +12553,13 @@ var model = {
                                         callback(null, data.found);
                                     }
                                 } else if (data.isTeam == true && !_.isEmpty(found[0].opponentsTeam)) {
-                                    // console.log("updating match", data.found);
+                                    console.log("updating match", data.found);
                                     if (found[0].opponentsTeam.length == 1) {
                                         var playerId = found[0].opponentsTeam[0];
                                         winPlayer.push(playerId);
                                         if (data.found.resultFootball && data.found.resultFootball.status == "IsCompleted" && data.found.resultFootball.isNoMatch == false) {
                                             winPlayer.push(data.found.resultFootball.winner.player);
-                                            // console.log("player", winPlayer);
+                                            console.log("player", winPlayer);
                                             updateObj = {
                                                 $set: {
                                                     opponentsTeam: winPlayer
@@ -12520,7 +12567,7 @@ var model = {
                                             };
                                         } else if (data.found.resultBasketball && data.found.resultBasketball.status == "IsCompleted" && data.found.resultBasketball.isNoMatch == false) {
                                             winPlayer.push(data.found.resultBasketball.winner.player);
-                                            // console.log("player", winPlayer);
+                                            console.log("player", winPlayer);
                                             updateObj = {
                                                 $set: {
                                                     opponentsTeam: winPlayer
@@ -12528,7 +12575,7 @@ var model = {
                                             };
                                         } else if (data.found.resultHandball && data.found.resultHandball.status == "IsCompleted" && data.found.resultHandball.isNoMatch == false) {
                                             winPlayer.push(data.found.resultHandball.winner.player);
-                                            // console.log("player", winPlayer);
+                                            console.log("player", winPlayer);
                                             updateObj = {
                                                 $set: {
                                                     opponentsTeam: winPlayer
@@ -12536,7 +12583,7 @@ var model = {
                                             };
                                         } else if (data.found.resultHockey && data.found.resultHockey.status == "IsCompleted" && data.found.resultHockey.isNoMatch == false) {
                                             winPlayer.push(data.found.resultHockey.winner.player);
-                                            // console.log("player", winPlayer);
+                                            console.log("player", winPlayer);
                                             updateObj = {
                                                 $set: {
                                                     opponentsTeam: winPlayer
@@ -12544,7 +12591,7 @@ var model = {
                                             };
                                         } else if (data.found.resultKabaddi && data.found.resultKabaddi.status == "IsCompleted" && data.found.resultKabaddi.isNoMatch == false) {
                                             winPlayer.push(data.found.resultKabaddi.winner.player);
-                                            // console.log("player", winPlayer);
+                                            console.log("player", winPlayer);
                                             updateObj = {
                                                 $set: {
                                                     opponentsTeam: winPlayer
@@ -12552,7 +12599,7 @@ var model = {
                                             };
                                         } else if (data.found.resultVolleyball && data.found.resultVolleyball.status == "IsCompleted" && data.found.resultVolleyball.isNoMatch == false) {
                                             winPlayer.push(data.found.resultVolleyball.winner.player);
-                                            // console.log("player", winPlayer);
+                                            console.log("player", winPlayer);
                                             updateObj = {
                                                 $set: {
                                                     opponentsTeam: winPlayer
@@ -12560,7 +12607,7 @@ var model = {
                                             };
                                         } else if (data.found.resultWaterPolo && data.found.resultWaterPolo.status == "IsCompleted" && data.found.resultWaterPolo.isNoMatch == false) {
                                             winPlayer.push(data.found.resultWaterPolo.winner.player);
-                                            // console.log("player", winPlayer);
+                                            console.log("player", winPlayer);
                                             updateObj = {
                                                 $set: {
                                                     opponentsTeam: winPlayer
@@ -12568,7 +12615,7 @@ var model = {
                                             };
                                         } else if (data.found.resultsCombat && data.found.resultsCombat.status == "IsCompleted" && data.found.resultsCombat.isNoMatch == false) {
                                             winPlayer.push(data.found.resultsCombat.winner.player);
-                                            // console.log("player", winPlayer);
+                                            console.log("player", winPlayer);
                                             updateObj = {
                                                 $set: {
                                                     opponentsTeam: winPlayer
@@ -12582,7 +12629,7 @@ var model = {
                                     }
                                 }
                             }
-                            // console.log("updateObj", updateObj, "updateObj1", updateObj1);
+                            console.log("updateObj", updateObj, "updateObj1", updateObj1);
                             if (!_.isEmpty(updateObj) && !_.isEmpty(updateObj1)) {
                                 async.parallel([
                                     function (callback) {
