@@ -553,6 +553,16 @@ var controller = {
             });
         }
     },
+    generatePlayerSpecific: function (req, res) {
+        if (req.body) {
+            Match.generatePlayerSpecific(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            })
+        }
+    },
 
     generateExcel: function (req, res) {
         async.waterfall([

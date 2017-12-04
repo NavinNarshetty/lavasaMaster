@@ -4890,57 +4890,198 @@ var model = {
     },
 
     generateExcelKnockoutPlayerSpecific: function (data, match, callback) {
-        var count = 0;
-        var excelData = [];
-        async.each(match, function (mainData, callback) {
-                var obj = {};
-                var temp = {};
-                if (count == 0) {
-                    if (mainData.resultBasketball) {
+        async.waterfall([
+                function (callback) {
+                    _.each(match, function (n) {
+                        if (n.resultBasketball) {
+                            var arr = [];
+                        }
+                    });
+                },
+                function (match, callback) {
 
-                        async.waterfall([
-                                function (callback) {
-                                    _.each(mainData.resultBasketball.teams[0].players, function (n) {
-                                        temp.matchId = mainData.matchId;
-                                        temp.team1 = mainData.resultBasketball.teams[0].teamId;
-                                    });
-                                },
-
-                                function (callback) {
-                                    _.each(mainData.resultBasketball.teams[1].players, function (n) {
-
-                                    });
-                                }
-                            ],
-                            function (err, results) {
-                                if (err || _.isEmpty(results)) {
-                                    callback(null, results);
-                                } else {
-                                    callback(null, results);
-                                }
-                            });
-
-                    } else if (mainData.resultVolleyball) {
-
-                    } else if (mainData.resultFootball) {
-
-                    } else if (mainData.resultHandball) {
-
-                    } else if (mainData.resultKabaddi) {
-
-                    } else if (mainData.resultHockey) {
-
+                },
+            ],
+            function (err, excelData) {
+                if (err) {
+                    callback(null, []);
+                } else if (excelData) {
+                    if (_.isEmpty(excelData)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, excelData);
                     }
-                    count++;
-                } else {
-                    count--;
                 }
-                callback(null, obj);
+            });
 
-            },
-            function (err, singleData) {
-                // Config.generateExcel("KnockoutIndividual", singleData, res);
-                callback(null, singleData);
+    },
+
+    generatePlayerSpecific: function (data, callback) {
+        var finalData = [];
+        async.waterfall([
+                function (callback) {
+                    var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
+                    Match.find({
+                        sport: data.sport
+                    }).lean().deepPopulate(deepSearch).exec(function (err, match) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(match)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, match);
+                            }
+                        }
+                    });
+                },
+                function (match, callback) {
+                    async.each(match, function (n, callback) {
+                        console.log("match", n.matchId);
+                        if (n.resultBasketball) {
+                            var final = {};
+                            final.matchId = n.matchId;
+                            var team1 = [];
+                            var team1Sub = [];
+                            var team2 = [];
+                            var team2Sub = [];
+                            final.matchId = n.matchId;
+                            console.log("team0", n.resultBasketball.teams[0].players.length);
+                            console.log("team1", n.resultBasketball.teams[1].players.length);
+                            if (n.resultBasketball.teams.length == 2 && n.resultBasketball.teams[0].players.length >= n.resultBasketball.teams[1].players.length) {
+                                console.log('inside 2');
+                                for (var i = 0; i < n.resultBasketball.teams[0].players.length; i++) {
+                                    if (n.resultBasketball.teams[0].players[i].isPlaying == false) {
+                                        var team = {};
+                                        team.sfaId = n.resultBasketball.teams[0].players[i].sfaId;
+                                        team.screenName = n.resultBasketball.teams[0].players[i].fullName;
+                                        team1.push(team);
+                                    } else {
+                                        var team = {};
+                                        team.sub1 = n.resultBasketball.teams[0].players[i].sfaId;
+                                        team.subName1 = n.resultBasketball.teams[0].players[i].fullName;
+                                        team1Sub.push(team);
+                                    }
+                                    if (n.resultBasketball.teams[1].players[i]) {
+                                        if (n.resultBasketball.teams[1].players[i].isPlaying == false) {
+                                            var team = {};
+                                            team.sfaId2 = n.resultBasketball.teams[1].players[i].sfaId;
+                                            team.screenName2 = n.resultBasketball.teams[1].players[i].fullName;
+                                            team2.push(team);
+                                        } else {
+                                            var team = {};
+                                            team.sub2 = n.resultBasketball.teams[1].players[i].sfaId;
+                                            team.subName2 = n.resultBasketball.teams[1].players[i].fullName;
+                                            team2Sub.push(team);
+                                        }
+                                    } else {
+                                        var team = {};
+                                        team.sfaId2 = "";
+                                        team.screenName2 = "";
+                                        team2.push(team);
+                                        var team = {};
+                                        team.sub2 = "";
+                                        team.subName2 = "";
+                                        team2Sub.push(team);
+                                    }
+                                }
+                                final.team1 = team1;
+                                final.team1Count = team1.length;
+                                final.team1Sub = team1Sub;
+                                final.team1SubCount = team1Sub.length;
+                                final.team2 = team2;
+                                final.team2Count = team2.length;
+                                final.team2Sub = team2Sub;
+                                final.team2SubCount = team2Sub.length;
+                                finalData.push(final);
+                                callback(null, finalData);
+                            } else if (n.resultBasketball.teams.length == 2 && n.resultBasketball.teams[0].players.length <= n.resultBasketball.teams[1].players.length) {
+                                console.log('inside 2 less');
+                                for (var i = 0; i < n.resultBasketball.teams[1].players.length; i++) {
+                                    if (n.resultBasketball.teams[0].players[i]) {
+                                        if (n.resultBasketball.teams[0].players[i].isPlaying == true) {
+                                            var team = {};
+                                            team.sfaId = n.resultBasketball.teams[0].players[i].sfaId;
+                                            team.screenName = n.resultBasketball.teams[0].players[i].fullName;
+                                            team1.push(team);
+                                        } else {
+                                            var team = {};
+                                            team.sub1 = n.resultBasketball.teams[0].players[i].sfaId;
+                                            team.subName1 = n.resultBasketball.teams[0].players[i].fullName;
+                                            team1Sub.push(team);
+                                        }
+                                    } else {
+                                        var team = {};
+                                        team.sfaId = "";
+                                        team.screenName = "";
+                                        team1.push(team);
+                                        var team = {};
+                                        team.sub1 = "";
+                                        team.subName1 = "";
+                                        team1Sub.push(team);
+                                    }
+
+                                    if (n.resultBasketball.teams[1].players[i].isPlaying == true) {
+                                        var team = {};
+                                        team.sfaId2 = n.resultBasketball.teams[1].players[i].sfaId;
+                                        team.screenName2 = n.resultBasketball.teams[1].players[i].fullName;
+                                        team2.push(team);
+                                    } else {
+                                        var team = {};
+                                        team.sub2 = n.resultBasketball.teams[1].players[i].sfaId;
+                                        team.subName2 = n.resultBasketball.teams[1].players[i].fullName;
+                                        team2Sub.push(team);
+                                    }
+                                }
+                                final.team1 = team1;
+                                final.team1Count = team1.length;
+                                final.team1Sub = team1Sub;
+                                final.team1SubCount = team1Sub.length;
+                                final.team2 = team2;
+                                final.team2Count = team2.length;
+                                final.team2Sub = team2Sub;
+                                final.team2SubCount = team2Sub.length;
+                                finalData.push(final);
+                                callback(null, finalData);
+                            } else {
+                                for (var i = 0; i < n.resultBasketball.teams[0].players.length; i++) {
+                                    if (n.resultBasketball.teams[0].players[i].isPlaying == false) {
+                                        var team = {};
+                                        team.sfaId = n.resultBasketball.teams[0].players[i].sfaId;
+                                        team.screenName = n.resultBasketball.teams[0].players[i].fullName;
+                                        team1.push(team);
+                                    } else {
+                                        var team = {};
+                                        team.sfaId = n.resultBasketball.teams[0].players[i].sfaId;
+                                        team.screenName = n.resultBasketball.teams[0].players[i].fullName;
+                                        team1Sub.push(team);
+                                    }
+                                }
+                                final.team1 = team1;
+                                final.team1Count = team1.length;
+                                final.team1Sub = team1Sub;
+                                final.team1SubCount = team1Sub.length;
+                                finalData.push(final);
+                                callback(null, finalData);
+                            }
+                        } else {
+                            callback(null, finalData);
+                        }
+                    }, function (err) {
+                        callback(null, finalData);
+                    });
+                },
+            ],
+            function (err, excelData) {
+                if (err) {
+                    callback(null, []);
+                } else if (excelData) {
+                    if (_.isEmpty(excelData)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, excelData);
+                    }
+                }
             });
 
     },
@@ -12693,7 +12834,6 @@ var model = {
                         callback(null, found);
                     }
                 }
-
             ],
             function (err, results) {
                 if (err || _.isEmpty(results)) {
