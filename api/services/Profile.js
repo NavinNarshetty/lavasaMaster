@@ -725,8 +725,6 @@ var model = {
                 } else if (_.isEmpty(profile)) {
                     callback(null, []);
                 } else {
-                    console.log('hi data2', data2);
-                    console.log('hi', profile);
                     callback(null, profile);
                 }
             });
