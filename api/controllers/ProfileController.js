@@ -88,7 +88,7 @@ var controller = {
             res.json({
                 "data": "Body not Found",
                 "value": false
-            })
+            });
         }
     },
 

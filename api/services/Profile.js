@@ -673,7 +673,7 @@ var model = {
                             if (_.isEmpty(found)) {
                                 callback(null, []);
                             } else {
-                                // console.log(found)
+                                console.log(found)
                                 profile.teamName = found.name;
                                 profile.teamId = found.teamId;
                                 profile.school = found.schoolName;
@@ -709,15 +709,20 @@ var model = {
                             } else {
                                 callback(null, player);
                             }
+                            console.log('Hi');
                         },
                         function (err, playerData) {
                             if (err) {
+                                console.log('Hi');
                                 callback(err, null);
                             } else {
+                                console.log('Data PLAYERS',playerData);
                                 profile.players = playerData;
+                                console.log('PROFILE',profile);
                                 callback(null, profile);
                             }
-                        });
+                        }
+                    );
                 }
             ],
             function (err, data2) {
@@ -726,6 +731,8 @@ var model = {
                 } else if (_.isEmpty(profile)) {
                     callback(null, []);
                 } else {
+                    console.log('hi data2', data2);
+                    console.log('hi', profile);
                     callback(null, profile);
                 }
             });

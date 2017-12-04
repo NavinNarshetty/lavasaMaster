@@ -2551,7 +2551,7 @@ var model = {
                                         }
                                         paramData.sport = singleData.SPORT;
                                         paramData.scheduleDate = singleData.DATE;
-                                        if (!_.isEmpty(n.success.TIME) || n.success.TIME != null) {
+                                        if (!_.isEmpty(singleData.TIME) || singleData.TIME != null) {
                                             paramData.scheduleTime = singleData.TIME;
                                         }
                                         if (data.resultType == "direct-final") {
