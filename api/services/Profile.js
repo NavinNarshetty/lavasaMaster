@@ -673,11 +673,9 @@ var model = {
                             if (_.isEmpty(found)) {
                                 callback(null, []);
                             } else {
-                                console.log("found", found);
                                 profile.teamName = found.name;
                                 profile.teamId = found.teamId;
                                 profile.school = found.schoolName;
-                                console.log("sport", found.sport.sportslist.sportsListSubCategory);
                                 profile.sportName = found.sport.sportslist.sportsListSubCategory.name;
                                 profile.sportsListSubCategory = found.sport.sportslist.sportsListSubCategory._id;
                                 profile.drawFormat = found.sport.sportslist.drawFormat;
@@ -693,7 +691,6 @@ var model = {
                 },
                 function (found, callback) {
                     async.concatSeries(found.studentTeam, function (n, callback) {
-                            console.log(n);
                             var player = {};
                             if (n.studentId !== null) {
                                 if (n.studentId.middleName) {
@@ -710,16 +707,12 @@ var model = {
                             } else {
                                 callback(null, player);
                             }
-                            console.log('Hi');
                         },
                         function (err, playerData) {
                             if (err) {
-                                console.log('Hi');
                                 callback(err, null);
                             } else {
-                                console.log('Data PLAYERS', playerData);
                                 profile.players = playerData;
-                                console.log('PROFILE', profile);
                                 callback(null, profile);
                             }
                         }
