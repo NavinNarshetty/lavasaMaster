@@ -12056,7 +12056,7 @@ var model = {
                                 } else if (!_.isEmpty(found.opponentsTeam)) {
                                     data.isTeam = true;
                                 }
-                                var type = found.excelType.toLowerCase();;
+                                var type = found.excelType.toLowerCase();
                                 if (type === "knockout") {
                                     data.isKnockout = true;
                                 } else {
