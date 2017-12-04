@@ -428,6 +428,9 @@ var model = {
                                                         info.medal = medalData.medalType;
                                                         info.participantName = n.name;
                                                         info.school = n.schoolName;
+                                                        if (n.school) {
+                                                            info.schoolId = n.school;
+                                                        }
                                                         info.TeamId = n.teamId;
                                                         obj.medals.push(info);
                                                         callback(null, final);
@@ -450,6 +453,7 @@ var model = {
                                                             info.school = n.school.name;
                                                         }
                                                         info.sfaId = n.sfaId;
+                                                        info.athleteId = n._id;
                                                         obj.medals.push(info);
                                                         callback(null, obj);
                                                     }, function (err) {
@@ -510,6 +514,9 @@ var model = {
                                                         info.medal = medalData.medalType;
                                                         info.participantName = n.name;
                                                         info.school = n.schoolName;
+                                                        if (n.school) {
+                                                            info.schoolId = n.school;
+                                                        }
                                                         info.TeamId = n.teamId;
                                                         obj.medals.push(info);
                                                         callback(null, final);
@@ -532,6 +539,7 @@ var model = {
                                                             info.school = n.school.name;
                                                         }
                                                         info.sfaId = n.sfaId;
+                                                        info.athleteId = n._id;
                                                         obj.medals.push(info);
                                                         callback(null, obj);
                                                     }, function (err) {
@@ -592,6 +600,9 @@ var model = {
                                                         info.medal = medalData.medalType;
                                                         info.participantName = n.name;
                                                         info.school = n.schoolName;
+                                                        if (n.school) {
+                                                            info.schoolId = n.school;
+                                                        }
                                                         info.TeamId = n.teamId;
                                                         obj.medals.push(info);
                                                         callback(null, final);
@@ -614,6 +625,7 @@ var model = {
                                                             info.school = n.school.name;
                                                         }
                                                         info.sfaId = n.sfaId;
+                                                        info.athleteId = n._id;
                                                         obj.medals.push(info);
                                                         callback(null, obj);
                                                     }, function (err) {
@@ -674,6 +686,9 @@ var model = {
                                                         info.medal = medalData.medalType;
                                                         info.participantName = n.name;
                                                         info.school = n.schoolName;
+                                                        if (n.school) {
+                                                            info.schoolId = n.school;
+                                                        }
                                                         info.TeamId = n.teamId;
                                                         obj.medals.push(info);
                                                         callback(null, final);
@@ -696,6 +711,7 @@ var model = {
                                                             info.school = n.school.name;
                                                         }
                                                         info.sfaId = n.sfaId;
+                                                        info.athleteId = n._id;
                                                         obj.medals.push(info);
                                                         callback(null, obj);
                                                     }, function (err) {
@@ -756,6 +772,9 @@ var model = {
                                                         info.medal = medalData.medalType;
                                                         info.participantName = n.name;
                                                         info.school = n.schoolName;
+                                                        if (n.school) {
+                                                            info.schoolId = n.school;
+                                                        }
                                                         info.TeamId = n.teamId;
                                                         obj.medals.push(info);
                                                         callback(null, final);
@@ -778,6 +797,7 @@ var model = {
                                                             info.school = n.school.name;
                                                         }
                                                         info.sfaId = n.sfaId;
+                                                        info.athleteId = n._id;
                                                         obj.medals.push(info);
                                                         callback(null, obj);
                                                     }, function (err) {
@@ -838,6 +858,9 @@ var model = {
                                                         info.medal = medalData.medalType;
                                                         info.participantName = n.name;
                                                         info.school = n.schoolName;
+                                                        if (n.school) {
+                                                            info.schoolId = n.school;
+                                                        }
                                                         info.TeamId = n.teamId;
                                                         obj.medals.push(info);
                                                         callback(null, final);
@@ -860,6 +883,7 @@ var model = {
                                                             info.school = n.school.name;
                                                         }
                                                         info.sfaId = n.sfaId;
+                                                        info.athleteId = n._id;
                                                         obj.medals.push(info);
                                                         callback(null, obj);
                                                     }, function (err) {
@@ -921,6 +945,9 @@ var model = {
                                                         info.participantName = n.name;
                                                         info.school = n.schoolName;
                                                         info.TeamId = n.teamId;
+                                                        if (n.school) {
+                                                            info.schoolId = n.school;
+                                                        }
                                                         obj.medals.push(info);
                                                         callback(null, final);
                                                     }, function (err) {
@@ -936,13 +963,14 @@ var model = {
                                                         } else {
                                                             info.participantName = n.firstName + " " + n.surname;
                                                         }
-                                                        console.log("n", n);
+                                                        // console.log("n", n);
                                                         if (n.atheleteSchoolName) {
                                                             info.school = n.atheleteSchoolName;
                                                         } else {
                                                             info.school = n.school.name;
                                                         }
                                                         info.sfaId = n.sfaId;
+                                                        info.athleteId = n._id;
                                                         obj.medals.push(info);
                                                         callback(null, obj);
                                                     }, function (err) {
@@ -992,7 +1020,7 @@ var model = {
                                     } else {
                                         var obj = {};
                                         obj.medals = [];
-                                        console.log("medal found***", found);
+                                        // console.log("medal found***", found);
                                         async.eachSeries(found, function (medalData, callback) {
                                             if (medalData) {
                                                 obj.name = medalData.sport.ageGroup.name + " " + medalData.sport.sportslist.name;
@@ -1004,7 +1032,9 @@ var model = {
                                                         info.medal = medalData.medalType;
                                                         info.participantName = n.name;
                                                         info.school = n.schoolName;
-                                                        info.schoolId = n._id;
+                                                        if (n.school) {
+                                                            info.schoolId = n.school;
+                                                        }
                                                         info.TeamId = n.teamId;
                                                         obj.medals.push(info);
                                                         callback(null, final);
@@ -1012,7 +1042,7 @@ var model = {
                                                         callback(null, obj);
                                                     });
                                                 } else {
-                                                    console.log("went in player", medalData.player);
+                                                    // console.log("went in player", medalData.player);
                                                     async.each(medalData.player, function (n, callback) {
                                                         var info = {};
                                                         info.sport = medalData.sport._id;
