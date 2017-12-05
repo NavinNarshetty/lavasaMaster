@@ -3846,7 +3846,7 @@ var model = {
                             Config.generateExcel("KnockoutIndividual", singleData, res);
                         });
                     } else if (data.playerType == "team" && data.playerSpecific == "yes") {
-                        Match.generateExcelKnockoutPlayerSpecific(data, match, function (err, singleData) {
+                        Match.generatePlayerSpecific(data, match, function (err, singleData) {
                             Config.generateExcel("KnockoutIndividual", singleData, res);
                         });
                     } else {
@@ -4889,183 +4889,46 @@ var model = {
 
     },
 
-    generateExcelKnockoutPlayerSpecific: function (data, match, callback) {
-        async.waterfall([
-                function (callback) {
-                    _.each(match, function (n) {
-                        if (n.resultBasketball) {
-                            var arr = [];
-                        }
-                    });
-                },
-                function (match, callback) {
-
-                },
-            ],
-            function (err, excelData) {
-                if (err) {
-                    callback(null, []);
-                } else if (excelData) {
-                    if (_.isEmpty(excelData)) {
-                        callback(null, []);
-                    } else {
-                        callback(null, excelData);
-                    }
-                }
-            });
-
-    },
-
-    generatePlayerSpecific: function (data, callback) {
+    generatePlayerSpecific: function (data, match, callback) {
         var finalData = [];
         async.waterfall([
                 function (callback) {
-                    var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
-                    Match.find({
-                        sport: data.sport
-                    }).lean().deepPopulate(deepSearch).exec(function (err, match) {
-                        if (err) {
-                            callback(err, null);
-                        } else {
-                            if (_.isEmpty(match)) {
-                                callback(null, []);
-                            } else {
-                                callback(null, match);
-                            }
-                        }
-                    });
-                },
-                function (match, callback) {
                     async.each(match, function (n, callback) {
-                        console.log("match", n.matchId);
                         if (n.resultBasketball) {
-                            var final = {};
-                            final.matchId = n.matchId;
-                            var team1 = [];
-                            var team1Sub = [];
-                            var team2 = [];
-                            var team2Sub = [];
-                            final.matchId = n.matchId;
-                            console.log("team0", n.resultBasketball.teams[0].players.length);
-                            console.log("team1", n.resultBasketball.teams[1].players.length);
-                            if (n.resultBasketball.teams.length == 2 && n.resultBasketball.teams[0].players.length >= n.resultBasketball.teams[1].players.length) {
-                                console.log('inside 2');
-                                for (var i = 0; i < n.resultBasketball.teams[0].players.length; i++) {
-                                    if (n.resultBasketball.teams[0].players[i].isPlaying == false) {
-                                        var team = {};
-                                        team.sfaId = n.resultBasketball.teams[0].players[i].sfaId;
-                                        team.screenName = n.resultBasketball.teams[0].players[i].fullName;
-                                        team1.push(team);
-                                    } else {
-                                        var team = {};
-                                        team.sub1 = n.resultBasketball.teams[0].players[i].sfaId;
-                                        team.subName1 = n.resultBasketball.teams[0].players[i].fullName;
-                                        team1Sub.push(team);
-                                    }
-                                    if (n.resultBasketball.teams[1].players[i]) {
-                                        if (n.resultBasketball.teams[1].players[i].isPlaying == false) {
-                                            var team = {};
-                                            team.sfaId2 = n.resultBasketball.teams[1].players[i].sfaId;
-                                            team.screenName2 = n.resultBasketball.teams[1].players[i].fullName;
-                                            team2.push(team);
-                                        } else {
-                                            var team = {};
-                                            team.sub2 = n.resultBasketball.teams[1].players[i].sfaId;
-                                            team.subName2 = n.resultBasketball.teams[1].players[i].fullName;
-                                            team2Sub.push(team);
-                                        }
-                                    }
-                                    // else {
-                                    //     var team = {};
-                                    //     team.sfaId2 = "";
-                                    //     team.screenName2 = "";
-                                    //     team2.push(team);
-                                    //     var team = {};
-                                    //     team.sub2 = "";
-                                    //     team.subName2 = "";
-                                    //     team2Sub.push(team);
-                                    // }
-                                }
-                                final.team1 = team1;
-                                final.team1Count = team1.length;
-                                final.team1Sub = team1Sub;
-                                final.team1SubCount = team1Sub.length;
-                                final.team2 = team2;
-                                final.team2Count = team2.length;
-                                final.team2Sub = team2Sub;
-                                final.team2SubCount = team2Sub.length;
-                                finalData.push(final);
-                                callback(null, finalData);
-                            } else if (n.resultBasketball.teams.length == 2 && n.resultBasketball.teams[0].players.length <= n.resultBasketball.teams[1].players.length) {
-                                console.log('inside 2 less');
-                                for (var i = 0; i < n.resultBasketball.teams[1].players.length; i++) {
-                                    if (n.resultBasketball.teams[0].players[i]) {
-                                        if (n.resultBasketball.teams[0].players[i].isPlaying == true) {
-                                            var team = {};
-                                            team.sfaId = n.resultBasketball.teams[0].players[i].sfaId;
-                                            team.screenName = n.resultBasketball.teams[0].players[i].fullName;
-                                            team1.push(team);
-                                        } else {
-                                            var team = {};
-                                            team.sub1 = n.resultBasketball.teams[0].players[i].sfaId;
-                                            team.subName1 = n.resultBasketball.teams[0].players[i].fullName;
-                                            team1Sub.push(team);
-                                        }
-                                    }
-                                    // else {
-                                    //     var team = {};
-                                    //     team.sfaId = "";
-                                    //     team.screenName = "";
-                                    //     team1.push(team);
-                                    //     var team = {};
-                                    //     team.sub1 = "";
-                                    //     team.subName1 = "";
-                                    //     team1Sub.push(team);
-                                    // }
-
-                                    if (n.resultBasketball.teams[1].players[i].isPlaying == true) {
-                                        var team = {};
-                                        team.sfaId2 = n.resultBasketball.teams[1].players[i].sfaId;
-                                        team.screenName2 = n.resultBasketball.teams[1].players[i].fullName;
-                                        team2.push(team);
-                                    } else {
-                                        var team = {};
-                                        team.sub2 = n.resultBasketball.teams[1].players[i].sfaId;
-                                        team.subName2 = n.resultBasketball.teams[1].players[i].fullName;
-                                        team2Sub.push(team);
-                                    }
-                                }
-                                final.team1 = team1;
-                                final.team1Count = team1.length;
-                                final.team1Sub = team1Sub;
-                                final.team1SubCount = team1Sub.length;
-                                final.team2 = team2;
-                                final.team2Count = team2.length;
-                                final.team2Sub = team2Sub;
-                                final.team2SubCount = team2Sub.length;
-                                finalData.push(final);
-                                callback(null, finalData);
-                            } else {
-                                for (var i = 0; i < n.resultBasketball.teams[0].players.length; i++) {
-                                    if (n.resultBasketball.teams[0].players[i].isPlaying == false) {
-                                        var team = {};
-                                        team.sfaId = n.resultBasketball.teams[0].players[i].sfaId;
-                                        team.screenName = n.resultBasketball.teams[0].players[i].fullName;
-                                        team1.push(team);
-                                    } else {
-                                        var team = {};
-                                        team.sfaId = n.resultBasketball.teams[0].players[i].sfaId;
-                                        team.screenName = n.resultBasketball.teams[0].players[i].fullName;
-                                        team1Sub.push(team);
-                                    }
-                                }
-                                final.team1 = team1;
-                                final.team1Count = team1.length;
-                                final.team1Sub = team1Sub;
-                                final.team1SubCount = team1Sub.length;
-                                finalData.push(final);
-                                callback(null, finalData);
-                            }
+                            var result = n.resultBasketball;
+                            Match.getResultArray(n, finalData, result, function (err, complete) {
+                                callback(null, complete);
+                            });
+                        } else if (n.resultFootball) {
+                            var result = n.resultFootball;
+                            Match.getResultArray(n, finalData, result, function (err, complete) {
+                                callback(null, complete);
+                            });
+                        } else if (n.resultHandball) {
+                            var result = n.resultFootball;
+                            Match.getResultArray(n, finalData, result, function (err, complete) {
+                                callback(null, complete);
+                            });
+                        } else if (n.resultHockey) {
+                            var result = n.resultHockey;
+                            Match.getResultArray(n, finalData, result, function (err, complete) {
+                                callback(null, complete);
+                            });
+                        } else if (n.resultKabaddi) {
+                            var result = n.resultKabaddi;
+                            Match.getResultArray(n, finalData, result, function (err, complete) {
+                                callback(null, complete);
+                            });
+                        } else if (n.resultVolleyball) {
+                            var result = n.resultVolleyball;
+                            Match.getResultArray(n, finalData, result, function (err, complete) {
+                                callback(null, complete);
+                            });
+                        } else if (n.resultWaterPolo) {
+                            var result = n.resultWaterPolo;
+                            Match.getResultArray(n, finalData, result, function (err, complete) {
+                                callback(null, complete);
+                            });
                         } else {
                             callback(null, finalData);
                         }
@@ -5073,19 +4936,257 @@ var model = {
                         callback(null, finalData);
                     });
                 },
+                function (finalData, callback) {
+                    var excelData = [];
+                    var page = 1;
+                    _.each(finalData, function (mainData) {
+                        for (var i = 0; i < mainData.max; i++) {
+                            var obj = {};
+                            obj["MATCH ID"] = mainData.matchId;
+                            obj["TEAM 1"] = mainData.teamId1;
+                            if (mainData.team1[i] != undefined) {
+                                obj["SFA ID 1"] = mainData.team1[i].sfaId;
+                                if (mainData.team1[i].middleName) {
+                                    obj["STARTING LINE UP SCREEN NAME 1"] = mainData.team1[i].firstName.charAt(0) + "." + mainData.team1[i].middleName.charAt(0) + "." + mainData.team1[i].surname;
+                                } else {
+                                    obj["STARTING LINE UP SCREEN NAME 1"] = mainData.team1[i].firstName.charAt(0) + "." + mainData.team1[i].surname;
+                                }
+                            } else {
+                                obj["SFA ID 1"] = "-";
+                                obj["STARTING LINE UP SCREEN NAME 1"] = "-";
+                            }
+                            if (mainData.team1Sub[i] != undefined) {
+                                obj["SUBSTITUTES SFA ID 1"] = mainData.team1Sub[i].sub1;
+                                if (mainData.team1Sub[i].middleName) {
+                                    obj["SUBSTITUTES SCREEN NAME 1"] = mainData.team1Sub[i].firstName.charAt(0) + "." + mainData.team1Sub[i].middleName.charAt(0) + "." + mainData.team1Sub[i].surname;
+                                } else {
+                                    obj["SUBSTITUTES SCREEN NAME 1"] = mainData.team1Sub[i].firstName.charAt(0) + "." + mainData.team1Sub[i].surname;
+                                }
+                            } else {
+                                obj["SUBSTITUTES ID 1"] = "-";
+                                obj["SUBSTITUTES SCREEN NAME 1"] = "-";
+                            }
+                            obj["TEAM 2"] = mainData.teamId2;
+
+                            if (mainData.team2[i] != undefined) {
+                                obj["SFA ID 2"] = mainData.team2[i].sfaId2;
+                                if (mainData.team2[i].middleName) {
+                                    obj["STARTING LINE UP SCREEN NAME 2"] = mainData.team2[i].firstName.charAt(0) + "." + mainData.team2[i].middleName.charAt(0) + "." + mainData.team2[i].surname;
+                                } else {
+                                    obj["STARTING LINE UP SCREEN NAME 2"] = mainData.team2[i].firstName.charAt(0) + "." + mainData.team2[i].surname;
+                                }
+                            } else {
+                                obj["SFA ID 2"] = "-";
+                                obj["STARTING LINE UP SCREEN NAME 2"] = "-";
+                            }
+                            if (mainData.team2Sub[i] != undefined) {
+                                obj["SUBSTITUTES SFA ID 2"] = mainData.team2Sub[i].sub2;
+                                if (mainData.team2Sub[i].middleName) {
+                                    obj["SUBSTITUTES SCREEN NAME 2"] = mainData.team2Sub[i].firstName.charAt(0) + "." + mainData.team2Sub[i].middleName.charAt(0) + "." + mainData.team2Sub[i].surname;
+                                } else {
+                                    obj["SUBSTITUTES SCREEN NAME 2"] = mainData.team2Sub[i].firstName.charAt(0) + "." + mainData.team2Sub[i].surname;
+                                }
+                            } else {
+                                obj["SUBSTITUTES SFA ID 2"] = "-";
+                                obj["SUBSTITUTES SCREEN NAME 2"] = "-";
+                            }
+                            excelData.push(obj);
+                        }
+                        var obj = {};
+                        excelData.push(obj);
+                    });
+                    callback(null, excelData);
+                }
             ],
-            function (err, excelData) {
+            function (err, complete) {
                 if (err) {
                     callback(null, []);
-                } else if (excelData) {
-                    if (_.isEmpty(excelData)) {
-                        callback(null, []);
-                    } else {
-                        callback(null, excelData);
-                    }
+                } else if (complete) {
+                    callback(null, complete);
                 }
             });
+    },
 
+    generateLeaguePlayerSpecific: function (data, res) {
+        var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
+        Match.find({
+            sport: data.sport
+        }).lean().deepPopulate(deepSearch).exec(function (err, match) {
+            if (err) {
+                res.callback(err, null);
+            } else {
+                if (_.isEmpty(match)) {
+                    res.callback(null, []);
+                } else {
+                    Match.generatePlayerSpecific(data, match, function (err, singleData) {
+                        Config.generateExcel("KnockoutIndividual", singleData, res);
+                    });
+                }
+            }
+        });
+    },
+
+    getResultArray: function (n, finalData, result, callback) {
+        var final = {};
+        var count = {};
+        var team1 = [];
+        var team1Sub = [];
+        var team2 = [];
+        var team2Sub = [];
+        final.matchId = n.matchId;
+        final.teamId1 = result.teams[0].teamId;
+        final.teamId2 = result.teams[1].teamId;
+        console.log("team0", result.teams[0].players.length);
+        console.log("team1", result.teams[1].players.length);
+        if (result.teams.length == 2 && result.teams[0].players.length >= result.teams[1].players.length) {
+            console.log('inside 2');
+            for (var i = 0; i < result.teams[0].players.length; i++) {
+                if (result.teams[0].players[i].isPlaying == true) {
+                    var team = {};
+                    team.sfaId = result.teams[0].players[i].sfaId;
+                    team.firstName = result.teams[0].players[i].firstName;
+                    team.surname = result.teams[0].players[i].surname;
+                    if (result.teams[0].players[i].middleName) {
+                        team.surname = result.teams[0].players[i].middleName;
+                    }
+                    team1.push(team);
+                } else {
+                    var team = {};
+                    team.sub1 = result.teams[0].players[i].sfaId;
+                    team.firstName = result.teams[0].players[i].firstName;
+                    team.surname = result.teams[0].players[i].surname;
+                    if (result.teams[0].players[i].middleName) {
+                        team.surname = result.teams[0].players[i].middleName;
+                    }
+                    team1Sub.push(team);
+                }
+                if (result.teams[1].players[i]) {
+                    if (result.teams[1].players[i].isPlaying == true) {
+                        var team = {};
+                        team.sfaId2 = result.teams[1].players[i].sfaId;
+                        team.firstName = result.teams[1].players[i].firstName;
+                        team.surname = result.teams[1].players[i].surname;
+                        if (result.teams[1].players[i].middleName) {
+                            team.surname = result.teams[1].players[i].middleName;
+                        }
+                        team2.push(team);
+                    } else {
+                        var team = {};
+                        team.sub2 = result.teams[1].players[i].sfaId;
+                        team.firstName = result.teams[1].players[i].firstName;
+                        team.surname = result.teams[1].players[i].surname;
+                        if (result.teams[1].players[i].middleName) {
+                            team.surname = result.teams[1].players[i].middleName;
+                        }
+                        team2Sub.push(team);
+                    }
+                }
+
+            }
+            final.team1 = team1;
+            count.team1Count = team1.length;
+            final.team1Sub = team1Sub;
+            count.team1SubCount = team1Sub.length;
+            final.team2 = team2;
+            count.team2Count = team2.length;
+            final.team2Sub = team2Sub;
+            count.team2SubCount = team2Sub.length;
+            // let min = Object.values(count).sort((prev, next) => prev - next)[0] // 0.35
+            let max = Object.values(count).sort((prev, next) => next - prev)[0] // 5
+            final.max = max;
+            console.log("max", max);
+            finalData.push(final);
+            callback(null, finalData);
+        } else if (result.teams.length == 2 && result.teams[0].players.length <= result.teams[1].players.length) {
+            console.log('inside 2 less');
+            for (var i = 0; i < result.teams[1].players.length; i++) {
+                if (result.teams[0].players[i]) {
+                    if (result.teams[0].players[i].isPlaying == true) {
+                        var team = {};
+                        team.sfaId = result.teams[0].players[i].sfaId;
+                        team.firstName = result.teams[0].players[i].firstName;
+                        team.surname = result.teams[0].players[i].surname;
+                        if (result.teams[0].players[i].middleName) {
+                            team.surname = result.teams[0].players[i].middleName;
+                        }
+                        team1.push(team);
+                    } else {
+                        var team = {};
+                        team.sub1 = result.teams[0].players[i].sfaId;
+                        team.firstName = result.teams[0].players[i].firstName;
+                        team.surname = result.teams[0].players[i].surname;
+                        if (result.teams[0].players[i].middleName) {
+                            team.surname = result.teams[0].players[i].middleName;
+                        }
+                        team1Sub.push(team);
+                    }
+                }
+                if (result.teams[1].players[i].isPlaying == true) {
+                    var team = {};
+                    team.sfaId2 = result.teams[1].players[i].sfaId;
+                    team.firstName = result.teams[1].players[i].firstName;
+                    team.surname = result.teams[1].players[i].surname;
+                    if (result.teams[1].players[i].middleName) {
+                        team.surname = result.teams[1].players[i].middleName;
+                    }
+                    team2.push(team);
+                } else {
+                    var team = {};
+                    team.sub2 = result.teams[1].players[i].sfaId;
+                    team.firstName = result.teams[1].players[i].firstName;
+                    team.surname = result.teams[1].players[i].surname;
+                    if (result.teams[1].players[i].middleName) {
+                        team.surname = result.teams[1].players[i].middleName;
+                    }
+                    team2Sub.push(team);
+                }
+            }
+            final.team1 = team1;
+            count.team1Count = team1.length;
+            final.team1Sub = team1Sub;
+            count.team1SubCount = team1Sub.length;
+            final.team2 = team2;
+            count.team2Count = team2.length;
+            final.team2Sub = team2Sub;
+            count.team2SubCount = team2Sub.length;
+            let max = Object.values(count).sort((prev, next) => next - prev)[0] // 5
+            final.max = max;
+            console.log("max", max);
+            finalData.push(final);
+            callback(null, finalData);
+        } else {
+            for (var i = 0; i < result.teams[0].players.length; i++) {
+                if (result.teams[0].players[i].isPlaying == true) {
+                    var team = {};
+                    team.sfaId = result.teams[0].players[i].sfaId;
+                    team.firstName = result.teams[0].players[i].firstName;
+                    team.surname = result.teams[0].players[i].surname;
+                    if (result.teams[0].players[i].middleName) {
+                        team.surname = result.teams[0].players[i].middleName;
+                    }
+                    team1.push(team);
+                } else {
+                    var team = {};
+                    team.sfaId = result.teams[0].players[i].sfaId;
+                    team.firstName = result.teams[0].players[i].firstName;
+                    team.surname = result.teams[0].players[i].surname;
+                    if (result.teams[0].players[i].middleName) {
+                        team.surname = result.teams[0].players[i].middleName;
+                    }
+                    team1Sub.push(team);
+                }
+            }
+            final.team1 = team1;
+            count.team1Count = team1.length;
+            final.team1Sub = team1Sub;
+            count.team1SubCount = team1Sub.length;
+            // let min = Object.values(count).sort((prev, next) => prev - next)[0] // 0.35
+            let max = Object.values(count).sort((prev, next) => next - prev)[0] // 5
+            console.log("max", max);
+            final.max = max;
+            finalData.push(final);
+            callback(null, finalData);
+        }
     },
 
     generateExcelHeat: function (data, res) {
