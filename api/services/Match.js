@@ -8198,8 +8198,8 @@ var model = {
                 }
                 if (mainData.opponentsTeam.length > 0) {
                     obj["TEAM ID 1"] = mainData.opponentsTeam[0].teamId;
-                    console.log(mainData.opponentsTeam[0].studentTeam[0])
-                    if (mainData.opponentsTeam[0].studentTeam[0].studentId.school) {
+                    if (mainData.opponentsTeam[0].studentTeam[0].studentId.school.screenName) {
+                        console.log(mainData.opponentsTeam[0].studentTeam[0].studentId.school.screenName);
                         obj["SCREEN SCHOOL NAME 1"] = mainData.opponentsTeam[0].studentTeam[0].studentId.school.screenName;
                     } else {
                         obj["SCREEN SCHOOL NAME 1"] = mainData.opponentsTeam[0].schoolName;
@@ -9426,7 +9426,7 @@ var model = {
                             obj["ROUND"] = mainData.round;
                             if (mainData.opponentsTeam.length > 0) {
                                 obj["TEAM ID 1"] = mainData.opponentsTeam[0].teamId;
-                                if (mainData.opponentsTeam[0].studentTeam[0].studentId.school) {
+                                if (mainData.opponentsTeam[0].studentTeam[0].studentId.school.screenName) {
                                     obj["SCREEN NAME SCHOOL 1"] = mainData.opponentsTeam[0].studentTeam[0].studentId.school.screenName;
                                 } else {
                                     obj["SCREEN NAME SCHOOL 1"] = mainData.opponentsTeam[0].schoolName;
@@ -9479,7 +9479,7 @@ var model = {
 
                             if (mainData.opponentsTeam.length > 1) {
                                 obj["TEAM ID 2"] = mainData.opponentsTeam[1].teamId;
-                                if (mainData.opponentsTeam[1].studentTeam[0].studentId.school) {
+                                if (mainData.opponentsTeam[1].studentTeam[0].studentId.school.screenName) {
                                     obj["SCREEN NAME SCHOOL 2"] = mainData.opponentsTeam[1].studentTeam[0].studentId.school.screenName;
                                 } else {
                                     obj["SCREEN NAME SCHOOL 2"] = mainData.opponentsTeam[1].schoolName;
