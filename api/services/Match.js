@@ -10455,8 +10455,6 @@ var model = {
                                     var result = {};
                                     result.players = [];
                                     async.concatSeries(arrData, function (singleData, callback) {
-                                        var date = moment(singleData.DATE, "DD-MM-YYYY");
-                                        singleData.DATE = date;
                                         async.waterfall([
                                                 function (callback) {
                                                     var paramData = {};
@@ -10558,7 +10556,7 @@ var model = {
                                                 }
                                                 paramData.sport = n.success.SPORT;
                                                 paramData.heatNo = n.success["HEAT NUMBER"];
-                                                paramData.scheduleDate = moment(n.success.DATE).format();
+                                                paramData.scheduleDate = n.success.DATE;
                                                 paramData.scheduleTime = n.success.TIME;
                                                 paramData.video = n.success["VIDEO TYPE"];
                                                 paramData.videoType = n.success["VIDEO"];
@@ -10615,12 +10613,7 @@ var model = {
                     async.concatSeries(importData, function (singleData, callback) {
                         async.waterfall([
                                 function (callback) {
-                                    var date = moment(singleData.DATE, "DD-MM-YYYY");
-                                    singleData.DATE = date;
-                                    callback(null, singleData);
-                                },
-                                function (singleData, callback) {
-                                    console.log("singleData", singleData);
+                                    // console.log("singleData", singleData);
                                     var paramData = {};
                                     paramData.name = singleData['EVENT'];
                                     paramData.age = singleData["AGE GROUP"];
@@ -10906,8 +10899,6 @@ var model = {
                                     var result = {};
                                     result.teams = [];
                                     async.concatSeries(arrData, function (singleData, callback) {
-                                        var date = moment(singleData.DATE, "DD-MM-YYYY");
-                                        singleData.DATE = date;
                                         async.waterfall([
                                                 // Find SportId
                                                 function (callback) {
@@ -11009,7 +11000,7 @@ var model = {
                                                 }
                                                 console.log(paramData.opponentsSingle);
                                                 paramData.sport = n.success.SPORT;
-                                                paramData.scheduleDate = moment(n.success.DATE).format();
+                                                paramData.scheduleDate = n.success.DATE;
                                                 paramData.scheduleTime = n.success.TIME;
                                                 paramData.video = singleData["VIDEO"];
                                                 paramData.video = singleData["VIDEO TYPE"];
@@ -11067,7 +11058,7 @@ var model = {
                         async.waterfall([
                                 function (callback) {
                                     var date = moment(singleData.DATE, "DD-MM-YYYY");
-                                    singleData.DATE = date;
+                                    // singleData.DATE = date;
                                     callback(null, singleData);
                                 },
                                 function (singleData, callback) {
@@ -11247,7 +11238,7 @@ var model = {
             async.waterfall([
                     function (callback) {
                         var date = moment(singleData.DATE, "DD-MM-YYYY");
-                        singleData.DATE = date;
+                        // singleData.DATE = date;
                         callback(null, singleData);
                     },
                     function (singleData, callback) {
@@ -11436,7 +11427,7 @@ var model = {
                         async.waterfall([
                                 function (callback) {
                                     var date = moment(singleData.DATE, "DD-MM-YYYY");
-                                    singleData.DATE = date;
+                                    // singleData.DATE = date;
                                     callback(null, singleData);
                                 },
                                 function (singleData, callback) {
@@ -11600,12 +11591,12 @@ var model = {
                     async.concatSeries(importData, function (singleData, callback) {
                             async.waterfall([
                                     function (callback) {
+                                        // console.log("date", singleData.DATE);
                                         var date = moment(singleData.DATE, "DD-MM-YYYY");
-                                        singleData.DATE = date;
                                         callback(null, singleData);
                                     },
                                     function (singleData, callback) {
-                                        console.log("singleData", singleData);
+                                        // console.log("singleData", singleData);
                                         var paramData = {};
                                         paramData.name = singleData.EVENT;
                                         paramData.age = singleData["AGE GROUP"];
@@ -11642,7 +11633,7 @@ var model = {
                                             if (_.isEmpty(singleData["TEAM 1"])) {
                                                 callback(null, singleData);
                                             } else {
-                                                console.log("singleData1", singleData);
+                                                // console.log("singleData1", singleData);
                                                 var paramData = {};
                                                 paramData.team = singleData["TEAM 1"];
                                                 paramData.sport = singleData.SPORT;
@@ -11670,7 +11661,7 @@ var model = {
                                             callback(null, singleData);
                                         } else {
                                             if (_.isEmpty(singleData["TEAM 2"])) {
-                                                console.log("inside sfa");
+                                                // console.log("inside sfa");
                                                 callback(null, singleData);
                                             } else {
                                                 var paramData = {};
@@ -11701,7 +11692,7 @@ var model = {
                                             paramData.matchId = singleData["MATCH ID"];
                                             paramData.round = singleData["ROUND"];
                                             if (_.isEmpty(singleData["TEAM NAME 1"]) || _.isEmpty(singleData["TEAM NAME 2"])) {
-                                                paramData.opponentsTeam = "";
+                                                paramData.opponentsTeam = [];
                                             } else if (_.isEmpty(singleData["TEAM NAME 1"])) {
                                                 paramData.opponentsTeam.push(singleData["TEAM NAME 2"]);
                                             } else if (_.isEmpty(singleData["TEAM NAME 2"])) {
@@ -11815,7 +11806,7 @@ var model = {
                             async.waterfall([
                                     function (callback) {
                                         var date = moment(singleData.DATE, "DD-MM-YYYY");
-                                        singleData.DATE = date;
+                                        // singleData.DATE = date;
                                         callback(null, singleData);
                                     },
                                     function (singleData, callback) {
@@ -11912,19 +11903,19 @@ var model = {
                                             var excelType = singleData["STAGE"].toLowerCase();
                                             // if (excelType == 'knockout') {
                                             var paramData = {};
-                                            paramData.opponentsTeam = [];
+                                            paramData.opponentsSingle = [];
                                             paramData.matchId = singleData["MATCH ID"];
                                             // paramData.matchId = data.matchId;
                                             paramData.round = singleData["ROUND"];
                                             if (_.isEmpty(singleData["NAME 1"]) || _.isEmpty(singleData["NAME 2"])) {
-                                                paramData.opponentsTeam = "";
+                                                paramData.opponentsSingle = [];
                                             } else if (_.isEmpty(singleData["NAME 1"])) {
-                                                paramData.opponentsTeam.push(singleData["NAME 2"]);
+                                                paramData.opponentsSingle.push(singleData["NAME 2"]);
                                             } else if (_.isEmpty(singleData["NAME 2"])) {
-                                                paramData.opponentsTeam.push(singleData["NAME 1"]);
+                                                paramData.opponentsSingle.push(singleData["NAME 1"]);
                                             } else {
-                                                paramData.opponentsTeam.push(singleData["NAME 1"]);
-                                                paramData.opponentsTeam.push(singleData["NAME 2"]);
+                                                paramData.opponentsSingle.push(singleData["NAME 1"]);
+                                                paramData.opponentsSingle.push(singleData["NAME 2"]);
                                             }
                                             paramData.sport = singleData.SPORT;
                                             paramData.scheduleDate = singleData.DATE;
@@ -14604,7 +14595,7 @@ var model = {
                         async.waterfall([
                                 function (callback) {
                                     var date = moment(singleData.DATE, "DD-MM-YYYY");
-                                    singleData.DATE = date;
+                                    // singleData.DATE = date;
                                     callback(null, singleData);
                                 },
                                 function (singleData, callback) {
@@ -14860,7 +14851,7 @@ var model = {
                             async.waterfall([
                                     function (callback) {
                                         var date = moment(singleData.DATE, "DD-MM-YYYY");
-                                        singleData.DATE = date;
+                                        // singleData.DATE = date;
                                         callback(null, singleData);
                                     },
                                     function (singleData, callback) {
@@ -14952,7 +14943,7 @@ var model = {
                                             paramData.matchId = singleData["MATCH ID"];
                                             paramData.round = _.trim(singleData["ROUND NAME"]);
                                             if (_.isEmpty(singleData["PARTICIPANT 1"]) && _.isEmpty(singleData["PARTICIPANT 2"])) {
-                                                paramData.opponentsTeam = "";
+                                                paramData.opponentsTeam = [];
                                             } else if (_.isEmpty(singleData["PARTICIPANT 1"])) {
                                                 paramData.opponentsTeam.push(singleData["PARTICIPANT 2"]);
                                             } else if (_.isEmpty(singleData["PARTICIPANT 2"])) {
@@ -14961,8 +14952,7 @@ var model = {
                                                 paramData.opponentsTeam.push(singleData["PARTICIPANT 1"]);
                                                 paramData.opponentsTeam.push(singleData["PARTICIPANT 2"]);
                                             }
-                                            console.log("singleData", singleData);
-
+                                            // console.log("singleData", singleData);
                                             // console.log("opponentsTeam", paramData.opponentsTeam);
                                             paramData.sport = singleData.SPORT;
                                             paramData.scheduleDate = singleData.DATE;
@@ -15023,7 +15013,7 @@ var model = {
                             async.waterfall([
                                     function (callback) {
                                         var date = moment(singleData.DATE, "DD-MM-YYYY");
-                                        singleData.DATE = date;
+                                        // singleData.DATE = date;
                                         callback(null, singleData);
                                     },
                                     function (singleData, callback) {
@@ -15121,7 +15111,7 @@ var model = {
                                             paramData.matchId = singleData["MATCH ID"];
                                             paramData.round = _.trim(singleData["ROUND NAME"]);
                                             if (_.isEmpty(singleData["PARTICIPANT 1"]) && _.isEmpty(singleData["PARTICIPANT 2"])) {
-                                                paramData.opponentsSingle = "";
+                                                paramData.opponentsSingle = [];
                                             } else if (_.isEmpty(singleData["PARTICIPANT 1"])) {
                                                 paramData.opponentsSingle.push(singleData["PARTICIPANT 2"]);
                                             } else if (_.isEmpty(singleData["PARTICIPANT 2"])) {
