@@ -17,6 +17,11 @@ myApp.factory('ResultSportInitialization', function () {
         surname: player.studentId.surname,
         fullName: player.studentId.firstName + " " + player.studentId.surname
       };
+      if(player.studentId.middleName){
+         format.middleName = player.studentId.middleName;
+        } else {
+          format.middleName = " ";
+      }
       switch (sportName) {
         case "Basketball":
           format.playerPoints.freeThrow = [];
