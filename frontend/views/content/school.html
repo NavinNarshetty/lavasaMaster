@@ -159,9 +159,10 @@
                         <a ui-sref="school-profile({id:data._id})">
                             <div class="school-boxs2">
                                 <div class="box-headers">
-                                    <div class="school-imgs text-center sf-relative border-r w130">
+                                    <div class="school-imgs text-center sf-relative border-r w130 main-img-holder">
                                         <!-- <img src="img/sf-school-grey.png" alt=""> -->
-                                        <img ng-src="{{data.schoolLogo|serverimage2}}" alt="">
+                                        <img class="main-img" ng-if="data.schoolLogo|serverimage2" ng-src="{{data.schoolLogo|serverimage2}}" alt="">
+                                        <img class="main-img" ng-if="!(data.schoolLogo|serverimage2)" ng-src="img/noimage.png" alt="">
                                         <div class="sigh-imgs sf-absulate">
                                             <img ng-show="data.status == 'Verified'" ng-src="img/sf-right.png" alt="">
                                         </div>

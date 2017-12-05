@@ -347,7 +347,7 @@ var model = {
             field: data.field,
             filters: {
                 keyword: {
-                    fields: ['schoolName'],
+                    fields: ['schoolName', 'sfaID'],
                     term: data.keyword
                 }
             },
