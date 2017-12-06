@@ -267,42 +267,42 @@
                                         <li>
                                             <a>SCHOOL CHAMPIONSHIP</a>
                                         </li>
-                                        <li class="hide" ng-if="selectedCity!=='hyderabad'">
+                                        <li style="display:none !important;" ng-if="selectedCity!=='hyderabad'">
                                             <a href="{{linkForAll}}liveupdates " style="color:#5aeba4 !important" target="_blank ">LIVE UPDATES</a>
                                         </li>
-                                        <li class="hide" ng-if="selectedCity !=='hyderabad'">
+                                        <li class="hide" style="display:none !important;" ng-if="selectedCity !=='hyderabad'">
                                             <a href="{{registerSchool}}/livescore" style="color:#5aeba4 !important">LIVE SCORES</a>
                                         </li>
-                                        <li ng-if="!registerSchool ">
+                                        <li ng-if="!registerSchool " class="hide" style="display:none !important;">
                                             <a ui-sref="championship "> ABOUT CHAMPIONSHIP</a>
                                         </li>
-                                        <li ng-if="registerSchool ">
+                                        <li ng-if="registerSchool " class="hide" style="display:none !important;">
                                             <a href="{{registerSchool}}/championship " target="_blank "> ABOUT CHAMPIONSHIP</a>
                                         </li>
-                                        <li ng-if="!registerSchool">
+                                        <li ng-if="!registerSchool" class="hide" style="display:none !important;">
                                             <a ui-sref="register "> REGISTER</a>
                                         </li>
-                                        <li ng-if="registerSchool">
+                                        <li ng-if="registerSchool" class="hide" style="display:none !important;">
                                             <a href="{{registerSchool}}/register " target="_blank "> REGISTER</a>
                                         </li>
-                                        <li ng-if="!registerSchool">
+                                        <li ng-if="!registerSchool" class="hide" style="display:none !important;">
                                             <a ui-sref="championshipschedules ">CHAMPIONSHIP SCHEDULE</a>
                                         </li>
-                                        <li ng-if="registerSchool">
+                                        <li ng-if="registerSchool" class="hide" style="display:none !important;">
                                             <a href="{{registerSchool}}/championship-schedule " target="_blank ">CHAMPIONSHIP SCHEDULE</a>
                                         </li>
                                         <!-- <li><a ui-sref="faq ">SPECIAL EVENTS</a></li>
                                                               <li><a ui-sref="faq ">VENUE</a></li>  -->
-                                        <li ng-if="!registerSchool">
+                                        <li ng-if="!registerSchool" class="hide" style="display:none !important;">
                                             <a ui-sref="championshipschedule">DRAWS &amp; SCHEDULES</a>
                                         </li>
-                                        <li ng-if="registerSchool">
+                                        <li ng-if="registerSchool" class="hide" style="display:none !important;">
                                             <a href="{{registerSchool}}/draws-schedule" target="_blank">DRAWS &amp; SCHEDULES</a>
                                         </li>
-                                        <li ng-if="!registerSchool" class="hide">
+                                        <li ng-if="!registerSchool" class="hide" style="display:none !important;">
                                             <a ui-sref="specialevents">SPECIAL EVENTS</a>
                                         </li>
-                                        <li ng-if="registerSchool" class="hide">
+                                        <li ng-if="registerSchool" class="hide" style="display:none !important;">
                                             <a href="{{registerSchool}}/specialevents" target="_blank">SPECIAL EVENTS</a>
                                         </li>
                                         <li ng-if="!registerSchool">
@@ -568,30 +568,30 @@
                                     <li class="hide" ng-if="selectedCity !=='hyderabad'">
                                         <a href="{{registerSchool}}/livescore" style="color:#5aeba4 !important">LIVE SCORES</a>
                                     </li>
-                                    <li ng-if="!registerSchool ">
+                                    <li ng-if="!registerSchool " class="hide">
                                         <a ui-sref="championship "> ABOUT CHAMPIONSHIP</a>
                                     </li>
-                                    <li ng-if="registerSchool ">
+                                    <li ng-if="registerSchool " class="hide">
                                         <a href="{{registerSchool}}/championship " target="_blank "> ABOUT CHAMPIONSHIP</a>
                                     </li>
-                                    <li ng-if="!registerSchool ">
+                                    <li ng-if="!registerSchool " class="hide">
                                         <a ui-sref="register "> REGISTER</a>
                                     </li>
-                                    <li ng-if="registerSchool ">
+                                    <li ng-if="registerSchool " class="hide">
                                         <a href="{{registerSchool}}/register " target="_blank "> REGISTER</a>
                                     </li>
-                                    <li ng-if="!registerSchool ">
+                                    <li ng-if="!registerSchool " class="hide">
                                         <a ui-sref="championshipschedules ">CHAMPIONSHIP SCHEDULE</a>
                                     </li>
-                                    <li ng-if="registerSchool ">
+                                    <li ng-if="registerSchool " class="hide">
                                         <a href="{{registerSchool}}/championship-schedule " target="_blank ">CHAMPIONSHIP SCHEDULE</a>
                                     </li>
                                     <!-- <li><a ui-sref="faq ">SPECIAL EVENTS</a></li>
                                                                       <li><a ui-sref="faq ">VENUE</a></li> -->
-                                    <li ng-if="!registerSchool">
+                                    <li ng-if="!registerSchool" class="hide">
                                         <a ui-sref="championshipschedule">DRAWS &amp; SCHEDULES</a>
                                     </li>
-                                    <li ng-if="registerSchool">
+                                    <li ng-if="registerSchool" class="hide">
                                         <a href="{{registerSchool}}/draws-schedule" target="_blank">DRAWS &amp; SCHEDULES</a>
                                     </li>
                                     <li ng-if="!registerSchool" class="hide">
@@ -670,30 +670,30 @@
                                 <li class="hide" ng-if="selectedCity !=='hyderabad'">
                                     <a href="{{registerSchool}}/livescore" style="color:#5aeba4 !important">LIVE SCORE</a>
                                 </li>
-                                <li ng-if="!registerSchool ">
+                                <li ng-if="!registerSchool " class="hide">
                                     <a ui-sref="championship "> ABOUT CHAMPIONSHIP</a>
                                 </li>
-                                <li ng-if="registerSchool ">
+                                <li ng-if="registerSchool " class="hide">
                                     <a href="{{registerSchool}}/championship " target="_blank "> ABOUT CHAMPIONSHIP</a>
                                 </li>
-                                <li ng-if="!registerSchool ">
+                                <li ng-if="!registerSchool " class="hide">
                                     <a ui-sref="register "> REGISTER</a>
                                 </li>
-                                <li ng-if="registerSchool ">
+                                <li ng-if="registerSchool " class="hide">
                                     <a href="{{registerSchool}}/register " target="_blank "> REGISTER</a>
                                 </li>
-                                <li ng-if="!registerSchool ">
+                                <li ng-if="!registerSchool " class="hide">
                                     <a ui-sref="championshipschedules ">CHAMPIONSHIP SCHEDULE</a>
                                 </li>
-                                <li ng-if="registerSchool ">
+                                <li ng-if="registerSchool " class="hide">
                                     <a href="{{registerSchool}}/championship-schedule " target="_blank ">CHAMPIONSHIP SCHEDULE</a>
                                 </li>
                                 <!--    <li><a ui-sref="faq ">SPECIAL EVENTS</a></li>
                                                               <li><a ui-sref="faq ">VENUE</a></li> -->
-                                <li ng-if="!registerSchool">
+                                <li ng-if="!registerSchool" class="hide">
                                     <a ui-sref="championshipschedule">DRAWS &amp; SCHEDULES</a>
                                 </li>
-                                <li ng-if="registerSchool">
+                                <li ng-if="registerSchool" class="hide">
                                     <a href="{{registerSchool}}/draws-schedule" target="_blank">DRAWS &amp; SCHEDULES</a>
                                 </li>
                                 <li ng-if="!registerSchool" class="hide">
