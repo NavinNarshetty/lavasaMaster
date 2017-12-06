@@ -5092,7 +5092,7 @@ var model = {
             final.team2Sub = team2Sub;
             count.team2SubCount = team2Sub.length;
             // let min = Object.values(count).sort((prev, next) => prev - next)[0] // 0.35
-            let max = Object.values(count).sort((prev, next) => next - prev)[0] // 5
+            var max = Object.values(count).sort((prev, next) => next - prev)[0] // 5
             final.max = max;
             console.log("max", max);
             finalData.push(final);
