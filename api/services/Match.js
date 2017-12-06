@@ -15863,5 +15863,36 @@ var model = {
             });
     },
 
+    setVimero: function (data, Callback) {
+
+        var Vimeo = require('vimeo-api').Vimeo;
+
+        CLIENT_ID = CLIENT_ID;
+        CLIENT_SECRET = CLIENT_SECRET;
+        console.log('1');
+        var lib = new Vimeo(CLIENT_ID, CLIENT_SECRET);
+        console.log('2');
+
+        lib.generateClientCredentials(scope, function (err, access_token) {
+            if (err) {
+                throw err;
+            }
+            console.log('3');
+            var token = access_token.access_token;
+            var scopes = access_token.scope;
+        });
+
+        lib.upload('youtube/test4.mp4', function (error, body, status_code, headers) {
+            if (err) {
+                throw err;
+            }
+            console.log('4');
+            lib.request(headers.location, function (error, body, status_code, headers) {
+                console.log(body);
+            });
+        });
+
+    }
+
 };
 module.exports = _.assign(module.exports, exports, model);
