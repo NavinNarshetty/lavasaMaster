@@ -5091,8 +5091,7 @@ var model = {
             count.team2Count = team2.length;
             final.team2Sub = team2Sub;
             count.team2SubCount = team2Sub.length;
-            // let min = Object.values(count).sort((prev, next) => prev - next)[0] // 0.35
-            var max = Object.values(count).sort((prev, next) => next - prev)[0] // 5
+            var max = Object.values(count).sort((prev, next) => next - prev)[0];
             final.max = max;
             console.log("max", max);
             finalData.push(final);
@@ -5149,7 +5148,7 @@ var model = {
             count.team2Count = team2.length;
             final.team2Sub = team2Sub;
             count.team2SubCount = team2Sub.length;
-            let max = Object.values(count).sort((prev, next) => next - prev)[0] // 5
+            var max = Object.values(count).sort((prev, next) => next - prev)[0];
             final.max = max;
             console.log("max", max);
             finalData.push(final);
@@ -5180,8 +5179,7 @@ var model = {
             count.team1Count = team1.length;
             final.team1Sub = team1Sub;
             count.team1SubCount = team1Sub.length;
-            // let min = Object.values(count).sort((prev, next) => prev - next)[0] // 0.35
-            let max = Object.values(count).sort((prev, next) => next - prev)[0] // 5
+            var max = Object.values(count).sort((prev, next) => next - prev)[0];
             console.log("max", max);
             final.max = max;
             finalData.push(final);
