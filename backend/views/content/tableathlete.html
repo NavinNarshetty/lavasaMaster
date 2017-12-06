@@ -112,8 +112,9 @@
                                         <input type="text" ng-keydown="$event.keyCode === 13 && searchInAthlete(search)" placeholder="Search Here...
                              " ng-model="search" />
                                     </form>
-                                    <a class="btn btn-success" ng-click="generateExcel(formData)">Excel Export</a>
-                                    <a class="btn btn-success" ng-click="targetAthleteExcel()">Export</a>
+                                    <a class="btn btn-success" ng-click="loginPopup(formData,'excel')"> <span style="font-size:12px;">Excel Export</span></a>
+                                    <!-- <a class="btn btn-success" ng-click="loginPopup(formData,'excel')">Login</a> -->
+                                    <a class="btn btn-success" ng-click="loginPopup('','targetexcel')"> <span style="font-size:12px;" >Target Export</span></a>
                                 </div>
                             </div>
                         </div>

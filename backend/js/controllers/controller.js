@@ -1827,7 +1827,7 @@ myApp.controller('DetailSportsCtrl', function ($scope, TemplateService, Navigati
 });
 
 //team sport
-myApp.controller('TeamSportCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr, $uibModal) {
+myApp.controller('TeamSportCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr, $uibModal, excelService) {
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tableteamsport");
@@ -1900,6 +1900,27 @@ myApp.controller('TeamSportCtrl', function ($scope, TemplateService, NavigationS
         });
     }
 
+    // $scope.user = $.jStorage.get("user");
+    $scope.login = {};
+    var navigationUrl;
+    var filename = 'IndividualSport';
+
+    // INITIALISE VARIABLES END
+    $scope.loginPopup = function (commonData, type) {
+        if (type === 'excel') {
+            navigationUrl = 'teamSport/generateExcel';
+        }
+        console.log(commonData, "*********************");
+        excelService.loginPopup(commonData, $scope, type);
+    }
+    $scope.loginSubmit = function (login) {
+        console.log(login, "check")
+
+        excelService.loginSubmit(login, navigationUrl, filename)
+
+    }
+
+    // OLD FUNCTION
     $scope.generateExcel = function () {
         $scope.url = "teamSport/generateExcel";
         NavigationService.generateExcel($scope.url, function (data) {
@@ -2064,7 +2085,7 @@ myApp.controller('StudentTeamCtrl', function ($scope, TemplateService, Navigatio
 
 //table-individualteamsport
 
-myApp.controller('IndividualTeamCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr, $uibModal, base64Service) {
+myApp.controller('IndividualTeamCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr, $uibModal, base64Service, excelService) {
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tableindividualsport");
@@ -2141,6 +2162,28 @@ myApp.controller('IndividualTeamCtrl', function ($scope, TemplateService, Naviga
         });
     }
 
+    // INITIALISE VARIABLES
+    // $scope.user = $.jStorage.get("user");
+    $scope.login = {};
+    var navigationUrl;
+    var filename = 'IndividualSport';
+
+    // INITIALISE VARIABLES END
+    $scope.loginPopup = function (commonData, type) {
+        if (type === 'excel') {
+            navigationUrl = 'individualSport/generateExcel';
+        }
+        console.log(commonData, "*********************");
+        excelService.loginPopup(commonData, $scope, type);
+    }
+    $scope.loginSubmit = function (login) {
+        console.log(login, "check")
+
+        excelService.loginSubmit(login, navigationUrl, filename)
+
+    }
+
+    // OLD GENERATE EXCEL
     $scope.generateExcel = function () {
         $scope.url = "individualSport/generateExcel";
         NavigationService.generateExcel($scope.url, function (data) {
@@ -2223,7 +2266,7 @@ myApp.controller('ViewIndividualSportCtrl', function ($scope, TemplateService, N
     $scope.getOneOldSchoolById();
 });
 
-myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, base64Service) {
+myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, base64Service, excelService) {
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tableschool");
@@ -2276,6 +2319,7 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
     }
 
 
+
     $scope.filterSchool = function () {
         $scope.url = "Registration/filterSchool";
         $scope.search = $scope.formData.keyword;
@@ -2290,11 +2334,24 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
     };
     $scope.filterSchool();
 
-    // $scope.generateExcel = function () {
-    //     NavigationService.generateSchoolExcel(function (data) {
-    //         window.location.href = adminurl + 'Registration/generateExcel';
-    //     });
-    // }
+    $scope.login = {};
+    var navigationUrl;
+    var filename = 'School';
+
+    // INITIALISE VARIABLES END
+    $scope.loginPopup = function (commonData, type) {
+        if (type === 'excel') {
+            navigationUrl = 'Registration/generateExcel';
+        }
+        console.log(commonData, "*********************");
+        excelService.loginPopup(commonData, $scope, type);
+    }
+    $scope.loginSubmit = function (login) {
+        console.log(login, "check")
+
+        excelService.loginSubmit(login, navigationUrl, filename)
+
+    }
 
     $scope.generateExcel = function (formData) {
         console.log("formdata", formData);
@@ -2356,7 +2413,7 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
     }
 })
 
-myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, base64Service) {
+myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, base64Service, $uibModal, toastr, excelService) {
     //athlete filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tableathlete");
@@ -2475,6 +2532,7 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
         });
     }
 
+    // OLD FUNCTIONS
     $scope.targetAthleteExcel = function () {
         var param = {};
         param.file = "targetAthlete"
@@ -2489,6 +2547,29 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
             console.log(formdata);
             NavigationService.generateAthleteExcelWithData(formdata, function (data) {});
         }
+    }
+    // OLD FUNCTIONS
+    // INITIALISE VARIABLES
+    // $scope.user = $.jStorage.get("user");
+    $scope.login = {};
+    var navigationUrl;
+    var filename = 'Athlete';
+
+    // INITIALISE VARIABLES END
+    $scope.loginPopup = function (commonData, type) {
+        if (type === 'excel') {
+            navigationUrl = 'Athelete/generateExcel';
+        } else if (type === 'targetexcel') {
+            navigationUrl = "Athelete/getTargetAthlete";
+        }
+        console.log(commonData, "*********************");
+        excelService.loginPopup(commonData, $scope, type);
+    }
+    $scope.loginSubmit = function (login) {
+        console.log(login, "check")
+
+        excelService.loginSubmit(login, navigationUrl, filename)
+
     }
     $scope.transferToWebsite = function (id) {
         $scope.constraints = {};
@@ -5232,28 +5313,28 @@ myApp.controller('AdditionalPaymentCtrl', function ($scope, TemplateService, Nav
         }
     }
     $scope.viewTable = function () {
-        
-                $scope.url = "AdditionalPayment/filter";
-                // $scope.search = $scope.formData.keyword;
-                $scope.formData.page = $scope.formData.page++;
-                NavigationService.apiCall($scope.url, $scope.formData, function (data) {
-                    // console.log("data.value", data);
-                    $scope.items = data.data.results;
-                    _.each($scope.items, function (n) {
-                        // console.log('N', n);
-                        if(n.athleteId){
-                            if (n.athleteId.middleName) {
-                                n.athleteName = n.athleteId.firstName + ' ' + n.athleteId.middleName + ' ' + n.athleteId.surname;
-                            } else {
-                                n.athleteName = n.athleteId.firstName + ' ' + n.athleteId.surname;
-                            }
-                            n.sfaId = n.athleteId.sfaId;
-                        }
-                    });
-                    $scope.totalItems = data.data.total; 
-                    $scope.maxRow = data.data.options.count;
-                });
-            }
+
+        $scope.url = "AdditionalPayment/filter";
+        // $scope.search = $scope.formData.keyword;
+        $scope.formData.page = $scope.formData.page++;
+        NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+            // console.log("data.value", data);
+            $scope.items = data.data.results;
+            _.each($scope.items, function (n) {
+                // console.log('N', n);
+                if (n.athleteId) {
+                    if (n.athleteId.middleName) {
+                        n.athleteName = n.athleteId.firstName + ' ' + n.athleteId.middleName + ' ' + n.athleteId.surname;
+                    } else {
+                        n.athleteName = n.athleteId.firstName + ' ' + n.athleteId.surname;
+                    }
+                    n.sfaId = n.athleteId.sfaId;
+                }
+            });
+            $scope.totalItems = data.data.total;
+            $scope.maxRow = data.data.options.count;
+        });
+    }
     $scope.viewTable();
 
 

@@ -1,0 +1,31 @@
+<div class="loginpopup-modal">
+  <div class="modal-header" hidden>
+    <div class="loginpopup-header">
+      <h4 class="m-clear text-uppercase">Backend Login</h4>
+    </div>
+  </div>
+  <div class="modal-body">
+    <div class="login-popup-form">
+      <form ng-submit="loginSubmit(login,athleteexcelData)" autocomplete="off">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="login-formholder">
+              <div class="formholder-title text-center">Authentication</div>
+              <div class="form-group" hidden>
+                <label for="login.email">Email</label>
+                <input id="login.email" type="email" placeholder="Enter Email" class="form-control" ng-model="login.email" required/>
+              </div>
+              <div class="form-group">
+                <label for="login.password" hidden>Password</label>
+                <input id="login.password" type="password" placeholder="Enter Password" class="form-control" ng-model="login.password" required/>
+              </div>
+              <div class="form-group">
+                <button class="btn btn-green-outline btn-scoring" type="submit" ng-disabled="!login.password">SUBMIT</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
