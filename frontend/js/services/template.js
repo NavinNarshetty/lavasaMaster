@@ -33,7 +33,7 @@ myApp.service('TemplateService', function () {
       } else if (type == 'class') {
         var destination = '.' + destination;
       }
-      console.log(destination, type, 'in dir')
+    //   console.log(destination, type, 'in dir')
       $('html,body').animate({
           scrollTop: $(destination).offset().top
         },

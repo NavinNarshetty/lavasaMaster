@@ -96,7 +96,7 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
   //===================Start of sorting result of league-cum-knockout==================
   //resutLeagueCumKnockout() for Team Sport
   this.resutLeagueCumKnockout = function (result) {
-    console.log("result", result);
+    // console.log("result", result);
     _.each(result.opponentsTeam, function (team, index) {
       if (result.globalResult) {
         if (result.globalResult !== undefined) {
@@ -203,7 +203,7 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
       } else if (result.resultsCombat) {
         result.globalResult = result.resultsCombat;
       } else {
-        console.log("New Team Sport Found");
+        // console.log("New Team Sport Found");
       }
       //function resutLeagueCumKnockout to  Teamsport result 
       this.resutLeagueCumKnockout(result);
@@ -213,7 +213,7 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
       if (result.resultFencing) {
         result.globalResultIndividual = result.resultFencing;
       } else {
-        console.log("New Individual Sport found in League-cum-knockout");
+        // console.log("New Individual Sport found in League-cum-knockout");
       }
       this.resutLeagueCumKnockoutIndividual(result);
 
@@ -229,7 +229,7 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
     } else if (type == 'class') {
       var destination = '.' + destination;
     }
-    console.log(destination, type, 'in dir')
+    // console.log(destination, type, 'in dir')
     $('html,body').animate({
       scrollTop: $(destination).offset().top
     },

@@ -30,7 +30,7 @@ myApp.controller('TeamCtrl', function ($scope, TemplateService, NavigationServic
     $scope.doSearch = function () {
         $scope.searchFilter.page = $scope.searchFilter.page++;
         NavigationService.getSearchDataTeam($scope.searchFilter, function (data) {
-            console.log('athlete', data);
+            // console.log('athlete', data);
             $scope.getSearchData = data.data.results;
             $scope.maxSize = data.data.options.count;
             $scope.totalItem = data.data.total;
@@ -95,14 +95,14 @@ myApp.controller('TeamDetailCtrl', function ($scope, TemplateService, Navigation
 
     $scope.teamDetail = function () {
         NavigationService.getTeamDetail($stateParams.id, function (data) {
-            console.log(data);
+            // console.log(data);
             if (data.value) {
                 $scope.teamDetails = data.data;
                 $scope.sportsListSubCategoryId = data.data.sportsListSubCategory;
-                console.log($scope.teamDetails);
+                // console.log($scope.teamDetails);
             } else {
                 $scope.teamDetails = {};
-                console.log("Error while fetching team details");
+                // console.log("Error while fetching team details");
             }
         });
     };
@@ -112,7 +112,7 @@ myApp.controller('TeamDetailCtrl', function ($scope, TemplateService, Navigation
         $scope.filterStatistics.sportsListSubCategory = $scope.sportsListSubCategoryId;
         // $scope.teamStats = undefined;
         NavigationService.getTeamStats($scope.filterStatistics, function (data) {
-            console.log('getStats', data);
+            // console.log('getStats', data);
             $scope.teamStats = data.data;
         });
     };

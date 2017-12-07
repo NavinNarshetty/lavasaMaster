@@ -99,7 +99,7 @@ myApp.controller('swissLeagueCtrl', function ($scope, TemplateService, $state, N
                   }
 
                   if (value.opponentsSingle.length > 0) {
-                    console.log(value.resultSwiss);
+                    // console.log(value.resultSwiss);
                     if (value.resultSwiss != undefined && value.resultSwiss.players) {
                       if (value.opponentsSingle.length < value.resultSwiss.players.length) {
                         _.each(value.resultSwiss.players, function (player) {
@@ -133,8 +133,8 @@ myApp.controller('swissLeagueCtrl', function ($scope, TemplateService, $state, N
                 });
               });
 
-              console.log($scope.roundsListName, " $scope.roundsListName ");
-              console.log($scope.roundsList, " $scope.roundsList ");
+              // console.log($scope.roundsListName, " $scope.roundsListName ");
+              // console.log($scope.roundsList, " $scope.roundsList ");
             }
           } else {
             toastr.error(allData.message, 'Error Message');
@@ -164,7 +164,7 @@ myApp.controller('swissLeagueCtrl', function ($scope, TemplateService, $state, N
                   value.rank = 3;
                 }
               });
-              console.log("  $scope.swissWinners", $scope.swissWinners);
+              // console.log("  $scope.swissWinners", $scope.swissWinners);
             }
           } else {
             toastr.error(allData.message, 'Error Message');

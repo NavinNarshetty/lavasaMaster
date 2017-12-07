@@ -1,6 +1,6 @@
 myApp.controller('languageCtrl', function ($scope, TemplateService, $translate, $rootScope) {
     $scope.changeLanguage = function () {
-        console.log("Language CLicked");
+        // console.log("Language CLicked");
         if (!$.jStorage.get("language")) {
             $translate.use("hi");
             $.jStorage.set("language", "hi");

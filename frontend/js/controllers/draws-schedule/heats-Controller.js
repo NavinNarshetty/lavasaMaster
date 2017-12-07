@@ -116,7 +116,7 @@ myApp.controller('HeatsCtrl', function ($scope, TemplateService, $state, Navigat
   var tempObjINdex;
   $scope.constraints = {};
   $scope.eventName = $stateParams.sportName;
-  console.log("eventName", $scope.eventName);
+  // console.log("eventName", $scope.eventName);
   $scope.getSportSpecificRounds = function (roundName) {
     if ($stateParams.id) {
       if (roundName) {
@@ -191,8 +191,8 @@ myApp.controller('HeatsCtrl', function ($scope, TemplateService, $state, Navigat
                   }
                 });
               });
-              console.log($scope.roundsListName, " $scope.roundsListName ");
-              console.log($scope.roundsList, " $scope.roundsList ");
+              // console.log($scope.roundsListName, " $scope.roundsListName ");
+              // console.log($scope.roundsList, " $scope.roundsList ");
             }
           } else {
             toastr.error(allData.message, 'Error Message');

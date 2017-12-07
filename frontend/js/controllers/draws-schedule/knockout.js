@@ -111,7 +111,7 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
                     if (!allData.message) {
                         if (allData.value) {
                             $scope.winnerCard = allData.data;
-                            console.log("  $scope.winnerCard", $scope.winnerCard);
+                            // console.log("  $scope.winnerCard", $scope.winnerCard);
                             _.each($scope.winnerCard, function (key) {
                                 if (key.medaltype === "gold") {
                                     key.rank = 1;
@@ -149,7 +149,7 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
             size: 'lg',
             windowClass: 'matchcenter-modal'
         })
-        console.log($scope.currentMatch, 'current');
+        // console.log($scope.currentMatch, 'current');
     }
     // MATCH CENTER END
 
@@ -351,7 +351,7 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
                             }
                             _.each($scope.roundsList, function (key) {
                                 _.each(key.match, function (value) {
-                                    console.log(value.opponentsTeam);
+                                    // console.log(value.opponentsTeam);
                                     if (value.sport.eventPdf) {
                                         $scope.showPdf = true;
                                         $scope.pdfdata = value.sport.eventPdf;
@@ -360,7 +360,7 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
 
                                     }
                                     _.each(value.opponentsTeam, function (obj) {
-                                        console.log(obj, "obj");
+                                        // console.log(obj, "obj");
                                         if (obj) {
                                             _.each(obj.studentTeam, function (value) {
                                                 value.fullName = value.studentId.firstName + ' ' + value.studentId.surname;
@@ -404,8 +404,8 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
 
                                 });
                             });
-                            console.log($scope.roundsListName, " $scope.roundsListName ");
-                            console.log($scope.roundsList, " $scope.roundsList ");
+                            // console.log($scope.roundsListName, " $scope.roundsListName ");
+                            // console.log($scope.roundsList, " $scope.roundsList ");
                         }
                     } else {
                         toastr.error(allData.message, 'Error Message');
@@ -435,7 +435,7 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
                                 }
                             });
 
-                            console.log("  $scope.winnerDoubles", $scope.winnerDoubles);
+                            // console.log("  $scope.winnerDoubles", $scope.winnerDoubles);
                         }
                     } else {
                         toastr.error(allData.message, 'Error Message');
@@ -461,7 +461,7 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
             size: 'lg',
             windowClass: 'matchcenter-modal'
         })
-        console.log($scope.currentMatch, 'current');
+        // console.log($scope.currentMatch, 'current');
     }
     // MATCH CENTER END
 
@@ -639,7 +639,7 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
 
 
 
-    console.log("im in konckout team");
+    // console.log("im in konckout team");
 
     $scope.constraints = {};
     $scope.getSportSpecificRounds = function (roundName) {
@@ -690,7 +690,7 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
                                         value.finalResult = value.resultsCombat;
                                         knockoutService.sortResult($scope.roundsList);
                                     } else {
-                                        console.log("no Sport Result Found");
+                                        // console.log("no Sport Result Found");
                                     }
                                 });
                             });
@@ -724,7 +724,7 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
                                     value.rank = 3;
                                 }
                             });
-                            console.log("  $scope.winnerDoubles", $scope.winnerDoubles);
+                            // console.log("  $scope.winnerDoubles", $scope.winnerDoubles);
                         }
                     } else {
                         toastr.error(allData.message, 'Error Message');
@@ -773,9 +773,9 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
             templateUrl: 'views/modal/matchcenter-team.html',
             size: 'lg',
             windowClass: 'teammatchcenter-modal'
-        })
-        console.log($scope.currentMatch, 'current');
-    }
+        });
+        // console.log($scope.currentMatch, 'current');
+    };
     // MATCH CENTER MODAL END
     // CLEAVE FUNCTION OPTIONS
     $scope.options = {

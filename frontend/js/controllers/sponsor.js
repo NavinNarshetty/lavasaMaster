@@ -49,19 +49,19 @@ myApp.controller('SponsorPartnerCtrl', function ($scope, TemplateService, $state
   $scope.getSponsor = function () {
     NavigationService.getSponsor(function (data) {
       $scope.sponsorData = data.data.data;
-      console.log($scope.sponsorData, "console")
+      // console.log($scope.sponsorData, "console")
     });
 
   }
   $scope.getSponsor();
   $scope.goSponsor = function (data) {
-    console.log(data)
+    // console.log(data)
     if (data.insidePage === "true") {
       $state.go('individual-sponsor', {
         id: data._id
       })
     } else {
-      console.log("nothing")
+      // console.log("nothing")
     }
 
   }
@@ -78,7 +78,7 @@ myApp.controller('IndividualSponsorCtrl', function ($scope, TemplateService, $st
   $scope.navigation = NavigationService.getNavigation();
   $scope.constraints = {};
   $scope.constraints._id = $stateParams.id;
-  console.log($stateParams.id)
+  // console.log($stateParams.id)
 
   $scope.getOneSponsor = function () {
     $scope.constraints._id = $stateParams.id;
@@ -86,8 +86,8 @@ myApp.controller('IndividualSponsorCtrl', function ($scope, TemplateService, $st
       $scope.sponsorData = data.data.data;
       $scope.sponsorGallery = $scope.sponsorData.videoGallery.concat($scope.sponsorData.gallery);
       $scope.sponsorGallery = _.shuffle($scope.sponsorGallery)
-      console.log($scope.sponsorGallery, "gallery")
-      console.log($scope.sponsorData, "console")
+      // console.log($scope.sponsorGallery, "gallery")
+      // console.log($scope.sponsorData, "console")
     });
   }
   $scope.getOneSponsor();
@@ -96,7 +96,7 @@ myApp.controller('IndividualSponsorCtrl', function ($scope, TemplateService, $st
     $scope.constraints.sponsorId = $stateParams.id;
     NavigationService.getSponsorCard($scope.constraints, function (data) {
       $scope.sponsorCard = data.data.data;
-      console.log($scope.sponsorCard, "console card")
+      // console.log($scope.sponsorCard, "console card")
     });
   }
   $scope.getSponsorCard();

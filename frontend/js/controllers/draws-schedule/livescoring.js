@@ -18,16 +18,16 @@ myApp.controller('LiveScoringCtrl', function ($scope, TemplateService, $state, N
 
     $scope.getAllSchedule = function (data) {
       $scope.url = "Schedule/getAll";
-      console.log(data);
+      // console.log(data);
       $scope.constraints = {};
       $scope.constraints.keyword = data;
       NavigationService.apiCallWithData($scope.url, $scope.constraints, function (data) {
-        console.log("data.value sportlist", data);
+        // console.log("data.value sportlist", data);
         $scope.scheduleData = data.data;
         $scope.scheduleData = _.sortBy($scope.scheduleData, 'sport.name');
         $scope.scheduleOdd = $scope.scheduleData.length % 2;
         if ($scope.scheduleOdd !== 0) {
-          console.log('in not')
+          // console.log('in not')
           $scope.scheduleData.push({})
         }
         _.each($scope.scheduleData, function (key) {
@@ -41,9 +41,9 @@ myApp.controller('LiveScoringCtrl', function ($scope, TemplateService, $state, N
         $scope.scheduleData1 = $scope.scheduleData.slice(0, $scope.scheduleData.length / 2);
         // $scope.scheduleData1 = _.partition($scope.scheduleData, $scope.scheduleData = $scope.scheduleData.length % 2);
         $scope.scheduleData2 = $scope.scheduleData.slice($scope.scheduleData.length / 2);
-        console.log($scope.scheduleData1, 'chunk1');
-        console.log($scope.scheduleData2, 'chunk2');
-        console.log($scope.scheduleData, 'after push');
+        // console.log($scope.scheduleData1, 'chunk1');
+        // console.log($scope.scheduleData2, 'chunk2');
+        // console.log($scope.scheduleData, 'after push');
 
 
       });
@@ -54,7 +54,7 @@ myApp.controller('LiveScoringCtrl', function ($scope, TemplateService, $state, N
   $scope.formData = {};
 
   $scope.downloadPdf = function (data) {
-    console.log(data);
+    // console.log(data);
     if (data == 'badminton') {
       window.open("img/pdf/allbadminton.pdf", "_blank");
       // window.open("img/pdf/badminton1.pdf", "_blank");
@@ -69,7 +69,7 @@ myApp.controller('LiveScoringCtrl', function ($scope, TemplateService, $state, N
       if (!allData.message) {
         if (allData.value) {
           $scope.sportList = allData.data;
-          console.log("$scope.sportList", $scope.sportList);
+          // console.log("$scope.sportList", $scope.sportList);
         }
       } else {
         toastr.error(allData.message, 'Error Message');
@@ -87,7 +87,7 @@ myApp.controller('LiveScoringCtrl', function ($scope, TemplateService, $state, N
               n.ageGroupId = n.ageGroup._id;
               n.ageGroupName = n.ageGroup.name;
             })
-            console.log($scope.ageGroups, "allData");
+            // console.log($scope.ageGroups, "allData");
           }
         } else {
           toastr.error(allData.message, 'Error Message');
@@ -101,7 +101,7 @@ myApp.controller('LiveScoringCtrl', function ($scope, TemplateService, $state, N
       errorService.errorCode(data, function (allData) {
         if (!allData.message) {
           if (allData.value) {
-            console.log("WEight", allData);
+            // console.log("WEight", allData);
             $scope.allWeights = allData.data;
             if ($scope.allWeights.length > 0) {
               _.each($scope.allWeights, function (n) {
@@ -120,9 +120,9 @@ myApp.controller('LiveScoringCtrl', function ($scope, TemplateService, $state, N
   $scope.nameOfSport = {};
   $scope.requestObj = {};
   $scope.sportName = function (sportName, sportId) {
-    console.log("sportId", sportId);
+    // console.log("sportId", sportId);
     $scope.nameOfSport = sportName;
-    console.log("$scope.nameOfSport", $scope.nameOfSport);
+    // console.log("$scope.nameOfSport", $scope.nameOfSport);
     if (sportName === 'Boxing' || sportName === 'Judo' || sportName === 'Kumite' || sportName === 'Taekwondo' || sportName === 'Sport MMA') {
       $scope.showWeight = true;
     } else {
@@ -134,7 +134,7 @@ myApp.controller('LiveScoringCtrl', function ($scope, TemplateService, $state, N
       errorService.errorCode(data, function (allData) {
         if (!allData.message) {
           if (allData.value) {
-            console.log("  allData.data;", allData.data);
+            // console.log("  allData.data;", allData.data);
             $scope.getAllBySport = allData.data;
           }
         } else {
@@ -147,7 +147,7 @@ myApp.controller('LiveScoringCtrl', function ($scope, TemplateService, $state, N
   };
   //get weight and age by Event
   $scope.getAgeOrWeightsByEvent = function (sportlistId) {
-    console.log("sportlistId", sportlistId);
+    // console.log("sportlistId", sportlistId);
     $scope.constraintsObj = {};
     $scope.constraintsObj.sportslist = sportlistId._id;
     $scope.getAllWeightsByEvent($scope.constraintsObj);
@@ -157,7 +157,7 @@ myApp.controller('LiveScoringCtrl', function ($scope, TemplateService, $state, N
   }
   //view Draw Schedule 
   $scope.viewDraw = function (formData) {
-    console.log("$scope.viewDraw", $scope.nameOfSport);
+    // console.log("$scope.viewDraw", $scope.nameOfSport);
     NavigationService.getQuickSportId(formData, function (data) {
       errorService.errorCode(data, function (allData) {
         if (!allData.message) {
@@ -166,7 +166,7 @@ myApp.controller('LiveScoringCtrl', function ($scope, TemplateService, $state, N
             if ($scope.drawDetails === 'No Data Found') {
               toastr.error('No Event Found', 'Error Message');
             }
-            console.log($scope.drawDetails, "$scope.drawDetails ");
+            // console.log($scope.drawDetails, "$scope.drawDetails ");
             //FOR CHECKING SPORT TYPE
             if ($scope.drawDetails.sportType) {
               if ($scope.drawDetails.matchFound) {
@@ -221,7 +221,7 @@ myApp.controller('LiveScoringCtrl', function ($scope, TemplateService, $state, N
                   case 'Individual Sports':
                     switch ($scope.drawDetails.drawFormat) {
                       case 'Heats':
-                        console.log("im in else");
+                        // console.log("im in else");
                         $state.go('heats', {
                           id: $scope.drawDetails.sport,
                           sportName: $scope.nameOfSport

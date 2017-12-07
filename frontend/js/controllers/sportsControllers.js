@@ -38,7 +38,7 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
                             tempObj.sportName = value;
                             tempObj.tempArr = _.cloneDeep(key);
                             _.each(tempObj.tempArr, function (sport) {
-                                console.log("athlete", $scope.detail);
+                                // console.log("athlete", $scope.detail);
                                 if ($scope.detail.userType === "athlete" && !$scope.detail.mixAccess && $.jStorage.get("IsColg") === 'school' &&
                                     sport.name === 'Water Polo') {
                                     sport.isVisibleSport = true;
@@ -67,7 +67,7 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
     $scope.callLogin = function () {
         loginService.loginGet(function (data) {
             $scope.detail = data;
-            console.log($scope.detail);
+            // console.log($scope.detail);
         });
         if ($.jStorage.get("userType") !== null && $.jStorage.get("userDetails") !== null) {
             if ($.jStorage.get("userType") === "school") {
@@ -151,19 +151,19 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
     };
     // ===========removeThis========
     $scope.redirectTo = function (val) {
-        console.log(val);
+        // console.log(val);
         $scope.currentDate = new Date();
-        console.log($scope.currentDate, " $scope.currentDate ");
+        // console.log($scope.currentDate, " $scope.currentDate ");
         $scope.currentDate = $scope.currentDate.setHours(0, 0, 0, 0);
         $scope.endDate = new Date(val.endDate);
-        console.log("$scope.endDate ", $scope.endDate);
+        // console.log("$scope.endDate ", $scope.endDate);
         $scope.endDate = $scope.endDate.setHours(0, 0, 0, 0);
         if ($scope.currentDate && $scope.endDate) {
             if ($scope.currentDate <= $scope.endDate) {
-                console.log("eligible for registering sport");
+                // console.log("eligible for registering sport");
                 $.jStorage.set("confirmPageKey", val.sportType);
                 selectService.redirectTo = val.sportType;
-                console.log(selectService.redirectTo);
+                // console.log(selectService.redirectTo);
                 if ($.jStorage.get('userType') == 'athlete') {
                     NavigationService.getIndividualAthlete({
                         'athleteToken': $.jStorage.get('userDetails').accessToken,
@@ -172,7 +172,7 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
                         'gender': '',
                         'page': 1
                     }, function (data) {
-                        console.log(data);
+                        // console.log(data);
                         if (data.data.data._id) {
                             $state.go('sports-rules', {
                                 id: val._id
@@ -187,7 +187,7 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
                     });
                 }
             } else {
-                console.log("Not eligible for registering sport");
+                // console.log("Not eligible for registering sport");
                 var tempData = $.jStorage.get('userDetails');
                 if (!tempData.mixAccess) {
                     $scope.particularSport = val.name;
@@ -203,10 +203,10 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
                         $scope.registrationEnd.close();
                     }, 8000);
                 } else {
-                    console.log("eligible for registering sport");
+                    // console.log("eligible for registering sport");
                     $.jStorage.set("confirmPageKey", val.sportType);
                     selectService.redirectTo = val.sportType;
-                    console.log(selectService.redirectTo);
+                    // console.log(selectService.redirectTo);
                     if ($.jStorage.get('userType') == 'athlete') {
                         NavigationService.getIndividualAthlete({
                             'athleteToken': $.jStorage.get('userDetails').accessToken,
@@ -215,7 +215,7 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
                             'gender': '',
                             'page': 1
                         }, function (data) {
-                            console.log(data);
+                            // console.log(data);
                             if (data.data.data._id) {
                                 $state.go('sports-rules', {
                                     id: val._id
@@ -237,20 +237,20 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
     $scope.redirectForTennis = function (val) {
         if (val) {
             $scope.currentDate = new Date();
-            console.log($scope.currentDate, " $scope.currentDate ");
+            // console.log($scope.currentDate, " $scope.currentDate ");
             $scope.currentDate = $scope.currentDate.setHours(0, 0, 0, 0);
             $scope.endDate = new Date(val.endDate);
-            console.log("$scope.endDate ", $scope.endDate);
+            // console.log("$scope.endDate ", $scope.endDate);
             $scope.endDate = $scope.endDate.setHours(0, 0, 0, 0);
             if ($scope.currentDate && $scope.endDate) {
                 if ($scope.currentDate <= $scope.endDate) {
-                    console.log("eligible for registering sport");
+                    // console.log("eligible for registering sport");
                     $state.go('sports-rules', {
                         id: val._id
                     });
 
                 } else {
-                    console.log("Not eligible for registering sport");
+                    // console.log("Not eligible for registering sport");
                     var tempData = $.jStorage.get('userDetails');
                     if (!tempData.mixAccess) {
                         $scope.particularSport = val.name;
@@ -266,7 +266,7 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
                             $scope.registrationEnd.close();
                         }, 8000);
                     } else {
-                        console.log("eligible for registering sport");
+                        // console.log("eligible for registering sport");
                         $state.go('sports-rules', {
                             id: val._id
                         });
@@ -369,7 +369,7 @@ myApp.controller('SportsRulesCtrl', function ($scope, TemplateService, $state, N
                         $scope.ruleArray = [];
                         $scope.ruleArray.push(allData.data.rules);
                     } else {
-                        console.log("no data found");
+                        // console.log("no data found");
                     }
                 } else {
                     $scope.isDisabled = false;
@@ -412,7 +412,7 @@ myApp.controller('SportsRulesCtrl', function ($scope, TemplateService, $state, N
                                 id: id
                             });
                         } else if ($.jStorage.get('userType') == 'athlete') {
-                            console.log($scope.basicSportDetails);
+                            // console.log($scope.basicSportDetails);
                             $scope.selectService.goNext($scope.basicSportDetails, null, null, null);
                         }
 
@@ -466,7 +466,7 @@ myApp.controller('SportIndividualCtrl', function ($scope, TemplateService, toast
     }
 
     if ($stateParams.id) {
-        console.log($stateParams.id);
+        // console.log($stateParams.id);
         $scope.constraints.sportsListSubCategory = $stateParams.id;
         $scope.constraints.type = 'Individual';
     }
@@ -478,10 +478,10 @@ myApp.controller('SportIndividualCtrl', function ($scope, TemplateService, toast
                 if (allData.value) {
                     if (_.isEmpty(allData.data)) {
                         $scope.getIndividualDetails = [];
-                        console.log('enter');
+                        // console.log('enter');
                     } else {
                         $scope.getIndividualDetails = allData.data;
-                        console.log($scope.getIndividualDetails);
+                        // console.log($scope.getIndividualDetails);
                         $scope.sportBy = $scope.getIndividualDetails[0].info[0].createdBy.toLowerCase();
                     }
                 }
@@ -548,7 +548,7 @@ myApp.controller('SportTeamCtrl', function ($scope, TemplateService, toastr, Nav
     }
 
     if ($stateParams.id) {
-        console.log($stateParams.id);
+        // console.log($stateParams.id);
         $scope.constraints.sportsListSubCategory = $stateParams.id;
         $scope.constraints.type = 'Team';
     }

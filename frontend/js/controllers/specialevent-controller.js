@@ -35,16 +35,16 @@ myApp.controller('SpecialEventCtrl', function ($scope, TemplateService, $state, 
   // API CALLS
   // GET ALL EVENT
   $scope.getEventCalender = function () {
-    console.log('getAllEventsByMonth');
+    // console.log('getAllEventsByMonth');
     NavigationService.getAllEventsByMonth(function (data) {
-      console.log(data, 'data');
+      // console.log(data, 'data');
       if (data.data.value == true) {
         $scope.events = data.data.data;
         $scope.initialiseColor();
       } else {
         toastr.error('Try Again');
       }
-      console.log($scope.events, 'Event List');
+      // console.log($scope.events, 'Event List');
     })
   }
   $scope.getEventCalender();

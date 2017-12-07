@@ -19,7 +19,7 @@ myApp.controller('eventAttendanceCtrl', function ($scope, TemplateService, $stat
   // INDIVIDUAL ATHELTE
   $scope.getAthleteName = function (input) {
     NavigationService.getAthletesfaID(input, function (data) {
-      console.log(data, 'athlete for individual')
+      // console.log(data, 'athlete for individual')
       $scope.athleteData = data.data.data.results;
       $scope.athleteData.fullName = '';
       _.each($scope.athleteData, function (value) {
@@ -30,14 +30,14 @@ myApp.controller('eventAttendanceCtrl', function ($scope, TemplateService, $stat
         }
       })
 
-      console.log($scope.athleteData, "check this athlete")
+      // console.log($scope.athleteData, "check this athlete")
     });
   }
   $scope.getAthleteName();
 
 
   $scope.selectSchool = function (data) {
-    console.log(data, "on select of school")
+    // console.log(data, "on select of school")
     if (data == undefined) {
       $scope.athlete = false;
       $scope.formData.athlete = ''
@@ -49,7 +49,7 @@ myApp.controller('eventAttendanceCtrl', function ($scope, TemplateService, $stat
     $scope.constraints.input = ''
     $scope.url = 'EventBib/getAllAthleteBySchoolId'
     NavigationService.apiCallWithData($scope.url, $scope.constraints, function (data) {
-      console.log(data, 'data of athlete fo selected school')
+      // console.log(data, 'data of athlete fo selected school')
       $scope.selectAthleteData = data.data.results;
       _.each($scope.selectAthleteData, function (key) {
         if (key.middleName) {
@@ -69,7 +69,7 @@ myApp.controller('eventAttendanceCtrl', function ($scope, TemplateService, $stat
     // console.log(data, 'select athlete from selected school')
     $scope.url = 'EventBib/getAllAthleteBySchoolId'
     NavigationService.apiCallWithData($scope.url, $scope.schoolAthleteData, function (data) {
-      console.log(data, 'selected school athlete data in refresh')
+      // console.log(data, 'selected school athlete data in refresh')
     });
 
   }
@@ -77,17 +77,17 @@ myApp.controller('eventAttendanceCtrl', function ($scope, TemplateService, $stat
 
 
   $scope.playerRefresh = function (data) {
-    console.log(data, 'refresh player')
+    // console.log(data, 'refresh player')
     $scope.refreshData = {}
     $scope.refreshData.input = data;
-    console.log($scope.refreshData, "in")
+    // console.log($scope.refreshData, "in")
     $scope.getAthleteName($scope.refreshData);
   }
   // INDIVIDUAL
   // GET ALL SPORTS
   $scope.getAllSports = function () {
     NavigationService.getSportsList(function (data) {
-      console.log(data, "get all sports");
+      // console.log(data, "get all sports");
       $scope.sportList = data.data.data;
     });
   }
@@ -97,7 +97,7 @@ myApp.controller('eventAttendanceCtrl', function ($scope, TemplateService, $stat
   // GET ALL AGE GROUP
   $scope.getAllAge = function () {
     NavigationService.getAllAgeGroups(function (data) {
-      console.log(data, "get all age");
+      // console.log(data, "get all age");
       $scope.ageGroups = data.data.data;
     });
   }
@@ -113,10 +113,10 @@ myApp.controller('eventAttendanceCtrl', function ($scope, TemplateService, $stat
     if (input != undefined) {
       $scope.url = "EventBib/getSchool"
       NavigationService.apiCallWithData($scope.url, input, function (data) {
-        console.log(data, "get all school");
+        // console.log(data, "get all school");
         // if (data.value) {
         $scope.schoolData = data.data;
-        console.log($scope.schoolData, "check this")
+        // console.log($scope.schoolData, "check this")
         // }
       });
     }
@@ -130,7 +130,7 @@ myApp.controller('eventAttendanceCtrl', function ($scope, TemplateService, $stat
   $scope.schoolRefresh = function (data) {
     $scope.refreshParameter = {};
     $scope.refreshParameter.input = data;
-    console.log(data, "in refresh")
+    // console.log(data, "in refresh")
     $scope.getSchoolreg($scope.refreshParameter);
   }
 
@@ -139,7 +139,7 @@ myApp.controller('eventAttendanceCtrl', function ($scope, TemplateService, $stat
 
   // ng-change
   $scope.getTeam = function (data) {
-    console.log(data, "ng-change")
+    // console.log(data, "ng-change")
     $scope.constraints = {};
     $scope.constraints.sportslist = data.sportslist;
     $scope.constraints.gender = data.gender;
@@ -148,7 +148,7 @@ myApp.controller('eventAttendanceCtrl', function ($scope, TemplateService, $stat
     if ($scope.constraints.sportslist && $scope.constraints.gender && $scope.constraints.ageGroup) {
       $scope.getPerTeamFilter($scope.constraints);
     } else {
-      console.log('')
+      // console.log('')
     }
 
   }
@@ -157,7 +157,7 @@ myApp.controller('eventAttendanceCtrl', function ($scope, TemplateService, $stat
   // TEAM AS PER FILTER
   $scope.getPerTeamFilter = function (constraints) {
     NavigationService.getPerTeamFilter(constraints, function (data) {
-      console.log(data, 'team on filter')
+      // console.log(data, 'team on filter')
       $scope.teamData = data.data.data;
       _.each($scope.teamData, function (key) {
         key.nameId = key.teamId + '-' + key.schoolName;
@@ -172,13 +172,13 @@ myApp.controller('eventAttendanceCtrl', function ($scope, TemplateService, $stat
     $scope.table = true
     $scope.form = {}
     $scope.form.teamId = data.team //send team id 
-    console.log(data, "view player data");
+    // console.log(data, "view player data");
     NavigationService.getPlayerPerTeam($scope.form, function (data) {
-      console.log(data, "table data");
+      // console.log(data, "table data");
       $scope.players = data.data.data;
       _.each($scope.players, function (value) {
-        console.log(value, 'inside each value')
-        console.log(value.studentId, 'inside each value middle')
+        // console.log(value, 'inside each value')
+        // console.log(value.studentId, 'inside each value middle')
         if (value.studentId != undefined) {
           if (value.studentId.middleName) {
             value.fullName = value.studentId.sfaId + ' ' + value.studentId.firstName + ' ' + value.studentId.middleName + ' ' + value.studentId.surname;
@@ -186,7 +186,7 @@ myApp.controller('eventAttendanceCtrl', function ($scope, TemplateService, $stat
             value.fullName = value.studentId.sfaId + ' ' + value.studentId.firstName + ' ' + value.studentId.surname;
           }
         }
-        console.log($scope.players, "after each")
+        // console.log($scope.players, "after each")
       })
     })
   }
@@ -209,9 +209,9 @@ myApp.controller('eventAttendanceProfileCtrl', function ($scope, TemplateService
   if ($stateParams.id) {
     $scope.constraints = {}
     $scope.constraints.athleteId = $stateParams.id;
-    console.log($scope.constraints, 'id for profile get one')
+    // console.log($scope.constraints, 'id for profile get one')
     NavigationService.getteamAthleteID($scope.constraints, function (data) {
-      console.log(data, "athlete profile data")
+      // console.log(data, "athlete profile data")
       $scope.playerDetail = data.data.data;
       if ($scope.playerDetail.isBib != undefined) {
         $scope.playerDetail.isBib = $scope.playerDetail.isBib.toString();
@@ -224,8 +224,8 @@ myApp.controller('eventAttendanceProfileCtrl', function ($scope, TemplateService
     })
 
     $scope.saveBib = function (data) {
-      console.log(data, 'save bib')
-      console.log(data.isBib, 'save bib b')
+      // console.log(data, 'save bib')
+      // console.log(data.isBib, 'save bib b')
       data.isBib = NavigationService.Boolean(data.isBib);
       $scope.saveDetail = {};
       $scope.saveDetail.isBib = data.isBib;
@@ -249,7 +249,7 @@ myApp.controller('eventAttendanceProfileCtrl', function ($scope, TemplateService
 
       $scope.url = 'Athelete/Save'
       NavigationService.apiCallWithData($scope.url, $scope.saveDetail, function (data) {
-        console.log(data, 'savedata');
+        // console.log(data, 'savedata');
         if (data.value) {
           $state.go('event-attendance')
         }
@@ -258,14 +258,14 @@ myApp.controller('eventAttendanceProfileCtrl', function ($scope, TemplateService
 
     // PHOTO ID
     $scope.changeitProfilePhoto = function (err, data) {
-      console.log(err, data, 'upload path');
+      // console.log(err, data, 'upload path');
       if (err != null && err != 'Uploading') {
 
         $scope.errorMsgpan = err;
         toastr.error('Please upload File size upto 5Mb Only', 'Error');
 
       } else if (!_.isEmpty(data)) {
-        console.log('in else');
+        // console.log('in else');
         $scope.errorMsgpan = " ";
         $scope.errorMsgpan = "Successfully uploaded";
         toastr.success('Successfully Uploaded', 'Save')
@@ -280,7 +280,7 @@ myApp.controller('eventAttendanceProfileCtrl', function ($scope, TemplateService
         $scope.errorMsgpan = err;
         toastr.error('Please upload File size upto 5Mb Only', 'Error');
       } else if (!_.isEmpty(data)) {
-        console.log('in else');
+        // console.log('in else');
         $scope.errorMsgpan = " ";
         $scope.errorMsgpan = "Successfully uploaded";
         toastr.success('Successfully Uploaded', 'Save')
@@ -294,7 +294,7 @@ myApp.controller('eventAttendanceProfileCtrl', function ($scope, TemplateService
         $scope.errorMsgpan = err;
         toastr.error('Please upload File size upto 5Mb Only', 'Error');
       } else if (!_.isEmpty(data)) {
-        console.log('in else');
+        // console.log('in else');
         $scope.errorMsgpan = " ";
         $scope.errorMsgpan = "Successfully uploaded";
         toastr.success('Successfully Uploaded', 'Save')
@@ -308,7 +308,7 @@ myApp.controller('eventAttendanceProfileCtrl', function ($scope, TemplateService
         $scope.errorMsgpan = err;
         toastr.error('Please upload File size upto 5Mb Only', 'Error');
       } else if (!_.isEmpty(data)) {
-        console.log('in else');
+        // console.log('in else');
         $scope.errorMsgpan = " ";
         $scope.errorMsgpan = "Successfully uploaded";
         toastr.success('Successfully Uploaded', 'Save')

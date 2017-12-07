@@ -31,7 +31,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
             if (data.data.value) {
                 callback(data.data.data);
             } else {
-                console.log(data);
+                // console.log(data);
             }
         });
     };
@@ -49,7 +49,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
 
     // push to Team
     this.pushToTeam = function (obj, bool, listOfAthlete, events) {
-        console.log(obj, bool, listOfAthlete, events);
+        // console.log(obj, bool, listOfAthlete, events);
 
         function checkIfApplicable(sT, sN) {
             var isApplicable = true;
@@ -62,7 +62,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                     }
                     break;
                 case "FA":
-                    console.log(obj);
+                    // console.log(obj);
                     if (sN == 'Fencing') {
                         if (obj.eventEpee.length <= 1 && obj.eventSabre.length <= 1 && obj.eventFoil.length <= 1) {
                             obj.checked = false;
@@ -286,7 +286,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                 }]
             });
 
-            console.log(athelete.eventFoil, "foil");
+            // console.log(athelete.eventFoil, "foil");
             athelete.sport = [];
             return athelete;
         }
@@ -307,9 +307,9 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
             // archerEvents.push(m);
             // });
             // });
-            console.log(athelete.groupByEventName);
+            // console.log(athelete.groupByEventName);
             athelete.optionalEvents = _.union(athelete.groupByEventName['Compound Bow'], athelete.groupByEventName['Recurve Bow'])
-            console.log(athelete.allEvents, athelete.optionalEvents);
+            // console.log(athelete.allEvents, athelete.optionalEvents);
         }
 
         switch (confirmPageKey) {
@@ -347,7 +347,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
 
     this.goNext = function (basicSportDetails, gender, age, length) {
         this.yourPromise = NavigationService.success().then(function () {
-            console.log(basicSportDetails, gender, age, length, "---------Gonext service----------");
+            // console.log(basicSportDetails, gender, age, length, "---------Gonext service----------");
 
             this.gender = gender;
             this.ageGroup = age;
@@ -400,14 +400,14 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
     };
 
     this.confirmSelection = function (data) {
-        console.log(this.team);
+        // console.log(this.team);
         var formData = _.cloneDeep(this.team);
         switch (this.sportType) {
             case "K":
                 this.findOverAllFormValidation();
                 _.each(formData, function (m) {
                     _.each(m.sport, function (n, index) {
-                        console.log(index, index == 0 && n.data[0]);
+                        // console.log(index, index == 0 && n.data[0]);
                         if (index == 0 && n && n.data[0]) {
                             m.sport[0] = n.data[0].sport;
                         } else if (index == 1 && n && n.sport) {
@@ -424,13 +424,13 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                         n.sport = _.compact(n.sport);
                     });
                 } else if (this.sportName == 'Archery') {
-                    console.log(formData);
+                    // console.log(formData);
                     _.each(formData, function (m, i) {
                         formData[i].sport = _.map(m.sport, 'sport');
                     });
 
                 }
-                console.log(this.isValidForm);
+                // console.log(this.isValidForm);
                 break;
             case "AAS":
                 this.findOverAllFormValidation();
@@ -453,7 +453,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
         }
         //check if form is valid and then send data
         if (this.isValidForm) {
-            console.log("isValid");
+            // console.log("isValid");
             _.each(formData, function (n, i) {
                 n.sportsListSubCategory = $.jStorage.get("sportsId");
                 n.athleteId = n._id
@@ -461,7 +461,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
             });
             this.saveData(formData, data);
         } else {
-            console.log("Some Fields are Missing");
+            // console.log("Some Fields are Missing");
         }
     };
 
@@ -493,7 +493,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
         }
         this.isDisabled = true;
         var ref = this;
-        console.log(formData);
+        // console.log(formData);
         $http({
             'method': 'POST',
             'url': adminUrl2 + 'individualSport/saveInIndividual',
@@ -538,10 +538,10 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                 }
                 break;
             case "AAS":
-                console.log("athlete", athelete);
+                // console.log("athlete", athelete);
 
                 if (this.sportName == 'Shooting') {
-                    console.log("im ASS", this.sportName);
+                    // console.log("im ASS", this.sportName);
                     if (athelete.peep.length >= 1 || athelete.open.length >= 1 || athelete.pistol.length >= 1) {
                         if (athelete.peep.length >= 1) {
                             athelete.sport = _.cloneDeep(athelete.peep);

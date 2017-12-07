@@ -73,7 +73,7 @@ myApp.controller('QfKnockoutCtrl', function ($scope, knockoutService, TemplateSe
               if (allData.data.qualifying != undefined && allData.data.qualifying.roundsList.length > 0) {
                 $scope.qualifying = allData.data.qualifying.roundsList;
               }
-              console.log("$scope.qualifying", $scope.qualifying);
+              // console.log("$scope.qualifying", $scope.qualifying);
               if (allData.data.knockout.roundsList.length > 0) {
                 $scope.knockout = allData.data.knockout.roundsList;
                 $scope.knockout = $scope.knockout.reverse();
@@ -128,14 +128,14 @@ myApp.controller('QfKnockoutCtrl', function ($scope, knockoutService, TemplateSe
     }
   };
   $scope.getSportSpecificRounds();
-  console.log("immmmmmmmmmmmmmmmmmmmmmmmmmm");
+  // console.log("immmmmmmmmmmmmmmmmmmmmmmmmmm");
 
   //show more data
   $scope.limitKnockout = 8;
   $scope.limitValue = 8;
   $scope.showMoreData = function (bool, type) {
     if (type === 'knockout') {
-      console.log("im inn");
+      // console.log("im inn");
       if (bool) {
         $scope.showKnockout = true;
         $scope.limitKnockout = 5000;
@@ -148,7 +148,7 @@ myApp.controller('QfKnockoutCtrl', function ($scope, knockoutService, TemplateSe
     } else {
       if (type === 'qualifying') {
         if (bool === true) {
-          console.log("im inn");
+          // console.log("im inn");
           $scope.showMore = true;
           $scope.limitValue = 5000;
         } else {

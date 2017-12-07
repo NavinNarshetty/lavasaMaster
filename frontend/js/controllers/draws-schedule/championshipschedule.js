@@ -18,16 +18,16 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
 
         $scope.getAllSchedule = function (data) {
             $scope.url = "Schedule/getAll";
-            console.log(data);
+            // console.log(data);
             $scope.constraints = {};
             $scope.constraints.keyword = data;
             NavigationService.apiCallWithData($scope.url, $scope.constraints, function (data) {
-                console.log("data.value sportlist", data);
+                // console.log("data.value sportlist", data);
                 $scope.scheduleData = data.data;
                 $scope.scheduleData = _.sortBy($scope.scheduleData, 'sport.name');
                 $scope.scheduleOdd = $scope.scheduleData.length % 2;
                 if ($scope.scheduleOdd !== 0) {
-                    console.log('in not')
+                    // console.log('in not')
                     $scope.scheduleData.push({})
                 }
                 _.each($scope.scheduleData, function (key) {
@@ -41,9 +41,9 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                 $scope.scheduleData1 = $scope.scheduleData.slice(0, $scope.scheduleData.length / 2);
                 // $scope.scheduleData1 = _.partition($scope.scheduleData, $scope.scheduleData = $scope.scheduleData.length % 2);
                 $scope.scheduleData2 = $scope.scheduleData.slice($scope.scheduleData.length / 2);
-                console.log($scope.scheduleData1, 'chunk1');
-                console.log($scope.scheduleData2, 'chunk2');
-                console.log($scope.scheduleData, 'after push');
+                // console.log($scope.scheduleData1, 'chunk1');
+                // console.log($scope.scheduleData2, 'chunk2');
+                // console.log($scope.scheduleData, 'after push');
 
 
             });
@@ -53,23 +53,20 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
 
     $scope.formData = {};
 
-    $scope.downloadPdf = function (data) {
-        console.log(data);
-        if (data == 'badminton') {
-            window.open("img/pdf/allbadminton.pdf", "_blank");
-            // window.open("img/pdf/badminton1.pdf", "_blank");
-            // window.open("img/pdf/badminton2.pdf", "_blank");
-        } else {
-            window.open("img/pdf/kabaddi.pdf", "_blank");
-        }
-    };
+    // $scope.downloadPdf = function (data) {
+    //     // console.log(data);
+    //     if (data == 'badminton') {
+    //         window.open("img/pdf/allbadminton.pdf", "_blank");
+    //     } else {
+    //         window.open("img/pdf/kabaddi.pdf", "_blank");
+    //     }
+    // };
 
     NavigationService.getAllSpotsList(function (data) {
         errorService.errorCode(data, function (allData) {
             if (!allData.message) {
                 if (allData.value) {
                     $scope.sportList = allData.data;
-                    console.log("$scope.sportList", $scope.sportList);
                 }
             } else {
                 toastr.error(allData.message, 'Error Message');
@@ -87,7 +84,6 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                             n.ageGroupId = n.ageGroup._id;
                             n.ageGroupName = n.ageGroup.name;
                         })
-                        console.log($scope.ageGroups, "allData");
                     }
                 } else {
                     toastr.error(allData.message, 'Error Message');
@@ -101,7 +97,7 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
             errorService.errorCode(data, function (allData) {
                 if (!allData.message) {
                     if (allData.value) {
-                        console.log("WEight", allData);
+                        // console.log("WEight", allData);
                         $scope.allWeights = allData.data;
                         if ($scope.allWeights.length > 0) {
                             _.each($scope.allWeights, function (n) {
@@ -120,9 +116,9 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
     $scope.nameOfSport = {};
     $scope.requestObj = {};
     $scope.sportName = function (sportName, sportId) {
-        console.log("sportId", sportId);
+        // console.log("sportId", sportId);
         $scope.nameOfSport = sportName;
-        console.log("$scope.nameOfSport", $scope.nameOfSport);
+        // console.log("$scope.nameOfSport", $scope.nameOfSport);
         if (sportName === 'Boxing' || sportName === 'Judo' || sportName === 'Kumite' || sportName === 'Taekwondo' || sportName === 'Sport MMA') {
             $scope.showWeight = true;
         } else {
@@ -134,7 +130,7 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
             errorService.errorCode(data, function (allData) {
                 if (!allData.message) {
                     if (allData.value) {
-                        console.log("  allData.data;", allData.data);
+                        // console.log("  allData.data;", allData.data);
                         $scope.getAllBySport = allData.data;
                     }
                 } else {
@@ -147,7 +143,7 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
     };
     //get weight and age by Event
     $scope.getAgeOrWeightsByEvent = function (sportlistId) {
-        console.log("sportlistId", sportlistId);
+        // console.log("sportlistId", sportlistId);
         $scope.constraintsObj = {};
         $scope.constraintsObj.sportslist = sportlistId._id;
         $scope.getAllWeightsByEvent($scope.constraintsObj);
@@ -157,7 +153,7 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
     }
     //view Draw Schedule 
     $scope.viewDraw = function (formData) {
-        console.log("$scope.viewDraw", $scope.nameOfSport);
+        // console.log("$scope.viewDraw", $scope.nameOfSport);
         NavigationService.getQuickSportId(formData, function (data) {
             errorService.errorCode(data, function (allData) {
                 if (!allData.message) {
@@ -166,7 +162,7 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                         if ($scope.drawDetails === 'No Data Found') {
                             toastr.error('No Event Found', 'Error Message');
                         }
-                        console.log($scope.drawDetails, "$scope.drawDetails ");
+                        // console.log($scope.drawDetails, "$scope.drawDetails ");
                         //FOR CHECKING SPORT TYPE
                         if ($scope.drawDetails.sportType) {
                             if ($scope.drawDetails.matchFound) {
@@ -221,7 +217,7 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                                     case 'Individual Sports':
                                         switch ($scope.drawDetails.drawFormat) {
                                             case 'Heats':
-                                                console.log("im in else");
+                                                // console.log("im in else");
                                                 $state.go('heats', {
                                                     id: $scope.drawDetails.sport,
                                                     sportName: $scope.nameOfSport

@@ -57,7 +57,7 @@ myApp.controller('SportsRegistrationCtrl', function ($scope, selectService, Temp
                     formData.type = $.jStorage.get("userType");
                     if (formData.sfaid) {
                         if ($scope.type == 'school') {
-                            console.log('enter school');
+                            // console.log('enter school');
                             if (formData.sfaid.charAt(1) == "S" && formData.type == "athlete") {
                                 toastr.error('Only Athlete Can Log In.', 'Login Message');
                             } else {
@@ -77,7 +77,7 @@ myApp.controller('SportsRegistrationCtrl', function ($scope, selectService, Temp
                                 }
                             }
                         } else {
-                            console.log('enter');
+                            // console.log('enter');
                             if (formData.sfaid.charAt(1) == "C" && formData.type == "athlete") {
                                 toastr.error('Only Athlete Can Log In.', 'Login Message');
                             } else {
