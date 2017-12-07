@@ -39,7 +39,7 @@
         <div class="col-md-6 col-sm-6 col-xs-12" ng-repeat="player in currentMatch.resultsRacquet.players track by $index">
           <div class="combatscore-player">
             <div class="matchplayer-card {{player.player}}">
-              <pre>{{player|json}}</pre>
+              <!-- <pre>{{player|json}}</pre> -->
               <div class="matchplayer-playerid">
                 <p>SFA ID: <span>{{currentMatch.opponentsSingle[$index].athleteId.sfaId}}</span></p>
               </div>
