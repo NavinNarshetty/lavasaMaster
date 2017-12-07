@@ -65,6 +65,7 @@ myApp.service('excelService', function ($http, TemplateService, $state, toastr, 
         console.log(dataResult, "password Fail");
         // PASSWORD ERROR END
       }
+      login.password = '';
     }
   }
 
