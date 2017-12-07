@@ -546,7 +546,7 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
         // if (formData.matchPhoto.length == 0) {
         //   toastr.error('Please upload match photo.', 'Data Incomplete');
         // }
-         else {
+        //  else {
 
           $scope.matchResult = {
             matchId: $scope.matchData.matchId
@@ -611,7 +611,7 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
               toastr.error('Data save failed. Please try again.', 'Save Error');
             }
           });
-        }
+        // }
       }
     } else {
       toastr.error('No data to save. Please check for valid MatchID.', 'Save Error');
