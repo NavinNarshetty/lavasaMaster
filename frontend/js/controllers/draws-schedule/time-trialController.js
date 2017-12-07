@@ -61,7 +61,7 @@ myApp.controller('TimeTrialCtrl', function ($scope, TemplateService, $state, Nav
 
   $scope.constraints = {};
   $scope.eventName = $stateParams.name;
-  console.log(" $scope.eventName", $scope.eventName);
+  // console.log(" $scope.eventName", $scope.eventName);
   $scope.getSportSpecificRounds = function (roundName) {
     if ($stateParams.id) {
       if (roundName) {
@@ -123,8 +123,8 @@ myApp.controller('TimeTrialCtrl', function ($scope, TemplateService, $state, Nav
                   }
                 });
               });
-              console.log($scope.roundsListName, " $scope.roundsListName ");
-              console.log($scope.roundsList, " $scope.roundsList ");
+              // console.log($scope.roundsListName, " $scope.roundsListName ");
+              // console.log($scope.roundsList, " $scope.roundsList ");
             }
           } else {
             toastr.error(allData.message, 'Error Message');
@@ -154,7 +154,7 @@ myApp.controller('TimeTrialCtrl', function ($scope, TemplateService, $state, Nav
                   }
                 });
 
-                console.log("  $scope.winnerTable", $scope.winnerTable);
+                // console.log("  $scope.winnerTable", $scope.winnerTable);
               }
             } else {
               toastr.error(allData.message, 'Error Message');

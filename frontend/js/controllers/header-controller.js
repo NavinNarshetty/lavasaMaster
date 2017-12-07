@@ -58,7 +58,7 @@ myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, Na
     if (serverType == 'test') {
         $scope.changeUrl = function (selectedCity) {
             var sublink = '';
-            console.log(selectedCity);
+            // console.log(selectedCity);
             switch (selectedCity) {
                 case 'mumbai':
                     $scope.selectedCity = 'mumbai';
@@ -163,7 +163,7 @@ myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, Na
     } else {
         $scope.changeUrl = function (selectedCity) {
             var sublink = '';
-            console.log(selectedCity);
+            // console.log(selectedCity);
             switch (selectedCity) {
                 case 'mumbai':
                     $scope.selectedCity = 'mumbai';

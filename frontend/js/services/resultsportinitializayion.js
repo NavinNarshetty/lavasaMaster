@@ -3,7 +3,7 @@ myApp.factory('ResultSportInitialization', function () {
 
     //for getting TEPLATE for result"Spotname" eg:resultFootball,resultBasketball etc
     getPlayerTemplate: function (sportName, player) {
-      console.log(player, "-----------------------");
+      // console.log(player, "-----------------------");
       var format = {
         player: player.studentId._id,
         sfaId: player.studentId.sfaId,
@@ -83,7 +83,7 @@ myApp.factory('ResultSportInitialization', function () {
     },
 
     getTeamTemplate: function (sportName, team) {
-      console.log("getTeamTemplate", team);
+      // console.log("getTeamTemplate", team);
       var format = {
         teamId: team.teamId,
         team: team._id,
@@ -245,7 +245,7 @@ myApp.factory('ResultSportInitialization', function () {
 
     getMyResult: function (sportName, match, callback) {
       var template = obj.getResultTemplate(sportName, match);
-      console.log("template", template);
+      // console.log("template", template);
       callback(template);
     },
     //for getting TEPLATE for result"Spotname" eg:resultFootball,resultBasketball etc end

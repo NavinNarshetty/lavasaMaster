@@ -72,7 +72,7 @@ myApp.controller('MediaGalleryCtrl', function ($scope, TemplateService, Navigati
     };
     $scope.tabchanges = function (tabs, a) {
         $scope.tabs = tabs;
-        console.log(tabs);
+        // console.log(tabs);
         if (tabs === 'photo') {
 
             $scope.classes.classp = "active-list";
@@ -102,7 +102,7 @@ myApp.controller('MediaGalleryCtrl', function ($scope, TemplateService, Navigati
         $scope.folders = undefined;
         NavigationService.getFolders($scope.filter, function (response) {
             if (response.data !== 'Folders Not Found') {
-                console.log(response);
+                // console.log(response);
                 $scope.folders = response.data;
                 _.each($scope.folders, function (key) {
                     key.medialink = key.media;
@@ -127,7 +127,7 @@ myApp.controller('MediaGalleryCtrl', function ($scope, TemplateService, Navigati
         $scope.mediaArr = undefined;
         NavigationService.getLimitedMedia($scope.filter, function (response) {
             if (response.value) {
-                console.log("get limited media : ", response);
+                // console.log("get limited media : ", response);
                 $scope.mediaArr = response.data;
                 $scope.totalCount = response.data.options.count;
 
@@ -138,7 +138,7 @@ myApp.controller('MediaGalleryCtrl', function ($scope, TemplateService, Navigati
                     NavigationService.getVideoThumbnail($scope.mediaArr.results);
                 }
             } else {
-                console.log("No data found");
+                // console.log("No data found");
                 $scope.mediaArr.results = [];
             }
         });
@@ -163,7 +163,7 @@ myApp.controller('MediaGalleryCtrl', function ($scope, TemplateService, Navigati
             $scope.filter.mediatype = $stateParams.type;
             $scope.flags.openGallery = false;
             $scope.tabchanges($stateParams.type, 1);
-            console.log($scope.filter);
+            // console.log($scope.filter);
             $scope.getMediaFolders();
         }
     }

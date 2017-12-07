@@ -190,12 +190,12 @@ myApp.controller('qfFinalCtrl', function ($scope, knockoutService, TemplateServi
                           obj.bestAttempt = value.resultQualifyingRound.player.bestAttempt;
                           obj.noShow = NavigationService.Boolean(value.resultQualifyingRound.player.noShow);
                           // obj.bestattempt = Math.max.apply(Math, value.resultQualifyingRound.player.attempt);
-                          console.log(obj.noShow);
+                          // console.log(obj.noShow);
 
                         }
 
                       }
-                      console.log("value", value.resultShooting);
+                      // console.log("value", value.resultShooting);
                       if (value.resultShooting != undefined) {
                         obj.laneNo = value.resultShooting.laneNo;
                         obj.detail = value.resultShooting.detail;
@@ -211,8 +211,8 @@ myApp.controller('qfFinalCtrl', function ($scope, knockoutService, TemplateServi
 
                 });
               });
-              console.log($scope.roundsListName, " $scope.roundsListName ");
-              console.log($scope.roundsList, " $scope.roundsList ");
+              // console.log($scope.roundsListName, " $scope.roundsListName ");
+              // console.log($scope.roundsList, " $scope.roundsList ");
             }
           } else {
             toastr.error(allData.message, 'Error Message');
@@ -242,7 +242,7 @@ myApp.controller('qfFinalCtrl', function ($scope, knockoutService, TemplateServi
                   }
                 });
 
-                console.log("  $scope.winnerTable", $scope.winnerTable);
+                // console.log("  $scope.winnerTable", $scope.winnerTable);
               }
             } else {
               toastr.error(allData.message, 'Error Message');

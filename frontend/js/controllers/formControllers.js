@@ -13,23 +13,23 @@ myApp.controller('RegisterCtrl', function ($scope, $uibModal, TemplateService, N
         $scope.type = data.type;
         $scope.getAllSchedule = function (data) {
             $scope.url = "Schedule/getAll";
-            console.log(data);
+            // console.log(data);
             $scope.constraints = {};
             $scope.constraints.keyword = data;
             NavigationService.apiCallWithData($scope.url, $scope.constraints, function (data) {
-                console.log("data.value sportlist", data);
+                // console.log("data.value sportlist", data);
                 $scope.scheduleData = data.data;
                 $scope.scheduleData = _.sortBy($scope.scheduleData, 'sport.name');
                 $scope.scheduleOdd = $scope.scheduleData.length % 2;
                 if ($scope.scheduleOdd !== 0) {
-                    console.log('in not')
+                    // console.log('in not')
                     $scope.scheduleData.push({})
                 }
                 $scope.scheduleData1 = $scope.scheduleData.slice(0, $scope.scheduleData.length / 2);
                 // $scope.scheduleData1 = _.partition($scope.scheduleData, $scope.scheduleData = $scope.scheduleData.length % 2);
                 $scope.scheduleData2 = $scope.scheduleData.slice($scope.scheduleData.length / 2);
-                console.log($scope.scheduleData1, 'chunk1');
-                console.log($scope.scheduleData2, 'chunk2');
+                // console.log($scope.scheduleData1, 'chunk1');
+                // console.log($scope.scheduleData2, 'chunk2');
 
 
             });
@@ -178,7 +178,7 @@ myApp.controller('RegisterCtrl', function ($scope, $uibModal, TemplateService, N
 
     // FINAL REGISTRATION MODAL
     $scope.endReg = function () {
-        console.log($scope.endEntries, 'insode modal')
+        // console.log($scope.endEntries, 'insode modal')
         $scope.modalInstance = $uibModal.open({
             animation: true,
             scope: $scope,
@@ -211,16 +211,16 @@ myApp.controller('ChampionshipSchedulesCtrl', function ($scope, TemplateService,
 
         $scope.getAllSchedule = function (data) {
             $scope.url = "Schedule/getAll";
-            console.log(data);
+            // console.log(data);
             $scope.constraints = {};
             $scope.constraints.keyword = data;
             NavigationService.apiCallWithData($scope.url, $scope.constraints, function (data) {
-                console.log("data.value sportlist", data);
+                // console.log("data.value sportlist", data);
                 $scope.scheduleData = data.data;
                 $scope.scheduleData = _.sortBy($scope.scheduleData, 'sport.name');
                 $scope.scheduleOdd = $scope.scheduleData.length % 2;
                 if ($scope.scheduleOdd !== 0) {
-                    console.log('in not')
+                    // console.log('in not')
                     $scope.scheduleData.push({})
                 }
                 _.each($scope.scheduleData, function (key) {
@@ -234,9 +234,9 @@ myApp.controller('ChampionshipSchedulesCtrl', function ($scope, TemplateService,
                 $scope.scheduleData1 = $scope.scheduleData.slice(0, $scope.scheduleData.length / 2);
                 // $scope.scheduleData1 = _.partition($scope.scheduleData, $scope.scheduleData = $scope.scheduleData.length % 2);
                 $scope.scheduleData2 = $scope.scheduleData.slice($scope.scheduleData.length / 2);
-                console.log($scope.scheduleData1, 'chunk1');
-                console.log($scope.scheduleData2, 'chunk2');
-                console.log($scope.scheduleData, 'after push');
+                // console.log($scope.scheduleData1, 'chunk1');
+                // console.log($scope.scheduleData2, 'chunk2');
+                // console.log($scope.scheduleData, 'after push');
 
 
             });
@@ -267,7 +267,7 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
         $scope.type = data.type;
     });
     $scope.changeitSchoolId = function (err, data) {
-        console.log(err, data);
+        // console.log(err, data);
         if (err) {
             $scope.errorMsgpan = err;
             if (err == 'Please Upload File Size Upto 5 MB') {
@@ -288,7 +288,7 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
         }
     };
     $scope.changeitPhotograph = function (err, data) {
-        console.log(err, data);
+        // console.log(err, data);
         if (err) {
             $scope.errorMsgpan = err;
             if (err == 'Please Upload File Size Upto 5 MB') {
@@ -309,7 +309,7 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
         }
     };
     $scope.changeitBirthImage = function (err, data) {
-        console.log(err, data);
+        // console.log(err, data);
         if (err) {
             $scope.errorMsgpan = err;
             if (err == 'Please Upload File Size Upto 5 MB') {
@@ -330,7 +330,7 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
         }
     };
     $scope.changeitPhotoImage = function (err, data) {
-        console.log(err, data);
+        // console.log(err, data);
         if (err) {
             $scope.errorMsgpan = err;
             if (err == 'Please Upload File Size Upto 5 MB') {
@@ -376,7 +376,7 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
     $scope.isDisabled = false;
 
     $scope.saveAthelete = function (formdata, formAthlete) { //formdata is data or body for this url
-        console.log("Athlete data: ", formdata);
+        // console.log("Athlete data: ", formdata);
         // console.log('Value', $scope.isSchoolAdded(formdata));
         // $scope.isSchoolAdded(formdata);
 
@@ -425,12 +425,12 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
         };
 
         var isSchoolAdded = function (form) {
-            console.log('enter', form);
+            // console.log('enter', form);
             if (form.school || (form.atheleteSchoolName && form.atheleteSchoolLocality && form.atheleteSchoolContact)) {
-                console.log('enter true');
+                // console.log('enter true');
                 return true;
             } else {
-                console.log('enter false');
+                // console.log('enter false');
                 $scope.openSchoolModal();
                 $timeout(function () {
                     $scope.schoolInstances.close();
@@ -447,14 +447,14 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
         }
         // if ($scope.isSchoolAdded(formdata) == false) {
         //     console.log('Value', $scope.isSchoolAdded(formdata));
-        //     // alert("Please select the school or enter all school details manually.");
-        //     // return;
+        //     alert("Please select the school or enter all school details manually.");
+        //     return;
         // }
         if (!isRegistrationFee(formdata)) {
             return;
         }
 
-        console.log("form", formdata);
+        // console.log("form", formdata);
         var sportLevelArray = [];
 
         if (formdata.school && formdata.schoolName) {
@@ -475,11 +475,11 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
             $scope.extras = {};
         } else {
             $scope.extras = $location.search();
-            console.log($scope.extras);
+            // console.log($scope.extras);
             formdata.utm_medium = $scope.extras.utm_medium;
             formdata.utm_source = $scope.extras.utm_source;
             formdata.utm_campaign = $scope.extras.utm_campaign;
-            console.log(formdata);
+            // console.log(formdata);
         }
 
         if (formdata.university == 'Other') {
@@ -513,29 +513,29 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
         }
 
         $scope.url = "Athelete/saveAthelete";
-        console.log($scope.url);
-        console.log(formdata);
+        // console.log($scope.url);
+        // console.log(formdata);
         if (formAthlete.$valid && $scope.showTerm === false) {
             if ($scope.showEmailOtpSuccess === false && $scope.showMobileOtpSuccess === false) {
                 $scope.isDisabled = true;
-                console.log('google', formdata);
+                // console.log('google', formdata);
                 NavigationService.apiCallWithData($scope.url, formdata, function (data) {
                     if (data.value === true) {
-                        console.log("registrationFee", data.data[0].registrationFee);
-                        console.log("value", data.value);
+                        // console.log("registrationFee", data.data[0].registrationFee);
+                        // console.log("value", data.value);
                         if (data.data[0].registrationFee == "online PAYU") {
                             var id = data.data[0]._id;
-                            console.log("true and in payment", id);
+                            // console.log("true and in payment", id);
                             var url = "payU/atheletePayment?id=" + id;
                             window.location.href = adminUrl2 + url;
                         } else {
-                            console.log("opening modal");
+                            // console.log("opening modal");
                             $scope.openModal();
                         }
                     } else {
                         $scope.isDisabled = false;
                         if (data.error == 'Athlete Already Exist') {
-                            console.log("User Already Exist");
+                            // console.log("User Already Exist");
                             $scope.openExistModal();
                             $timeout(function () {
                                 $scope.existInstances.close();
@@ -551,7 +551,7 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
             }
         } else {
             $scope.isDisabled = false;
-            console.log("Enter all mandatory fields");
+            // console.log("Enter all mandatory fields");
             $scope.openErrorModal();
             $timeout(function () {
                 $scope.modalInstances.close();
@@ -567,29 +567,29 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
         if (otp == 'sfa1') {
             $scope.mobileOtp = 'sfa1';
             if (_.isEqual($scope.mobileOtp, otp)) {
-                console.log("mobile OTP verified");
+                // console.log("mobile OTP verified");
                 $scope.showMobileOtpSuccess = false;
             } else {
                 $scope.showMobileOtpSuccess = true;
             }
         } else if (otp != undefined) {
-            console.log("opt", $scope.mobileOtp, otp);
-            console.log(typeof otp, typeof $scope.mobileOtp);
+            // console.log("opt", $scope.mobileOtp, otp);
+            // console.log(typeof otp, typeof $scope.mobileOtp);
             var otpCheck = otp.toString();
-            console.log("length", otpCheck.length);
+            // console.log("length", otpCheck.length);
             if (otpCheck.length == 4) {
 
                 if (_.isEqual($scope.mobileOtp, otpCheck)) {
-                    console.log("email OTP verified");
+                    // console.log("email OTP verified");
                     $scope.showMobileOtpSuccess = false;
                 } else {
                     $scope.showMobileOtpSuccess = true;
                 }
             } else if (otpCheck.length == 3) {
                 otpCheck = "0" + otpCheck;
-                console.log("otpCheck", otpCheck);
+                // console.log("otpCheck", otpCheck);
                 if (_.isEqual($scope.mobileOtp, otpCheck)) {
-                    console.log("email OTP verified");
+                    // console.log("email OTP verified");
                     $scope.showMobileOtpSuccess = false;
 
                 } else {
@@ -605,30 +605,30 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
         if (otp == 'sfa1') {
             $scope.emailOtp = 'sfa1';
             if (_.isEqual($scope.emailOtp, otp)) {
-                console.log("email OTP verified");
+                // console.log("email OTP verified");
                 $scope.showEmailOtpSuccess = false;
             } else {
-                console.log("Incorrect OTP!");
+                // console.log("Incorrect OTP!");
                 $scope.showEmailOtpSuccess = true;
             }
         } else if (otp != undefined) {
-            console.log("opt", $scope.emailOtp, otp);
-            console.log(typeof otp, typeof $scope.emailOtp);
+            // console.log("opt", $scope.emailOtp, otp);
+            // console.log(typeof otp, typeof $scope.emailOtp);
 
             var otpCheck = otp.toString();
-            console.log("length", otpCheck.length);
+            // console.log("length", otpCheck.length);
             if (otpCheck.length == 4) {
                 if (_.isEqual($scope.emailOtp, otpCheck)) {
-                    console.log("email OTP verified");
+                    // console.log("email OTP verified");
                     $scope.showEmailOtpSuccess = false;
                 } else {
                     $scope.showEmailOtpSuccess = true;
                 }
             } else if (otpCheck.length == 3) {
                 otpCheck = "0" + otpCheck;
-                console.log("otpCheck", otpCheck);
+                // console.log("otpCheck", otpCheck);
                 if (_.isEqual($scope.emailOtp, otpCheck)) {
-                    console.log("email OTP verified");
+                    // console.log("email OTP verified");
                     $scope.showEmailOtpSuccess = false;
                 } else {
                     $scope.showEmailOtpSuccess = true;
@@ -646,9 +646,9 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
 
     $scope.sendMobileOTP = function (mobile) {
         var formData = {};
-        console.log("form", formData);
+        // console.log("form", formData);
         $scope.url = "athelete/generateMobileOTP";
-        console.log($scope.url);
+        // console.log($scope.url);
         formData.mobile = mobile;
         NavigationService.apiCallWithData($scope.url, formData, function (data) {
             $scope.mobileOtp = data.data;
@@ -656,9 +656,9 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
     };
     $scope.sendEmailOTP = function (email) {
         var formData = {};
-        console.log("form", email);
+        // console.log("form", email);
         $scope.url = "athelete/generateEmailOTP";
-        console.log($scope.url);
+        // console.log($scope.url);
         formData.email = email;
         NavigationService.apiCallWithData($scope.url, formData, function (data) {
             $scope.emailOtp = data.data;
@@ -668,30 +668,30 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
     //search filter
     $scope.refreshChange = function (paramData) {
         NavigationService.getAtheleteSFA(paramData, function (data) {
-            console.log("sfa", data);
+            // console.log("sfa", data);
             $scope.atheleList = data.data.results;
 
         });
     };
 
     $scope.searchChange = function (paramData) {
-        console.log("changekeyword", paramData);
+        // console.log("changekeyword", paramData);
         $scope.sfaId = paramData;
     };
 
     $scope.searchChangeSchool = function (paramData) {
-        console.log("changekeyword", paramData);
+        // console.log("changekeyword", paramData);
         $scope.schoolname = paramData;
     };
     $scope.refreshChangeSchool = function (paramData) {
         NavigationService.getSchoolSFA(paramData, function (data) {
-            console.log("sfa 1", data);
+            // console.log("sfa 1", data);
             $scope.schoolList = data.data.results;
         });
     };
 
     $scope.getDataBasedonSFA = function (uiselCust) {
-        console.log("inside get");
+        // console.log("inside get");
         if (uiselCust.schoolName == "----Otributor Group") {
             $scope.uiCarrierGroups = {
                 name: "abc-ui"
@@ -709,7 +709,7 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
     //     console.log("schoolName", data);
     //     $scope.schoolList = data.data;
 
-    //     // console.log("schoolName", $scope.schoolName);
+    //     console.log("schoolName", $scope.schoolName);
     // });
 
     // NavigationService.getAtheleteSFA("", function (data) {
@@ -720,26 +720,26 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
 
     //removes image uploaded
     $scope.removeProof = function (data, className) {
-        console.log(className);
+        // console.log(className);
         $("." + className + " input").val("");
         delete $scope.formData.birthImage;
         $scope.show = 0;
     };
     $scope.removeProof1 = function (data, className) {
-        console.log(className);
+        // console.log(className);
         $("." + className + " input").val("");
         delete $scope.formData.photoImage;
         $scope.show = 0;
     };
 
     $scope.removePhoto = function (data, className) {
-        console.log(className);
+        // console.log(className);
         $("." + className + " input").val("");
         delete $scope.formData.photograph;
         $scope.show = 0;
     };
     $scope.removeImage = function (data, className) {
-        console.log(className);
+        // console.log(className);
         $("." + className + " input").val("");
         delete $scope.formData.atheleteSchoolIdImage;
         $scope.show = 0;
@@ -749,16 +749,16 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
         if ($scope.formData.parentDetails.length < 3) {
 
             $scope.formData.parentDetails.push({});
-            console.log("sportsDepartment", $scope.formData.parentDetails);
+            // console.log("sportsDepartment", $scope.formData.parentDetails);
 
         }
     };
 
     $scope.removeSportForm = function (index) {
-        console.log("hello remove", index);
+        // console.log("hello remove", index);
         if (index !== 0) {
             $scope.formData.parentDetails.splice(index, 1);
-            console.log("sportsDepartment", $scope.formData.parentDetails);
+            // console.log("sportsDepartment", $scope.formData.parentDetails);
         }
     };
 
@@ -784,7 +784,7 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
     //         $scope.formData.sportLevel = _.chunk($scope.sportsLevelArray, 3);
 
     //     }
-    //     // console.log("sportsLevelArray", $scope.sportsLevelArray);
+    //     console.log("sportsLevelArray", $scope.sportsLevelArray);
 
     // };
     // $scope.removeSportLevelForm = function (indexX, indexY) {
@@ -1037,7 +1037,7 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
         $scope.type = data.type;
     });
     $scope.changeitSchoolLogo = function (err, data) {
-        console.log(err, data);
+        // console.log(err, data);
         if (err) {
             $scope.errorMsgpan = err;
             if (err == 'Please Upload File Size Upto 5 MB') {
@@ -1058,7 +1058,7 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
         }
     };
     $scope.changeitPhotograph = function (err, data) {
-        console.log(err, data);
+        // console.log(err, data);
         if (err) {
             $scope.errorMsgpan = err;
             if (err == 'Please Upload File Size Upto 5 MB') {
@@ -1183,7 +1183,7 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
                 mobile: null
             };
             $scope.formData.sportsDepartment.push($scope.sportDepart);
-            console.log("sportsDepartment", $scope.formData.sportsDepartment);
+            // console.log("sportsDepartment", $scope.formData.sportsDepartment);
         }
     };
     //    $scope.removeArrayImage = function (index) {
@@ -1192,10 +1192,10 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
     //     }
 
     $scope.removeSportForm = function (index) {
-        console.log("hello remove", index);
+        // console.log("hello remove", index);
         if (index !== 0) {
             $scope.formData.sportsDepartment.splice(index, 1);
-            console.log("sportsDepartment", $scope.formData.sportsDepartment);
+            // console.log("sportsDepartment", $scope.formData.sportsDepartment);
         }
     };
     $scope.teamSport = [];
@@ -1262,7 +1262,7 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
         if (formdata.teamSports.length > 0 || formdata.racquetSports.length > 0 || formdata.combatSports.length > 0 || formdata.targetSports.length > 0 || formdata.individualSports.length > 0 || formdata.aquaticsSports.length > 0) {
             $scope.showTeamSports = false;
         } else {
-            console.log('enter');
+            // console.log('enter');
             $scope.showTeamSports = true;
         }
 
@@ -1275,7 +1275,7 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
             $scope.extras = {};
         } else {
             $scope.extras = $location.search();
-            console.log($scope.extras);
+            // console.log($scope.extras);
             formdata.utm_medium = $scope.extras.utm_medium;
             formdata.utm_source = $scope.extras.utm_source;
             formdata.utm_campaign = $scope.extras.utm_campaign;
@@ -1292,8 +1292,8 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
         }
 
         $scope.url = "registration/saveRegistrationForm";
-        console.log($scope.url);
-        console.log('final data', formdata);
+        // console.log($scope.url);
+        // console.log('final data', formdata);
         if (formvalid.$valid && $scope.showTerm === false && $scope.showTeamSports === false) {
             if ($scope.showOtpSuccess === false) {
                 $scope.isDisabled = true;
@@ -1301,11 +1301,11 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
                     if (data.value === true) {
                         if (data.data.registrationFee == "online PAYU") {
                             var id = data.data._id;
-                            console.log("true and in payment");
+                            // console.log("true and in payment");
                             var url = "payU/schoolPayment?id=" + id;
                             window.location.href = adminUrl2 + url;
                         } else {
-                            console.log("opening modal");
+                            // console.log("opening modal");
                             $scope.openModal();
                         }
                     } else {
@@ -1319,7 +1319,7 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
             }
         } else {
             $scope.isDisabled = false;
-            console.log("Enter all mandatory fields");
+            // console.log("Enter all mandatory fields");
             $scope.openErrorModal();
             $timeout(function () {
                 $scope.modalInstances.close();
@@ -1347,16 +1347,16 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
     // }
 
     $scope.checkOTP = function (otp) {
-        console.log("opt", $scope.emailOtp, otp);
-        console.log(typeof otp, typeof $scope.emailOtp);
+        // console.log("opt", $scope.emailOtp, otp);
+        // console.log(typeof otp, typeof $scope.emailOtp);
 
         var otpCheck = otp.toString();
-        console.log("length", otpCheck.length);
+        // console.log("length", otpCheck.length);
         if (otpCheck.length == 4) {
 
             if (_.isEqual($scope.emailOtp, otpCheck)) {
                 // $(' .verify-otp-regis').html('<i class="fa fa-check"></i>').css("color", "green");
-                console.log("email OTP verified");
+                // console.log("email OTP verified");
                 $scope.showOtpSuccess = false;
 
             } else {
@@ -1366,10 +1366,10 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
             }
         } else if (otpCheck.length == 3) {
             otpCheck = "0" + otpCheck;
-            console.log("otpCheck", otpCheck);
+            // console.log("otpCheck", otpCheck);
             if (_.isEqual($scope.emailOtp, otpCheck)) {
                 // $(' .verify-otp-regis').html('<i class="fa fa-check"></i>').css("color", "green");
-                console.log("email OTP verified");
+                // console.log("email OTP verified");
                 $scope.showOtpSuccess = false;
 
             } else {
@@ -1386,9 +1386,9 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
     $scope.sendOTP = function (email) {
         var formdata = {};
         formdata.email = email;
-        console.log("form", formdata);
+        // console.log("form", formdata);
         $scope.url = "registration/generateOTP";
-        console.log($scope.url);
+        // console.log($scope.url);
         NavigationService.apiCallWithData($scope.url, formdata, function (data) {
             $scope.emailOtp = data.data;
         });
@@ -1436,7 +1436,7 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
                 name: formdata
             });
         }
-        console.log($scope.teamSport);
+        // console.log($scope.teamSport);
     };
 
     //racquet sports array
@@ -1515,7 +1515,7 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
     //called on refresh
     $scope.refreshSFA = function (paramData) {
         NavigationService.getSchoolSFA(paramData, function (data) {
-            console.log("sfa regis", data);
+            // console.log("sfa regis", data);
             $scope.schoolList = data.data.results;
             //$scope.schoolList = data.data;
         });
@@ -1523,19 +1523,19 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
 
     //called on select for taking value
     $scope.searchSFA = function (paramData) {
-        console.log("changekeyword", paramData);
+        // console.log("changekeyword", paramData);
         $scope.sfaID = paramData;
-        console.log("sfaid", $scope.sfaID);
+        // console.log("sfaid", $scope.sfaID);
     };
     $scope.searchSFACollege = function (paramData) {
-        console.log("changekeyword", paramData);
+        // console.log("changekeyword", paramData);
         $scope.sfaID = paramData.sfaid;
-        console.log("sfaid", $scope.sfaID);
+        // console.log("sfaid", $scope.sfaID);
     };
     $scope.searchSFAHyderabad = function (paramData) {
-        console.log("changekeyword", paramData);
+        // console.log("changekeyword", paramData);
         $scope.sfaID = paramData.sfaid;
-        console.log("sfaid", $scope.sfaID);
+        // console.log("sfaid", $scope.sfaID);
     };
 
     //get school name for binding with dropdown
@@ -1582,7 +1582,7 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
     $scope.removeImage = function (data, className) {
         // console.log("remove me", document.getElementById("inputImage").value);
         // $scope.formData.schoolLogo = null;
-        console.log(className);
+        // console.log(className);
         $("." + className + " input").val("");
         delete $scope.formData.schoolLogo;
         $scope.show = 0;
@@ -1590,11 +1590,11 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
     $scope.removeArrayImage = function (index, className) {
         // console.log("remove me", document.getElementById("inputImage").value);
         // $scope.formData.sportsDepartment[index].photograph = null;
-        console.log(className);
+        // console.log(className);
         $("." + className + " input").val("");
-        console.log($scope.formData.sportsDepartment[index].photograph);
+        // console.log($scope.formData.sportsDepartment[index].photograph);
         delete $scope.formData.sportsDepartment[index].photograph;
-        console.log($scope.formData.sportsDepartment[index].photograph);
+        // console.log($scope.formData.sportsDepartment[index].photograph);
         $scope.show = 0;
     };
 
@@ -1638,17 +1638,17 @@ myApp.controller('AdditionalPaymentFormCtrl', function ($scope, TemplateService,
             if (!isRegistrationFee(formData)) {
                 return;
             }
-            console.log(formData);
+            // console.log(formData);
             if (formData.feeType == "online PAYU") {
                 var id = formData.sfaId;
-                console.log("true and in payment");
+                // console.log("true and in payment");
                 var url = "payU/additionalPayment?id=" + id;
                 window.location.href = adminUrl2 + url;
             } else {
                 var constraints = {};
                 constraints.sfaId = formData.sfaId;
                 NavigationService.getOneBySfaId(constraints, function (data) {
-                    console.log(data);
+                    // console.log(data);
                     if (data.data.value == true) {
                         formData.athleteId = data.data.data._id;
                         NavigationService.savePaymentAdditional(formData, function (data) {

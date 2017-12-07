@@ -54,7 +54,7 @@ myApp.controller('IndividualSelectionCtrl', function ($scope, TemplateService, e
     NavigationService.getSportDetails({
         '_id': $stateParams.id
     }, function (data) {
-        console.log(data);
+        // console.log(data);
         $scope.basicSportDetails = data.data;
         $scope.selectService.sportName = data.data.sportName;
         $scope.selectService.sportType = data.data.sportType;
@@ -150,7 +150,7 @@ myApp.controller('IndividualSelectionCtrl', function ($scope, TemplateService, e
 
     $scope.loadMore = function () {
         $scope.getAthletePerSchoolObj.page++;
-        console.log("$scope.getAthletePerSchoolObj", $scope.getAthletePerSchoolObj);
+        // console.log("$scope.getAthletePerSchoolObj", $scope.getAthletePerSchoolObj);
         $scope.getAllAthletes($scope.getAthletePerSchoolObj);
     };
     //***** for getting age group *****
@@ -164,7 +164,7 @@ myApp.controller('IndividualSelectionCtrl', function ($scope, TemplateService, e
         NavigationService.setAgeTitle($scope.showAgeObj);
         $scope.getAthletePerSchoolObj.age = ageId;
         $scope.getAllAthletes($scope.getAthletePerSchoolObj);
-        console.log("$scope.getAthletePerSchoolObj", $scope.getAthletePerSchoolObj);
+        // console.log("$scope.getAthletePerSchoolObj", $scope.getAthletePerSchoolObj);
     };
 
 
@@ -231,7 +231,7 @@ myApp.controller('ConfirmFencingCtrl', function ($scope, TemplateService, Naviga
     };
 
     $scope.tp = function (event) {
-        console.log(event);
+        // console.log(event);
     };
 });
 
@@ -252,7 +252,7 @@ myApp.controller('ConfirmIndividualCtrl', function ($scope, TemplateService, Nav
     });
     $scope.selectService = selectService;
     $scope.redirectTo = $.jStorage.get("confirmPageKey");
-    console.log($scope.selectService.team);
+    // console.log($scope.selectService.team);
     $scope.config = {
         'weightsReq': false,
         'varSet': false,
@@ -322,11 +322,11 @@ myApp.controller('ConfirmIndividualCtrl', function ($scope, TemplateService, Nav
     };
 
     $scope.tp = function (data) {
-        console.log(data);
+        // console.log(data);
     };
 
     $scope.saveIt = function (team) {
-        console.log(team);
+        // console.log(team);
     };
 
 
@@ -411,7 +411,7 @@ myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, Navigat
     };
 
     $scope.tp = function (team) {
-        console.log(team);
+        // console.log(team);
     };
 
     $scope.disableFunction = function (event, eventArr, index) {

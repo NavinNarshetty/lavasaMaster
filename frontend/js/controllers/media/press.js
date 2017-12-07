@@ -17,7 +17,7 @@ myApp.controller('MediaPressCtrl', function ($scope, TemplateService, Navigation
 
     $scope.tabchanges = function (tabs, a) {
         $scope.tabs = tabs;
-        console.log(tabs);
+        // console.log(tabs);
         if (tabs === 'photo') {
 
             $scope.classes.classp = "active-list";
@@ -55,7 +55,7 @@ myApp.controller('MediaPressCtrl', function ($scope, TemplateService, Navigation
     //         }
     //     });
     // };
-    console.log("window", window.location);
+    // console.log("window", window.location);
     $scope.loadMedia = function (year) {
         if (year == '2015' || year == '2016') {
             window.open("https://mumbai.sfanow.in/media-press", '_self');
@@ -63,7 +63,7 @@ myApp.controller('MediaPressCtrl', function ($scope, TemplateService, Navigation
         $scope.mediaArr = undefined;
         NavigationService.getLimitedMedia($scope.filter, function (response) {
             if (response) {
-                console.log("get limited media : ", response);
+                // console.log("get limited media : ", response);
                 $scope.mediaArr = response.data;
                 $scope.totalCount = response.data.options.count;
                 if ($scope.filter.mediatype == 'press-video') {
@@ -73,7 +73,7 @@ myApp.controller('MediaPressCtrl', function ($scope, TemplateService, Navigation
                     NavigationService.getVideoThumbnail($scope.mediaArr.results);
                 }
             } else {
-                console.log("No data found");
+                // console.log("No data found");
                 $scope.mediaArr.results = [];
             }
         });
@@ -100,7 +100,7 @@ myApp.controller('MediaPressCtrl', function ($scope, TemplateService, Navigation
             $scope.filter.mediatype = $stateParams.type;
             $scope.flags.openGallery = false;
             $scope.tabchanges($stateParams.type, 1);
-            console.log($scope.filter);
+            // console.log($scope.filter);
             $scope.getMediaFolders();
         }
     }

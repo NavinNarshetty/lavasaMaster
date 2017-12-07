@@ -26,7 +26,7 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
           if (allData.value) {
             $scope.oneSportDetail = allData.data;
             $scope.sportsListSubCategoryName = $scope.oneSportDetail.sportslist.sportsListSubCategory.name;
-            console.log("  $scope.sportsListSubCategoryName", $scope.sportsListSubCategoryName);
+            // console.log("  $scope.sportsListSubCategoryName", $scope.sportsListSubCategoryName);
             if ($scope.sportsListSubCategoryName === 'Fencing') {
               Url = 'match/getStandingsFencing';
               $scope.getStandingsFun(Url);
@@ -91,8 +91,8 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
                 }
 
               }
-              console.log($scope.knockout, "$scope.knockout");
-              console.log($scope.matches, "$scope.matches ");
+              // console.log($scope.knockout, "$scope.knockout");
+              // console.log($scope.matches, "$scope.matches ");
             }
           } else {
             toastr.error(allData.message, 'Error Message');
@@ -132,12 +132,12 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
       Obj.sport = $stateParams.id;
       if (Url) {
         NavigationService.getSportStandings(Obj, Url, function (data) {
-          console.log(data, "data");
+          // console.log(data, "data");
           errorService.errorCode(data, function (allData) {
             if (!allData.message) {
               if (allData.value) {
                 $scope.tablePoint = allData.data.tablePoint;
-                console.log("$scope.tablePoint ", $scope.tablePoint);
+                // console.log("$scope.tablePoint ", $scope.tablePoint);
               }
             } else {
               toastr.error(allData.message, 'Error Message');
@@ -161,9 +161,9 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
 
   // MATCH CENTER MODAL
   $scope.matchCenter = function (card) {
-    console.log($scope.oneSportDetail, 'oneSportDetail');
+    // console.log($scope.oneSportDetail, 'oneSportDetail');
     $scope.currentMatch = card;
-    console.log(card, 'card');
+    // console.log(card, 'card');
     $scope.currentMatch.sport = {};
     $scope.currentMatch.sport = $scope.oneSportDetail;
     $scope.currentMatch.sportName = $scope.currentMatch.sport.sportslist.sportsListSubCategory.name;
@@ -195,7 +195,7 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
       size: 'lg',
       windowClass: 'teammatchcenter-modal'
     })
-    console.log($scope.currentMatch, 'current');
+    // console.log($scope.currentMatch, 'current');
   }
   // MATCH CENTER MODAL END
   // CLEAVE FUNCTION OPTIONS

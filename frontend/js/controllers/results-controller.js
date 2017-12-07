@@ -181,7 +181,7 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
 
   // FUNCTIONS
   $scope.log = function () {
-    console.log($scope.sportFilter, 'filter');
+    // console.log($scope.sportFilter, 'filter');
   };
   // SELECT YEAR FILTER
   $scope.loadResult = function(year){
@@ -214,13 +214,13 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
   };
 
   $scope.addMedalDetail = function (index, detail) {
-    console.log(detail, 'detail');
-    console.log(index, 'indexS');
+    // console.log(detail, 'detail');
+    // console.log(index, 'indexS');
     var id = "#rank" + index;
     var demo = "";
     if (detail.rowDetail == true) {
       detailId = "#rankDetail" + index;
-      console.log(detailId, 'det');
+      // console.log(detailId, 'det');
       $(detailId).remove();
       detail.rowDetail = false;
       // $(id).after(demo);
@@ -241,7 +241,7 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
             n.bronzeMedal = n.medals.bronze.count;
           }
         }
-        console.log('sport', n);
+        // console.log('sport', n);
         // <td colspan="3"> <div> </div> </td>
         detailTable = detailTable + '<tr>   <td class="dd-sportname" colspan="2">' + n.name + ' </td> <td colspan="1"> <div class="detail-resultholder"> ' + n.goldMedal + ' </div> </td> <td colspan="1"> <div class="detail-resultholder">' + n.silverMedal + ' </div> </td> <td colspan="1"> <div class="detail-resultholder">' + n.bronzeMedal + ' </div> </td> <td colspan="1"> <div class="detail-resultholder">' + n.totalPoints + ' </div> </td> </tr>';
       });
@@ -284,7 +284,7 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
       name: $scope.sportFilter.name
     }
     $scope.getMedalWinners();
-    console.log($scope.medalFilter, 'clear');
+    // console.log($scope.medalFilter, 'clear');
   }
   // CLEAR FILTER END
   $scope.medalSchoolRedirect = function(player){
@@ -293,7 +293,7 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
         id: player.schoolId
       })
     } else {
-      console.log("noid");
+      // console.log("noid");
     }
   }
   // FUNCTIONS END
@@ -347,7 +347,7 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
         }
         // console.log('medalFilterList',$scope.medalFilterList);
       } else{
-        console.log("getAgeGroupsAndEvents Failed", data);
+        // console.log("getAgeGroupsAndEvents Failed", data);
       }
     });
   }
@@ -392,7 +392,7 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
         } else{
           $scope.showMedalList = true;
         }
-        console.log('$scope.medalWinners',$scope.medalWinners);
+        // console.log('$scope.medalWinners',$scope.medalWinners);
       } else {
         toastr.error('Error in getMedalWinners');
       }

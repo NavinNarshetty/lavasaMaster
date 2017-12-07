@@ -112,7 +112,7 @@ myApp.directive('img', function ($compile, $parse) {
             replace: false,
             link: function ($scope, element, attrs) {
                 $element = $(element);
-                console.log("Checking Fancybox");
+                // console.log("Checking Fancybox");
                 setTimeout(function () {
                     $(".various").fancybox({
                         maxWidth: 800,
@@ -154,11 +154,11 @@ myApp.directive('img', function ($compile, $parse) {
 
                             amount++;
                             var elewidth = $elementli.eq(0).width();
-                            //                        console.log(elewidth);
+                            // console.log(elewidth);
                             var num = amount % elewidth;
                             if (num === 0 && amount > 0) {
                                 amount = -15;
-                                //                            console.log(amount);
+                                // console.log(amount);
                                 var $firstelement = $elementli.eq(0);
                                 $element.append("<li>" + $firstelement.html() + "</li>");
                                 $firstelement.eq(0).remove();
@@ -345,7 +345,7 @@ myApp.directive('img', function ($compile, $parse) {
                 // console.info(scope.person);
                 var sfastate = "";
                 $scope.profiles = function (participantType, id) {
-                    console.log(participantType, id);
+                    // console.log(participantType, id);
                     if (participantType == 'player') {
                         sfastate = 'student-profile';
                     } else {
@@ -365,7 +365,7 @@ myApp.directive('img', function ($compile, $parse) {
             replace: false,
             link: function ($scope, element, attrs) {
                 $element = $(element);
-                console.log("Checking Fancybox");
+                // console.log("Checking Fancybox");
                 setTimeout(function () {
                     $(".varies").fancybox({
                         maxWidth: 800,
@@ -393,7 +393,7 @@ myApp.directive('img', function ($compile, $parse) {
                 callback: "&ngCallback"
             },
             link: function ($scope, element, attrs) {
-                console.log($scope.model);
+                // console.log($scope.model);
                 $scope.showImage = function () {};
                 $scope.check = true;
                 if (!$scope.type) {
@@ -415,15 +415,15 @@ myApp.directive('img', function ($compile, $parse) {
                 // }
 
                 $scope.$watch("image", function (newVal, oldVal) {
-                    console.log(newVal, oldVal);
+                    // console.log(newVal, oldVal);
                     isArr = _.isArray(newVal);
                     if (!isArr && newVal && newVal.file) {
                         $scope.uploadNow(newVal);
                     } else if (isArr && newVal.length > 0 && newVal[0].file) {
 
                         $timeout(function () {
-                            console.log(oldVal, newVal);
-                            console.log(newVal.length);
+                            // console.log(oldVal, newVal);
+                            // console.log(newVal.length);
                             _.each(newVal, function (newV, key) {
                                 if (newV && newV.file) {
                                     $scope.uploadNow(newV);
@@ -499,7 +499,7 @@ myApp.directive('img', function ($compile, $parse) {
                                 $scope.type = "image";
                             }
                             $scope.model = data.data[0];
-                            console.log($scope.model, 'model means blob');
+                            // console.log($scope.model, 'model means blob');
 
                         }
                         $timeout(function () {
@@ -671,9 +671,9 @@ myApp.directive('img', function ($compile, $parse) {
             },
             templateUrl: 'views/directive/date.html',
             link: function ($scope, element, attrs) {
-                console.log("This is loaded atlease");
+                // console.log("This is loaded atlease");
                 $scope.data = {};
-                console.log($scope.value);
+                // console.log($scope.value);
                 $scope.dateOptions = {
                     dateFormat: "dd/mm/yy",
                     changeYear: true,
@@ -684,7 +684,7 @@ myApp.directive('img', function ($compile, $parse) {
                     $scope.data.dob = moment($scope.value).toDate();
                 }
                 $scope.changeDate = function (data) {
-                    console.log("ChangeDate Called");
+                    // console.log("ChangeDate Called");
                     $scope.value = $scope.data.dob;
                 };
             }
@@ -775,7 +775,7 @@ myApp.directive('img', function ($compile, $parse) {
                 items: "=value"
             },
             link: function (scope, element, attr) {
-                console.log('enter');
+                // console.log('enter');
             }
         };
     })
@@ -788,7 +788,7 @@ myApp.directive('img', function ($compile, $parse) {
                 items: "=value"
             },
             link: function (scope, element, attr) {
-                console.log('enter');
+                // console.log('enter');
             }
         };
     })
@@ -833,7 +833,7 @@ myApp.directive('img', function ($compile, $parse) {
                     } else if (type == 'class') {
                         var destination = '.' + destination;
                     }
-                    console.log(destination, type, 'in dir')
+                    // console.log(destination, type, 'in dir')
                     $('html,body').animate({
                             scrollTop: $(destination).offset().top
                         },

@@ -380,7 +380,7 @@ myApp.filter('myFilter', function () {
 
     .filter('videothumbnail', function () {
         return function (value) {
-            console.log('valu', value);
+            // console.log('valu', value);
             if (value) {
                 return "http://img.youtube.com/vi/" + value + "/hqdefault.jpg";
             } else {

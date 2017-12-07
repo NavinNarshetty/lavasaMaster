@@ -3,10 +3,10 @@
           var getJ = $.jStorage.get("userDetails");
           var getData = {};
           if (getJ !== null) {
-              console.log(getJ);
+            //   console.log(getJ);
               getData.isLoggedIn = true;
               if ($.jStorage.get("userType") == "school") {
-                  console.log(getJ);
+                //   console.log(getJ);
                   getData.userType = 'school';
                   getData.sfaIdObj = getJ.sfaID;
                   getData.schoolName = getJ.schoolName;
@@ -16,7 +16,7 @@
                   }
                   NavigationService.setUserSchool(getData.schoolName);
               } else {
-                  console.log(getJ);
+                //   console.log(getJ);
                   getData.userType = 'athlete';
                   getData.firstName = getJ.firstName;
                   getData.surname = getJ.surname;

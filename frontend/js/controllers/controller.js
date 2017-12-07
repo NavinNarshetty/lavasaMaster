@@ -20,7 +20,7 @@ myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationServic
         var i = 0;
         $scope.buttonClick = function () {
             i++;
-            console.log("This is a button Click");
+            // console.log("This is a button Click");
         };
 
 
@@ -33,7 +33,7 @@ myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationServic
         $scope.navigation = NavigationService.getNavigation();
         $scope.formSubmitted = false;
         $scope.submitForm = function (data) {
-            console.log(data);
+            // console.log(data);
             $scope.formSubmitted = true;
         };
     })
@@ -41,7 +41,7 @@ myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationServic
     //Example API Controller
     .controller('DemoAPICtrl', function ($scope, TemplateService, apiService, NavigationService, $timeout) {
         apiService.getDemo($scope.formData, function (data) {
-            console.log(data);
+            // console.log(data);
         });
     })
 
@@ -97,7 +97,7 @@ myApp.controller('FaqCtrl', function ($scope, TemplateService, NavigationService
         errorService.errorCode(data, function (allData) {
             if (!allData.message) {
                 if (allData.value) {
-                    console.log(allData.data.results, "allData");
+                    // console.log(allData.data.results, "allData");
                     $scope.allFaqs = allData.data.results;
 
                 } else {
@@ -182,7 +182,7 @@ myApp.controller('ChampionsCtrl', function ($scope, TemplateService, NavigationS
                         return _.zipObject(["sporttype", "name"], currentItem);
                     })
                     .value();
-                console.log($scope.sports);
+                // console.log($scope.sports);
             }
         });
     };
