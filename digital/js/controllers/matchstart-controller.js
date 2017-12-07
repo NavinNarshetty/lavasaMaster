@@ -424,9 +424,10 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
       if ($scope.matchDetails.players.length == 1) {
         toastr.error('Minimum 2 Players required to start scoring');
       } else {
-        if (formData.matchPhoto.length == 0) {
-          toastr.error('Please upload match photo.', 'Data Incomplete');
-        } else {
+        // if (formData.matchPhoto.length == 0) {
+        //   toastr.error('Please upload match photo.', 'Data Incomplete');
+        // }
+         else {
           $scope.matchResult = {
             matchId: $scope.matchData.matchId
           }
@@ -542,9 +543,10 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
       if ($scope.matchDetails.teams.length == 1) {
         toastr.error('Minimum 2 Teams required to start scoring');
       } else {
-        if (formData.matchPhoto.length == 0) {
-          toastr.error('Please upload match photo.', 'Data Incomplete');
-        } else {
+        // if (formData.matchPhoto.length == 0) {
+        //   toastr.error('Please upload match photo.', 'Data Incomplete');
+        // }
+         else {
 
           $scope.matchResult = {
             matchId: $scope.matchData.matchId
