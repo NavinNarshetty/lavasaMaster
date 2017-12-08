@@ -434,8 +434,7 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
             $scope.selectService.pushToTeam(checked, bool, listOfAthelete);
 
             if ($scope.selectService.team.length <= $scope.maxPlayer) {
-                // console.log("$scope.selectService.team.length ",
-                    $scope.selectService.team.length);
+                // console.log("$scope.selectService.team.length ", $scope.selectService.team.length);
 
             } else {
                 if (objIndex !== undefined) {
