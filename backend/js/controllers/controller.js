@@ -1903,7 +1903,7 @@ myApp.controller('TeamSportCtrl', function ($scope, TemplateService, NavigationS
     // $scope.user = $.jStorage.get("user");
     $scope.login = {};
     var navigationUrl;
-    var filename = 'IndividualSport';
+    var filename = 'Teamsports';
 
     // INITIALISE VARIABLES END
     $scope.loginPopup = function (commonData, type) {
