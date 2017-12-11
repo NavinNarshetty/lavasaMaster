@@ -8539,12 +8539,16 @@ var model = {
                     if (mainData.resultsCombat) {
                         var i;
                         var sNo = 1;
+                        if(mainData.resultsCombat.teams[1]){
                         for (i = 0; i < mainData.resultsCombat.teams[1].sets.length; i++) {
                             if (i == 0) {
                                 obj["T1 FINAL SCORE"] = mainData.resultsCombat.teams[1].sets[i].point;
                             } else {
                                 obj["T1 FINAL SCORE"] = obj["T1 FINAL SCORE"] + mainData.resultsCombat.teams[1].sets[i].point;
                             }
+                        }
+                        }else{
+                            obj["T1 FINAL SCORE"]="";
                         }
                         if (mainData.resultsCombat.winner.player === mainData.resultsCombat.opponentsTeam[0]._id.toString()) {
                             obj["WINNER NAME"] = obj["SCREEN NAME ATHLETE 1"];
@@ -8556,16 +8560,17 @@ var model = {
                             obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 2"];
                         }
                     } else if (mainData.resultsRacquet) {
+                        if(mainData.resultsRacquet.teams[1]){
                         for (var i = 0; i < mainData.resultsRacquet.teams[0].sets.length; i++) {
                             if (i == 0) {
-                                obj["T2 Total Service Errors"] = mainData.resultsRacquet.teams[0].sets[i].serviceError;
-                                obj["T2 Total Unforced Errors"] = mainData.resultsRacquet.teams[0].sets[i].unforcedError;
-                                obj["T2 Total Winners"] = mainData.resultsRacquet.teams[0].sets[i].winner;
+                                obj["T2 Total Service Errors"] = mainData.resultsRacquet.teams[1].sets[i].serviceError;
+                                obj["T2 Total Unforced Errors"] = mainData.resultsRacquet.teams[1].sets[i].unforcedError;
+                                obj["T2 Total Winners"] = mainData.resultsRacquet.teams[1].sets[i].winner;
 
                             } else {
-                                obj["T2 Total Service Errors"] = obj["T2 Total Service Errors"] + mainData.resultsRacquet.teams[0].sets[i].serviceError;
-                                obj["T2 Total Unforced Errors"] = obj["T2 Total Unforced Errors"] + mainData.resultsRacquet.teams[0].sets[i].unforcedError;
-                                obj["T2 Total Winners"] = obj["A2 Total Winners"] + mainData.resultsRacquet.teams[0].sets[i].winner;
+                                obj["T2 Total Service Errors"] = obj["T2 Total Service Errors"] + mainData.resultsRacquet.teams[1].sets[i].serviceError;
+                                obj["T2 Total Unforced Errors"] = obj["T2 Total Unforced Errors"] + mainData.resultsRacquet.teams[1].sets[i].unforcedError;
+                                obj["T2 Total Winners"] = obj["A2 Total Winners"] + mainData.resultsRacquet.teams[1].sets[i].winner;
 
                             }
                             switch (i) {
@@ -9050,13 +9055,131 @@ var model = {
                             }
                         }
 
+                        }else{
+                            obj["T2 Total Service Errors"] = "";
+                            obj["T2 Total Unforced Errors"] = "";
+                            obj["T2 Total Winners"] = "";
+                            switch (i) {
+                                case 0:
+                                    obj["T1 Set 1"] = mainData.resultsRacquet.teams[0].sets[0].point;
+                                    // obj["T2 Set 1"] = mainData.resultsRacquet.teams[1].sets[0].point;
+                                    obj["T1 Set 2"] = "";
+                                    obj["T2 Set 2"] = "";
+                                    obj["T1 Set 3"] = "";
+                                    obj["T2 Set 3"] = "";
+                                    obj["T1 Set 4"] = "";
+                                    obj["T2 Set 4"] = "";
+                                    obj["T1 Set 5"] = "";
+                                    obj["T2 Set 5"] = "";
+                                    break;
+                                case 1:
+                                    obj["T1 Set 1"] = mainData.resultsRacquet.teams[0].sets[0].point;
+                                    // obj["T2 Set 1"] = mainData.resultsRacquet.teams[1].sets[0].point;
+                                    obj["T1 Set 2"] = mainData.resultsRacquet.teams[0].sets[1].point;
+                                    // obj["T2 Set 2"] = mainData.resultsRacquet.teams[1].sets[1].point;
+                                    obj["T1 Set 3"] = "";
+                                    obj["T2 Set 3"] = "";
+                                    obj["T1 Set 4"] = "";
+                                    obj["T2 Set 4"] = "";
+                                    obj["T1 Set 5"] = "";
+                                    obj["T2 Set 5"] = "";
+                                    break;
+                                case 2:
+                                    obj["T1 Set 1"] = mainData.resultsRacquet.teams[0].sets[0].point;
+                                    // obj["T2 Set 1"] = mainData.resultsRacquet.teams[1].sets[0].point;
+                                    obj["T1 Set 2"] = mainData.resultsRacquet.teams[0].sets[1].point;
+                                    // obj["T2 Set 2"] = mainData.resultsRacquet.teams[1].sets[1].point;
+                                    obj["T1 Set 3"] = mainData.resultsRacquet.teams[0].sets[2].point;
+                                    // obj["T2 Set 3"] = mainData.resultsRacquet.teams[1].sets[2].point;
+                                    obj["T1 Set 4"] = "";
+                                    obj["T2 Set 4"] = "";
+                                    obj["T1 Set 5"] = "";
+                                    obj["T2 Set 5"] = "";
+                                    break;
+                                case 3:
+                                    obj["T1 Set 1"] = mainData.resultsRacquet.teams[0].sets[0].point;
+                                    // obj["T2 Set 1"] = mainData.resultsRacquet.teams[1].sets[0].point;
+                                    obj["T1 Set 2"] = mainData.resultsRacquet.teams[0].sets[1].point;
+                                    // obj["T2 Set 2"] = mainData.resultsRacquet.teams[1].sets[1].point;
+                                    obj["T1 Set 3"] = mainData.resultsRacquet.teams[0].sets[2].point;
+                                    // obj["T2 Set 3"] = mainData.resultsRacquet.teams[1].sets[2].point;
+                                    obj["T1 Set 4"] = mainData.resultsRacquet.teams[0].sets[3].point;
+                                    // obj["T2 Set 4"] = mainData.resultsRacquet.teams[1].sets[3].point;
+                                    obj["T1 Set 5"] = "";
+                                    obj["T2 Set 5"] = "";
+                                    break;
+                                case 4:
+                                    obj["T1 Set 1"] = mainData.resultsRacquet.teams[0].sets[0].point;
+                                    // obj["T2 Set 1"] = mainData.resultsRacquet.teams[1].sets[0].point;
+                                    obj["T1 Set 2"] = mainData.resultsRacquet.teams[0].sets[1].point;
+                                    // obj["T2 Set 2"] = mainData.resultsRacquet.teams[1].sets[1].point;
+                                    obj["T1 Set 3"] = mainData.resultsRacquet.teams[0].sets[2].point;
+                                    // obj["T2 Set 3"] = mainData.resultsRacquet.teams[1].sets[4].point;
+                                    obj["T1 Set 4"] = mainData.resultsRacquet.teams[0].sets[3].point;
+                                    // obj["T2 Set 4"] = mainData.resultsRacquet.teams[1].sets[3].point;
+                                    obj["T1 Set 5"] = mainData.resultsRacquet.teams[0].sets[4].point;
+                                    // obj["T2 Set 5"] = mainData.resultsRacquet.teams[1].sets[4].point;
+                                    break;
+                                case 5:
+                                    obj["T1 Set 1"] = mainData.resultsRacquet.teams[0].sets[0].point;
+                                    // obj["T2 Set 1"] = mainData.resultsRacquet.teams[1].sets[0].point;
+                                    obj["T1 Set 2"] = mainData.resultsRacquet.teams[0].sets[1].point;
+                                    // obj["T2 Set 2"] = mainData.resultsRacquet.teams[1].sets[1].point;
+                                    obj["T1 Set 3"] = mainData.resultsRacquet.teams[0].sets[2].point;
+                                    // obj["T2 Set 3"] = mainData.resultsRacquet.teams[1].sets[4].point;
+                                    obj["T1 Set 4"] = mainData.resultsRacquet.teams[0].sets[3].point;
+                                    // obj["T2 Set 4"] = mainData.resultsRacquet.teams[1].sets[3].point;
+                                    obj["T1 Set 5"] = mainData.resultsRacquet.teams[0].sets[4].point;
+                                    // obj["T2 Set 5"] = mainData.resultsRacquet.teams[1].sets[4].point;
+                                    obj["T1 Set 6"] = mainData.resultsRacquet.teams[0].sets[5].point;
+                                    // obj["T2 Set 6"] = mainData.resultsRacquet.teams[1].sets[5].point;
+                                    break;
+                                case 6:
+                                    obj["T1 Set 1"] = mainData.resultsRacquet.teams[0].sets[0].point;
+                                    // obj["T2 Set 1"] = mainData.resultsRacquet.teams[1].sets[0].point;
+                                    obj["T1 Set 2"] = mainData.resultsRacquet.teams[0].sets[1].point;
+                                    // obj["T2 Set 2"] = mainData.resultsRacquet.teams[1].sets[1].point;
+                                    obj["T1 Set 3"] = mainData.resultsRacquet.teams[0].sets[2].point;
+                                    // obj["T2 Set 3"] = mainData.resultsRacquet.teams[1].sets[4].point;
+                                    obj["T1 Set 4"] = mainData.resultsRacquet.teams[0].sets[3].point;
+                                    // obj["T2 Set 4"] = mainData.resultsRacquet.teams[1].sets[3].point;
+                                    obj["T1 Set 5"] = mainData.resultsRacquet.teams[0].sets[4].point;
+                                    // obj["T2 Set 5"] = mainData.resultsRacquet.teams[1].sets[4].point;
+                                    obj["T1 Set 6"] = mainData.resultsRacquet.teams[0].sets[5].point;
+                                    // obj["T2 Set 6"] = mainData.resultsRacquet.teams[1].sets[5].point;
+                                    obj["T1 Set 7"] = mainData.resultsRacquet.teams[0].sets[6].point;
+                                    // obj["T2 Set 7"] = mainData.resultsRacquet.teams[1].sets[6].point;
+                                    break;
+                                case 7:
+                                    obj["T1 Set 1"] = mainData.resultsRacquet.teams[0].sets[0].point;
+                                    // obj["T2 Set 1"] = mainData.resultsRacquet.teams[1].sets[0].point;
+                                    obj["T1 Set 2"] = mainData.resultsRacquet.teams[0].sets[1].point;
+                                    // obj["T2 Set 2"] = mainData.resultsRacquet.teams[1].sets[1].point;
+                                    obj["T1 Set 3"] = mainData.resultsRacquet.teams[0].sets[2].point;
+                                    // obj["T2 Set 3"] = mainData.resultsRacquet.teams[1].sets[4].point;
+                                    obj["T1 Set 4"] = mainData.resultsRacquet.teams[0].sets[3].point;
+                                    // obj["T2 Set 4"] = mainData.resultsRacquet.teams[1].sets[3].point;
+                                    obj["T1 Set 5"] = mainData.resultsRacquet.teams[0].sets[4].point;
+                                    // obj["T2 Set 5"] = mainData.resultsRacquet.teams[1].sets[4].point;
+                                    obj["T1 Set 6"] = mainData.resultsRacquet.teams[0].sets[5].point;
+                                    // obj["T2 Set 6"] = mainData.resultsRacquet.teams[1].sets[5].point;
+                                    obj["T1 Set 7"] = mainData.resultsRacquet.teams[0].sets[6].point;
+                                    // obj["T2 Set 7"] = mainData.resultsRacquet.teams[1].sets[6].point;
+                                    obj["T1 Set 8"] = mainData.resultsRacquet.teams[0].sets[7].point;
+                                    // obj["T2 Set 8"] = mainData.resultsRacquet.teams[1].sets[7].point;
+                                    break;
+                                
+                            }    
+                        }
                         if (mainData.resultsRacquet.winner.player === mainData.resultsRacquet.opponentsTeam[1]._id.toString()) {
                             obj["WINNER TEAM ID"] = obj["TEAM ID 2"];
                         } else {
                             obj["WINNER TEAM ID"] = obj["TEAM ID 1"];
                         }
                     } else if (mainData.resultBasketball) {
+                        if(mainData.resultBasketball.teams[1]){
                         obj["COACH NAME 2"] = mainData.resultBasketball.teams[1].coach;
+                        
                         if (mainData.opponentsTeam[1]) {
                             obj["T2 FINAL SCORE"] = mainData.resultBasketball.teams[1].teamResults.finalGoalPoints;
                         } else {
@@ -9067,7 +9190,13 @@ var model = {
                         } else {
                             obj["WINNER TEAM ID"] = obj["TEAM ID 1"];
                         }
+                        }else{
+                           obj["COACH NAME 2"]=""; 
+                           obj["T2 FINAL SCORE"] = "";
+                           obj["WINNER TEAM ID"] = "";
+                        }
                     } else if (mainData.resultWaterPolo) {
+                        if(mainData.resultWaterPolo.teams[1]){
                         obj["COACH NAME 2"] = mainData.resultWaterPolo.teams[1].coach;
                         obj["T2 Shots on goal"] = mainData.resultWaterPolo.teams[1].teamResults.shotsOnGoal;
                         obj["T2 Total Shots"] = mainData.resultWaterPolo.teams[1].teamResults.totalShots;
@@ -9086,7 +9215,18 @@ var model = {
                             // obj["WINNER NAME"] = obj["SCREEN NAME ATHLETE 1"];
                             obj["WINNER TEAM ID"] = obj["TEAM ID 1"];
                         }
+                        }else{
+                        obj["COACH NAME 2"] = "";
+                        obj["T2 Shots on goal"] = "";
+                        obj["T2 Total Shots"] = "";
+                        obj["T2 Saves"] = "";
+                        obj["T2 Penalties"] = "";   
+                        obj["T1 FINAL SCORE"] = "";
+                        obj["T2 FINAL SCORE"] = "";       
+                        obj["WINNER TEAM ID"] = obj["TEAM ID 1"]; 
+                        }
                     } else if (mainData.resultVolleyball) {
+                        if(mainData.mainData.resultVolleyball.teams[1]){
                         obj["COACH NAME 2"] = mainData.resultVolleyball.teams[1].coach;
                         obj["T1 Spike"] = mainData.resultVolleyball.teams[1].teamResults.spike;
                         obj["T1 Foul"] = mainData.resultVolleyball.teams[1].teamResults.fouls;
@@ -9103,8 +9243,7 @@ var model = {
                         } else {
                             obj["RESULT 2"] = "No Match";
                         }
-
-
+                        
                         var i = mainData.resultsVolleyball.teamResults[0].sets.length;
                         switch (i) {
                             case 0:
@@ -9572,8 +9711,91 @@ var model = {
                         } else {
                             obj["WINNER TEAM ID"] = obj["TEAM ID 1"];
                         }
+                        }else{
+                        obj["COACH NAME 2"] = "";
+                        obj["T1 Spike"] = "";
+                        obj["T1 Foul"] = "";
+                        obj["T1 Block"] = "";    
+                        obj["RESULT 2"] = "No Match";
+                        var i = mainData.resultsVolleyball.teamResults[0].sets.length;
+                        switch (i) {
+                            case 0:
+                                obj["T1 Set 1"] = mainData.resultsVolleyball.teamResults[0].sets[0].point;
+                                // obj["T2 Set 1"] = mainData.resultsVolleyball.teamResults[1].sets[0].point;
+                                break;
+                            case 1:
+                                obj["T1 Set 1"] = mainData.resultsVolleyball.teamResults[0].sets[0].point;
+                                // obj["T2 Set 1"] = mainData.resultsVolleyball.teamResults[1].sets[0].point;
+                                obj["T1 Set 2"] = mainData.resultsVolleyball.teamResults[0].sets[1].point;
+                                // obj["T2 Set 2"] = mainData.resultsVolleyball.teamResults[1].sets[1].point;
+                                break;
+                            case 2:
+                                obj["T1 Set 1"] = mainData.resultsVolleyball.teamResults[0].sets[0].point;
+                                // obj["T2 Set 1"] = mainData.resultsVolleyball.teamResults[1].sets[0].point;
+                                obj["T1 Set 2"] = mainData.resultsVolleyball.teamResults[0].sets[1].point;
+                                // obj["T2 Set 2"] = mainData.resultsVolleyball.teamResults[1].sets[1].point;
+                                obj["T1 Set 3"] = mainData.resultsVolleyball.teamResults[0].sets[2].point;
+                                // obj["T2 Set 3"] = mainData.resultsVolleyball.teamResults[1].sets[2].point;
+                                break;
+                            case 3:
+                                obj["T1 Set 1"] = mainData.resultsVolleyball.teamResults[0].sets[0].point;
+                                // obj["T2 Set 1"] = mainData.resultsVolleyball.teamResults[1].sets[0].point;
+                                obj["T1 Set 2"] = mainData.resultsVolleyball.teamResults[0].sets[1].point;
+                                // obj["T2 Set 2"] = mainData.resultsVolleyball.teamResults[1].sets[1].point;
+                                obj["T1 Set 3"] = mainData.resultsVolleyball.teamResults[0].sets[2].point;
+                                // obj["T2 Set 3"] = mainData.resultsVolleyball.teamResults[1].sets[2].point;
+                                obj["T1 Set 4"] = mainData.resultsVolleyball.teamResults[0].sets[3].point;
+                                // obj["T2 Set 4"] = mainData.resultsVolleyball.teamResults[1].sets[3].point;
+                                break;
+                            case 4:
+                                obj["T1 Set 1"] = mainData.resultsVolleyball.teamResults[0].sets[0].point;
+                                // obj["T2 Set 1"] = mainData.resultsVolleyball.teamResults[1].sets[0].point;
+                                obj["T1 Set 2"] = mainData.resultsVolleyball.teamResults[0].sets[1].point;
+                                // obj["T2 Set 2"] = mainData.resultsVolleyball.teamResults[1].sets[1].point;
+                                obj["T1 Set 3"] = mainData.resultsVolleyball.teamResults[0].sets[2].point;
+                                // obj["T2 Set 3"] = mainData.resultsVolleyball.teamResults[1].sets[4].point;
+                                obj["T1 Set 4"] = mainData.resultsVolleyball.teamResults[0].sets[3].point;
+                                // obj["T2 Set 4"] = mainData.resultsVolleyball.teamResults[1].sets[3].point;
+                                obj["T1 Set 5"] = mainData.resultsVolleyball.teamResults[0].sets[4].point;
+                                // obj["T2 Set 5"] = mainData.resultsVolleyball.teamResults[1].sets[4].point;
+                                break;
+                            case 5:
+                                obj["T1 Set 1"] = mainData.resultsVolleyball.teamResults[0].sets[0].point;
+                                // obj["T2 Set 1"] = mainData.resultsVolleyball.teamResults[1].sets[0].point;
+                                obj["T1 Set 2"] = mainData.resultsVolleyball.teamResults[0].sets[1].point;
+                                // obj["T2 Set 2"] = mainData.resultsVolleyball.teamResults[1].sets[1].point;
+                                obj["T1 Set 3"] = mainData.resultsVolleyball.teamResults[0].sets[2].point;
+                                // obj["T2 Set 3"] = mainData.resultsVolleyball.teamResults[1].sets[4].point;
+                                obj["T1 Set 4"] = mainData.resultsVolleyball.teamResults[0].sets[3].point;
+                                // obj["T2 Set 4"] = mainData.resultsVolleyball.teamResults[1].sets[3].point;
+                                obj["T1 Set 5"] = mainData.resultsVolleyball.teamResults[0].sets[4].point;
+                                // obj["T2 Set 5"] = mainData.resultsVolleyball.teamResults[1].sets[4].point;
+                                obj["T1 Set 6"] = mainData.resultsVolleyball.teamResults[0].sets[5].point;
+                                // obj["T2 Set 6"] = mainData.resultsVolleyball.teamResults[1].sets[5].point;
+
+                                break;
+                            case 6:
+                                obj["T1 Set 1"] = mainData.resultsVolleyball.teamResults[0].sets[0].point;
+                                // obj["T2 Set 1"] = mainData.resultsVolleyball.teamResults[1].sets[0].point;
+                                obj["T1 Set 2"] = mainData.resultsVolleyball.teamResults[0].sets[1].point;
+                                // obj["T2 Set 2"] = mainData.resultsVolleyball.teamResults[1].sets[1].point;
+                                obj["T1 Set 3"] = mainData.resultsVolleyball.teamResults[0].sets[2].point;
+                                // obj["T2 Set 3"] = mainData.resultsVolleyball.teamResults[1].sets[4].point;
+                                obj["T1 Set 4"] = mainData.resultsVolleyball.teamResults[0].sets[3].point;
+                                // obj["T2 Set 4"] = mainData.resultsVolleyball.teamResults[1].sets[3].point;
+                                obj["T1 Set 5"] = mainData.resultsVolleyball.teamResults[0].sets[4].point;
+                                // obj["T2 Set 5"] = mainData.resultsVolleyball.teamResults[1].sets[4].point;
+                                obj["T1 Set 6"] = mainData.resultsVolleyball.teamResults[0].sets[5].point;
+                                // obj["T2 Set 6"] = mainData.resultsVolleyball.teamResults[1].sets[5].point;
+                                obj["T1 Set 7"] = mainData.resultsVolleyball.teamResults[0].sets[6].point;
+                                // obj["T2 Set 7"] = mainData.resultsVolleyball.teamResults[1].sets[6].point;
+                                break;
+                        }
+                         obj["WINNER TEAM ID"] = obj["TEAM ID 1"];
+                        }
 
                     } else if (mainData.resultHockey) {
+                        if(mainData.resultHockey.teams[1]){
                         obj["COACH NAME 2"] = mainData.resultHockey.teams[1].coach;
                         obj["T2 Shots on goal"] = mainData.resultHockey.teams[1].teamResults.shotsOnGoal;
                         obj["T2 Total Shots"] = mainData.resultHockey.teams[1].teamResults.totalShots;
@@ -9588,7 +9810,20 @@ var model = {
                         } else {
                             obj["WINNER TEAM ID"] = obj["TEAM ID 1"];
                         }
+                        }else{
+                        obj["COACH NAME 2"] = "";
+                        obj["T2 Shots on goal"] = "";
+                        obj["T2 Total Shots"] = "";
+                        obj["T2 Penalty Corners"] = "";
+                        obj["T2 Penalty Strokes"] = "";
+                        obj["T2 Saves"] = "";
+                        obj["T2 Fouls"] = "";
+                        obj["T1 Final Score"] = "";
+                        obj["T2 Final Score"] = "";
+                        obj["WINNER TEAM ID"] = obj["TEAM ID 1"];    
+                        }
                     } else if (mainData.resultHandball) {
+                        if(mainData.resultHandball.teams[1]){
                         obj["COACH NAME 2"] = mainData.resultHandball.teams[1].coach;
                         obj["T2 Shots on goal"] = mainData.resultHandball.teams[1].teamResults.shotsOnGoal;
                         obj["T2 Saves"] = mainData.resultHandball.teams[1].teamResults.saves;
@@ -9600,7 +9835,17 @@ var model = {
                         } else {
                             obj["WINNER TEAM ID"] = obj["TEAM ID 1"];
                         }
+                        }else{
+                        obj["COACH NAME 2"] = "";
+                        obj["T2 Shots on goal"] = "";
+                        obj["T2 Saves"] = "";
+                        obj["T2 Penalties"] = "";
+                        obj["T1 Final Score"] = "";
+                        obj["T2 Final Score"] = "";                 
+                        obj["WINNER TEAM ID"] = obj["TEAM ID 1"];
+                        }
                     } else if (mainData.resultKabaddi) {
+                        if(mainData.resultKabaddi.teams[1]){
                         obj["COACH NAME 2"] = mainData.resultKabaddi.teams[1].coach;
                         obj["T2 Super Tackle Points"] = mainData.resultKabaddi.teams[1].teamResults.superTackle;
                         obj["T2 All Out Points"] = mainData.resultKabaddi.teams[1].teamResults.allOut;
@@ -9610,6 +9855,14 @@ var model = {
                             obj["WINNER TEAM ID"] = obj["TEAM ID 2"];
                         } else {
                             obj["WINNER TEAM ID"] = obj["TEAM ID 1"];
+                        }
+                        }else{
+                        obj["COACH NAME 2"] = "";
+                        obj["T2 Super Tackle Points"] = "";
+                        obj["T2 All Out Points"] = "";
+                        obj["T1 Final Score"] = "";
+                        obj["T2 Final Score"] = ""; 
+                        obj["WINNER TEAM ID"] = obj["TEAM ID 1"];
                         }
                     } 
                     else {
@@ -9796,30 +10049,40 @@ var model = {
                                         obj["WINNER TEAM ID"] = "";
                                     }
                                     obj["VIDEO"] = "";
-                                } else {
-                                    obj["COACH NAME 1"] = "";
-                                    obj["T2 Shots on goal"] = "";
-                                    obj["T2 Total Shots"] = "";
-                                    obj["T2 Corners"] = "";
-                                    obj["T2 Penalties"] = "";
-                                    obj["T2 Saves"] = "";
-                                    obj["T2 Fouls"] = "";
-                                    obj["T2 Offisdes"] = "";
-                                    obj["FINAL SCORE"] = "";
-                                    obj["WINNER NAME"] = "";
-                                    obj["WINNER TEAM ID"] = "";
-                                    obj["VIDEO"] = "";
-                                    // obj["MATCH CENTER"] = "";
-                                }
+                                } 
                             } else {
                                 obj["TEAM 2"] = "";
                                 obj["TEAM NAME 2"] = "";
                                 obj["SCHOOL 2"] = "";
-                                // obj["COACH NAME 1"] = "";
-                                // obj["TEAM SPECIFIC DATA POINTS 1"] = "";
-                                // obj["FINAL SCORE"] = "";
-                                // obj["WINNER NAME"] = "";
-                                // obj["WINNER TEAM ID"] = "";
+                                if (mainData.resultFootball) {  
+                                    if (mainData.resultFootball.status == "isCompleted" && mainData.resultFootball.isNoMatch == false || mainData.resultFootball.isDraw == false) {
+                                        if (mainData.resultFootball.winner.player === mainData.opponentsTeam[0]._id.toString()) {
+                                            obj["WINNER NAME"] = mainData.opponentsTeam[0].name;
+                                            obj["WINNER TEAM ID"] = mainData.opponentsTeam[0].teamId;
+                                        } else {
+                                            obj["WINNER NAME"] = mainData.opponentsTeam[1].name;
+                                            obj["WINNER TEAM ID"] = mainData.opponentsTeam[1].teamId;
+                                        }
+                                    } else {
+                                        obj["WINNER NAME"] = "";
+                                        obj["WINNER TEAM ID"] = "";
+                                    }
+                                    obj["VIDEO"] = "";
+                                } else if (mainData.resultHockey) {
+                                    if (mainData.resultHockey.status == "isCompleted" && mainData.resultHockey.isNoMatch == false || mainData.resultHockey.isDraw == false) {
+                                        if (mainData.resultHockey.winner.player === mainData.opponentsTeam[0]._id.toString()) {
+                                            obj["WINNER NAME"] = mainData.opponentsTeam[0].name;
+                                            obj["WINNER TEAM ID"] = mainData.opponentsTeam[0].teamId;
+                                        } else {
+                                            obj["WINNER NAME"] = mainData.opponentsTeam[1].name;
+                                            obj["WINNER TEAM ID"] = mainData.opponentsTeam[1].teamId;
+                                        }
+                                    } else {
+                                        obj["WINNER NAME"] = "";
+                                        obj["WINNER TEAM ID"] = "";
+                                    }
+                                    obj["VIDEO"] = "";
+                                }
                                 obj["VIDEO TYPE"] = "";
                                 obj["VIDEO"] = "";
                             }
