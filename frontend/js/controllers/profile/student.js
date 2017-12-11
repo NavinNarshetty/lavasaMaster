@@ -291,7 +291,7 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
     };
     $scope.getStudentProfile();
 
-    
+
     $scope.url = window.location.origin;
     $scope.getCertificate = function (athleteId) {
         $scope.constraints = {};
@@ -301,7 +301,7 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
             window.open($scope.url + '/pdf/' + data.data, '_blank');
         });
     };
-    
+
 
     $scope.getSpecialAward = function (athleteId) {
         $scope.constraints = {};
@@ -331,16 +331,16 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
 
         });
     };
-   
-   
+
+
     //New changeYear Function
     $scope.changeYear = function () {
         //console.log("($scope.filter.year ", $scope.filter.year);
         if ($scope.filter.year == '2015' || $scope.filter.year == '2016') {
             $scope.studentProfileSfaId = $scope.studentProfile.athlete.sfaId;
             if ($scope.studentProfileSfaId.substr(2, 2) < '17') {
-                window.open("http://localhost:8080/#/student-profile/Old" + $scope.studentProfileSfaId, '_self');
-                // window.open("https://mumbai.sfanow.in/student-profile/" + $scope.studentProfileSfaId, '_self');
+                // window.open("http://localhost:8080/#/student-profile/Old" + $scope.studentProfileSfaId, '_self');
+                window.open("https://mumbai.sfanow.in/student-profile/" + $scope.studentProfileSfaId, '_self');
             } else {
                 toastr.error('you are not Registered for previous year');
             }
@@ -400,8 +400,8 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
         });
     };
     $scope.nowSport = {};
-   
-   
+
+
     $scope.sportsSelected = function (sport, index) {
         // console.log("$index", index);
         // console.log(sport);
@@ -434,8 +434,8 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
         // });
         $scope.sportStats($scope.nowSport);
     };
-   
-    
+
+
     // $scope.getStats = function () {
     //     $scope.filterStatistics.student = $stateParams.id;
     //     $scope.studentStats = undefined;

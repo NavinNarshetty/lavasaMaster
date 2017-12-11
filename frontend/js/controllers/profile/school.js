@@ -242,7 +242,7 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
         $scope.schoolData.school = $stateParams.id;
     }
     $scope.schoolData.maxSize = 8;
-    
+
     //CONFIG PROPERTY DETAILS
     configService.getDetail(function (data) {
         $scope.state = data.state;
@@ -265,168 +265,168 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
                 var schoolSport = 0;
                 var subArrLength = 0;
 
- // IMAGE ACTIVE AND INACTIVE PLACEMENT AT UPPER LAYER OF JSON
- _.each($scope.getSchoolProfile.registerSport, function (n) {
-    n.subCategory = [];
-    n.malePlayers = [];
-    n.femalePlayers = [];
-    if (!_.isEmpty(n.gender[0].players)) {
-        n.inactiveimage = n.gender[0].players[0].inactiveimage;
-        n.image = n.gender[0].players[0].image;
-        if (n.inactiveimage === undefined) {
-            n.inactiveimage = '';
-        }
-        if (n.image === undefined) {
-            n.image = '';
-        }
-        n.subCategory.push(n.gender[0].players[0].sportsListSubCategoryId);
-     } 
-         if ((n.gender).length > 1) {
-             if (n.gender[0].name == 'male') {
-                 n.malePlayers = n.gender[0].players;
-             } else if (n.gender[0].name == 'female') {
-                 n.femalePlayers = n.gender[0].players;
-             }
-             if (n.gender[1].name == 'male') {
-                 n.malePlayers = n.gender[1].players;
-             } else if (n.gender[1].name == 'female') {
-                 n.femalePlayers = n.gender[1].players;
-             }
-         } else if ((n.gender).length == 1) {
-             if (n.gender[0].name == 'male') {
-                 n.malePlayers = n.gender[0].players;
-             } else if (n.gender[0].name == 'female') {
-                 n.femalePlayers = n.gender[0].players;
-             }
-         }
-    schoolSport = schoolSport + 1;
-});
+                // IMAGE ACTIVE AND INACTIVE PLACEMENT AT UPPER LAYER OF JSON
+                _.each($scope.getSchoolProfile.registerSport, function (n) {
+                    n.subCategory = [];
+                    n.malePlayers = [];
+                    n.femalePlayers = [];
+                    if (!_.isEmpty(n.gender[0].players)) {
+                        n.inactiveimage = n.gender[0].players[0].inactiveimage;
+                        n.image = n.gender[0].players[0].image;
+                        if (n.inactiveimage === undefined) {
+                            n.inactiveimage = '';
+                        }
+                        if (n.image === undefined) {
+                            n.image = '';
+                        }
+                        n.subCategory.push(n.gender[0].players[0].sportsListSubCategoryId);
+                    }
+                    if ((n.gender).length > 1) {
+                        if (n.gender[0].name == 'male') {
+                            n.malePlayers = n.gender[0].players;
+                        } else if (n.gender[0].name == 'female') {
+                            n.femalePlayers = n.gender[0].players;
+                        }
+                        if (n.gender[1].name == 'male') {
+                            n.malePlayers = n.gender[1].players;
+                        } else if (n.gender[1].name == 'female') {
+                            n.femalePlayers = n.gender[1].players;
+                        }
+                    } else if ((n.gender).length == 1) {
+                        if (n.gender[0].name == 'male') {
+                            n.malePlayers = n.gender[0].players;
+                        } else if (n.gender[0].name == 'female') {
+                            n.femalePlayers = n.gender[0].players;
+                        }
+                    }
+                    schoolSport = schoolSport + 1;
+                });
 
-// SPORTS MERGING AS PER INDIVIDUAL
-if (schoolSport == $scope.getSchoolProfile.registerSport.length) {
- _.each($scope.getSchoolProfile.registerSport, function (n, key) {
-     var sportArr = [];
-     var sportName = [];
-     if (n.name == 'Kho Kho' || n.name == 'Water Polo' || n.name == 'Table Tennis' || n.name == 'Sport MMA') {
-         sportArr[0] = n.name;
-         sportName = sportArr;
-     } else {
-         sportName = _.split(n.name, " ");
-     }
-     if (n.name == 'Table Tennis Doubles') {
-         var bindName = sportName[0] + ' ' +
-             sportName[1];
-         $scope.sportObj = _.findIndex($scope.getSchoolProfile.registerSport, ['name', bindName]);
-     } else {
-         $scope.sportObj = _.findIndex($scope.getSchoolProfile.registerSport, ['name', sportName[0]]);
-     }
-     if ($scope.sportObj != key && $scope.sportObj != -1) {
-         $scope.getSchoolProfile.registerSport[$scope.sportObj].subCategory.push(n.subCategory[0]);
-         if ((n.gender).length > 1) {
-             if (n.gender[0].name == 'male') {
-                 _.each(n.gender[0].players, function(player){
-                     $scope.getSchoolProfile.registerSport[$scope.sportObj].malePlayers.push(player);
-                 });
-             } else if (n.gender[0].name == 'female') {
-                 _.each(n.gender[0].players, function(player){
-                     $scope.getSchoolProfile.registerSport[$scope.sportObj].femalePlayers.push(player);
-                 });
-             }
-             if (n.gender[1].name == 'male') {
-                 _.each(n.gender[1].players, function(player){
-                     $scope.getSchoolProfile.registerSport[$scope.sportObj].malePlayers.push(player);
-                 });
-             } else if (n.gender[1].name == 'female') {
-                 _.each(n.gender[1].players, function(player){
-                     $scope.getSchoolProfile.registerSport[$scope.sportObj].femalePlayers.push(player);
-                 });
-             }
-         } else if ((n.gender).length == 1) {
-             if (n.gender[0].name == 'male') {
-                 _.each(n.gender[0].players, function(player){
-                     $scope.getSchoolProfile.registerSport[$scope.sportObj].malePlayers.push(player);
-                 });
-             } else if (n.gender[0].name == 'female') {
-                 _.each(n.gender[0].players, function(player){
-                     $scope.getSchoolProfile.registerSport[$scope.sportObj].femalePlayers.push(player);
-                 });
-             }
-         }
-         n.removeElement = true;
-     } else if ($scope.sportObj != key && $scope.sportObj == -1) {
-         if (n.name == 'Table Tennis Doubles') {
-             n.name = sportName[0] + ' ' +
-                 sportName[1];
-         } else {
-             n.name = sportName[0];
-         }
-     }
-     subArrLength = subArrLength + 1;
- });
- $scope.getSchoolProfile.registerSport = _.filter($scope.getSchoolProfile.registerSport, function (n) {
-     return !n.removeElement;
- });
-}
+                // SPORTS MERGING AS PER INDIVIDUAL
+                if (schoolSport == $scope.getSchoolProfile.registerSport.length) {
+                    _.each($scope.getSchoolProfile.registerSport, function (n, key) {
+                        var sportArr = [];
+                        var sportName = [];
+                        if (n.name == 'Kho Kho' || n.name == 'Water Polo' || n.name == 'Table Tennis' || n.name == 'Sport MMA') {
+                            sportArr[0] = n.name;
+                            sportName = sportArr;
+                        } else {
+                            sportName = _.split(n.name, " ");
+                        }
+                        if (n.name == 'Table Tennis Doubles') {
+                            var bindName = sportName[0] + ' ' +
+                                sportName[1];
+                            $scope.sportObj = _.findIndex($scope.getSchoolProfile.registerSport, ['name', bindName]);
+                        } else {
+                            $scope.sportObj = _.findIndex($scope.getSchoolProfile.registerSport, ['name', sportName[0]]);
+                        }
+                        if ($scope.sportObj != key && $scope.sportObj != -1) {
+                            $scope.getSchoolProfile.registerSport[$scope.sportObj].subCategory.push(n.subCategory[0]);
+                            if ((n.gender).length > 1) {
+                                if (n.gender[0].name == 'male') {
+                                    _.each(n.gender[0].players, function (player) {
+                                        $scope.getSchoolProfile.registerSport[$scope.sportObj].malePlayers.push(player);
+                                    });
+                                } else if (n.gender[0].name == 'female') {
+                                    _.each(n.gender[0].players, function (player) {
+                                        $scope.getSchoolProfile.registerSport[$scope.sportObj].femalePlayers.push(player);
+                                    });
+                                }
+                                if (n.gender[1].name == 'male') {
+                                    _.each(n.gender[1].players, function (player) {
+                                        $scope.getSchoolProfile.registerSport[$scope.sportObj].malePlayers.push(player);
+                                    });
+                                } else if (n.gender[1].name == 'female') {
+                                    _.each(n.gender[1].players, function (player) {
+                                        $scope.getSchoolProfile.registerSport[$scope.sportObj].femalePlayers.push(player);
+                                    });
+                                }
+                            } else if ((n.gender).length == 1) {
+                                if (n.gender[0].name == 'male') {
+                                    _.each(n.gender[0].players, function (player) {
+                                        $scope.getSchoolProfile.registerSport[$scope.sportObj].malePlayers.push(player);
+                                    });
+                                } else if (n.gender[0].name == 'female') {
+                                    _.each(n.gender[0].players, function (player) {
+                                        $scope.getSchoolProfile.registerSport[$scope.sportObj].femalePlayers.push(player);
+                                    });
+                                }
+                            }
+                            n.removeElement = true;
+                        } else if ($scope.sportObj != key && $scope.sportObj == -1) {
+                            if (n.name == 'Table Tennis Doubles') {
+                                n.name = sportName[0] + ' ' +
+                                    sportName[1];
+                            } else {
+                                n.name = sportName[0];
+                            }
+                        }
+                        subArrLength = subArrLength + 1;
+                    });
+                    $scope.getSchoolProfile.registerSport = _.filter($scope.getSchoolProfile.registerSport, function (n) {
+                        return !n.removeElement;
+                    });
+                }
 
-//COUNT OF MALE AND FEMALE FOR PARTICULAR SPORT + SPORTS ARRAY ASSIGNED
-if (subArrLength >= $scope.getSchoolProfile.registerSport.length) {
- $scope.schoolSports = $scope.getSchoolProfile.registerSport;
- _.each($scope.schoolSports, function (count) {
-     $scope.forMale = [];
-     $scope.forFemale = [];
-     if(count.malePlayers){
-         $scope.forMale = _.uniqBy(count.malePlayers,'athlete');
-         count.maleCount = $scope.forMale.length;
-     }else{
-         $scope.forMale = [];
-         count.maleCount = $scope.forMale.length;
-     }
-     if(count.femalePlayers){
-         $scope.forFemale = _.uniqBy(count.femalePlayers,'athlete'); 
-         count.femaleCount = $scope.forFemale.length;
-     }else{
-         $scope.forFemale = [];
-         count.femaleCount = $scope.forFemale.length;
-     }
- });
-}
+                //COUNT OF MALE AND FEMALE FOR PARTICULAR SPORT + SPORTS ARRAY ASSIGNED
+                if (subArrLength >= $scope.getSchoolProfile.registerSport.length) {
+                    $scope.schoolSports = $scope.getSchoolProfile.registerSport;
+                    _.each($scope.schoolSports, function (count) {
+                        $scope.forMale = [];
+                        $scope.forFemale = [];
+                        if (count.malePlayers) {
+                            $scope.forMale = _.uniqBy(count.malePlayers, 'athlete');
+                            count.maleCount = $scope.forMale.length;
+                        } else {
+                            $scope.forMale = [];
+                            count.maleCount = $scope.forMale.length;
+                        }
+                        if (count.femalePlayers) {
+                            $scope.forFemale = _.uniqBy(count.femalePlayers, 'athlete');
+                            count.femaleCount = $scope.forFemale.length;
+                        } else {
+                            $scope.forFemale = [];
+                            count.femaleCount = $scope.forFemale.length;
+                        }
+                    });
+                }
 
-// CONTINGENT STRENGTH COUNTS
-$scope.athletesCount = data.data.athletesCount;
-_.each($scope.athletesCount, function (n) {
- if (n.name == 'male') {
-     $scope.maleCount = n.count;
- } else if (n.name == 'female') {
-     $scope.femaleCount = n.count;
- }
-});
-if ($scope.maleCount || $scope.femaleCount) {
- if ($scope.femaleCount === undefined && $scope.maleCount === undefined) {
-     $scope.totalCount = 0;
- } else if ($scope.femaleCount !== undefined && $scope.maleCount === undefined) {
-     $scope.totalCount = $scope.femaleCount;
-     $scope.maleCount = 0;
- } else if ($scope.femaleCount === undefined && $scope.maleCount !== undefined) {
-     $scope.totalCount = $scope.maleCount;
-     $scope.femaleCount = 0;
- } else {
-     $scope.totalCount = parseInt($scope.maleCount) + parseInt($scope.femaleCount);
- }
-}
+                // CONTINGENT STRENGTH COUNTS
+                $scope.athletesCount = data.data.athletesCount;
+                _.each($scope.athletesCount, function (n) {
+                    if (n.name == 'male') {
+                        $scope.maleCount = n.count;
+                    } else if (n.name == 'female') {
+                        $scope.femaleCount = n.count;
+                    }
+                });
+                if ($scope.maleCount || $scope.femaleCount) {
+                    if ($scope.femaleCount === undefined && $scope.maleCount === undefined) {
+                        $scope.totalCount = 0;
+                    } else if ($scope.femaleCount !== undefined && $scope.maleCount === undefined) {
+                        $scope.totalCount = $scope.femaleCount;
+                        $scope.maleCount = 0;
+                    } else if ($scope.femaleCount === undefined && $scope.maleCount !== undefined) {
+                        $scope.totalCount = $scope.maleCount;
+                        $scope.femaleCount = 0;
+                    } else {
+                        $scope.totalCount = parseInt($scope.maleCount) + parseInt($scope.femaleCount);
+                    }
+                }
 
-//MEDALS COUNT
-$scope.medals = data.data.medalData;
-_.each($scope.medals, function (n) {
- if (n.name == 'gold') {
-     $scope.goldCount = n.count;
- } else if (n.name == 'silver') {
-     $scope.silverCount = n.count;
- } else if (n.name == 'bronze') {
-     $scope.bronzeCount = n.count;
- }
-});
+                //MEDALS COUNT
+                $scope.medals = data.data.medalData;
+                _.each($scope.medals, function (n) {
+                    if (n.name == 'gold') {
+                        $scope.goldCount = n.count;
+                    } else if (n.name == 'silver') {
+                        $scope.silverCount = n.count;
+                    } else if (n.name == 'bronze') {
+                        $scope.bronzeCount = n.count;
+                    }
+                });
 
-} else {
+            } else {
                 {
                     $scope.getSchoolProfile = '';
                     $scope.schoolSports = '';
@@ -436,7 +436,7 @@ _.each($scope.medals, function (n) {
         });
     };
     $scope.getSchoolProfiles();
-  
+
 
     //GET SPECIAL AWARDS
     $scope.url = window.location.origin;
@@ -473,7 +473,7 @@ _.each($scope.medals, function (n) {
             $scope.getSchoolStats();
         }
     };
-   
+
 
     //GET ALL AGE GROUP
     $scope.getSportAgeGroup = function () {
@@ -571,7 +571,7 @@ _.each($scope.medals, function (n) {
     //SELECT PARTICULAR SPORT
     $scope.selectSport = function (selected) {
         // console.log(selected);
-        if(_.isEmpty($scope.filterStatistics.sportsListSubCategory)){
+        if (_.isEmpty($scope.filterStatistics.sportsListSubCategory)) {
             $scope.filterStatistics = {};
             $scope.schoolStats = [];
             $scope.sportContingent.showContingent = true;
@@ -585,21 +585,21 @@ _.each($scope.medals, function (n) {
             $scope.getDrawFormats();
             $scope.getSportAgeGroup();
         } else {
-            if(selected.name !== $scope.statsDetail.name){
-            $scope.filterStatistics = {};
-            $scope.sportContingent = {};
-            $scope.filter.sport = {};
-            delete $scope.statsDetail;
-            $scope.schoolStats = [];
-            $scope.sportContingent.showContingent = true;
-            $scope.statsDetail = selected;
-            $scope.filter.sport = selected;
-            $scope.filterStatistics.sportsListSubCategory = selected.subCategory;
-            $scope.filterStatistics.age = '';
-            $scope.filterStatistics.gender = '';
-            $scope.filterStatistics.event = '';
-            $scope.tabchange('player', 1);
-            }else{
+            if (selected.name !== $scope.statsDetail.name) {
+                $scope.filterStatistics = {};
+                $scope.sportContingent = {};
+                $scope.filter.sport = {};
+                delete $scope.statsDetail;
+                $scope.schoolStats = [];
+                $scope.sportContingent.showContingent = true;
+                $scope.statsDetail = selected;
+                $scope.filter.sport = selected;
+                $scope.filterStatistics.sportsListSubCategory = selected.subCategory;
+                $scope.filterStatistics.age = '';
+                $scope.filterStatistics.gender = '';
+                $scope.filterStatistics.event = '';
+                $scope.tabchange('player', 1);
+            } else {
                 $scope.filterStatistics = {};
                 $scope.sportContingent = {};
                 $scope.filter.sport = {};
@@ -690,15 +690,15 @@ _.each($scope.medals, function (n) {
         }
     };
 
-   
+
     // changeYear
     $scope.changeYear = function () {
         if ($scope.filter.year == '2015' || $scope.filter.year == '2016') {
             $scope.getSchoolProfileSfaId = $scope.getSchoolProfile.sfaId;
             console.log(" $scope.getSchoolProfileSfaId", $scope.getSchoolProfileSfaId);
             if ($scope.getSchoolProfileSfaId.substr(2, 2) < '17') {
-                // window.open("https://mumbai.sfanow.in/school-profile/Old" + $scope.getSchoolProfileSfaId, '_self');
-                window.open("http://localhost:8080/#/school-profile/Old" + $scope.getSchoolProfileSfaId, '_self');
+                window.open("https://mumbai.sfanow.in/school-profile/Old" + $scope.getSchoolProfileSfaId, '_self');
+                // window.open("http://localhost:8080/#/school-profile/Old" + $scope.getSchoolProfileSfaId, '_self');
             } else {
                 toastr.error('You are not Registered for Previous year', 'Error Message');
             }
@@ -712,8 +712,8 @@ _.each($scope.medals, function (n) {
             $scope.getSchoolProfileSfaId = $scope.getSchoolProfile.sfaId;
             console.log(" $scope.getSchoolProfileSfaId", $scope.getSchoolProfileSfaId);
             if ($scope.getSchoolProfileSfaId.substr(2, 2) < '17') {
-                // window.open("https://mumbai.sfanow.in/school-profile/Old" + $scope.getSchoolProfileSfaId, '_self');
-                window.open("http://localhost:8080/#/school-profile/Old" + $scope.getSchoolProfileSfaId, '_self');
+                window.open("https://mumbai.sfanow.in/school-profile/Old" + $scope.getSchoolProfileSfaId, '_self');
+                // window.open("http://localhost:8080/#/school-profile/Old" + $scope.getSchoolProfileSfaId, '_self');
             } else {
                 toastr.error('You are not Registered for Previous year', 'Error Message');
             }
@@ -742,8 +742,8 @@ _.each($scope.medals, function (n) {
             scope: $scope
         });
     };
-    
-    
+
+
     $scope.eventYear = eventYear;
     console.log(" $scope.eventYear ", $scope.eventYear);
     $scope.filterStatistics.year = '2017';
