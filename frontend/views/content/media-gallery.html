@@ -120,8 +120,8 @@ Press release
                             <div class="row text-center" ng-if="!(mediaArr.results.length > 0)">
                                 {{mediaArr.results === undefined && 'Loading ..' || 'No Photos Found.'}}
                             </div>
-                            <uib-pagination ng-if="mediaArr.total > 0" ng-change="loadMedia();" total-items="mediaArr.total" ng-model="filter.page" items-per-page="totalCount"
-                                max-size="template.pageMax">
+                            <uib-pagination ng-if="mediaArr.results.length > 0" ng-change="loadMedia();" total-items="mediaArr.total" ng-model="filter.page"
+                                items-per-page="totalCount" max-size="template.pageMax">
                             </uib-pagination>
                         </div>
                     </div>
@@ -195,8 +195,8 @@ Press release
                             <div class="row text-center" ng-if="!(mediaArr.results.length > 0)">
                                 {{mediaArr.results === undefined && 'Loading ..' || 'No Videos Found.'}}
                             </div>
-                            <uib-pagination ng-if="mediaArr.total > 0" ng-change="loadMedia();" total-items="mediaArr.total" ng-model="filter.page" items-per-page="totalCount"
-                                max-size="template.pageMax">
+                            <uib-pagination ng-if="mediaArr.results.length > 0" ng-change="loadMedia();" total-items="mediaArr.total" ng-model="filter.page"
+                                items-per-page="totalCount" max-size="template.pageMax">
                             </uib-pagination>
                         </div>
                     </div>

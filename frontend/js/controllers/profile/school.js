@@ -212,7 +212,7 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
     $scope.changeYear();
 });
 
-myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, $uibModal, configService) {
+myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, $uibModal, configService, toastr) {
     //Used to name the .html file
     $scope.template = TemplateService.getHTML("content/school-profile.html");
     TemplateService.title = "School Profile"; //This is the Title of the Website
@@ -266,42 +266,42 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
                 var subArrLength = 0;
 
                 // IMAGE ACTIVE AND INACTIVE PLACEMENT AT UPPER LAYER OF JSON
-                   _.each($scope.getSchoolProfile.registerSport, function (n) {
-                       n.subCategory = [];
-                       n.malePlayers = [];
-                       n.femalePlayers = [];
-                       if (!_.isEmpty(n.gender[0].players)) {
-                           n.inactiveimage = n.gender[0].players[0].inactiveimage;
-                           n.image = n.gender[0].players[0].image;
-                           if (n.inactiveimage === undefined) {
-                               n.inactiveimage = '';
-                           }
-                           if (n.image === undefined) {
-                               n.image = '';
-                           }
-                           n.subCategory.push(n.gender[0].players[0].sportsListSubCategoryId);
-                        } 
-                            if ((n.gender).length > 1) {
-                                if (n.gender[0].name == 'male') {
-                                    n.malePlayers = n.gender[0].players;
-                                } else if (n.gender[0].name == 'female') {
-                                    n.femalePlayers = n.gender[0].players;
-                                }
-                                if (n.gender[1].name == 'male') {
-                                    n.malePlayers = n.gender[1].players;
-                                } else if (n.gender[1].name == 'female') {
-                                    n.femalePlayers = n.gender[1].players;
-                                }
-                            } else if ((n.gender).length == 1) {
-                                if (n.gender[0].name == 'male') {
-                                    n.malePlayers = n.gender[0].players;
-                                } else if (n.gender[0].name == 'female') {
-                                    n.femalePlayers = n.gender[0].players;
-                                }
-                            }
-                       schoolSport = schoolSport + 1;
-                   });
-                
+                _.each($scope.getSchoolProfile.registerSport, function (n) {
+                    n.subCategory = [];
+                    n.malePlayers = [];
+                    n.femalePlayers = [];
+                    if (!_.isEmpty(n.gender[0].players)) {
+                        n.inactiveimage = n.gender[0].players[0].inactiveimage;
+                        n.image = n.gender[0].players[0].image;
+                        if (n.inactiveimage === undefined) {
+                            n.inactiveimage = '';
+                        }
+                        if (n.image === undefined) {
+                            n.image = '';
+                        }
+                        n.subCategory.push(n.gender[0].players[0].sportsListSubCategoryId);
+                    }
+                    if ((n.gender).length > 1) {
+                        if (n.gender[0].name == 'male') {
+                            n.malePlayers = n.gender[0].players;
+                        } else if (n.gender[0].name == 'female') {
+                            n.femalePlayers = n.gender[0].players;
+                        }
+                        if (n.gender[1].name == 'male') {
+                            n.malePlayers = n.gender[1].players;
+                        } else if (n.gender[1].name == 'female') {
+                            n.femalePlayers = n.gender[1].players;
+                        }
+                    } else if ((n.gender).length == 1) {
+                        if (n.gender[0].name == 'male') {
+                            n.malePlayers = n.gender[0].players;
+                        } else if (n.gender[0].name == 'female') {
+                            n.femalePlayers = n.gender[0].players;
+                        }
+                    }
+                    schoolSport = schoolSport + 1;
+                });
+
                 // SPORTS MERGING AS PER INDIVIDUAL
                 if (schoolSport == $scope.getSchoolProfile.registerSport.length) {
                     _.each($scope.getSchoolProfile.registerSport, function (n, key) {
@@ -324,30 +324,30 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
                             $scope.getSchoolProfile.registerSport[$scope.sportObj].subCategory.push(n.subCategory[0]);
                             if ((n.gender).length > 1) {
                                 if (n.gender[0].name == 'male') {
-                                    _.each(n.gender[0].players, function(player){
+                                    _.each(n.gender[0].players, function (player) {
                                         $scope.getSchoolProfile.registerSport[$scope.sportObj].malePlayers.push(player);
                                     });
                                 } else if (n.gender[0].name == 'female') {
-                                    _.each(n.gender[0].players, function(player){
+                                    _.each(n.gender[0].players, function (player) {
                                         $scope.getSchoolProfile.registerSport[$scope.sportObj].femalePlayers.push(player);
                                     });
                                 }
                                 if (n.gender[1].name == 'male') {
-                                    _.each(n.gender[1].players, function(player){
+                                    _.each(n.gender[1].players, function (player) {
                                         $scope.getSchoolProfile.registerSport[$scope.sportObj].malePlayers.push(player);
                                     });
                                 } else if (n.gender[1].name == 'female') {
-                                    _.each(n.gender[1].players, function(player){
+                                    _.each(n.gender[1].players, function (player) {
                                         $scope.getSchoolProfile.registerSport[$scope.sportObj].femalePlayers.push(player);
                                     });
                                 }
                             } else if ((n.gender).length == 1) {
                                 if (n.gender[0].name == 'male') {
-                                    _.each(n.gender[0].players, function(player){
+                                    _.each(n.gender[0].players, function (player) {
                                         $scope.getSchoolProfile.registerSport[$scope.sportObj].malePlayers.push(player);
                                     });
                                 } else if (n.gender[0].name == 'female') {
-                                    _.each(n.gender[0].players, function(player){
+                                    _.each(n.gender[0].players, function (player) {
                                         $scope.getSchoolProfile.registerSport[$scope.sportObj].femalePlayers.push(player);
                                     });
                                 }
@@ -374,17 +374,17 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
                     _.each($scope.schoolSports, function (count) {
                         $scope.forMale = [];
                         $scope.forFemale = [];
-                        if(count.malePlayers){
-                            $scope.forMale = _.uniqBy(count.malePlayers,'athlete');
+                        if (count.malePlayers) {
+                            $scope.forMale = _.uniqBy(count.malePlayers, 'athlete');
                             count.maleCount = $scope.forMale.length;
-                        }else{
+                        } else {
                             $scope.forMale = [];
                             count.maleCount = $scope.forMale.length;
                         }
-                        if(count.femalePlayers){
-                            $scope.forFemale = _.uniqBy(count.femalePlayers,'athlete'); 
+                        if (count.femalePlayers) {
+                            $scope.forFemale = _.uniqBy(count.femalePlayers, 'athlete');
                             count.femaleCount = $scope.forFemale.length;
-                        }else{
+                        } else {
                             $scope.forFemale = [];
                             count.femaleCount = $scope.forFemale.length;
                         }
@@ -473,6 +473,7 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
             $scope.getSchoolStats();
         }
     };
+
 
     //GET ALL AGE GROUP
     $scope.getSportAgeGroup = function () {
@@ -570,7 +571,7 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
     //SELECT PARTICULAR SPORT
     $scope.selectSport = function (selected) {
         // console.log(selected);
-        if(_.isEmpty($scope.filterStatistics.sportsListSubCategory)){
+        if (_.isEmpty($scope.filterStatistics.sportsListSubCategory)) {
             $scope.filterStatistics = {};
             $scope.schoolStats = [];
             $scope.sportContingent.showContingent = true;
@@ -584,21 +585,21 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
             $scope.getDrawFormats();
             $scope.getSportAgeGroup();
         } else {
-            if(selected.name !== $scope.statsDetail.name){
-            $scope.filterStatistics = {};
-            $scope.sportContingent = {};
-            $scope.filter.sport = {};
-            delete $scope.statsDetail;
-            $scope.schoolStats = [];
-            $scope.sportContingent.showContingent = true;
-            $scope.statsDetail = selected;
-            $scope.filter.sport = selected;
-            $scope.filterStatistics.sportsListSubCategory = selected.subCategory;
-            $scope.filterStatistics.age = '';
-            $scope.filterStatistics.gender = '';
-            $scope.filterStatistics.event = '';
-            $scope.tabchange('player', 1);
-            }else{
+            if (selected.name !== $scope.statsDetail.name) {
+                $scope.filterStatistics = {};
+                $scope.sportContingent = {};
+                $scope.filter.sport = {};
+                delete $scope.statsDetail;
+                $scope.schoolStats = [];
+                $scope.sportContingent.showContingent = true;
+                $scope.statsDetail = selected;
+                $scope.filter.sport = selected;
+                $scope.filterStatistics.sportsListSubCategory = selected.subCategory;
+                $scope.filterStatistics.age = '';
+                $scope.filterStatistics.gender = '';
+                $scope.filterStatistics.event = '';
+                $scope.tabchange('player', 1);
+            } else {
                 $scope.filterStatistics = {};
                 $scope.sportContingent = {};
                 $scope.filter.sport = {};
@@ -689,6 +690,40 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
         }
     };
 
+
+    // changeYear
+    $scope.changeYear = function () {
+        if ($scope.filter.year == '2015' || $scope.filter.year == '2016') {
+            $scope.getSchoolProfileSfaId = $scope.getSchoolProfile.sfaId;
+            console.log(" $scope.getSchoolProfileSfaId", $scope.getSchoolProfileSfaId);
+            if ($scope.getSchoolProfileSfaId.substr(2, 2) < '17') {
+                window.open("https://mumbai.sfanow.in/school-profile/Old" + $scope.getSchoolProfileSfaId, '_self');
+                // window.open("http://localhost:8080/#/school-profile/Old" + $scope.getSchoolProfileSfaId, '_self');
+            } else {
+                toastr.error('You are not Registered for Previous year', 'Error Message');
+            }
+        }
+    };
+
+
+    //onChangeContingentYear
+    $scope.onChangeContingentYear = function () {
+        if ($scope.filterStatistics.year == '2015' || $scope.filterStatistics.year == '2016') {
+            $scope.getSchoolProfileSfaId = $scope.getSchoolProfile.sfaId;
+            console.log(" $scope.getSchoolProfileSfaId", $scope.getSchoolProfileSfaId);
+            if ($scope.getSchoolProfileSfaId.substr(2, 2) < '17') {
+                window.open("https://mumbai.sfanow.in/school-profile/Old" + $scope.getSchoolProfileSfaId, '_self');
+                // window.open("http://localhost:8080/#/school-profile/Old" + $scope.getSchoolProfileSfaId, '_self');
+            } else {
+                toastr.error('You are not Registered for Previous year', 'Error Message');
+            }
+
+
+        }
+
+    };
+
+
     $scope.videoNA = function () {
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
@@ -697,6 +732,7 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
             scope: $scope
         });
     };
+
 
     $scope.videoYTU = function () {
         var modalInstance = $uibModal.open({
@@ -707,6 +743,11 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
         });
     };
 
+
+    $scope.eventYear = eventYear;
+    console.log(" $scope.eventYear ", $scope.eventYear);
+    $scope.filterStatistics.year = '2017';
+    $scope.filter.year = '2017';
 });
 
 myApp.controller('SchoolBioCtrl', function ($scope, TemplateService, NavigationService, $timeout, $uibModal, $stateParams) {

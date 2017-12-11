@@ -25,10 +25,6 @@ var requrl = "http://hyderabadschool.sfanow.in/api/";
 // var requrl = "http://testhyderabadcollege.sfanow.in/api/";
 // var requrl = "http://testahmedabadschool.sfanow.in/api/";
 // var requrl = "http://testahmedabadcollege.sfanow.in/api/";
-// var requrl = "http://wohlig.io:1337/api/";
-// var requrl = "http://mumbaischool.sfanow.in/api/";
-// var requrl = "https://sfa.wohlig.co.in/api/";
-// var requrl = "http://sfa2.wohlig.co.in/api/";
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
