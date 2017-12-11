@@ -165,7 +165,8 @@
             <div class="text-center">
                 <h4 class="color-blue text-up font-semi">sports participated</h4>
             </div>
-            <div class="hide">
+            <!-- <div class="hide"> -->
+            <div class="">
                 <!--mt-min-38-->
                 <div class="float-right">
                     <h4 class="text-up color-blue display-inline">Year</h4>
@@ -184,13 +185,13 @@
             <div class="col-md-offset-1 col-md-10">
                 <div class="sport-slider mt40">
                     <flex-slider class="carousel" flex-slide="sportDetails in schoolSports | orderBy:'name' track by $index" slideshow="false" animation="slide"
-                        item-width="200" item-margin="40">
+                    item-width="200" item-margin="40">
                         <li>
                             <a>
                                 <div class="sports-participate text-center">
-                                <!-- <img ng-src="{{sportDetails.inactiveimage | serverimage2}}" alt="" class="img-responsive image-width"> -->
+                                    <!-- <img ng-src="{{sportDetails.inactiveimage | serverimage2}}" alt="" class="img-responsive image-width"> -->
                                     <img ng-src="{{ sportDetails.name !== filter.sport.name?(sportDetails.inactiveimage | serverimage2):(sportDetails.image  | serverimage2)}}"
-                                        alt="" class="img-responsive image-width" ng-click="selectSport(sportDetails);">
+                                    alt="" class="img-responsive image-width" ng-click="selectSport(sportDetails);">
                                     <span class="color-base text-up f16 mt10 equalSpacing">{{sportDetails.name}}</span>
                                     <div class="combine mt10">
                                         <div class="boy-sec display-inline color-base icon-right">
@@ -236,14 +237,15 @@
                         </ul>
                     </div>
                 </div>
-                <div class="hide">
+                <div class="">
+                    <!-- <div class="hide"> -->
                     <div class="float-right">
                         <h4 class="text-up color-blue display-inline">Year</h4>
                         <div class="display-inline">
                             <div class="sfa-select">
                                 <select ng-change="onChangeContingentYear()" class="select" ng-model="filterStatistics.year">
-                                    <!-- <option value="2015">{{year15}}</option>
-                                    <option value="2016">{{year16}}</option> -->
+                                    <option value="2015">{{year15}}</option>
+                                    <option value="2016">{{year16}}</option>
                                     <option value="2017">{{eventYear}}</option>
                                 </select>
                                 <span class="only-border"></span>
@@ -380,9 +382,10 @@
                                     <div class="display-inline">
                                         <div class="sfa-select">
                                             <select ng-change="getStats()" ng-model="filterStatistics.year" class="select">
-                                                <option value=""></option>
+                                              
                                                 <option value="2015">{{year15}}</option>
                                                 <option value="2016">{{year16}}</option>
+                                                <option value="2017">{{eventYear}}</option>
                                             </select>
                                             <span class="only-border"></span>
                                         </div>
