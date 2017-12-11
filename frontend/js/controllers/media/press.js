@@ -65,7 +65,7 @@ myApp.controller('MediaPressCtrl', function ($scope, TemplateService, Navigation
             if (response) {
                 // console.log("get limited media : ", response);
                 $scope.mediaArr = response.data;
-                $scope.totalCount = response.data.options.count;
+                $scope.totalCount = $scope.mediaArr.options.count;
                 if ($scope.filter.mediatype == 'press-video') {
                     _.each($scope.mediaArr.results, function (n) {
                         n.thumbnail = "../img/media-video-thumb.jpg";
