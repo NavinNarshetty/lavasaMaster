@@ -7156,8 +7156,6 @@ var model = {
                                 } else {
                                     obj["SCREEN NAME SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.school.name;
                                 }
-
-
                             } else {
                                 obj["SFA ID 1"] = "";
                                 obj["SCREEN NAME ATHLETE 1"] = "";
@@ -7743,8 +7741,7 @@ var model = {
                         } else {
                             if (_.isEmpty(match)) {
                                 callback(null, []);
-                            } else {
-                                // console.log("found0", match);
+                            } else{
                                 callback(null, match);
                             }
                         }
@@ -7879,6 +7876,11 @@ var model = {
                     } else {
                         obj["SCREEN NAME SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.school.name;
                     }
+                     } else {
+                    obj["SFAID 2"] = "";
+                    obj["SCREEN NAME ATHLETE 2"] = "";
+                    obj["SCREEN NAME SCHOOL 2"] = "";
+                }
                     if (mainData.resultsCombat) {
                         var i;
                         var sNo = 1;
@@ -8410,26 +8412,7 @@ var model = {
                     }
                     obj["VIDEO TYPE"] = "";
                     obj["VIDEO"] = "";
-                } else {
-                    obj["SFAID 2"] = "";
-                    obj["SCREEN NAME ATHLETE 2"] = "";
-                    obj["SCREEN NAME SCHOOL 2"] = "";
-                    obj["A2 Total Service Errors"] = "";
-                    obj["A2 Total Unforced Errors"] = "";
-                    obj["A2 Total Winners"] = "";
-                    obj["A1 Set 1"] = "";
-                    obj["A2 Set 1"] = "";
-                    obj["A1 Set 2"] = "";
-                    obj["A2 Set 2"] = "";
-                    obj["A1 Set 3"] = "";
-                    obj["A2 Set 3"] = "";
-                    obj["A1 Set 4"] = "";
-                    obj["A2 Set 4"] = "";
-                    obj["A1 Set 5"] = "";
-                    obj["A2 Set 5"] = "";
-                    obj["VIDEO TYPE"] = "";
-                    obj["VIDEO"] = "";
-                }
+               
                 callback(null, obj);
             },
             function (err, singleData) {
@@ -8549,6 +8532,10 @@ var model = {
                     } else {
                         obj["SCREEN SCHOOL NAME 2"] = mainData.opponentsTeam[1].schoolName;
                     }
+                } else {
+                    obj["TEAM ID 2"] = "";
+                    obj["SCREEN SCHOOL NAME 2"] = "";
+                }
                     if (mainData.resultsCombat) {
                         var i;
                         var sNo = 1;
@@ -9624,21 +9611,23 @@ var model = {
                         } else {
                             obj["WINNER TEAM ID"] = obj["TEAM ID 1"];
                         }
-                    } else {
-                        obj["RESULT 1"] = "";
-                        obj["SCORE 1"] = "";
-                        obj["DATA POINTS 1"] = "";
-                    }
-
-                } else {
-                    obj["TEAM ID 2"] = "";
-                    obj["SCREEN SCHOOL NAME 2"] = "";
-                    obj["RESULT 2"] = "";
-                    obj["SCORE 2"] = "";
-                    obj["DATA POINTS 2"] = "";
+                    } 
+                    else {
+                    //     obj["RESULT 1"] = "";
+                    //     obj["SCORE 1"] = "";
+                    //     obj["DATA POINTS 1"] = "";
                     obj["VIDEO TYPE"] = "";
                     obj["VIDEO"] = "";
-                }
+                    }
+
+                // } else {
+                //     obj["TEAM ID 2"] = "";
+                //     obj["SCREEN SCHOOL NAME 2"] = "";
+                //     // obj["RESULT 2"] = "";
+                //     // obj["SCORE 2"] = "";
+                //     // obj["DATA POINTS 2"] = "";
+                    
+                // }
                 callback(null, obj);
 
             },
@@ -9728,14 +9717,14 @@ var model = {
                             } else {
                                 obj["TEAM ID 1"] = "";
                                 obj["SCREEN NAME SCHOOL 1"] = "";
-                                obj["COACH NAME 1"] = "";
-                                obj["T1 Shots on goal"] = "";
-                                obj["T1 Total Shots"] = "";
-                                obj["T1 Corners"] = "";
-                                obj["T1 Penalties"] = "";
-                                obj["T1 Saves"] = "";
-                                obj["T1 Fouls"] = "";
-                                obj["T1 Offisdes"] = "";
+                                // obj["COACH NAME 1"] = "";
+                                // obj["T1 Shots on goal"] = "";
+                                // obj["T1 Total Shots"] = "";
+                                // obj["T1 Corners"] = "";
+                                // obj["T1 Penalties"] = "";
+                                // obj["T1 Saves"] = "";
+                                // obj["T1 Fouls"] = "";
+                                // obj["T1 Offisdes"] = "";
 
                             }
 
@@ -9826,11 +9815,11 @@ var model = {
                                 obj["TEAM 2"] = "";
                                 obj["TEAM NAME 2"] = "";
                                 obj["SCHOOL 2"] = "";
-                                obj["COACH NAME 1"] = "";
-                                obj["TEAM SPECIFIC DATA POINTS 1"] = "";
-                                obj["FINAL SCORE"] = "";
-                                obj["WINNER NAME"] = "";
-                                obj["WINNER TEAM ID"] = "";
+                                // obj["COACH NAME 1"] = "";
+                                // obj["TEAM SPECIFIC DATA POINTS 1"] = "";
+                                // obj["FINAL SCORE"] = "";
+                                // obj["WINNER NAME"] = "";
+                                // obj["WINNER TEAM ID"] = "";
                                 obj["VIDEO TYPE"] = "";
                                 obj["VIDEO"] = "";
                             }
@@ -15863,36 +15852,7 @@ var model = {
             });
     },
 
-    setVimero: function (data, Callback) {
-
-        var Vimeo = require('vimeo-api').Vimeo;
-
-        CLIENT_ID = CLIENT_ID;
-        CLIENT_SECRET = CLIENT_SECRET;
-        console.log('1');
-        var lib = new Vimeo(CLIENT_ID, CLIENT_SECRET);
-        console.log('2');
-
-        lib.generateClientCredentials(scope, function (err, access_token) {
-            if (err) {
-                throw err;
-            }
-            console.log('3');
-            var token = access_token.access_token;
-            var scopes = access_token.scope;
-        });
-
-        lib.upload('youtube/test4.mp4', function (error, body, status_code, headers) {
-            if (err) {
-                throw err;
-            }
-            console.log('4');
-            lib.request(headers.location, function (error, body, status_code, headers) {
-                console.log(body);
-            });
-        });
-
-    }
+    
 
 };
 module.exports = _.assign(module.exports, exports, model);
