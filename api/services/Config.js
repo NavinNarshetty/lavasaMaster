@@ -53,6 +53,7 @@ var model = {
         });
         return arr;
     },
+
     checkRestrictedDelete: function (Model, schema, data, callback) {
 
         var values = schema.tree;
@@ -81,6 +82,7 @@ var model = {
             }
         });
     },
+    
     manageArrayObject: function (Model, id, data, key, action, callback) {
         Model.findOne({
             "_id": id
@@ -1081,8 +1083,6 @@ var model = {
                 callback(null, filename);
             });
         }
-    },
-
-
+    }
 };
 module.exports = _.assign(module.exports, exports, model);

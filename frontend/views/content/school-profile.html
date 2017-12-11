@@ -188,9 +188,9 @@
                         <li>
                             <a>
                                 <div class="sports-participate text-center">
-                                    <img ng-src="{{sportDetails.inactiveimage | serverimage2}}" alt="" class="img-responsive image-width">
-                                    <!-- <img ng-src="{{ sportDetails.name !== filter.sport.name && (sportDetails.inactiveimage | serverimage2) || (sportDetails.image  | serverimage2)}}"
-                                        alt="" class="img-responsive image-width" ng-click="selectSport(sportDetails);"> -->
+                                <!-- <img ng-src="{{sportDetails.inactiveimage | serverimage2}}" alt="" class="img-responsive image-width"> -->
+                                    <img ng-src="{{ sportDetails.name !== filter.sport.name?(sportDetails.inactiveimage | serverimage2):(sportDetails.image  | serverimage2)}}"
+                                        alt="" class="img-responsive image-width" ng-click="selectSport(sportDetails);">
                                     <span class="color-base text-up f16 mt10 equalSpacing">{{sportDetails.name}}</span>
                                     <div class="combine mt10">
                                         <div class="boy-sec display-inline color-base icon-right">
@@ -420,38 +420,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div class="col-md-3 col-sm-4 col-xs-12 text-c-m">
-                                    <h4 class="text-up color-blue display-inline">gender</h4>
-                                    <div class="display-inline">
-                                        <div class="sfa-select">
-                                            <select ng-change="getStats()" ng-model="filterStatistics.gender" class="select">
-                                                <option value=""></option>
-                                                <option value="Boys">Boys</option>
-                                                <option value="Girls">Girls</option>
-
-                                            </select>
-                                            <span class="only-border"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 col-sm-4 col-xs-12 text-c-m" ng-if="dropdowns.agegroup.length > 0">
-                                    <h4 class="text-up color-blue display-inline">age group</h4>
-                                    <div class="display-inline">
-                                        <div class="sfa-select">
-                                            <select ng-change="getStats()" class="select" ng-model="filterStatistics.agegroup" ng-options="item.name as item.name for item in dropdowns.agegroup"></select>
-                                            <span class="only-border"></span>
-                                        </div>
-                                    </div>
-                                </div> -->
-                                <!-- <div class="col-md-3 col-sm-4 col-xs-12 text-c-m" ng-if="dropdowns.category.length > 0">
-                                    <h4 class="text-up color-blue display-inline">category</h4>
-                                    <div class="display-inline">
-                                        <div class="sfa-select">
-                                            <select class="select" ng-change="getStats()" ng-model="filterStatistics.category" ng-options="item.name as item.name for item in dropdowns.category"></select>
-                                            <span class="only-border"></span>
-                                        </div>
-                                    </div>
-                                </div> -->
                             </div>
                             <div class="row mt25 main-over" ng-if="statsDetail">
                                 <div class="col-md-12 mt25">
@@ -485,7 +453,7 @@
                                                 <!-- DO NOT DELETE -->
                                                 <!-- <tr  ng-repeat="stat in schoolStats"> -->
                                                 <!-- DO NOT DELETE -->
-                                                <tr class="other-bg" ng-repeat="stat in schoolStats.match | orderBy:'sportslist'">
+                                                <tr class="other-bg" ng-repeat="stat in schoolStats.match | orderBy:['sportslist','ageGroup','gender']">
                                                     <td>
                                                         <span>{{stat.year}}</span>
                                                     </td>

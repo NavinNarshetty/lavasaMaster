@@ -31,7 +31,7 @@ myApp.controller('StudentsCtrl', function ($scope, TemplateService, NavigationSe
     $scope.doSearch = function () {
         $scope.searchFilter.page = $scope.searchFilter.page++;
         NavigationService.getSearchDataStudent($scope.searchFilter, function (data) {
-            console.log('athlete', data);
+            // console.log('athlete', data);
             $scope.getSearchData = data.data.results;
             $scope.maxSize = data.data.options.count;
             $scope.totalItem = data.data.total;
@@ -74,7 +74,7 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
     //     var medal = medalName;
     //     var spname = [];
     //     _.forEach(sportName, function (name) {
-    //         //    console.log("THE SPORTS NAME", name.name);
+    //         console.log("THE SPORTS NAME", name.name);
     //         spname.push(name.name);
     //     });
     //     var MAINDATA = [];
@@ -103,7 +103,7 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
     //                     "sport": data.sport.sportslist.name,
     //                     "isMedal": true
     //                 });
-    //                 //          console.log("JSONNN", MAINDATA);
+    //                 console.log("JSONNN", MAINDATA);
     //             }
 
     //         });
@@ -200,7 +200,7 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
     $scope.getStudentProfile = function () {
         NavigationService.getStudentProfile($stateParams.id, function (data) {
             if (data.value) {
-                console.log($scope.studentProfile);
+                // console.log($scope.studentProfile);
                 $scope.studentProfile = data.data;
                 $scope.athlete = $scope.studentProfile.athlete;
                 if ($scope.athlete) {
@@ -241,7 +241,7 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
                         } else {
                             sportName = _.split(n.sportslist.sportsListSubCategory.name, " ");
                         }
-                        console.log(sportName);
+                        // console.log(sportName);
                         if (n.sportslist.sportsListSubCategory.name == 'Table Tennis Doubles') {
                             var bindName = sportName[0] + ' ' +
                                 sportName[1];
@@ -267,14 +267,14 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
                     });
                 }
                 if (subArrLength >= $scope.studentProfile.sport.length) {
-                    console.log(" $scope.studentProfile.sport", $scope.studentProfile.sport);
+                    // console.log(" $scope.studentProfile.sport", $scope.studentProfile.sport);
                     $scope.sport = $scope.studentProfile.sport;
                 }
 
                 $scope.specialAward = $scope.studentProfile.isSpecialAward;
                 $scope.medals = $scope.studentProfile.medalData;
                 _.each($scope.medals, function (n) {
-                    console.log('n', n);
+                    // console.log('n', n);
                     if (n.name == 'gold') {
                         $scope.goldCount = n.count;
                     } else if (n.name == 'silver') {
@@ -285,7 +285,7 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
                 });
             } else {
                 $scope.studentProfile = [];
-                console.log("Error while fetching Student Profile.");
+                // console.log("Error while fetching Student Profile.");
             }
         });
     };
@@ -296,7 +296,7 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
         $scope.constraints = {};
         $scope.constraints._id = athleteId;
         NavigationService.getCertificate($scope.constraints, function (data) {
-            console.log(data.data);
+            // console.log(data.data);
             window.open($scope.url + '/pdf/' + data.data, '_blank');
         });
     };
@@ -304,7 +304,7 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
         $scope.constraints = {};
         $scope.constraints.athlete = athleteId;
         NavigationService.getAwardsCertificate($scope.constraints, function (data) {
-            console.log(data);
+            // console.log(data);
             if (data.value) {
                 _.each(data.data, function (key) {
                     window.open($scope.url + '/pdf/' + key.url, '_blank');
@@ -316,13 +316,13 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
     };
 
     $scope.sportStats = function (data) {
-        console.log('stats', data);
+        // console.log('stats', data);
         $scope.table.layout = data.sportslist.drawFormat.name;
         $scope.constraints = {};
         $scope.constraints.athleteId = $scope.studentid;
         $scope.constraints.sportsListSubCategory = data.subCategory;
         NavigationService.getAthleteStats($scope.constraints, function (data) {
-            console.log('stats inside', data);
+            // console.log('stats inside', data);
             $scope.studentStats = data.data;
 
         });
@@ -337,12 +337,12 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
     //     $scope.studentMedalCount(constraints);
     // };
     // $scope.getStudentSport = function (constraints) {
-    //     //console.log("constraints : ",constraints);
+    //     console.log("constraints : ",constraints);
     //     var i = 0;
     //     $scope.studentSport = undefined;
     //     NavigationService.getStudentSport(constraints, function (response) {
     //         if (response.value) {
-    //             //   console.log(s"studentSport data = ",data);
+    //             console.log(s"studentSport data = ",data);
     //             $scope.studentSport = response.data;
     //             $scope.SPORTDATA = response.data;
     //             console.log($scope.studentSport);
@@ -377,8 +377,8 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
     };
     $scope.nowSport = {};
     $scope.sportsSelected = function (sport, index) {
-        console.log("$index", index);
-        console.log(sport);
+        // console.log("$index", index);
+        // console.log(sport);
         $scope.nowSport = sport;
         $scope.activateSports(sport.sportslist.sportsListSubCategory._id);
         // $scope.participatedSports = _.groupBy(sport.sports, function (key) {
@@ -388,7 +388,7 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
         // $scope.filterStatistics.year = $scope.filter.year;
         // $scope.filterStatistics.sport = sport._id;
         $scope.filterStatistics.sport = sport;
-        console.log("sport.sportslist.drawFormat.name", sport.sportslist.drawFormat.name);
+        // console.log("sport.sportslist.drawFormat.name", sport.sportslist.drawFormat.name);
         $scope.table.layout = sport.sportslist.drawFormat.name;
         // console.log(" $scope.table.layout", $scope.table.layout);
         // NavigationService.filterCategoryBySport({
@@ -455,7 +455,7 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
     //                             }
     //                         }
     //                     });
-    //                     // console.log("opponent", $scope.studentStats);
+    //                     console.log("opponent", $scope.studentStats);
 
     //                 } else if ($scope.studentStats[0].drawFormat == 'League') {
     //                     _.each($scope.studentStats, function (key) {
@@ -578,7 +578,7 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
     //     });
     // };
     // $scope.makeActive = function(sports) {
-    //     //console.log("sports : ",sports.sportslist);
+    //     console.log("sports : ",sports.sportslist);
     //     console.log(sports);
     // };
 
@@ -607,7 +607,7 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
 myApp.controller('StudentBioCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state) {
     //Used to name the .html file
 
-    console.log("Testing Consoles");
+    // console.log("Testing // consoles");
 
     $scope.template = TemplateService.getHTML("content/students-bio.html");
     TemplateService.title = "Athlete Biography"; //This is the Title of the Website
@@ -625,7 +625,7 @@ myApp.controller('StudentBioCtrl', function ($scope, TemplateService, Navigation
 
 
     $scope.getSport = function (sport) {
-        console.log(sport);
+        // console.log(sport);
 
         constraints.agegroup = sport.agegroup.name;
         if (sport.firstcategory) {
@@ -643,7 +643,7 @@ myApp.controller('StudentBioCtrl', function ($scope, TemplateService, Navigation
         });
     };
     $scope.tabchanges = function (tabs, a) {
-        //        console.log(tab);
+        // console.log(tab);
         $scope.tabs = tabs;
         if (a == 1) {
 
@@ -663,7 +663,7 @@ myApp.controller('StudentBioCtrl', function ($scope, TemplateService, Navigation
     $scope.classc = '';
 
     $scope.tabchange = function (tab, a) {
-        //        console.log(tab);
+        // console.log(tab);
         $scope.tab = tab;
         if (a == 1) {
 
@@ -733,7 +733,7 @@ myApp.controller('StudentBioCtrl', function ($scope, TemplateService, Navigation
     $scope.getStudentProfile = function () {
         NavigationService.getStudentProfile($stateParams.id, function (data) {
             if (data.value) {
-                console.log(data);
+                // console.log(data);
                 $scope.studentProfile = data.data;
                 constraints.gender = data.data.gender;
                 if ($scope.studentProfile.gender == "Boys") {
@@ -743,7 +743,7 @@ myApp.controller('StudentBioCtrl', function ($scope, TemplateService, Navigation
                 }
             } else {
                 $scope.studentProfile = [];
-                console.log("Error while fetching Student Profile.");
+                // console.log("Error while fetching Student Profile.");
             }
         });
     };
@@ -762,10 +762,10 @@ myApp.controller('StudentBioCtrl', function ($scope, TemplateService, Navigation
         NavigationService.getStudentMedalCount(constraints, function (data) {
             if (data.value) {
                 $scope.studentMedal[constraints.year] = data.data;
-                console.log($scope.studentMedal);
+                // console.log($scope.studentMedal);
             } else {
                 $scope.studentMedal[constraints.year] = {};
-                console.log("No Student Medal found");
+                // console.log("No Student Medal found");
             }
         });
     };
@@ -781,14 +781,14 @@ myApp.controller('StudentBioCtrl', function ($scope, TemplateService, Navigation
         });
     };
     $scope.getStudentSport = function (constraints) {
-        //console.log("constraints : ",constraints);
+        // console.log("constraints : ",constraints);
         var i = 0;
         $scope.studentSport = {};
         NavigationService.getStudentSport(constraints, function (response) {
             if (response.value) {
-                //   console.log("studentSport data = ",data);
+                // console.log("studentSport data = ",data);
                 $scope.studentSport[constraints.year] = response.data;
-                console.log($scope.studentSport);
+                // console.log($scope.studentSport);
                 _.each($scope.studentSport[constraints.year], function (key) {
                     key.active = false;
                 });
