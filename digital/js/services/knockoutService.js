@@ -118,13 +118,16 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
           } else {
             result.noShow = false;
           }
-
+          if(result.globalResult.winner.reason){
+            console.log("yaba");
+            result.reason = result.globalResult.winner.reason;
+          }
         }
       }
     });
     return result;
   };
-  //End of resutLeagueCumKnockout() 
+  //End of resutLeagueCumKnockout()
 
   //resutLeagueCumKnockoutIndividual() for Individual Sport
   this.resutLeagueCumKnockoutIndividual = function (result) {
@@ -174,7 +177,7 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
 
 
   };
-  //End of resutLeagueCumKnockoutIndividual() 
+  //End of resutLeagueCumKnockoutIndividual()
   this.sortLeagueKnockoutResult = function (result) {
     if (result.opponentsTeam.length > 0) {
       //for opponentsTeam
@@ -198,7 +201,7 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
       } else {
         console.log("New Team Sport Found");
       }
-      //function resutLeagueCumKnockout to  Teamsport result 
+      //function resutLeagueCumKnockout to  Teamsport result
       this.resutLeagueCumKnockout(result);
 
     } else if (result.opponentsSingle.length > 0) {
