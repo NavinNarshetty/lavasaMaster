@@ -207,6 +207,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'TeamDetailCtrl'
         })
+        .state('gallery', {
+            url: "/gallery",
+            templateUrl: tempateURL,
+            controller: 'SfaGalleryCtrl'
+        })
 
 
         // Media

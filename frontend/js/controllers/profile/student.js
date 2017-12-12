@@ -285,6 +285,10 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
                 });
             } else {
                 $scope.studentProfile = [];
+                if (_.isEmpty($scope.studentProfile)) {
+                    toastr.error('No Student Found');
+                    $state.go('students');
+                }
                 // console.log("Error while fetching Student Profile.");
             }
         });

@@ -430,6 +430,10 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
                 {
                     $scope.getSchoolProfile = '';
                     $scope.schoolSports = '';
+                    if (!$scope.getSchoolProfile || $scope.getSchoolProfile == 'undefined') {
+                        toastr.error('No School Found');
+                        $state.go('school');
+                    }
                     // console.log("Error while fetching School Profile.");
                 }
             }
