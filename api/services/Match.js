@@ -7209,7 +7209,6 @@ var model = {
                                         obj["WINNER SFA ID "] = "";
                                         obj["WINNER SCHOOL"] = "";
                                     }
-
                                 } else {
                                     obj["Score A1"] = "";
                                     obj["Score A2"] = "";
@@ -8413,9 +8412,11 @@ var model = {
                     if (mainData.resultsRacquet.winner.opponentsSingle === mainData.opponentsSingle[1]._id.toString()) {
                         obj["WINNER NAME"] = obj["SCREEN NAME ATHLETE 2"];
                         obj["WINNER SFA ID"] = obj["SFAID 2"];
+                        obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 2"];
                     } else {
                         obj["WINNER NAME"] = obj["SCREEN NAME ATHLETE 1"];
                         obj["WINNER SFA ID"] = obj["SFAID 1"];
+                        obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 1"];
                     }
                 }
                 obj["VIDEO TYPE"] = "";
@@ -8559,12 +8560,10 @@ var model = {
                         obj["T1 FINAL SCORE"] = "";
                     }
                     if (mainData.resultsCombat.winner.player === mainData.resultsCombat.opponentsTeam[0]._id.toString()) {
-                        obj["WINNER NAME"] = obj["SCREEN NAME ATHLETE 1"];
-                        obj["WINNER SFA ID"] = obj["SFAID 1"];
+                        obj["WINNER TEAM ID"] = obj["TEAM ID 1"];
                         obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 1"];
                     } else {
-                        obj["WINNER NAME"] = obj["SCREEN NAME ATHLETE 2"];
-                        obj["WINNER SFA ID"] = obj["SFAID 2"];
+                        obj["WINNER TEAM ID"] = obj["TEAM ID 2"];
                         obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 2"];
                     }
                 } else if (mainData.resultsRacquet) {
@@ -9181,8 +9180,10 @@ var model = {
                     }
                     if (mainData.resultsRacquet.winner.player === mainData.resultsRacquet.opponentsTeam[1]._id.toString()) {
                         obj["WINNER TEAM ID"] = obj["TEAM ID 2"];
+                        obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 1"];
                     } else {
                         obj["WINNER TEAM ID"] = obj["TEAM ID 1"];
+                        obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 2"];
                     }
                 } else if (mainData.resultBasketball) {
                     if (mainData.resultBasketball.teams[1]) {
@@ -9195,8 +9196,11 @@ var model = {
                         }
                         if (mainData.resultBasketball.winner.player === mainData.opponentsTeam[1]._id.toString()) {
                             obj["WINNER TEAM ID"] = obj["TEAM ID 2"];
+                            obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 2"];
+
                         } else {
                             obj["WINNER TEAM ID"] = obj["TEAM ID 1"];
+                            obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 1"];
                         }
                     } else {
                         obj["COACH NAME 2"] = "";
@@ -9219,9 +9223,11 @@ var model = {
                         }
                         if (mainData.resultWaterPolo.winner.player === mainData.opponentsTeam[1]._id.toString()) {
                             obj["WINNER TEAM ID"] = obj["TEAM ID 2"];
+                            obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 2"];
                         } else {
                             // obj["WINNER NAME"] = obj["SCREEN NAME ATHLETE 1"];
                             obj["WINNER TEAM ID"] = obj["TEAM ID 1"];
+                            obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 1"];
                         }
                     } else {
                         obj["COACH NAME 2"] = "";
@@ -9716,8 +9722,10 @@ var model = {
                         }
                         if (mainData.resultsVolleyball.winner.player === mainData.opponentsTeam[1]._id.toString()) {
                             obj["WINNER TEAM ID"] = obj["TEAM ID 2"];
+                            obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 2"];
                         } else {
                             obj["WINNER TEAM ID"] = obj["TEAM ID 1"];
+                            obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 1"];
                         }
                     } else {
                         obj["COACH NAME 2"] = "";
@@ -9815,8 +9823,10 @@ var model = {
                         obj["T2 Final Score"] = mainData.resultHockey.teams[1].teamResults.finalPoints;
                         if (mainData.resultHockey.winner.player === mainData.opponentsTeam[1]._id.toString()) {
                             obj["WINNER TEAM ID"] = obj["TEAM ID 2"];
+                            obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 2"];
                         } else {
                             obj["WINNER TEAM ID"] = obj["TEAM ID 1"];
+                            obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 1"];
                         }
                     } else {
                         obj["COACH NAME 2"] = "";
@@ -9840,8 +9850,10 @@ var model = {
                         obj["T2 Final Score"] = mainData.resultHandball.teams[1].teamResults.finalPoints;
                         if (mainData.resultHandball.winner.player === mainData.opponentsTeam[1]._id.toString()) {
                             obj["WINNER TEAM ID"] = obj["TEAM ID 2"];
+                            obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 2"];
                         } else {
                             obj["WINNER TEAM ID"] = obj["TEAM ID 1"];
+                            obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 1"];
                         }
                     } else {
                         obj["COACH NAME 2"] = "";
@@ -9861,8 +9873,10 @@ var model = {
                         obj["T2 Final Score"] = mainData.resultKabaddi.teams[1].teamResults.finalPoints;
                         if (mainData.resultKabaddi.winner.player === mainData.opponentsTeam[1]._id.toString()) {
                             obj["WINNER TEAM ID"] = obj["TEAM ID 2"];
+                            obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 2"];
                         } else {
                             obj["WINNER TEAM ID"] = obj["TEAM ID 1"];
+                            obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 1"];
                         }
                     } else {
                         obj["COACH NAME 2"] = "";
@@ -10020,13 +10034,16 @@ var model = {
                                         if (mainData.resultFootball.winner.player === mainData.opponentsTeam[0]._id.toString()) {
                                             obj["WINNER NAME"] = mainData.opponentsTeam[0].name;
                                             obj["WINNER TEAM ID"] = mainData.opponentsTeam[0].teamId;
+                                            obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 1"];
                                         } else {
                                             obj["WINNER NAME"] = mainData.opponentsTeam[1].name;
                                             obj["WINNER TEAM ID"] = mainData.opponentsTeam[1].teamId;
+                                            obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 2"];
                                         }
                                     } else {
                                         obj["WINNER NAME"] = "";
                                         obj["WINNER TEAM ID"] = "";
+                                        obj["WINNER SCHOOL"] = "";
                                     }
                                     obj["VIDEO"] = "";
                                 } else if (mainData.resultHockey) {
@@ -10047,13 +10064,16 @@ var model = {
                                         if (mainData.resultHockey.winner.player === mainData.opponentsTeam[0]._id.toString()) {
                                             obj["WINNER NAME"] = mainData.opponentsTeam[0].name;
                                             obj["WINNER TEAM ID"] = mainData.opponentsTeam[0].teamId;
+                                            obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 1"];
                                         } else {
                                             obj["WINNER NAME"] = mainData.opponentsTeam[1].name;
                                             obj["WINNER TEAM ID"] = mainData.opponentsTeam[1].teamId;
+                                            obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 2"];
                                         }
                                     } else {
                                         obj["WINNER NAME"] = "";
                                         obj["WINNER TEAM ID"] = "";
+                                        obj["WINNER SCHOOL"] = "";
                                     }
                                     obj["VIDEO"] = "";
                                 }
@@ -10066,13 +10086,16 @@ var model = {
                                         if (mainData.resultFootball.winner.player === mainData.opponentsTeam[0]._id.toString()) {
                                             obj["WINNER NAME"] = mainData.opponentsTeam[0].name;
                                             obj["WINNER TEAM ID"] = mainData.opponentsTeam[0].teamId;
+                                            obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 1"];
                                         } else {
                                             obj["WINNER NAME"] = mainData.opponentsTeam[1].name;
                                             obj["WINNER TEAM ID"] = mainData.opponentsTeam[1].teamId;
+                                            obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 2"];
                                         }
                                     } else {
                                         obj["WINNER NAME"] = "";
                                         obj["WINNER TEAM ID"] = "";
+                                        obj["WINNER SCHOOL"] = "";
                                     }
                                     obj["VIDEO"] = "";
                                 } else if (mainData.resultHockey) {
@@ -10080,13 +10103,16 @@ var model = {
                                         if (mainData.resultHockey.winner.player === mainData.opponentsTeam[0]._id.toString()) {
                                             obj["WINNER NAME"] = mainData.opponentsTeam[0].name;
                                             obj["WINNER TEAM ID"] = mainData.opponentsTeam[0].teamId;
+                                            obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 1"];
                                         } else {
                                             obj["WINNER NAME"] = mainData.opponentsTeam[1].name;
                                             obj["WINNER TEAM ID"] = mainData.opponentsTeam[1].teamId;
+                                            obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 2"];
                                         }
                                     } else {
                                         obj["WINNER NAME"] = "";
                                         obj["WINNER TEAM ID"] = "";
+                                        obj["WINNER SCHOOL"] = "";
                                     }
                                     obj["VIDEO"] = "";
                                 }
