@@ -56,10 +56,13 @@
                                     <div class="folder-box sf-relative">
                                         <img ng-src="{{item.medialink | mediapath}}" alt="Sports For All" class="img-responsive width100 hover-min">
                                         <div class="over-layer sf-absulate media-t">
-                                            <h4 class="btm-0 sf-absulate font-semi">{{item.mediatitle}}</h4>
+                                            <!-- <h4 class="btm-0 sf-absulate font-semi">{{item.mediatitle}}</h4> -->
                                         </div>
                                     </div>
                                 </a>
+                                <div class="gallery-video-min">
+                                    <h4 class="font-semi">{{item.mediatitle | truncate:90}}</h4>
+                                </div>
                             </div>
                         </div>
                         <div class="row text-center" ng-if="filter.mediatype=='press-photo' && !(mediaArr.results.length > 0)">
@@ -73,10 +76,13 @@
                                     <div class="folder-box sf-relative">
                                         <img ng-src="{{item.thumbnail}}" alt="Sports For All" class="img-responsive width100 hover-min">
                                         <div class="over-layer sf-absulate">
-                                            <h4 class="banner-set sf-absulate ">{{ item.mediatitle}}</h4>
+                                            <!-- <h4 class="banner-set sf-absulate ">{{ item.mediatitle}}</h4> -->
                                         </div>
                                     </div>
                                 </a>
+                                <div class="gallery-video-min">
+                                    <h4 class="">{{ item.mediatitle | truncate:80}}</h4>
+                                </div>
                             </div>
                         </div>
                         <div class="row text-center" ng-if="filter.mediatype=='press-video' && !(mediaArr.results.length > 0)">

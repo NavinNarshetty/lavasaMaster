@@ -7993,18 +7993,23 @@ h1.forgot-space {
 }
 
 // NEW MODAL ON CHAMPIONSHIP END
-
 //Classes for school profile pics
-.main-img-holder{
+.main-img-holder {
     width: 130px;
     margin: 0 auto;
     height: 130px;
     border-radius: 100%;
     overflow: hidden;
 }
-.main-img{
+
+.main-img {
     margin: 0 auto;
     height: 100%;
     width: 100%;
 }
+
 //Classes for school profile pics end
+// VIEDO
+.gallery-video-min {
+    min-height: 60px;
+}

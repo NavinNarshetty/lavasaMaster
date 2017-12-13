@@ -110,9 +110,9 @@ Press release
                                     <a href="{{item.medialink | mediapath}}" rel="gallery1" fancybox-box>
                                         <div class="folder-box sf-relative">
                                             <img ng-src="{{item.medialink | mediapath}}" alt="Sports For All" class="img-responsive width100 hover-min">
-                                            <div class="over-layer sf-absulate">
+                                            <!-- <div class="over-layer sf-absulate">
                                                 <h4 class="oth-pos sf-absulate">{{item.mediatitle}}</h4>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </a>
                                 </div>
@@ -185,11 +185,12 @@ Press release
                                             <!-- <img ng-src="{{item.medialink | newlinkvideo:item.videotype}}" alt="Sports For All" class="img-responsive width100 hover-min m-h"> -->
                                             <img ng-src="{{item.thumbnail}}" alt="Sports For All" class="img-responsive width100 hover-min m-h">
                                             <!-- <img ng-src="{{vimeoThumbnail}}" alt="Sports For All" class="img-responsive width100 hover-min m-h"> -->
-                                            <div class="over-layer sf-absulate">
-                                                <h4 class="banner-set sf-absulate">{{item.mediatitle}}</h4>
-                                            </div>
+
                                         </div>
                                     </a>
+                                    <div class="gallery-video-min">
+                                        <h4 class="">{{item.mediatitle | truncate:'90'}}</h4>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row text-center" ng-if="!(mediaArr.results.length > 0)">
