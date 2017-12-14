@@ -255,47 +255,6 @@ var model = {
                 var low = obj.lowestParticipation =  _.orderBy(obj.sport, 'totalStrength', ['asc']);
                 console.log("obj.highestParticipation",obj.highestParticipation);
                 console.log("obj.lowestParticipation",obj.lowestParticipation);
-                // obj.highestParticipation=[];
-                // obj.lowestParticipation=[];
-                // if (!_.isEmpty(high)) {
-                //     _.each(high, function (n, k) {
-                //         if (high[k] && high[k + 1]) {
-                //             if (high[k].totalStrength != high[k + 1].totalStrength) {
-                //                 return;
-                //             } else {
-                //                 obj.highestParticipation.push({
-                //                     name: high[k].sportName,
-                //                     count: high[k].totalStrength
-                //                 });
-                //             }
-                //         } else {
-                //             obj.highestParticipation.push({
-                //                 name: high[k].sportName,
-                //                 count: high[k].totalStrength
-                //             });
-                //         }
-                //     });
-                // }
-
-                // if (!_.isEmpty(low)) {
-                //     _.each(low, function (n, k) {
-                //         if (low[k] && low[k + 1]) {
-                //             if (low[k].totalStrength != low[k + 1].totalStrength) {
-                //                 return;
-                //             } else {
-                //                 obj.lowestParticipation.push({
-                //                     name: low[k].sportName,
-                //                     count: low[k].totalStrength
-                //                 });
-                //             }
-                //         } else {
-                //             obj.lowestParticipation.push({
-                //                 name: low[k].sportName,
-                //                 count: low[k].totalStrength
-                //             });
-                //         }
-                //     });
-                // }
                 callback(obj);
             })
 
