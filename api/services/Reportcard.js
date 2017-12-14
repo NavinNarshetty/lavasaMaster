@@ -366,7 +366,7 @@ var model = {
                                 }];
                                 IndividualSport.aggregate(indSportPipeline, function (err, result) {
                                     if (err) {
-                                        callback(err, null);
+                                        fcallback(err, null);
                                     } else {
                                         callback(null, result);
                                     }
@@ -471,7 +471,7 @@ var model = {
                                 }];
                                 TeamSport.aggregate(teamSportPipeline, function (err, result) {
                                     if (err) {
-                                        callback(err, null);
+                                        fcallback(err, null);
                                     } else {
                                         callback(null, result);
                                     }
@@ -488,6 +488,7 @@ var model = {
                         });
                     },
                     function (parallelResult, callback) {
+                        console.log("parallelResult-------------------------------------------",parallelResult);
                         async.concatSeries(parallelResult, function (singleData, callback) {
                             var resultVar = Match.getResultVar(singleData.sportsListSubCategory.name, singleData.sportsListSubCategory.type);
 
@@ -636,31 +637,31 @@ var model = {
                     //waterfall callback
                     callback(null, waterfallResult);
                     // save and update
-                    // Reportcard.findOne({
-                    //     "schoolName": saveObj.schoolName
-                    // }).exec(function (err, found) {
-                    //     function save() {
-                    //         Reportcard.saveData(saveObj, function (err, data) {
-                    //             var obj = {};
-                    //             if (err) {
-                    //                 console.log("err", err);
-                    //                 obj.messege = "Error While Saving";
-                    //             } else {
-                    //                 obj.messege = "Successfully Saved";
-                    //             }
-                    //             callback(null, obj);
-                    //         })
-                    //     }
-                    //     if (err) {
-                    //         console.log("err while finding school");
-                    //         callback(err, null);
-                    //     } else if (!_.isEmpty(found)) {
-                    //         saveObj._id = found
-                    //         save();
-                    //     } else {
-                    //         save();
-                    //     }
-                    // });
+                    Reportcard.findOne({
+                        "schoolName": saveObj.schoolName
+                    }).exec(function (err, found) {
+                        function save() {
+                            Reportcard.saveData(saveObj, function (err, data) {
+                                var obj = {};
+                                if (err) {
+                                    console.log("err", err);
+                                    obj.messege = "Error While Saving";
+                                } else {
+                                    obj.messege = "Successfully Saved";
+                                }
+                                callback(null, obj);
+                            })
+                        }
+                        if (err) {
+                            console.log("err while finding school");
+                            callback(err, null);
+                        } else if (!_.isEmpty(found)) {
+                            saveObj._id = found
+                            save();
+                        } else {
+                            save();
+                        }
+                    });
                 });
             }, function (err, result) {
                 //concatLimit callbacknonParticipatedSport
