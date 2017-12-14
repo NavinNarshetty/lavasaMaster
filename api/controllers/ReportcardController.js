@@ -7,8 +7,16 @@ var controller = {
         Reportcard.generateReportCard(res.callback);
     },
 
-    tp:function(req,res){
-        Reportcard.tp(res.callback);
+    getOneReportCard:function(req,res){
+        if(req.body.name){
+            Reportcard.getOneReportCard(req.body,res.callback);
+        }else{
+            res.json({
+                data:"Invalid Params",
+                value:false
+            });
+        }
+        Reportcard.getOneReportCard(res.callback);
     }
 
 };

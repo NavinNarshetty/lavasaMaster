@@ -1271,3 +1271,12 @@ header {
       overflow-y: auto;
   }
 }
+
+.attendanceselect-page{
+  .sport-type-head{
+    color: $brand-primary;
+  }
+  .championshipdraw-card-btn{
+    background-color: $brand-primary;
+  }
+}

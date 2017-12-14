@@ -16150,6 +16150,166 @@ var model = {
             });
     },
 
+    getResultVar: function (sportName, sportType) {
+        if (sportName == "Shooting Air Pistol Team" || sportName == "Shooting Air Rifle Open Team" || sportName == "Shooting Air Rifle Peep Team") {
+            return null;
+        } else {
+
+
+            if (sportType == "Racquet Sports") {
+                var arr = _.split(sportName, " ");
+                var foundDoubles = _.indexOf(arr, 'Doubles');
+                if (foundDoubles == -1) {
+                    return {
+                        resultVar: "resultsRacquet",
+                        opponentsVar: "opponentsSingle"
+                    };
+                } else {
+                    return {
+                        resultVar: "resultsRacquet",
+                        opponentsVar: "opponentsTeam"
+                    };
+                }
+            } else if (sportType == "Combat Sports") {
+                switch (sportName) {
+                    case "Karate Team Kumite":
+                        return {
+                            resultVar: "resultsCombat",
+                            opponentsVar: "opponentsTeam"
+                        };
+                    case "Fencing":
+                        return {
+                            resultVar: "resultFencing",
+                            opponentsVar: "opponentsSingle"
+                        };
+                    default:
+                        return {
+                            resultVar: "resultsCombat",
+                            opponentsVar: "opponentsSingle"
+                        };
+                }
+
+            } else if (sportType == "Individual Sports") {
+                switch (sportName) {
+                    case "Chess":
+                        return {
+                            resultVar: "resultSwiss",
+                            opponentsVar: "opponentsSingle"
+                        };
+
+                    case "Athletics":
+                        return {
+                            resultVar: "resultHeat",
+                            opponentsVar: "opponentsSingle"
+                        };
+                    case "Athletics 4x100m Relay":
+                    case "Athletics 4x50m Relay":
+                    case "Athletics Medley Relay":
+                        return {
+                            resultVar: "resultHeat",
+                            opponentsVar: "opponentsTeam"
+                        };
+
+                    case "Carrom":
+                        return {
+                            resultVar: "resultCombat",
+                            opponentsVar: "opponentsSingle"
+                        };
+                }
+            } else if (sportType == "Target Sports") {
+                switch (sportName) {
+                    case "Shooting":
+                        return {
+                            resultVar: "resultShooting",
+                            opponentsVar: "opponentsSingle"
+                        };
+                    case "Archery":
+                        return {
+                            resultVar1: "resultQualifyingRound",
+                            resultVar2: "resultKnockout",
+                            opponentsVar: "opponentsSingle"
+                        };
+
+                }
+            } else if (sportType == "Aquatics Sports") {
+                switch (sportName) {
+                    case "Swimming":
+                        return {
+                            resultVar: "resultHeat",
+                            opponentsVar: "opponentsSingle"
+                        };
+                    case "Water Polo":
+                        return {
+                            resultVar: "resultWaterPolo",
+                            opponentsVar: "opponentsTeam"
+                        };
+                    case "Swimming 4x50m Freestyle Relay":
+                    case "Swimming 4x50m Medley Relay":
+                        return {
+                            resultVar: "resultHeat",
+                            opponentsVar: "opponentsTeam"
+                        };
+                }
+            } else {
+                switch (sportName) {
+                    case "Basketball":
+                        return {
+                            resultVar: "resultBasketball",
+                            opponentsVar: "opponentsTeam"
+                        };
+
+                    case "Football":
+                        return {
+                            resultVar: "resultFootball",
+                            opponentsVar: "opponentsTeam"
+                        };
+
+                    case "Hockey":
+                        return {
+                            resultVar: "resultHockey",
+                            opponentsVar: "opponentsTeam"
+                        };
+
+                    case "Kabaddi":
+                        return {
+                            resultVar: "resultKabaddi",
+                            opponentsVar: "opponentsTeam"
+                        };
+
+                    case "Volleyball":
+                        return {
+                            resultVar: "resultVolleyball",
+                            opponentsVar: "opponentsTeam"
+                        };
+
+                    case "Handball":
+                        return {
+                            resultVar: "resultHandball",
+                            opponentsVar: "opponentsTeam"
+                        };
+
+                    case "Water Polo":
+                        return {
+                            resultVar: "resultWaterPolo",
+                            opponentsVar: "opponentsTeam"
+                        };
+                    case "Throwball":
+                        return {
+                            resultVar: "resultsCombat",
+                            opponentsVar: "opponentsTeam"
+                        };
+                    case "Kho Kho":
+                        return {
+                            resultVar: "resultsCombat",
+                            opponentsVar: "opponentsTeam"
+                        };
+                }
+            }
+        }
+
+    },
+
+
 
 
 };
