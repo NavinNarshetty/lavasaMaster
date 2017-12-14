@@ -9259,6 +9259,17 @@ var model = {
                     }
                 } else if (mainData.resultVolleyball) {
                     if (mainData.resultVolleyball.teams[1]) {
+                        console.log(mainData.resultVolleyball);
+                        console.log(mainData.resultVolleyball.teams[0]);
+                        console.log(mainData.resultVolleyball.teams[1]);
+                        console.log(mainData.resultVolleyball.teams[0].teamResults);
+                        console.log(mainData.resultVolleyball.teams[1].teamResults);
+                        console.log(mainData.resultVolleyball.teams[0].teamResults.length);
+                        console.log(mainData.resultVolleyball.teams[1].teamResults.length);
+                        console.log(mainData.resultVolleyball.teams[0].teamResults[0]);
+                        console.log(mainData.resultVolleyball.teams[1].teamResults[1]);
+                        console.log(mainData.resultVolleyball.teams[0].teamResults[0].sets);
+                        console.log(mainData.resultVolleyball.teams[1].teamResults[1].sets);
                         obj["COACH NAME 2"] = mainData.resultVolleyball.teams[1].coach;
                         obj["T1 Spike"] = mainData.resultVolleyball.teams[1].teamResults.spike;
                         obj["T1 Foul"] = mainData.resultVolleyball.teams[1].teamResults.fouls;
@@ -9751,77 +9762,82 @@ var model = {
                         obj["T1 Foul"] = "";
                         obj["T1 Block"] = "";
                         obj["RESULT 2"] = "No Match";
-                        var i = mainData.resultVolleyball.teamResults[0].sets.length;
+                        console.log(mainData.resultVolleyball);
+                        console.log(mainData.resultVolleyball.teams[0].teamResults);
+                        console.log(mainData.resultVolleyball.teams[0].teamResults.length);
+                        console.log(mainData.resultVolleyball.teams[0].teamResults[0]);
+                        console.log(mainData.resultVolleyball.teamResults[0].sets);
+                        var i = mainData.resultVolleyball.teams[0].teamResults[0].sets.length;
                         switch (i) {
                             case 0:
-                                obj["T1 Set 1"] = mainData.resultVolleyball.teamResults[0].sets[0].point;
+                                obj["T1 Set 1"] = mainData.resultVolleyball.teams[0].teamResults[0].sets[0].point;
                                 // obj["T2 Set 1"] = mainData.resultVolleyball.teamResults[1].sets[0].point;
                                 break;
                             case 1:
-                                obj["T1 Set 1"] = mainData.resultVolleyball.teamResults[0].sets[0].point;
+                                obj["T1 Set 1"] = mainData.resultVolleyball.teams[0].teamResults[0].sets[0].point;
                                 // obj["T2 Set 1"] = mainData.resultVolleyball.teamResults[1].sets[0].point;
-                                obj["T1 Set 2"] = mainData.resultVolleyball.teamResults[0].sets[1].point;
+                                obj["T1 Set 2"] = mainData.resultVolleyball.teams[0].teamResults[0].sets[1].point;
                                 // obj["T2 Set 2"] = mainData.resultVolleyball.teamResults[1].sets[1].point;
                                 break;
                             case 2:
-                                obj["T1 Set 1"] = mainData.resultVolleyball.teamResults[0].sets[0].point;
+                                obj["T1 Set 1"] = mainData.resultVolleyball.teams[0].teamResults[0].sets[0].point;
                                 // obj["T2 Set 1"] = mainData.resultVolleyball.teamResults[1].sets[0].point;
-                                obj["T1 Set 2"] = mainData.resultVolleyball.teamResults[0].sets[1].point;
+                                obj["T1 Set 2"] = mainData.resultVolleyball.teams[0].teamResults[0].sets[1].point;
                                 // obj["T2 Set 2"] = mainData.resultVolleyball.teamResults[1].sets[1].point;
-                                obj["T1 Set 3"] = mainData.resultVolleyball.teamResults[0].sets[2].point;
+                                obj["T1 Set 3"] = mainData.resultVolleyball.teams[0].teamResults[0].sets[2].point;
                                 // obj["T2 Set 3"] = mainData.resultVolleyball.teamResults[1].sets[2].point;
                                 break;
                             case 3:
-                                obj["T1 Set 1"] = mainData.resultVolleyball.teamResults[0].sets[0].point;
+                                obj["T1 Set 1"] = mainData.resultVolleyball.teams[0].teamResults[0].sets[0].point;
                                 // obj["T2 Set 1"] = mainData.resultVolleyball.teamResults[1].sets[0].point;
-                                obj["T1 Set 2"] = mainData.resultVolleyball.teamResults[0].sets[1].point;
+                                obj["T1 Set 2"] = mainData.resultVolleyball.teams[0].teamResults[0].sets[1].point;
                                 // obj["T2 Set 2"] = mainData.resultVolleyball.teamResults[1].sets[1].point;
-                                obj["T1 Set 3"] = mainData.resultVolleyball.teamResults[0].sets[2].point;
+                                obj["T1 Set 3"] = mainData.resultVolleyball.teams[0].teamResults[0].sets[2].point;
                                 // obj["T2 Set 3"] = mainData.resultVolleyball.teamResults[1].sets[2].point;
-                                obj["T1 Set 4"] = mainData.resultVolleyball.teamResults[0].sets[3].point;
+                                obj["T1 Set 4"] = mainData.resultVolleyball.teams[0].teamResults[0].sets[3].point;
                                 // obj["T2 Set 4"] = mainData.resultVolleyball.teamResults[1].sets[3].point;
                                 break;
                             case 4:
-                                obj["T1 Set 1"] = mainData.resultVolleyball.teamResults[0].sets[0].point;
+                                obj["T1 Set 1"] = mainData.resultVolleyball.teams[0].teamResults[0].sets[0].point;
                                 // obj["T2 Set 1"] = mainData.resultVolleyball.teamResults[1].sets[0].point;
-                                obj["T1 Set 2"] = mainData.resultVolleyball.teamResults[0].sets[1].point;
+                                obj["T1 Set 2"] = mainData.resultVolleyball.teams[0].teamResults[0].sets[1].point;
                                 // obj["T2 Set 2"] = mainData.resultVolleyball.teamResults[1].sets[1].point;
-                                obj["T1 Set 3"] = mainData.resultVolleyball.teamResults[0].sets[2].point;
+                                obj["T1 Set 3"] = mainData.resultVolleyball.teams[0].teamResults[0].sets[2].point;
                                 // obj["T2 Set 3"] = mainData.resultVolleyball.teamResults[1].sets[4].point;
-                                obj["T1 Set 4"] = mainData.resultVolleyball.teamResults[0].sets[3].point;
+                                obj["T1 Set 4"] = mainData.resultVolleyball.teams[0].teamResults[0].sets[3].point;
                                 // obj["T2 Set 4"] = mainData.resultVolleyball.teamResults[1].sets[3].point;
-                                obj["T1 Set 5"] = mainData.resultVolleyball.teamResults[0].sets[4].point;
+                                obj["T1 Set 5"] = mainData.resultVolleyball.teams[0].teamResults[0].sets[4].point;
                                 // obj["T2 Set 5"] = mainData.resultVolleyball.teamResults[1].sets[4].point;
                                 break;
                             case 5:
-                                obj["T1 Set 1"] = mainData.resultVolleyball.teamResults[0].sets[0].point;
+                                obj["T1 Set 1"] = mainData.resultVolleyball.teams[0].teamResults[0].sets[0].point;
                                 // obj["T2 Set 1"] = mainData.resultVolleyball.teamResults[1].sets[0].point;
-                                obj["T1 Set 2"] = mainData.resultVolleyball.teamResults[0].sets[1].point;
+                                obj["T1 Set 2"] = mainData.resultVolleyball.teams[0].teamResults[0].sets[1].point;
                                 // obj["T2 Set 2"] = mainData.resultVolleyball.teamResults[1].sets[1].point;
-                                obj["T1 Set 3"] = mainData.resultVolleyball.teamResults[0].sets[2].point;
+                                obj["T1 Set 3"] = mainData.resultVolleyball.teams[0].teamResults[0].sets[2].point;
                                 // obj["T2 Set 3"] = mainData.resultVolleyball.teamResults[1].sets[4].point;
-                                obj["T1 Set 4"] = mainData.resultVolleyball.teamResults[0].sets[3].point;
+                                obj["T1 Set 4"] = mainData.resultVolleyball.teams[0].teamResults[0].sets[3].point;
                                 // obj["T2 Set 4"] = mainData.resultVolleyball.teamResults[1].sets[3].point;
-                                obj["T1 Set 5"] = mainData.resultVolleyball.teamResults[0].sets[4].point;
+                                obj["T1 Set 5"] = mainData.resultVolleyball.teams[0].teamResults[0].sets[4].point;
                                 // obj["T2 Set 5"] = mainData.resultVolleyball.teamResults[1].sets[4].point;
-                                obj["T1 Set 6"] = mainData.resultVolleyball.teamResults[0].sets[5].point;
+                                obj["T1 Set 6"] = mainData.resultVolleyball.teams[0].teamResults[0].sets[5].point;
                                 // obj["T2 Set 6"] = mainData.resultVolleyball.teamResults[1].sets[5].point;
 
                                 break;
                             case 6:
-                                obj["T1 Set 1"] = mainData.resultVolleyball.teamResults[0].sets[0].point;
+                                obj["T1 Set 1"] = mainData.resultVolleyball.teams[0].teamResults[0].sets[0].point;
                                 // obj["T2 Set 1"] = mainData.resultVolleyball.teamResults[1].sets[0].point;
-                                obj["T1 Set 2"] = mainData.resultVolleyball.teamResults[0].sets[1].point;
+                                obj["T1 Set 2"] = mainData.resultVolleyball.teams[0].teamResults[0].sets[1].point;
                                 // obj["T2 Set 2"] = mainData.resultVolleyball.teamResults[1].sets[1].point;
-                                obj["T1 Set 3"] = mainData.resultVolleyball.teamResults[0].sets[2].point;
+                                obj["T1 Set 3"] = mainData.resultVolleyball.teams[0].teamResults[0].sets[2].point;
                                 // obj["T2 Set 3"] = mainData.resultVolleyball.teamResults[1].sets[4].point;
-                                obj["T1 Set 4"] = mainData.resultVolleyball.teamResults[0].sets[3].point;
+                                obj["T1 Set 4"] = mainData.resultVolleyball.teams[0].teamResults[0].sets[3].point;
                                 // obj["T2 Set 4"] = mainData.resultVolleyball.teamResults[1].sets[3].point;
-                                obj["T1 Set 5"] = mainData.resultVolleyball.teamResults[0].sets[4].point;
+                                obj["T1 Set 5"] = mainData.resultVolleyball.teams[0].teamResults[0].sets[4].point;
                                 // obj["T2 Set 5"] = mainData.resultVolleyball.teamResults[1].sets[4].point;
-                                obj["T1 Set 6"] = mainData.resultVolleyball.teamResults[0].sets[5].point;
+                                obj["T1 Set 6"] = mainData.resultVolleyball.teams[0].teamResults[0].sets[5].point;
                                 // obj["T2 Set 6"] = mainData.resultVolleyball.teamResults[1].sets[5].point;
-                                obj["T1 Set 7"] = mainData.resultVolleyball.teamResults[0].sets[6].point;
+                                obj["T1 Set 7"] = mainData.resultVolleyball.teams[0].teamResults[0].sets[6].point;
                                 // obj["T2 Set 7"] = mainData.resultVolleyball.teamResults[1].sets[6].point;
                                 break;
                         }
