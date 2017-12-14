@@ -481,7 +481,8 @@ var model = {
                             //parallel callback
                             var arr = [];
 
-                            arr = parallelResult[0].concat(parallelResult[1]);
+                            // arr = parallelResult[0].concat(parallelResult[1]);
+                            arr = _.flatten(parallelResult);
                             // console.log("array hai",arr.length);
                             callback(null, arr);
                         });
