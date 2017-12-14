@@ -635,7 +635,7 @@ var model = {
                     },
                 ], function (err, waterfallResult) {
                     //waterfall callback
-                    callback(null, waterfallResult);
+                    // callback(null, waterfallResult);
                     // save and update
                     Reportcard.findOne({
                         "schoolName": saveObj.schoolName
