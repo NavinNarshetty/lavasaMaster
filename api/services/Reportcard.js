@@ -69,6 +69,23 @@ module.exports = mongoose.model('Reportcard', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
+
+    getOneReportCard:function(data,callback){
+        var matchObj={
+            "schoolName":data.name
+        }
+
+        Reportcard.findOne(matchObj).exec(function(err,result){
+            if(err){
+                callback(err,null);
+            }else if(!_.isEmpty(result)){
+                callback(null,result);
+            }else{
+                callback("No Data Found",null);
+            }
+        });
+    },
+
     generateReportCard: function (fcallback) {
 
         function calTotalAth(obj, callback) {
