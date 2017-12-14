@@ -31,31 +31,6 @@
                   <button class="btn sport-btn-blue-outline">{{roundName}}</button>
                 </div>
               </div>
-              <!-- <div class="swiper-slide">
-                <div class="knockout-viewmore">
-                  <button class="btn sport-btn-blue-outline">Round 2</button>
-                </div>
-              </div>
-              <div class="swiper-slide">
-                <div class="knockout-viewmore">
-                  <button class="btn sport-btn-blue-outline">Round 3</button>
-                </div>
-              </div>
-              <div class="swiper-slide">
-                <div class="knockout-viewmore">
-                  <button class="btn sport-btn-blue-outline">Quater-Final</button>
-                </div>
-              </div>
-              <div class="swiper-slide">
-                <div class="knockout-viewmore">
-                  <button class="btn sport-btn-blue-outline">Semi-Final</button>
-                </div>
-              </div>
-              <div class="swiper-slide">
-                <div class="knockout-viewmore">
-                  <button class="btn sport-btn-blue-outline">Final</button>
-                </div>
-              </div> -->
             </div>
             <!-- Add Arrows -->
           </div>
@@ -157,7 +132,7 @@
           <div class=" knockout-cardholder">
             <div class="knockout-card " ng-if="card.opponentsSingle.length>0" ng-repeat="player in card.opponentsSingle track by $index "
               ng-class="{'knockout-winnercard':player.isWinner===true}">
-              <div class="knockout-cardimage display-inline ver-mid " >
+              <div class="knockout-cardimage display-inline ver-mid ">
                 <img ng-src="{{player.athleteId.photograph|serverimage2:50:50:'cover'}}" alt="{{player.athleteId.fullName}}" class="img-responsive ">
               </div>
               <div class="display-inline knockout-cardplayername ver-mid ">
@@ -223,7 +198,7 @@
           <div class=" knockout-cardholder">
             <div class="knockout-card " ng-class="{'knockout-winnercard':player.isWinner===true}" ng-repeat="player in card.opponentsSingle track by $index"
               ng-if="card.opponentsSingle.length>0">
-              <div class="knockout-cardimage display-inline ver-mid " >
+              <div class="knockout-cardimage display-inline ver-mid ">
                 <img ng-src="{{player.athleteId.photograph|serverimage2:50:50:'cover'}}" alt="{{player.athleteId.fullName}}" class="img-responsive ">
               </div>
               <div class="display-inline knockout-cardplayername ver-mid ">

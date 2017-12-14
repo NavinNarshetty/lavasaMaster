@@ -1684,23 +1684,124 @@ $sport-table-grey:#efeeee !default;
 }
 
 // END REGISTRATION MODAL END
-
-
-
-///Suksha CSS
-   
-    .gallery-page{
-      margin-top: 50px;
-    }
-.gallery-title{
-  font-size: 23px;
-  font-weight: bold;
-  color: blue;
+// GALLERY
+.adspace {
+  background-color: #ddd;
+  height: 130px;
+  margin: 40px 0px;
+  font-size: 30px;
 }
-    .video-img{
-      width: 200px;
-      height: 200px;
+
+.event-gallery-page {
+  min-height: 100vh;
+  margin: 50px 0px;
+  .event-gallery-header {
+    // margin: 40px 0px;
+    font-size: 45px;
   }
-    .video-title{
-      width: 190px;
-    }
+  .event-gallery-subtitle {
+    font-size: 16px;
+  }
+}
+
+.event-gallery-videoholder {
+  margin: 40px 0px;
+}
+
+// COMMON
+.album-holder {
+  .album-pic-holder {
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 175px;
+    margin: 8px 0px;
+  }
+  .album-title-holder {
+    margin-top: 10px;
+  }
+  .album-subtitle {
+    font-size: 18px;
+  }
+}
+
+.event-video-holder {
+  width: 100%;
+  .event-thumbnailholder {
+    // background-image: url('/img/dishapatani1.jpg');
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 175px;
+    width: 100%;
+    margin: 8px 0px;
+  }
+  .evnt-thumbnailtitle {
+    text-align: left;
+    font-size: 16px;
+  }
+}
+
+.event-gallery-swiperholder {
+  .swiper-button-prev,
+  .swiper-button-next,
+  .swiper-container-rtl .swiper-button-prev,
+  .swiper-container-rtl .swiper-button-next {
+    background-image: none;
+    width: auto;
+    height: auto;
+    padding: 5px;
+    margin: -15px;
+  }
+  .swiper-button-prev {
+    left: -15px;
+  }
+  .swiper-button-next {
+    right: -15px;
+  }
+}
+
+// COMMON END
+// FEATURED GALLERY
+.featured-gallery-page {
+  min-height: 100vh;
+  margin: 50px 0px;
+  .featured-gallery-header {
+    font-size: 45px;
+  }
+  .feature-masonry-picholder {
+    margin: 15px 0px;
+  }
+  .featured-gallery-dropdown,
+  .featured-gallery-dropdown-boysgirls,
+  .featured-gallery-dropdown-sports {
+    position: relative;
+    color: #27b465;
+    cursor: pointer;
+    font-size: 24px;
+    text-transform: capitalize;
+    @extend .d-fjalla-one;
+  }
+  .featured-gallery-dropdownfilter {
+    width: 350px;
+    padding: 5px 10px;
+    box-shadow: 0 0 10px #e5e5e5;
+    position: absolute;
+    top: 30px;
+    left: 0px;
+    background: #fff;
+    color: #1a1a1a;
+    display: inline-block;
+    font-size: 16px;
+    font-family: sans-serif;
+    z-index: 1;
+  }
+  .custom-featuredgallery-dropdown {
+    border-bottom: 1px solid #e1e1e1;
+    padding: 8px;
+  }
+}
+
+// FEATURED GALLERY END
+// GALLERY END
+///Suksha CSS

@@ -1,0 +1,105 @@
+<div class="event-gallery-page">
+  <!-- CONTAINER -->
+  <div class="container">
+    <!-- HEADER -->
+    <div class="event-gallery-header sport-color-primary d-fjalla-one text-uppercase">
+      SFA MUMBAI 2016-2017
+    </div>
+    <!-- HEADER END -->
+
+    <!-- VIDEOS -->
+    <div class="event-gallery-videoholder">
+      <div class="even-gallery-videoheader">
+        <h3 class="d-fjalla-one text-uppercase sport-blue-table ">Videos</h3>
+      </div>
+      <!-- SWIPER -->
+
+      <div class="event-gallery-swiperholder relate">
+        <div class="swiper-container">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide pointer" ng-repeat="videoCard in eventVideos track by $index">
+              <div class="event-video-holder">
+                <div class="event-thumbnailholder" style="background-image:url('{{videoCard.thumbnail}}')">
+                </div>
+                <div class="evnt-thumbnailtitle" title="{{videoCard.content}}">
+                  {{videoCard.content | truncate:'50'}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Add Arrows -->
+        <div class="swiper-button-next"><span class="fa fa-chevron-right"></div>
+        <div class="swiper-button-prev"><span class="fa fa-chevron-left"></div>
+      </div>
+    </div>
+    <!-- VIDEOS END -->
+
+    <!-- AD SPACE -->
+    <div class="event-gallery-adspace relate">
+      <div class="adspace text-center d-fjalla-one">
+        <div class="get-center m-clear">AD SPACE</div>
+      </div>
+    </div>
+    <!-- AD SPACE END -->
+
+    <!-- PHOTOS -->
+    <div class="event-gallery-photos">
+      <div class="event-gallery-photoheader">
+        <h3 class="d-fjalla-one text-uppercase sport-blue-table">Photos</h3>
+      </div>
+      <!-- CATEGORY -->
+      <div class="event-gallery-category" ng-repeat="gallerycategory in category track by $index">
+          <div class="event-gallery-subtitle text-uppercase">
+              {{gallerycategory.name}}
+          </div>
+          <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="card in gallerycategory.cardDetail track by $index">
+              <div class="album-holder pointer">
+                <div class="album-pic-holder" style="background-image:url('{{card.image}}')">
+                </div>
+                <div class="album-title-holder">
+                  <p class="fjalla-one text-capitalize m-clear album-subtitle" title="{{card.title}}">{{card.title | truncate:'22'}}</p>
+                  <p><span><i class="fa fa-picture-o color-darkgrey"></i></span><span> <span>{{card.count}}</span> <span>Albums</span></span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- CATEGORY END -->
+
+<!-- AD SPACE -->
+<div class="event-gallery-adspace relate">
+  <div class="adspace text-center d-fjalla-one">
+    <div class="get-center m-clear">AD SPACE</div>
+  </div>
+</div>
+<!-- AD SPACE END -->
+
+<!-- VIEW BY SPORT -->
+<div class="event-gallery-category" ng-repeat="gallerysport in viewBySport track by $index">
+  <div class="event-gallery-subtitle text-uppercase">
+    {{gallerysport.name}}
+  </div>
+  <div class="row">
+    <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="card in gallerysport.sportDetail track by $index">
+      <div class="album-holder pointer">
+        <div class="album-pic-holder" style="background-image:url('{{card.image}}')">
+        </div>
+        <div class="album-title-holder">
+          <p class="fjalla-one text-capitalize m-clear album-subtitle ">{{card.title | truncate:'25'}}</p>
+          <p><span>
+                                            <i class="fa fa-picture-o color-darkgrey"></i></span><span> <span>{{card.count}}</span>            <span>Albums</span></span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- VIEW BY SPORT END -->
+</div>
+<!-- PHOTOS END -->
+</div>
+<!-- CONTAINER END -->
+</div>

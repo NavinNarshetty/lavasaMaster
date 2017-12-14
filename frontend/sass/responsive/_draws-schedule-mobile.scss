@@ -86,6 +86,11 @@
   .sponser-videoplay-holder .sponer-playe-button {
     font-size: 12px;
   } // INDIVIDUAL SPONSER END
+  // GALLERY
+  .featured-gallery-page .featured-gallery-header {
+    margin-top: 50px;
+    font-size: 40px;
+  } // GALLERY END
 }
 
 @media screen and (max-width: 767px) {
@@ -150,7 +155,11 @@
   } // SWISS LEAGUE END
   .sponser-partner-title {
     margin-top: 10px;
-  }
+  } // GALLERY
+  .featured-gallery-page .featured-gallery-header {
+    margin-top: 0px;
+    font-size: 30px;
+  } // GALLERY END
 }
 
 @media screen and (max-width: 480px) {
@@ -273,4 +282,9 @@
       font-size: 16px;
     }
   } // END REGISTRATION MODAL END
+  // ALL GALLERY HEADER FONT
+  .featured-gallery-page .featured-gallery-header {
+    margin-top: 0px;
+    font-size: 24px;
+  } // ALL GALLERY HEADER FONT END
 }

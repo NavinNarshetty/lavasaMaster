@@ -207,12 +207,16 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'TeamDetailCtrl'
         })
-        .state('gallery', {
-            url: "/gallery",
+        .state('eventgallery', {
+            url: "/eventgallery",
             templateUrl: tempateURL,
             controller: 'SfaGalleryCtrl'
         })
-
+        .state('featuredgallery', {
+            url: "/featuredgallery",
+            templateUrl: tempateURL,
+            controller: 'featuredGalleryCtrl'
+        })
 
         // Media
 

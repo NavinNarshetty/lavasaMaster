@@ -104,5 +104,6 @@ module.exports = [
   'frontend/js/controllers/results-controller.js',
   'frontend/js/controllers/specialevent-controller.js',
   'frontend/js/controllers/reportcard-controller.js',
-  'frontend/js/controllers/galleryController.js'
+  'frontend/js/controllers/galleryController.js',
+  'frontend/js/controllers/featuredgallery.js'
 ];
