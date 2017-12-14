@@ -453,6 +453,7 @@ var model = {
                                                             info.school = n.school.name;
                                                         }
                                                         info.sfaId = n.sfaId;
+                                                        info.profile = n.photograph;
                                                         info.athleteId = n._id;
                                                         obj.medals.push(info);
                                                         callback(null, obj);
@@ -539,6 +540,7 @@ var model = {
                                                             info.school = n.school.name;
                                                         }
                                                         info.sfaId = n.sfaId;
+                                                        info.profile = n.photograph;
                                                         info.athleteId = n._id;
                                                         obj.medals.push(info);
                                                         callback(null, obj);
@@ -625,6 +627,7 @@ var model = {
                                                             info.school = n.school.name;
                                                         }
                                                         info.sfaId = n.sfaId;
+                                                        info.profile = n.photograph;
                                                         info.athleteId = n._id;
                                                         obj.medals.push(info);
                                                         callback(null, obj);
@@ -711,6 +714,7 @@ var model = {
                                                             info.school = n.school.name;
                                                         }
                                                         info.sfaId = n.sfaId;
+                                                        info.profile = n.photograph;
                                                         info.athleteId = n._id;
                                                         obj.medals.push(info);
                                                         callback(null, obj);
@@ -797,6 +801,7 @@ var model = {
                                                             info.school = n.school.name;
                                                         }
                                                         info.sfaId = n.sfaId;
+                                                        info.profile = n.photograph;
                                                         info.athleteId = n._id;
                                                         obj.medals.push(info);
                                                         callback(null, obj);
@@ -883,6 +888,7 @@ var model = {
                                                             info.school = n.school.name;
                                                         }
                                                         info.sfaId = n.sfaId;
+                                                        info.profile = n.photograph;
                                                         info.athleteId = n._id;
                                                         obj.medals.push(info);
                                                         callback(null, obj);
@@ -970,6 +976,7 @@ var model = {
                                                             info.school = n.school.name;
                                                         }
                                                         info.sfaId = n.sfaId;
+                                                        info.profile = n.photograph;
                                                         info.athleteId = n._id;
                                                         obj.medals.push(info);
                                                         callback(null, obj);
