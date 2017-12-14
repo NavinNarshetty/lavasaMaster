@@ -33,6 +33,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'DigitalHomeCtrl'
         })
+        .state('digital-attendance', {
+            url: "/digital-attendance",
+            templateUrl: tempateURL,
+            controller: 'DigitalAttendanceCtrl'
+        })
         .state('matchstart', {
             url: "/match/:drawFormat/:id/:sport",
             templateUrl: tempateURL,
