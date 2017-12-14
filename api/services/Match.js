@@ -5043,7 +5043,7 @@ var model = {
 
     getResultArray: function (n, finalData, result, callback) {
         var final = {};
-        var count = {};
+        var count = [];
         var team1 = [];
         var team1Sub = [];
         var team2 = [];
@@ -5100,15 +5100,17 @@ var model = {
 
                 }
                 final.team1 = team1;
-                count.team1Count = team1.length;
+                count.push(team1.length);
                 final.team1Sub = team1Sub;
-                count.team1SubCount = team1Sub.length;
+                count.push(team1Sub.length);
                 final.team2 = team2;
-                count.team2Count = team2.length;
+                count.push(team2.length);
                 final.team2Sub = team2Sub;
-                count.team2SubCount = team2Sub.length;
-                var max = Object.values(count).sort((prev, next) => next - prev)[0];
-                final.max = max;
+                count.push(team2Sub.length);
+                var max = count.sort(function(a, b) {
+            return b-a;
+             });
+                final.max = max[0];
                 console.log("max", max);
                 finalData.push(final);
                 callback(null, finalData);
@@ -5194,12 +5196,14 @@ var model = {
                 }
             }
             final.team1 = team1;
-            count.team1Count = team1.length;
+            count.push(team1.length);
             final.team1Sub = team1Sub;
-            count.team1SubCount = team1Sub.length;
-            var max = Object.values(count).sort((prev, next) => next - prev)[0];
+            count.push(team1Sub.length);
+            var max = count.sort(function(a, b) {
+            return b - a;
+             });
             console.log("max", max);
-            final.max = max;
+            final.max = max[0];
             finalData.push(final);
             callback(null, finalData);
         }
