@@ -16,7 +16,6 @@ var controller = {
                 value:false
             });
         }
-        Reportcard.getOneReportCard(res.callback);
     }
 
 };
