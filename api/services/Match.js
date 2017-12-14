@@ -4960,7 +4960,7 @@ var model = {
                             var obj = {};
                             obj["MATCH ID"] = mainData.matchId;
                             obj["TEAM 1"] = mainData.teamId1;
-                            if (mainData.team1[i] != undefined) {
+                            if (!_.isEmpty(mainData.team1)&&mainData.team1[i] != undefined) {
                                 obj["SFA ID 1"] = mainData.team1[i].sfaId;
                                 if (mainData.team1[i].middleName) {
                                     obj["STARTING LINE UP SCREEN NAME 1"] = mainData.team1[i].firstName.charAt(0) + "." + mainData.team1[i].middleName.charAt(0) + "." + mainData.team1[i].surname;
@@ -4971,7 +4971,7 @@ var model = {
                                 obj["SFA ID 1"] = "-";
                                 obj["STARTING LINE UP SCREEN NAME 1"] = "-";
                             }
-                            if (mainData.team1Sub[i] != undefined) {
+                            if (!_.isEmpty(mainData.team1Sub)&&mainData.team1Sub[i] != undefined) {
                                 obj["SUBSTITUTES SFA ID 1"] = mainData.team1Sub[i].sub1;
                                 if (mainData.team1Sub[i].middleName) {
                                     obj["SUBSTITUTES SCREEN NAME 1"] = mainData.team1Sub[i].firstName.charAt(0) + "." + mainData.team1Sub[i].middleName.charAt(0) + "." + mainData.team1Sub[i].surname;
@@ -4984,7 +4984,7 @@ var model = {
                             }
                             obj["TEAM 2"] = mainData.teamId2;
 
-                            if (mainData.team2[i] != undefined) {
+                            if (!_.isEmpty(mainData.team2) && mainData.team2[i] != undefined) {
                                 obj["SFA ID 2"] = mainData.team2[i].sfaId2;
                                 if (mainData.team2[i].middleName) {
                                     obj["STARTING LINE UP SCREEN NAME 2"] = mainData.team2[i].firstName.charAt(0) + "." + mainData.team2[i].middleName.charAt(0) + "." + mainData.team2[i].surname;
@@ -4995,7 +4995,7 @@ var model = {
                                 obj["SFA ID 2"] = "-";
                                 obj["STARTING LINE UP SCREEN NAME 2"] = "-";
                             }
-                            if (mainData.team2Sub[i] != undefined) {
+                            if (!_.isEmpty(mainData.team2Sub)&& mainData.team2Sub[i] != undefined) {
                                 obj["SUBSTITUTES SFA ID 2"] = mainData.team2Sub[i].sub2;
                                 if (mainData.team2Sub[i].middleName) {
                                     obj["SUBSTITUTES SCREEN NAME 2"] = mainData.team2Sub[i].firstName.charAt(0) + "." + mainData.team2Sub[i].middleName.charAt(0) + "." + mainData.team2Sub[i].surname;
@@ -5069,7 +5069,7 @@ var model = {
                         team1.push(team);
                     } else {
                         var team = {};
-                        team.sub1 = result.teams[0].players[i].sfaId;
+                        team.sub1 = result.teams[0].players[i].sub;
                         team.firstName = result.teams[0].players[i].firstName;
                         team.surname = result.teams[0].players[i].surname;
                         if (result.teams[0].players[i].middleName) {
@@ -5198,7 +5198,7 @@ var model = {
                     team1.push(team);
                 } else {
                     var team = {};
-                    team.sfaId = result.teams[0].players[i].sfaId;
+                    team.sub1 = result.teams[0].players[i].sfaId;
                     team.firstName = result.teams[0].players[i].firstName;
                     team.surname = result.teams[0].players[i].surname;
                     if (result.teams[0].players[i].middleName) {
