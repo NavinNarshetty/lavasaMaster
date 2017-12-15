@@ -523,7 +523,7 @@ var model = {
                     });
                 },
                 function (individualData, callback) {
-                    data.sport = profile.sport;
+                    data.sport = _.uniqBy(profile.sport, "sportslist.name");
                     Profile.getMedalsInProfile(data, function (err, medalData) {
                         if (err) {
                             callback(err, null);
@@ -571,7 +571,7 @@ var model = {
                         callback(null, data2);
                     } else {
                         profile.sport = _.uniqBy(profile.sport, "sportslist.sportsListSubCategory.name");
-                        console.log("length", profile.sport.length);
+                        // console.log("length", profile.sport.length);
                         callback(null, profile);
                     }
                 }
@@ -592,6 +592,7 @@ var model = {
                                     if (_.isEmpty(found)) {
                                         callback(null, found);
                                     } else {
+                                        console.log("found", found);
                                         callback(null, found);
                                     }
                                 }
@@ -634,7 +635,7 @@ var model = {
                                         }
                                     },
                                     function (err) {
-                                        // console.log("medals", medals)
+                                        console.log("medals", medals)
                                         callback(null, medals);
                                     });
                             }
