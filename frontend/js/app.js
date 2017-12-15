@@ -490,7 +490,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
         // DRAWS SCHEDULE END
         .state('reportcard', {
-            url: "/reportcard",
+            url: "/reportcard/:school",
             templateUrl: tempateURL,
             controller: 'ReportCardCtrl'
         });
