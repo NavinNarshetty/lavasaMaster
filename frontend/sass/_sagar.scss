@@ -2010,10 +2010,12 @@ $tickerDuration: 60s;
   }
 }
 .report-noshowcontingent {
+  min-width: 35px;
   padding: 0 5px;
   margin: 0 10px 15px;
   background: #ccc;
   display: inline-block;
+  text-align: center;
   vertical-align: middle;
 }
 .reportcontingent-keycard{

@@ -1247,5 +1247,14 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
                 callback(data.data);
             });
         },
+        getOneReportCard: function(request, callback) {
+          $http({
+            url: adminUrl2 + 'Reportcard/getOneReportCard',
+            method: 'POST',
+            data: request
+          }).then(function(data){
+            callback(data.data);
+          });
+        }
     };
 });

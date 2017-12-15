@@ -1,4 +1,4 @@
-<div class="">
+<!-- <div class="">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -8,7 +8,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <div class="reportcard-page d-opensans-regular" id="printSectionId">
     <!-- REPORT CARD HEADER -->
     <section class="">
@@ -27,8 +27,8 @@
                     </div>
                 </div>
                 <div class="">
-                    <div class="reportcard-school d-fjalla-one">OPENING CEREMONY | LAUNCH OF THE #UNSTOPPABLE </div>
-                    <div class="reportcard-sfaid">Sfa ID: MS1024</div>
+                    <div class="reportcard-school d-fjalla-one">{{schoolData.schoolName}} </div>
+                    <div class="reportcard-sfaid">Sfa ID: {{schoolData.sfaId}}</div>
                 </div>
             </div>
             <div class="report-greenbar">
@@ -48,7 +48,7 @@
                         <div class="report-contingenttotal">
                             <div class="">
                                 <div class="report-contingentblock">
-                                    <div class="report-contingentcount">321</div>
+                                    <div class="report-contingentcount">{{schoolData.totalStrength}}</div>
                                     Total Athletes
                                 </div>
                                 <div class="report-contingentblock">
@@ -56,40 +56,40 @@
                                         <div class="report-gendericon">
                                             <img src="img/medal-icon/male-small.png" alt="Male Athletes | SFA Championship" class="img-responsive">
                                         </div>
-                                        <span class="report-contingentcount report-countmale">71</span>
+                                        <span class="report-contingentcount report-countmale">{{schoolData.maleCount}}</span>
                                     </div>
                                     <div class="reportcontingent-gender">
                                         <div class="report-gendericon">
                                             <img src="img/medal-icon/female-small.png" alt="Female Athletes | SFA Championship" class="img-responsive">
                                         </div>
-                                        <span class="report-contingentcount report-countfemale">71</span>
+                                        <span class="report-contingentcount report-countfemale">{{schoolData.femaleCount}}</span>
                                     </div>
                                     <span class="display-block">
-                    Gender Ratio: <span><span>3</span> : <span>2</span></span>
+                    Gender Ratio: <span>{{schoolData.genderRatio}}</span>
                                     </span>
                                 </div>
                             </div>
                         </div>
                         <div class="reportcontingent-sportlist">
                             <ul class="list-unstyled">
-                                <li ng-repeat="list in lists track by $index">
+                                <li ng-repeat="list in schoolData.sport track by $index">
                                     <div class="clearfix">
                                       <div class="text-uppercase pull-left">
-                                          Table tennis
+                                          {{list.sportName}} - {{list.totalStrength}}
                                       </div>
                                         <div class="pull-right">
                                             <div class="report-contingentprogress">
                                                 <div class="progress progress-statistics">
                                                     <div class="progress-bar reportgender-stats male-statistics" role="progressbar" style="width:45%">
-                                                        <span class="pull-right"> <span class="male-statisticsnumber">200</span></span>
+                                                        <span class="pull-right"> <span class="male-statisticsnumber">{{list.maleCount}}</span></span>
                                                     </div>
                                                     <div class="progress-bar reportgender-stats female-statistics" role="progressbar" style="width:55%">
-                                                        <span class="pull-left"><span class="female-statisticsnumber">200</span></span>
+                                                        <span class="pull-left"><span class="female-statisticsnumber">{{list.femaleCount}}</span></span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="report-noshowcontingent">
-                                              <span>200</span>
+                                              <span>{{list.noShowCount}}</span>
                                             </div>
                                         </div>
 
@@ -285,7 +285,7 @@
                         <ul class="list-unstyled">
                           <li>
                             <div class="">
-                              No Show: 5%
+                              No Show: {{schoolData.noShowPercent}}%
                             </div>
                           </li>
                           <li>
@@ -307,7 +307,7 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="report-content">
-                  <span class="text-uppercase color-sportprimary d-opensans-semibold">Sports Participated:</span> <span><span>03</span> / <span>26</span></span>
+                  <span class="text-uppercase color-sportprimary d-opensans-semibold">Sports Participated:</span> <span><span>{{schoolData.sportParticipationCount}}</span> / <span>{{schoolData.totalSportCount}}</span></span>
                 </div>
                 <div class="report-content">
                   <p class="text-uppercase m-clear color-sportprimary d-opensans-semibold">Did Not Participate In:</p>

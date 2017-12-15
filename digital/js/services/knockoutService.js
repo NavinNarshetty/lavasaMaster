@@ -94,6 +94,7 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
         if (result.globalResult !== undefined) {
           if (team._id === result.globalResult.winner.player) {
             team.isWinner = true;
+            result.winnerName = team.schoolName;
           }
           result.status = result.globalResult.status;
           result.isNoMatch = result.globalResult.isNoMatch;
