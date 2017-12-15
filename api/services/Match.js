@@ -8511,9 +8511,9 @@ var model = {
                     } else if (mainData.resultVolleyball) {
                         if(mainData.resultVolleyball.winner.player === mainData.opponentsTeam[0]._id.toString()){
                             if (mainData.resultVolleyball.teams[0].walkover == true) {
-                                obj["RESULT 2"] = "walkover";
+                                obj["RESULT 1"] = "walkover";
                             }else{
-                                obj["RESULT 2"] = "Won";
+                                obj["RESULT 1"] = "Won";
                             }
                         }else{
                         if (mainData.resultVolleyball.isNoMatch == false) {
