@@ -157,8 +157,6 @@ var model = {
 
                            
                             returnObj.noShowCount = noShow.length;
-                            // console.log("returnObj.noShowCount",returnObj.noShowCount);
-                          
 
                             var sport = _(values)
                                 .groupBy('athleteId.gender').value();
@@ -273,11 +271,8 @@ var model = {
                 var lowIndex=0;
                 for(var i=0;i<high.length;i++){
                     if(high[i] && high[i+1]){
-                        console.log("high[i]",high[i]);
-                        console.log("high[i++]",high[i+1]);                        
                         if( (high[i].totalStrength!=high[i+1].totalStrength)){
                             highIndex=i;
-                            console.log("highIndex", highIndex);
                             break
                         }
                     }else{
@@ -289,7 +284,6 @@ var model = {
                     if(low[i] && low[i+1]){
                         if( (low[i].totalStrength!=low[i+1].totalStrength)){
                             lowIndex=i;
-                            console.log("lowIndex", lowIndex);
                             break
                         }
                     }else{
@@ -643,7 +637,8 @@ var model = {
                                     saveObj.totalSportCount = null;
                                 } else {
                                     saveObj.totalSportCount = data.totalSport;
-                                    // saveObj.nonParticipatedSport=_.difference(data.totalSportArr,saveObj.participatedSport);
+                                    console.log("participated Sport",obj.participatedSport);
+                                    saveObj.nonParticipatedSport=_.difference(data.sports,obj.participatedSport);
                                 }
                                 callback(null, saveObj);
                             });
@@ -652,7 +647,7 @@ var model = {
                     },
                 ], function (err, waterfallResult) {
                     //waterfall callback
-                    // callback(null, waterfallResult);
+                    //callback(null, waterfallResult);
                     // save and update
                     Reportcard.findOne({
                         "schoolName": saveObj.schoolName
@@ -666,7 +661,7 @@ var model = {
                                     obj.messege = "Successfully Saved";
                                 }
                                 callback(null, obj);
-                            })
+                            });
                         }
                         if (err) {
                             callback(err, null);
