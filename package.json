@@ -5,6 +5,7 @@
   "description": "A Wohlig Application",
   "keywords": [],
   "dependencies": {
+    "@google-cloud/storage": "^1.5.1",
     "async": "^2.5.0",
     "autoprefixer": "^6.7.7",
     "chalk": "^1.1.3",
