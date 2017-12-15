@@ -5069,7 +5069,7 @@ var model = {
                         team1.push(team);
                     } else {
                         var team = {};
-                        team.sub1 = result.teams[0].players[i].sub;
+                        team.sub1 = result.teams[0].players[i].sfaId;
                         team.firstName = result.teams[0].players[i].firstName;
                         team.surname = result.teams[0].players[i].surname;
                         if (result.teams[0].players[i].middleName) {
@@ -5115,7 +5115,7 @@ var model = {
                 console.log("max", max);
                 finalData.push(final);
                 callback(null, finalData);
-            } else if (result.teams.length == 2 && result.teams[0].players.length <= result.teams[1].players.length) {
+            } else if (result.teams.length == 2 && result.teams[0].players.length < result.teams[1].players.length) {
                 console.log('inside 2 less');
                 for (var i = 0; i < result.teams[1].players.length; i++) {
                     if (result.teams[0].players[i]) {
@@ -5159,15 +5159,6 @@ var model = {
                         team2Sub.push(team);
                     }
                 }
-                // final.team1 = team1;
-                // count.team1Count = team1.length;
-                // final.team1Sub = team1Sub;
-                // count.team1SubCount = team1Sub.length;
-                // final.team2 = team2;
-                // count.team2Count = team2.length;
-                // final.team2Sub = team2Sub;
-                // count.team2SubCount = team2Sub.length;
-                // var max = Object.values(count).sort((prev, next) => next - prev)[0];
                 final.team1 = team1;
                 count.push(team1.length);
                 final.team1Sub = team1Sub;
@@ -9271,10 +9262,21 @@ var model = {
                 } else if (mainData.resultVolleyball) {
                     if (mainData.resultVolleyball.teams[1]) {
                         obj["COACH NAME 2"] = mainData.resultVolleyball.teams[1].coach;
-                        obj["T1 Spike"] = mainData.resultVolleyball.teams[1].teamResults.spike;
-                        obj["T1 Foul"] = mainData.resultVolleyball.teams[1].teamResults.fouls;
-                        obj["T1 Block"] = mainData.resultVolleyball.teams[1].teamResults.block;
-
+                        if (mainData.resultVolleyball.teams[1].teamResults.spike) {
+                            obj["T2 Spike"] = mainData.resultVolleyball.teams[1].teamResults.spike;
+                        } else {
+                            obj["T2 Spike"] = "";
+                        }
+                        if (mainData.resultVolleyball.teams[1].teamResults.fouls) {
+                            obj["T2 Foul"] = mainData.resultVolleyball.teams[1].teamResults.fouls;
+                        } else {
+                            obj["T2 Foul"] = "";
+                        }
+                        if (mainData.resultVolleyball.teams[1].teamResults.block) {
+                            obj["T2 Block"] = mainData.resultVolleyball.teams[1].teamResults.block;
+                        } else {
+                            obj["T2 Block"] = "";
+                        }
                         if (mainData.resultVolleyball.isNoMatch == false) {
                             if (mainData.resultVolleyball.teams[1].walkover == false && mainData.resultVolleyball.teams[1].noShow == false) {
                                 obj["RESULT 2"] = "Lost";
@@ -9841,7 +9843,6 @@ var model = {
                         obj["WINNER TEAM ID"] = obj["TEAM ID 1"];
                         obj["WINNER SCHOOL"] = obj["SCREEN SCHOOL NAME 1"];
                     }
-
                 } else if (mainData.resultHockey) {
                     if (mainData.resultHockey.teams[1]) {
                         obj["COACH NAME 2"] = mainData.resultHockey.teams[1].coach;
@@ -9925,8 +9926,6 @@ var model = {
                     obj["VIDEO TYPE"] = "";
                     obj["VIDEO"] = "";
                 }
-
-
                 console.log("obj", obj);
                 callback(null, obj);
 
