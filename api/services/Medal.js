@@ -475,7 +475,7 @@ var model = {
                 StudentTeam.find(matchObj).exec(function (err, regTeamSport) {
                     regTeamSport = _.uniq(_.map(regTeamSport, function (n) {
                         return {
-                            "sport": n.sport,
+                            "sport": _.toString(n.sport),
                             "teamId": n.teamId
                         }
                     }));
@@ -494,11 +494,12 @@ var model = {
                     regIndiSport = _.uniq(_.flatten(_.map(regIndiSport, function (n1) {
                         return _.map(n1.sport, function (n2) {
                             return {
-                                "sport": n2
+                                "sport": _.toString(n2),
                             }
                         })
                     })));
                     regSports = _.union(regTeamSport, regIndiSport);
+                    regSports = _.uniqBy(regSports,'sport');
                     athleteDetails.regSports = regSports;
                     callback(null, athleteDetails);
                     // finalCallback(null, regSport);
@@ -588,7 +589,7 @@ var model = {
                                 //getSport Details for every regSport
                                 function (callback) {
                                     var matchObj = {
-                                        "_id": regSport.sport
+                                        "_id": ObjectId(regSport.sport)
                                     };
                                     Sport.findOne(matchObj).deepPopulate("sportslist sportslist.sportsListSubCategory ageGroup weight").lean().exec(function (err, sport) {
                                         if (err) {
@@ -675,7 +676,7 @@ var model = {
 
                                 //generatePdf
                                 function (pdfObj, sport, callback) {
-                                    console.log('data***************', pdfObj, sport)
+                                    console.log('data***************', pdfObj, sport);
                                     if (!pdfObj.sportObj.notFound) {
                                         pdfObj.newFilename = pdfObj.athlete.sfaId + "-" + pdfObj.sportObj.sportslist.name + pdfObj.sportObj.sportslist.sportsListSubCategory.name + "-" + pdfObj.filename + ".pdf";
                                         // pdfObj.newFilename = pdfObj.sportObj.sportslist.sportsListSubCategory.name + "-" + pdfObj.sportObj.ageGroup.name + "-" + pdfObj.sportObj.gender + "-" + pdfObj.sportObj.sportslist.name + "-" + pdfObj.filename + ".pdf";
@@ -710,7 +711,11 @@ var model = {
                         var path="pdf/";
                         console.log("athleteDetails",athleteDetails);
                         if(fileNameArr.length>1){
-                            var fileName=athleteDetails.sfaId + "-" + athleteDetails.firstName + athleteDetails.middleName + athleteDetails.surname ;
+                            if(athleteDetails.middleName){
+                                var fileName=athleteDetails.sfaId + "-" + athleteDetails.firstName + athleteDetails.middleName + athleteDetails.surname ;
+                            }else{
+                                var fileName=athleteDetails.sfaId + "-" + athleteDetails.firstName + athleteDetails.surname ;                                
+                            }
                             Config.merge2pdfs(fileNameArr,path,fileName,function(data){
                                 callback(null,fileName+ ".pdf");
                             });
