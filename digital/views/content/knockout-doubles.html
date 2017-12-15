@@ -29,31 +29,6 @@
                                     <button class="btn sport-btn-blue-outline">{{round}}</button>
                                 </div>
                             </div>
-                            <!-- <div class="swiper-slide">
-                  <div class="knockout-viewmore">
-                    <button class="btn sport-btn-blue-outline">Round 2</button>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div class="knockout-viewmore">
-                    <button class="btn sport-btn-blue-outline">Round 3</button>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div class="knockout-viewmore">
-                    <button class="btn sport-btn-blue-outline">Quater-Final</button>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div class="knockout-viewmore">
-                    <button class="btn sport-btn-blue-outline">Semi-Final</button>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div class="knockout-viewmore">
-                    <button class="btn sport-btn-blue-outline">Final</button>
-                  </div>
-                </div> -->
                         </div>
                         <!-- Add Arrows -->
                     </div>
@@ -83,6 +58,9 @@
             <h3 class="sport-success d-fjalla-one text-center text-uppercase">{{roundsList[0].name}}
               </h3>
             <div class="knockout-doubles-cardholder" ng-repeat="card in roundsList[0].match track by $index">
+                    <div class="knockout-cardholder-matchid">
+                            {{card.matchId}}
+                    </div>
                 <div  class="knockoutdouble-teamplayer" ng-repeat="players  in card.opponentsTeam track by $index" >
               <div class="knockout-card" ng-repeat="player in players.studentTeam track by $index" ng-class="{'knockout-winnercard':players.isWinner===true}">
 
@@ -163,6 +141,9 @@
                 <div class="knockout-doubles-cardholder-round2 relate" ng-repeat="card in roundsList[1].match track by $index">
                     <div class="get-center knockout-round-width">
                         <div class=" knockout-doubles-cardholder">
+                            <div class="knockout-cardholder-matchid">
+                                {{card.matchId}}
+                            </div>
                             <div class="knockoutdouble-teamplayer" ng-repeat="players in card.opponentsTeam track by $index">
                                 <div class="knockout-card " ng-repeat="player in players.studentTeam track by $index " ng-class="{'knockout-winnercard':players.isWinner===true}">
                                     <div class="knockout-cardimage inline-block  ver-mid " ng-if="player.studentId.photograph">
@@ -223,6 +204,9 @@
                 <div class="knockout-doubles-cardholder-round3 relate" ng-repeat="card in roundsList[2].match track by $index">
                     <div class="get-center knockout-round-width">
                         <div class=" knockout-doubles-cardholder">
+                            <div class="knockout-cardholder-matchid">
+                                {{card.matchId}}
+                            </div>
                             <div class="knockoutdouble-teamplayer" ng-repeat="players in card.opponentsTeam track by $index" ng-class="{'knockout-winnercard':players.isWinner===true}">
                                 <div class="knockout-card " ng-repeat="player in players.studentTeam track by $index">
                                     <div class="knockout-cardimage inline-block  ver-mid " ng-if="player.studentId.photograph">

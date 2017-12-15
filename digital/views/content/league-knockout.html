@@ -34,6 +34,11 @@
               </th>
               <th>
                 <div>
+                  <h4>Match Id</h4>
+                </div>
+              </th>
+              <th>
+                <div>
                   <h4 class="m-clear" ng-if="isTeam">team1</h4>
                   <h4 class="m-clear" ng-if="!isTeam">Player1</h4>
                 </div>
@@ -61,6 +66,11 @@
               <td>
                 <div class="text-capitalize">
                   {{data.round}}
+                </div>
+              </td>
+              <td>
+                <div class="text-capitalize">
+                  {{data.matchId}}
                 </div>
               </td>
               <td>
@@ -291,6 +301,11 @@
                         </th>
                         <th>
                           <div class="">
+                            <h4 class="m-clear">Match ID</h4>
+                          </div>
+                        </th>
+                        <th>
+                          <div class="">
                             <h4 class="m-clear" ng-if="isTeam">Team A</h4>
                             <h4 class="m-clear" ng-if="!isTeam">Player A</h4>
                           </div>
@@ -318,6 +333,11 @@
                         <td>
                           <div class="text-capitalize">
                             {{$index+1}}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="text-capitalize">
+                            {{content.matchId}}
                           </div>
                         </td>
                         <td>
