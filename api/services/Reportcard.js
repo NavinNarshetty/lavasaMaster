@@ -4,7 +4,7 @@ var schema = new Schema({
         ref: 'Registration'
     },
     schoolName: String,
-    sfaId:String,
+    sfaId: String,
     totalStrength: Number,
     maleCount: Number,
     femaleCount: Number,
@@ -33,7 +33,7 @@ var schema = new Schema({
     //     count: Number
     // }],
 
-    highestParticipation:[{
+    highestParticipation: [{
         subCategoryId: {
             type: Schema.Types.ObjectId,
             ref: 'Sport'
@@ -44,7 +44,7 @@ var schema = new Schema({
         femaleCount: Number,
         noShowCount: Number
     }],
-    lowestParticipation:[{
+    lowestParticipation: [{
         subCategoryId: {
             type: Schema.Types.ObjectId,
             ref: 'Sport'
@@ -71,20 +71,78 @@ module.exports = mongoose.model('Reportcard', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
-    getOneReportCard:function(data,callback){
-        var matchObj={
-            "schoolName":data.name
-        }
+    getOneReportCard: function (data, callback) {
 
-        Reportcard.findOne(matchObj).exec(function(err,result){
-            if(err){
-                callback(err,null);
-            }else if(!_.isEmpty(result)){
-                callback(null,result);
-            }else{
-                callback("No Data Found",null);
+        async.waterfall([
+            function (callback) {
+                var sendObj = {};
+                var matchObj = {
+                    "schoolName": data.name
+                }
+
+                Reportcard.findOne(matchObj).exec(function (err, result) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (!_.isEmpty(result)) {
+                        sendObj.contingent = result;
+                        callback(null, sendObj);
+                    } else {
+                        callback("No Data Found", null);
+                    }
+                });
+            },
+            function (sendObj, callback) {
+                Rank.getSchoolByRanks(function (err, result) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        sendObj.totalSchoolCount = result.length;
+                        var index = _.findIndex(result, ['name', data.name]);
+                        if (index != -1) {
+                            sendObj.schoolRank = index + 1;
+                            sendObj.medalsTally = result[index];
+                        } else {
+                            sendObj.schoolRank = "NA";
+                        }
+
+                        async.concatSeries(sendObj.medalsTally.sportData, function (singleData, callback) {
+                            var matchObj = {
+                                "name": singleData.name
+                            }
+                            Rank.getSchoolBySport(matchObj, function (err, schoolSportData) {
+                                if (err) {
+                                    callback(err, null);
+                                } else {
+                                    singleData.totalSchoolCount = schoolSportData.table.length;
+                                    var index = _.findIndex(schoolSportData.table, ['_id', data.name]);
+                                    if (index != -1) {
+                                        singleData.schoolRank = index + 1;
+                                    } else {
+                                        singleData.schoolRank = "NA";
+                                    }
+                                    callback(null, singleData);
+                                }
+                            });
+
+                        }, function (err, finalResult) {
+                            sendObj.medalsTally.sportData = finalResult;
+                            callback(null, sendObj);
+                        });
+
+
+                    }
+                })
             }
-        });
+        ], function (err, result) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, result);
+            }
+
+        })
+
+
     },
 
     generateReportCard: function (fcallback) {
@@ -155,7 +213,7 @@ var model = {
                                 return n.noShow == true;
                             });
 
-                           
+
                             returnObj.noShowCount = noShow.length;
 
                             var sport = _(values)
@@ -206,7 +264,7 @@ var model = {
                                 "totalStrength": 0,
                                 "maleCount": 0,
                                 "femaleCount": 0,
-                                "noShowCount":0
+                                "noShowCount": 0
                             };
 
                             _.each(matchedObjs, function (n) {
@@ -266,34 +324,34 @@ var model = {
                 }
             ], function (err, result) {
                 var high = obj.highestParticipation = _.orderBy(obj.sport, ['totalStrength'], ['desc']);
-                var low = obj.lowestParticipation =  _.orderBy(obj.sport, 'totalStrength', ['asc']);
-                var highIndex=0;
-                var lowIndex=0;
-                for(var i=0;i<high.length;i++){
-                    if(high[i] && high[i+1]){
-                        if( (high[i].totalStrength!=high[i+1].totalStrength)){
-                            highIndex=i;
+                var low = obj.lowestParticipation = _.orderBy(obj.sport, 'totalStrength', ['asc']);
+                var highIndex = 0;
+                var lowIndex = 0;
+                for (var i = 0; i < high.length; i++) {
+                    if (high[i] && high[i + 1]) {
+                        if ((high[i].totalStrength != high[i + 1].totalStrength)) {
+                            highIndex = i;
                             break
                         }
-                    }else{
-                        highIndex=i;
+                    } else {
+                        highIndex = i;
                     }
                 }
 
-                for(var i=0;i<low.length;i++){
-                    if(low[i] && low[i+1]){
-                        if( (low[i].totalStrength!=low[i+1].totalStrength)){
-                            lowIndex=i;
+                for (var i = 0; i < low.length; i++) {
+                    if (low[i] && low[i + 1]) {
+                        if ((low[i].totalStrength != low[i + 1].totalStrength)) {
+                            lowIndex = i;
                             break
                         }
-                    }else{
-                        lowIndex=i;
+                    } else {
+                        lowIndex = i;
                     }
                 }
 
-                obj.highestParticipation = obj.highestParticipation.splice(0,highIndex+1);
-                obj.lowestParticipation = obj.lowestParticipation.splice(0,lowIndex+1);
-             
+                obj.highestParticipation = obj.highestParticipation.splice(0, highIndex + 1);
+                obj.lowestParticipation = obj.lowestParticipation.splice(0, lowIndex + 1);
+
                 callback(obj);
             })
 
@@ -306,7 +364,7 @@ var model = {
             async.concatLimit(schoolsList, 1, function (school, callback) {
                 var saveObj = {};
                 saveObj.schoolName = school.schoolName;
-               
+
                 saveObj.sfaId = school.sfaID;
                 async.waterfall([
                     function (callback) {
@@ -530,7 +588,7 @@ var model = {
                                         if (result[resultVar.resultVar]) {
                                             var findByKey = '';
                                             var noShow = function (obj) {
-                                              
+
                                                 if (!_.isEmpty(obj)) {
                                                     singleData.noShow = obj.noShow;
                                                 } else {
@@ -611,7 +669,7 @@ var model = {
                     function (parallelResult, callback) {
                         _.remove(parallelResult, function (n) {
                             return n.delete == true;
-                        });        
+                        });
                         var obj = {
                             "name": school.schoolName,
                             "arr": parallelResult
@@ -637,8 +695,8 @@ var model = {
                                     saveObj.totalSportCount = null;
                                 } else {
                                     saveObj.totalSportCount = data.totalSport;
-                                    console.log("participated Sport",obj.participatedSport);
-                                    saveObj.nonParticipatedSport=_.difference(data.sports,obj.participatedSport);
+                                    console.log("participated Sport", obj.participatedSport);
+                                    saveObj.nonParticipatedSport = _.difference(data.sports, obj.participatedSport);
                                 }
                                 callback(null, saveObj);
                             });
