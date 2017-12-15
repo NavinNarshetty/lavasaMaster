@@ -126,10 +126,14 @@ var model = {
 
                         }, function (err, finalResult) {
                             sendObj.medalsTally.sportData = finalResult;
-                            callback(null, sendObj);
+
+                            ConfigProperty.findOne().exec(function(err,data){
+                                sendObj.medalsTally.medal['gold'].totalGold=data['goldMedal'];
+                                sendObj.medalsTally.medal['silver'].totalSilver=data['silverMedal'];
+                                sendObj.medalsTally.medal['bronze'].totalBronze=data['bronzeMedal'];
+                                callback(null, sendObj);
+                            });                           
                         });
-
-
                     }
                 })
             }
