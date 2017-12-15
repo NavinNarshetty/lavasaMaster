@@ -6113,6 +6113,7 @@ var model = {
                                     if (mainData.opponentsTeam.length == 1 && mainData.resultVolleyball.winner.player === mainData.opponentsTeam[0]._id.toString()) {
                                         obj["RESULT 1"] = "Bye";
                                     } else if (mainData.resultVolleyball.winner.player === mainData.opponentsTeam[0]._id.toString()) {
+                                        console.log('----------------------++++++++++++++++++++++++++++++++-----------------------------');
                                         if (mainData.resultVolleyball.teams[0].walkover == true) {
                                             obj["RESULT 1"] = "walkover";
                                         } else {
@@ -6392,6 +6393,7 @@ var model = {
                                 } else if (mainData.resultVolleyball) {
 
                                     if (mainData.resultVolleyball.winner.player === mainData.opponentsTeam[1]._id.toString()) {
+                                        console.log('++++++++++++++++++++------------------------------+++++++++++++++++++++++++');
                                         if (mainData.resultVolleyball.teams[1].walkover == true) {
                                             obj["RESULT 2"] = "walkover";
                                         } else {
@@ -6403,7 +6405,7 @@ var model = {
                                                 obj["RESULT 2"] = "Lost";
                                             } else if (mainData.resultVolleyball.teams[1].walkover == true) {
                                                 obj["RESULT 2"] = "walkover";
-                                            } else {
+                                            } else if (mainData.resultVolleyball.teams[1].noShow == true){
                                                 obj["RESULT 2"] = "noShow";
                                             }
                                         } else {
@@ -8507,6 +8509,13 @@ var model = {
                         obj["T1 Saves"] = mainData.resultWaterPolo.teams[0].teamResults.saves;
                         obj["T1 Penalties"] = mainData.resultWaterPolo.teams[0].teamResults.penalty;
                     } else if (mainData.resultVolleyball) {
+                        if(mainData.resultVolleyball.winner.player === mainData.opponentsTeam[0]._id.toString()){
+                            if (mainData.resultVolleyball.teams[0].walkover == true) {
+                                obj["RESULT 2"] = "walkover";
+                            }else{
+                                obj["RESULT 2"] = "Won";
+                            }
+                        }else{
                         if (mainData.resultVolleyball.isNoMatch == false) {
                             if (mainData.resultVolleyball.teams[0].walkover == false && mainData.resultVolleyball.teams[0].noShow == false) {
                                 obj["RESULT 1"] = "Lost";
@@ -8518,6 +8527,7 @@ var model = {
                         } else {
                             obj["RESULT 1"] = "No Match";
                         }
+                    }
                         obj["COACH NAME 1"] = mainData.resultVolleyball.teams[0].coach;
                         obj["T1 Spike"] = mainData.resultVolleyball.teams[0].teamResults.spike;
                         obj["T1 Foul"] = mainData.resultVolleyball.teams[0].teamResults.fouls;
@@ -9277,16 +9287,24 @@ var model = {
                         } else {
                             obj["T2 Block"] = "";
                         }
-                        if (mainData.resultVolleyball.isNoMatch == false) {
-                            if (mainData.resultVolleyball.teams[1].walkover == false && mainData.resultVolleyball.teams[1].noShow == false) {
-                                obj["RESULT 2"] = "Lost";
-                            } else if (mainData.resultVolleyball.teams[1].walkover == true) {
+                        if(mainData.resultVolleyball.winner.player === mainData.opponentsTeam[1]._id.toString()){
+                            if (mainData.resultVolleyball.teams[1].walkover == true) {
                                 obj["RESULT 2"] = "walkover";
-                            } else {
-                                obj["RESULT 2"] = "noShow";
+                            }else{
+                                obj["RESULT 2"] = "Won";
                             }
-                        } else {
-                            obj["RESULT 2"] = "No Match";
+                        }else{
+                            if (mainData.resultVolleyball.isNoMatch == false) {
+                                if (mainData.resultVolleyball.teams[1].walkover == false && mainData.resultVolleyball.teams[1].noShow == false) {
+                                    obj["RESULT 2"] = "Lost";
+                                } else if (mainData.resultVolleyball.teams[1].walkover == true) {
+                                    obj["RESULT 2"] = "walkover";
+                                } else {
+                                    obj["RESULT 2"] = "noShow";
+                                }
+                            } else {
+                                obj["RESULT 2"] = "No Match";
+                            }
                         }
 
                         var i = mainData.resultVolleyball.teams[0].teamResults.sets.length - 1;
