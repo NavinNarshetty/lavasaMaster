@@ -10046,7 +10046,7 @@ var model = {
                                     }
                                     obj["FINAL SCORE 1"] = mainData.resultFootball.teams[1].teamResults.finalPoints;
                                     obj["FINAL SCORE 1"] = mainData.resultFootball.teams[1].teamResults.finalPoints;
-                                    if (mainData.resultFootball.status == "isCompleted" && mainData.resultFootball.isNoMatch == false || mainData.resultFootball.isDraw == false) {
+                                    if (mainData.resultFootball.status == "IsCompleted" && mainData.resultFootball.isNoMatch == false || mainData.resultFootball.isDraw == false) {
                                         if (mainData.resultFootball.winner.player === mainData.opponentsTeam[0]._id.toString()) {
                                             obj["WINNER NAME"] = mainData.opponentsTeam[0].name;
                                             obj["WINNER TEAM ID"] = mainData.opponentsTeam[0].teamId;
@@ -10076,7 +10076,7 @@ var model = {
 
                                     obj["FINAL SCORE 1"] = mainData.resultHockey.teams[0].teamResults.finalPoints;
                                     obj["FINAL SCORE 2"] = mainData.resultHockey.teams[1].teamResults.finalPoints;
-                                    if (mainData.resultHockey.status == "isCompleted" && mainData.resultHockey.isNoMatch == false && mainData.resultHockey.isDraw == false) {
+                                    if (mainData.resultHockey.status == "IsCompleted" && mainData.resultHockey.isNoMatch == false || mainData.resultHockey.isDraw == false) {
                                         if (mainData.resultHockey.winner.player === mainData.opponentsTeam[0]._id.toString()) {
                                             obj["WINNER NAME"] = mainData.opponentsTeam[0].name;
                                             obj["WINNER TEAM ID"] = mainData.opponentsTeam[0].teamId;
@@ -10098,7 +10098,7 @@ var model = {
                                 obj["TEAM NAME 2"] = "";
                                 obj["SCHOOL 2"] = "";
                                 if (mainData.resultFootball) {
-                                    if (mainData.resultFootball.status == "isCompleted" && mainData.resultFootball.isNoMatch == false || mainData.resultFootball.isDraw == false) {
+                                    if (mainData.resultFootball.status == "IsCompleted" && mainData.resultFootball.isNoMatch == false || mainData.resultFootball.isDraw == false) {
                                         if (mainData.resultFootball.winner.player === mainData.opponentsTeam[0]._id.toString()) {
                                             obj["WINNER NAME"] = mainData.opponentsTeam[0].name;
                                             obj["WINNER TEAM ID"] = mainData.opponentsTeam[0].teamId;
@@ -10116,7 +10116,7 @@ var model = {
                                     }
                                     obj["VIDEO"] = "";
                                 } else if (mainData.resultHockey) {
-                                    if (mainData.resultHockey.status == "isCompleted" && mainData.resultHockey.isNoMatch == false && mainData.resultHockey.isDraw == false) {
+                                    if (mainData.resultHockey.status == "IsCompleted" && mainData.resultHockey.isNoMatch == false || mainData.resultHockey.isDraw == false) {
                                         if (mainData.resultHockey.winner.player === mainData.opponentsTeam[0]._id.toString()) {
                                             obj["WINNER NAME"] = mainData.opponentsTeam[0].name;
                                             obj["WINNER TEAM ID"] = mainData.opponentsTeam[0].teamId;
