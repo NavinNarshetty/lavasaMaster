@@ -847,11 +847,11 @@
   }
 
   .knockout-cardholder-round2 {
-    min-height: 350px;
+    min-height: 370px;
   }
 
   .knockout-cardholder-round3 {
-    min-height: 700px;
+    min-height: 740px;
   } // END KNOCKOUT CARD
   // WINNER CARD
   .knockout-winnercardholder {
@@ -895,7 +895,7 @@
     margin-bottom: 25px;
     position: relative;
     .knockout-card {
-      &:nth-child(even) {
+      &:nth-child(odd) {
         border-bottom: none;
       } // &:nth-child(2) {
       //   border-bottom: 3px solid $sport-primary;
@@ -914,11 +914,11 @@
   }
 
   .knockout-doubles-cardholder-round2 {
-    min-height: 560px;
+    min-height: 610px;
   }
 
   .knockout-doubles-cardholder-round3 {
-    min-height: 1120px;
+    min-height: 1220px;
   } // WINNER CARD
   .knockout-winnercardname-holder {
     margin: 0 0 5px;
