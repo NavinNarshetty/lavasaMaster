@@ -13,6 +13,9 @@ myApp.controller('ReportCardCtrl', function ($scope, TemplateService, $state, Na
   });
 
   // VARIABLE INITITALISE
+  // $scope.school = {
+  //   name: $stateParams.school
+  // }
   $scope.school = {
     name: "Silver Oaks International School"
   }
@@ -24,15 +27,20 @@ myApp.controller('ReportCardCtrl', function ($scope, TemplateService, $state, Na
   // FUNCTIONS END
 
   // API CALLS
-  NavigationService.getOneReportCard($scope.school, function(data) {
-    if (data.value == true) {
-      $scope.schoolData = data.data;
-      console.log("$scope.schoolData", $scope.schoolData);
-    } else {
-      console.log("Error in call");
-      console.log("Error", data);
-    }
-  })
+  if($scope.school.name != ""){
+    NavigationService.getOneReportCard($scope.school, function(data) {
+      if (data.value == true) {
+        $scope.schoolData = data.data;
+        console.log("$scope.schoolData", $scope.schoolData);
+      } else {
+        toastr.error("Data not found.", "Error");
+        console.log("Error", data);
+      }
+    });
+  } else {
+    toastr.error("Cannot Find School.","Error");
+  }
+
   // API CALLS END
   // JSONS
   $scope.lists = [0,1,2,3,4,5,6,7,8,9];

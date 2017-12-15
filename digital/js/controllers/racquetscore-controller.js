@@ -17,6 +17,7 @@ myApp.controller('RacquetScoreCtrl', function($scope, TemplateService, Navigatio
     $scope.setLength  = [];
     $scope.matchError = "";
     $scope.stateParam = $stateParams;
+    $scope.btnDisable = false;
     // VARIABLE INITIALISE END
 
     // API CALLN INTEGRATION
@@ -142,13 +143,16 @@ myApp.controller('RacquetScoreCtrl', function($scope, TemplateService, Navigatio
           }
         })
       });
+      $scope.btnDisable = true;
       $scope.match.resultsRacquet.status = "IsCompleted";
       $scope.matchResult = {
         resultsRacquet : $scope.match.resultsRacquet,
         matchId: $scope.matchData.matchId
       }
+      $interval.cancel(promise);
       NavigationService.saveMatch($scope.matchResult, function(data){
         if(data.value == true){
+          $scope.btnDisable = false;
           if ($stateParams.drawFormat === 'Knockout') {
               $state.go('knockout', {
                 drawFormat: $stateParams.drawFormat,
