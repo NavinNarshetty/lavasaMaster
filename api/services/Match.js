@@ -4955,12 +4955,12 @@ var model = {
                     var excelData = [];
                     var page = 1;
                     _.each(finalData, function (mainData) {
-                        console.log("mainData",mainData);
+                        console.log("mainData", mainData);
                         for (var i = 0; i < mainData.max; i++) {
                             var obj = {};
                             obj["MATCH ID"] = mainData.matchId;
                             obj["TEAM 1"] = mainData.teamId1;
-                            if (!_.isEmpty(mainData.team1)&&mainData.team1[i] != undefined) {
+                            if (!_.isEmpty(mainData.team1) && mainData.team1[i] != undefined) {
                                 obj["SFA ID 1"] = mainData.team1[i].sfaId;
                                 if (mainData.team1[i].middleName) {
                                     obj["STARTING LINE UP SCREEN NAME 1"] = mainData.team1[i].firstName.charAt(0) + "." + mainData.team1[i].middleName.charAt(0) + "." + mainData.team1[i].surname;
@@ -4971,7 +4971,7 @@ var model = {
                                 obj["SFA ID 1"] = "-";
                                 obj["STARTING LINE UP SCREEN NAME 1"] = "-";
                             }
-                            if (!_.isEmpty(mainData.team1Sub)&&mainData.team1Sub[i] != undefined) {
+                            if (!_.isEmpty(mainData.team1Sub) && mainData.team1Sub[i] != undefined) {
                                 obj["SUBSTITUTES SFA ID 1"] = mainData.team1Sub[i].sub1;
                                 if (mainData.team1Sub[i].middleName) {
                                     obj["SUBSTITUTES SCREEN NAME 1"] = mainData.team1Sub[i].firstName.charAt(0) + "." + mainData.team1Sub[i].middleName.charAt(0) + "." + mainData.team1Sub[i].surname;
@@ -4995,7 +4995,7 @@ var model = {
                                 obj["SFA ID 2"] = "-";
                                 obj["STARTING LINE UP SCREEN NAME 2"] = "-";
                             }
-                            if (!_.isEmpty(mainData.team2Sub)&& mainData.team2Sub[i] != undefined) {
+                            if (!_.isEmpty(mainData.team2Sub) && mainData.team2Sub[i] != undefined) {
                                 obj["SUBSTITUTES SFA ID 2"] = mainData.team2Sub[i].sub2;
                                 if (mainData.team2Sub[i].middleName) {
                                     obj["SUBSTITUTES SCREEN NAME 2"] = mainData.team2Sub[i].firstName.charAt(0) + "." + mainData.team2Sub[i].middleName.charAt(0) + "." + mainData.team2Sub[i].surname;
@@ -5108,9 +5108,9 @@ var model = {
                 count.push(team2.length);
                 final.team2Sub = team2Sub;
                 count.push(team2Sub.length);
-                var max = count.sort(function(a, b) {
-            return b-a;
-             });
+                var max = count.sort(function (a, b) {
+                    return b - a;
+                });
                 final.max = max[0];
                 console.log("max", max);
                 finalData.push(final);
@@ -5159,7 +5159,7 @@ var model = {
                         team2Sub.push(team);
                     }
                 }
-               // final.team1 = team1;
+                // final.team1 = team1;
                 // count.team1Count = team1.length;
                 // final.team1Sub = team1Sub;
                 // count.team1SubCount = team1Sub.length;
@@ -5176,9 +5176,9 @@ var model = {
                 count.push(team2.length);
                 final.team2Sub = team2Sub;
                 count.push(team2Sub.length);
-                var max = count.sort(function(a, b) {
-            return b-a;
-             });
+                var max = count.sort(function (a, b) {
+                    return b - a;
+                });
                 final.max = max[0];
                 console.log("max", max);
                 finalData.push(final);
@@ -5211,9 +5211,9 @@ var model = {
             count.push(team1.length);
             final.team1Sub = team1Sub;
             count.push(team1Sub.length);
-            var max = count.sort(function(a, b) {
-            return b - a;
-             });
+            var max = count.sort(function (a, b) {
+                return b - a;
+            });
             console.log("max", max);
             final.max = max[0];
             finalData.push(final);
@@ -8516,6 +8516,17 @@ var model = {
                         obj["T1 Saves"] = mainData.resultWaterPolo.teams[0].teamResults.saves;
                         obj["T1 Penalties"] = mainData.resultWaterPolo.teams[0].teamResults.penalty;
                     } else if (mainData.resultVolleyball) {
+                        if (mainData.resultVolleyball.isNoMatch == false) {
+                            if (mainData.resultVolleyball.teams[0].walkover == false && mainData.resultVolleyball.teams[0].noShow == false) {
+                                obj["RESULT 1"] = "Lost";
+                            } else if (mainData.resultVolleyball.teams[0].walkover == true) {
+                                obj["RESULT 1"] = "walkover";
+                            } else {
+                                obj["RESULT 1"] = "noShow";
+                            }
+                        } else {
+                            obj["RESULT 1"] = "No Match";
+                        }
                         obj["COACH NAME 1"] = mainData.resultVolleyball.teams[0].coach;
                         obj["T1 Spike"] = mainData.resultVolleyball.teams[0].teamResults.spike;
                         obj["T1 Foul"] = mainData.resultVolleyball.teams[0].teamResults.fouls;
@@ -9274,7 +9285,7 @@ var model = {
                             }
                         } else {
                             obj["RESULT 2"] = "No Match";
-                        } 
+                        }
 
                         var i = mainData.resultVolleyball.teams[0].teamResults.sets.length - 1;
                         switch (i) {
@@ -9911,13 +9922,12 @@ var model = {
                         obj["WINNER SCHOOL"] = obj["SCREEN SCHOOL NAME 1"];
                     }
                 } else {
-                   
                     obj["VIDEO TYPE"] = "";
                     obj["VIDEO"] = "";
                 }
 
-                
-                console.log("obj",obj);
+
+                console.log("obj", obj);
                 callback(null, obj);
 
             },
@@ -10103,7 +10113,7 @@ var model = {
                                             obj["WINNER NAME"] = mainData.opponentsTeam[0].name;
                                             obj["WINNER TEAM ID"] = mainData.opponentsTeam[0].teamId;
                                             obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 1"];
-                                        } 
+                                        }
                                         // else {
                                         //     obj["WINNER NAME"] = mainData.opponentsTeam[1].name;
                                         //     obj["WINNER TEAM ID"] = mainData.opponentsTeam[1].teamId;
@@ -10121,7 +10131,7 @@ var model = {
                                             obj["WINNER NAME"] = mainData.opponentsTeam[0].name;
                                             obj["WINNER TEAM ID"] = mainData.opponentsTeam[0].teamId;
                                             obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 1"];
-                                        } 
+                                        }
                                         // else {
                                         //     obj["WINNER NAME"] = mainData.opponentsTeam[1].name;
                                         //     obj["WINNER TEAM ID"] = mainData.opponentsTeam[1].teamId;
@@ -16322,9 +16332,5 @@ var model = {
         }
 
     },
-
-
-
-
 };
 module.exports = _.assign(module.exports, exports, model);
