@@ -19,7 +19,7 @@ var schema = new Schema({
     district: [{
         type: String,
     }],
-    totalSport:Number,
+    totalSport: Number,
     totalAmountType: Number,
     totalAmountInWordsType: String,
     taxTotalAmountInWords: String,
@@ -68,6 +68,14 @@ var schema = new Schema({
     }],
     termsAndCondition: String,
     // university: String
+    sports:[ {
+        type: String,
+       
+    }],
+    goldMedal: Number,
+    silverMedal: Number,
+    bronzeMedal: Number
+
 });
 
 schema.plugin(deepPopulate, {});
@@ -105,6 +113,10 @@ var model = {
                     finalData.infoId = property[0].infoId;
                     finalData.ddFavour = property[0].ddFavour;
                     finalData.additionalFee = property[0].additionalFee;
+                    finalData.sports = property[0].sports;
+                    finalData.goldMedal = property[0].goldMedal;
+                    finalData.silverMedal = property[0].silverMedal;
+                    finalData.bronzeMedal = property[0].bronzeMedal;
                     callback(null, finalData);
                 }
             }
