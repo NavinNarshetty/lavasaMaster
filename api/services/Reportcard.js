@@ -4,6 +4,7 @@ var schema = new Schema({
         ref: 'Registration'
     },
     schoolName: String,
+    sfaId:String,
     totalStrength: Number,
     maleCount: Number,
     femaleCount: Number,
@@ -87,7 +88,6 @@ var model = {
     },
 
     generateReportCard: function (fcallback) {
-
         function calTotalAth(obj, callback) {
 
             var returnObj = {};
@@ -144,20 +144,22 @@ var model = {
             async.waterfall([
 
                 function (callback) {
-                    // console.log("-------------------------");
                     obj.sport = _(obj.arr)
                         .groupBy('sportsListSubCategory.name')
                         .map(function (values, key1) {
                             var returnObj = {};
                             returnObj.sportName = key1;
                             returnObj.subCategoryId = values[0].sportsListSubCategory._id;
-                            // console.log("values====================================================================",values);
                             returnObj.totalStrength = values.length;
                             var noShow = _.remove(values, function (n) {
                                 return n.noShow == true;
                             });
-                            // console.log("noShow",noShow);
+
+                           
                             returnObj.noShowCount = noShow.length;
+                            // console.log("returnObj.noShowCount",returnObj.noShowCount);
+                          
+
                             var sport = _(values)
                                 .groupBy('athleteId.gender').value();
 
@@ -177,8 +179,6 @@ var model = {
 
                             returnObj.malePercent = _.round(returnObj.maleCount / (returnObj.maleCount + returnObj.femaleCount) * 100);
                             returnObj.femalePercent = _.round(returnObj.femaleCount / (returnObj.maleCount + returnObj.femaleCount) * 100);
-
-                            // console.log(returnObj.malePercent, returnObj.femalePercent);
 
                             if (_.isNaN(returnObj.malePercent)) {
                                 returnObj.malePercent = 0;
@@ -207,7 +207,8 @@ var model = {
                                 "sportName": sportName,
                                 "totalStrength": 0,
                                 "maleCount": 0,
-                                "femaleCount": 0
+                                "femaleCount": 0,
+                                "noShowCount":0
                             };
 
                             _.each(matchedObjs, function (n) {
@@ -215,12 +216,13 @@ var model = {
                                 addObj.totalStrength += n.totalStrength;
                                 addObj.maleCount += n.maleCount;
                                 addObj.femaleCount += n.femaleCount;
+                                addObj.noShowCount += n.noShowCount;
                                 n.removeThis = true;
                             });
+                            console.log("addObj.noShowCount",addObj.noShowCount);
 
                             addObj.malePercent = _.round(addObj.maleCount / (addObj.maleCount + addObj.femaleCount) * 100);
                             addObj.femalePercent = _.round(addObj.femaleCount / (addObj.maleCount + addObj.femaleCount) * 100);
-                            // console.log(addObj.malePercent, addObj.femalePercent);
                             if (_.isNaN(addObj.malePercent)) {
                                 addObj.malePercent = 0;
                             }
@@ -232,7 +234,6 @@ var model = {
 
                         }
 
-                        // console.log("matchedObjs", matchedObjs);
                         if (sportsToMerge.length - 1 == k) {
                             obj.sport = _.filter(obj.sport, function (n) {
                                 return !n.removeThis;
@@ -245,7 +246,6 @@ var model = {
                 function (callback) {
                     // calculate participated sport
                     obj.participatedSport = [];
-                    // console.log("obj.sport",obj.sport);
                     if (!_.isEmpty(obj.sport)) {
                         _.each(obj.sport, function (n, k) {
                             obj.participatedSport.push(n.sportName);
@@ -270,8 +270,6 @@ var model = {
             ], function (err, result) {
                 var high = obj.highestParticipation = _.orderBy(obj.sport, ['totalStrength'], ['desc']);
                 var low = obj.lowestParticipation =  _.orderBy(obj.sport, 'totalStrength', ['asc']);
-                console.log("obj.highestParticipation",obj.highestParticipation);
-                console.log("obj.lowestParticipation",obj.lowestParticipation);
                 callback(obj);
             })
 
@@ -280,10 +278,12 @@ var model = {
         // async.cobn
         Registration.find({
             'status': "Verified"
-        }, "_id schoolName").exec(function (err, schoolsList) {
+        }, "_id schoolName sfaID").exec(function (err, schoolsList) {
             async.concatLimit(schoolsList, 1, function (school, callback) {
                 var saveObj = {};
                 saveObj.schoolName = school.schoolName;
+               
+                saveObj.sfaId = school.sfaID;
                 async.waterfall([
                     function (callback) {
                         async.parallel([
@@ -483,12 +483,10 @@ var model = {
 
                             // arr = parallelResult[0].concat(parallelResult[1]);
                             arr = _.flatten(parallelResult);
-                            // console.log("array hai",arr.length);
                             callback(null, arr);
                         });
                     },
                     function (parallelResult, callback) {
-                        console.log("parallelResult-------------------------------------------",parallelResult);
                         async.concatSeries(parallelResult, function (singleData, callback) {
                             var resultVar = Match.getResultVar(singleData.sportsListSubCategory.name, singleData.sportsListSubCategory.type);
 
@@ -497,21 +495,18 @@ var model = {
                                 callback();
                             } else {
                                 var matchObj = {};
-                                // console.log("singleData.sportsListSubCategory.name", singleData)
-                                // console.log("resultVar", resultVar);
                                 matchObj[resultVar.opponentsVar] = singleData._id;
                                 var pullProperties = resultVar.resultVar + " " + "excelType";
-                                // console.log("pullProperties",pullProperties);
+
                                 Match.findOne(matchObj, pullProperties).lean().exec(function (err, result) {
                                     if (err) {
                                         callback(err, null);
                                     } else if (!_.isEmpty(result)) {
 
                                         if (result[resultVar.resultVar]) {
-                                            console.log("----");
                                             var findByKey = '';
                                             var noShow = function (obj) {
-                                                // console.log("obj",obj);
+                                              
                                                 if (!_.isEmpty(obj)) {
                                                     singleData.noShow = obj.noShow;
                                                 } else {
@@ -530,10 +525,6 @@ var model = {
                                                         findByKey = 'player';
                                                     } else if (singleData.sportsListSubCategory.name == "Chess") {
                                                         noShow = function (obj) {
-                                                            if (singleData.sportsListSubCategory.type == "Combat Sports") {
-                                                                // console.log("obj",obj);
-                                                            }
-
                                                             if (obj.score && obj.rank) {
                                                                 singleData.noShow = true;
                                                             } else {
@@ -556,7 +547,6 @@ var model = {
                                                     }
                                                     break;
                                             }
-                                            // console.log("result[resultVar.opponentsVar]",result[resultVar.opponentsVar]);
 
                                             if (resultVar.opponentsVar == 'opponentsSingle') {
                                                 if (singleData.sportsListSubCategory.name != "Shooting") {
@@ -590,17 +580,14 @@ var model = {
                                 });
                             }
                         }, function (err, result) {
-                            // console.log(null,parallelResult)
                             callback(null, parallelResult);
                         })
 
                     },
                     function (parallelResult, callback) {
-                        // console.log("before",parallelResult.length);
                         _.remove(parallelResult, function (n) {
                             return n.delete == true;
-                        });
-                        // console.log("after",parallelResult.length);                        
+                        });        
                         var obj = {
                             "name": school.schoolName,
                             "arr": parallelResult
@@ -614,7 +601,7 @@ var model = {
                         });
                     },
                     function (mainObj, callback) {
-                        // console.log("mainObj",mainObj);
+
                         calSportDetails(_.cloneDeep(mainObj), function (obj) {
                             saveObj.sport = obj.sport;
                             saveObj.highestParticipation = obj.highestParticipation;
@@ -644,8 +631,7 @@ var model = {
                             Reportcard.saveData(saveObj, function (err, data) {
                                 var obj = {};
                                 if (err) {
-                                    console.log("err", err);
-                                    obj.messege = "Error While Saving";
+                                    obj.messege = err;
                                 } else {
                                     obj.messege = "Successfully Saved";
                                 }
@@ -653,7 +639,6 @@ var model = {
                             })
                         }
                         if (err) {
-                            console.log("err while finding school");
                             callback(err, null);
                         } else if (!_.isEmpty(found)) {
                             saveObj._id = found
