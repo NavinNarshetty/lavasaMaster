@@ -219,7 +219,6 @@ var model = {
                                 addObj.noShowCount += n.noShowCount;
                                 n.removeThis = true;
                             });
-                            console.log("addObj.noShowCount",addObj.noShowCount);
 
                             addObj.malePercent = _.round(addObj.maleCount / (addObj.maleCount + addObj.femaleCount) * 100);
                             addObj.femalePercent = _.round(addObj.femaleCount / (addObj.maleCount + addObj.femaleCount) * 100);
@@ -270,6 +269,37 @@ var model = {
             ], function (err, result) {
                 var high = obj.highestParticipation = _.orderBy(obj.sport, ['totalStrength'], ['desc']);
                 var low = obj.lowestParticipation =  _.orderBy(obj.sport, 'totalStrength', ['asc']);
+                var highIndex=0;
+                var lowIndex=0;
+                for(var i=0;i<high.length;i++){
+                    if(high[i] && high[i+1]){
+                        console.log("high[i]",high[i]);
+                        console.log("high[i++]",high[i+1]);                        
+                        if( (high[i].totalStrength!=high[i+1].totalStrength)){
+                            highIndex=i;
+                            console.log("highIndex", highIndex);
+                            break
+                        }
+                    }else{
+                        highIndex=i;
+                    }
+                }
+
+                for(var i=0;i<low.length;i++){
+                    if(low[i] && low[i+1]){
+                        if( (low[i].totalStrength!=low[i+1].totalStrength)){
+                            lowIndex=i;
+                            console.log("lowIndex", lowIndex);
+                            break
+                        }
+                    }else{
+                        lowIndex=i;
+                    }
+                }
+
+                obj.highestParticipation = obj.highestParticipation.splice(0,highIndex+1);
+                obj.lowestParticipation = obj.lowestParticipation.splice(0,lowIndex+1);
+             
                 callback(obj);
             })
 
