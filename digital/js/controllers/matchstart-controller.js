@@ -173,6 +173,10 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
                 _.each($scope.matchDetails.players, function (n, key) {
                   $scope.formData.players[key] = {
                     "player": n._id,
+                    "firstName": n.firstName,
+                    "surname": n.surname,
+                    "fullName": n.firstName + " " + n.surname,
+                    "sfaId": n.sfaId,
                     "noShow": false,
                     "walkover": false,
                     "sets": [{
