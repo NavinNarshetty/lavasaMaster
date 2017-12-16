@@ -4915,7 +4915,7 @@ var model = {
                                 callback(null, complete);
                             });
                         } else if (n.resultFootball) {
-                            var result = n.resultFootball;
+                            var result = n.resultHandball;
                             Match.getResultArray(n, finalData, result, function (err, complete) {
                                 callback(null, complete);
                             });
@@ -5050,7 +5050,7 @@ var model = {
         var team2 = [];
         var team2Sub = [];
         final.matchId = n.matchId;
-        if (result.teams[0] && result.teams[1]) {
+        if (result.teams.length > 1) {
             final.teamId1 = result.teams[0].teamId;
             final.teamId2 = result.teams[1].teamId;
             console.log("team0", result.teams[0].players.length);
