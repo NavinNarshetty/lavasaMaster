@@ -21,14 +21,14 @@
                         </div>
                         <div class="report-cuprank">
                             <span>School Rank</span>
-                            <span class="report-ranktext d-teko-semibold"><span class="report-ranktext-big">99</span> <span class="report-ranktext-small">/<span>100</span></span>
+                            <span class="report-ranktext d-teko-semibold"><span class="report-ranktext-big">{{schoolData.schoolRank}}</span> <span class="report-ranktext-small">/<span>{{schoolData.totalSchoolCount}}</span></span>
                             </span>
                         </div>
                     </div>
                 </div>
                 <div class="">
-                    <div class="reportcard-school d-fjalla-one">{{schoolData.schoolName}} </div>
-                    <div class="reportcard-sfaid">Sfa ID: {{schoolData.sfaId}}</div>
+                    <div class="reportcard-school d-fjalla-one">{{schoolData.contingent.schoolName}} </div>
+                    <div class="reportcard-sfaid">Sfa ID: {{schoolData.contingent.sfaId}}</div>
                 </div>
             </div>
             <div class="report-greenbar">
@@ -48,7 +48,7 @@
                         <div class="report-contingenttotal">
                             <div class="">
                                 <div class="report-contingentblock">
-                                    <div class="report-contingentcount">{{schoolData.totalStrength}}</div>
+                                    <div class="report-contingentcount">{{schoolData.contingent.totalStrength}}</div>
                                     Total Athletes
                                 </div>
                                 <div class="report-contingentblock">
@@ -56,23 +56,23 @@
                                         <div class="report-gendericon">
                                             <img src="img/medal-icon/male-small.png" alt="Male Athletes | SFA Championship" class="img-responsive">
                                         </div>
-                                        <span class="report-contingentcount report-countmale">{{schoolData.maleCount}}</span>
+                                        <span class="report-contingentcount report-countmale">{{schoolData.contingent.maleCount}}</span>
                                     </div>
                                     <div class="reportcontingent-gender">
                                         <div class="report-gendericon">
                                             <img src="img/medal-icon/female-small.png" alt="Female Athletes | SFA Championship" class="img-responsive">
                                         </div>
-                                        <span class="report-contingentcount report-countfemale">{{schoolData.femaleCount}}</span>
+                                        <span class="report-contingentcount report-countfemale">{{schoolData.contingent.femaleCount}}</span>
                                     </div>
                                     <span class="display-block">
-                    Gender Ratio: <span>{{schoolData.genderRatio}}</span>
+                    Gender Ratio: <span>{{schoolData.contingent.genderRatio}}</span>
                                     </span>
                                 </div>
                             </div>
                         </div>
                         <div class="reportcontingent-sportlist">
                             <ul class="list-unstyled">
-                                <li ng-repeat="list in schoolData.sport track by $index">
+                                <li ng-repeat="list in schoolData.contingent.sport|orderBy:'sportName' track by $index">
                                     <div class="clearfix">
                                       <div class="text-uppercase pull-left">
                                           {{list.sportName}} - {{list.totalStrength}}
@@ -126,7 +126,7 @@
                 </div>
                 <div class="col-md-7 col-sm-7 col-xs-12">
                     <!-- PERFORMANCE SUMMARY -->
-                    <div class="report-content report-performaneholder ">
+                    <div class="report-content report-performaneholder hide">
                         <div class="report-titles">Performance Summary</div>
                         <div class="reportperformance-content">
                             <!-- CUP AND RANK -->
@@ -193,7 +193,7 @@
                     </div>
                     <!-- PERFORMANCE SUMMARY END -->
                     <!-- MEDALS TALLY -->
-                    <div class="report-content report-medalsummaryholder hide">
+                    <div class="report-content report-medalsummaryholder ">
                         <div class="report-titles">Medal Tally</div>
                         <div class="report-medaltableholder table-responsive ">
                             <table class="table">
@@ -202,7 +202,7 @@
                                         <td>
                                             <div class="text-uppercase">
                                                 Total Medals
-                                                <span class="report-ranktext report-medalcount d-teko-semibold"><span class="report-ranktext-big">99</span> <span class="report-ranktext-small">/<span>100</span></span>
+                                                <span class="report-ranktext report-medalcount d-teko-semibold"><span class="report-ranktext-big">{{schoolData.medalsTally.totalCount}}</span> <span class="report-ranktext-small">/<span>100</span></span>
                                                 </span>
                                             </div>
                                         </td>
@@ -212,10 +212,10 @@
                                                     <img src="img/medal-icon/gold-blue.png" alt="Gold Medal | SFA Championship" title="Gold Medal | SFA Championship" class="img-responsive">
                                                 </div>
                                                 <div class="report-rankholder">
-                                                    <span class="report-ranktext-big d-teko-semibold">08</span>
+                                                    <span class="report-ranktext-big d-teko-semibold">{{schoolData.medalsTally.medal.gold.count}}</span>
                                                     <span class="inline-block">
                             <span>Out of</span>
-                                                    <span class="display-block d-teko-semibold">1568</span>
+                                                    <span class="display-block d-teko-semibold">{{schoolData.medalsTally.medal.gold.totalGold}}</span>
                                                     </span>
                                                 </div>
                                             </div>
@@ -226,10 +226,10 @@
                                                     <img src="img/medal-icon/silver-blue.png" alt="Silver Medal | SFA Championship" title="Silver Medal | SFA Championship" class="img-responsive">
                                                 </div>
                                                 <div class="report-rankholder">
-                                                    <span class="report-ranktext-big d-teko-semibold">08</span>
+                                                    <span class="report-ranktext-big d-teko-semibold">{{schoolData.medalsTally.medal.silver.count}}</span>
                                                     <span class="inline-block">
                             <span>Out of</span>
-                                                    <span class="display-block d-teko-semibold">1568</span>
+                                                    <span class="display-block d-teko-semibold">{{schoolData.medalsTally.medal.silver.totalSilver}}</span>
                                                     </span>
                                                 </div>
                                             </div>
@@ -240,10 +240,10 @@
                                                     <img src="img/medal-icon/bronze-blue.png" alt="Bronze Medal | SFA Championship" title="Bronze Medal | SFA Championship" class="img-responsive">
                                                 </div>
                                                 <div class="report-rankholder">
-                                                    <span class="report-ranktext-big d-teko-semibold">08</span>
+                                                    <span class="report-ranktext-big d-teko-semibold">{{schoolData.medalsTally.medal.bronze.count}}</span>
                                                     <span class="inline-block">
                             <span>Out of</span>
-                                                    <span class="display-block d-teko-semibold">1568</span>
+                                                    <span class="display-block d-teko-semibold">{{schoolData.medalsTally.medal.bronze.totalBronze}}</span>
                                                     </span>
                                                 </div>
                                             </div>
@@ -256,23 +256,31 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="list in lists track by $index">
+                                    <tr ng-repeat="medalSport in schoolData.medalsTally.sportData|orderBy:'name' track by $index">
                                         <td>
                                             <div class="report-medal-td reporttable-sportdetails">
-                                                <span class="reporttable-sportcount">08</span> <span>Table Tennis</span>
+                                                <span class="reporttable-sportcount">{{medalSport.totalCount}}</span> <span>{{medalSport.name}}</span>
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="report-medal-td">333</div>
+                                            <div class="report-medal-td">
+                                              <span ng-if="medalSport.medals.gold">{{medalSport.medals.gold.count}}</span>
+                                              <span ng-if="!medalSport.medals.gold">0</span></div>
                                         </td>
                                         <td>
-                                            <div class="report-medal-td">333</div>
+                                            <div class="report-medal-td">
+                                              <span ng-if="medalSport.medals.silver">{{medalSport.medals.silver.count}}</span>
+                                              <span ng-if="!medalSport.medals.silver-box">0</span></div>
+                                            </div>
                                         </td>
                                         <td>
-                                            <div class="report-medal-td">333</div>
+                                            <div class="report-medal-td">
+                                              <span ng-if="medalSport.medals.bronze">{{medalSport.medals.bronze.count}}</span>
+                                              <span ng-if="!medalSport.medals.bronze">0</span></div>
+                                            </div>
                                         </td>
                                         <td>
-                                            <div class="report-medal-td"><span>333</span> / <span>500</span></div>
+                                            <div class="report-medal-td"><span>{{medalSport.schoolRank}}</span> / <span>{{medalSport.totalSchoolCount}}</span></div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -285,17 +293,17 @@
                         <ul class="list-unstyled">
                           <li>
                             <div class="">
-                              No Show: {{schoolData.noShowPercent}}%
+                              No Show: {{schoolData.contingent.noShowPercent}}%
                             </div>
                           </li>
                           <li>
                             <div class="">
-                              Highest Participation: <span ng-repeat="list in lists| limitTo:4 track by $index">Table Tennis <span>,</span></span>
+                              Highest Participation: <span class="participation-name" ng-repeat="sportHigh in schoolData.contingent.highestParticipation track by $index">{{sportHigh.sportName}} <span class="participation-comma">,</span></span>
                             </div>
                           </li>
                           <li>
                             <div class="">
-                              Least Participation: <span ng-repeat="list in lists| limitTo:4 track by $index">Table Tennis <span>,</span></span>
+                              Least Participation: <span class="participation-name" ng-repeat="sportLow in schoolData.contingent.lowestParticipation track by $index">{{sportLow.sportName}} <span class="participation-comma">,</span></span>
                             </div>
                           </li>
                         </ul>
@@ -307,11 +315,11 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="report-content">
-                  <span class="text-uppercase color-sportprimary d-opensans-semibold">Sports Participated:</span> <span><span>{{schoolData.sportParticipationCount}}</span> / <span>{{schoolData.totalSportCount}}</span></span>
+                  <span class="text-uppercase color-sportprimary d-opensans-semibold">Sports Participated:</span> <span><span>{{schoolData.contingent.sportParticipationCount}}</span> / <span>{{schoolData.contingent.totalSportCount}}</span></span>
                 </div>
                 <div class="report-content">
                   <p class="text-uppercase m-clear color-sportprimary d-opensans-semibold">Did Not Participate In:</p>
-                  <div class=""><span ng-repeat="list in lists| limitTo:4 track by $index">Table Tennis <span>,</span></span></div>
+                  <div class=""><span class="participation-name" ng-repeat="sportNo in schoolData.contingent.nonParticipatedSport track by $index">{{sportNo}} <span class="participation-comma">,</span></span></div>
                 </div>
               </div>
             </div>

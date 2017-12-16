@@ -1896,8 +1896,17 @@ $tickerDuration: 60s;
   text-align: left;
 }
 .reporttable-sportcount{
+  min-width: 35px;
   padding: 0px 5px;
+  display: inline-block;
   background-color: $brand-green;
+  text-align: center;
+}
+.report-contingentholder{
+  padding: 0;
+}
+.report-medalsummaryholder{
+  padding: 0;
 }
 .report-contingenttotal{
   padding: 10px;
@@ -1992,7 +2001,7 @@ $tickerDuration: 60s;
 
   .progress{
     border-radius: 0px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     background-color: transparent;
   }
   .reportgender-stats{
@@ -2012,7 +2021,7 @@ $tickerDuration: 60s;
 .report-noshowcontingent {
   min-width: 35px;
   padding: 0 5px;
-  margin: 0 10px 15px;
+  margin: 0 0px 10px 5px;
   background: #ccc;
   display: inline-block;
   text-align: center;
@@ -2026,10 +2035,15 @@ $tickerDuration: 60s;
     margin: 0;
   }
 }
+.reportcontingent-key{
+  margin-bottom: 5px;
+  >span{
+    vertical-align: middle;
+  }
+}
 .report-keybox {
     width: 15px;
     height: 15px;
-    margin-bottom: 10px;
     display: inline-block;
     background: #ccc;
     vertical-align: middle;
@@ -2054,7 +2068,11 @@ $tickerDuration: 60s;
   margin: 0 5px;
   border: 1px solid #000;
   display: inline-block;
+  text-transform: uppercase;
   vertical-align: middle;
+  ul{
+    margin: 0;
+  }
 }
 .report-schoolheader {
   padding: 15px;
@@ -2109,6 +2127,15 @@ $tickerDuration: 60s;
   }
   .table-striped > tbody > tr:nth-of-type(even){
     background-color: transparent;
+  }
+}
+.participation-name{
+  margin-right: 5px;
+  &:last-child{
+    .participation-comma{
+      margin-right: 0;
+      display: none;
+    }
   }
 }
 // REPORT CARD PAGE END
