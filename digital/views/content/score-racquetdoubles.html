@@ -115,7 +115,7 @@
                         <img ng-src="{{match.teams[$index].photograph|serverimage}}" alt="{{match.teams[$index].schoolName}}" class="img-responsive">
                     </div> -->
                     <div class="scorematch-teamschool">
-                      <p>{{team.schoolName}}</p>
+                      <p>{{team.teamId}} - {{team.schoolName}}</p>
                     </div>
                     <div class="relate setpoint-element" ng-repeat="set in team.sets track by $index">
                         <label for="player1score" class="text-uppercase">SET <span>{{$index+1}}</span></label>
