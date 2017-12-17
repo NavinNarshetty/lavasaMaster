@@ -105,7 +105,7 @@
                             </div>
                             <div class="btn-common mt25">
                                 <!-- <button type="button" name="button" class="text-up btn-orange padd-btn" ui-sref="student-bio({'id':studentid})">athlete bio</button> -->
-                                <button type="button" name="button" class="text-up btn-orange padd-btn ml10 hide" ng-if="certificate" ng-click="getCertificate(studentid);">Certificate</button>
+                                <button type="button" name="button" class="text-up btn-orange padd-btn ml10" ng-if="certificate" ng-click="getCertificate(studentid);">Certificate</button>
                                 <button ng-if="specialAward" type="button" name="button" class="text-up btn-orange padd-btn ml10" ng-click="getSpecialAward(studentid)">Special Award</button>
                             </div>
                         </div>
@@ -140,8 +140,8 @@
     <div class="container mt40">
         <div class="row">
             <div class="text-center">
-                <!-- <h4 class="hide text-up color-blue display-inline">Year</h4> -->
-                <h4 class="text-up color-blue display-inline">Year</h4>
+                <h4 class="hide text-up color-blue display-inline">Year</h4>
+                <!-- <h4 class="text-up color-blue display-inline">Year</h4> -->
                 <!-- <div class="display-inline hide"> -->
                 <div class="display-inline">
                     <div class="sfa-select">
@@ -158,10 +158,10 @@
                 <div class="sf-relative mt15">
                     <div class="sport-icon-list sf-list blue-cat">
                         <ul>
-                            <hovericon game="game" ng-repeat="game in sport | orderBy:'sportslist.sportsListSubCategory.name'">
-                            </hovericon>
-                            <!-- <hovericon game="game" ng-repeat="game in sport | orderBy:'sportslist.sportsListSubCategory.name'" ng-click="sportsSelected(game,$index);">
+                            <!-- <hovericon game="game" ng-repeat="game in sport | orderBy:'sportslist.sportsListSubCategory.name'">
                             </hovericon> -->
+                            <hovericon game="game" ng-repeat="game in sport | orderBy:'sportslist.sportsListSubCategory.name'" ng-click="sportsSelected(game,$index);">
+                            </hovericon>
                         </ul>
                     </div>
                 </div>
