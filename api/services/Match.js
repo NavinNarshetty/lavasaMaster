@@ -11145,7 +11145,7 @@ var model = {
                                                     result.players.push(player);
                                                 } else {
                                                     player.laneNo = n.success["LANE NUMBER"];
-                                                    result.teams.push(player);
+                                                    result.players.push(player);
                                                 }
                                                 paramData.sport = n.success.SPORT;
                                                 paramData.heatNo = n.success["HEAT NUMBER"];
@@ -12293,7 +12293,12 @@ var model = {
                                                 paramData.opponentsTeam.push(singleData["TEAM NAME 2"]);
                                             }
                                             paramData.sport = singleData.SPORT;
-                                            paramData.scheduleDate = singleData.DATE;
+                                            var storeDate = singleData.DATE;
+                                            var splitDate = storeDate.indexOf('/');
+                                            console.log('++++++++++++++++++++++++++++++',splitDate);
+                                            if(splitDate !== -1){
+                                                paramData.scheduleDate = singleData.DATE;
+                                            }
                                             paramData.scheduleTime = singleData.TIME;
                                             paramData.excelType = singleData["STAGE"];
                                             paramData.video = singleData["VIDEO"];
@@ -12527,7 +12532,7 @@ var model = {
                                                         callback(null, singleData);
                                                     }
                                                 });
-                                            callback(null, singleData);
+                                            // callback(null, singleData);
                                         }
                                     }
                                 ],
@@ -15312,7 +15317,7 @@ var model = {
                                                 player1.score = singleData["P2 SCORE"];
                                                 player1.rank = singleData["P2 RANK"];
                                                 resultData.players.push(player);
-                                                resultData.teams.push(player1);
+                                                resultData.players.push(player1);
 
                                             }
                                         }

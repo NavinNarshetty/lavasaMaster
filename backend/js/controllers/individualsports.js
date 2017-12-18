@@ -423,15 +423,21 @@ myApp.controller('FormatTableCtrl', function ($scope, TemplateService, Navigatio
 
             resultKnockout.matchId = data.matchId;
             resultKnockout.round = data.round;
-            if (data.opponentsSingle[0]) {
-              if (data.opponentsSingle[0].athleteId.middleName === undefined) {
+            if (data.opponentsSingle.length > 1) {
+              if (data.opponentsSingle[0].athleteId.middleName === undefined || data.opponentsSingle[0].athleteId.middleName === undefined) {
                 resultKnockout.player2 = data.opponentsSingle[1].athleteId.firstName + ' ' + data.opponentsSingle[1].athleteId.surname;
                 resultKnockout.player1 = data.opponentsSingle[0].athleteId.firstName + ' ' + data.opponentsSingle[0].athleteId.surname;
               } else {
+                resultKnockout.player1 = data.opponentsSingle[0].athleteId.firstName + ' ' + data.opponentsSingle[0].athleteId.middleName + ' ' + data.opponentsSingle[0].athleteId.surname;
                 resultKnockout.player2 = data.opponentsSingle[1].athleteId.firstName + ' ' + data.opponentsSingle[1].athleteId.middleName + ' ' + data.opponentsSingle[1].athleteId.surname;
+              }
+            } else if (data.opponentsSingle.length > 0) {
+              if (data.opponentsSingle[0].athleteId.middleName === undefined) {
+                resultKnockout.player1 = data.opponentsSingle[0].athleteId.firstName + ' ' + data.opponentsSingle[0].athleteId.surname;
+              } else {
                 resultKnockout.player1 = data.opponentsSingle[0].athleteId.firstName + ' ' + data.opponentsSingle[0].athleteId.middleName + ' ' + data.opponentsSingle[0].athleteId.surname;
               }
-              // resultKnockout.player1 = data.opponentsSingle[0].athleteId.fullname;
+
             } else {
               resultKnockout.player2 = "-";
               resultKnockout.player1 = "-";

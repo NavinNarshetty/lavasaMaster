@@ -54,7 +54,7 @@ myApp.controller('QfKnockoutCtrl', function ($scope, knockoutService, TemplateSe
     round: "final",
     score: "1-5",
     qscore: "11"
-  }, ];
+  },];
 
   // END TABLE JSON
 
@@ -87,7 +87,13 @@ myApp.controller('QfKnockoutCtrl', function ($scope, knockoutService, TemplateSe
 
                     }
                     _.each(key.opponentsSingle, function (obj) {
-                      obj.athleteId.fullName = obj.athleteId.firstName + ' ' + obj.athleteId.surname;
+                      console.log("obj", obj);
+                      if (obj.athleteId.middleName) {
+                        obj.athleteId.fullName = obj.athleteId.sfaId + " - " + obj.athleteId.firstName + ' ' + obj.athleteId.middleName + ' ' + obj.athleteId.surname;
+                      } else {
+                        obj.athleteId.fullName = obj.athleteId.sfaId + " - " + obj.athleteId.firstName + ' ' + obj.athleteId.surname;
+                      }
+
                     });
                   });
 
@@ -111,10 +117,27 @@ myApp.controller('QfKnockoutCtrl', function ($scope, knockoutService, TemplateSe
 
                     }
                     _.each(key.opponentsSingle, function (obj) {
-                      obj.athleteId.fullName = obj.athleteId.firstName + ' ' + obj.athleteId.surname;
+                      if (obj.athleteId.middleName) {
+                        obj.athleteId.fullName = obj.athleteId.sfaId + ' - ' + obj.athleteId.firstName + ' ' + obj.athleteId.middleName + ' ' + obj.athleteId.surname;
+                      } else {
+                        obj.athleteId.fullName = obj.athleteId.sfaId + ' - ' + obj.athleteId.firstName + ' ' + obj.athleteId.surname;
+                      }
                     });
                   });
                 });
+              }
+              console.log("$scope.knockout", $scope.knockout);
+              if ($scope.knockout.length > 0) {
+                $scope.sportsListSubCategoryName = $scope.knockout[0].sport.sportslist.sportsListSubCategory.name;
+                $scope.sportsListSubCategoryGender = $scope.knockout[0].sport.gender;
+                $scope.sportsListSubCategoryAgeGroup = $scope.knockout[0].sport.ageGroup.name;
+                $scope.sportsListSubCategorySportlistName = $scope.knockout[0].sport.sportslist.name;
+
+              } else if ($scope.qualifying.length > 0) {
+                $scope.sportsListSubCategoryGender = $scope.qualifying[0].sport.gender;
+                $scope.sportsListSubCategoryAgeGroup = $scope.qualifying[0].sport.ageGroup.name;
+                $scope.sportsListSubCategoryName = $scope.qualifying[0].sport.sportslist.sportsListSubCategory.name;
+                $scope.sportsListSubCategorySportlistName = qualifying[0].sport.sportslist.name;
               }
 
 
