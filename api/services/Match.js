@@ -7926,14 +7926,14 @@ var model = {
                     console.log('+++++++++++++++++++',mainData.opponentsSingle.length);
                     console.log('...................',mainData.opponentsSingle[0]);
                     console.log('+++++++++++++++++++',mainData.opponentsSingle[1]);
-                    if (mainData.resultsCombat.winner.opponentsSingle === mainData.opponentsSingle[1]._id.toString()) {
-                        obj["WINNER NAME"] = obj["SCREEN NAME ATHLETE 2"];
-                        obj["WINNER SFA ID"] = obj["SFAID 2"];
-                        obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 2"];
-                    } else {
+                    if (mainData.resultsCombat.winner.opponentsSingle === mainData.opponentsSingle[0]._id.toString()) {
                         obj["WINNER NAME"] = obj["SCREEN NAME ATHLETE 1"];
                         obj["WINNER SFA ID"] = obj["SFAID 1"];
                         obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 1"];
+                    } else {
+                        obj["WINNER NAME"] = obj["SCREEN NAME ATHLETE 2"];
+                        obj["WINNER SFA ID"] = obj["SFAID 2"];
+                        obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 2"];
                     }
                 } else if (mainData.resultsRacquet) {
                     for (var i = 0; i < mainData.resultsRacquet.players[1].sets.length; i++) {
