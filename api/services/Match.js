@@ -11145,7 +11145,7 @@ var model = {
                                                     result.players.push(player);
                                                 } else {
                                                     player.laneNo = n.success["LANE NUMBER"];
-                                                    result.teams.push(player);
+                                                    result.players.push(player);
                                                 }
                                                 paramData.sport = n.success.SPORT;
                                                 paramData.heatNo = n.success["HEAT NUMBER"];
@@ -15317,7 +15317,7 @@ var model = {
                                                 player1.score = singleData["P2 SCORE"];
                                                 player1.rank = singleData["P2 RANK"];
                                                 resultData.players.push(player);
-                                                resultData.teams.push(player1);
+                                                resultData.players.push(player1);
 
                                             }
                                         }
