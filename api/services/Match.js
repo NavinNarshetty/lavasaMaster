@@ -3894,7 +3894,11 @@ var model = {
                 var dateTime = moment(mainData.scheduleDate).format('DD-MM-YYYY');
                 obj.DATE = dateTime;
                 obj.TIME = mainData.scheduleTime;
+                console.log('mainData',mainData);
+                console.log('mainData opponents',mainData.opponentsSingle);
+                console.log('mainData opponents length',mainData.opponentsSingle.length);
                 if (mainData.opponentsSingle.length > 0) {
+                    console.log('mainData opponents 0',mainData.opponentsSingle[0]);
                     obj["SFAID 1"] = mainData.opponentsSingle[0].athleteId.sfaId;
                     if (mainData.opponentsSingle[0].athleteId.middleName) {
                         obj["PARTICIPANT 1"] = mainData.opponentsSingle[0].athleteId.firstName + " " + mainData.opponentsSingle[0].athleteId.middleName + " " + mainData.opponentsSingle[0].athleteId.surname;
@@ -4005,8 +4009,9 @@ var model = {
                 }
 
                 if (mainData.opponentsSingle.length > 1) {
+                    console.log('mainData opponents 1',mainData.opponentsSingle[1]);
                     obj["SFAID 2"] = mainData.opponentsSingle[1].athleteId.sfaId;
-
+                    
                     if (mainData.opponentsSingle[1].athleteId.middleName) {
                         obj["PARTICIPANT 2"] = mainData.opponentsSingle[1].athleteId.firstName + " " + mainData.opponentsSingle[1].athleteId.middleName + " " + mainData.opponentsSingle[1].athleteId.surname;
                     } else {
@@ -4018,6 +4023,10 @@ var model = {
                         obj["SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.school.name;
                     }
                     if (mainData.resultsCombat) {
+                        console.log('mainData resultsCombat',mainData.resultsCombat.players);
+                        console.log('mainData resultsCombat length',mainData.resultsCombat.players.length);
+                        console.log('mainData resultsCombat 0',mainData.resultsCombat.players[0]);
+                        console.log('mainData resultsCombat 1',mainData.resultsCombat.players[1]);
 
                         if (mainData.opponentsSingle[1].athleteId._id === mainData.resultsCombat.winner.player) {
                             if (mainData.resultsCombat.players[0].walkover == true) {
@@ -4042,12 +4051,12 @@ var model = {
                         var sNo = 1;
                         for (i = 0; i < mainData.resultsCombat.players[1].sets.length; i++) {
                             if (i == 0) {
-                                obj["SCORE 1"] = "Set" + sNo + "-" + mainData.resultsCombat.players[1].sets[i].point;
-                                obj["DATA POINTS 1"] = "Set" + sNo + "{ point:" + mainData.resultsCombat.players[1].sets[i].point + "ace:" + mainData.resultsCombat.players[1].sets[i].ace + "winner:" + mainData.resultsCombat.players[1].sets[i].winner + "unforcedError:" + mainData.resultsCombat.players[1].sets[i].unforcedError + "serviceError:" + mainData.resultsCombat.players[1].sets[i].serviceError + "doubleFaults:" + mainData.resultsCombat.players[1].sets[i].doubleFaults + "}";
+                                obj["SCORE 2"] = "Set" + sNo + "-" + mainData.resultsCombat.players[1].sets[i].point;
+                                obj["DATA POINTS 2"] = "Set" + sNo + "{ point:" + mainData.resultsCombat.players[1].sets[i].point + "ace:" + mainData.resultsCombat.players[1].sets[i].ace + "winner:" + mainData.resultsCombat.players[1].sets[i].winner + "unforcedError:" + mainData.resultsCombat.players[1].sets[i].unforcedError + "serviceError:" + mainData.resultsCombat.players[1].sets[i].serviceError + "doubleFaults:" + mainData.resultsCombat.players[1].sets[i].doubleFaults + "}";
                                 sNo++;
                             } else {
-                                obj["SCORE 1"] = obj["SCORE 1"] + "," + "Set" + sNo + "-" + mainData.resultsCombat.players[1].sets[i].point;
-                                obj["DATA POINTS 1"] = obj["DATA POINTS 1"] + "," + "Set" + sNo + "{ point:" + mainData.resultsCombat.players[1].sets[i].point + "ace:" + mainData.resultsCombat.players[1].sets[i].ace + "winner:" + mainData.resultsCombat.players[1].sets[i].winner + "unforcedError:" + mainData.resultsCombat.players[1].sets[i].unforcedError + "serviceError:" + mainData.resultsCombat.players[1].sets[i].serviceError + "doubleFaults:" + mainData.resultsCombat.players[1].sets[i].doubleFaults + "}";
+                                obj["SCORE 2"] = obj["SCORE 1"] + "," + "Set" + sNo + "-" + mainData.resultsCombat.players[1].sets[i].point;
+                                obj["DATA POINTS 2"] = obj["DATA POINTS 1"] + "," + "Set" + sNo + "{ point:" + mainData.resultsCombat.players[1].sets[i].point + "ace:" + mainData.resultsCombat.players[1].sets[i].ace + "winner:" + mainData.resultsCombat.players[1].sets[i].winner + "unforcedError:" + mainData.resultsCombat.players[1].sets[i].unforcedError + "serviceError:" + mainData.resultsCombat.players[1].sets[i].serviceError + "doubleFaults:" + mainData.resultsCombat.players[1].sets[i].doubleFaults + "}";
                                 sNo++;
                             }
                         }
@@ -4106,6 +4115,7 @@ var model = {
                     obj["VIDEO TYPE"] = "";
                     obj["VIDEO"] = "";
                 }
+                console.log(obj);
                 callback(null, obj);
             },
             function (err, singleData) {
