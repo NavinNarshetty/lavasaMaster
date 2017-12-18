@@ -87,7 +87,13 @@ myApp.controller('QfKnockoutCtrl', function ($scope, knockoutService, TemplateSe
 
                     }
                     _.each(key.opponentsSingle, function (obj) {
-                      obj.athleteId.fullName = obj.athleteId.firstName + ' ' + obj.athleteId.surname;
+                      console.log("obj", obj);
+                      if (obj.athleteId.middleName) {
+                        obj.athleteId.fullName = obj.athleteId.sfaId + " - " + obj.athleteId.firstName + ' ' + obj.athleteId.middleName + ' ' + obj.athleteId.surname;
+                      } else {
+                        obj.athleteId.fullName = obj.athleteId.sfaId + " - " + obj.athleteId.firstName + ' ' + obj.athleteId.surname;
+                      }
+
                     });
                   });
 
@@ -111,7 +117,11 @@ myApp.controller('QfKnockoutCtrl', function ($scope, knockoutService, TemplateSe
 
                     }
                     _.each(key.opponentsSingle, function (obj) {
-                      obj.athleteId.fullName = obj.athleteId.firstName + ' ' + obj.athleteId.surname;
+                      if (obj.athleteId.middleName) {
+                        obj.athleteId.fullName = obj.athleteId.sfaId + ' - ' + obj.athleteId.firstName + ' ' + obj.athleteId.middleName + ' ' + obj.athleteId.surname;
+                      } else {
+                        obj.athleteId.fullName = obj.athleteId.sfaId + ' - ' + obj.athleteId.firstName + ' ' + obj.athleteId.surname;
+                      }
                     });
                   });
                 });
