@@ -4028,7 +4028,8 @@ var model = {
                         console.log('mainData resultsCombat 0',mainData.resultsCombat.players[0]);
                         console.log('mainData resultsCombat 1',mainData.resultsCombat.players[1]);
 
-                        if (mainData.opponentsSingle[1].athleteId._id === mainData.resultsCombat.winner.player) {
+                        // if (mainData.opponentsSingle[1].athleteId._id === mainData.resultsCombat.winner.player) {
+                            if (mainData.opponentsSingle[1].athleteId._id.equals(mainData.resultsCombat.winner.player)) {
                             if (mainData.resultsCombat.players[1].walkover == true) {
                                 obj["RESULT 2"] = "walkover";
                             } else {
