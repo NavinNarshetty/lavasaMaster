@@ -4926,12 +4926,12 @@ var model = {
                                 callback(null, complete);
                             });
                         } else if (n.resultFootball) {
-                            var result = n.resultHandball;
+                            var result = n.resultFootball;
                             Match.getResultArray(n, finalData, result, function (err, complete) {
                                 callback(null, complete);
                             });
                         } else if (n.resultHandball) {
-                            var result = n.resultFootball;
+                            var result = n.resultHandball;
                             Match.getResultArray(n, finalData, result, function (err, complete) {
                                 callback(null, complete);
                             });
