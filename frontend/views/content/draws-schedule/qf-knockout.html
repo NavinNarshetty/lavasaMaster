@@ -2,9 +2,9 @@
   <div class="container">
     <!--SPORT NAME-->
     <div class="qf-knockout-sportname text-center">
-      <h3 class="d-fjalla-one text-uppercase sport-type-head"> <span>{{qualifying[0].match[0].sport.sportslist.sportsListSubCategory.name}}</span> |
-        <span>{{qualifying[0].match[0].sport.gender}}</span> |
-        <span>{{qualifying[0].match[0].sport.ageGroup.name}}</span></h3>
+      <h3 class="d-fjalla-one text-uppercase sport-type-head"> <span>{{sportsListSubCategoryName}}</span> |
+        <span>{{sportsListSubCategoryGender}}</span> |
+        <span>{{sportsListSubCategoryAgeGroup}}</span></h3>
       <div class="draws-downloadpdf draws-a" ng-if="showPdf">
         <a href="{{trustedURL}}" target="_new">Download the schedule in pdf format</a>
       </div>
@@ -13,14 +13,14 @@
 
     <!--SPORT EVENT NAME-->
     <div class="qf-knockout-sporteventname text-center">
-      <h3 class="d-fjalla-one text-uppercase sport-color-primary m-clear">{{qualifying[0].match[0].sport.sportslist.name}}</h3>
+      <h3 class="d-fjalla-one text-uppercase sport-color-primary m-clear">{{sportsListSubCategorySportlistName}}</h3>
     </div>
     <!--SPORT END EVENT NAME-->
 
     <!--OUT DIV HOLDER-->
     <div class="qf-knockout-holder">
       <!--KNOCKOUT HEAD-->
-      <div class="qf-knockout-knockouthead">
+      <div class="qf-knockout-knockouthead" ng-if="knockout.length>0">
         <h3 class="d-fjalla-one text-uppercase sport-color-primary">knockout</h3>
       </div>
       <!--END KNOCKOUT HEAD-->
@@ -65,19 +65,26 @@
               </td>
               <td>
                 <div class="text-left">
+                  <p class="m-clear text-capitalize" title="TBD" ng-if="!data.opponentsSingle[0].athleteId && !data.opponentsSingle[1].athleteId">TBD</p>
+                  <p class="m-clear text-capitalize" ng-if="!data.opponentsSingle[0].athleteId && data.opponentsSingle[1].athleteId">-</p>
                   <p class="m-clear text-capitalize" title="{{data.opponentsSingle[0].athleteId.fullName}}">{{data.opponentsSingle[0].athleteId.fullName}}</p>
                   <p class="m-clear text-capitalize" title="{{data.opponentsSingle[0].athleteId.school.name}}">{{data.opponentsSingle[0].athleteId.school.name}}</p>
                 </div>
               </td>
               <td>
                 <div class="text-left">
+                  <p class="m-clear text-capitalize" title="" ng-if="data.opponentsSingle[0].athleteId && !data.opponentsSingle[1].athleteId">-</p>
+                  <p class="m-clear text-capitalize" title="TBD" ng-if="!data.opponentsSingle[0].athleteId && !data.opponentsSingle[1].athleteId">TBD</p>
                   <p class="m-clear text-capitalize" title="{{data.opponentsSingle[1].athleteId.fullName}}">{{data.opponentsSingle[1].athleteId.fullName}}</p>
                   <p class="m-clear text-capitalize" title="{{data.opponentsSingle[1].athleteId.school.name}}">{{data.opponentsSingle[1].athleteId.school.name}}</p>
                 </div>
               </td>
               <td>
-                <div>
+                <div ng-if="data.resultKnockout.finalScore">
                   {{data.resultKnockout.finalScore}}
+                </div>
+                <div ng-if="!data.resultKnockout.finalScore">
+                  -
                 </div>
               </td>
               <td hidden>
@@ -100,7 +107,7 @@
       </div>
       <!--END KNOCKOUT TABLE-->
       <!--QUALIFYING HEAD-->
-      <div class="qf-knockout-qualifyinghead" id='qfknockout'>
+      <div class="qf-knockout-qualifyinghead" id='qfknockout' ng-if="qualifying.length>0">
         <h3 class="d-fjalla-one text-uppercase sport-color-primary m-clear">Qualifying</h3>
         <p class="sport-color-primary" ng-if="qualifying[0].match[0].scheduleDate"><span>{{qualifying[0].match[0].scheduleDate |englishNumeralDate}}</span>
           <span> |</span>
