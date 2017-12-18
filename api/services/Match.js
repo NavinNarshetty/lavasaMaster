@@ -4029,7 +4029,7 @@ var model = {
                         console.log('mainData resultsCombat 1',mainData.resultsCombat.players[1]);
 
                         if (mainData.opponentsSingle[1].athleteId._id === mainData.resultsCombat.winner.player) {
-                            if (mainData.resultsCombat.players[0].walkover == true) {
+                            if (mainData.resultsCombat.players[1].walkover == true) {
                                 obj["RESULT 2"] = "walkover";
                             } else {
                                 obj["RESULT 2"] = "Won";
