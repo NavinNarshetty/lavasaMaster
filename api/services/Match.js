@@ -12295,7 +12295,7 @@ var model = {
                                             paramData.sport = singleData.SPORT;
                                             var storeDate = singleData.DATE;
                                             var splitDate = storeDate.indexOf('/');
-                                            console.log(splitDate);
+                                            console.log('++++++++++++++++++++++++++++++',splitDate);
                                             if(splitDate !== -1){
                                                 paramData.scheduleDate = singleData.DATE;
                                             }
