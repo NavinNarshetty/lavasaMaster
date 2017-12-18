@@ -12293,7 +12293,12 @@ var model = {
                                                 paramData.opponentsTeam.push(singleData["TEAM NAME 2"]);
                                             }
                                             paramData.sport = singleData.SPORT;
-                                            paramData.scheduleDate = singleData.DATE;
+                                            var storeDate = singleData.DATE;
+                                            var splitDate = storeDate.indexOf('/');
+                                            console.log(splitDate);
+                                            if(splitDate !== -1){
+                                                paramData.scheduleDate = singleData.DATE;
+                                            }
                                             paramData.scheduleTime = singleData.TIME;
                                             paramData.excelType = singleData["STAGE"];
                                             paramData.video = singleData["VIDEO"];
@@ -12527,7 +12532,7 @@ var model = {
                                                         callback(null, singleData);
                                                     }
                                                 });
-                                            callback(null, singleData);
+                                            // callback(null, singleData);
                                         }
                                     }
                                 ],
