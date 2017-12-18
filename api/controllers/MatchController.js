@@ -572,6 +572,9 @@ var controller = {
                     paramData.name = req.body.sportslist.name;
                     paramData.age = req.body.ageGroup.name;
                     paramData.gender = req.body.gender;
+                    if(req.body.weight){
+                        paramData.weight = req.body.weight.name;
+                    }
                     Match.getSportId(paramData, function (err, sportData) {
                         if (err || _.isEmpty(sportData)) {
                             err = "Sport,Event,AgeGroup,Gender may have wrong values";
