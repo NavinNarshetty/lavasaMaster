@@ -136,30 +136,38 @@ var model = {
         console.log("inside");
         const Storage = require('@google-cloud/storage');
         const projectId = 'future-oasis-145313';
-        const storage = new Storage({
-            projectId: projectId,
-            keyFilename: '/home/wohlig/Documents/htdocs/lavasaBackend/assets/googleKey/client_secret.json'
-        });
-        const bucketName = 'sportsforall';
-        const bucketName1 = 'media&gallery/';
-        storage
-            .bucket(bucketName)
-            .getFiles()
-            .then(results => {
-                var files = results[0];
-                console.log('Files:');
-                files.forEach(file => {
-                    var temp = {};
-                    temp.fileName = file.name;
-                    final.push(temp);
+        GoogleCredencials.findOne().lean().exec(function (err, keys) {
+            if (err || _.isEmpty(keys)) {
+                callback(null, {
+                    error: "No Data"
                 });
-                callback(null, final);
-            })
-            .catch(err => {
-                console.error('ERROR:', err);
-                callback(err, null);
-            });
-    }
+            } else {
+                const storage = new Storage({
+                    projectId: projectId,
+                    keyFilename: '/home/wohlig/Documents/htdocs/lavasaBackend/config/googleKey/client_secret.json'
+                });
+                const bucketName = 'sportsforall';
+                const bucketName1 = 'media&gallery/';
+                storage
+                    .bucket(bucketName)
+                    .getFiles()
+                    .then(results => {
+                        var files = results[0];
+                        console.log('Files:');
+                        files.forEach(file => {
+                            var temp = {};
+                            temp.fileName = file.name;
+                            final.push(temp);
+                        });
+                        callback(null, final);
+                    })
+                    .catch(err => {
+                        console.error('ERROR:', err);
+                        callback(err, null);
+                    });
+            }
+        });
+    },
 
 
 };
