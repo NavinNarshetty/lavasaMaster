@@ -7922,6 +7922,10 @@ var model = {
                     } else {
                         obj["ATHLETE 2 SCORE"] = "";
                     }
+                    console.log('...................',mainData.resultsCombat);
+                    console.log('+++++++++++++++++++',mainData.opponentsSingle.length);
+                    console.log('...................',mainData.opponentsSingle[0]);
+                    console.log('+++++++++++++++++++',mainData.opponentsSingle[1]);
                     if (mainData.resultsCombat.winner.opponentsSingle === mainData.opponentsSingle[1]._id.toString()) {
                         obj["WINNER NAME"] = obj["SCREEN NAME ATHLETE 2"];
                         obj["WINNER SFA ID"] = obj["SFAID 2"];
