@@ -381,7 +381,6 @@ Vimeo.prototype.generateClientCredentials = function (scope, fn) {
  */
 Vimeo.prototype.streamingUpload = function (formData, video_uri, callback, progress_callback) {
 	var url = formData.link;
-	var port = formData.port;
 	var _self = this;
 	// console.log("path", path, "uri", video_uri);
 	if (typeof video_uri === 'function') {

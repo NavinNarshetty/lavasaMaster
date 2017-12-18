@@ -12,5 +12,9 @@ var controller = {
         console.log("vimeo");
         Vimeo.authenticateCloud(req.body, res.callback);
     },
+
+    videoUpload: function (req, res) {
+        Vimeo.videoUpload(req.body, res.callback);
+    },
 };
 module.exports = _.assign(module.exports, controller);

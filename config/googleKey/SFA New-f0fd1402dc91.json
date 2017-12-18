@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "future-oasis-145313",
+  "private_key_id": "f0fd1402dc912b80e74a0e45a632d6b447ce4afb",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDMJePPWWBhVRTO\n5b25ZoxDqc5HjqD4572hhiDCyhIJiUGWMyRvm7qfYeigOxMoLko4lW4YU87GGB7d\naP4kje5AWBUO8VACVEtMGow8zb5YTxJBgwZGAkNVVkjjuzFA1VM5zzywNmVY2S7G\nFUNMop9nHWh4v18rcACb6yS8rjwBTNG+nqIZnmC+/wcynAG4G6EIkU99Hl1It5sO\nnijq87t+M4tOmcEOXJWGEPByJeFVMRa/q28mDrVMeP66ZCJCK2FEqdXRWTpGSg00\nG6ZdoRztAR3grUGeYf9jl6INwbxtPvigi6eVFt2kme+Cc8qr6aWO0HEPWB/KkNNs\nAIKFXWetAgMBAAECggEAT33lggTMWboWeyXMRZgfv+0r7IMmPSWHmpCuywqCEYKH\nrmPFqUvbVFp8iX/XSssTjYrqLsDbgBk+U3qhkzxM7HMf6Ayg2fdWxpCD0N1QY/SO\nKEJLvBD/hQgvI7XtTNCEMrt2ZysXNYyEAQ+ggAPGzBEQcAwck75uDkh2qp2xsdM0\nc+YGLqSzyUG4XB3rMU3d7BjP0NCMDvptGM53No3Q0TXiw2BH2EiImCbRNdoJiLFq\nunMg/tkAjoq9nUXrB/Rd35wnmFMZjnnrorCCVAU4ORjuTC00pjefH+kEJaJ1ZV82\nY2d5n5k6miohh6F6nXlScPLv1KhtvJrZ5M/CUG1ShQKBgQDyjjHcgz9B6uD4VdoX\nJfujJpO0cJdqSM62xxQrRzr/QkITGk8+Zg5ZnKFP/Gqm86bAsvi5hDAo4yg4dSWI\nBsOQAb9KLyC4BVDn5XNHVDsEronYfq1e2IqxNA7tmCIzlTO2vac/I7tRh3ucOaD+\n+9F4gaTW/uyb8swhtbE+utX+2wKBgQDXdrPV+4r3AMN8PXNdWgwEKbr0pWrSTQn3\nMm01ovLqaPVpi5Y6TYjcWkdqe39DtAWXhzJ1keD2SnwpA0U9jNG0RRfBpljKyZxc\nbPEr4SqA8795vMWQIxp5ejLnIh94EpK1Vd4MLh3Hpe8b5tAvV/nrzWJ82IKvMx8a\n8tCFxJ0mFwKBgDRa4QRaCBNwYXL5BQQuHKzQrN0r2GMGqCfnvMDCtUdXw+9fpG8x\nlDNfjao4L8UtnnbFqs5QbBzHO21ES/+ahifVWLboiUVvUFFdw45H7h1Kl1J1tXJd\nh0JMnFRInElKEUmGkk0cp1gnyFSmU8v2CvbZ9Py7NdNLiyhTkZiat4o1AoGACA0u\ngTOKKNrFc1IUiot/4XPxwYyg5kTst2kR/aweKbZMXWpS7dDR6XISMx90TQJgJx5t\nO0l9P5be9uVhZABsIbFnRtxBeyp3hlin1nzuiq0RHap5M36sUZfIaSy0QldnVhFk\nX84lXL2NptxEMVC3TSF6qbGpiIR/iBFEy4riWHcCgYEAmFBL+9lXee5fn4jv+ohH\nThjXDH8vnzsZ3NvbXM327TcD5qc0QH55hlT1P4whYESIwKtT17oePraipC1Rlu6y\nXv8LfIsI0oFps1KLBjNLSFJayFv6BfSV5uZ3MYzSmkHoLPx13Qz6DwpQVRyOFcjs\nA9bdk2mERmij7rpwvxjovLw=\n-----END PRIVATE KEY-----\n",
+  "client_email": "future-oasis-145313@appspot.gserviceaccount.com",
+  "client_id": "106765175061389344549",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/future-oasis-145313%40appspot.gserviceaccount.com"
+}

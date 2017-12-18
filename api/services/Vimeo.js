@@ -29,6 +29,7 @@ var model = {
                     });
                 },
                 function (client, callback) {
+                    console.log("client", client);
                     if (client.error) {
                         callback(null, client);
                     } else {
@@ -39,14 +40,50 @@ var model = {
                         console.log('2');
                         if (client.accessToken) {
                             lib.access_token = client.accessToken;
-                            lib.streamingUpload(data,
-                                function (err, body, status, headers) {
-                                    if (err) {
-                                        return console.log(err);
+                            async.concatLimit(data, 4, function (file, callback) {
+                                console.log("file", file);
+                                var urlData = {};
+                                urlData.link = "https://storage.googleapis.com/match-videos/" + file.fileName;
+                                console.log("link", urlData.link);
+                                lib.streamingUpload(urlData,
+                                    function (err, body, status, headers) {
+                                        if (err) {
+                                            return console.log(err);
+                                        }
+                                        var result = {};
+                                        result.body = body;
+                                        result.status = status;
+                                        result.headers = headers;
+                                        console.log("uri", body.uri);
+                                        var str = body.uri.toString();
+                                        var i = str.lastIndexOf("/");
+                                        console.log("index", i);
+                                        var uri = str.slice(++i, str.length).toString();
+                                        console.log("uri", uri);
+                                        var obj = {
+                                            $set: {
+                                                video: uri,
+                                                videoType: "vimeo"
+                                            }
+                                        };
+                                        Match.update({
+                                            matchId: body.name
+                                        }, obj).exec(function (err, complete) {
+                                            console.log(complete);
+                                            if (err || _.isEmpty(complete)) {
+                                                callback(null, {
+                                                    error: err,
+                                                    success: result
+                                                });
+                                            } else {
+                                                callback(null, result);
+                                            }
+                                        });
                                     }
-                                    callback(null, status);
-                                }
-                            );
+                                );
+                            }, function (err, vidoe) {
+                                callback(null, vidoe);
+                            });
                         } else {
                             callback(null, "Access Token Not Found");
                         }
@@ -136,39 +173,77 @@ var model = {
         console.log("inside");
         const Storage = require('@google-cloud/storage');
         const projectId = 'future-oasis-145313';
-        GoogleCredencials.findOne().lean().exec(function (err, keys) {
-            if (err || _.isEmpty(keys)) {
-                callback(null, {
-                    error: "No Data"
-                });
-            } else {
-                const storage = new Storage({
-                    projectId: projectId,
-                    keyFilename: '/home/wohlig/Documents/htdocs/lavasaBackend/config/googleKey/client_secret.json'
-                });
-                const bucketName = 'sportsforall';
-                const bucketName1 = 'media&gallery/';
-                storage
-                    .bucket(bucketName)
-                    .getFiles()
-                    .then(results => {
-                        var files = results[0];
-                        console.log('Files:');
-                        files.forEach(file => {
-                            var temp = {};
-                            temp.fileName = file.name;
-                            final.push(temp);
-                        });
-                        callback(null, final);
-                    })
-                    .catch(err => {
-                        console.error('ERROR:', err);
-                        callback(err, null);
-                    });
-            }
+        const storage = new Storage({
+            projectId: projectId,
+            keyFilename: '/home/wohlig/Documents/htdocs/lavasaBackend/config/googleKey/SFA New-f0fd1402dc91.json'
         });
+        const bucketName = 'match-videos';
+        storage
+            .bucket(bucketName)
+            .getFiles()
+            .then(results => {
+                var files = results[0];
+                console.log('Files:');
+                files.forEach(file => {
+                    var temp = {};
+                    temp.fileName = file.name;
+                    final.push(temp);
+                });
+                callback(null, final);
+            })
+            .catch(err => {
+                console.error('ERROR:', err);
+                callback(err, null);
+            });
     },
 
+    videoUpload: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    Vimeo.authenticateCloud(data, function (err, googleData) {
+                        if (err || _.isEmpty(googleData)) {
+                            err = "Sport,Event,AgeGroup,Gender may have wrong values";
+                            callback(null, {
+                                error: err,
+                                success: googleData
+                            });
+                        } else {
+                            callback(null, googleData);
+                        }
+                    });
+                },
+                function (googleData, callback) {
+                    console.log("googleData", googleData);
+                    if (googleData.error) {
+                        callback(null, googleData);
+                    } else {
+                        Vimeo.setVimeo(googleData, function (err, vimeoData) {
+                            if (err || _.isEmpty(vimeoData)) {
+                                err = "Sport,Event,AgeGroup,Gender may have wrong values";
+                                callback(null, {
+                                    error: err,
+                                    success: vimeoData
+                                });
+                            } else {
+                                callback(null, vimeoData);
+                            }
+                        });
+                    }
+                }
+            ],
+            function (err, data2) {
+                if (err) {
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, data2);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
+
+    }
 
 };
 module.exports = _.assign(module.exports, exports, model);

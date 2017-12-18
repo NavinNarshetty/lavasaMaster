@@ -248,10 +248,11 @@ FileStreamer.prototype._getNewStart = function (next) {
  */
 FileStreamer.prototype._upload_endpoint_request = function (options, callback) {
 	console.log("this._endpoint.path", this._endpoint.path);
+	console.log("options*****", options);
 	var request_options = {
 		protocol: this._endpoint.protocol,
 		host: this._endpoint.hostname,
-		port: 1337,
+		port: 878,
 		query: this._endpoint.query,
 		headers: options.headers,
 		path: this._endpoint.path,
