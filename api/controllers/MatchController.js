@@ -76,16 +76,23 @@ var controller = {
                     function (importData, callback) {
                         if (req.body.resultType == "knockout" || req.body.excelType == 'knockout') {
                             var excelLength = importData.length;
+                            console.log(excelLength);
                             var range = req.body.range;
                             var sum = 0;
-                            if (range != 0) {
+                            if (range !== 0) {
                                 while (range >= 1) {
                                     sum = parseInt(sum) + range;
                                     range = range / 2;
                                 }
                             }
-                            if (req.body.thirdPlace == "yes") {
+                            if (req.body.thirdPlace == "yes"  && range !== 0) {
                                 sum = sum + 1;
+                            } else if (req.body.thirdPlace == "yes" && range === 0) {
+                                sum = sum + 1;
+                                excelLength = sum;
+                            } else if (req.body.thirdPlace == "no" && range === 0) {
+                                // sum = 1;
+                                excelLength = sum;
                             }
                             if (excelLength == sum) {
                                 req.body.rangeTotal = sum;
