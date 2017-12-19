@@ -91,7 +91,7 @@ var controller = {
                                 sum = sum + 1;
                                 excelLength = sum;
                             } else if (req.body.thirdPlace == "no" && range === 0) {
-                                // sum = 1;
+                                sum = 1;
                                 excelLength = sum;
                             }
                             if (excelLength == sum) {
