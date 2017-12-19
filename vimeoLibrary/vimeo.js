@@ -394,7 +394,7 @@ Vimeo.prototype.streamingUpload = function (formData, video_uri, callback, progr
 		path: '/me/videos',
 		query: {
 			type: 'pull',
-			link: url
+			link: url,
 		}
 	};
 	console.log("option", options);
@@ -404,17 +404,46 @@ Vimeo.prototype.streamingUpload = function (formData, video_uri, callback, progr
 			return callback(err);
 		}
 		console.log("ticket", ticket);
-		var file = new FileStreamer(options.query.link, options.path, progress_callback);
+		var file = new FileStreamer(options.query, options.path, progress_callback);
 		console.log("file", file);
 		// file.ready(function () {
-		// 	_self.request({
-		// 		method: 'DELETE',
-		// 		path: options.query.link,
-		// 		port: 1337
-		// 	}, callback);
+		// _self.request({
+		// 	method: 'POST',
+		// 	path: ticket.query.link,
+		// 	port: 1337
+		// }, callback);
 		// });
 		callback(null, ticket, status, headers);
 		// file.error(callback);
 		file.upload();
+	});
+};
+
+Vimeo.prototype.descriptionUpload = function (formData, video_uri, callback, progress_callback) {
+	var videoId = formData.videoId;
+	var desc = formData.description;
+	var path = "/videos/" + videoId;
+	var _self = this;
+	if (typeof video_uri === 'function') {
+		progress_callback = callback;
+		callback = video_uri;
+		video_uri = undefined;
+	}
+
+	var options = {
+		method: 'PATCH',
+		path: path,
+		query: {
+			"description": desc
+		}
+	};
+	this.request(options, function (err, ticket, status, headers) {
+		if (err) {
+			console.log("err", err);
+			return callback(err);
+		}
+		var file = new FileStreamer(options.query.description, options.path, progress_callback);
+		callback(null, ticket);
+
 	});
 };

@@ -27,17 +27,17 @@ var http_module = require('http');
  * @param {string} file_path       Path to the video file
  * @param {string} upload_endpoint upload URL provided with an upload ticket
  */
-var FileStreamer = module.exports = function FileStreamer(file_path, upload_endpoint, progress_callback) {
+var FileStreamer = module.exports = function FileStreamer(file_path, progress_callback) {
 	if (!file_path) {
 		throw new Error('You must provide a file path');
 	}
 
-	if (!upload_endpoint) {
-		throw new Error('You must provide an upload endpoint');
-	}
+	// if (!upload_endpoint) {
+	// 	throw new Error('You must provide an upload endpoint');
+	// }
 
-	this._endpoint = url_module.parse(upload_endpoint);
-	this._path = file_path;
+	// this._endpoint = url_module.parse(file_path.link);
+	this._path = file_path.link;
 	this.progress_callback = progress_callback;
 }
 
@@ -121,7 +121,7 @@ FileStreamer.prototype.error = function (fn) {
  */
 FileStreamer.prototype.upload = function () {
 	var _self = this;
-
+	console.log("path issue", _self._path);
 	fs_module.stat(_self._path, function (stat_err, stats) {
 		if (stat_err) {
 			return _self._error(stat_err);
@@ -252,7 +252,7 @@ FileStreamer.prototype._upload_endpoint_request = function (options, callback) {
 	var request_options = {
 		protocol: this._endpoint.protocol,
 		host: this._endpoint.hostname,
-		port: 878,
+		port: 1337,
 		query: this._endpoint.query,
 		headers: options.headers,
 		path: this._endpoint.path,

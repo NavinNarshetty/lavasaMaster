@@ -16,5 +16,9 @@ var controller = {
     videoUpload: function (req, res) {
         Vimeo.videoUpload(req.body, res.callback);
     },
+
+    setVideoDescription: function (req, res) {
+        Vimeo.setVideoDescription(req.body, res.callback);
+    },
 };
 module.exports = _.assign(module.exports, controller);
