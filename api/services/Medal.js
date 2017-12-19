@@ -453,6 +453,11 @@ var model = {
                     } else if (!_.isEmpty(data)) {
                         console.log("data", data);
                         athleteDetails = data;
+                        if(data.atheleteSchoolName){
+                            data.schoolName = data.atheleteSchoolName;
+                        }else{
+                            data.schoolName = data.school.name;
+                        }
                         pdfObj.athlete = _.cloneDeep(data);
                         if (pdfObj.athlete.middleName) {
                             pdfObj.athleteName = pdfObj.athlete.firstName + ' ' + pdfObj.athlete.middleName + ' ' + pdfObj.athlete.surname;

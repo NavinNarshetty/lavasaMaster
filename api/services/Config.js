@@ -693,7 +693,7 @@ var model = {
     },
 
     generatePdf: function (pdfObj, callback) {
-        console.log("generatePdf");
+        console.log("generatePdf", pdfObj);
 
         var pdf = require('html-pdf');
 
