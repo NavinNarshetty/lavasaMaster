@@ -4,8 +4,8 @@ myApp.service('excelService', function ($http, TemplateService, $state, toastr, 
   var type;
   var admin = {
     "email": "digital@sfanow.in",
-    "password": "sfabackend"
-  }
+    "password": "sfabackend2017-18"
+  };
   this.loginPopup = function (data, varScope, type) {
     console.log(data);
     commonExcelData = data;
