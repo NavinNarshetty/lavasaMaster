@@ -1194,8 +1194,6 @@ var model = {
             });
     },
 
-
-
     getPointsPerPool: function (standings, data, callback) {
         async.concatSeries(standings.teams, function (team, callback) {
             async.waterfall([
@@ -6640,27 +6638,30 @@ var model = {
                                 }
                                 if (mainData.resultFencing) {
                                     obj["SCORE 1"] = mainData.resultFencing.players[0].finalPoints;
-                                }
-                                if (mainData.opponentsSingle.length == 1 && mainData.resultFencing.winner.player === mainData.opponentsSingle[0]._id.toString()) {
-                                    obj["RESULT 1"] = "Bye";
-                                } else if (mainData.resultFencing.winner.player === mainData.opponentsSingle[0]._id.toString()) {
-                                    if (mainData.resultFencing.teams[0].walkover == true) {
-                                        obj["RESULT 1"] = "walkover";
-                                    } else {
-                                        obj["RESULT 1"] = "Won";
-                                    }
-                                } else {
-                                    if (mainData.resultFencing.isNoMatch == false) {
-                                        if (mainData.resultFencing.teams[0].walkover == false && mainData.resultFencing.teams[0].noShow == false) {
-                                            obj["RESULT 1"] = "Lost";
-                                        } else if (mainData.resultFencing.teams[0].walkover == true) {
+                                    if (mainData.opponentsSingle.length == 1 && mainData.resultFencing.winner.opponentsSingle === mainData.opponentsSingle[0]._id.toString()) {
+                                        obj["RESULT 1"] = "Bye";
+                                    } else if (mainData.resultFencing.winner.opponentsSingle === mainData.opponentsSingle[0]._id.toString()) {
+                                        if (mainData.resultFencing.players[0].walkover == true) {
                                             obj["RESULT 1"] = "walkover";
                                         } else {
-                                            obj["RESULT 1"] = "noShow";
+                                            obj["RESULT 1"] = "Won";
                                         }
                                     } else {
-                                        obj["RESULT 1"] = "No Match";
+                                        if (mainData.resultFencing.isNoMatch == false) {
+                                            if (mainData.resultFencing.players[0].walkover == false && mainData.resultFencing.players[0].noShow == false) {
+                                                obj["RESULT 1"] = "Lost";
+                                            } else if (mainData.resultFencing.players[0].walkover == true) {
+                                                obj["RESULT 1"] = "walkover";
+                                            } else {
+                                                obj["RESULT 1"] = "noShow";
+                                            }
+                                        } else {
+                                            obj["RESULT 1"] = "No Match";
+                                        }
                                     }
+                                } else {
+                                    obj["SCORE 1"] = "";
+                                    obj["RESULT 1"] = "";
                                 }
                             } else {
                                 obj["SFAID 1"] = "";
@@ -6679,17 +6680,17 @@ var model = {
                                 }
                                 if (mainData.resultFencing) {
                                     obj["SCORE 2"] = mainData.resultFencing.players[1].finalPoints;
-                                    if (mainData.resultFencing.winner.player === mainData.opponentsSingle[1]._id.toString()) {
-                                        if (mainData.resultFencing.teams[1].walkover == true) {
+                                    if (mainData.resultFencing.winner.opponentsSingle === mainData.opponentsSingle[1]._id.toString()) {
+                                        if (mainData.resultFencing.players[1].walkover == true) {
                                             obj["RESULT 2"] = "walkover";
                                         } else {
                                             obj["RESULT 2"] = "Won";
                                         }
                                     } else {
                                         if (mainData.resultFencing.isNoMatch == false) {
-                                            if (mainData.resultFencing.teams[1].walkover == false && mainData.resultFencing.teams[1].noShow == false) {
+                                            if (mainData.resultFencing.players[1].walkover == false && mainData.resultFencing.players[1].noShow == false) {
                                                 obj["RESULT 2"] = "Lost";
-                                            } else if (mainData.resultFencing.teams[1].walkover == true) {
+                                            } else if (mainData.resultFencing.players[1].walkover == true) {
                                                 obj["RESULT 2"] = "walkover";
                                             } else {
                                                 obj["RESULT 2"] = "noShow";
@@ -6698,16 +6699,17 @@ var model = {
                                             obj["RESULT 2"] = "No Match";
                                         }
                                     }
+
                                     if (!_.isEmpty(mainData.resultFencing.winner) && mainData.resultFencing.isNoMatch == false || mainData.resultFencing.isDraw == false) {
-                                        if (mainData.opponentsSingle[0]._id.equals(mainData.resultFencing.winner.opponentsSingle)) {
-                                            if (opponentsSingle[0].athleteId.middleName) {
+                                        if (mainData.opponentsSingle[0]._id.toString() === mainData.resultFencing.winner.opponentsSingle) {
+                                            if (mainData.opponentsSingle[0].athleteId.middleName) {
                                                 obj["WINNER NAME"] = mainData.opponentsSingle[0].athleteId.firstName + " " + mainData.opponentsSingle[0].athleteId.middleName + " " + mainData.opponentsSingle[0].athleteId.surname;
                                             } else {
                                                 obj["WINNER NAME"] = mainData.opponentsSingle[0].athleteId.firstName + " " + mainData.opponentsSingle[0].athleteId.surname;
                                             }
                                             obj["WINNER SFAID"] = mainData.opponentsSingle[0].athleteId.sfaId;
                                         } else {
-                                            if (opponentsSingle[1].athleteId.middleName) {
+                                            if (mainData.opponentsSingle[1].athleteId.middleName) {
                                                 obj["WINNER NAME"] = mainData.opponentsSingle[1].athleteId.firstName + " " + mainData.opponentsSingle[1].athleteId.middleName + " " + mainData.opponentsSingle[1].athleteId.surname;
                                             } else {
                                                 obj["WINNER NAME"] = mainData.opponentsSingle[1].athleteId.firstName + " " + mainData.opponentsSingle[1].athleteId.surname;
@@ -6718,37 +6720,43 @@ var model = {
                                         obj["WINNER NAME"] = "";
                                         obj["WINNER SFAID"] = "";
                                     }
-                                    obj["VIDEO"] = "";
-                                    obj["MATCH CENTER"] = "";
                                 } else {
-                                    obj["COACH NAME 1"] = "";
-                                    obj["DATA POINTS 1"] = "";
-                                    obj["FINAL SCORE"] = "";
+                                    obj["SCORE 2"] = "";
+                                    obj["RESULT 2"] = "";
                                     obj["WINNER NAME"] = "";
                                     obj["WINNER SFAID"] = "";
                                 }
-                                if (mainData.videoType) {
-                                    obj["VIDEO TYPE"] = mainData.videoType;
-                                } else {
-                                    obj["VIDEO TYPE"] = "";
-                                }
-                                if (mainData.video) {
-                                    obj["VIDEO"] = mainData.video;
-                                } else {
-                                    obj["VIDEO"] = "";
-                                }
+                                obj["VIDEO"] = "";
+                                obj["MATCH CENTER"] = "";
                             } else {
-                                obj["TEAM 2"] = "";
-                                obj["TEAM NAME 2"] = "";
-                                obj["SCHOOL 2"] = "";
                                 obj["COACH NAME 1"] = "";
                                 obj["DATA POINTS 1"] = "";
                                 obj["FINAL SCORE"] = "";
                                 obj["WINNER NAME"] = "";
                                 obj["WINNER SFAID"] = "";
+                            }
+                            if (mainData.videoType) {
+                                obj["VIDEO TYPE"] = mainData.videoType;
+                            } else {
                                 obj["VIDEO TYPE"] = "";
+                            }
+                            if (mainData.video) {
+                                obj["VIDEO"] = mainData.video;
+                            } else {
                                 obj["VIDEO"] = "";
                             }
+                            // } else {
+                            //     obj["TEAM 2"] = "";
+                            //     obj["TEAM NAME 2"] = "";
+                            //     obj["SCHOOL 2"] = "";
+                            //     obj["COACH NAME 1"] = "";
+                            //     obj["DATA POINTS 1"] = "";
+                            //     obj["FINAL SCORE"] = "";
+                            //     obj["WINNER NAME"] = "";
+                            //     obj["WINNER SFAID"] = "";
+                            //     obj["VIDEO TYPE"] = "";
+                            //     obj["VIDEO"] = "";
+                            // }
                             callback(null, obj);
 
                         },
@@ -8605,6 +8613,7 @@ var model = {
 
     generateGraphicsKnockoutTeam: function (match, callback) {
         async.concatSeries(match, function (mainData, callback) {
+                console.log("mainData", mainData);
                 var obj = {};
                 var dateTime = moment(mainData.scheduleDate).format('DD-MM-YYYY');
                 obj.DATE = dateTime;
