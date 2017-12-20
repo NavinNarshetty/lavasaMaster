@@ -85,7 +85,7 @@ var controller = {
                                     range = range / 2;
                                 }
                             }
-                            if (req.body.thirdPlace == "yes"  && range !== 0) {
+                            if (req.body.thirdPlace == "yes" && range !== 0) {
                                 sum = sum + 1;
                             } else if (req.body.thirdPlace == "yes" && range === 0) {
                                 sum = sum + 1;
@@ -313,6 +313,19 @@ var controller = {
                 error: "All Fields Required !"
             }];
             res.callback(null, data);
+        }
+    },
+
+    getVideoExcelAthlete: function (req, res) {
+        if (req.body) {
+            // res.connection.setTimeout(200000000);
+            // req.connection.setTimeout(200000000);
+            Match.getVideoExcelAthlete(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            })
         }
     },
 
@@ -576,7 +589,7 @@ var controller = {
                     paramData.name = req.body.sportslist.name;
                     paramData.age = req.body.ageGroup.name;
                     paramData.gender = req.body.gender;
-                    if(req.body.weight){
+                    if (req.body.weight) {
                         paramData.weight = req.body.weight.name;
                     }
                     Match.getSportId(paramData, function (err, sportData) {
@@ -648,7 +661,7 @@ var controller = {
                     paramData.name = req.body.sportslist.name;
                     paramData.age = req.body.ageGroup.name;
                     paramData.gender = req.body.gender;
-                    if(req.body.weight){
+                    if (req.body.weight) {
                         paramData.weight = req.body.weight.name;
                     }
                     Match.getSportId(paramData, function (err, sportData) {

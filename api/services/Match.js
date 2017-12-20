@@ -1019,7 +1019,7 @@ var model = {
                 }
             },
             function (sendObj, callback) {
-                var deepSearch = "opponentsTeam.studentTeam.studentId";
+                var deepSearch = "opponentsTeam.studentTeam.studentId opponentsSingle.athleteId.school";
                 Match.find({
                     sport: data.sport,
                     excelType: {
@@ -1039,7 +1039,6 @@ var model = {
                         } else {
                             finalData.qualifying = sendObj;
                             var matches = _.groupBy(found, 'round');
-                            // console.log("matches", matches);
                             callback(null, matches);
                         }
                     }
@@ -1195,96 +1194,7 @@ var model = {
             });
     },
 
-    getStandingsFencing: function (data, callback) {
-        var deepSearch = "opponentsSingle.athleteId.school";
-        var standings = [];
-        var teams = [];
-        var tablePoint = [];
-        var final = {};
-        async.waterfall([
-                function (callback) {
-                    Match.find({
-                        sport: data.sport,
-                        excelType: {
-                            $regex: "league",
-                            $options: "i"
-                        }
-                    }).lean().deepPopulate(deepSearch).sort({
-                        createdAt: 1
-                    }).exec(function (err, found) {
-                        if (err) {
-                            callback(err, null);
-                        } else {
-                            if (_.isEmpty(found)) {
-                                callback(null, []);
-                            } else {
-                                var matchesPerPool = _.groupBy(found, 'round');
-                                callback(null, matchesPerPool);
-                            }
-                        }
-                    });
-                },
-                function (matchesPerPool, callback) {
-                    // console.log("matchesPerPool", matchesPerPool);
-                    var arr = _.keys(matchesPerPool);
-                    var i = 0;
-                    while (i < arr.length) {
-                        var match = {};
-                        var name = arr[i];
-                        match.name = arr[i];
 
-                        var n = matchesPerPool[name].length;
-                        _.each(matchesPerPool[name], function (match) {
-                            var team = {};
-                            var team1 = {};
-                            if (match.opponentsSingle[0]) {
-                                team = match.opponentsSingle[0];
-                                teams.push(team);
-                            }
-                            if (match.opponentsSingle[1]) {
-                                team1 = match.opponentsSingle[1];
-                                teams.push(team1);
-                            }
-                        });
-                        var t = _.uniq(teams, function (x) {
-                            return x;
-                        });
-                        match.teams = t;
-                        // console.log("match", match);
-                        teams = [];
-                        standings.push(match);
-                        i++;
-                    }
-                    callback(null, standings);
-                },
-                function (standings, callback) {
-                    // console.log("unique", standings);
-                    async.eachSeries(standings, function (n, callback) {
-                        Match.getPointsPerPoolFencing(n, data, function (err, complete) {
-                            if (err || _.isEmpty(complete)) {
-                                callback(err, null);
-                            } else {
-                                var dummy = {};
-                                dummy.name = n.name;
-                                dummy.points = complete;
-                                tablePoint.push(dummy);
-                                callback(null, tablePoint);
-                            }
-                        });
-                    }, function (err) {
-                        final.tablePoint = tablePoint;
-                        callback(null, final);
-                    });
-                }
-            ],
-            function (err, results) {
-                if (err || _.isEmpty(results)) {
-                    callback(null, results);
-                } else {
-                    callback(null, results);
-                }
-            });
-    },
 
     getPointsPerPool: function (standings, data, callback) {
         async.concatSeries(standings.teams, function (team, callback) {
@@ -1514,6 +1424,98 @@ var model = {
 
     },
 
+    getStandingsFencing: function (data, callback) {
+        var deepSearch = "opponentsSingle.athleteId.school";
+        var standings = [];
+        var teams = [];
+        var tablePoint = [];
+        var final = {};
+        async.waterfall([
+                function (callback) {
+                    Match.find({
+                        sport: data.sport,
+                        excelType: {
+                            $regex: "league",
+                            $options: "i"
+                        }
+                    }).lean().deepPopulate(deepSearch).sort({
+                        createdAt: 1
+                    }).exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(found)) {
+                                callback(null, []);
+                            } else {
+                                var matchesPerPool = _.groupBy(found, 'round');
+                                callback(null, matchesPerPool);
+                            }
+                        }
+                    });
+                },
+                function (matchesPerPool, callback) {
+                    // console.log("matchesPerPool", matchesPerPool);
+                    var arr = _.keys(matchesPerPool);
+                    var i = 0;
+                    while (i < arr.length) {
+                        var match = {};
+                        var name = arr[i];
+                        match.name = arr[i];
+
+                        var n = matchesPerPool[name].length;
+                        _.each(matchesPerPool[name], function (match) {
+                            var team = {};
+                            var team1 = {};
+                            if (match.opponentsSingle[0]) {
+                                team = match.opponentsSingle[0];
+                                teams.push(team);
+                            }
+                            if (match.opponentsSingle[1]) {
+                                team1 = match.opponentsSingle[1];
+                                teams.push(team1);
+                            }
+                        });
+                        var t = _.uniq(teams, function (x) {
+                            return x;
+                        });
+                        match.teams = t;
+                        // console.log("match", match);
+                        teams = [];
+                        standings.push(match);
+                        i++;
+                    }
+                    callback(null, standings);
+                },
+                function (standings, callback) {
+                    async.eachSeries(standings, function (n, callback) {
+                        console.log("n", n);
+                        Match.getPointsPerPoolFencing(n, data, function (err, complete) {
+                            if (err || _.isEmpty(complete)) {
+                                callback(err, null);
+                            } else {
+                                var dummy = {};
+                                dummy.name = n.name;
+                                dummy.points = complete;
+                                tablePoint.push(dummy);
+                                callback(null, tablePoint);
+                            }
+                        });
+                    }, function (err) {
+                        final.tablePoint = tablePoint;
+                        callback(null, final);
+                    });
+                }
+            ],
+            function (err, results) {
+                if (err || _.isEmpty(results)) {
+                    callback(null, results);
+                } else {
+                    callback(null, results);
+                }
+            });
+
+    },
+
     getPointsPerPoolFencing: function (standings, data, callback) {
         async.concatSeries(standings.teams, function (team, callback) {
             // console.log("team", team);
@@ -1528,17 +1530,15 @@ var model = {
                         }
                         teamData._id = team.athleteId._id;
                         teamData.opponentsSingle = team._id;
-                        var teamid = team._id.toString();
+                        console.log("teamId", teamData._id, "sport", data.sport, "round", standings.name);
+                        var teamid = teamData._id.toString();
                         var matchObj = {
                             sport: data.sport,
                             excelType: {
                                 $regex: "league",
                                 $options: "i"
                             },
-                            $or: [{
-                                "resultFencing.players.player": teamid,
-                            }],
-
+                            "resultFencing.players.player": teamid,
                             round: standings.name
                         }
                         Match.find(matchObj).lean().deepPopulate("opponentsSingle.athleteId.school").sort({
@@ -1547,6 +1547,7 @@ var model = {
                             if (err) {
                                 callback(err, null);
                             } else {
+                                console.log("found****", found);
                                 if (_.isEmpty(found)) {
                                     teamData.matches = found;
                                     callback(null, teamData);
@@ -1558,6 +1559,7 @@ var model = {
                         });
                     },
                     function (teamData, callback) {
+                        console.log("teamdata", teamData);
                         var scores = {};
                         scores._id = teamData._id;
                         scores.player = teamData.opponentsSingle;
@@ -1572,7 +1574,7 @@ var model = {
 
                         _.each(teamData.matches, function (match) {
                             scores.matchCount = teamData.matches.length;
-                            // if (match.resultFencing) {
+                            // console.log("teamdata._id", teamData._id, "player", match.resultFencing.winner.player);
                             if (match.resultFencing.players.length == 2) {
                                 if (teamData._id == match.resultFencing.players[0].player && match.resultFencing.players[0].noShow == true) {
                                     scores.noShow = ++scores.noShow;
@@ -7870,7 +7872,7 @@ var model = {
                                     obj["A1 Total Unforced Errors"] = obj["A1 Total Unforced Errors"] + mainData.resultsRacquet.players[0].sets[i].unforcedError;
                                     obj["A1 Total Winners"] = obj["A1 Total Winners"] + mainData.resultsRacquet.players[0].sets[i].winner;
                                 }
-                                if(mainData.resultsRacquet.players.length == 1){
+                                if (mainData.resultsRacquet.players.length == 1) {
                                     var sNo = 1;
                                     var code = ++i;
                                     console.log("sets", mainData.resultsRacquet.players[0].sets);
@@ -8061,13 +8063,13 @@ var model = {
                                 obj["A2 Total Service Errors"] = mainData.resultsRacquet.players[1].sets[i].serviceError;
                                 obj["A2 Total Unforced Errors"] = mainData.resultsRacquet.players[1].sets[i].unforcedError;
                                 obj["A2 Total Winners"] = mainData.resultsRacquet.players[1].sets[i].winner;
-    
+
                             } else {
                                 obj["A2 Point"] = mainData.resultsRacquet.players[1].sets[i].point;
                                 obj["A2 Total Service Errors"] = obj["A2 Total Service Errors"] + mainData.resultsRacquet.players[1].sets[i].serviceError;
                                 obj["A2 Total Unforced Errors"] = obj["A2 Total Unforced Errors"] + mainData.resultsRacquet.players[1].sets[i].unforcedError;
                                 obj["A2 Total Winners"] = obj["A2 Total Winners"] + mainData.resultsRacquet.players[1].sets[i].winner;
-    
+
                             }
                             var sNo = 1;
                             var code = ++i;
@@ -8383,7 +8385,7 @@ var model = {
                                     obj["A2 Set 14"] = mainData.resultsRacquet.players[1].sets[13].point;
                                     obj["A1 Set 15"] = mainData.resultsRacquet.players[0].sets[14].point;
                                     obj["A2 Set 15"] = mainData.resultsRacquet.players[1].sets[14].point;
-    
+
                                     break;
                                 case 16:
                                     obj["A1 Set 1"] = mainData.resultsRacquet.players[0].sets[0].point;
@@ -8576,7 +8578,7 @@ var model = {
                                     obj["A2 Set 20"] = mainData.resultsRacquet.players[1].sets[19].point;
                             }
                         }
-                    }else {
+                    } else {
                         obj["A2 Total Service Errors"] = "";
                         obj["A2 Total Unforced Errors"] = "";
                         obj["A2 Total Winners"] = "";
@@ -16520,35 +16522,84 @@ var model = {
     //--------------------VIDEO EXCEL---------------------------------------------------------
 
     getVideoExcelAthlete: function (data, callback) {
-        var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup opponentsSingle.athleteId opponentsTeam.studentTeam.studentId";
         async.waterfall([
                 function (callback) {
-                    Athelete.find().lean().exec(function (err, athleteData) {
-                        if (err) {
-                            callback(err, null);
-                        } else if (_.isEmpty(athleteData)) {
-                            callback(null, []);
+                    Athelete.find({
+                        school: data.school
+                    }, {
+                        _id: 1,
+                        firstName: 1,
+                        surname: 1,
+                        middleName: 1,
+                        gender: 1,
+                        school: 1
+                    }).lean().exec(function (err, athleteData) {
+                        if (err || _.isEmpty(athleteData)) {
+                            var err = "No data Found";
+                            callback(null, {
+                                error: err,
+                                data: athleteData
+                            });
                         } else {
                             callback(null, athleteData);
                         }
                     });
                 },
                 function (athleteData, callback) {
-                    async.concatSeries(athleteData, function (n, callback) {
-                        Match.find({}).deepPopulate(deepSearch).lean().exec(function (err, individual) {
-                            if (err) {
-                                callback(err, null);
-                            } else if (_.isEmpty(individual)) {
-                                callback(null, []);
-                            } else {
-                                callback(null, individual);
-                            }
-                        });
+                    async.concatSeries(athleteData, function (single, callback) {
+                        console.log("single", single);
+                        async.waterfall([
+                                function (callback) {
+                                    var pipeLine = Match.getSinglesAggregatePipeline(single);
+                                    Match.aggregate(pipeLine, function (err, singleData) {
+                                        console.log("single", singleData);
+                                        if (err) {
+                                            callback(err, "error in mongoose");
+                                        } else if (_.isEmpty(singleData)) {
+                                            callback(null, []);
+                                        } else {
+                                            callback(null, singleData);
+                                        }
+                                    });
+                                },
+                                function (singleData, callback) {
+                                    var pipeLine = Match.getTeamAggregatePipeline(single);
+                                    Match.aggregate(pipeLine, function (err, matchData) {
+                                        console.log("team", matchData);
+                                        if (err) {
+                                            callback(err, "error in mongoose");
+                                        } else if (_.isEmpty(matchData)) {
+                                            var final = {};
+                                            final.single = singleData;
+                                            callback(null, final);
+                                        } else {
+                                            var final = {};
+                                            final.single = singleData;
+                                            final.team = matchData;
+                                            callback(null, final);
+                                        }
+                                    });
+                                }
+                            ],
+                            function (err, excelData) {
+                                if (err) {
+                                    callback(null, []);
+                                } else if (excelData) {
+                                    if (_.isEmpty(excelData)) {
+                                        callback(null, []);
+                                    } else {
+                                        callback(null, excelData);
+                                    }
+                                }
+                            });
                     }, function (err, complete) {
-                        callback(null, complete);
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            callback(null, complete);
+                        }
                     });
-
-                },
+                }
             ],
             function (err, excelData) {
                 if (err) {
@@ -16562,6 +16613,120 @@ var model = {
                     }
                 }
             });
-    }
+    },
+
+    getSinglesAggregatePipeline: function (data) {
+        var pipeline = [
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "individualsports",
+                    "localField": "opponentsSingle",
+                    "foreignField": "_id",
+                    "as": "opponentsSingle"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$opponentsSingle",
+                    preserveNullAndEmptyArrays: false // optional
+                }
+            },
+
+            // Stage 3
+            {
+                $match: {
+                    "opponentsSingle.athleteId": objectid(data._id)
+                }
+            },
+
+            // Stage 4
+            {
+                $match: {
+
+                }
+            },
+
+            // Stage 5
+            {
+                $lookup: {
+                    "from": "atheletes",
+                    "localField": "opponentsSingle.athleteId",
+                    "foreignField": "_id",
+                    "as": "opponentsSingle.athleteId"
+                }
+            },
+
+        ];
+        return pipeline;
+    },
+
+    getTeamAggregatePipeline: function (data) {
+        var pipeline = [
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "teamsports",
+                    "localField": "opponentsTeam",
+                    "foreignField": "_id",
+                    "as": "opponentsTeam"
+                }
+            },
+
+            // Stage 3
+            {
+                $unwind: {
+                    path: "$opponentsTeam",
+                    preserveNullAndEmptyArrays: false // optional
+                }
+            },
+
+            // Stage 4
+            {
+                $lookup: {
+                    "from": "studentteams",
+                    "localField": "opponentsTeam.studentTeam",
+                    "foreignField": "_id",
+                    "as": "opponentsTeam.studentTeam"
+                }
+            },
+
+            // Stage 6
+            {
+                $unwind: {
+                    path: "$opponentsTeam.studentTeam",
+
+                }
+            },
+            // Stage 5
+            {
+                $match: {
+                    "opponentsTeam.studentTeam.studentId": objectid(data._id)
+                }
+            },
+
+            // Stage 7
+            {
+                $lookup: {
+                    "from": "atheletes",
+                    "localField": "opponentsTeam.studentTeam.studentId",
+                    "foreignField": "_id",
+                    "as": "opponentsTeam.studentTeam.studentId"
+                }
+            },
+
+            // Stage 8
+            {
+                $unwind: {
+                    path: "$opponentsTeam.studentTeam.studentId",
+                }
+            },
+
+        ];
+        return pipeline;
+    },
+
 };
 module.exports = _.assign(module.exports, exports, model);
