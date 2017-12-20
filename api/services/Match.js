@@ -7932,7 +7932,9 @@ var model = {
                         obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 2"];
                     }
                 } else if (mainData.resultsRacquet) {
+                    console.log(mainData.resultsRacquet.players[0].sets);
                     if (mainData.resultsRacquet.players && mainData.resultsRacquet.players.length > 1) {
+                        console.log(mainData.resultsRacquet.players[1].sets);
                         for (var i = 0; i < mainData.resultsRacquet.players[1].sets.length; i++) {
                             if (i == 0) {
                                 obj["A2 Total Service Errors"] = mainData.resultsRacquet.players[1].sets[i].serviceError;
