@@ -638,10 +638,16 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
           $scope.matchResult.resultsCombat = $scope.formData;
           $scope.matchResult.resultsCombat.status = "IsCompleted";
         }
+        _.each($scope.matchResult.resultsCombat.players, function(n){
+          n.finalPoints = 0;
+        });
       break;
       case "Racquet Sports":
         $scope.matchResult.resultsRacquet = $scope.formData;
         $scope.matchResult.resultsRacquet.status = "IsCompleted";
+        _.each($scope.matchResult.resultsRacquet.players, function(n){
+          n.sets = [];
+        });
       break;
       case "Team Sports":
         switch ($scope.matchDetails.sportsName) {
@@ -744,11 +750,20 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
       case "Combat Sports":
         $scope.matchResult.resultsCombat = $scope.formData;
         $scope.matchResult.resultsCombat.status = "IsCompleted";
-        break;
+        _.each($scope.matchResult.resultsCombat.players, function(n){
+          n.finalPoints = 0;
+        });
+      break;
       case "Racquet Sports":
         $scope.matchResult.resultsRacquet = $scope.formData;
         $scope.matchResult.resultsRacquet.status = "IsCompleted";
-        break;
+        if($scope.matchDetails.isTeam == true){
+          _.each($scope.matchResult.resultsRacquet.teams, function(n){
+            n.sets = [];
+          })
+        }
+        console.log("yiyiffui",$scope.matchResult);
+      break;
       case "Team Sports":
         switch ($scope.matchDetails.sportsName) {
           case "Kho Kho":
@@ -757,7 +772,7 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
             $scope.matchResult.resultsCombat.status = "IsCompleted";
             break;
         }
-        break;
+      break;
     }
     NavigationService.saveMatch($scope.matchResult, function (data) {
       if (data.value == true) {

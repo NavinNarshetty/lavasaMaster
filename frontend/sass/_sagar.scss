@@ -1773,7 +1773,7 @@ $tickerDuration: 60s;
 // REPORT CARD PAGE
 .reportcard-page{
   min-height: 100vh;
-  padding: 0px 0 50px;
+  padding: 40px 0 50px;
 }
 .reportcard-header{
   background-color: $sport-primary;
@@ -2079,6 +2079,7 @@ $tickerDuration: 60s;
 }
 .winpercent-big{
   font-size: 36px;
+  vertical-align: top;
 }
 .report-summarycard{
   max-width: 75%;
@@ -2098,15 +2099,15 @@ $tickerDuration: 60s;
   background: $sport-lightblue;
   position: relative;
   color: #fff;
-  font-size: 24px;
+  font-size: 21px;
   text-transform: uppercase;
   &:after{
     content: '';
     position: absolute;
     top: 0;
-    right: -64px;
-    border-right: 64px solid transparent;
-    border-bottom: 64px solid $sport-lightblue;
+    right: -50px;
+    border-right: 50px solid transparent;
+    border-bottom: 60px solid $sport-lightblue;
   }
 }
 .reportsummary-schooltable{
