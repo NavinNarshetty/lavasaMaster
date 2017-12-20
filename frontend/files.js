@@ -43,6 +43,7 @@ module.exports = [
   "bower_components/masonry/masonry.js",
   "bower_components/imagesloaded/imagesloaded.js",
   "bower_components/masonry/dist/masonry.pkgd.min.js",
+  "bower_components/angular-svg-round-progressbar/build/roundProgress.min.js",
   // "bower_components/angular-masonry/angular-masonry.js",
 
   //App.js

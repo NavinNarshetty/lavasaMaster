@@ -74,7 +74,8 @@
     "async": "^2.5.0",
     "FileSaver.js": "^0.0.2",
     "swiper": "^3.4.2",
-    "cleave.js": "^1.0.1"
+    "cleave.js": "^1.0.1",
+    "angular-svg-round-progressbar": "0.4.8"
   },
   "devDependencies": {
     "angular-translate": "^2.11.0"

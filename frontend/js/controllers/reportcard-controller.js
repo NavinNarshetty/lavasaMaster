@@ -31,17 +31,28 @@ myApp.controller('ReportCardCtrl', function ($scope, TemplateService, $state, Na
     NavigationService.getOneReportCard($scope.school, function(data) {
       if (data.value == true) {
         $scope.schoolData = data.data;
+        if ((!$scope.schoolData.medalsTally.medal.gold.count || $scope.schoolData.medalsTally.medal.gold.count == 0) && (!$scope.schoolData.medalsTally.medal.silver.count || $scope.schoolData.medalsTally.medal.silver.count == 0) && (!$scope.schoolData.medalsTally.medal.bronze.count || $scope.schoolData.medalsTally.medal.bronze.count == 0 )) {
+          $scope.schoolData.noRank = true;
+          $scope.schoolData.schoolRank = 'NA';
+        } else{
+          $scope.schoolData.noRank = false;
+        }
         _.each($scope.schoolData.contingent.sport, function(n){
+          if(n.maleCount == 0 && n.femaleCount == 0){
+            n.stackGender = false;
+          } else {
+            n.stackGender = true;
+          }
           if(n.maleCount == n.femaleCount){
             n.malePercent = 50;
             n.femalePercent = 50;
           } else {
             var total = n.maleCount + n.femaleCount;
             var ratio = n.maleCount / total;
-            console.log('ratio',n.sportName, ratio);
+            // console.log('ratio',n.sportName, ratio);
             var percent = ratio * 100;
             var percent = _.round(percent);
-            console.log("percen", n.sportName, percent);
+            // console.log("percen", n.sportName, percent);
             if(percent < 20){
               n.malePercent = 20;
             } else if(percent > 80){
