@@ -1528,6 +1528,7 @@ var model = {
                         }
                         teamData._id = team.athleteId._id;
                         teamData.opponentsSingle = team._id;
+                        teamData.player = team.athleteId;
                         console.log("teamId", teamData._id, "sport", data.sport, "round", standings.name);
                         var teamid = teamData._id.toString();
                         var matchObj = {
@@ -1560,7 +1561,7 @@ var model = {
                         console.log("teamdata", teamData);
                         var scores = {};
                         scores._id = teamData._id;
-                        scores.player = teamData.opponentsSingle;
+                        scores.player = teamData.player;
                         scores.sfaId = teamData.teamId;
                         scores.schoolName = teamData.schoolName;
                         scores.win = 0;
