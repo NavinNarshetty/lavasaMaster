@@ -146,7 +146,7 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
         }
 
       }
-      if (result.globalResultIndividual !== undefined) {
+      if (result.globalResultIndividual !== undefined && !_.isEmpty(result.globalResultIndividual)) {
         if (player._id === result.globalResultIndividual.winner.opponentsSingle) {
           player.isWinner = true;
         } else {
