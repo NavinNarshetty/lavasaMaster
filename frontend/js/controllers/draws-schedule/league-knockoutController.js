@@ -26,7 +26,7 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
           if (allData.value) {
             $scope.oneSportDetail = allData.data;
             $scope.sportsListSubCategoryName = $scope.oneSportDetail.sportslist.sportsListSubCategory.name;
-            // console.log("  $scope.sportsListSubCategoryName", $scope.sportsListSubCategoryName);
+            $scope.isTeam = $scope.oneSportDetail.sportslist.sportsListSubCategory.isTeam;
             if ($scope.sportsListSubCategoryName === 'Fencing') {
               Url = 'match/getStandingsFencing';
               $scope.getStandingsFun(Url);
@@ -137,7 +137,24 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
             if (!allData.message) {
               if (allData.value) {
                 $scope.tablePoint = allData.data.tablePoint;
-                // console.log("$scope.tablePoint ", $scope.tablePoint);
+                if ($scope.tablePoint) {
+                  _.each($scope.tablePoint, function (key) {
+                    console.log("key", key);
+                    _.each(key.points, function (value) {
+
+                      if (!_.isEmpty(value.player)) {
+                        if (value.player.middleName) {
+                          value.fullName = value.player.firstName + ' ' + value.player.middleName + ' ' + value.player.surname;
+                        } else {
+                          value.fullName = value.player.firstName + ' ' + value.player.surname;
+                        }
+
+                      }
+                    });
+                  });
+                }
+
+
               }
             } else {
               toastr.error(allData.message, 'Error Message');
