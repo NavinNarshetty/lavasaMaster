@@ -8063,18 +8063,18 @@ var model = {
                         obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 2"];
                     }
                 } else if (mainData.resultsRacquet) {
-                    console.log(mainData.resultsRacquet.players[0].sets);
+                    // console.log(mainData.resultsRacquet.players[0].sets);
                     if (mainData.resultsRacquet.players && mainData.resultsRacquet.players.length > 1) {
                         console.log(mainData.resultsRacquet.players[1].sets);
                         for (var i = 0; i < mainData.resultsRacquet.players[1].sets.length; i++) {
                             if (i == 0) {
-                                obj["A2 Point"] = mainData.resultsRacquet.players[1].sets[i].point;
+                                // obj["A2 Point"] = mainData.resultsRacquet.players[1].sets[i].point;
                                 obj["A2 Total Service Errors"] = mainData.resultsRacquet.players[1].sets[i].serviceError;
                                 obj["A2 Total Unforced Errors"] = mainData.resultsRacquet.players[1].sets[i].unforcedError;
                                 obj["A2 Total Winners"] = mainData.resultsRacquet.players[1].sets[i].winner;
 
                             } else {
-                                obj["A2 Point"] = mainData.resultsRacquet.players[1].sets[i].point;
+                                // obj["A2 Point"] = mainData.resultsRacquet.players[1].sets[i].point;
                                 obj["A2 Total Service Errors"] = obj["A2 Total Service Errors"] + mainData.resultsRacquet.players[1].sets[i].serviceError;
                                 obj["A2 Total Unforced Errors"] = obj["A2 Total Unforced Errors"] + mainData.resultsRacquet.players[1].sets[i].unforcedError;
                                 obj["A2 Total Winners"] = obj["A2 Total Winners"] + mainData.resultsRacquet.players[1].sets[i].winner;
