@@ -47,10 +47,10 @@ schema.plugin(deepPopulate, {
             select: ''
         },
         "team.studentTeam": {
-            select: ''
+            select: '_id studentId teamId'
         },
         "team.studentTeam.studentId": {
-            select: ''
+            select: 'sfaId firstName surname middleName'
         },
         "player": {
             select: ''
