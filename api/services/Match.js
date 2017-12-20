@@ -9384,10 +9384,6 @@ var model = {
 
                         }
                     }
-                    console.log(mainData.resultsRacquet);
-                    console.log(mainData.resultsRacquet.winner);
-                    console.log(mainData.resultsRacquet.opponentsTeam);
-                    console.log(mainData.resultsRacquet.opponentsTeam.length);
                     if (mainData.resultsRacquet.winner.player === mainData.opponentsTeam[0]._id.toString()) {
                         obj["WINNER TEAM ID"] = obj["TEAM ID 1"];
                         obj["WINNER SCHOOL"] = obj["SCREEN SCHOOL NAME 1"];
