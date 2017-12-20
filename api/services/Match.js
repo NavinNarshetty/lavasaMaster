@@ -8435,14 +8435,14 @@ var model = {
                         obj["A2 Total Unforced Errors"] = "";
                         obj["A2 Total Winners"] = "";
                     }
-                    if (mainData.resultsRacquet.winner.opponentsSingle === mainData.opponentsSingle[1]._id.toString()) {
-                        obj["WINNER NAME"] = obj["SCREEN NAME ATHLETE 2"];
-                        obj["WINNER SFA ID"] = obj["SFAID 2"];
-                        obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 2"];
-                    } else {
+                    if (mainData.resultsRacquet.winner.opponentsSingle === mainData.opponentsSingle[0]._id.toString()) {
                         obj["WINNER NAME"] = obj["SCREEN NAME ATHLETE 1"];
                         obj["WINNER SFA ID"] = obj["SFAID 1"];
                         obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 1"];
+                    } else {
+                        obj["WINNER NAME"] = obj["SCREEN NAME ATHLETE 2"];
+                        obj["WINNER SFA ID"] = obj["SFAID 2"];
+                        obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 2"];
                     }
                 }
                 obj["VIDEO TYPE"] = "";
