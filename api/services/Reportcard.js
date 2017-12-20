@@ -290,7 +290,7 @@ var model = {
 
                             ConfigProperty.findOne().exec(function (err, data) {
 
-                                if (sendObj.medalsTally && sendObj.medalsTally.medal && sendObj.medalsTally.medal['gold'] && sendObj.medalsTally.medal['gold'].totalGold) {
+                                if (sendObj.medalsTally && sendObj.medalsTally.medal && sendObj.medalsTally.medal['gold'] && sendObj.medalsTally.medal['gold'].count) {
                                     sendObj.medalsTally.medal['gold'].totalGold = data['goldMedal'];
                                 } else {
                                     if (sendObj.medalsTally && sendObj.medalsTally.medal) {
@@ -307,7 +307,7 @@ var model = {
                                     }
                                 }
 
-                                if (sendObj.medalsTally && sendObj.medalsTally.medal && sendObj.medalsTally.medal['silver'] && sendObj.medalsTally.medal['silver'].totalSilver) {
+                                if (sendObj.medalsTally && sendObj.medalsTally.medal && sendObj.medalsTally.medal['silver'] && sendObj.medalsTally.medal['silver'].count) {
                                     sendObj.medalsTally.medal['silver'].totalSilver = data['silverMedal'];
                                 } else {
                                     sendObj.medalsTally.medal['silver'] = {
@@ -315,7 +315,7 @@ var model = {
                                     }
                                 }
 
-                                if (sendObj.medalsTally && sendObj.medalsTally.medal && sendObj.medalsTally.medal['bronze'] && sendObj.medalsTally.medal['bronze'].totalBronze) {
+                                if (sendObj.medalsTally && sendObj.medalsTally.medal && sendObj.medalsTally.medal['bronze'] && sendObj.medalsTally.medal['bronze'].count) {
                                     sendObj.medalsTally.medal['bronze'].totalBronze = data['bronzeMedal'];
                                 } else {
                                     sendObj.medalsTally.medal['bronze'] = {
