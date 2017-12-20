@@ -235,6 +235,43 @@
     .report-content{
       padding: 0 10px;
     }
+    .report-contingentprogress{
+      width: 130px;
+    }
+    .reportperformance-content{
+      .report-cupcard{
+        padding: 10px;
+      }
+      .report-cupholder{
+        width: 50px;
+      }
+      .report-cuprank{
+        .report-schoolranktitle{
+          font-size: 14px;
+        }
+        .report-schoolrank{
+          font-size: 24px;
+        }
+      }
+    }
+    .reportperformance-medallist{
+      padding: 10px;
+      .report-medalholder{
+        width: 16px;
+      }
+      .report-rankholder{
+        width: calc( 100% - 20px);
+      }
+    }
+    .report-schoolsummaryholder{
+      text-align: center;
+    }
+    .report-summarycard{
+      text-align: left;
+    }
+    .report-wingraph{
+      width: 50%;
+    }
     // REPORT CARD  END
      // Mobile End
  }

@@ -19,7 +19,8 @@ var myApp = angular.module('myApp', [
     'angularPromiseButtons',
     'ui.swiper',
     'cleave.js',
-    'wu.masonry'
+    'wu.masonry',
+    'angular-svg-round-progressbar'
 
 ]);
 

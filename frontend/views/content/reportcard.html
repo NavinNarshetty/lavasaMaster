@@ -18,7 +18,7 @@
                   <div class="reportcard-school d-fjalla-one">{{schoolData.contingent.schoolName}} </div>
                   <div class="reportcard-sfaid">Sfa ID: {{schoolData.contingent.sfaId}}</div>
               </div>
-                <div class="pull-right mob-floatclear">
+                <div class="pull-right mob-floatclear" ng-if="!schoolData.noRank">
                     <div class="report-cupcard">
                         <div class="report-cupholder">
                             <img src="img/medal-icon/trophy-big.png" alt="SFA Trophy | Sports For All" title="SFA Trophy | Sports For All" class="img-responsive">
@@ -82,7 +82,7 @@
                                       </div>
                                         <div class="pull-right">
                                             <div class="report-contingentprogress">
-                                                <div class="progress progress-statistics">
+                                                <div class="progress progress-statistics" ng-if="list.stackGender">
                                                     <div class="progress-bar reportgender-stats male-statistics" role="progressbar" style="width:{{list.malePercent}}%">
                                                         <span class="pull-right"> <span class="male-statisticsnumber">{{list.maleCount}} </span></span>
                                                     </div>
@@ -129,7 +129,7 @@
                 </div>
                 <div class="col-md-7 col-sm-7 col-xs-12">
                     <!-- PERFORMANCE SUMMARY -->
-                    <div class="report-content report-performaneholder hide">
+                    <div class="report-content report-performaneholder" ng-if="schoolData.noRank">
                         <div class="report-titles">Performance Summary</div>
                         <div class="reportperformance-content">
                             <!-- CUP AND RANK -->
@@ -156,7 +156,7 @@
                                                 <span class="report-ranktext-big d-teko-semibold">00</span>
                                                 <span class="inline-block">
                           <span>Out of</span>
-                                                <span class="display-block d-teko-semibold">1568</span>
+                                                <span class="display-block d-teko-semibold">{{schoolData.medalsTally.medal.gold.totalGold}}</span>
                                                 </span>
                                             </div>
                                         </div>
@@ -170,7 +170,7 @@
                                                 <span class="report-ranktext-big d-teko-semibold">00</span>
                                                 <span class="inline-block">
                           <span>Out of</span>
-                                                <span class="display-block d-teko-semibold">1568</span>
+                                                <span class="display-block d-teko-semibold">{{schoolData.medalsTally.medal.silver.totalSilver}}</span>
                                                 </span>
                                             </div>
                                         </div>
@@ -184,7 +184,7 @@
                                                 <span class="report-ranktext-big d-teko-semibold">00</span>
                                                 <span class="inline-block">
                           <span>Out of</span>
-                                                <span class="display-block d-teko-semibold">1568</span>
+                                                <span class="display-block d-teko-semibold">{{schoolData.medalsTally.medal.bronze.totalBronze}}</span>
                                                 </span>
                                             </div>
                                         </div>
@@ -196,7 +196,7 @@
                     </div>
                     <!-- PERFORMANCE SUMMARY END -->
                     <!-- MEDALS TALLY -->
-                    <div class="report-content report-medalsummaryholder ">
+                    <div class="report-content report-medalsummaryholder " ng-if="!schoolData.noRank">
                         <div class="report-titles">Medal Tally</div>
                         <div class="report-medaltableholder table-responsive ">
                             <table class="table">
@@ -311,7 +311,14 @@
                           </li>
                         </ul>
                       </div>
-                      <div class="report-wingraph"></div>
+                      <div class="report-wingraph">
+                        <round-progress max="100" current="schoolData.contingent.noShowPercent" color="#0eda85" bgcolor="#ccc" radius="60" stroke="15" semi="false" rounded="false" clockwise="false" responsive="true" duration="1000" animation="easeInOutQuart" animation-delay="0"></round-progress>
+                        <div class="get-center">
+                          <div class="report-winpercentholder">
+                            WIN <span class="display-block"><span class="winpercent-big">{{schoolData.contingent.noShowPercent}}</span> %</span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                 </div>
             </div>
@@ -332,7 +339,7 @@
     <section class="report-schoolperformance-section">
       <div class="container">
         <div class="report-schoolheader">
-          Your School's Performance Vs. Top Performers at SFA Mumbai 2016
+          Your School's Performance Vs. Top Performers at SFA {{sfaCity}} {{eventYear}}
         </div>
         <div class="reportsummary-schooltable">
           <div class="reportschool-tableholder table-responsive">
@@ -361,25 +368,25 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="list in lists track by $index">
+                <tr ng-repeat="school in schoolData.performance track by $index">
                   <td>
                     <div class="">
-                      Ryan International High School, Kharghar
+                      {{school.topSchoolName}}
                     </div>
                   </td>
                   <td>
                     <div class="">
-                      Maximum Sports Participated
+                      {{school.criteria}}
                     </div>
                   </td>
                   <td>
                     <div class="">
-                      3
+                      {{school.topPerformance}}
                     </div>
                   </td>
                   <td>
                     <div class="">
-                      26
+                      {{school.myPerformance}}
                     </div>
                   </td>
                 </tr>

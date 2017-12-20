@@ -119,7 +119,7 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
           } else {
             result.noShow = false;
           }
-          if(result.globalResult.winner.reason){
+          if (result.globalResult.winner.reason) {
             console.log("yaba");
             result.reason = result.globalResult.winner.reason;
           }
@@ -142,7 +142,7 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
         }
 
       }
-      if (result.globalResultIndividual !== undefined) {
+      if (result.globalResultIndividual !== undefined && !_.isEmpty(result.globalResultIndividual)) {
         if (player._id === result.globalResultIndividual.winner.opponentsSingle) {
           player.isWinner = true;
         } else {

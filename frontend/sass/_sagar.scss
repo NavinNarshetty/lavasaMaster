@@ -2064,15 +2064,24 @@ $tickerDuration: 60s;
   background-color: $bg-color-female;
 }
 .report-wingraph{
-  width: 30%;
-  height: 100px;
-  border: 1px solid #000;
-  border-radius: 100%;
+  width: 20%;
+  // border: 1px solid #000;
   display: inline-block;
+  position: relative;
   vertical-align: middle;
 }
+.report-winpercentholder{
+  font-size: 21px;
+  color: $sport-primary;
+  line-height: 1;
+  text-align: center;
+  @extend .d-teko-semibold;
+}
+.winpercent-big{
+  font-size: 36px;
+}
 .report-summarycard{
-  max-width: 65%;
+  max-width: 75%;
   padding: 10px;
   margin: 0 5px;
   border: 1px solid #000;
