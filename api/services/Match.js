@@ -8780,7 +8780,7 @@ var model = {
                             } else {
                                 obj["T2 Total Service Errors"] = obj["T2 Total Service Errors"] + mainData.resultsRacquet.teams[1].sets[i].serviceError;
                                 obj["T2 Total Unforced Errors"] = obj["T2 Total Unforced Errors"] + mainData.resultsRacquet.teams[1].sets[i].unforcedError;
-                                obj["T2 Total Winners"] = obj["A2 Total Winners"] + mainData.resultsRacquet.teams[1].sets[i].winner;
+                                obj["T2 Total Winners"] = obj["T2 Total Winners"] + mainData.resultsRacquet.teams[1].sets[i].winner;
 
                             }
                             switch (i) {
