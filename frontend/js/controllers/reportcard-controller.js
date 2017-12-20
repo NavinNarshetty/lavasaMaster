@@ -31,6 +31,27 @@ myApp.controller('ReportCardCtrl', function ($scope, TemplateService, $state, Na
     NavigationService.getOneReportCard($scope.school, function(data) {
       if (data.value == true) {
         $scope.schoolData = data.data;
+        _.each($scope.schoolData.contingent.sport, function(n){
+          if(n.maleCount == n.femaleCount){
+            n.malePercent = 50;
+            n.femalePercent = 50;
+          } else {
+            var total = n.maleCount + n.femaleCount;
+            var ratio = n.maleCount / total;
+            console.log('ratio',n.sportName, ratio);
+            var percent = ratio * 100;
+            var percent = _.round(percent);
+            console.log("percen", n.sportName, percent);
+            if(percent < 20){
+              n.malePercent = 20;
+            } else if(percent > 80){
+              n.malePercent = 80;
+            } else {
+              n.malePercent = percent;
+            }
+            n.femalePercent = 100 - n.malePercent;
+          }
+        });
         console.log("$scope.schoolData", $scope.schoolData);
       } else {
         toastr.error("Data not found.", "Error");

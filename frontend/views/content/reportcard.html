@@ -14,7 +14,11 @@
     <section class="">
         <div class="container">
             <div class="clearfix reportcard-header">
-                <div class="pull-right">
+              <div class="float-left mob-floatclear">
+                  <div class="reportcard-school d-fjalla-one">{{schoolData.contingent.schoolName}} </div>
+                  <div class="reportcard-sfaid">Sfa ID: {{schoolData.contingent.sfaId}}</div>
+              </div>
+                <div class="pull-right mob-floatclear">
                     <div class="report-cupcard">
                         <div class="report-cupholder">
                             <img src="img/medal-icon/trophy-big.png" alt="SFA Trophy | Sports For All" title="SFA Trophy | Sports For All" class="img-responsive">
@@ -26,10 +30,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="">
-                    <div class="reportcard-school d-fjalla-one">{{schoolData.contingent.schoolName}} </div>
-                    <div class="reportcard-sfaid">Sfa ID: {{schoolData.contingent.sfaId}}</div>
-                </div>
+
             </div>
             <div class="report-greenbar">
                 <div class="report-yellowbar"></div>
@@ -52,6 +53,7 @@
                                     Total Athletes
                                 </div>
                                 <div class="report-contingentblock">
+                                  <div class="contingent-flexbox">
                                     <div class="reportcontingent-gender">
                                         <div class="report-gendericon">
                                             <img src="img/medal-icon/male-small.png" alt="Male Athletes | SFA Championship" class="img-responsive">
@@ -64,6 +66,7 @@
                                         </div>
                                         <span class="report-contingentcount report-countfemale">{{schoolData.contingent.femaleCount}}</span>
                                     </div>
+                                  </div>
                                     <span class="display-block">
                     Gender Ratio: <span>{{schoolData.contingent.genderRatio}}</span>
                                     </span>
@@ -75,16 +78,16 @@
                                 <li ng-repeat="list in schoolData.contingent.sport|orderBy:'sportName' track by $index">
                                     <div class="clearfix">
                                       <div class="text-uppercase pull-left">
-                                          {{list.sportName}} - {{list.totalStrength}}
+                                          {{list.sportName}}
                                       </div>
                                         <div class="pull-right">
                                             <div class="report-contingentprogress">
                                                 <div class="progress progress-statistics">
-                                                    <div class="progress-bar reportgender-stats male-statistics" role="progressbar" style="width:45%">
-                                                        <span class="pull-right"> <span class="male-statisticsnumber">{{list.maleCount}}</span></span>
+                                                    <div class="progress-bar reportgender-stats male-statistics" role="progressbar" style="width:{{list.malePercent}}%">
+                                                        <span class="pull-right"> <span class="male-statisticsnumber">{{list.maleCount}} </span></span>
                                                     </div>
-                                                    <div class="progress-bar reportgender-stats female-statistics" role="progressbar" style="width:55%">
-                                                        <span class="pull-left"><span class="female-statisticsnumber">{{list.femaleCount}}</span></span>
+                                                    <div class="progress-bar reportgender-stats female-statistics" role="progressbar" style="width:{{list.femalePercent}}%">
+                                                        <span class="pull-left"><span class="female-statisticsnumber">{{list.femaleCount}} </span></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -200,7 +203,7 @@
                                 <thead>
                                     <tr>
                                         <td>
-                                            <div class="text-uppercase">
+                                            <div class="text-uppercase medaltally-total">
                                                 Total Medals
                                                 <span class="report-ranktext report-medalcount d-teko-semibold"><span class="report-ranktext-big">{{schoolData.medalsTally.totalCount}}</span> <span class="report-ranktext-small">/<span>100</span></span>
                                                 </span>

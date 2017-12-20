@@ -196,5 +196,45 @@
       }
     }
     // SPECIAL EVENT END
+    // REPORT CARD
+    .mob-floatclear{
+      float: none !important;
+    }
+    .reportcard-school{
+      font-size: 21px;
+    }
+    .reportcard-sfaid{
+      font-size: 16px;
+    }
+    .report-cupcard{
+      margin-top: 10px;
+      .report-ranktext-big{
+        font-size: 30px;
+      }
+      .report-ranktext-small{
+        font-size: 21px;
+      }
+    }
+    .report-cupholder{
+      width: 35px;
+    }
+    .report-summarycard{
+      max-width: initial;
+      margin: 10px 0;
+      display: block;
+    }
+    .report-schoolheader{
+      font-size: 16px;
+    }
+    .report-schoolheader{
+      padding: 10px;
+    }
+    .reportsummary-schooltable{
+      padding: 10px;
+    }
+    .report-content{
+      padding: 0 10px;
+    }
+    // REPORT CARD  END
      // Mobile End
  }

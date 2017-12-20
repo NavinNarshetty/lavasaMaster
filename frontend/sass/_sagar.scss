@@ -19,6 +19,10 @@ $bg-color-female: #ffcd7b !default;
     height: 100%;
 }
 
+.float-clear{
+  float: none !important;
+}
+
 .pad-clear{
   padding: 0 !important;
 }
@@ -1936,11 +1940,16 @@ $tickerDuration: 60s;
   font-size: 36px;
   vertical-align: middle;
 }
+.contingent-flexbox{
+  display: flex;
+  flex-wrap: nowrap;
+}
 .reportcontingent-gender{
-  width: 49%;
+  // width: 49%;
   margin-bottom: 5px;
-  display: inline-block;
+  // display: inline-block;
   vertical-align: middle;
+  flex: auto;
 }
 .report-gendericon{
   width: 20px;

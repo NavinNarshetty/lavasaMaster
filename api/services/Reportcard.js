@@ -9,6 +9,7 @@ var schema = new Schema({
     maleCount: Number,
     femaleCount: Number,
     genderRatio: String,
+    myRank: Number,
     sport: [{
         subCategoryId: {
             type: Schema.Types.ObjectId,
@@ -24,6 +25,9 @@ var schema = new Schema({
     sportParticipationCount: Number,
     nonParticipatedSport: [String],
     noShowPercent: Number,
+    winCount: Number,
+    looseCount: Number,
+    winPercent: Number,
     // highestParticipation: [{
     //     name: String,
     //     count: Number
@@ -73,6 +77,139 @@ var model = {
 
     getOneReportCard: function (data, callback) {
 
+        function calPerformance(obj, callback) {
+
+            async.waterfall([
+                function (callback) {
+
+                    Reportcard.findOne().sort({
+                        "totalStrength": -1
+                    }).exec(function (err, result) {
+                        if (err) {
+                            obj.performance.push({
+                                "criteria": "Contingent Strength"
+                            })
+                        } else if (!_.isEmpty(result)) {
+                            obj.performance.push({
+                                "topSchoolName": result.schoolName,
+                                "criteria": "Contingent Strength",
+                                "topPerformance": result.totalStrength,
+                                "myPerformance": obj.contingent.totalStrength
+                            });
+                            callback();
+                        }
+                    });
+
+                },
+                function (callback) {
+
+                    Reportcard.findOne().sort({
+                        "maleCount": -1
+                    }).exec(function (err, result) {
+
+                        if (err || _.isEmpty(result)) {
+                            obj.performance.push({
+                                "criteria": "Maximum Male Athletes"
+                            })
+                        } else if (!_.isEmpty(result)) {
+                            obj.performance.push({
+                                "topSchoolName": result.schoolName,
+                                "criteria": "Maximum Male Athletes",
+                                "topPerformance": result.maleCount,
+                                "myPerformance": obj.contingent.maleCount
+                            });
+                            callback();
+                        }
+                    });
+                },
+                function (callback) {
+                    Reportcard.findOne().sort({
+                        "femaleCount": -1
+                    }).exec(function (err, result) {
+
+                        if (err || _.isEmpty(result)) {
+                            obj.performance.push({
+                                "criteria": "Maximum Female Athletes"
+                            })
+                        } else if (!_.isEmpty(result)) {
+                            obj.performance.push({
+                                "topSchoolName": result.schoolName,
+                                "criteria": "Maximum Female Athletes",
+                                "topPerformance": result.femaleCount,
+                                "myPerformance": obj.contingent.femaleCount
+                            })
+                            callback();
+                        }
+                    })
+                },
+                function (callback) {
+                    Reportcard.findOne().sort({
+                        "femaleCount": -1
+                    }).exec(function (err, result) {
+
+                        if (err || _.isEmpty(result)) {
+                            obj.performance.push({
+                                "criteria": "Maximum Female Athletes"
+                            })
+                        } else if (!_.isEmpty(result)) {
+                            obj.performance.push({
+                                "topSchoolName": result.schoolName,
+                                "criteria": "Maximum Sports Participated",
+                                "topPerformance": result.sportParticipationCount,
+                                "myPerformance": obj.contingent.sportParticipationCount
+                            })
+                            callback();
+                        }
+                    })
+                },
+                function (callback) {
+                    Reportcard.findOne({
+                        'totalStrength': {
+                            $ne: 0
+                        }
+                    }).sort({
+                        "noShowPercent": 1
+                    }).exec(function (err, result) {
+                        if (err || _.isEmpty(result)) {
+                            obj.performance.push({
+                                "criteria": "Minimum No Show %"
+                            })
+                        } else if (!_.isEmpty(result)) {
+                            obj.performance.push({
+                                "topSchoolName": result.schoolName,
+                                "criteria": "Minimum No Show %",
+                                "topPerformance": result.noShowPercent,
+                                "myPerformance": obj.contingent.noShowPercent
+                            })
+                            callback();
+                        }
+                    })
+                },
+                function (callback) {
+                    Reportcard.findOne().sort({
+                        'winPercent': -1,
+                        'schoolRank': 1
+                    }).exec(function (err, result) {
+                        if (err || _.isEmpty(result)) {
+                            obj.performance.push({
+                                "criteria": "Maximum Win %"
+                            })
+                        } else if (!_.isEmpty(result)) {
+                            obj.performance.push({
+                                "topSchoolName": result.schoolName,
+                                "criteria": "Maximum Win %",
+                                "topPerformance": result.winPercent,
+                                "myPerformance": obj.contingent.winPercent
+                            })
+                            callback();
+                        }
+                    })
+                }
+            ], function (err, result) {
+                callback(obj);
+            });
+        };
+
         async.waterfall([
             function (callback) {
                 var sendObj = {};
@@ -101,6 +238,30 @@ var model = {
                         if (index != -1) {
                             sendObj.schoolRank = index + 1;
                             sendObj.medalsTally = result[index];
+                            sendObj.performance = sendObj.contingent.performance;
+
+
+                            var maxTotalMedalsWon = _.maxBy(result, 'totalCount');
+                            var maxGoldMedalsWon = _.maxBy(result, 'medal.gold.count');
+
+                            sendObj.performance.push({
+                                topSchoolName: result[0].name,
+                                criteria: "School Rank (Out of " + result.length + ")",
+                                topPerformance: 1,
+                                myPerformance: index + 1
+                            }, {
+                                topSchoolName: maxTotalMedalsWon.name,
+                                criteria: "Maximum Medals Won",
+                                topPerformance: maxTotalMedalsWon.totalCount,
+                                myPerformance: result[index].totalCount
+                            }, {
+                                topSchoolName: maxGoldMedalsWon.name,
+                                criteria: "Maximum Gold Medals Won",
+                                topPerformance: maxGoldMedalsWon.medal.gold.count,
+                                myPerformance: (result[index].medal && result[index].medal.gold) ? result[index].medal.gold.count : 0
+                            });
+
+
                         } else {
                             sendObj.schoolRank = "NA";
                         }
@@ -127,14 +288,50 @@ var model = {
                         }, function (err, finalResult) {
                             sendObj.medalsTally.sportData = finalResult;
 
-                            ConfigProperty.findOne().exec(function(err,data){
-                                sendObj.medalsTally.medal['gold'].totalGold=data['goldMedal'];
-                                sendObj.medalsTally.medal['silver'].totalSilver=data['silverMedal'];
-                                sendObj.medalsTally.medal['bronze'].totalBronze=data['bronzeMedal'];
+                            ConfigProperty.findOne().exec(function (err, data) {
+
+                                if (sendObj.medalsTally && sendObj.medalsTally.medal && sendObj.medalsTally.medal['gold'] && sendObj.medalsTally.medal['gold'].count) {
+                                    sendObj.medalsTally.medal['gold'].totalGold = data['goldMedal'];
+                                } else {
+                                    if (sendObj.medalsTally && sendObj.medalsTally.medal) {
+                                        sendObj.medalsTally.medal['gold'] = {
+                                            "totalGold": data['goldMedal']
+                                        }
+                                    } else {
+                                        console.log(data);
+                                        sendObj.medalsTally.medal = {
+                                            'gold': {
+                                                "totalGold": data['goldMedal']
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (sendObj.medalsTally && sendObj.medalsTally.medal && sendObj.medalsTally.medal['silver'] && sendObj.medalsTally.medal['silver'].count) {
+                                    sendObj.medalsTally.medal['silver'].totalSilver = data['silverMedal'];
+                                } else {
+                                    sendObj.medalsTally.medal['silver'] = {
+                                        "totalSilver": data['silverMedal']
+                                    }
+                                }
+
+                                if (sendObj.medalsTally && sendObj.medalsTally.medal && sendObj.medalsTally.medal['bronze'] && sendObj.medalsTally.medal['bronze'].count) {
+                                    sendObj.medalsTally.medal['bronze'].totalBronze = data['bronzeMedal'];
+                                } else {
+                                    sendObj.medalsTally.medal['bronze'] = {
+                                        "totalBronze": data['bronzeMedal']
+                                    }
+                                }
                                 callback(null, sendObj);
-                            });                           
+                            });
                         });
                     }
+                })
+            },
+            // calPerformance
+            function (sendObj, callback) {
+                calPerformance(sendObj, function (obj) {
+                    callback(null, obj);
                 })
             }
         ], function (err, result) {
@@ -150,16 +347,26 @@ var model = {
     },
 
     generateReportCard: function (fcallback) {
+
         function calTotalAth(obj, callback) {
 
             var returnObj = {};
             returnObj.maleCount = 0;
             returnObj.femaleCount = 0;
             returnObj.genderRatio = "0:0";
+
             obj.arr = _.uniqBy(obj.arr, function (n) {
                 return JSON.stringify(n.athleteId._id)
             });
             returnObj.totalStrength = obj.arr.length;
+
+            var wonArr = _.filter(obj.arr, ['won', true]);
+            var looseArr = _.filter(obj.arr, ['won', false]);
+
+            returnObj.winCount = wonArr.length;
+            returnObj.looseCount = looseArr.length;
+            var winPercent = _.round((returnObj.winCount / (returnObj.winCount + returnObj.looseCount)) * 100);
+            returnObj.winPercent = _.isNaN(winPercent) ? 0 : winPercent;
             obj.arr = _.groupBy(obj.arr, 'athleteId.gender');
 
             if (obj.arr['male'] && obj.arr['female']) {
@@ -199,6 +406,8 @@ var model = {
             } else {
                 callback(returnObj);
             }
+
+
         };
 
         function calSportDetails(obj, callback) {
@@ -252,6 +461,7 @@ var model = {
 
                     callback();
                 },
+
                 function (callback) {
                     var sportsToMerge = ['Tennis', 'Badminton', 'Table Tennis', 'Athletics', 'Swimming'];
 
@@ -361,6 +571,17 @@ var model = {
 
         };
 
+        function calPerformance(obj, callback) {
+            async.waterfall([
+                // calSchoolRank
+                function (callback) {
+
+                },
+            ], function (err, result) {
+
+            });
+        };
+
         // async.cobn
         Registration.find({
             'status': "Verified"
@@ -371,6 +592,7 @@ var model = {
 
                 saveObj.sfaId = school.sfaID;
                 async.waterfall([
+
                     function (callback) {
                         async.parallel([
                             //Individual Sports
@@ -572,6 +794,7 @@ var model = {
                             callback(null, arr);
                         });
                     },
+
                     function (parallelResult, callback) {
                         async.concatSeries(parallelResult, function (singleData, callback) {
                             var resultVar = Match.getResultVar(singleData.sportsListSubCategory.name, singleData.sportsListSubCategory.type);
@@ -591,68 +814,178 @@ var model = {
 
                                         if (result[resultVar.resultVar]) {
                                             var findByKey = '';
-                                            var noShow = function (obj) {
 
+                                            var noShow = function (obj) {
                                                 if (!_.isEmpty(obj)) {
                                                     singleData.noShow = obj.noShow;
                                                 } else {
                                                     singleData.delete = true;
                                                 }
                                             };
-                                            switch (singleData.sportsListSubCategory.type) {
-                                                case 'Combat Sports':
-                                                case 'Racquet Sports':
-                                                case 'Team Sports':
-                                                    findByKey = 'player';
-                                                    break;
-                                                case 'Individual Sports':
-                                                    findByKey = 'id';
-                                                    if (singleData.sportsListSubCategory.name == "Carrom") {
-                                                        findByKey = 'player';
-                                                    } else if (singleData.sportsListSubCategory.name == "Chess") {
-                                                        noShow = function (obj) {
-                                                            if (obj.score && obj.rank) {
-                                                                singleData.noShow = true;
-                                                            } else {
-                                                                singleData.delete = true;
-                                                            }
-                                                        }
-                                                    }
-                                                    break;
-                                                case 'Aquatics Sports':
-                                                    break;
-                                                case 'Target Sports':
-                                                    if (singleData.sportsListSubCategory.name == "Archery") {
-                                                        if (result.excelType == 'qualifying') {
-                                                            findByKey = 'id';
-                                                            resultVar['resultVar'] = resultVar.resultVar1;
-                                                        } else if (result.excelType == 'knockout') {
-                                                            findByKey = 'player';
-                                                            resultVar['resultVar'] = resultVar.resultVar2;
-                                                        }
-                                                    }
-                                                    break;
-                                            }
 
-                                            if (resultVar.opponentsVar == 'opponentsSingle') {
-                                                if (singleData.sportsListSubCategory.name != "Shooting") {
-                                                    var obj = _.find(result[resultVar.resultVar].players, [findByKey, singleData.athleteId._id.toString()]);
-                                                    noShow(obj);
-                                                    callback();
-                                                } else {
-                                                    noShow(result[resultVar.resultVar]);
-                                                    callback();
-                                                }
-                                            } else if (resultVar.opponentsVar == 'opponentsTeam') {
-                                                var sendObj = {};
-                                                _.each(result[resultVar.resultVar].teams, function (n) {
-                                                    if (_.findIndex(n.players, [findByKey, singleData.athleteId._id.toString()]) != -1) {
-                                                        sendObj = n
+                                            var win=function(obj){
+                                                if (singleData.type == 'indi') {
+                                                    if (obj && obj.winner && obj.winner.opponentsSingle && (obj.winner.opponentsSingle == _.toString(singleData._id))) {
+                                                        singleData.won = true;
+                                                    } else {
+                                                        singleData.won = false;
                                                     }
-                                                });
-                                                noShow(sendObj);
-                                                callback();
-                                            }
+                                                } else if (singleData.type == 'team') {
+                                                    if (obj && obj.winner && obj.winner.player && (obj.winner.player == _.toString(singleData._id))) {
+                                                        singleData.won = true;
+                                                    } else {
+                                                        singleData.won = false;
+                                                    }
+                                                }
+                                            }             
+                                            callback();                            
+
+                                            // switch (singleData.sportsListSubCategory.type) {
+                                            //     case 'Combat Sports':
+                                            //     case 'Racquet Sports':
+                                            //     case 'Team Sports':
+                                            //         findByKey = 'player';
+                                            //         break;
+                                            //     case 'Individual Sports':
+                                            //         findByKey = 'id';
+                                            //         if (singleData.sportsListSubCategory.name == "Carrom") {
+                                            //             findByKey = 'player';
+                                            //         } else if (singleData.sportsListSubCategory.name == "Chess") {
+                                            //             noShow = function (obj) {
+                                            //                 if (obj.score && obj.rank) {
+                                            //                     singleData.noShow = false;
+                                            //                 } else {
+                                            //                     singleData.delete = true;
+                                            //                 }
+                                            //             }
+                                            //         } else if (singleData.sportsListSubCategory.name == "Athletics" || singleData.sportsListSubCategory.name == "Athletics 4x100m Relay" || singleData.sportsListSubCategory.name == "Athletics 4x50m Relay" || singleData.sportsListSubCategory.name == "Athletics Medley Relay") {
+                                            //             findByKey = 'id';
+                                            //             noShow = function (obj) {
+                                            //                 if (obj && obj.result) {
+                                            //                     if (obj.result == '-') {
+                                            //                         singleData.noShow = true;
+                                            //                     } else {
+                                            //                         singleData.noShow = false;
+                                            //                     }
+                                            //                 } else {
+                                            //                     singleData.delete = true;
+                                            //                 }
+                                            //             }
+
+                                            //             win = function(obj){
+                                            //                 console.log("obj",obj);
+                                            //                 console.log("singleData.athleteId._id",singleData.athleteId._id);
+                                            //                 console.log("resultVar",resultVar);
+                                            //                 console.log("result",result[resultVar.resultVar]);
+                                            //                 if(obj.result){
+                                            //                     if(obj.result == "Won" || obj.result == 1 || obj.result == 2 || obj.result == 3){
+                                            //                         singleData.won = true;
+                                            //                     }else if(obj.result == "Loss"){
+                                            //                         singleData.won=false;
+                                            //                     }
+                                            //                 }else{
+                                            //                     singleData.delete = true;//doubt
+                                            //                 }
+                                            //             }
+                                            //         }
+                                            //         break;
+                                            //     case 'Aquatics Sports':
+                                            //         noShow = function (obj) {
+                                            //             if (obj && obj.result) {
+                                            //                 if (obj.result == '-') {
+                                            //                     singleData.noShow = true;
+                                            //                 } else {
+                                            //                     singleData.noShow = false;
+                                            //                 }
+                                            //             } else {
+                                            //                 singleData.delete = true;
+                                            //             }
+                                            //         }
+
+                                            //         win = function(obj){
+                                            //             if(obj.result){
+                                            //                 if(obj.result == "Won" || obj.result == 1 || obj.result == 2 || obj.result == 3){
+                                            //                     singleData.won = true;
+                                            //                 }else if(obj.result == "Loss"){
+                                            //                     singleData.won=false;
+                                            //                 }
+                                            //             }else{
+                                            //                 singleData.delete = true;//doubt
+                                            //             }
+                                            //         }
+                                            //         break;
+                                            //     case 'Target Sports':
+                                            //         if (singleData.sportsListSubCategory.name == "Archery") {
+                                            //             if (result.excelType == 'qualifying') {
+                                            //                 findByKey = 'id';
+                                            //                 resultVar['resultVar'] = resultVar.resultVar1;
+                                            //                 win = function(obj){
+                                            //                     if(obj.result){
+                                            //                         if(obj.result == "Won" || obj.result == 1 || obj.result == 2 || obj.result == 3){
+                                            //                             singleData.won = true;
+                                            //                         }else if(obj.result == "Loss"){
+                                            //                             singleData.won=false;
+                                            //                         }
+                                            //                     }else{
+                                            //                         singleData.delete = true;//doubt
+                                            //                     }
+                                            //                 }
+                                            //             } else if (result.excelType == 'knockout') {
+                                            //                 findByKey = 'player';
+                                            //                 resultVar['resultVar'] = resultVar.resultVar2;
+                                            //             }
+                                            //         } else if (singleData.sportsListSubCategory.name == "Shooting") {
+                                            //             noShow = function (obj) {
+                                            //                 if (obj && obj.result) {
+                                            //                     if (obj.result == '-') {
+                                            //                         singleData.noShow = true;
+                                            //                     } else {
+                                            //                         singleData.noShow = false;
+                                            //                     }
+                                            //                 } else {
+                                            //                     singleData.delete = true;
+                                            //                 }
+                                            //             };
+
+                                            //             win = function(obj){
+                                            //                 if(obj.result){
+                                            //                     if(obj.result == "Won" || obj.result == 1 || obj.result == 2 || obj.result == 3){
+                                            //                         singleData.won = true;
+                                            //                     }else if(obj.result == "Loss"){
+                                            //                         singleData.won=false;
+                                            //                     }
+                                            //                 }else{
+                                            //                     singleData.delete = true;//doubt
+                                            //                 }
+                                            //             }
+
+
+                                            //         }
+                                            //         break;
+                                            // }
+
+                                            // if (resultVar.opponentsVar == 'opponentsSingle') {
+                                            //     if (singleData.sportsListSubCategory.name != "Shooting") {
+                                            //         var obj = _.find(result[resultVar.resultVar].players, [findByKey, singleData.athleteId._id.toString()]);
+                                            //         noShow(obj);
+                                            //         win(obj);
+                                            //         callback();
+                                            //     } else {
+                                            //         var obj = _.find(result[resultVar.resultVar].players, [findByKey, singleData._id.toString()]);
+                                            //         noShow(obj);
+                                            //         callback();
+                                            //     }
+                                            // } else if (resultVar.opponentsVar == 'opponentsTeam') {
+                                            //     var sendObj = {};
+                                            //     _.each(result[resultVar.resultVar].teams, function (n) {
+                                            //         if (_.findIndex(n.players, [findByKey, singleData.athleteId._id.toString()]) != -1) {
+                                            //             sendObj = n
+                                            //         }
+                                            //     });
+                                            //     noShow(sendObj);
+                                            //     win(sendObj);
+                                            //     callback();
+                                            // }
                                         } else {
                                             singleData.delete = true;
                                             callback();
@@ -668,8 +1001,8 @@ var model = {
                         }, function (err, result) {
                             callback(null, parallelResult);
                         })
-
                     },
+
                     function (parallelResult, callback) {
                         _.remove(parallelResult, function (n) {
                             return n.delete == true;
@@ -683,11 +1016,14 @@ var model = {
                             saveObj.maleCount = data.maleCount;
                             saveObj.femaleCount = data.femaleCount;
                             saveObj.genderRatio = data.genderRatio;
+                            saveObj.winCount = data.winCount;
+                            saveObj.looseCount = data.looseCount;
+                            saveObj.winPercent = data.winPercent;
                             callback(null, obj);
                         });
                     },
-                    function (mainObj, callback) {
 
+                    function (mainObj, callback) {
                         calSportDetails(_.cloneDeep(mainObj), function (obj) {
                             saveObj.sport = obj.sport;
                             saveObj.highestParticipation = obj.highestParticipation;
@@ -699,17 +1035,16 @@ var model = {
                                     saveObj.totalSportCount = null;
                                 } else {
                                     saveObj.totalSportCount = data.totalSport;
-                                    console.log("participated Sport", obj.participatedSport);
                                     saveObj.nonParticipatedSport = _.difference(data.sports, obj.participatedSport);
                                 }
                                 callback(null, saveObj);
                             });
-
                         });
                     },
+
                 ], function (err, waterfallResult) {
                     //waterfall callback
-                    //callback(null, waterfallResult);
+                    // callback(null, waterfallResult);
                     // save and update
                     Reportcard.findOne({
                         "schoolName": saveObj.schoolName
