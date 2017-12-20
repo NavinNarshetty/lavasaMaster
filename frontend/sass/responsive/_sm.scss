@@ -48,5 +48,56 @@
 
     }
     // MATCH CENTER  END
+    // REPORT CARD PAGE
+    .report-medaltableholder{
+      .table {
+        > thead {
+          > tr {
+            > td{
+              padding: 10px 5px;
+            }
+          }
+        }
+      }
+    }
+    .report-contingentcount{
+      font-size: 36px;
+    }
+    .report-countmale, .report-countfemale{
+      font-size: 30px;
+    }
+    .report-ranktext-big{
+      font-size: 36px;
+    }
+    .report-ranktext-small{
+      font-size: 24px;
+    }
+    .medaltally-total{
+      font-size: 12px;
+    }
+    .report-contingentprogress{
+      width: 140px;
+    }
+    .report-medalholder{
+      width: 15px;
+    }
+    .report-rankholder{
+      width: calc(100% - 19px);
+      font-size: 12px;
+      .report-ranktext-big{
+        font-size: 30px;
+      }
+    }
+    .report-schoolheader{
+      display: block;
+      font-size: 18px;
+      &:after{
+        display: none;
+      }
+    }
+    .report-medaltableholder{
+      padding-bottom: 20px;
+    }
+    // REPORT CARD PAGE END
     // Tablet End
  }
