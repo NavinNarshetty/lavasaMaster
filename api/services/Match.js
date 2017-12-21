@@ -524,14 +524,12 @@ var model = {
     },
 
     getSportId: function (data, callback) {
-        // console.log("data", datsa);
         var sport = {};
         async.waterfall([
                 function (callback) {
                     SportsList.findOne({
                         name: data.name
                     }).lean().deepPopulate("sportsListSubCategory").exec(function (err, found) {
-                        // console.log(found, "found");
                         if (err || _.isEmpty(found)) {
                             callback(null, {
                                 error: "No SportsList found!",
@@ -540,7 +538,6 @@ var model = {
                         } else {
                             sport.sportslist = found._id;
                             sport.sportsListSubCategory = found.sportsListSubCategory._id;
-                            // console.log("sport", sport);
                             callback(null, sport);
                         }
                     });
@@ -549,7 +546,6 @@ var model = {
                     AgeGroup.findOne({
                         name: data.age
                     }).lean().exec(function (err, found) {
-                        // console.log("age", found);
                         if (err || _.isEmpty(found)) {
                             callback(null, {
                                 error: "No Age found!",
@@ -563,14 +559,12 @@ var model = {
                 },
                 function (sport, callback) {
                     if (_.isEmpty(data.weight) || data.weight == undefined) {
-                        // console.log("inside weight");
                         callback(null, sport);
                     } else {
 
                         Weight.findOne({
                             name: data.weight
                         }).lean().exec(function (err, found) {
-                            // console.log("weight", found);
                             if (err || _.isEmpty(found)) {
                                 callback(null, {
                                     error: "No Weight found!",
@@ -587,20 +581,6 @@ var model = {
                     if (sport.error) {
                         callback(null, sport);
                     } else {
-                        if (sport.weight) {
-                            var matchObj = {
-                                gender: data.gender,
-                                sportslist: sport.sportslist,
-                                ageGroup: sport.age
-                            };
-                        } else {
-                            var matchObj = {
-                                gender: data.gender,
-                                sportslist: sport.sportslist,
-                                ageGroup: sport.age,
-                                weight: sport.weight
-                            };
-                        }
                         var matchObj = {};
                         matchObj.gender = data.gender;
                         matchObj.sportslist = sport.sportslist;
@@ -612,7 +592,6 @@ var model = {
                         Sport.findOne(matchObj).lean().exec(function (err, found) {
                             console.log("sport", found);
                             if (err || _.isEmpty(found)) {
-                                // console.log("sport", found);
                                 callback(null, {
                                     error: "No Sport found!",
                                     success: data
