@@ -46,6 +46,12 @@ schema.plugin(deepPopulate, {
         "team": {
             select: ''
         },
+        "team.studentTeam": {
+            select: '_id studentId teamId'
+        },
+        "team.studentTeam.studentId": {
+            select: 'sfaId firstName surname middleName'
+        },
         "player": {
             select: ''
         },
@@ -263,7 +269,7 @@ var model = {
 
     getOneMedal: function (matchObj, callback) {
         var obj = {};
-        Medal.findOne(matchObj).deepPopulate("sport sport.sportslist sport.ageGroup sport.weight player team").lean().exec(function (err, data) {
+        Medal.findOne(matchObj).deepPopulate("sport sport.sportslist sport.ageGroup sport.weight player team team.studentTeam team.studentTeam.studentId").lean().exec(function (err, data) {
             if (err) {
                 callback(err, null);
             } else if (!_.isEmpty(data)) {

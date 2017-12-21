@@ -1799,12 +1799,12 @@ var model = {
                                                                 i++;
                                                             }
                                                             stats.score = result;
-                                                            stas.status = singleData.resultsRacquet.status;
+                                                            stats.status = singleData.resultsRacquet.status;
                                                         } else if (singleData.resultsRacquet.status == "IsCompleted" && singleData.resultsRacquet.isNoMatch == true) {
                                                             stats.status = singleData.resultsRacquet.status;
                                                             stats.reason = "NO Match";
                                                         } else {
-                                                            stas.status = singleData.resultsRacquet.status;
+                                                            stats.status = singleData.resultsRacquet.status;
                                                             stats.reason = "";
                                                         }
                                                         match.push(stats);

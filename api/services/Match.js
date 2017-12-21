@@ -4956,6 +4956,11 @@ var model = {
                             Match.getResultArray(n, finalData, result, function (err, complete) {
                                 callback(null, complete);
                             });
+                        } else if (n.resultsRacquet) {
+                            var result = n.resultsRacquet;
+                            Match.getResultArray(n, finalData, result, function (err, complete) {
+                                callback(null, complete);
+                            });
                         } else {
                             callback(null, finalData);
                         }
@@ -5062,6 +5067,9 @@ var model = {
         var team2 = [];
         var team2Sub = [];
         final.matchId = n.matchId;
+        console.log('TTD N',n);
+        console.log('TTD Final Data', finalData);
+        console.log('TTD result', result);
         if (result.teams.length > 1) {
             final.teamId1 = result.teams[0].teamId;
             final.teamId2 = result.teams[1].teamId;
@@ -8780,7 +8788,7 @@ var model = {
                             } else {
                                 obj["T2 Total Service Errors"] = obj["T2 Total Service Errors"] + mainData.resultsRacquet.teams[1].sets[i].serviceError;
                                 obj["T2 Total Unforced Errors"] = obj["T2 Total Unforced Errors"] + mainData.resultsRacquet.teams[1].sets[i].unforcedError;
-                                obj["T2 Total Winners"] = obj["A2 Total Winners"] + mainData.resultsRacquet.teams[1].sets[i].winner;
+                                obj["T2 Total Winners"] = obj["T2 Total Winners"] + mainData.resultsRacquet.teams[1].sets[i].winner;
 
                             }
                             switch (i) {
@@ -9384,7 +9392,7 @@ var model = {
 
                         }
                     }
-                    if (mainData.resultsRacquet.winner.player === mainData.resultsRacquet.opponentsTeam[0]._id.toString()) {
+                    if (mainData.resultsRacquet.winner.player === mainData.opponentsTeam[0]._id.toString()) {
                         obj["WINNER TEAM ID"] = obj["TEAM ID 1"];
                         obj["WINNER SCHOOL"] = obj["SCREEN SCHOOL NAME 1"];
                     } else {
