@@ -74,13 +74,16 @@ schema.plugin(deepPopulate, {
             select: '_id sfaId firstName middleName surname school photograph dob city atheleteSchoolName'
         },
         "opponentsSingle.athleteId.school": {
-            select: '_id name'
+            select: '_id sfaid name screenName'
         },
         "opponentsTeam": {
             select: '_id name teamId schoolName studentTeam createdBy sport school'
         },
         "opponentsTeam.studentTeam.studentId": {
             select: '_id sfaId firstName middleName surname school photograph dob city'
+        },
+        "opponentsTeam.studentTeam.studentId.school": {
+            select: '_id sfaid name screenName'
         },
         "opponentsTeam.school": {
             select: '_id schoolLogo schoolName'
@@ -7757,7 +7760,7 @@ var model = {
     generateGraphicsKnockout: function (data, res) {
         async.waterfall([
                 function (callback) {
-                    var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
+                    var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId opponentsTeam.studentTeam.studentId.school";
                     Match.find({
                         sport: data.sport
                     }).lean().deepPopulate(deepSearch).exec(function (err, match) {
