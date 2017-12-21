@@ -404,7 +404,7 @@ var model = {
                     if (data.event && data.age && data.gender) {
                         var final = [];
                         async.eachSeries(sendObj.medalWinners, function (singleData, callback) {
-                                console.log("singleData", singleData);
+                                // console.log("singleData", singleData);
                                 var matchObj = {
                                     "sport": singleData._id
                                 }
@@ -417,12 +417,13 @@ var model = {
                                         var obj = {};
                                         obj.medals = [];
                                         async.eachSeries(found, function (medalData, callback) {
-                                            console.log("medalData", medalData);
+                                            // console.log("medalData", medalData);
                                             if (medalData.sport.sportslist.name === data.event && medalData.sport.ageGroup.name === data.age && medalData.sport.gender == data.gender) {
                                                 obj.name = medalData.sport.ageGroup.name + " " + medalData.sport.sportslist.name;
                                                 obj.gender = medalData.sport.gender;
                                                 if (!_.isEmpty(medalData.team)) {
                                                     async.each(medalData.team, function (n, callback) {
+                                                        console.log("n", n);
                                                         var info = {};
                                                         info.sport = medalData.sport._id;
                                                         info.medal = medalData.medalType;
@@ -431,6 +432,7 @@ var model = {
                                                         if (n.school) {
                                                             info.schoolId = n.school;
                                                         }
+                                                        info.team = n._id;
                                                         info.TeamId = n.teamId;
                                                         obj.medals.push(info);
                                                         callback(null, final);
@@ -510,6 +512,7 @@ var model = {
                                                 obj.gender = medalData.sport.gender;
                                                 if (!_.isEmpty(medalData.team)) {
                                                     async.each(medalData.team, function (n, callback) {
+                                                        console.log("n", n);
                                                         var info = {};
                                                         info.sport = medalData.sport._id;
                                                         info.medal = medalData.medalType;
@@ -518,6 +521,7 @@ var model = {
                                                         if (n.school) {
                                                             info.schoolId = n.school;
                                                         }
+                                                        info.team = n._id;
                                                         info.TeamId = n.teamId;
                                                         obj.medals.push(info);
                                                         callback(null, final);
@@ -605,6 +609,7 @@ var model = {
                                                         if (n.school) {
                                                             info.schoolId = n.school;
                                                         }
+                                                        info.team = n._id;
                                                         info.TeamId = n.teamId;
                                                         obj.medals.push(info);
                                                         callback(null, final);
@@ -692,6 +697,7 @@ var model = {
                                                         if (n.school) {
                                                             info.schoolId = n.school;
                                                         }
+                                                        info.team = n._id;
                                                         info.TeamId = n.teamId;
                                                         obj.medals.push(info);
                                                         callback(null, final);
@@ -779,6 +785,7 @@ var model = {
                                                         if (n.school) {
                                                             info.schoolId = n.school;
                                                         }
+                                                        info.team = n._id;
                                                         info.TeamId = n.teamId;
                                                         obj.medals.push(info);
                                                         callback(null, final);
@@ -866,6 +873,7 @@ var model = {
                                                         if (n.school) {
                                                             info.schoolId = n.school;
                                                         }
+                                                        info.team = n._id;
                                                         info.TeamId = n.teamId;
                                                         obj.medals.push(info);
                                                         callback(null, final);
@@ -950,6 +958,7 @@ var model = {
                                                         info.medal = medalData.medalType;
                                                         info.participantName = n.name;
                                                         info.school = n.schoolName;
+                                                        info.team = n._id;
                                                         info.TeamId = n.teamId;
                                                         if (n.school) {
                                                             info.schoolId = n.school;
@@ -1015,7 +1024,7 @@ var model = {
                     } else {
                         var final = [];
                         async.eachSeries(sendObj.medalWinners, function (singleData, callback) {
-                                console.log("singleData", singleData);
+                                // console.log("singleData", singleData);
                                 var matchObj = {
                                     "sport": singleData._id
                                 }
@@ -1034,6 +1043,7 @@ var model = {
                                                 obj.gender = medalData.sport.gender;
                                                 if (!_.isEmpty(medalData.team)) {
                                                     async.each(medalData.team, function (n, callback) {
+                                                        console.log("n", n);
                                                         var info = {};
                                                         info.sport = medalData.sport._id;
                                                         info.medal = medalData.medalType;
@@ -1042,6 +1052,7 @@ var model = {
                                                         if (n.school) {
                                                             info.schoolId = n.school;
                                                         }
+                                                        info.team = n._id;
                                                         info.TeamId = n.teamId;
                                                         obj.medals.push(info);
                                                         callback(null, final);
