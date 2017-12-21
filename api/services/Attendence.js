@@ -90,7 +90,7 @@ var model = {
                                         }
                                         team.players.push(member);
                                     });
-                                    team.attendence = false;
+                                    team.attendance = false;
                                     complete.attendenceListTeam.push(team);
                                 });
                                 callback(null, complete);
@@ -123,7 +123,7 @@ var model = {
                                     } else {
                                         single.schoolName = n.athleteId.school.name;
                                     }
-                                    single.attendence = false;
+                                    single.attendance = false;
                                     complete.attendenceListIndividual.push(single);
                                 });
                                 callback(null, complete);
