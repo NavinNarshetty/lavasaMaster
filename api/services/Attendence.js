@@ -66,7 +66,7 @@ var model = {
                             } else {
                                 var complete = {};
                                 complete.isTeam = true;
-                                complete.list = [];
+                                complete.attendenceListTeam = [];
                                 var teamData = _.groupBy(studentData, 'teamId.name');
                                 _.each(teamData, function (teams) {
                                     var team = {};
@@ -87,7 +87,7 @@ var model = {
                                         team.players.push(member);
                                     });
                                     team.attendence = false;
-                                    complete.list.push(team);
+                                    complete.attendenceListTeam.push(team);
                                 });
                                 callback(null, complete);
                             }
@@ -104,7 +104,7 @@ var model = {
                             } else {
                                 var complete = {};
                                 complete.isTeam = false;
-                                complete.list = [];
+                                complete.attendenceListIndividual = [];
                                 _.each(individualData, function (n) {
                                     var single = {};
                                     single.athleteId = n.athleteId._id;
@@ -120,7 +120,7 @@ var model = {
                                         single.schoolName = n.athleteId.school.name;
                                     }
                                     single.attendence = false;
-                                    complete.list.push(single);
+                                    complete.attendenceListIndividual.push(single);
                                 });
                                 callback(null, complete);
                             }
@@ -138,10 +138,18 @@ var model = {
                                 callback(null, complete);
                             } else {
                                 if (complete.isTeam == true) {
-                                    var common = _.intersectionBy(attendenceData, complete.list, 'team');
-                                    callback(null, common);
+
+                                    var common = {};
+                                    common.sport = attendenceData.sport;
+                                    common.isTeam = true;
+                                    common.attendenceListTeam = complete.attendenceListTeam;
+
                                 } else {
-                                    var common = _.intersectionBy(attendenceData, complete.list, 'athleteId');
+                                    // var common = _.intersectionBy(attendenceData, complete.list, 'athleteId');
+                                    var common = {};
+                                    common.sport = attendenceData.sport;
+                                    common.isTeam = true;
+                                    common.attendenceListIndividual = complete.attendenceListIndividual;
                                 }
                                 callback(null, common);
                             }
