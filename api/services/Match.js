@@ -8604,7 +8604,7 @@ var model = {
 
     generateGraphicsKnockoutTeam: function (match, callback) {
         async.concatSeries(match, function (mainData, callback) {
-                // console.log("mainData", mainData);
+                console.log("mainData", mainData);
                 var obj = {};
                 var dateTime = moment(mainData.scheduleDate).format('DD-MM-YYYY');
                 obj.DATE = dateTime;
