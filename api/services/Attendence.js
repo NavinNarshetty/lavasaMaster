@@ -65,7 +65,7 @@ var model = {
                                 });
                             } else {
                                 var complete = {};
-                                complete.isTeam = false;
+                                complete.isTeam = true;
                                 complete.list = [];
                                 var teamData = _.groupBy(studentData, 'teamId.name');
                                 _.each(teamData, function (teams) {
@@ -161,6 +161,28 @@ var model = {
                     }
                 }
             });
+    },
+
+    saveAttendence: function (data, callback) {
+        if (data.isTeam == true) {
+            var formdata = {};
+            formdata.sport = data.sport;
+            formdata.attendenceListTeam = data.list;
+        } else {
+            var formdata = {};
+            formdata.sport = data.sport;
+            formdata.attendenceListIndividual = data.list;
+        }
+        Attendence.saveData(formdata, function (err, complete) {
+            if (err || _.isEmpty(complete)) {
+                callback(err, null);
+            } else {
+                callback(null, {
+                    error: err,
+                    success: complete
+                });
+            }
+        });
     }
 
 };
