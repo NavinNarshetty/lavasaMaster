@@ -4956,6 +4956,11 @@ var model = {
                             Match.getResultArray(n, finalData, result, function (err, complete) {
                                 callback(null, complete);
                             });
+                        } else if (n.resultsRacquet) {
+                            var result = n.resultsRacquet;
+                            Match.getResultArray(n, finalData, result, function (err, complete) {
+                                callback(null, complete);
+                            });
                         } else {
                             callback(null, finalData);
                         }
@@ -5062,6 +5067,9 @@ var model = {
         var team2 = [];
         var team2Sub = [];
         final.matchId = n.matchId;
+        console.log('TTD N',n);
+        console.log('TTD Final Data', finalData);
+        console.log('TTD result', result);
         if (result.teams.length > 1) {
             final.teamId1 = result.teams[0].teamId;
             final.teamId2 = result.teams[1].teamId;
