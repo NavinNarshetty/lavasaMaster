@@ -11,7 +11,7 @@ var schema = new Schema({
         athleteName: String,
         sfaId: String,
         schoolName: String,
-        attendence: Boolean,
+        attendance: Boolean,
     }],
     attendenceListTeam: [{
         team: {
@@ -21,7 +21,11 @@ var schema = new Schema({
         teamName: String,
         teamId: String,
         schoolName: String,
-        attendence: Boolean,
+        players: [{
+            sfaId: String,
+            playerName: String
+        }],
+        attendance: Boolean,
     }]
 
 });
@@ -172,25 +176,82 @@ var model = {
     },
 
     saveAttendence: function (data, callback) {
-        if (data.isTeam == true) {
-            var formdata = {};
-            formdata.sport = data.sport;
-            formdata.attendenceListTeam = data.list;
-        } else {
-            var formdata = {};
-            formdata.sport = data.sport;
-            formdata.attendenceListIndividual = data.list;
-        }
-        Attendence.saveData(formdata, function (err, complete) {
-            if (err || _.isEmpty(complete)) {
-                callback(err, null);
-            } else {
-                callback(null, {
-                    error: err,
-                    success: complete
-                });
-            }
-        });
+        async.waterfall([
+                function (callback) {
+                    Attendence.findOne({
+                        sport: data.sport
+                    }).lean().exec(function (err, found) {
+                        if (err) {
+                            callback(null, {
+                                error: "data not found"
+                            });
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+                },
+                function (found, callback) {
+                    if (found.error) {
+                        callback(null, found);
+                    } else if (_.isEmpty(found)) {
+                        if (data.isTeam == true) {
+                            var formdata = {};
+                            formdata.sport = data.sport;
+                            formdata.attendenceListTeam = data.list;
+                        } else {
+                            var formdata = {};
+                            formdata.sport = data.sport;
+                            formdata.attendenceListIndividual = data.list;
+                        }
+                        Attendence.saveData(formdata, function (err, complete) {
+                            if (err || _.isEmpty(complete)) {
+                                callback(err, null);
+                            } else {
+                                callback(null, {
+                                    error: err,
+                                    success: complete
+                                });
+                            }
+                        });
+                    } else {
+                        if (data.isTeam == true) {
+                            var formdata = {
+                                attendenceListTeam: data.list
+                            };
+                        } else {
+                            var formdata = {
+                                attendenceListIndividual: data.list
+                            };
+                        }
+                        Attendence.update({
+                            sport: data.sport
+                        }, formdata).lean().exec(function (err, updateData) {
+                            if (err || _.isEmpty(updateData)) {
+                                callback(null, {
+                                    error: "No data found!",
+                                    success: data
+                                });
+                            } else {
+                                callback(null, updateData);
+                            }
+                        });
+                    }
+
+                }
+
+            ],
+            function (err, data2) {
+                if (err) {
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, data2);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
+
     }
 
 };
