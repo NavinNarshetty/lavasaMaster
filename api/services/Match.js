@@ -74,7 +74,7 @@ schema.plugin(deepPopulate, {
             select: '_id sfaId firstName middleName surname school photograph dob city atheleteSchoolName'
         },
         "opponentsSingle.athleteId.school": {
-            select: '_id name'
+            select: '_id sfaid name screenName'
         },
         "opponentsTeam": {
             select: '_id name teamId schoolName studentTeam createdBy sport school'
@@ -8604,10 +8604,7 @@ var model = {
 
     generateGraphicsKnockoutTeam: function (match, callback) {
         async.concatSeries(match, function (mainData, callback) {
-                console.log("mainData", mainData);
-                console.log(mainData.opponentsTeam[0].studentTeam);
-                console.log(mainData.opponentsTeam[0].studentTeam[0].studentId.school);
-                console.log(mainData.opponentsTeam[0].studentTeam[0].studentId.school.screenName);
+                // console.log("mainData", mainData);
                 var obj = {};
                 var dateTime = moment(mainData.scheduleDate).format('DD-MM-YYYY');
                 obj.DATE = dateTime;
