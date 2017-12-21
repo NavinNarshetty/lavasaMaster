@@ -139,9 +139,7 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
                 $scope.tablePoint = allData.data.tablePoint;
                 if ($scope.tablePoint) {
                   _.each($scope.tablePoint, function (key) {
-                    console.log("key", key);
                     _.each(key.points, function (value) {
-
                       if (!_.isEmpty(value.player)) {
                         if (value.player.middleName) {
                           value.fullName = value.player.firstName + ' ' + value.player.middleName + ' ' + value.player.surname;

@@ -199,11 +199,9 @@
                           <div class="text-capitalize" title="{{content.teamid | filterConcate : content.schoolName}}" ng-if="isTeam">
                             {{content.teamid | filterConcate : content.schoolName | truncate:40}}
                           </div>
-                          <div class="text-capitalize" title="{{content.teamid | filterConcate : content.schoolName}}" ng-if="!isTeam">
-                            {{content.teamid | filterConcate : content.schoolName | truncate:40}}
+                          <div class="text-capitalize" ng-if="!isTeam">
                             <p class="m-clear text-capitalize" title="{{content.fullName}}">{{content.fullName | truncate:'30'}} </p>
                             <p class="m-clear text-capitalize" title="{{content.schoolName}}">{{content.schoolName | truncate:'30'}} </p>
-
                           </div>
                         </td>
                         <td>

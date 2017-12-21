@@ -131,6 +131,20 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
             if (!allData.message) {
               if (allData.value) {
                 $scope.tablePoint = allData.data.tablePoint;
+                if ($scope.tablePoint) {
+                  _.each($scope.tablePoint, function (key) {
+                    _.each(key.points, function (value) {
+                      if (!_.isEmpty(value.player)) {
+                        if (value.player.middleName) {
+                          value.fullName = value.player.firstName + ' ' + value.player.middleName + ' ' + value.player.surname;
+                        } else {
+                          value.fullName = value.player.firstName + ' ' + value.player.surname;
+                        }
+
+                      }
+                    });
+                  });
+                }
                 console.log("$scope.tablePoint ", $scope.tablePoint);
               }
             } else {
