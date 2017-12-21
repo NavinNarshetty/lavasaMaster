@@ -940,5 +940,11 @@ var controller = {
         }
     },
 
+    getDrawFormats: function (req, res) {
+        res.connection.setTimeout(20000000000);
+        req.connection.setTimeout(20000000000);
+        Match.getDrawFormats(req, res.callback);
+    }
+
 };
 module.exports = _.assign(module.exports, controller);
