@@ -194,32 +194,32 @@ var model = {
                     }
                 }],
                 $or: [{
-                        firstName: {
-                            $regex: data.input,
-                            $options: "i"
+                    firstName: {
+                        $regex: data.input,
+                        $options: "i"
 
-                        }
-                    },
-                    {
-                        middleName: {
-                            $regex: data.input,
-                            $options: "i"
-
-                        },
-                    },
-                    {
-                        surname: {
-                            $regex: data.input,
-                            $options: "i"
-
-                        },
-                    }, {
-                        sfaId: {
-                            $regex: data.input,
-                            $options: "i"
-
-                        },
                     }
+                },
+                {
+                    middleName: {
+                        $regex: data.input,
+                        $options: "i"
+
+                    },
+                },
+                {
+                    surname: {
+                        $regex: data.input,
+                        $options: "i"
+
+                    },
+                }, {
+                    sfaId: {
+                        $regex: data.input,
+                        $options: "i"
+
+                    },
+                }
                 ]
             };
         }
@@ -247,25 +247,25 @@ var model = {
             count: maxRow
         };
         async.waterfall([
-                function (callback) {
-                    Athelete.find(matchObj)
-                        .order(options)
-                        .deepPopulate("school")
-                        .keyword(options)
-                        .page(options, callback);
-                },
-                // function (found, callback) {
-                //     Athelete.getSportRegisteredAthlete(found, function (err, athlete) {
-                //         if (err) {
-                //             callback(err, null);
-                //         } else if (_.isEmpty(athlete)) {
-                //             callback(null, []);
-                //         } else {
-                //             callback(null, athlete);
-                //         }
-                //     });
-                // }
-            ],
+            function (callback) {
+                Athelete.find(matchObj)
+                    .order(options)
+                    .deepPopulate("school")
+                    .keyword(options)
+                    .page(options, callback);
+            },
+            // function (found, callback) {
+            //     Athelete.getSportRegisteredAthlete(found, function (err, athlete) {
+            //         if (err) {
+            //             callback(err, null);
+            //         } else if (_.isEmpty(athlete)) {
+            //             callback(null, []);
+            //         } else {
+            //             callback(null, athlete);
+            //         }
+            //     });
+            // }
+        ],
             function (err, data2) {
                 if (err) {
                     console.log(err);
@@ -288,9 +288,25 @@ var model = {
         var flag = false;
         async.each(data.results, function (n, callback) {
             async.waterfall([
-                    function (callback) {
-                        StudentTeam.findOne({
-                            studentId: n._id
+                function (callback) {
+                    StudentTeam.findOne({
+                        studentId: n._id
+                    }).lean().exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            flag = false;
+                            callback(null, flag);
+                        } else {
+                            flag = true;
+                            callback(null, flag);
+                        }
+                    });
+                },
+                function (flag, callback) {
+                    if (flag == false) {
+                        IndividualSport.findOne({
+                            athleteId: n._id
                         }).lean().exec(function (err, found) {
                             if (err) {
                                 callback(err, null);
@@ -298,31 +314,15 @@ var model = {
                                 flag = false;
                                 callback(null, flag);
                             } else {
-                                flag = true;
+                                flag = true
                                 callback(null, flag);
                             }
                         });
-                    },
-                    function (flag, callback) {
-                        if (flag == false) {
-                            IndividualSport.findOne({
-                                athleteId: n._id
-                            }).lean().exec(function (err, found) {
-                                if (err) {
-                                    callback(err, null);
-                                } else if (_.isEmpty(found)) {
-                                    flag = false;
-                                    callback(null, flag);
-                                } else {
-                                    flag = true
-                                    callback(null, flag);
-                                }
-                            });
-                        } else {
-                            callback(null, flag);
-                        }
+                    } else {
+                        callback(null, flag);
                     }
-                ],
+                }
+            ],
                 function (err, data2) {
                     if (err) {
                         callback(null, []);
@@ -571,60 +571,60 @@ var model = {
         if (data.type == "School Name") {
             Athelete.aggregate(
                 [{
-                        $lookup: {
-                            "from": "schools",
-                            "localField": "school",
-                            "foreignField": "_id",
-                            "as": "schoolData"
-                        }
-                    },
-                    // Stage 2
-                    {
-                        $unwind: {
-                            path: "$schoolData",
-                            preserveNullAndEmptyArrays: true // optional
-                        }
-                    },
-                    // Stage 3
-                    {
-                        $match: {
+                    $lookup: {
+                        "from": "schools",
+                        "localField": "school",
+                        "foreignField": "_id",
+                        "as": "schoolData"
+                    }
+                },
+                // Stage 2
+                {
+                    $unwind: {
+                        path: "$schoolData",
+                        preserveNullAndEmptyArrays: true // optional
+                    }
+                },
+                // Stage 3
+                {
+                    $match: {
 
-                            $or: [{
-                                    "schoolData.name": {
-                                        $regex: data.input,
-                                        // $options: 'i'
-                                    }
-                                },
-                                {
-                                    "atheleteSchoolName": {
-                                        $regex: data.input,
-                                        // $options: 'i'
-                                    }
-                                }
-                            ]
+                        $or: [{
+                            "schoolData.name": {
+                                $regex: data.input,
+                                // $options: 'i'
+                            }
+                        },
+                        {
+                            "atheleteSchoolName": {
+                                $regex: data.input,
+                                // $options: 'i'
+                            }
+                        }
+                        ]
 
-                        }
-                    },
-                    // Stage 4
-                    {
-                        $match: {
-                            $or: [{
-                                registrationFee: {
-                                    $ne: "online PAYU"
-                                }
-                            }, {
-                                paymentStatus: {
-                                    $ne: "Pending"
-                                }
-                            }]
-                        }
-                    },
-                    {
-                        $sort: {
-                            "createdAt": -1
+                    }
+                },
+                // Stage 4
+                {
+                    $match: {
+                        $or: [{
+                            registrationFee: {
+                                $ne: "online PAYU"
+                            }
+                        }, {
+                            paymentStatus: {
+                                $ne: "Pending"
+                            }
+                        }]
+                    }
+                },
+                {
+                    $sort: {
+                        "createdAt": -1
 
-                        }
-                    },
+                    }
+                },
                 ],
                 function (err, returnReq) {
                     console.log("returnReq : ", returnReq);
@@ -659,45 +659,45 @@ var model = {
         } else if (data.keyword !== "") {
             Athelete.aggregate(
                 [{
-                        $match: {
+                    $match: {
 
-                            $or: [{
-                                    "firstName": {
-                                        $regex: data.keyword,
-                                        $options: "i"
-                                    }
-                                }, {
-                                    "surname": {
-                                        $regex: data.keyword,
-                                        $options: "i"
-                                    }
-                                },
-                                {
-                                    "sfaId": data.keyword
-                                }
-                            ]
+                        $or: [{
+                            "firstName": {
+                                $regex: data.keyword,
+                                $options: "i"
+                            }
+                        }, {
+                            "surname": {
+                                $regex: data.keyword,
+                                $options: "i"
+                            }
+                        },
+                        {
+                            "sfaId": data.keyword
                         }
-                    },
-                    // Stage 4
-                    {
-                        $match: {
-                            $or: [{
-                                registrationFee: {
-                                    $ne: "online PAYU"
-                                }
-                            }, {
-                                paymentStatus: {
-                                    $ne: "Pending"
-                                }
-                            }]
-                        }
-                    },
-                    {
-                        $sort: {
-                            "createdAt": -1
+                        ]
+                    }
+                },
+                // Stage 4
+                {
+                    $match: {
+                        $or: [{
+                            registrationFee: {
+                                $ne: "online PAYU"
+                            }
+                        }, {
+                            paymentStatus: {
+                                $ne: "Pending"
+                            }
+                        }]
+                    }
+                },
+                {
+                    $sort: {
+                        "createdAt": -1
 
-                        }
-                    },
+                    }
+                },
                 ],
                 function (err, returnReq) {
                     console.log("returnReq : ", returnReq);
@@ -755,20 +755,20 @@ var model = {
             data.school = undefined;
         }
         Athelete.aggregate([{
-                $match: {
-                    $and: [{
-                            firstName: data.firstName
-                        }, {
-                            surname: data.surname
-                        },
-                        {
-                            $or: [{
-                                email: data.email
-                            }]
-                        },
-                    ]
-                }
-            }],
+            $match: {
+                $and: [{
+                    firstName: data.firstName
+                }, {
+                    surname: data.surname
+                },
+                {
+                    $or: [{
+                        email: data.email
+                    }]
+                },
+                ]
+            }
+        }],
             function (err, found) {
                 console.log("found athelete", found);
                 if (err) {
@@ -788,75 +788,75 @@ var model = {
                                     callback("No order data found", null);
                                 } else {
                                     async.parallel([
-                                            function (callback) {
-                                                console.log("inside school save");
-                                                if (data.atheleteSchoolName) {
-                                                    var schoolData = {};
-                                                    schoolData.schoolName = data.atheleteSchoolName;
-                                                    schoolData.locality = data.atheleteSchoolLocality;
-                                                    schoolData.schoolLogo = data.atheleteSchoolIdImage;
-                                                    schoolData.landline = data.atheleteSchoolContact;
-                                                    if (data.utm_source) {
-                                                        schoolData.utm_source = data.utm_source;
-                                                    }
-                                                    if (data.utm_medium) {
-                                                        schoolData.utm_medium = data.utm_medium;
-                                                    }
-                                                    if (data.utm_campaign) {
-                                                        schoolData.utm_campaign = data.utm_campaign;
-                                                    }
-                                                    console.log("need to save");
-                                                    Registration.saveData(schoolData, function (err, registerData) {
-                                                        console.log("registerData", registerData);
-                                                        if (err) {
-                                                            console.log("err", err);
-                                                            callback("There was an error while saving school", null);
+                                        function (callback) {
+                                            console.log("inside school save");
+                                            if (data.atheleteSchoolName) {
+                                                var schoolData = {};
+                                                schoolData.schoolName = data.atheleteSchoolName;
+                                                schoolData.locality = data.atheleteSchoolLocality;
+                                                schoolData.schoolLogo = data.atheleteSchoolIdImage;
+                                                schoolData.landline = data.atheleteSchoolContact;
+                                                if (data.utm_source) {
+                                                    schoolData.utm_source = data.utm_source;
+                                                }
+                                                if (data.utm_medium) {
+                                                    schoolData.utm_medium = data.utm_medium;
+                                                }
+                                                if (data.utm_campaign) {
+                                                    schoolData.utm_campaign = data.utm_campaign;
+                                                }
+                                                console.log("need to save");
+                                                Registration.saveData(schoolData, function (err, registerData) {
+                                                    console.log("registerData", registerData);
+                                                    if (err) {
+                                                        console.log("err", err);
+                                                        callback("There was an error while saving school", null);
+                                                    } else {
+                                                        if (_.isEmpty(registerData)) {
+                                                            callback("No register data found", null);
                                                         } else {
-                                                            if (_.isEmpty(registerData)) {
-                                                                callback("No register data found", null);
-                                                            } else {
-                                                                callback(null, athleteData);
-                                                            }
+                                                            callback(null, athleteData);
                                                         }
-                                                    });
-                                                } else {
-                                                    callback(null, athleteData);
-                                                }
-                                            },
-                                            function (callback) {
-                                                console.log("inside payment check");
-                                                if (athleteData.registrationFee == "cash") {
-                                                    Athelete.atheletePaymentMail(athleteData, function (err, vData) {
-                                                        if (err) {
-                                                            callback(err, null);
-                                                        } else if (vData) {
-                                                            callback(null, vData);
-                                                        }
-                                                    });
-                                                } else {
-                                                    callback(null, athleteData);
-                                                }
-                                                // if (athleteData.registrationFee == "cash" && data.property.institutionType == "school") {
-                                                //     Athelete.atheletePaymentMail(athleteData, function (err, vData) {
-                                                //         if (err) {
-                                                //             callback(err, null);
-                                                //         } else if (vData) {
-                                                //             callback(null, vData);
-                                                //         }
-                                                //     });
-                                                // } else if (athleteData.registrationFee == "cash" && data.property.institutionType == "college") {
-                                                //     Athelete.atheletePaymentMailCollege(athleteData, function (err, vData) {
-                                                //         if (err) {
-                                                //             callback(err, null);
-                                                //         } else if (vData) {
-                                                //             callback(null, vData);
-                                                //         }
-                                                //     });
-                                                // } else {
-                                                //     callback(null, athleteData);
-                                                // }
+                                                    }
+                                                });
+                                            } else {
+                                                callback(null, athleteData);
                                             }
-                                        ],
+                                        },
+                                        function (callback) {
+                                            console.log("inside payment check");
+                                            if (athleteData.registrationFee == "cash") {
+                                                Athelete.atheletePaymentMail(athleteData, function (err, vData) {
+                                                    if (err) {
+                                                        callback(err, null);
+                                                    } else if (vData) {
+                                                        callback(null, vData);
+                                                    }
+                                                });
+                                            } else {
+                                                callback(null, athleteData);
+                                            }
+                                            // if (athleteData.registrationFee == "cash" && data.property.institutionType == "school") {
+                                            //     Athelete.atheletePaymentMail(athleteData, function (err, vData) {
+                                            //         if (err) {
+                                            //             callback(err, null);
+                                            //         } else if (vData) {
+                                            //             callback(null, vData);
+                                            //         }
+                                            //     });
+                                            // } else if (athleteData.registrationFee == "cash" && data.property.institutionType == "college") {
+                                            //     Athelete.atheletePaymentMailCollege(athleteData, function (err, vData) {
+                                            //         if (err) {
+                                            //             callback(err, null);
+                                            //         } else if (vData) {
+                                            //             callback(null, vData);
+                                            //         }
+                                            //     });
+                                            // } else {
+                                            //     callback(null, athleteData);
+                                            // }
+                                        }
+                                    ],
                                         function (err, data2) {
                                             if (err) {
                                                 console.log(err);
@@ -890,67 +890,67 @@ var model = {
                                             } else {
                                                 console.log("data removed and moved to save again");
                                                 async.parallel([
-                                                        function (callback) {
-                                                            console.log("inside school save");
-                                                            if (data.atheleteSchoolName) {
-                                                                var schoolData = {};
-                                                                schoolData.schoolName = data.atheleteSchoolName;
-                                                                schoolData.locality = data.atheleteSchoolLocality;
-                                                                schoolData.schoolLogo = data.atheleteSchoolIdImage;
-                                                                schoolData.landline = data.atheleteSchoolContact;
-                                                                console.log("need to save");
+                                                    function (callback) {
+                                                        console.log("inside school save");
+                                                        if (data.atheleteSchoolName) {
+                                                            var schoolData = {};
+                                                            schoolData.schoolName = data.atheleteSchoolName;
+                                                            schoolData.locality = data.atheleteSchoolLocality;
+                                                            schoolData.schoolLogo = data.atheleteSchoolIdImage;
+                                                            schoolData.landline = data.atheleteSchoolContact;
+                                                            console.log("need to save");
 
-                                                                Registration.saveData(schoolData, function (err, registerData) {
-                                                                    console.log("registerData", registerData);
-                                                                    if (err) {
-                                                                        console.log("err", err);
-                                                                        callback("There was an error while saving data", null);
+                                                            Registration.saveData(schoolData, function (err, registerData) {
+                                                                console.log("registerData", registerData);
+                                                                if (err) {
+                                                                    console.log("err", err);
+                                                                    callback("There was an error while saving data", null);
+                                                                } else {
+                                                                    if (_.isEmpty(registerData)) {
+                                                                        callback("No register data found", null);
                                                                     } else {
-                                                                        if (_.isEmpty(registerData)) {
-                                                                            callback("No register data found", null);
-                                                                        } else {
-                                                                            callback(null, athleteData);
-                                                                        }
+                                                                        callback(null, athleteData);
                                                                     }
-                                                                });
-                                                            } else {
-                                                                callback(null, athleteData);
-                                                            }
-                                                        },
-                                                        function (callback) {
-                                                            console.log("inside payment check");
-                                                            if (athleteData.registrationFee == "cash") {
-                                                                Athelete.atheletePaymentMail(athleteData, function (err, vData) {
-                                                                    if (err) {
-                                                                        callback(err, null);
-                                                                    } else if (vData) {
-                                                                        callback(null, vData);
-                                                                    }
-                                                                });
-                                                            } else {
-                                                                callback(null, athleteData);
-                                                            }
-                                                            // if (athleteData.registrationFee == "cash" && data.property.institutionType == "school") {
-                                                            //     Athelete.atheletePaymentMail(athleteData, function (err, vData) {
-                                                            //         if (err) {
-                                                            //             callback(err, null);
-                                                            //         } else if (vData) {
-                                                            //             callback(null, vData);
-                                                            //         }
-                                                            //     });
-                                                            // } else if (athleteData.registrationFee == "cash" && data.property.institutionType == "college") {
-                                                            //     Athelete.atheletePaymentMailCollege(athleteData, function (err, vData) {
-                                                            //         if (err) {
-                                                            //             callback(err, null);
-                                                            //         } else if (vData) {
-                                                            //             callback(null, vData);
-                                                            //         }
-                                                            //     });
-                                                            // } else {
-                                                            //     callback(null, athleteData);
-                                                            // }
+                                                                }
+                                                            });
+                                                        } else {
+                                                            callback(null, athleteData);
                                                         }
-                                                    ],
+                                                    },
+                                                    function (callback) {
+                                                        console.log("inside payment check");
+                                                        if (athleteData.registrationFee == "cash") {
+                                                            Athelete.atheletePaymentMail(athleteData, function (err, vData) {
+                                                                if (err) {
+                                                                    callback(err, null);
+                                                                } else if (vData) {
+                                                                    callback(null, vData);
+                                                                }
+                                                            });
+                                                        } else {
+                                                            callback(null, athleteData);
+                                                        }
+                                                        // if (athleteData.registrationFee == "cash" && data.property.institutionType == "school") {
+                                                        //     Athelete.atheletePaymentMail(athleteData, function (err, vData) {
+                                                        //         if (err) {
+                                                        //             callback(err, null);
+                                                        //         } else if (vData) {
+                                                        //             callback(null, vData);
+                                                        //         }
+                                                        //     });
+                                                        // } else if (athleteData.registrationFee == "cash" && data.property.institutionType == "college") {
+                                                        //     Athelete.atheletePaymentMailCollege(athleteData, function (err, vData) {
+                                                        //         if (err) {
+                                                        //             callback(err, null);
+                                                        //         } else if (vData) {
+                                                        //             callback(null, vData);
+                                                        //         }
+                                                        //     });
+                                                        // } else {
+                                                        //     callback(null, athleteData);
+                                                        // }
+                                                    }
+                                                ],
                                                     function (err, data2) {
                                                         if (err) {
                                                             console.log(err);
@@ -987,110 +987,100 @@ var model = {
     generateAtheleteSfaID: function (data, callback) {
         //find and first time atheleteID idea is for string id generation if required
         async.waterfall([
-                function (callback) {
-                    ConfigProperty.find().lean().exec(function (err, complete) {
-                        if (err) {
-                            callback(err, null);
+            function (callback) {
+                ConfigProperty.find().lean().exec(function (err, complete) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(complete)) {
+                            callback(null, []);
                         } else {
-                            if (_.isEmpty(complete)) {
-                                callback(null, []);
-                            } else {
-                                callback(null, complete);
-                            }
+                            callback(null, complete);
                         }
-                    });
-                },
-                function (complete, callback) {
-                    Athelete.findOne({
-                        _id: data._id
-                    }).sort({
-                        createdAt: -1
-                    }).exec(function (err, found) {
-                        console.log("found", found);
-                        if (err) {
-                            console.log(err);
-                            callback(err, null);
+                    }
+                });
+            },
+            function (complete, callback) {
+                Athelete.findOne({
+                    _id: data._id
+                }).sort({
+                    createdAt: -1
+                }).exec(function (err, found) {
+                    console.log("found", found);
+                    if (err) {
+                        console.log(err);
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(found)) {
+                            console.log("isempty");
+                            callback("No order data found", null);
                         } else {
-                            if (_.isEmpty(found)) {
-                                console.log("isempty");
-                                callback("No order data found", null);
-                            } else {
-                                if (found.atheleteSchoolName && data.atheleteSchoolName) {
-                                    data.school = undefined;
-                                }
-                                if (_.isEmpty(data.school)) {
-                                    data.school = undefined;
-                                }
-                                if (found.school && data.school) {
-                                    data.atheleteSchoolName = '';
-                                }
-                                if (found.verifyCount === 0) {
+                            if (found.atheleteSchoolName && data.atheleteSchoolName) {
+                                data.school = undefined;
+                            }
+                            if (_.isEmpty(data.school)) {
+                                data.school = undefined;
+                            }
+                            if (found.school && data.school) {
+                                data.atheleteSchoolName = '';
+                            }
+                            if (found.verifyCount === 0) {
 
-                                    if (data.status == "Verified") {
-                                        data.verifyCount = 1;
-                                        data.password = generator.generate({
-                                            length: 8,
-                                            numbers: true
-                                        });
-                                        if (_.isEmpty(data.sfaId)) {
-                                            var year = new Date().getFullYear().toString().substr(2, 2);
-                                            if (_.isEmpty(complete[0].city)) {
-                                                found.city = "Mumbai";
-                                            }
-                                            var type = complete[0].institutionType;
-                                            var city = complete[0].sfaCity;
-                                            var prefixCity = city.charAt(0);
-                                            console.log("prefixCity", prefixCity);
-                                            Athelete.find({
-                                                "status": 'Verified'
-                                            }).sort({
-                                                atheleteID: -1
-                                            }).limit(1).lean().exec(
-                                                function (err, datafound) {
-                                                    console.log("found1***", datafound);
-                                                    if (err) {
-                                                        console.log(err);
-                                                        callback(err, null);
-                                                    } else {
-                                                        if (_.isEmpty(datafound) && type == 'school') {
-                                                            data.atheleteID = 1;
-                                                            console.log("atheleteID", data.atheleteID);
-                                                            data.sfaId = prefixCity + "A" + year + data.atheleteID;
-                                                        } else if (_.isEmpty(datafound) && type == 'college') {
-                                                            data.atheleteID = 50001;
-                                                            console.log("atheleteID", data.atheleteID);
-                                                            data.sfaId = prefixCity + "A" + year + data.atheleteID;
-                                                        } else {
-                                                            console.log("found", datafound[0].sfaId);
-                                                            // if (datafound[0].atheleteID == undefined) {
-                                                            //     datafound[0].atheleteID = 0;
-                                                            // }
-                                                            data.atheleteID = ++datafound[0].atheleteID;
-                                                            console.log("atheleteID", data.atheleteID);
-                                                            data.sfaId = prefixCity + "A" + year + data.atheleteID;
-                                                        }
-                                                        data.verifiedDate = new Date();
-
-                                                        Athelete.saveVerify(data, found, function (err, vData) {
-                                                            if (err) {
-                                                                callback(err, null);
-                                                            } else if (vData) {
-                                                                callback(null, vData);
-                                                            }
-                                                        });
-                                                    }
-                                                });
-                                            // data.sfaId = sfa;
-
-                                        } else {
-                                            Athelete.saveVerify(data, found, function (err, vData) {
+                                if (data.status == "Verified") {
+                                    data.verifyCount = 1;
+                                    data.password = generator.generate({
+                                        length: 8,
+                                        numbers: true
+                                    });
+                                    if (_.isEmpty(data.sfaId)) {
+                                        var year = new Date().getFullYear().toString().substr(2, 2);
+                                        if (_.isEmpty(complete[0].city)) {
+                                            found.city = "Mumbai";
+                                        }
+                                        var type = complete[0].institutionType;
+                                        var city = complete[0].sfaCity;
+                                        var prefixCity = city.charAt(0);
+                                        console.log("prefixCity", prefixCity);
+                                        Athelete.find({
+                                            "status": 'Verified'
+                                        }).sort({
+                                            atheleteID: -1
+                                        }).limit(1).lean().exec(
+                                            function (err, datafound) {
+                                                console.log("found1***", datafound);
                                                 if (err) {
+                                                    console.log(err);
                                                     callback(err, null);
-                                                } else if (vData) {
-                                                    callback(null, vData);
+                                                } else {
+                                                    if (_.isEmpty(datafound) && type == 'school') {
+                                                        data.atheleteID = 1;
+                                                        console.log("atheleteID", data.atheleteID);
+                                                        data.sfaId = prefixCity + "A" + year + data.atheleteID;
+                                                    } else if (_.isEmpty(datafound) && type == 'college') {
+                                                        data.atheleteID = 50001;
+                                                        console.log("atheleteID", data.atheleteID);
+                                                        data.sfaId = prefixCity + "A" + year + data.atheleteID;
+                                                    } else {
+                                                        console.log("found", datafound[0].sfaId);
+                                                        // if (datafound[0].atheleteID == undefined) {
+                                                        //     datafound[0].atheleteID = 0;
+                                                        // }
+                                                        data.atheleteID = ++datafound[0].atheleteID;
+                                                        console.log("atheleteID", data.atheleteID);
+                                                        data.sfaId = prefixCity + "A" + year + data.atheleteID;
+                                                    }
+                                                    data.verifiedDate = new Date();
+
+                                                    Athelete.saveVerify(data, found, function (err, vData) {
+                                                        if (err) {
+                                                            callback(err, null);
+                                                        } else if (vData) {
+                                                            callback(null, vData);
+                                                        }
+                                                    });
                                                 }
                                             });
-                                        }
+                                        // data.sfaId = sfa;
 
                                     } else {
                                         Athelete.saveVerify(data, found, function (err, vData) {
@@ -1100,8 +1090,8 @@ var model = {
                                                 callback(null, vData);
                                             }
                                         });
-
                                     }
+
                                 } else {
                                     Athelete.saveVerify(data, found, function (err, vData) {
                                         if (err) {
@@ -1112,11 +1102,21 @@ var model = {
                                     });
 
                                 }
+                            } else {
+                                Athelete.saveVerify(data, found, function (err, vData) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else if (vData) {
+                                        callback(null, vData);
+                                    }
+                                });
+
                             }
                         }
-                    });
-                }
-            ],
+                    }
+                });
+            }
+        ],
             function (err, data2) {
                 if (err) {
                     console.log(err);
@@ -1202,110 +1202,110 @@ var model = {
 
     updatePaymentStatus: function (data, callback) {
         async.waterfall([
-                function (callback) {
-                    ConfigProperty.find().lean().exec(function (err, property) {
-                        if (err) {
-                            callback(err, null);
+            function (callback) {
+                ConfigProperty.find().lean().exec(function (err, property) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(property)) {
+                            callback(null, []);
                         } else {
-                            if (_.isEmpty(property)) {
-                                callback(null, []);
-                            } else {
-                                callback(null, property);
-                            }
+                            callback(null, property);
                         }
-                    });
-                },
-                function (property, callback) {
-                    console.log("inside update", data);
-                    var matchObj = {
-                        $set: {
-                            paymentStatus: "Paid",
-                            transactionID: data.transactionid
-                        }
-                    };
+                    }
+                });
+            },
+            function (property, callback) {
+                console.log("inside update", data);
+                var matchObj = {
+                    $set: {
+                        paymentStatus: "Paid",
+                        transactionID: data.transactionid
+                    }
+                };
 
-                    Athelete.findOne({ //finds one with refrence to id
-                        firstName: data.firstName,
-                        surname: data.surname,
-                        email: data.email,
-                    }).lean().exec(function (err, found) {
-                        if (err) {
-                            callback(err, null);
-                        } else if (_.isEmpty(found)) {
-                            console.log("empty in Athelete found");
-                            callback(null, "Data is empty");
-                        } else {
-                            console.log("found in update", found);
-                            Athelete.update({
-                                _id: found._id
-                            }, matchObj).exec(
-                                function (err, data3) {
-                                    if (err) {
-                                        console.log(err);
-                                        callback(err, null);
-                                    } else if (data3) {
-                                        async.parallel([
-                                                function (callback) {
-                                                    Athelete.atheletePaymentMail(found, function (err, vData) {
-                                                        if (err) {
-                                                            callback(err, null);
-                                                        } else if (vData) {
-                                                            callback(null, vData);
-                                                        }
-                                                    });
-                                                    // if (property[0].institutionType == "school") {
-                                                    //     Athelete.atheletePaymentMail(found, function (err, vData) {
-                                                    //         if (err) {
-                                                    //             callback(err, null);
-                                                    //         } else if (vData) {
-                                                    //             callback(null, vData);
-                                                    //         }
-                                                    //     });
-                                                    // } else {
-                                                    //     Athelete.atheletePaymentMailCollege(found, function (err, vData) {
-                                                    //         if (err) {
-                                                    //             callback(err, null);
-                                                    //         } else if (vData) {
-                                                    //             callback(null, vData);
-                                                    //         }
-                                                    //     });
-                                                    // }
-
-                                                },
-                                                function (callback) {
-                                                    Athelete.receiptMail(found, function (err, mailsms) {
-                                                        if (err) {
-                                                            callback(err, null);
-                                                        } else {
-                                                            if (_.isEmpty(mailsms)) {
-                                                                callback(null, "Data not found");
-                                                            } else {
-                                                                callback(null, mailsms);
-                                                            }
-                                                        }
-
-                                                    });
-                                                }
-                                            ],
-                                            function (err, data2) {
+                Athelete.findOne({ //finds one with refrence to id
+                    firstName: data.firstName,
+                    surname: data.surname,
+                    email: data.email,
+                }).lean().exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(found)) {
+                        console.log("empty in Athelete found");
+                        callback(null, "Data is empty");
+                    } else {
+                        console.log("found in update", found);
+                        Athelete.update({
+                            _id: found._id
+                        }, matchObj).exec(
+                            function (err, data3) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(err, null);
+                                } else if (data3) {
+                                    async.parallel([
+                                        function (callback) {
+                                            Athelete.atheletePaymentMail(found, function (err, vData) {
                                                 if (err) {
-                                                    console.log(err);
-                                                    callback(null, []);
-                                                } else if (data2) {
-                                                    if (_.isEmpty(data2)) {
-                                                        callback(null, []);
-                                                    } else {
-                                                        callback(null, data2);
-                                                    }
+                                                    callback(err, null);
+                                                } else if (vData) {
+                                                    callback(null, vData);
                                                 }
                                             });
-                                    }
+                                            // if (property[0].institutionType == "school") {
+                                            //     Athelete.atheletePaymentMail(found, function (err, vData) {
+                                            //         if (err) {
+                                            //             callback(err, null);
+                                            //         } else if (vData) {
+                                            //             callback(null, vData);
+                                            //         }
+                                            //     });
+                                            // } else {
+                                            //     Athelete.atheletePaymentMailCollege(found, function (err, vData) {
+                                            //         if (err) {
+                                            //             callback(err, null);
+                                            //         } else if (vData) {
+                                            //             callback(null, vData);
+                                            //         }
+                                            //     });
+                                            // }
 
-                                });
-                        }
-                    });
-                }
-            ],
+                                        },
+                                        function (callback) {
+                                            Athelete.receiptMail(found, function (err, mailsms) {
+                                                if (err) {
+                                                    callback(err, null);
+                                                } else {
+                                                    if (_.isEmpty(mailsms)) {
+                                                        callback(null, "Data not found");
+                                                    } else {
+                                                        callback(null, mailsms);
+                                                    }
+                                                }
+
+                                            });
+                                        }
+                                    ],
+                                        function (err, data2) {
+                                            if (err) {
+                                                console.log(err);
+                                                callback(null, []);
+                                            } else if (data2) {
+                                                if (_.isEmpty(data2)) {
+                                                    callback(null, []);
+                                                } else {
+                                                    callback(null, data2);
+                                                }
+                                            }
+                                        });
+                                }
+
+                            });
+                    }
+                });
+            }
+        ],
             function (err, data2) {
                 if (err) {
                     console.log(err);
@@ -1319,84 +1319,84 @@ var model = {
 
     receiptMail: function (data, callback) {
         async.waterfall([
-                function (callback) {
-                    ConfigProperty.find().lean().exec(function (err, property) {
-                        if (err) {
-                            callback(err, null);
+            function (callback) {
+                ConfigProperty.find().lean().exec(function (err, property) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(property)) {
+                            callback(null, []);
                         } else {
-                            if (_.isEmpty(property)) {
-                                callback(null, []);
-                            } else {
-                                callback(null, property);
-                            }
+                            callback(null, property);
                         }
-                    });
-                },
-                function (property, callback) {
-                    Athelete.findOne({ //finds one with refrence to id
-                        _id: data._id
-                    }).exec(function (err, found) {
-                        if (err) {
-                            callback(err, null);
-                        } else if (_.isEmpty(found)) {
-                            callback(null, "Data is empty");
+                    }
+                });
+            },
+            function (property, callback) {
+                Athelete.findOne({ //finds one with refrence to id
+                    _id: data._id
+                }).exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(found)) {
+                        callback(null, "Data is empty");
+                    } else {
+                        var emailData = {};
+                        if (found.sfaId) {
+                            emailData.sfaId = found.sfaId;
                         } else {
-                            var emailData = {};
-                            if (found.sfaId) {
-                                emailData.sfaId = found.sfaId;
-                            } else {
-                                emailData.sfaId = "";
-                            }
-                            emailData.firstName = found.firstName;
-                            emailData.surname = found.surname;
-                            emailData.transactionID = found.transactionID;
-                            emailData.Date = moment().format("DD-MM-YYYY");
-                            emailData.receiptNo = "SFA" + found.receiptId;
-                            emailData.city = property[0].sfaCity;
-                            emailData.year = property[0].year;
-                            emailData.eventYear = property[0].eventYear;
-                            emailData.type = property[0].institutionType;
-                            emailData.athleteAmount = property[0].totalAmountAthlete;
-                            emailData.amountInWords = property[0].totalAmountInWordsAthlete;
-                            emailData.amountWithoutTax = property[0].amoutWithoutTaxAthlete;
-                            emailData.cgstAmout = property[0].cgstAmoutAthlete;
-                            emailData.cgstPercent = property[0].cgstPercentAthlete;
-                            emailData.sgstAmout = property[0].sgstAmoutAthlete;
-                            emailData.sgstPercent = property[0].sgstPercentAthlete;
-                            emailData.igstAmout = property[0].igstAmoutAthlete;
-                            emailData.igstPercent = property[0].igstPercentAthlete;
+                            emailData.sfaId = "";
+                        }
+                        emailData.firstName = found.firstName;
+                        emailData.surname = found.surname;
+                        emailData.transactionID = found.transactionID;
+                        emailData.Date = moment().format("DD-MM-YYYY");
+                        emailData.receiptNo = "SFA" + found.receiptId;
+                        emailData.city = property[0].sfaCity;
+                        emailData.year = property[0].year;
+                        emailData.eventYear = property[0].eventYear;
+                        emailData.type = property[0].institutionType;
+                        emailData.athleteAmount = property[0].totalAmountAthlete;
+                        emailData.amountInWords = property[0].totalAmountInWordsAthlete;
+                        emailData.amountWithoutTax = property[0].amoutWithoutTaxAthlete;
+                        emailData.cgstAmout = property[0].cgstAmoutAthlete;
+                        emailData.cgstPercent = property[0].cgstPercentAthlete;
+                        emailData.sgstAmout = property[0].sgstAmoutAthlete;
+                        emailData.sgstPercent = property[0].sgstPercentAthlete;
+                        emailData.igstAmout = property[0].igstAmoutAthlete;
+                        emailData.igstPercent = property[0].igstPercentAthlete;
 
-                            // emailData.from = "info@sfanow.in";
-                            emailData.from = property[0].infoId;
-                            emailData.infoId = property[0].infoId;
-                            emailData.infoNo = property[0].infoNo;
-                            emailData.cityAddress = property[0].cityAddress;
-                            emailData.ddFavour = property[0].ddFavour;
-                            emailData.email1 = [{
-                                email: found.email
-                            }];
-                            emailData.bcc1 = [{
-                                email: "payments@sfanow.in"
-                            }, {
-                                email: "admin@sfanow.in"
-                            }];
-                            emailData.filename = "receiptAthelete.ejs";
-                            emailData.subject = "SFA: Your Payment Receipt as an Athlete for SFA " + emailData.city + " " + emailData.type + " " + emailData.eventYear + ".";
-                            console.log("emaildata", emailData);
-                            Config.emailTo(emailData, function (err, emailRespo) {
-                                if (err) {
-                                    console.log(err);
-                                    callback(null, err);
-                                } else if (emailRespo) {
-                                    callback(null, emailRespo);
-                                } else {
-                                    callback(null, "Invalid data");
-                                }
-                            });
-                        }
-                    });
-                }
-            ],
+                        // emailData.from = "info@sfanow.in";
+                        emailData.from = property[0].infoId;
+                        emailData.infoId = property[0].infoId;
+                        emailData.infoNo = property[0].infoNo;
+                        emailData.cityAddress = property[0].cityAddress;
+                        emailData.ddFavour = property[0].ddFavour;
+                        emailData.email1 = [{
+                            email: found.email
+                        }];
+                        emailData.bcc1 = [{
+                            email: "payments@sfanow.in"
+                        }, {
+                            email: "admin@sfanow.in"
+                        }];
+                        emailData.filename = "receiptAthelete.ejs";
+                        emailData.subject = "SFA: Your Payment Receipt as an Athlete for SFA " + emailData.city + " " + emailData.type + " " + emailData.eventYear + ".";
+                        console.log("emaildata", emailData);
+                        Config.emailTo(emailData, function (err, emailRespo) {
+                            if (err) {
+                                console.log(err);
+                                callback(null, err);
+                            } else if (emailRespo) {
+                                callback(null, emailRespo);
+                            } else {
+                                callback(null, "Invalid data");
+                            }
+                        });
+                    }
+                });
+            }
+        ],
             function (err, data2) {
                 if (err) {
                     console.log(err);
@@ -1602,78 +1602,78 @@ var model = {
 
     registeredOnlinePaymentMailSms: function (data, callback) {
         async.waterfall([
-                function (callback) {
-                    ConfigProperty.find().lean().exec(function (err, property) {
+            function (callback) {
+                ConfigProperty.find().lean().exec(function (err, property) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(property)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, property);
+                        }
+                    }
+                });
+            },
+            function (property, callback) {
+                async.parallel([
+                    function (callback) {
+                        var emailOtp = (Math.random() + "").substring(2, 6);
+                        var emailData = {};
+                        // emailData.from = "info@sfanow.in";
+                        emailData.from = property[0].infoId;
+                        emailData.name = data.firstName;
+                        emailData.email = data.email;
+                        emailData.city = property[0].sfaCity;
+                        emailData.year = property[0].year;
+                        emailData.eventYear = property[0].eventYear;
+                        emailData.infoId = property[0].infoId;
+                        emailData.infoNo = property[0].infoNo;
+                        emailData.cityAddress = property[0].cityAddress;
+                        emailData.ddFavour = property[0].ddFavour;
+                        emailData.filename = "atheleteOnlinePayment.ejs";
+                        emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.year;
+                        console.log("emaildata", emailData);
+                        Config.email(emailData, function (err, emailRespo) {
+                            if (err) {
+                                console.log(err);
+                                callback(null, err);
+                            } else if (emailRespo) {
+                                callback(null, emailRespo);
+                            } else {
+                                callback(null, "Invalid data");
+                            }
+                        });
+                    },
+                    function (callback) {
+
+                        var smsData = {};
+                        smsData.mobile = data.mobile;
+                        smsData.content = "Thank you for registering for SFA " + property[0].sfaCity + " " + property[0].eventYear + ". For further details please check your registered email ID.";
+                        console.log("smsdata", smsData);
+                        Config.sendSms(smsData, function (err, smsRespo) {
+                            if (err) {
+                                console.log(err);
+                                callback(err, null);
+                            } else if (smsRespo) {
+                                console.log(smsRespo, "sms sent");
+                                callback(null, smsRespo);
+                            } else {
+                                callback(null, "Invalid data");
+                            }
+                        });
+                    }
+                ],
+                    function (err, final) {
                         if (err) {
                             callback(err, null);
                         } else {
-                            if (_.isEmpty(property)) {
-                                callback(null, []);
-                            } else {
-                                callback(null, property);
-                            }
+                            callback(null, final);
                         }
+
                     });
-                },
-                function (property, callback) {
-                    async.parallel([
-                            function (callback) {
-                                var emailOtp = (Math.random() + "").substring(2, 6);
-                                var emailData = {};
-                                // emailData.from = "info@sfanow.in";
-                                emailData.from = property[0].infoId;
-                                emailData.name = data.firstName;
-                                emailData.email = data.email;
-                                emailData.city = property[0].sfaCity;
-                                emailData.year = property[0].year;
-                                emailData.eventYear = property[0].eventYear;
-                                emailData.infoId = property[0].infoId;
-                                emailData.infoNo = property[0].infoNo;
-                                emailData.cityAddress = property[0].cityAddress;
-                                emailData.ddFavour = property[0].ddFavour;
-                                emailData.filename = "atheleteOnlinePayment.ejs";
-                                emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.year;
-                                console.log("emaildata", emailData);
-                                Config.email(emailData, function (err, emailRespo) {
-                                    if (err) {
-                                        console.log(err);
-                                        callback(null, err);
-                                    } else if (emailRespo) {
-                                        callback(null, emailRespo);
-                                    } else {
-                                        callback(null, "Invalid data");
-                                    }
-                                });
-                            },
-                            function (callback) {
-
-                                var smsData = {};
-                                smsData.mobile = data.mobile;
-                                smsData.content = "Thank you for registering for SFA " + property[0].sfaCity + " " + property[0].eventYear + ". For further details please check your registered email ID.";
-                                console.log("smsdata", smsData);
-                                Config.sendSms(smsData, function (err, smsRespo) {
-                                    if (err) {
-                                        console.log(err);
-                                        callback(err, null);
-                                    } else if (smsRespo) {
-                                        console.log(smsRespo, "sms sent");
-                                        callback(null, smsRespo);
-                                    } else {
-                                        callback(null, "Invalid data");
-                                    }
-                                });
-                            }
-                        ],
-                        function (err, final) {
-                            if (err) {
-                                callback(err, null);
-                            } else {
-                                callback(null, final);
-                            }
-
-                        });
-                }
-            ],
+            }
+        ],
             function (err, data2) {
                 if (err) {
                     console.log(err);
@@ -1688,78 +1688,78 @@ var model = {
 
     registeredCashPaymentMailSms: function (data, callback) {
         async.waterfall([
-                function (callback) {
-                    ConfigProperty.find().lean().exec(function (err, property) {
+            function (callback) {
+                ConfigProperty.find().lean().exec(function (err, property) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(property)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, property);
+                        }
+                    }
+                });
+            },
+            function (property, callback) {
+                async.parallel([
+                    function (callback) {
+                        var emailData = {};
+                        // emailData.from = "info@sfanow.in";
+                        emailData.from = property[0].infoId;
+                        emailData.email = data.email;
+                        emailData.name = data.firstName;
+                        emailData.city = property[0].sfaCity;
+                        emailData.year = property[0].year;
+                        emailData.eventYear = property[0].eventYear;
+                        emailData.infoId = property[0].infoId;
+                        emailData.infoNo = property[0].infoNo;
+                        emailData.cityAddress = property[0].cityAddress;
+                        emailData.ddFavour = property[0].ddFavour;
+                        emailData.athleteAmount = property[0].totalAmountAthlete;
+                        emailData.filename = "atheleteCashPayment.ejs";
+                        emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.eventYear;
+                        console.log("emaildata", emailData);
+
+                        Config.email(emailData, function (err, emailRespo) {
+                            if (err) {
+                                console.log(err);
+                                callback(null, err);
+                            } else if (emailRespo) {
+                                callback(null, emailRespo);
+                            } else {
+                                callback(null, "Invalid data");
+                            }
+                        });
+                    },
+                    function (callback) {
+                        var smsData = {};
+                        smsData.mobile = data.mobile;
+                        smsData.content = "Thank you for registering for SFA " + property[0].sfaCity + " " + property[0].eventYear + ". For further details please check your registered email ID.";
+                        console.log("smsdata", smsData);
+                        Config.sendSms(smsData, function (err, smsRespo) {
+                            if (err) {
+                                console.log(err);
+                                callback(err, null);
+                            } else if (smsRespo) {
+                                console.log(smsRespo, "sms sent");
+                                callback(null, smsRespo);
+                            } else {
+                                callback(null, "Invalid data");
+                            }
+                        });
+                    }
+                ],
+                    function (err, final) {
                         if (err) {
                             callback(err, null);
                         } else {
-                            if (_.isEmpty(property)) {
-                                callback(null, []);
-                            } else {
-                                callback(null, property);
-                            }
+                            callback(null, final);
                         }
+
                     });
-                },
-                function (property, callback) {
-                    async.parallel([
-                            function (callback) {
-                                var emailData = {};
-                                // emailData.from = "info@sfanow.in";
-                                emailData.from = property[0].infoId;
-                                emailData.email = data.email;
-                                emailData.name = data.firstName;
-                                emailData.city = property[0].sfaCity;
-                                emailData.year = property[0].year;
-                                emailData.eventYear = property[0].eventYear;
-                                emailData.infoId = property[0].infoId;
-                                emailData.infoNo = property[0].infoNo;
-                                emailData.cityAddress = property[0].cityAddress;
-                                emailData.ddFavour = property[0].ddFavour;
-                                emailData.athleteAmount = property[0].totalAmountAthlete;
-                                emailData.filename = "atheleteCashPayment.ejs";
-                                emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.eventYear;
-                                console.log("emaildata", emailData);
-
-                                Config.email(emailData, function (err, emailRespo) {
-                                    if (err) {
-                                        console.log(err);
-                                        callback(null, err);
-                                    } else if (emailRespo) {
-                                        callback(null, emailRespo);
-                                    } else {
-                                        callback(null, "Invalid data");
-                                    }
-                                });
-                            },
-                            function (callback) {
-                                var smsData = {};
-                                smsData.mobile = data.mobile;
-                                smsData.content = "Thank you for registering for SFA " + property[0].sfaCity + " " + property[0].eventYear + ". For further details please check your registered email ID.";
-                                console.log("smsdata", smsData);
-                                Config.sendSms(smsData, function (err, smsRespo) {
-                                    if (err) {
-                                        console.log(err);
-                                        callback(err, null);
-                                    } else if (smsRespo) {
-                                        console.log(smsRespo, "sms sent");
-                                        callback(null, smsRespo);
-                                    } else {
-                                        callback(null, "Invalid data");
-                                    }
-                                });
-                            }
-                        ],
-                        function (err, final) {
-                            if (err) {
-                                callback(err, null);
-                            } else {
-                                callback(null, final);
-                            }
-
-                        });
-                }
-            ],
+            }
+        ],
             function (err, data2) {
                 if (err) {
                     console.log(err);
@@ -1774,79 +1774,79 @@ var model = {
 
     successVerifiedMailSms: function (data, callback) {
         async.waterfall([
-                function (callback) {
-                    ConfigProperty.find().lean().exec(function (err, property) {
+            function (callback) {
+                ConfigProperty.find().lean().exec(function (err, property) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(property)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, property);
+                        }
+                    }
+                });
+            },
+            function (property, callback) {
+                async.parallel([
+                    function (callback) {
+                        var emailData = {};
+                        // emailData.from = "info@sfanow.in";
+                        emailData.from = property[0].infoId;
+                        emailData.infoId = property[0].infoId;
+                        emailData.infoNo = property[0].infoNo;
+                        emailData.cityAddress = property[0].cityAddress;
+                        emailData.ddFavour = property[0].ddFavour;
+                        emailData.email = data.email;
+                        emailData.sfaID = data.sfaId;
+                        emailData.password = data.password;
+                        emailData.name = data.firstName;
+                        emailData.city = property[0].sfaCity;
+                        emailData.year = property[0].year;
+                        emailData.eventYear = property[0].eventYear;
+                        emailData.type = property[0].institutionType;
+                        emailData.filename = "registeredVerification.ejs";
+                        emailData.subject = "SFA: You are now a verified Athlete for SFA " + emailData.city + " " + emailData.eventYear;
+                        console.log("emaildata", emailData);
+                        Config.email(emailData, function (err, emailRespo) {
+                            if (err) {
+                                console.log(err);
+                                callback(null, err);
+                            } else if (emailRespo) {
+                                callback(null, emailRespo);
+                            } else {
+                                callback(null, "Invalid data");
+                            }
+                        });
+                    },
+                    function (callback) {
+                        var smsData = {};
+                        smsData.mobile = data.mobile;
+                        smsData.content = "Congratulations ! SFA ID " + data.sfaId + "and Password " + data.password + ".Kindly complete your Sports Registrations";
+                        console.log("smsdata", smsData);
+                        Config.sendSms(smsData, function (err, smsRespo) {
+                            if (err) {
+                                console.log(err);
+                                callback(err, null);
+                            } else if (smsRespo) {
+                                console.log(smsRespo, "sms sent");
+                                callback(null, smsRespo);
+                            } else {
+                                callback(null, "Invalid data");
+                            }
+                        });
+                    }
+                ],
+                    function (err, final) {
                         if (err) {
                             callback(err, null);
                         } else {
-                            if (_.isEmpty(property)) {
-                                callback(null, []);
-                            } else {
-                                callback(null, property);
-                            }
+                            callback(null, final);
                         }
-                    });
-                },
-                function (property, callback) {
-                    async.parallel([
-                            function (callback) {
-                                var emailData = {};
-                                // emailData.from = "info@sfanow.in";
-                                emailData.from = property[0].infoId;
-                                emailData.infoId = property[0].infoId;
-                                emailData.infoNo = property[0].infoNo;
-                                emailData.cityAddress = property[0].cityAddress;
-                                emailData.ddFavour = property[0].ddFavour;
-                                emailData.email = data.email;
-                                emailData.sfaID = data.sfaId;
-                                emailData.password = data.password;
-                                emailData.name = data.firstName;
-                                emailData.city = property[0].sfaCity;
-                                emailData.year = property[0].year;
-                                emailData.eventYear = property[0].eventYear;
-                                emailData.type = property[0].institutionType;
-                                emailData.filename = "registeredVerification.ejs";
-                                emailData.subject = "SFA: You are now a verified Athlete for SFA " + emailData.city + " " + emailData.eventYear;
-                                console.log("emaildata", emailData);
-                                Config.email(emailData, function (err, emailRespo) {
-                                    if (err) {
-                                        console.log(err);
-                                        callback(null, err);
-                                    } else if (emailRespo) {
-                                        callback(null, emailRespo);
-                                    } else {
-                                        callback(null, "Invalid data");
-                                    }
-                                });
-                            },
-                            function (callback) {
-                                var smsData = {};
-                                smsData.mobile = data.mobile;
-                                smsData.content = "Congratulations ! SFA ID " + data.sfaId + "and Password " + data.password + ".Kindly complete your Sports Registrations";
-                                console.log("smsdata", smsData);
-                                Config.sendSms(smsData, function (err, smsRespo) {
-                                    if (err) {
-                                        console.log(err);
-                                        callback(err, null);
-                                    } else if (smsRespo) {
-                                        console.log(smsRespo, "sms sent");
-                                        callback(null, smsRespo);
-                                    } else {
-                                        callback(null, "Invalid data");
-                                    }
-                                });
-                            }
-                        ],
-                        function (err, final) {
-                            if (err) {
-                                callback(err, null);
-                            } else {
-                                callback(null, final);
-                            }
 
-                        });
-                }
-            ],
+                    });
+            }
+        ],
             function (err, data2) {
                 if (err) {
                     console.log(err);
@@ -1860,83 +1860,83 @@ var model = {
 
     failureVerifiedMailSms: function (data, callback) {
         async.waterfall([
-                function (callback) {
-                    ConfigProperty.find().lean().exec(function (err, property) {
+            function (callback) {
+                ConfigProperty.find().lean().exec(function (err, property) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(property)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, property);
+                        }
+                    }
+                });
+            },
+            function (property, callback) {
+                async.parallel([
+                    function (callback) {
+                        var emailData = {};
+                        // emailData.from = "info@sfanow.in";
+                        emailData.from = property[0].infoId;
+                        emailData.infoId = property[0].infoId;
+                        emailData.infoNo = property[0].infoNo;
+                        emailData.cityAddress = property[0].cityAddress;
+                        emailData.ddFavour = property[0].ddFavour;
+                        emailData.email = data.email;
+                        emailData.name = data.firstName;
+                        emailData.sfaID = data.sfaID;
+                        emailData.password = data.password;
+                        emailData.city = property[0].sfaCity;
+                        emailData.year = property[0].year;
+                        emailData.eventYear = property[0].eventYear;
+                        emailData.type = property[0].institutionType;
+                        emailData.filename = "rejection.ejs";
+                        emailData.subject = "SFA: Rejection of Your Application for SFA " + emailData.city + " " + emailData.eventYear;
+                        console.log("emaildata", emailData);
+                        Config.email(emailData, function (err, emailRespo) {
+                            if (err) {
+                                console.log(err);
+                                callback(null, err);
+                            } else if (emailRespo) {
+                                //callback(null, emailRespo);
+                            } else {
+                                //callback(null, "Invalid data");
+                            }
+                        });
+                    },
+                    function (callback) {
+
+                        var smsData = {};
+                        smsData.mobile = data.mobile;
+                        var city = property[0].sfaCity;
+                        var year = property[0].year;
+                        var eventYear = property[0].eventYear;
+                        smsData.content = "We regret to inform you that your application has been rejected for SFA " + city + " " + eventYear + ". For further queries please email us at info@sfanow.in";
+                        console.log("smsdata", smsData);
+                        Config.sendSms(smsData, function (err, smsRespo) {
+                            if (err) {
+                                console.log(err);
+                                callback(err, null);
+                            } else if (smsRespo) {
+                                console.log(smsRespo, "sms sent");
+                                callback(null, smsRespo);
+                            } else {
+                                callback(null, "Invalid data");
+                            }
+                        });
+                    }
+                ],
+                    function (err, final) {
                         if (err) {
                             callback(err, null);
                         } else {
-                            if (_.isEmpty(property)) {
-                                callback(null, []);
-                            } else {
-                                callback(null, property);
-                            }
+                            callback(null, final);
                         }
+
                     });
-                },
-                function (property, callback) {
-                    async.parallel([
-                            function (callback) {
-                                var emailData = {};
-                                // emailData.from = "info@sfanow.in";
-                                emailData.from = property[0].infoId;
-                                emailData.infoId = property[0].infoId;
-                                emailData.infoNo = property[0].infoNo;
-                                emailData.cityAddress = property[0].cityAddress;
-                                emailData.ddFavour = property[0].ddFavour;
-                                emailData.email = data.email;
-                                emailData.name = data.firstName;
-                                emailData.sfaID = data.sfaID;
-                                emailData.password = data.password;
-                                emailData.city = property[0].sfaCity;
-                                emailData.year = property[0].year;
-                                emailData.eventYear = property[0].eventYear;
-                                emailData.type = property[0].institutionType;
-                                emailData.filename = "rejection.ejs";
-                                emailData.subject = "SFA: Rejection of Your Application for SFA " + emailData.city + " " + emailData.eventYear;
-                                console.log("emaildata", emailData);
-                                Config.email(emailData, function (err, emailRespo) {
-                                    if (err) {
-                                        console.log(err);
-                                        callback(null, err);
-                                    } else if (emailRespo) {
-                                        //callback(null, emailRespo);
-                                    } else {
-                                        //callback(null, "Invalid data");
-                                    }
-                                });
-                            },
-                            function (callback) {
-
-                                var smsData = {};
-                                smsData.mobile = data.mobile;
-                                var city = property[0].sfaCity;
-                                var year = property[0].year;
-                                var eventYear = property[0].eventYear;
-                                smsData.content = "We regret to inform you that your application has been rejected for SFA " + city + " " + eventYear + ". For further queries please email us at info@sfanow.in";
-                                console.log("smsdata", smsData);
-                                Config.sendSms(smsData, function (err, smsRespo) {
-                                    if (err) {
-                                        console.log(err);
-                                        callback(err, null);
-                                    } else if (smsRespo) {
-                                        console.log(smsRespo, "sms sent");
-                                        callback(null, smsRespo);
-                                    } else {
-                                        callback(null, "Invalid data");
-                                    }
-                                });
-                            }
-                        ],
-                        function (err, final) {
-                            if (err) {
-                                callback(err, null);
-                            } else {
-                                callback(null, final);
-                            }
-
-                        });
-                }
-            ],
+            }
+        ],
             function (err, data2) {
                 if (err) {
                     console.log(err);
@@ -1951,85 +1951,85 @@ var model = {
 
     unregistedOnlinePaymentMailSms: function (data, callback) {
         async.waterfall([
-                function (callback) {
-                    ConfigProperty.find().lean().exec(function (err, property) {
+            function (callback) {
+                ConfigProperty.find().lean().exec(function (err, property) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(property)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, property);
+                        }
+                    }
+                });
+            },
+            function (property, callback) {
+                async.parallel([
+                    function (callback) {
+                        var emailData = {};
+                        // emailData.from = "info@sfanow.in";
+                        emailData.from = property[0].infoId;
+                        emailData.infoId = property[0].infoId;
+                        emailData.infoNo = property[0].infoNo;
+                        emailData.cityAddress = property[0].cityAddress;
+                        emailData.ddFavour = property[0].ddFavour;
+                        emailData.email = data.email;
+                        emailData.name = data.firstName;
+                        emailData.city = property[0].sfaCity;
+                        emailData.year = property[0].year;
+                        emailData.type = property[0].institutionType;
+                        emailData.eventYear = property[0].eventYear;
+                        emailData.athleteAmount = property[0].totalAmountAthlete;
+                        // emailData.sfaID = data.sfaID;
+                        // emailData.password = data.password;
+                        emailData.filename = "unregisteredOnlinePayment.ejs";
+                        emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.eventYear + ".";
+                        console.log("emaildata", emailData);
+
+                        Config.email(emailData, function (err, emailRespo) {
+                            if (err) {
+                                console.log(err);
+                                callback(null, err);
+                            } else if (emailRespo) {
+                                callback(null, emailRespo);
+                            } else {
+                                callback(null, "Invalid data");
+                            }
+                        });
+                    },
+                    function (callback) {
+
+                        var smsData = {};
+                        smsData.mobile = data.mobile;
+                        var city = property[0].sfaCity;
+                        var year = property[0].year;
+                        var eventYear = property[0].eventYear;
+                        smsData.content = "Thank you for registering for SFA " + city + " " + eventYear + ". For further details please check your registered email ID.";
+                        console.log("smsdata", smsData);
+                        Config.sendSms(smsData, function (err, smsRespo) {
+                            if (err) {
+                                console.log(err);
+                                callback(err, null);
+                            } else if (smsRespo) {
+                                console.log(smsRespo, "sms sent");
+                                callback(null, smsRespo);
+                            } else {
+                                callback(null, "Invalid data");
+                            }
+                        });
+                    }
+                ],
+                    function (err, final) {
                         if (err) {
                             callback(err, null);
                         } else {
-                            if (_.isEmpty(property)) {
-                                callback(null, []);
-                            } else {
-                                callback(null, property);
-                            }
+                            callback(null, final);
                         }
+
                     });
-                },
-                function (property, callback) {
-                    async.parallel([
-                            function (callback) {
-                                var emailData = {};
-                                // emailData.from = "info@sfanow.in";
-                                emailData.from = property[0].infoId;
-                                emailData.infoId = property[0].infoId;
-                                emailData.infoNo = property[0].infoNo;
-                                emailData.cityAddress = property[0].cityAddress;
-                                emailData.ddFavour = property[0].ddFavour;
-                                emailData.email = data.email;
-                                emailData.name = data.firstName;
-                                emailData.city = property[0].sfaCity;
-                                emailData.year = property[0].year;
-                                emailData.type = property[0].institutionType;
-                                emailData.eventYear = property[0].eventYear;
-                                emailData.athleteAmount = property[0].totalAmountAthlete;
-                                // emailData.sfaID = data.sfaID;
-                                // emailData.password = data.password;
-                                emailData.filename = "unregisteredOnlinePayment.ejs";
-                                emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.eventYear + ".";
-                                console.log("emaildata", emailData);
-
-                                Config.email(emailData, function (err, emailRespo) {
-                                    if (err) {
-                                        console.log(err);
-                                        callback(null, err);
-                                    } else if (emailRespo) {
-                                        callback(null, emailRespo);
-                                    } else {
-                                        callback(null, "Invalid data");
-                                    }
-                                });
-                            },
-                            function (callback) {
-
-                                var smsData = {};
-                                smsData.mobile = data.mobile;
-                                var city = property[0].sfaCity;
-                                var year = property[0].year;
-                                var eventYear = property[0].eventYear;
-                                smsData.content = "Thank you for registering for SFA " + city + " " + eventYear + ". For further details please check your registered email ID.";
-                                console.log("smsdata", smsData);
-                                Config.sendSms(smsData, function (err, smsRespo) {
-                                    if (err) {
-                                        console.log(err);
-                                        callback(err, null);
-                                    } else if (smsRespo) {
-                                        console.log(smsRespo, "sms sent");
-                                        callback(null, smsRespo);
-                                    } else {
-                                        callback(null, "Invalid data");
-                                    }
-                                });
-                            }
-                        ],
-                        function (err, final) {
-                            if (err) {
-                                callback(err, null);
-                            } else {
-                                callback(null, final);
-                            }
-
-                        });
-                }
-            ],
+            }
+        ],
             function (err, data2) {
                 if (err) {
                     console.log(err);
@@ -2044,83 +2044,83 @@ var model = {
 
     unregistedCashPaymentMailSms: function (data, callback) {
         async.waterfall([
-                function (callback) {
-                    ConfigProperty.find().lean().exec(function (err, property) {
+            function (callback) {
+                ConfigProperty.find().lean().exec(function (err, property) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(property)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, property);
+                        }
+                    }
+                });
+            },
+            function (property, callback) {
+                async.parallel([
+                    function (callback) {
+                        var emailData = {};
+                        // emailData.from = "info@sfanow.in";
+                        emailData.from = property[0].infoId;
+                        emailData.infoId = property[0].infoId;
+                        emailData.infoNo = property[0].infoNo;
+                        emailData.cityAddress = property[0].cityAddress;
+                        emailData.ddFavour = property[0].ddFavour;
+                        emailData.email = data.email;
+                        emailData.name = data.firstName;
+                        emailData.city = property[0].sfaCity;
+                        emailData.year = property[0].year;
+                        emailData.type = property[0].institutionType;
+                        emailData.eventYear = property[0].eventYear;
+                        emailData.athleteAmount = property[0].totalAmountAthlete;
+                        emailData.filename = "unregistercashpayment.ejs";
+                        emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.eventYear + ".";
+                        console.log("emaildata", emailData);
+                        Config.email(emailData, function (err, emailRespo) {
+                            if (err) {
+                                console.log(err);
+                                callback(null, err);
+                            } else if (emailRespo) {
+                                callback(null, emailRespo);
+                            } else {
+                                callback(null, "Invalid data");
+                            }
+                        });
+                    },
+                    function (callback) {
+
+                        var smsData = {};
+                        smsData.mobile = data.mobile;
+                        var city = property[0].sfaCity;
+                        var year = property[0].year;
+                        var eventYear = property[0].eventYear;
+                        smsData.content = "Thank you for registering for SFA " + city + " " + eventYear + ". For further details please check your registered email ID.";
+                        console.log("smsdata", smsData);
+                        Config.sendSms(smsData, function (err, smsRespo) {
+                            if (err) {
+                                console.log(err);
+                                callback(err, null);
+                            } else if (smsRespo) {
+                                console.log(smsRespo, "sms sent");
+                                callback(null, smsRespo);
+                            } else {
+                                callback(null, "Invalid data");
+                            }
+                        });
+                    }
+                ],
+                    function (err, final) {
                         if (err) {
                             callback(err, null);
                         } else {
-                            if (_.isEmpty(property)) {
-                                callback(null, []);
-                            } else {
-                                callback(null, property);
-                            }
+                            callback(null, final);
                         }
+
                     });
-                },
-                function (property, callback) {
-                    async.parallel([
-                            function (callback) {
-                                var emailData = {};
-                                // emailData.from = "info@sfanow.in";
-                                emailData.from = property[0].infoId;
-                                emailData.infoId = property[0].infoId;
-                                emailData.infoNo = property[0].infoNo;
-                                emailData.cityAddress = property[0].cityAddress;
-                                emailData.ddFavour = property[0].ddFavour;
-                                emailData.email = data.email;
-                                emailData.name = data.firstName;
-                                emailData.city = property[0].sfaCity;
-                                emailData.year = property[0].year;
-                                emailData.type = property[0].institutionType;
-                                emailData.eventYear = property[0].eventYear;
-                                emailData.athleteAmount = property[0].totalAmountAthlete;
-                                emailData.filename = "unregistercashpayment.ejs";
-                                emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.eventYear + ".";
-                                console.log("emaildata", emailData);
-                                Config.email(emailData, function (err, emailRespo) {
-                                    if (err) {
-                                        console.log(err);
-                                        callback(null, err);
-                                    } else if (emailRespo) {
-                                        callback(null, emailRespo);
-                                    } else {
-                                        callback(null, "Invalid data");
-                                    }
-                                });
-                            },
-                            function (callback) {
 
-                                var smsData = {};
-                                smsData.mobile = data.mobile;
-                                var city = property[0].sfaCity;
-                                var year = property[0].year;
-                                var eventYear = property[0].eventYear;
-                                smsData.content = "Thank you for registering for SFA " + city + " " + eventYear + ". For further details please check your registered email ID.";
-                                console.log("smsdata", smsData);
-                                Config.sendSms(smsData, function (err, smsRespo) {
-                                    if (err) {
-                                        console.log(err);
-                                        callback(err, null);
-                                    } else if (smsRespo) {
-                                        console.log(smsRespo, "sms sent");
-                                        callback(null, smsRespo);
-                                    } else {
-                                        callback(null, "Invalid data");
-                                    }
-                                });
-                            }
-                        ],
-                        function (err, final) {
-                            if (err) {
-                                callback(err, null);
-                            } else {
-                                callback(null, final);
-                            }
-
-                        });
-
-                }
-            ],
+            }
+        ],
             function (err, data2) {
                 if (err) {
                     console.log(err);
@@ -2388,58 +2388,58 @@ var model = {
         if (data.type == "School Name") {
             Athelete.aggregate(
                 [{
-                        $lookup: {
-                            "from": "schools",
-                            "localField": "school",
-                            "foreignField": "_id",
-                            "as": "school"
-                        }
-                    },
-                    // Stage 2
-                    {
-                        $unwind: {
-                            path: "$school",
-                            preserveNullAndEmptyArrays: true // optional
-                        }
-                    },
-                    // Stage 3
-                    {
-                        $match: {
+                    $lookup: {
+                        "from": "schools",
+                        "localField": "school",
+                        "foreignField": "_id",
+                        "as": "school"
+                    }
+                },
+                // Stage 2
+                {
+                    $unwind: {
+                        path: "$school",
+                        preserveNullAndEmptyArrays: true // optional
+                    }
+                },
+                // Stage 3
+                {
+                    $match: {
 
-                            $or: [{
-                                    "school.name": {
-                                        $regex: data.input
-                                    }
-                                },
-                                {
-                                    "atheleteSchoolName": {
-                                        $regex: data.input
-                                    }
-                                }
-                            ]
+                        $or: [{
+                            "school.name": {
+                                $regex: data.input
+                            }
+                        },
+                        {
+                            "atheleteSchoolName": {
+                                $regex: data.input
+                            }
+                        }
+                        ]
 
-                        }
-                    },
-                    // Stage 4
-                    {
-                        $match: {
-                            $or: [{
-                                registrationFee: {
-                                    $ne: "online PAYU"
-                                }
-                            }, {
-                                paymentStatus: {
-                                    $ne: "Pending"
-                                }
-                            }]
-                        }
-                    },
-                    {
-                        $sort: {
-                            "createdAt": -1
+                    }
+                },
+                // Stage 4
+                {
+                    $match: {
+                        $or: [{
+                            registrationFee: {
+                                $ne: "online PAYU"
+                            }
+                        }, {
+                            paymentStatus: {
+                                $ne: "Pending"
+                            }
+                        }]
+                    }
+                },
+                {
+                    $sort: {
+                        "createdAt": -1
 
-                        }
-                    },
+                    }
+                },
                 ],
                 function (err, returnReq) {
                     console.log("returnReq : ", returnReq);
@@ -2474,55 +2474,55 @@ var model = {
         } else if (data.keyword !== "" && data.type !== "") {
             Athelete.aggregate(
                 [{
-                        $match: {
+                    $match: {
 
-                            $or: [{
-                                    "firstName": {
-                                        $regex: data.keyword,
-                                        $options: "i"
-                                    }
-                                },
-                                {
-                                    "sfaId": data.keyword
-                                }
-                            ]
+                        $or: [{
+                            "firstName": {
+                                $regex: data.keyword,
+                                $options: "i"
+                            }
+                        },
+                        {
+                            "sfaId": data.keyword
                         }
-                    },
-                    // Stage 4
-                    {
-                        $match: {
-                            $or: [{
-                                registrationFee: {
-                                    $ne: "online PAYU"
-                                }
-                            }, {
-                                paymentStatus: {
-                                    $ne: "Pending"
-                                }
-                            }]
-                        }
-                    },
-                    {
-                        $lookup: {
-                            "from": "schools",
-                            "localField": "school",
-                            "foreignField": "_id",
-                            "as": "school"
-                        }
-                    },
-                    // Stage 2
-                    {
-                        $unwind: {
-                            path: "$school",
-                            preserveNullAndEmptyArrays: true // optional
-                        }
-                    },
-                    {
-                        $sort: {
-                            "createdAt": -1
+                        ]
+                    }
+                },
+                // Stage 4
+                {
+                    $match: {
+                        $or: [{
+                            registrationFee: {
+                                $ne: "online PAYU"
+                            }
+                        }, {
+                            paymentStatus: {
+                                $ne: "Pending"
+                            }
+                        }]
+                    }
+                },
+                {
+                    $lookup: {
+                        "from": "schools",
+                        "localField": "school",
+                        "foreignField": "_id",
+                        "as": "school"
+                    }
+                },
+                // Stage 2
+                {
+                    $unwind: {
+                        path: "$school",
+                        preserveNullAndEmptyArrays: true // optional
+                    }
+                },
+                {
+                    $sort: {
+                        "createdAt": -1
 
-                        }
-                    },
+                    }
+                },
                 ],
                 function (err, returnReq) {
                     console.log("returnReq : ", returnReq);
@@ -2567,190 +2567,190 @@ var model = {
         console.log('generate req data', data);
 
         async.waterfall([
-                function (callback) {
-                    Athelete.excelFilterAthlete(data, function (err, complete) {
+            function (callback) {
+                Athelete.excelFilterAthlete(data, function (err, complete) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(complete)) {
+                            callback(null, complete);
+                        } else {
+                            // console.log('logs', complete);
+                            callback(null, complete);
+                        }
+                    }
+                });
+
+            },
+            function (complete, callback) {
+                //    console.log('logs for excel', complete.length);
+                var excelData = [];
+                var schoolData;
+                async.concatLimit(complete, 20, function (n, callback) {
+                    var obj = {};
+                    obj.sfaID = n.sfaId;
+                    async.waterfall([
+                        function (callback) {
+                            if (_.isEmpty(n.school)) {
+                                schoolData = n.atheleteSchoolName;
+                                callback(null, schoolData);
+                            } else {
+                                School.findOne({
+                                    _id: n.school
+                                }).lean().exec(function (err, found) {
+                                    if (_.isEmpty(found)) {
+                                        console.log("name is null");
+                                        schoolData = "";
+                                        callback(null, schoolData);
+                                    } else {
+                                        schoolData = found.name;
+                                        // console.log("found", schoolData);
+                                        callback(null, schoolData);
+                                    }
+
+                                });
+
+                            }
+                        },
+                        function (schoolData, callback) {
+                            // if (n.receiptId) {
+                            //     if (n.registrationFee == "online PAYU") {
+                            //         obj.receiptNo = "SFA" + n.receiptId;
+                            //     } else {
+                            //         obj.receiptNo = "";
+                            //     }
+                            // } else {
+                            //     obj.receiptNo = "";
+                            // }
+                            obj.receiptNo = "SFA" + n.receiptId;
+                            obj.school = schoolData;
+                            if (n.university) {
+                                obj.university = n.university;
+                            } else {
+                                obj.university = "";
+                            }
+                            if (n.faculty) {
+                                obj.faculty = n.faculty;
+                            } else {
+                                obj.faculty = "";
+                            }
+                            if (n.course) {
+                                obj.course = n.course;
+                            } else {
+                                obj.course = "";
+                            }
+                            if (n.year) {
+                                obj.collegeYear = n.collegeYear;
+                            } else {
+                                obj.collegeYear = "";
+                            }
+                            if (n.degree) {
+                                obj.degree = n.degree;
+                            } else {
+                                obj.degree = "";
+                            }
+                            var parentInfo;
+                            var countParent = 0;
+                            var levelInfo;
+                            var countLevel = 0;
+                            _.each(n.parentDetails, function (details) {
+                                var name = details.name + details.surname;
+                                var email = details.email;
+                                var mobile = details.mobile;
+                                var relation = details.relation;
+                                if (countParent === 0) {
+                                    parentInfo = "{ Name:" + name + "," + "Relation:" + relation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
+                                } else {
+                                    parentInfo = parentInfo + "{ Name:" + name + "," + "Relation:" + relation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
+                                }
+                                countParent++;
+
+                            });
+                            obj.parentDetails = parentInfo;
+                            _.each(n.sportLevel, function (details) {
+                                var level = details.level;
+                                var sport = details.sport;
+                                if (countLevel === 0) {
+                                    levelInfo = "{ Level:" + level + "," + "Sport:" + sport + "}";
+                                } else {
+                                    levelInfo = levelInfo + "{ Level:" + level + "," + "Sport:" + sport + "}";
+                                }
+                                countLevel++;
+
+                                // console.log("levelInfo", levelInfo);
+
+                            });
+                            obj.sportLevel = levelInfo;
+                            var dateTime = moment.utc(n.createdAt).utcOffset("+05:30").format('YYYY-MM-DD HH:mm');
+                            obj.date = dateTime;
+                            obj.idProof = n.idProof;
+                            obj.surname = n.surname;
+                            obj.firstName = n.firstName;
+                            obj.middleName = n.middleName;
+                            obj.gender = n.gender;
+                            obj.standard = n.standard;
+                            obj.bloodGroup = n.bloodGroup;
+                            obj.photograph = n.photograph;
+                            obj.dob = n.dob;
+                            obj.age = n.age;
+                            obj.ageProof = n.ageProof;
+                            obj.photoImage = n.photoImage;
+                            obj.birthImage = n.birthImage;
+                            obj.playedTournaments = n.playedTournaments;
+                            obj.mobile = n.mobile;
+                            obj.email = n.email;
+                            obj.smsOTP = n.smsOTP;
+                            obj.emailOTP = n.emailOTP;
+                            obj.address = n.address;
+                            obj.addressLine2 = n.addressLine2;
+                            obj.state = n.state;
+                            obj.district = n.district;
+                            obj.city = n.city;
+                            obj.pinCode = n.pinCode;
+                            obj.status = n.status;
+                            obj.password = n.password;
+                            obj.year = n.year;
+                            obj.registrationFee = n.registrationFee;
+                            obj.paymentStatus = n.paymentStatus;
+                            obj.transactionID = n.transactionID;
+                            obj.remarks = n.remarks;
+                            // obj.utm_medium = n.utm_medium;
+                            // obj.utm_source = n.utm_source;
+                            // obj.utm_campaign = n.utm_campaign;
+                            if (n.utm_medium) {
+                                obj.utm_medium = n.utm_medium;
+                            } else {
+                                obj.utm_medium = "";
+                            }
+
+                            if (n.utm_campaign) {
+                                obj.utm_campaign = n.utm_campaign;
+                            } else {
+                                obj.utm_campaign = "";
+                            }
+                            if (n.utm_source) {
+                                obj.utm_source = n.utm_source;
+                            } else {
+                                obj.utm_source = "";
+                            }
+                            // console.log("obj", obj);
+                            excelData.push(obj);
+                            callback(null, excelData);
+                        }
+                    ], function (err, excelData) {
                         if (err) {
                             callback(err, null);
                         } else {
-                            if (_.isEmpty(complete)) {
-                                callback(null, complete);
-                            } else {
-                                // console.log('logs', complete);
-                                callback(null, complete);
-                            }
+                            //    console.log("length", excelData.length);
+                            callback(null, excelData);
                         }
                     });
-
                 },
-                function (complete, callback) {
-                    //    console.log('logs for excel', complete.length);
-                    var excelData = [];
-                    var schoolData;
-                    async.concatLimit(complete, 20, function (n, callback) {
-                            var obj = {};
-                            obj.sfaID = n.sfaId;
-                            async.waterfall([
-                                function (callback) {
-                                    if (_.isEmpty(n.school)) {
-                                        schoolData = n.atheleteSchoolName;
-                                        callback(null, schoolData);
-                                    } else {
-                                        School.findOne({
-                                            _id: n.school
-                                        }).lean().exec(function (err, found) {
-                                            if (_.isEmpty(found)) {
-                                                console.log("name is null");
-                                                schoolData = "";
-                                                callback(null, schoolData);
-                                            } else {
-                                                schoolData = found.name;
-                                                // console.log("found", schoolData);
-                                                callback(null, schoolData);
-                                            }
-
-                                        });
-
-                                    }
-                                },
-                                function (schoolData, callback) {
-                                    // if (n.receiptId) {
-                                    //     if (n.registrationFee == "online PAYU") {
-                                    //         obj.receiptNo = "SFA" + n.receiptId;
-                                    //     } else {
-                                    //         obj.receiptNo = "";
-                                    //     }
-                                    // } else {
-                                    //     obj.receiptNo = "";
-                                    // }
-                                    obj.receiptNo = "SFA" + n.receiptId;
-                                    obj.school = schoolData;
-                                    if (n.university) {
-                                        obj.university = n.university;
-                                    } else {
-                                        obj.university = "";
-                                    }
-                                    if (n.faculty) {
-                                        obj.faculty = n.faculty;
-                                    } else {
-                                        obj.faculty = "";
-                                    }
-                                    if (n.course) {
-                                        obj.course = n.course;
-                                    } else {
-                                        obj.course = "";
-                                    }
-                                    if (n.year) {
-                                        obj.collegeYear = n.collegeYear;
-                                    } else {
-                                        obj.collegeYear = "";
-                                    }
-                                    if (n.degree) {
-                                        obj.degree = n.degree;
-                                    } else {
-                                        obj.degree = "";
-                                    }
-                                    var parentInfo;
-                                    var countParent = 0;
-                                    var levelInfo;
-                                    var countLevel = 0;
-                                    _.each(n.parentDetails, function (details) {
-                                        var name = details.name + details.surname;
-                                        var email = details.email;
-                                        var mobile = details.mobile;
-                                        var relation = details.relation;
-                                        if (countParent === 0) {
-                                            parentInfo = "{ Name:" + name + "," + "Relation:" + relation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
-                                        } else {
-                                            parentInfo = parentInfo + "{ Name:" + name + "," + "Relation:" + relation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
-                                        }
-                                        countParent++;
-
-                                    });
-                                    obj.parentDetails = parentInfo;
-                                    _.each(n.sportLevel, function (details) {
-                                        var level = details.level;
-                                        var sport = details.sport;
-                                        if (countLevel === 0) {
-                                            levelInfo = "{ Level:" + level + "," + "Sport:" + sport + "}";
-                                        } else {
-                                            levelInfo = levelInfo + "{ Level:" + level + "," + "Sport:" + sport + "}";
-                                        }
-                                        countLevel++;
-
-                                        // console.log("levelInfo", levelInfo);
-
-                                    });
-                                    obj.sportLevel = levelInfo;
-                                    var dateTime = moment.utc(n.createdAt).utcOffset("+05:30").format('YYYY-MM-DD HH:mm');
-                                    obj.date = dateTime;
-                                    obj.idProof = n.idProof;
-                                    obj.surname = n.surname;
-                                    obj.firstName = n.firstName;
-                                    obj.middleName = n.middleName;
-                                    obj.gender = n.gender;
-                                    obj.standard = n.standard;
-                                    obj.bloodGroup = n.bloodGroup;
-                                    obj.photograph = n.photograph;
-                                    obj.dob = n.dob;
-                                    obj.age = n.age;
-                                    obj.ageProof = n.ageProof;
-                                    obj.photoImage = n.photoImage;
-                                    obj.birthImage = n.birthImage;
-                                    obj.playedTournaments = n.playedTournaments;
-                                    obj.mobile = n.mobile;
-                                    obj.email = n.email;
-                                    obj.smsOTP = n.smsOTP;
-                                    obj.emailOTP = n.emailOTP;
-                                    obj.address = n.address;
-                                    obj.addressLine2 = n.addressLine2;
-                                    obj.state = n.state;
-                                    obj.district = n.district;
-                                    obj.city = n.city;
-                                    obj.pinCode = n.pinCode;
-                                    obj.status = n.status;
-                                    obj.password = n.password;
-                                    obj.year = n.year;
-                                    obj.registrationFee = n.registrationFee;
-                                    obj.paymentStatus = n.paymentStatus;
-                                    obj.transactionID = n.transactionID;
-                                    obj.remarks = n.remarks;
-                                    // obj.utm_medium = n.utm_medium;
-                                    // obj.utm_source = n.utm_source;
-                                    // obj.utm_campaign = n.utm_campaign;
-                                    if (n.utm_medium) {
-                                        obj.utm_medium = n.utm_medium;
-                                    } else {
-                                        obj.utm_medium = "";
-                                    }
-
-                                    if (n.utm_campaign) {
-                                        obj.utm_campaign = n.utm_campaign;
-                                    } else {
-                                        obj.utm_campaign = "";
-                                    }
-                                    if (n.utm_source) {
-                                        obj.utm_source = n.utm_source;
-                                    } else {
-                                        obj.utm_source = "";
-                                    }
-                                    // console.log("obj", obj);
-                                    excelData.push(obj);
-                                    callback(null, excelData);
-                                }
-                            ], function (err, excelData) {
-                                if (err) {
-                                    callback(err, null);
-                                } else {
-                                    //    console.log("length", excelData.length);
-                                    callback(null, excelData);
-                                }
-                            });
-                        },
-                        function (err, data) {
-                            Config.generateExcel("Athlete", excelData, res);
-                        });
-                }
-            ],
+                    function (err, data) {
+                        Config.generateExcel("Athlete", excelData, res);
+                    });
+            }
+        ],
             function (err, data2) {
                 if (err) {
                     console.log(err);
@@ -3132,93 +3132,93 @@ var model = {
 
     getTargetAthleteold: function (data, res) {
         async.waterfall([
-                function (callback) {
-                    athlete = [];
-                    async.parallel([
-                            function (callback) {
-                                StudentTeam.find().lean().exec(function (err, found) {
-                                    if (err) {
-                                        callback(err, null);
-                                    } else if (_.isEmpty(found)) {
-                                        callback(null, []);
-                                    } else {
-                                        _.each(found, function (n) {
-                                            athlete.push(n.studentId);
-                                            // callback(null, n);
-                                            // }, function (err, complete) {
-                                            console.log("team", athlete);
-                                            //     callback(null, athlete);
-                                        });
-                                        callback(null, athlete);
-                                    }
-                                });
-                            },
-                            function (callback) {
-                                IndividualSport.find().lean().exec(function (err, found) {
-                                    if (err) {
-                                        callback(err, null);
-                                    } else if (_.isEmpty(found)) {
-                                        callback(null, []);
-                                    } else {
-                                        _.each(found, function (n) {
-                                            athlete.push(n.athleteId);
-                                            // callback(null, n);
-                                            // }, function (err, complete) {
-                                            console.log("athlete", athlete);
-                                            //     callback(null, athlete);
-                                        });
-                                        callback(null, athlete);
-                                    }
-                                });
-                            }
-                        ],
-                        function (err, data2) {
+            function (callback) {
+                athlete = [];
+                async.parallel([
+                    function (callback) {
+                        StudentTeam.find().lean().exec(function (err, found) {
                             if (err) {
+                                callback(err, null);
+                            } else if (_.isEmpty(found)) {
                                 callback(null, []);
-                            } else if (data2) {
-                                if (_.isEmpty(data2)) {
-                                    callback(null, []);
-                                } else {
-                                    var registerdAthlete = [].concat.apply([], [
-                                        data2[0],
-                                        data2[1]
-                                    ]);
-                                    console.log("registerdAthlete", registerdAthlete);
-                                    callback(null, registerdAthlete);
-                                }
+                            } else {
+                                _.each(found, function (n) {
+                                    athlete.push(n.studentId);
+                                    // callback(null, n);
+                                    // }, function (err, complete) {
+                                    console.log("team", athlete);
+                                    //     callback(null, athlete);
+                                });
+                                callback(null, athlete);
                             }
                         });
-                },
-                function (registerdAthlete, callback) {
-                    var targetAthlete = [];
-                    var deepSearch = "school";
-                    Athelete.find().lean().deepPopulate(deepSearch).exec(function (err, athlete) {
-                        if (err) {
-                            callback(err, null);
-                        } else if (_.isEmpty(athlete)) {
-                            callback(null, []);
-                        } else {
-                            var i = 0;
-                            _.each(athlete, function (n) {
-                                _.each(registerdAthlete, function (m) {
-                                    if (n._id !== m) {
-                                        console.log("matched", n);
-                                        targetAthlete.push(n);
-                                    }
+                    },
+                    function (callback) {
+                        IndividualSport.find().lean().exec(function (err, found) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (_.isEmpty(found)) {
+                                callback(null, []);
+                            } else {
+                                _.each(found, function (n) {
+                                    athlete.push(n.athleteId);
+                                    // callback(null, n);
+                                    // }, function (err, complete) {
+                                    console.log("athlete", athlete);
+                                    //     callback(null, athlete);
                                 });
-                            });
-                            callback(null, targetAthlete);
+                                callback(null, athlete);
+                            }
+                        });
+                    }
+                ],
+                    function (err, data2) {
+                        if (err) {
+                            callback(null, []);
+                        } else if (data2) {
+                            if (_.isEmpty(data2)) {
+                                callback(null, []);
+                            } else {
+                                var registerdAthlete = [].concat.apply([], [
+                                    data2[0],
+                                    data2[1]
+                                ]);
+                                console.log("registerdAthlete", registerdAthlete);
+                                callback(null, registerdAthlete);
+                            }
                         }
                     });
-                },
-                function (targetAthlete, callback) {
-                    console.log("inside generate");
-                    Athelete.generateTargetAthlete(targetAthlete, function (err, singleData) {
-                        // callback(null, singleData);
-                        Config.generateExcel("targetAthlete", singleData, res);
-                    });
-                }
-            ],
+            },
+            function (registerdAthlete, callback) {
+                var targetAthlete = [];
+                var deepSearch = "school";
+                Athelete.find().lean().deepPopulate(deepSearch).exec(function (err, athlete) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(athlete)) {
+                        callback(null, []);
+                    } else {
+                        var i = 0;
+                        _.each(athlete, function (n) {
+                            _.each(registerdAthlete, function (m) {
+                                if (n._id !== m) {
+                                    console.log("matched", n);
+                                    targetAthlete.push(n);
+                                }
+                            });
+                        });
+                        callback(null, targetAthlete);
+                    }
+                });
+            },
+            function (targetAthlete, callback) {
+                console.log("inside generate");
+                Athelete.generateTargetAthlete(targetAthlete, function (err, singleData) {
+                    // callback(null, singleData);
+                    Config.generateExcel("targetAthlete", singleData, res);
+                });
+            }
+        ],
             function (err, data2) {
                 if (err) {
                     console.log(err);
@@ -3265,79 +3265,79 @@ var model = {
 
     getTargetAthlete: function (data, res) {
         async.waterfall([
-                function (callback) {
-                    var deepSearch = "school";
-                    Athelete.find().lean().deepPopulate(deepSearch).exec(function (err, athlete) {
-                        if (err) {
-                            callback(err, null);
-                        } else if (_.isEmpty(athlete)) {
-                            callback(null, []);
-                        } else {
-                            callback(null, athlete);
-                        }
-                    });
-                },
-                function (athlete, callback) {
-                    var targetAthlete = [];
-                    var flag = false;
-                    async.each(athlete, function (n, callback) {
-                        async.waterfall([
-                                function (callback) {
-                                    StudentTeam.findOne({
-                                        studentId: n._id
-                                    }).lean().exec(function (err, found) {
-                                        if (err) {
-                                            callback(err, null);
-                                        } else if (_.isEmpty(found)) {
-                                            flag = false;
-                                            callback(null, flag);
-                                        } else {
-                                            flag = true;
-                                            callback(null, flag);
-                                        }
-                                    });
-                                },
-                                function (flag, callback) {
-                                    if (flag == false) {
-                                        IndividualSport.findOne({
-                                            athleteId: n._id
-                                        }).lean().exec(function (err, found) {
-                                            if (err) {
-                                                callback(err, null);
-                                            } else if (_.isEmpty(found)) {
-                                                flag = false;
-                                                callback(null, flag);
-                                            } else {
-                                                flag = true
-                                                callback(null, flag);
-                                            }
-                                        });
-                                    } else {
-                                        callback(null, flag);
-                                    }
-                                }
-                            ],
-                            function (err, data2) {
+            function (callback) {
+                var deepSearch = "school";
+                Athelete.find().lean().deepPopulate(deepSearch).exec(function (err, athlete) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(athlete)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, athlete);
+                    }
+                });
+            },
+            function (athlete, callback) {
+                var targetAthlete = [];
+                var flag = false;
+                async.each(athlete, function (n, callback) {
+                    async.waterfall([
+                        function (callback) {
+                            StudentTeam.findOne({
+                                studentId: n._id
+                            }).lean().exec(function (err, found) {
                                 if (err) {
-                                    callback(null, []);
+                                    callback(err, null);
+                                } else if (_.isEmpty(found)) {
+                                    flag = false;
+                                    callback(null, flag);
                                 } else {
-                                    if (data2 == false) {
-                                        targetAthlete.push(n);
-                                    }
-                                    callback(null, data2);
+                                    flag = true;
+                                    callback(null, flag);
                                 }
                             });
-                    }, function (err) {
-                        callback(null, targetAthlete);
-                    });
-                },
-                function (targetAthlete, callback) {
-                    console.log("inside generate");
-                    Athelete.generateTargetAthlete(targetAthlete, function (err, singleData) {
-                        Config.generateExcel("targetAthlete", singleData, res);
-                    });
-                }
-            ],
+                        },
+                        function (flag, callback) {
+                            if (flag == false) {
+                                IndividualSport.findOne({
+                                    athleteId: n._id
+                                }).lean().exec(function (err, found) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else if (_.isEmpty(found)) {
+                                        flag = false;
+                                        callback(null, flag);
+                                    } else {
+                                        flag = true
+                                        callback(null, flag);
+                                    }
+                                });
+                            } else {
+                                callback(null, flag);
+                            }
+                        }
+                    ],
+                        function (err, data2) {
+                            if (err) {
+                                callback(null, []);
+                            } else {
+                                if (data2 == false) {
+                                    targetAthlete.push(n);
+                                }
+                                callback(null, data2);
+                            }
+                        });
+                }, function (err) {
+                    callback(null, targetAthlete);
+                });
+            },
+            function (targetAthlete, callback) {
+                console.log("inside generate");
+                Athelete.generateTargetAthlete(targetAthlete, function (err, singleData) {
+                    Config.generateExcel("targetAthlete", singleData, res);
+                });
+            }
+        ],
             function (err, data2) {
                 if (err) {
                     console.log(err);
@@ -3351,6 +3351,81 @@ var model = {
                 }
             });
     },
+
+
+
+    // async.concatSeries(totals, function (n, callback) {
+    //     console.log("n", n);
+    //     var d = new Date(n._id.event);
+    //     n._id.month = monthNames[n._id.month];
+    //     callback(null, n);
+    // }, function (err, complete) {
+    //     if (err) {
+    //         callback(err, null);
+    //     } else {
+    //         callback(null, complete);
+    //     }
+    // })
+
+    toTitleCase: function (data) {
+        if (data) {
+            return data.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
+
+        } else {
+            return '';
+        }
+    },
+
+
+    updateAthleteName: function (data, callback) {
+        Athelete.find({ $or: [{ firstName: { $exists: true } }, { middleName: { $exists: true } }, { surname: { $exists: true } }] }, {
+            _id: 1,
+            surname: 1,
+            firstName: 1,
+            middleName: 1
+        }).lean().exec(function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(found)) {
+                callback(null, "Data is empty");
+            } else {
+                async.concatLimit(found, 10, function (key, callback) {
+                    if (!_.isEmpty(key.firstName)) {
+                        key.firstName = Athelete.toTitleCase(key.firstName);
+                    }
+                    if (!_.isEmpty(key.surname)) {
+                        key.surname = Athelete.toTitleCase(key.surname);
+                    }
+                    if (!_.isEmpty(key.middleName) && key.middleName != '') {
+                        key.middleName = Athelete.toTitleCase(key.middleName);
+                    }
+
+                    Athelete.saveData(key, function (err, res) {
+                        if (err) {
+                            callback(err, 'no data found');
+                        } else {
+                            if (_.isEmpty(res)) {
+                                callback(null, "No data found");
+                            } else {
+                                callback(null, res);
+                            }
+                        }
+                    });
+
+                }, function (err, res) {
+                    console.log("Finished");
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        callback(null, res);
+                    }
+                });
+            }
+        });
+
+    },
+
+
 
 };
 module.exports = _.assign(module.exports, exports, model);

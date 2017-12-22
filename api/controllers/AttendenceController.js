@@ -21,5 +21,16 @@ var controller = {
             });
         }
     },
+
+    getPlayersMatchSelection: function (req, res) {
+        if (req.body) {
+            Attendence.getPlayersMatchSelection(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            });
+        }
+    },
 };
 module.exports = _.assign(module.exports, controller);
