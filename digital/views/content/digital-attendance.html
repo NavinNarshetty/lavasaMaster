@@ -116,12 +116,19 @@
                                 <!-- VIEW DRAW BUTTON -->
 
                                 <!---->
-                                <div class="championshipdraw-card-lable inline-block">
-
+                                <div class="form-group">
+                                  <div class="championshipdraw-card-lable inline-block">
+                                  </div>
+                                  <div class=" championshipdraw-card-dropdown inline-block">
+                                      <button class="btn championshipdraw-card-btn" ng-click="viewDraw(formData);" ng-disabled="championshipDrawsForm.$invalid">Start Attendance</button>
+                                  </div>
                                 </div>
-                                <div class=" championshipdraw-card-dropdown inline-block">
-
-                                    <button class="btn championshipdraw-card-btn" ng-click="viewDraw(formData);" ng-disabled="championshipDrawsForm.$invalid">View Draw</button>
+                                <div class="form-group">
+                                  <div class="championshipdraw-card-lable inline-block">
+                                  </div>
+                                  <div class=" championshipdraw-card-dropdown inline-block">
+                                      <button class="btn championshipdraw-card-btn" ng-click="viewDraw(formData);" ng-disabled="championshipDrawsForm.$invalid">Create Matches</button>
+                                  </div>
                                 </div>
                                 <!-- VIEW DRAW BUTTON -->
                             </form>

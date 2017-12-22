@@ -1404,3 +1404,21 @@ header {
   }
 }
 // ATTENDANCE SHEET TEAM END
+// CREATE MATCH HEATS
+.creatematch-page{
+  min-height: calc(100vh - 60px);
+  padding: 20px 0;
+}
+.creatematch-title{
+  font-size: 30px;
+  color: $brand-primary;
+  text-align: center;
+  text-transform: uppercase;
+  @extend .d-fjalla-one;
+}
+.creatematch-header {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  margin: 20px 0;
+}
+// CREATE MATCH HEATS END

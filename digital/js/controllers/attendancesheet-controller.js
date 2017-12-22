@@ -116,5 +116,6 @@ myApp.controller('AttendanceSheetCtrl', function($scope, TemplateService, Naviga
       attendance:  false
     }];
     // JSONS END
+
     // CODE ENDS HERE
 });

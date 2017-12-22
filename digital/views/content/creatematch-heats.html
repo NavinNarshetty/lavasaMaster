@@ -1,0 +1,96 @@
+<div class="creatematch-page">
+  <div class="container">
+      <div class="creatematch-title">
+        Create Match
+      </div>
+      <!-- HEADER FORM -->
+
+      <div class="creatematch-header">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="matchForm.sportType"> Select Sport Type</label>
+              <select class="select form-control" id="matchForm.sportType" ng-model="matchForm.sportType" ng-options="sport.type as sport.type for sport in roundType"></select>
+              <!-- <pre>{{match.draw}}</pre> -->
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="matchForm.matchCount">Enter No. of Matches</label>
+              <input type="number" class="form-control" id="matchForm.matchCount" min="0" ng-model="matchForm.matchCount">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="matchForm.prefix"> Enter Match ID Prefix</label>
+              <input type="text" id="matchForm.prefix" class="form-control" ng-model="matchForm.prefix">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Attendance Strength: <span>999</span></label>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="matchForm.roundName">Enter Round Name</label>
+              <input type="text" class="form-control" id="matchForm.roundName" ng-model="matchForm.roundName">
+            </div>
+          </div>
+          <div class=" col-md-4">
+            <div class="form-group">
+              <button type="button" name="button" class="btn btn-green-outline btn-scoring" ng-click="createMatches()">Create Match</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- HEADER FORM -->
+      <!-- MATCH DISPLAY SECTION -->
+      <div class="creatematch-displaysection">
+        <div class="creatematch-table">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>
+                  <div class="">
+                    Sr. No
+                  </div>
+                </th>
+                <th>
+                  <div class="">
+                    Match ID
+                  </div>
+                </th>
+                <th>
+                  <div class="">
+                    Actions
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat= "match in matchList track by $index">
+                <td>
+                  <div class="">{{$index + 1}}</div>
+                </td>
+                <td>
+                  <div class="">
+                    {{match.matchId}}
+                  </div>
+                </td>
+                <td>
+                  <div class="">
+                    <button type="button" name="button" class="btn btn-green-outline">View</button>
+                    <button type="button" name="button" class="btn btn-green-outline">Edit</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- MATCH DISPLAY SECTION END -->
+  </div>
+</div>

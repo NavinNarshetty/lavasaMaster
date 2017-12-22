@@ -10,6 +10,11 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
         classis: "active",
         anchor: "digital-home",
         subnav: []
+    }, {
+        name: "Sport Attendance",
+        classis: "active",
+        anchor: "digital-attendance",
+        subnav: []
     }];
 
     return {

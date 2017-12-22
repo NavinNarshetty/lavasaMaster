@@ -59,10 +59,10 @@
         </div>
       </div>
       <div class="col-md-2 col-sm-3">
-        <div class="matchstart-uploadholder text-uppercase ">
+        <!-- <div class="matchstart-uploadholder text-uppercase ">
           <button class="btn btn-green-outline btn-scoring">Upload Picture</button>
           <upload-image ng-model="formData.matchPhoto" ng-callback="getMatchPhoto(data)" allow-type="image/*" no-view class="pointer upload-scorecard" multiple inobj></upload-image>
-        </div>
+        </div> -->
         <div class="digital-swiper scorescard-swiper" ng-if="formData.matchPhoto.length>0">
           <div class="matchstart-uploadpic text-uppercase" ng-repeat= "pic in formData.matchPhoto track by $index">
             <span class="remove-pic" ng-click="removeMatchScore(pic)"><i class="fa fa-times"></i></span>
