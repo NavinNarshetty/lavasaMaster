@@ -255,6 +255,25 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
                 callback(data)
             });
         },
+        getAthleteForAttendance: function (formData, callback) {
+            $http({
+                url: adminurl + "Attendence/getAthleteForAttendence",
+                method: "POST",
+                data: formData
+            }).success(function (data) {
+                callback(data)
+            });
+        },
+        saveAttendance: function (formData, callback) {
+            $http({
+                url: adminurl + "Attendence/saveAttendence",
+                method: "POST",
+                data: formData
+            }).success(function (data) {
+                callback(data)
+            });
+        },
+
         Boolean: function (str) {
             if (str == 'true' || str || str === true) {
                 return true;

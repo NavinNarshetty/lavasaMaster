@@ -81,4 +81,6 @@ module.exports = [
   'digital/js/controllers/scoringimages-controller.js',
   'digital/js/controllers/scorequalifying-controller.js',
   'digital/js/controllers/scoreleague-controller.js',
+  'digital/js/controllers/attendancesheet-controller.js',
+  'digital/js/controllers/attendancesheet-team-controller.js',
 ];

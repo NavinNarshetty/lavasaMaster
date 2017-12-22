@@ -1271,7 +1271,7 @@ header {
       overflow-y: auto;
   }
 }
-
+// ATTENDANCE SELECT PAGE
 .attendanceselect-page{
   .sport-type-head{
     color: $brand-primary;
@@ -1280,3 +1280,127 @@ header {
     background-color: $brand-primary;
   }
 }
+// ATTENDANCE SELECT PAGE END
+
+// ATTENDANCE SHEET PAGE
+.attendancepage{
+  min-height: 100vh;
+  padding: 50px 0;
+  position: relative;
+}
+.attendancesheet-title{
+  color: $brand-primary;
+  font-size: 30px;
+  text-align: center;
+  text-transform: uppercase;
+  @extend .d-fjalla-one;
+}
+.attendance-sportheading{
+  color: $brand-success;
+  font-size: 24px;
+  text-align: center;
+  text-transform: uppercase;
+  @extend .d-fjalla-one;
+}
+.attendancesheet-stickyhead{
+  width: 100%;
+  padding: 10px 0;
+  box-shadow: 0 2px 5px #ccc;
+  position: fixed;
+  top: 50px;
+  left: 0;
+  background-color: #fff;
+
+  .form-group{
+    margin: 0;
+  }
+}
+.player-highlight{
+  background-color: $brand-warning;
+  // color: #fff;
+}
+.attendance-table{
+  margin: 30px 0;
+
+  .table{
+    >tbody{
+      >tr{
+        td{
+          vertical-align: middle;
+        }
+      }
+    }
+    // display: block;
+    // >thead{
+    //   display: block;
+    //   position: sticky;
+    //   top: 0;
+    //   background-color: #ccc;
+    // }
+    // tbody, thead tr{
+    //   width: 100%;
+    //   display: table;
+    //   table-layout: fixed;
+    // }
+  }
+}
+// ATTENDANCE SHEET PAGE END
+// ATTENDANCE SHEET TEAM
+.attendaceteam-table{
+  .table{
+    > tbody {
+      > tr{
+        td {
+          // border: none;
+          vertical-align: top;
+        }
+      }
+    }
+  }
+}
+.attendanceteam-accordion{
+  .panel-group{
+    margin: 0;
+  }
+  .panel{
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+  }
+  .panel-heading{
+    padding: 0px 10px;
+    background-color: transparent;
+    a{
+      color: #333;
+    }
+  }
+  .panel-body{
+    padding: 0 10px;
+  }
+}
+.attendanceteam-tablehead{
+  .accordion-arrow{
+    font-size: 21px;
+  }
+  .table{
+    margin-bottom: 0;
+    background-color: transparent;
+    >tbody{
+      td{
+        padding: 5px 0;
+        border: none;
+      }
+    }
+  }
+  .attendancehead-teamid{
+    width: 150px;
+  }
+}
+.attendance-teamplayer-table{
+  .table{
+    margin-bottom: 0;
+    background-color: transparent;
+    font-size: 12px;
+  }
+}
+// ATTENDANCE SHEET TEAM END

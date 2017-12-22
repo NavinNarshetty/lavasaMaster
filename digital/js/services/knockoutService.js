@@ -221,7 +221,14 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
   };
   //===================End of sorting result of league-cum-knockout==================
 
-  this.scrollTo = function (destination, type) {
+  this.scrollTo = function (destination, type, offset) {
+    console.log(destination, type, offset);
+    var off;
+    if (offset != undefined) {
+      off = offset;
+    } else {
+      off = 0;
+    }
     if (type == 'id') {
       var destination = '#' + destination;
     } else if (type == 'class') {
@@ -229,7 +236,7 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
     }
     console.log(destination, type, 'in dir')
     $('html,body').animate({
-      scrollTop: $(destination).offset().top
+      scrollTop: $(destination).offset().top-off
     },
       'slow');
   };
