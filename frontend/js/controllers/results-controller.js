@@ -287,15 +287,17 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
     // console.log($scope.medalFilter, 'clear');
   }
   // CLEAR FILTER END
+  // TEAM PROFILE REDIRECT
   $scope.medalSchoolRedirect = function(player){
     if(player.schoolId){
-      $state.go('school-profile', {
-        id: player.schoolId
+      $state.go('team-detail', {
+        id: player.team
       })
     } else {
       // console.log("noid");
     }
   }
+  // TEAM PROFILE REDIRECT END
   // FUNCTIONS END
 
   // APIS

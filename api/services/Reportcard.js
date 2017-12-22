@@ -298,7 +298,7 @@ var model = {
                                             "totalGold": data['goldMedal']
                                         }
                                     } else {
-                                        console.log(data);
+                                        // console.log(data);
                                         sendObj.medalsTally.medal = {
                                             'gold': {
                                                 "totalGold": data['goldMedal']
@@ -360,13 +360,13 @@ var model = {
             });
             returnObj.totalStrength = obj.arr.length;
 
-            var wonArr = _.filter(obj.arr, ['won', true]);
-            var looseArr = _.filter(obj.arr, ['won', false]);
+            // var wonArr = _.filter(obj.arr, ['won', true]);
+            // var looseArr = _.filter(obj.arr, ['won', false]);
 
-            returnObj.winCount = wonArr.length;
-            returnObj.looseCount = looseArr.length;
-            var winPercent = _.round((returnObj.winCount / (returnObj.winCount + returnObj.looseCount)) * 100);
-            returnObj.winPercent = _.isNaN(winPercent) ? 0 : winPercent;
+            // returnObj.winCount = wonArr.length;
+            // returnObj.looseCount = looseArr.length;
+            // var winPercent = _.round((returnObj.winCount / (returnObj.winCount + returnObj.looseCount)) * 100);
+            // returnObj.winPercent = _.isNaN(winPercent) ? 0 : winPercent;
             obj.arr = _.groupBy(obj.arr, 'athleteId.gender');
 
             if (obj.arr['male'] && obj.arr['female']) {
@@ -406,8 +406,6 @@ var model = {
             } else {
                 callback(returnObj);
             }
-
-
         };
 
         function calSportDetails(obj, callback) {
@@ -774,6 +772,7 @@ var model = {
                                         "school.name": "$schoolName",
                                         "athleteId._id": "$studentTeam.studentId._id",
                                         "athleteId.gender": "$studentTeam.studentId.gender",
+                                        "teamId": "$teamId",
                                         "type": "team"
                                     }
                                 }];
@@ -788,225 +787,24 @@ var model = {
                         ], function (err, parallelResult) {
                             //parallel callback
                             var arr = [];
+                            var winLoose = [];
+                            winLoose[0] = _.cloneDeep(parallelResult[0]);
+                            winLoose[1] = _.uniqBy(_.cloneDeep(parallelResult[1]), 'teamId')
 
-                            // arr = parallelResult[0].concat(parallelResult[1]);
+                            // console.log("parallel[0]",parallelResult[0].length, "+", "parallel[1]",parallelResult[1].length);
+                            // console.log("winLoose[0]",winLoose[0].length, "+", "winLoose[1]",winLoose[1].length);
+
                             arr = _.flatten(parallelResult);
-                            callback(null, arr);
+                            winLoose = _.flatten(winLoose);
+
+
+                            // console.log("arr.length",arr.length);
+                            // console.log("winLoose.length",winLoose.length);     
+
+                            callback(null, arr, winLoose);
                         });
                     },
-
-                    function (parallelResult, callback) {
-                        async.concatSeries(parallelResult, function (singleData, callback) {
-                            var resultVar = Match.getResultVar(singleData.sportsListSubCategory.name, singleData.sportsListSubCategory.type);
-
-                            if (resultVar == null) {
-                                singleData.ignoreMe = true;
-                                callback();
-                            } else {
-                                var matchObj = {};
-                                matchObj[resultVar.opponentsVar] = singleData._id;
-                                var pullProperties = resultVar.resultVar + " " + "excelType";
-
-                                Match.findOne(matchObj, pullProperties).lean().exec(function (err, result) {
-                                    if (err) {
-                                        callback(err, null);
-                                    } else if (!_.isEmpty(result)) {
-
-                                        if (result[resultVar.resultVar]) {
-                                            var findByKey = '';
-
-                                            var noShow = function (obj) {
-                                                if (!_.isEmpty(obj)) {
-                                                    singleData.noShow = obj.noShow;
-                                                } else {
-                                                    singleData.delete = true;
-                                                }
-                                            };
-
-                                            var win=function(obj){
-                                                if (singleData.type == 'indi') {
-                                                    if (obj && obj.winner && obj.winner.opponentsSingle && (obj.winner.opponentsSingle == _.toString(singleData._id))) {
-                                                        singleData.won = true;
-                                                    } else {
-                                                        singleData.won = false;
-                                                    }
-                                                } else if (singleData.type == 'team') {
-                                                    if (obj && obj.winner && obj.winner.player && (obj.winner.player == _.toString(singleData._id))) {
-                                                        singleData.won = true;
-                                                    } else {
-                                                        singleData.won = false;
-                                                    }
-                                                }
-                                            }             
-                                            callback();                            
-
-                                            // switch (singleData.sportsListSubCategory.type) {
-                                            //     case 'Combat Sports':
-                                            //     case 'Racquet Sports':
-                                            //     case 'Team Sports':
-                                            //         findByKey = 'player';
-                                            //         break;
-                                            //     case 'Individual Sports':
-                                            //         findByKey = 'id';
-                                            //         if (singleData.sportsListSubCategory.name == "Carrom") {
-                                            //             findByKey = 'player';
-                                            //         } else if (singleData.sportsListSubCategory.name == "Chess") {
-                                            //             noShow = function (obj) {
-                                            //                 if (obj.score && obj.rank) {
-                                            //                     singleData.noShow = false;
-                                            //                 } else {
-                                            //                     singleData.delete = true;
-                                            //                 }
-                                            //             }
-                                            //         } else if (singleData.sportsListSubCategory.name == "Athletics" || singleData.sportsListSubCategory.name == "Athletics 4x100m Relay" || singleData.sportsListSubCategory.name == "Athletics 4x50m Relay" || singleData.sportsListSubCategory.name == "Athletics Medley Relay") {
-                                            //             findByKey = 'id';
-                                            //             noShow = function (obj) {
-                                            //                 if (obj && obj.result) {
-                                            //                     if (obj.result == '-') {
-                                            //                         singleData.noShow = true;
-                                            //                     } else {
-                                            //                         singleData.noShow = false;
-                                            //                     }
-                                            //                 } else {
-                                            //                     singleData.delete = true;
-                                            //                 }
-                                            //             }
-
-                                            //             win = function(obj){
-                                            //                 console.log("obj",obj);
-                                            //                 console.log("singleData.athleteId._id",singleData.athleteId._id);
-                                            //                 console.log("resultVar",resultVar);
-                                            //                 console.log("result",result[resultVar.resultVar]);
-                                            //                 if(obj.result){
-                                            //                     if(obj.result == "Won" || obj.result == 1 || obj.result == 2 || obj.result == 3){
-                                            //                         singleData.won = true;
-                                            //                     }else if(obj.result == "Loss"){
-                                            //                         singleData.won=false;
-                                            //                     }
-                                            //                 }else{
-                                            //                     singleData.delete = true;//doubt
-                                            //                 }
-                                            //             }
-                                            //         }
-                                            //         break;
-                                            //     case 'Aquatics Sports':
-                                            //         noShow = function (obj) {
-                                            //             if (obj && obj.result) {
-                                            //                 if (obj.result == '-') {
-                                            //                     singleData.noShow = true;
-                                            //                 } else {
-                                            //                     singleData.noShow = false;
-                                            //                 }
-                                            //             } else {
-                                            //                 singleData.delete = true;
-                                            //             }
-                                            //         }
-
-                                            //         win = function(obj){
-                                            //             if(obj.result){
-                                            //                 if(obj.result == "Won" || obj.result == 1 || obj.result == 2 || obj.result == 3){
-                                            //                     singleData.won = true;
-                                            //                 }else if(obj.result == "Loss"){
-                                            //                     singleData.won=false;
-                                            //                 }
-                                            //             }else{
-                                            //                 singleData.delete = true;//doubt
-                                            //             }
-                                            //         }
-                                            //         break;
-                                            //     case 'Target Sports':
-                                            //         if (singleData.sportsListSubCategory.name == "Archery") {
-                                            //             if (result.excelType == 'qualifying') {
-                                            //                 findByKey = 'id';
-                                            //                 resultVar['resultVar'] = resultVar.resultVar1;
-                                            //                 win = function(obj){
-                                            //                     if(obj.result){
-                                            //                         if(obj.result == "Won" || obj.result == 1 || obj.result == 2 || obj.result == 3){
-                                            //                             singleData.won = true;
-                                            //                         }else if(obj.result == "Loss"){
-                                            //                             singleData.won=false;
-                                            //                         }
-                                            //                     }else{
-                                            //                         singleData.delete = true;//doubt
-                                            //                     }
-                                            //                 }
-                                            //             } else if (result.excelType == 'knockout') {
-                                            //                 findByKey = 'player';
-                                            //                 resultVar['resultVar'] = resultVar.resultVar2;
-                                            //             }
-                                            //         } else if (singleData.sportsListSubCategory.name == "Shooting") {
-                                            //             noShow = function (obj) {
-                                            //                 if (obj && obj.result) {
-                                            //                     if (obj.result == '-') {
-                                            //                         singleData.noShow = true;
-                                            //                     } else {
-                                            //                         singleData.noShow = false;
-                                            //                     }
-                                            //                 } else {
-                                            //                     singleData.delete = true;
-                                            //                 }
-                                            //             };
-
-                                            //             win = function(obj){
-                                            //                 if(obj.result){
-                                            //                     if(obj.result == "Won" || obj.result == 1 || obj.result == 2 || obj.result == 3){
-                                            //                         singleData.won = true;
-                                            //                     }else if(obj.result == "Loss"){
-                                            //                         singleData.won=false;
-                                            //                     }
-                                            //                 }else{
-                                            //                     singleData.delete = true;//doubt
-                                            //                 }
-                                            //             }
-
-
-                                            //         }
-                                            //         break;
-                                            // }
-
-                                            // if (resultVar.opponentsVar == 'opponentsSingle') {
-                                            //     if (singleData.sportsListSubCategory.name != "Shooting") {
-                                            //         var obj = _.find(result[resultVar.resultVar].players, [findByKey, singleData.athleteId._id.toString()]);
-                                            //         noShow(obj);
-                                            //         win(obj);
-                                            //         callback();
-                                            //     } else {
-                                            //         var obj = _.find(result[resultVar.resultVar].players, [findByKey, singleData._id.toString()]);
-                                            //         noShow(obj);
-                                            //         callback();
-                                            //     }
-                                            // } else if (resultVar.opponentsVar == 'opponentsTeam') {
-                                            //     var sendObj = {};
-                                            //     _.each(result[resultVar.resultVar].teams, function (n) {
-                                            //         if (_.findIndex(n.players, [findByKey, singleData.athleteId._id.toString()]) != -1) {
-                                            //             sendObj = n
-                                            //         }
-                                            //     });
-                                            //     noShow(sendObj);
-                                            //     win(sendObj);
-                                            //     callback();
-                                            // }
-                                        } else {
-                                            singleData.delete = true;
-                                            callback();
-                                        }
-
-                                    } else {
-                                        singleData.noShow = true;
-                                        callback(null, "Not Found");
-                                    }
-
-                                });
-                            }
-                        }, function (err, result) {
-                            callback(null, parallelResult);
-                        })
-                    },
-
-                    function (parallelResult, callback) {
-                        _.remove(parallelResult, function (n) {
-                            return n.delete == true;
-                        });
+                    function (parallelResult, winLoose, callback) {
                         var obj = {
                             "name": school.schoolName,
                             "arr": parallelResult
@@ -1016,11 +814,219 @@ var model = {
                             saveObj.maleCount = data.maleCount;
                             saveObj.femaleCount = data.femaleCount;
                             saveObj.genderRatio = data.genderRatio;
-                            saveObj.winCount = data.winCount;
-                            saveObj.looseCount = data.looseCount;
-                            saveObj.winPercent = data.winPercent;
+
+                            obj.arr = winLoose;
                             callback(null, obj);
                         });
+                    },
+
+                    function (winLoose, callback) {
+                        // console.log("winLoose",winLoose.name);
+                        async.concatSeries(winLoose.arr, function (singleData, callback) {
+                            // console.log("singleData",singleData);
+                            var resultVar = Match.getResultVar(singleData.sportsListSubCategory.name, singleData.sportsListSubCategory.type);
+
+                            if (resultVar == null) {
+                                callback();
+                            } else {
+                                var matchObj = {};
+                                matchObj[resultVar.opponentsVar] = singleData._id;
+                                var pullProperties = resultVar.resultVar + " " + "excelType";
+
+                                Match.findOne(matchObj, pullProperties).lean().exec(function (err, result) {
+
+                                    if (err) {
+                                        callback(err, null);
+                                    } else if (!_.isEmpty(result)) {
+
+                                        if (result[resultVar.resultVar]) {
+                                            var findByKey = '';
+
+                                            //for knockout and league knockout
+                                            var noShowKnock = function (obj) {
+                                                if (!_.isEmpty(obj)) {
+                                                    singleData.noShow = obj.noShow;
+                                                } else {
+                                                    singleData.delete = true;
+                                                }
+                                            };
+
+                                            //for knockout and league knockout
+                                            var winKnock = function (obj) {
+                                                if (singleData.type == 'indi') {
+                                                    if (obj && obj.winner && obj.winner.opponentsSingle && (obj.winner.opponentsSingle == _.toString(singleData._id))) {
+                                                        console.log("won Knock Indi", singleData.sportsListSubCategory.name);
+                                                        singleData.won = true;
+                                                    } else {
+                                                        // console.log("Loose Knock Indi", singleData.sportsListSubCategory.name);                                                                                                                
+                                                        singleData.won = false;
+                                                    }
+                                                } else if (singleData.type == 'team') {
+                                                    // console.log(obj, singleData.sportsListSubCategory.name);
+                                                    if (obj && obj.winner && obj.winner.player && (obj.winner.player == _.toString(singleData._id))) {
+
+                                                        // console.log("won Knock Team", singleData.sportsListSubCategory.name);
+                                                        singleData.won = true;
+                                                    } else {
+                                                        // console.log("Loose Knock Team", singleData.sportsListSubCategory.name);                                                        
+                                                        singleData.won = false;
+                                                    }
+                                                }
+                                            }
+
+                                            var noShowHeat = function (obj) {
+                                                if (obj && obj.result) {
+                                                    if (obj.result == '-') {
+                                                        // console.log("noShow true",singleData.sportsListSubCategory.name);                                                        
+                                                        singleData.noShow = true;
+                                                    } else {
+                                                        // console.log("noShow false",singleData.sportsListSubCategory.name);                                                         
+                                                        singleData.noShow = false;
+                                                    }
+                                                } else {
+                                                    singleData.delete = true;
+                                                }
+                                            }
+
+                                            var winHeat = function (obj) {
+                                                if (obj && obj.result) {
+                                                    if (obj.result == "QF" || obj.result == 1 || obj.result == 2 || obj.result == 3) {
+                                                        // console.log("won Heat",singleData.sportsListSubCategory.name);                                                        
+                                                        singleData.won = true;
+                                                    } else if (obj.result == "DNQ") {
+                                                        // console.log("Loss Heat",singleData.sportsListSubCategory.name);                                                                                                                
+                                                        singleData.won = false;
+                                                    }
+                                                } else {
+                                                    // console.log("noShow Not Found",singleData.sportsListSubCategory.name);                                               
+                                                    singleData.delete = true; //doubt
+                                                }
+                                            }
+
+                                            switch (singleData.sportsListSubCategory.type) {
+                                                case 'Combat Sports':
+                                                case 'Racquet Sports':
+                                                case 'Team Sports':
+                                                    findByKey = 'team';
+                                                    noShow = noShowKnock;
+                                                    win = winKnock;
+                                                    break;
+                                                case 'Individual Sports':
+                                                    findByKey = 'id';
+                                                    if (singleData.sportsListSubCategory.name == "Carrom") {
+                                                        findByKey = 'player';
+                                                        noShow = noShowKnock;
+                                                        win = winKnock;
+                                                    } else if (singleData.sportsListSubCategory.name == "Chess") {
+                                                        noShow = function (obj) {
+                                                            if (obj && obj.score && obj.rank) {
+                                                                singleData.noShow = false;
+                                                            } else {
+                                                                singleData.delete = true;
+                                                            }
+                                                        }
+                                                        win = winKnock;
+                                                    } else if (singleData.sportsListSubCategory.name == "Athletics" || singleData.sportsListSubCategory.name == "Athletics 4x100m Relay" || singleData.sportsListSubCategory.name == "Athletics 4x50m Relay" || singleData.sportsListSubCategory.name == "Athletics Medley Relay") {
+                                                        findByKey = 'id';
+                                                        noShow = noShowHeat;
+                                                        win = winHeat;
+                                                    }
+                                                    break;
+                                                case 'Aquatics Sports':
+                                                    if (singleData.sportsListSubCategory.name != "Water Polo") {
+                                                        findByKey = 'id';
+                                                        noShow = noShowHeat;
+                                                        win = winHeat;
+                                                    } else {
+                                                        findByKey = 'player';
+                                                        noShow = noShowKnock;
+                                                        win = winKnock;
+                                                    }
+                                                    break;
+                                                case 'Target Sports':
+                                                    if (singleData.sportsListSubCategory.name == "Archery") {
+                                                        if (result.excelType == 'qualifying') {
+                                                            resultVar['resultVar'] = resultVar.resultVar1;
+                                                            noShow = noShowHeat;
+
+                                                            win = winHeat;
+                                                        } else if (result.excelType == 'knockout') {
+                                                            findByKey = 'player';
+                                                            resultVar['resultVar'] = resultVar.resultVar2;
+                                                            noShow = noShowKnock;
+                                                            win = winKnock;
+                                                        }
+                                                    } else if (singleData.sportsListSubCategory.name == "Shooting") {
+                                                        noShow = noShowHeat;
+                                                        win = winHeat;
+                                                    }
+                                                    break;
+                                            }
+
+                                            if (resultVar.opponentsVar == 'opponentsSingle') {
+                                                // console.log("Sports Name",singleData.sportsListSubCategory.name);
+                                                if (singleData.sportsListSubCategory.name != "Shooting" && singleData.sportsListSubCategory.name != "Archery" && singleData.sportsListSubCategory.name != "Athletics") {
+                                                    var obj = _.find(result[resultVar.resultVar].players, [findByKey, singleData.athleteId._id.toString()]);
+                                                    noShow(obj);
+                                                    win(result[resultVar.resultVar]);
+                                                    callback();
+                                                } else if (singleData.sportsListSubCategory.name == "Shooting" || singleData.sportsListSubCategory.name == "Archery") {
+                                                    // console.log("shooting || Archery", result);
+                                                    var obj = result[resultVar.resultVar].player;
+                                                    noShow(obj);
+                                                    win(obj);
+                                                    callback();
+                                                } else if (singleData.sportsListSubCategory.name == "Athletics" || singleData.sportsListSubCategory.name == "Swimming") {
+                                                    var obj = _.find(result[resultVar.resultVar].players, [findByKey, singleData._id]);
+                                                    noShow(obj);
+                                                    win(obj);
+                                                    callback();
+                                                }
+                                            } else if (resultVar.opponentsVar == 'opponentsTeam') {
+                                                // console.log("Sports Name",singleData.sportsListSubCategory.name);                                                
+                                                if (singleData.sportsListSubCategory.name != "Athletics 4x100m Relay" && singleData.sportsListSubCategory.name != "Athletics 4x50m Relay" && singleData.sportsListSubCategory.name != "Athletics Medley Relay" && singleData.sportsListSubCategory.name != "Swimming 4x50m Freestyle Relay" && singleData.sportsListSubCategory.name != "Swimming 4x50m Medley Relay") {
+                                                    var sendObj = {};
+                                                    sendObj = _.find(result[resultVar.resultVar].teams, [findByKey, _.toString(singleData._id)])
+                                                    noShow(sendObj);
+                                                    win(result[resultVar.resultVar]);
+                                                    callback();
+                                                } else {
+                                                    var obj = _.find(result[resultVar.resultVar].teams, ['id', singleData._id]);
+                                                    noShow(obj);
+                                                    win(obj);
+                                                    callback();
+                                                }
+                                            }
+                                        } else {
+                                            singleData.delete = true;
+                                            callback();
+                                        }
+
+                                    } else {
+                                        singleData.delete = true;
+                                        callback(null, "Not Found");
+                                    }
+
+                                });
+                            }
+                        }, function (err, result) {
+                            callback(null, winLoose);
+                        })
+                    },
+
+                    function (winLoose, callback) {                        
+                        _.remove(winLoose.arr, function (n) {
+                            return n.delete == true;
+                        });
+                        
+                        var wonArr = _.filter(winLoose.arr, ['won', true]);
+                        var looseArr = _.filter(winLoose.arr, ['won', false]);
+
+                        saveObj.winCount = wonArr.length;
+                        saveObj.looseCount = looseArr.length;
+                        var winPercent = _.round((saveObj.winCount / (saveObj.winCount + saveObj.looseCount)) * 100);
+                        saveObj.winPercent = _.isNaN(winPercent) ? 0 : winPercent;
+                        callback(null,winLoose);
                     },
 
                     function (mainObj, callback) {

@@ -209,6 +209,14 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
     // MATCH CENTER
     $scope.matchCenter = function (card) {
       $scope.currentMatch = card;
+      $scope.playerArr = [];
+      _.each(card.opponentsSingle, function(n, nkey){
+        console.log(n.athleteId._id, card.resultsRacquet.players);
+        $scope.playerArr[nkey] = _.find(card.resultsRacquet.players, ['player', _.toString(n.athleteId._id)]);
+      })
+      console.log("palyerarr",$scope.playerArr);
+      console.log("card.pla",card.resultsRacquet.players);
+      card.resultsRacquet.players = $scope.playerArr;
       $scope.currentMatch.sportName = $scope.currentMatch.sport.sportslist.sportsListSubCategory.name;
         modal = $uibModal.open({
             animation: true,
