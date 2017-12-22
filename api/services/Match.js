@@ -7876,6 +7876,11 @@ var model = {
                                     obj["A1 Total Winners"] = obj["A1 Total Winners"] + mainData.resultsRacquet.players[0].sets[i].winner;
                                 }
                             }
+                            if(mainData.resultsRacquet.players[0].sets.length == 0){
+                                obj["A1 Total Service Errors"] = "";
+                                obj["A1 Total Unforced Errors"] = "";
+                                obj["A1 Total Winners"] = "";
+                            }
                         } else {
                             obj["A1 Total Service Errors"] = "";
                             obj["A1 Total Unforced Errors"] = "";
