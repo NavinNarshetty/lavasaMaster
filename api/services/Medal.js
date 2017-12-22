@@ -404,7 +404,7 @@ var model = {
             //find teams registered with that sportId
             function (sport, callback) {
                 console.log("sport", sport);
-                TeamSport.find(sport, function (err, teams) {
+                TeamSport.find(sport).deepPopulate("studentTeam studentTeam.studentId").exec(function (err, teams) {
                     if (err) {
                         callback(err, null);
                     } else if (!_.isEmpty(sport)) {
