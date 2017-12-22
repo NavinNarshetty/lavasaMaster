@@ -7838,6 +7838,9 @@ var model = {
                     } else {
                         obj["SCREEN NAME ATHLETE 1"] = firstName + ". " + mainData.opponentsSingle[0].athleteId.surname;
                     }
+                    console.log(mainData.opponentsSingle[0].athleteId);
+                    console.log(mainData.opponentsSingle[0].athleteId.school);
+                    console.log(mainData.opponentsSingle[0].athleteId.school.screenName);
                     if (mainData.opponentsSingle[0].athleteId.school.screenName) {
                         obj["SCREEN NAME SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.school.screenName;
                     } else {
