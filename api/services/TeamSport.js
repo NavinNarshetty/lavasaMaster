@@ -64,7 +64,7 @@ schema.plugin(deepPopulate, {
             select: '_id name'
         },
         "studentTeam": {
-            select: '_id studentId isGoalKeeper isCaptain'
+            select: '_id studentId isGoalKeeper isCaptain teamId'
         },
         "studentTeam.studentId": {
             select: '_id firstName middleName surname email mobile sfaId school atheleteSchoolName gender'
