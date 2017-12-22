@@ -1,0 +1,154 @@
+<div class="attendancepage attendancepage-team">
+  <div class="container">
+    <!-- ATTENDANCE HEADER -->
+    <div class="attendancesheet-header">
+      <div class="attendancesheet-title">ATTENDANCE SHEET</div>
+      <div class="attendance-sportheading">
+        <span>Athletics</span> | <span>Long Jump</span> | <span>MALE </span> | <span>U-12</span>
+      </div>
+    </div>
+    <!-- ATTENDANCE HEADER END -->
+    <!-- ATTENDANCE STICKY SEARCH -->
+    <div class="attendancesheet-stickyhead">
+      <div class="container">
+        <div class="row">
+          <form>
+            <div class="col-md-offset-2 col-md-4 col-sm-8 col-xs-12">
+              <div class="form-group">
+                <input type="text" class="form-control" id="attendanceId" placeholder="Enter Team ID" ng-model="search.sfaId">
+              </div>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6">
+              <div class="">
+                <button type="button" class="btn btn-green-outline btn-scoring" ng-click="searchAthlete();">Search</button>
+              </div>
+            </div>
+          </form>
+            <div class="col-md-offset-2 col-md-2 col-sm-offset-8 col-sm-4 col-xs-6">
+              <div class="">
+                <button type="button" class="btn btn-green-outline btn-scoring" ng-click="saveAttendance();">Save</button>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <!-- ATTENDANCE STICKY SEARCH END -->
+    <!-- ATTENDANCE SECTION -->
+    <div class="attendance-section attendance-table attendaceteam-table">
+      <table class="table">
+        <thead>
+          <tr >
+            <th>
+              <div class="">
+                Sr.No
+              </div>
+            </th>
+            <th>
+              <div class="">
+                Team
+              </div>
+            </th>
+            <th>
+              <div class="">
+                Attendance
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody >
+          <tr ng-repeat="team in attendanceList.attendenceListTeam track by $index" id="{{team.teamId}}" ng-class="{'player-highlight': team.teamId==search.sfaId}">
+            <td>
+              <div class="">
+                {{$index + 1}}
+              </div>
+            </td>
+            <td>
+              <div class="attendanceteam-accordion">
+                <uib-accordion close-others="oneAtATime">
+                  <div uib-accordion-group class="panel-default" is-open="team.open">
+                    <uib-accordion-heading class="clearfix">
+
+                      <a >
+                        <div class="attendanceteam-tablehead">
+                          <table class="table">
+                            <tbody>
+                              <tr>
+                                <td class="attendancehead-teamid">
+                                  <div >
+                                    {{team.teamId}}
+                                  </div>
+                                </td>
+                                <td>
+                                  <div class="text-left">
+                                    {{team.schoolName}}
+                                  </div>
+                                </td>
+                                <td>
+                                  <div class="text-right accordion-arrow">
+                                    <i class=" fa " ng-class="{'fa-angle-up': team.open, 'fa-angle-down': !team.open}"></i>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </a>
+                    </uib-accordion-heading>
+                    <div class="attendance-teamplayer-table">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>
+                              <div class="">
+                                Sr. No
+                              </div>
+                            </th>
+                            <th>
+                              <div class="">
+                                SFA ID
+                              </div>
+                            </th>
+                            <th>
+                              <div class="">
+                                Athlete Name
+                              </div>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="player in team.players track by $index">
+                            <td>
+                              <div class="">
+                                {{$index + 1}}
+                              </div>
+                            </td>
+                            <td>
+                              <div class="">
+                                {{player.sfaId}}
+                              </div>
+                            </td>
+                            <td>
+                              <div class="">
+                                {{player.playerName}}
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </uib-accordion>
+              </div>
+            </td>
+            <td>
+              <div class="">
+                <input type="checkbox" class="form-control" ng-model="team.attendance">
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- ATTENDANCE SECTION END -->
+  </div>
+</div>
