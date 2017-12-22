@@ -26,12 +26,12 @@ mongoose = require('mongoose');
 
 // global["database"] = "sfanew";
 // global["database"] = "sfa1";
-global["database"] = "live-sfa";
+// global["database"] = "live-sfa";
 // global["database"] = "test-sfa";
 // global["database"] = "forMatches";
 // global["database"] = "digitalScoring";
 // global["database"] = "sfa";
-// global["database"] = "liveHy";
+global["database"] = "liveHy";
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/' + database, function (err) {
     if (err) {
