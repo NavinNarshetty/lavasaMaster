@@ -248,7 +248,7 @@ myApp.controller('ChampionshipSchedulesCtrl', function ($scope, TemplateService,
 
 });
 
-myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element, NavigationService, $timeout, $uibModal, GoogleAdWordsService, $location, $state, errorService, toastr, configService) {
+myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element, NavigationService, $timeout, $uibModal, GoogleAdWordsService, $location, $state, errorService, toastr, $filter, configService) {
     //Used to name the .html file
     $scope.template = TemplateService.getHTML("content/formathlete.html");
     TemplateService.title = "Athlete Registration";
@@ -379,6 +379,10 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
         // console.log("Athlete data: ", formdata);
         // console.log('Value', $scope.isSchoolAdded(formdata));
         // $scope.isSchoolAdded(formdata);
+
+        formdata.firstName = $filter('firstcapitalize')(formdata.firstName,{column1:true});
+        formdata.middleName = $filter('firstcapitalize')(formdata.middleName,{column1:true});
+        formdata.surname = $filter('firstcapitalize')(formdata.surname,{Column1:true});
 
         var isFormValid = function (form) {
             if (!form.atheleteSchoolIdImage) {
