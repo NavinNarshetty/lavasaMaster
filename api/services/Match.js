@@ -7838,13 +7838,14 @@ var model = {
                     } else {
                         obj["SCREEN NAME ATHLETE 1"] = firstName + ". " + mainData.opponentsSingle[0].athleteId.surname;
                     }
-                    console.log(mainData.opponentsSingle[0].athleteId);
-                    console.log(mainData.opponentsSingle[0].athleteId.school);
-                    console.log(mainData.opponentsSingle[0].athleteId.school.screenName);
-                    if (mainData.opponentsSingle[0].athleteId.school.screenName) {
-                        obj["SCREEN NAME SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.school.screenName;
+                    if(mainData.opponentsSingle[0].athleteId.atheleteSchoolName){
+                        obj["SCREEN NAME SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.atheleteSchoolName;
                     } else {
-                        obj["SCREEN NAME SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.school.name;
+                        if (mainData.opponentsSingle[0].athleteId.school.screenName) {
+                            obj["SCREEN NAME SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.school.screenName;
+                        } else {
+                            obj["SCREEN NAME SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.school.name;
+                        }
                     }
                     if (mainData.resultsCombat) {
                         if (mainData.resultsCombat.winner) {
@@ -7902,10 +7903,14 @@ var model = {
                     } else {
                         obj["SCREEN NAME ATHLETE 2"] = fName + ". " + mainData.opponentsSingle[1].athleteId.surname;
                     }
-                    if (mainData.opponentsSingle[1].athleteId.school.screenName) {
-                        obj["SCREEN NAME SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.school.screenName;
-                    } else {
-                        obj["SCREEN NAME SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.school.name;
+                    if(mainData.opponentsSingle[1].athleteId.atheleteSchoolName){
+                        obj["SCREEN NAME SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.atheleteSchoolName;
+                    } else {       
+                        if (mainData.opponentsSingle[1].athleteId.school.screenName) {
+                            obj["SCREEN NAME SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.school.screenName;
+                        } else {
+                            obj["SCREEN NAME SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.school.name;
+                        }
                     }
                 } else {
                     obj["SFAID 2"] = "";
