@@ -1,3 +1,15 @@
+var mongoose = require('mongoose');
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
+var uniqueValidator = require('mongoose-unique-validator');
+var timestamps = require('mongoose-timestamp');
+var validators = require('mongoose-validators');
+var monguurl = require('monguurl');
+var autoIncrement = require('mongoose-auto-increment');
+var objectid = require("mongodb").ObjectID;
+var moment = require('moment');
+var request = require("request");
+autoIncrement.initialize(mongoose);
+
 var schema = new Schema({
     sport: {
         type: Schema.Types.ObjectId,
@@ -27,7 +39,6 @@ var schema = new Schema({
         }],
         attendance: Boolean,
     }]
-
 });
 
 schema.plugin(deepPopulate, {});
@@ -41,16 +52,17 @@ var model = {
     getAthleteForAttendence: function (data, callback) {
         async.waterfall([
                 function (callback) {
-                    var deepSearch = "sportslist.sportsListSubCategory";
-                    Sport.findOne({
-                        _id: data.sport
-                    }).lean().deepPopulate(deepSearch).exec(function (err, found) {
+                    var test = {};
+                    test._id = data.sport;
+                    Sport.getOne(test, function (err, found) {
                         if (err || _.isEmpty(found)) {
+                            err = "Sport,Event,AgeGroup,Gender may have wrong values";
                             callback(null, {
-                                error: "No data Found",
-                                data: data
+                                error: err,
+                                success: found
                             });
                         } else {
+                            console.log("found----->", found);
                             callback(null, found);
                         }
                     });
@@ -135,32 +147,29 @@ var model = {
                     if (complete.error) {
                         callback(null, complete);
                     } else {
-                        Attendence.find({
-                            sport: data.sport
+                        Attendence.findOne({
+                            sport: objectid(data.sport)
                         }).lean().exec(function (err, attendenceData) {
                             if (err || _.isEmpty(attendenceData)) {
                                 callback(null, complete);
                             } else {
                                 if (complete.isTeam == true) {
-
                                     var common = {};
                                     common.sport = attendenceData.sport;
                                     common.isTeam = true;
-                                    common.attendenceListTeam = complete.attendenceListTeam;
+                                    common.attendenceListTeam = attendenceData.attendenceListTeam;
 
                                 } else {
-                                    // var common = _.intersectionBy(attendenceData, complete.list, 'athleteId');
                                     var common = {};
                                     common.sport = attendenceData.sport;
-                                    common.isTeam = true;
-                                    common.attendenceListIndividual = complete.attendenceListIndividual;
+                                    common.isTeam = false;
+                                    common.attendenceListIndividual = attendenceData.attendenceListIndividual;
                                 }
                                 callback(null, common);
                             }
                         });
                     }
                 },
-
             ],
             function (err, data2) {
                 if (err) {
@@ -178,67 +187,83 @@ var model = {
     saveAttendence: function (data, callback) {
         async.waterfall([
                 function (callback) {
+                    // console.log("data", data);
                     Attendence.findOne({
-                        sport: data.sport
+                        sport: objectid(data.sport)
                     }).lean().exec(function (err, found) {
                         if (err) {
                             callback(null, {
                                 error: "data not found"
                             });
+                        } else if (found == null) {
+                            callback(null, []);
                         } else {
                             callback(null, found);
                         }
                     });
                 },
                 function (found, callback) {
+                    console.log("found", found);
                     if (found.error) {
                         callback(null, found);
                     } else if (_.isEmpty(found)) {
                         if (data.isTeam == true) {
                             var formdata = {};
-                            formdata.sport = data.sport;
-                            formdata.attendenceListTeam = data.list;
+                            formdata.sport = objectid(data.sport);
+                            formdata.attendenceListTeam = data.attendenceListTeam;
                         } else {
                             var formdata = {};
-                            formdata.sport = data.sport;
-                            formdata.attendenceListIndividual = data.list;
+                            formdata.sport = objectid(data.sport);
+                            formdata.attendenceListIndividual = data.attendenceListIndividual;
                         }
                         Attendence.saveData(formdata, function (err, complete) {
                             if (err || _.isEmpty(complete)) {
                                 callback(err, null);
                             } else {
-                                callback(null, {
-                                    error: err,
-                                    success: complete
-                                });
+                                callback(null, complete);
                             }
                         });
                     } else {
                         if (data.isTeam == true) {
                             var formdata = {
-                                attendenceListTeam: data.list
+                                $set: {
+                                    attendenceListTeam: data.attendenceListTeam
+                                }
                             };
+                            Attendence.update({
+                                sport: objectid(data.sport)
+                            }, formdata).lean().exec(function (err, updateData) {
+                                if (err || _.isEmpty(updateData)) {
+                                    callback(null, {
+                                        error: "No data found!",
+                                        success: data
+                                    });
+                                } else {
+                                    callback(null, updateData);
+                                }
+                            });
                         } else {
+                            console.log("individual", data.attendenceListIndividual);
                             var formdata = {
-                                attendenceListIndividual: data.list
+                                $set: {
+                                    attendenceListIndividual: data.attendenceListIndividual
+                                }
                             };
+                            Attendence.update({
+                                sport: objectid(data.sport)
+                            }, formdata).lean().exec(function (err, updateData) {
+                                if (err || _.isEmpty(updateData)) {
+                                    callback(null, {
+                                        error: "No data found!",
+                                        success: data
+                                    });
+                                } else {
+                                    callback(null, updateData);
+                                }
+                            });
                         }
-                        Attendence.update({
-                            sport: data.sport
-                        }, formdata).lean().exec(function (err, updateData) {
-                            if (err || _.isEmpty(updateData)) {
-                                callback(null, {
-                                    error: "No data found!",
-                                    success: data
-                                });
-                            } else {
-                                callback(null, updateData);
-                            }
-                        });
                     }
-
                 }
-
             ],
             function (err, data2) {
                 if (err) {
@@ -252,6 +277,74 @@ var model = {
                 }
             });
 
+    },
+
+    getPlayersMatchSelection: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    var test = {};
+                    test._id = data.sport;
+                    Sport.getOne(test, function (err, found) {
+                        if (err || _.isEmpty(found)) {
+                            err = "Sport,Event,AgeGroup,Gender may have wrong values";
+                            callback(null, {
+                                error: err,
+                                success: found
+                            });
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+                },
+                function (found, callback) {
+                    if (found.error) {
+                        callback(null, found);
+                    } else if (found.sportslist.sportsListSubCategory.isTeam == true) {
+                        Attendence.findOne({
+                            sport: data.sport
+                        }).lean().exec(function (err, teamData) {
+                            if (err || _.isEmpty(teamData)) {
+                                callback(null, {
+                                    error: "No data Data",
+                                    data: data
+                                });
+                            } else {
+                                var team = _.filter(teamData.attendenceListTeam, function (o) {
+                                    return o.attendance == true;
+                                });
+                                callback(null, team);
+                            }
+                        });
+                    } else {
+                        Attendence.findOne({
+                            sport: data.sport
+                        }).lean().exec(function (err, individualData) {
+                            if (err || _.isEmpty(individualData)) {
+                                callback(null, {
+                                    error: "No data Data",
+                                    data: data
+                                });
+                            } else {
+                                var single = _.filter(individualData.attendenceListIndividual, function (o) {
+                                    return o.attendance == true;
+                                });
+                                callback(null, single);
+                            }
+                        });
+                    }
+                },
+            ],
+            function (err, data2) {
+                if (err) {
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, data2);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
     }
 
 };
