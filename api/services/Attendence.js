@@ -80,7 +80,7 @@ var model = {
                         }).deepPopulate("teamId studentId").lean().exec(function (err, studentData) {
                             if (err || _.isEmpty(studentData)) {
                                 callback(null, {
-                                    error: "No data Data",
+                                    error: "No Data Found",
                                     data: data
                                 });
                             } else {
@@ -139,6 +139,7 @@ var model = {
                                     } else {
                                         single.schoolName = n.athleteId.school.name;
                                     }
+                                    single.opponentSingle = n._id;
                                     single.attendance = false;
                                     complete.attendenceListIndividual.push(single);
                                 });
@@ -309,7 +310,7 @@ var model = {
                         }).lean().exec(function (err, teamData) {
                             if (err || _.isEmpty(teamData)) {
                                 callback(null, {
-                                    error: "No data Data",
+                                    error: "No Data found",
                                     data: data
                                 });
                             } else {
@@ -325,7 +326,7 @@ var model = {
                         }).lean().exec(function (err, individualData) {
                             if (err || _.isEmpty(individualData)) {
                                 callback(null, {
-                                    error: "No data Data",
+                                    error: "No Data Found",
                                     data: data
                                 });
                             } else {
@@ -539,19 +540,76 @@ var model = {
             });
     },
 
-    MatchPerSportCheck: function (data, callback) {
-        Match.getSportSpecificRounds(data, function (err, found) {
-            if (err || _.isEmpty(found)) {
-                err = "Headers may have wrong values";
-                callback(null, {
-                    error: err,
-                    success: found
-                });
-            } else {
-                console.log("found----->", found);
-                callback(null, found);
-            }
-        });
+    addPlayersToMatch: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    var test = {};
+                    test._id = data.sport;
+                    Sport.getOne(test, function (err, found) {
+                        if (err || _.isEmpty(found)) {
+                            err = "Sport,Event,AgeGroup,Gender may have wrong values";
+                            callback(null, {
+                                error: err,
+                                success: found
+                            });
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+                },
+                function (found, callback) {
+                    if (found.error) {
+                        callback(null, found);
+                    } else if (found.sportslist.sportsListSubCategory.isTeam == true) {
+                        var formData = {
+                            $set: {
+                                opponentsTeam: data.players
+                            }
+                        };
+                        Match.update({
+                            matchId: data.matchId
+                        }, formData).exec(function (err, updateData) {
+                            if (err || _.isEmpty(updateData)) {
+                                callback(null, {
+                                    error: "No data found!",
+                                    success: data
+                                });
+                            } else {
+                                callback(null, updateData);
+                            }
+                        });
+                    } else {
+                        var formData = {
+                            $set: {
+                                opponentsSingle: data.players
+                            }
+                        };
+                        Match.update({
+                            matchId: data.matchId
+                        }, formData).exec(function (err, updateData) {
+                            if (err || _.isEmpty(updateData)) {
+                                callback(null, {
+                                    error: "No data found!",
+                                    success: data
+                                });
+                            } else {
+                                callback(null, updateData);
+                            }
+                        });
+                    }
+                }
+            ],
+            function (err, data2) {
+                if (err) {
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, data2);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
     }
 
 };

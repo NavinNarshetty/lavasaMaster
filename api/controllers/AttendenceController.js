@@ -46,9 +46,9 @@ var controller = {
         }
     },
 
-    MatchPerSportCheck: function (req, res) {
+    addPlayersToMatch: function (req, res) {
         if (req.body) {
-            Attendence.MatchPerSportCheck(req.body, res.callback);
+            Attendence.addPlayersToMatch(req.body, res.callback);
         } else {
             res.json({
                 "data": "Body not Found",
