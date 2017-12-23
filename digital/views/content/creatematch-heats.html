@@ -31,7 +31,7 @@
         <div class="row">
           <div class="col-md-offset-8 col-md-4">
             <div class="form-group">
-              <button type="button" name="button" class="btn btn-green-outline btn-scoring" ng-click="createMatches()">Create Match</button>
+              <button type="button" name="button" class="btn btn-green-outline btn-scoring" ng-click="createMatches()">Create Round</button>
             </div>
           </div>
         </div>
@@ -43,7 +43,10 @@
           <div class="creatematch-roundhead">
             {{round.name}}
           </div>
-          <div class="creatematch-roundtable" >
+          <div class="creatematch-roundbtnholder">
+            <button class="btn btn-green-outline text-uppercase">Add Match</button>
+          </div>
+          <div class="creatematch-roundtable table-responsive">
             <table class="table">
               <thead>
                 <tr>
@@ -63,7 +66,7 @@
                     </div>
                   </th>
                   <th>
-                    <div class="">
+                    <div class="text-right">
                       Actions
                     </div>
                   </th>
@@ -87,7 +90,7 @@
                     </div>
                   </td>
                   <td>
-                    <div class="">
+                    <div class="text-right">
                       <button class="btn btn-green-outline">View</button>
                       <button class="btn btn-green-outline">Edit</button>
                     </div>

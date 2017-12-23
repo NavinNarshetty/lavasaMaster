@@ -933,7 +933,20 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
         if (!$scope.matchResult.resultsRacquet.status) {
           // $scope.matchResult.resultsRacquet.status = "IsPending";
         }
-        break;
+      break;
+      case "Team Sports":
+        if ($scope.drawFormat == 'League cum Knockout') {
+          $scope.matchResult.resultFencing = $scope.formData;
+          if (!$scope.matchResult.resultFencing.status) {
+            // $scope.matchResult.resultFencing.status = "IsPending";
+          }
+        } else {
+          $scope.matchResult.resultsCombat = $scope.formData;
+          if (!$scope.matchResult.resultsCombat.status) {
+            // $scope.matchResult.resultsCombat.status = "IsPending";
+          }
+        }
+      break;
     }
     if ($scope.drawFormat == 'League cum Knockout') {
       NavigationService.saveFencing($scope.matchResult, function(data){
@@ -953,10 +966,17 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
           $rootScope.modalInstance.close('a');
           toastr.success('Match result has been successfully reset', 'Result Reset');
           if ($stateParams.drawFormat === 'Knockout') {
-            $state.go('knockout', {
-              drawFormat: $stateParams.drawFormat,
-              id: $stateParams.sport
-            });
+            if($scope.matchDetails.sportType == 'Team Sports'){
+              $state.go('knockout-team', {
+                drawFormat: $stateParams.drawFormat,
+                id: $stateParams.sport
+              });
+            } else {
+              $state.go('knockout', {
+                drawFormat: $stateParams.drawFormat,
+                id: $stateParams.sport
+              });
+            }
           } else if ($stateParams.drawFormat === 'Heats') {
             $state.go('heats', {
               drawFormat: $stateParams.drawFormat,
