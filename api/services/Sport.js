@@ -31,6 +31,7 @@ var schema = new Schema({
     fromDate: Date,
     toDate: Date,
     eventPdf: String,
+    matchPrefix: String
 });
 
 schema.plugin(deepPopulate, {

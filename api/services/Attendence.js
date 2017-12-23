@@ -24,6 +24,10 @@ var schema = new Schema({
         sfaId: String,
         schoolName: String,
         attendance: Boolean,
+        opponentSingle: {
+            type: Schema.Types.ObjectId,
+            ref: 'IndividualSport'
+        },
     }],
     attendenceListTeam: [{
         team: {
@@ -232,7 +236,7 @@ var model = {
                             };
                             Attendence.update({
                                 sport: objectid(data.sport)
-                            }, formdata).lean().exec(function (err, updateData) {
+                            }, formdata).exec(function (err, updateData) {
                                 if (err || _.isEmpty(updateData)) {
                                     callback(null, {
                                         error: "No data found!",
@@ -251,7 +255,7 @@ var model = {
                             };
                             Attendence.update({
                                 sport: objectid(data.sport)
-                            }, formdata).lean().exec(function (err, updateData) {
+                            }, formdata).exec(function (err, updateData) {
                                 if (err || _.isEmpty(updateData)) {
                                     callback(null, {
                                         error: "No data found!",
@@ -345,6 +349,209 @@ var model = {
                     }
                 }
             });
+    },
+
+    createMatchHeat: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    Attendence.updateMatchPrefix(data, function (err, found) {
+                        if (err || _.isEmpty(found)) {
+                            err = "Headers may have wrong values";
+                            callback(null, {
+                                error: err,
+                                success: found
+                            });
+                        } else {
+                            console.log("found----->", found);
+                            callback(null, found);
+                        }
+                    });
+                },
+                function (found, callback) {
+                    Match.findOne({
+                        sport: objectid(data.sport)
+                    }).sort({
+                        createdAt: -1
+                    }).lean().exec(function (err, matchData) {
+                        if (err) {
+                            callback(null, {
+                                error: "No data Found"
+                            });
+                        } else if (_.isEmpty(matchData)) {
+                            var formData = {};
+                            formData.sport = data.sport;
+                            if (!found.matchPrefix) {
+                                formData.matchId = data.prefix;
+                            } else {
+                                formData.matchId = found.matchPrefix;
+                            }
+                            formData.round = data.round;
+                            formData.heatNo = 1;
+                            callback(null, formData);
+                        } else {
+                            var formData = {};
+                            formData.sport = data.sport;
+                            if (!found.matchPrefix) {
+                                formData.matchId = data.prefix;
+                            } else {
+                                formData.matchId = found.matchPrefix;
+                            }
+                            if (data.round) {
+                                formData.round = data.round;
+                                if (data.round != matchData.round) {
+                                    formData.heatNo = 1;
+                                } else {
+                                    formData.heatNo = ++matchData.heatNo;
+                                }
+                            } else {
+                                formData.round = matchData.round;
+                                formData.heatNo = ++matchData.heatNo;
+                            }
+                            callback(null, formData);
+                        }
+                    });
+                },
+                function (formData, callback) {
+                    Match.saveMatch(formData, function (err, complete) {
+                        if (err || _.isEmpty(complete)) {
+                            callback(err, null);
+                        } else {
+                            callback(null, complete);
+                        }
+                    });
+                },
+            ],
+            function (err, data2) {
+                if (err) {
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, data2);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
+    },
+
+    createMatchQualifying: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    Attendence.getPlayersMatchSelection(data, function (err, found) {
+                        if (err || _.isEmpty(found)) {
+                            err = "Sport,Event,AgeGroup,Gender may have wrong values";
+                            callback(null, {
+                                error: err,
+                                success: found
+                            });
+                        } else {
+                            console.log("found----->", found);
+                            callback(null, found);
+                        }
+                    });
+                },
+                function (found, callback) {
+                    async.eachSeries(found, function (n, callback) {
+                        var formData = {};
+                        formData.matchId = data.prefix;
+                        formData.sport = data.sport;
+                        formData.round = data.round;
+                        formData.opponentSingle = [];
+                        formData.opponentSingle.push(n)
+                        Match.saveMatch(formData, function (err, complete) {
+                            if (err || _.isEmpty(complete)) {
+                                callback(err, null);
+                            } else {
+                                callback(null, complete);
+                            }
+                        });
+                    });
+                },
+            ],
+            function (err, data2) {
+                if (err) {
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, data2);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
+
+    },
+
+    updateMatchPrefix: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    var test = {};
+                    test._id = objectid(data.sport);
+                    Sport.getOne(test, function (err, found) {
+                        if (err || _.isEmpty(found)) {
+                            err = "Sport,Event,AgeGroup,Gender may have wrong values";
+                            callback(null, {
+                                error: err,
+                                success: found
+                            });
+                        } else {
+                            console.log("found----->", found);
+                            callback(null, found);
+                        }
+                    });
+                },
+                function (found, callback) {
+                    if (found.error) {
+                        callback(null, found);
+                    } else if (found.matchPrefix) {
+                        callback(null, found);
+                    } else {
+                        var formData = {
+                            $set: {
+                                matchPrefix: data.prefix
+                            }
+                        };
+                        Sport.update({
+                            _id: objectid(data.sport)
+                        }, formData).exec(function (err, updateData) {
+                            if (err || _.isEmpty(updateData)) {
+                                callback(null, {
+                                    error: "No data found!",
+                                    success: data
+                                });
+                            } else {
+                                callback(null, found);
+                            }
+                        });
+                    }
+                },
+            ],
+            function (err, data2) {
+                if (err) {
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, data2);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
+    },
+
+    MatchPerSportCheck: function (data, callback) {
+        Match.getSportSpecificRounds(data, function (err, found) {
+            if (err || _.isEmpty(found)) {
+                err = "Headers may have wrong values";
+                callback(null, {
+                    error: err,
+                    success: found
+                });
+            } else {
+                console.log("found----->", found);
+                callback(null, found);
+            }
+        });
     }
 
 };

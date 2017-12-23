@@ -32,5 +32,29 @@ var controller = {
             });
         }
     },
+
+    createMatch: function (req, res) {
+        if (req.body.sportType == "Heat") {
+            Attendence.createMatchHeat(req.body, res.callback);
+        } else if (req.body.sportType == "Qualifying") {
+            Attendence.createMatchQualifying(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            });
+        }
+    },
+
+    MatchPerSportCheck: function (req, res) {
+        if (req.body) {
+            Attendence.MatchPerSportCheck(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            });
+        }
+    }
 };
 module.exports = _.assign(module.exports, controller);
