@@ -278,6 +278,24 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
                 callback(data)
             });
         },
+        createMatch: function (formData, callback) {
+            $http({
+                url: adminurl + "Attendence/createMatch",
+                method: "POST",
+                data: formData
+            }).success(function (data) {
+                callback(data)
+            });
+        },
+        getPlayersMatchSelection: function (formData, callback) {
+            $http({
+                url: adminurl + "Attendence/getPlayersMatchSelection",
+                method: "POST",
+                data: formData
+            }).success(function (data) {
+                callback(data)
+            });
+        },
 
         Boolean: function (str) {
             if (str == 'true' || str || str === true) {

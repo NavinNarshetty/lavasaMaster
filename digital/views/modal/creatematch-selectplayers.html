@@ -1,0 +1,83 @@
+<div class="creatematch-selectplayers-modal">
+  <div class="modal-header">
+      <div class="matchstart-header clearfix">
+          <div class="pull-right">
+              <p class="m-clear ">match id: <span>{{currentMatch.matchId}}</span> </p>
+          </div>
+          <p class="m-clear d-fjalla-one">{{currentMatch.round}} {{currentMatch.heatNo}}</p>
+      </div>
+  </div>
+  <div class="modal-content">
+    <div class="creatematch-playerholder">
+      <div class="creatematch-playertitle">
+        Select Players <span class="creatematch-note"> ( Max 8 Players ) </span>
+      </div>
+      <div class="creatematch-playertable table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>
+                <div class="">
+                  No
+                </div>
+              </th>
+              <th>
+                <div class="">
+                  SFA ID
+                </div>
+              </th>
+              <th>
+                <div class="">
+                  Athlete Name
+                </div>
+              </th>
+              <th>
+                <div class="">
+                  Select
+                </div>
+              </th>
+              <th>
+                <div class="">
+                  Lane No
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="player in playerList track by $index">
+              <td>
+                <div class="">{{$index + 1}}</div>
+              </td>
+              <td>
+                <div class="">
+                  {{player.sfaId}}
+                </div>
+              </td>
+              <td>
+                <div class="">
+                  {{player.athleteName}}
+                </div>
+              </td>
+              <td class="creatematch-selectholder">
+                <div class="">
+                  <input type="checkbox" class="checkbox form-control">
+                </div>
+              </td>
+              <td class="creatematch-laneholder">
+                <div class="">
+                  <input type="number" class="form-control text-center" placeholder="0" >
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="text-right">
+      <button type="button" class="btn btn-green-outline mlr-10">Save</button>
+      <button type="button" class="btn btn-green-outline mlr-10" ng-click="$dismiss()">Cancel</button>
+    </div>
+  </div>
+</div>

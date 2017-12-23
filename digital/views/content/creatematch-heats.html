@@ -15,8 +15,8 @@
           </div>
           <div class="col-md-4">
             <div class="form-group">
-              <label for="matchForm.roundType"> Select Round Type</label>
-              <select class="select form-control" id="matchForm.roundType" ng-model="matchForm.roundType" ng-options="sport.type as sport.type for sport in roundType"></select>
+              <label for="matchForm.round"> Select Round Type</label>
+              <select class="select form-control" id="matchForm.round" ng-model="matchForm.round" ng-options="sport.type as sport.type for sport in roundType"></select>
               <!-- <pre>{{match.draw}}</pre> -->
             </div>
           </div>
@@ -39,7 +39,7 @@
       <!-- HEADER FORM -->
       <!-- MATCH DISPLAY SECTION -->
       <div class="creatematch-displaysection">
-        <div class="creatematch-roundholder" ng-repeat="round in roundList track by $index">
+        <div class="creatematch-roundholder" ng-repeat="round in roundsList track by $index">
           <div class="creatematch-roundhead">
             {{round.name}}
           </div>
@@ -73,7 +73,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="match in round.matches track by $index">
+                <tr ng-repeat="heat in round.match track by $index">
                   <td>
                     <div class="">
                       {{$index + 1}}
@@ -81,18 +81,18 @@
                   </td>
                   <td>
                     <div class="">
-                      {{match.matchId}}
+                      {{heat.matchId}}
                     </div>
                   </td>
                   <td>
                     <div class="">
-                      {{match.matchName}}
+                      {{heat.round}} {{heat.heatNo}}
                     </div>
                   </td>
                   <td>
                     <div class="text-right">
-                      <button class="btn btn-green-outline">View</button>
-                      <button class="btn btn-green-outline">Edit</button>
+                      <button class="btn btn-green-outline mlr-10" ng-click="matchEdit(heat, 'view');">View</button>
+                      <button class="btn btn-green-outline mlr-10" ng-click="matchEdit(heat, 'edit');">Edit</button>
                     </div>
                   </td>
                 </tr>
