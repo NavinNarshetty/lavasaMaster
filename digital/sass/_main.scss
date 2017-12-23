@@ -1421,4 +1421,17 @@ header {
   border-bottom: 1px solid #ccc;
   margin: 20px 0;
 }
+.creatematch-displaysection {
+  padding: 10px 0;
+  margin: 20px 0;
+}
+.creatematch-roundhead {
+  padding: 10px 0;
+  background-color: $brand-warning;
+  color: $brand-primary;
+  font-size: 24px;
+  text-align: center;
+  text-transform: uppercase;
+  @extend .d-fjalla-one;
+}
 // CREATE MATCH HEATS END

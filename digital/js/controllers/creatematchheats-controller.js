@@ -6,9 +6,8 @@ myApp.controller('CreateMatchHeatsCtrl', function($scope, TemplateService, Navig
     // INITIALISE VARIABLES
     $scope.matchForm = {
       sportType: "",
-      matchCount: '',
-      prefix: '',
-      roundName: ''
+      roundType: "",
+      prefix: ''
     }
     $scope.roundType = [{
       type: 'Heat'
@@ -23,16 +22,60 @@ myApp.controller('CreateMatchHeatsCtrl', function($scope, TemplateService, Navig
     // FUNCTIONS END
 
     // JSONS
-    $scope.matchList = [{
-      matchId: 'LOLRAJ123',
+    $scope.roundList = [{
+      name: 'Heats',
+      matches: [{
+        matchId: 'HA1234',
+        matchName: 'Heat 1'
+      },{
+        matchId: 'HA1234',
+        matchName: 'Heat 1'
+      },{
+        matchId: 'HA1234',
+        matchName: 'Heat 1'
+      },{
+        matchId: 'HA1234',
+        matchName: 'Heat 1'
+      },{
+        matchId: 'HA1234',
+        matchName: 'Heat 1'
+      }]
     },{
-      matchId: 'LOLRAJ123',
+      name: 'Semi Final',
+      matches: [{
+        matchId: 'HA1234',
+        matchName: 'Heat 1'
+      },{
+        matchId: 'HA1234',
+        matchName: 'Heat 1'
+      },{
+        matchId: 'HA1234',
+        matchName: 'Heat 1'
+      },{
+        matchId: 'HA1234',
+        matchName: 'Heat 1'
+      },{
+        matchId: 'HA1234',
+        matchName: 'Heat 1'
+      }]
     },{
-      matchId: 'LOLRAJ123',
-    },{
-      matchId: 'LOLRAJ123',
-    },{
-      matchId: 'LOLRAJ123',
+      name: 'Final',
+      matches: [{
+        matchId: 'HA1234',
+        matchName: 'Heat 1'
+      },{
+        matchId: 'HA1234',
+        matchName: 'Heat 1'
+      },{
+        matchId: 'HA1234',
+        matchName: 'Heat 1'
+      },{
+        matchId: 'HA1234',
+        matchName: 'Heat 1'
+      },{
+        matchId: 'HA1234',
+        matchName: 'Heat 1'
+      }]
     }]
     // JSONS END
 
