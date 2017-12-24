@@ -225,7 +225,7 @@ var model = {
             "folder": data.folder,
             "mediatype": data.mediatype,
             "year": data.year
-        }
+        };
 
         var maxRow = Config.maxRow;
         var page = 1;
@@ -253,8 +253,7 @@ var model = {
             sendObj.total = count;
         });
 
-        Media.find(matchObj).limit(options.count).skip(options.start)
-            .lean().exec(function (err, medias) {
+        Media.find(matchObj).lean().skip(options.start).limit(options.count).exec(function (err, medias) {
                 if (err || _.isEmpty(data)) {
                     callback(err, "Medias Not Found");
                 } else {
