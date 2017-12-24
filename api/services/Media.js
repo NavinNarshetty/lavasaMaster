@@ -253,13 +253,13 @@ var model = {
             console.log('count',count);
             found.total = count;
         });
-        Medal.find(matchObj).lean().exec(options, function (err, found) {
+        Medal.find(matchObj).lean().exec(function (err, found) {
             if (err) {
                 callback(err, null);
             } else if (_.isEmpty(found)) {
                 callback(null, "Data is empty");
             } else {
-                console.log(found);
+                console.log('found',found);
                 callback(null, found);
             }
         });
