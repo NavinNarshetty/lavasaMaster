@@ -226,7 +226,6 @@ var model = {
             "mediatype": data.mediatype,
             "year": data.year
         };
-
         var maxRow = Config.maxRow;
         var page = 1;
         if (data && data.page) {
@@ -248,9 +247,56 @@ var model = {
             count: maxRow
         };
 
-        sendObj.options = options;
-        console.log('All incoming Data',data);
-        console.log('All incoming Data in match',matchObj);
+        // sendObj.options = options;
+        
+        Media.count(matchObj, function (err, count) {
+            console.log('count',count);
+            found.total = count;
+        });
+        Medal.find(matchObj)
+        .order(options)
+        .keyword(options)
+        .page(options, function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(found)) {
+                callback(null, "Data is empty");
+            } else {
+                console.log(found);
+                callback(null, found);
+            }
+        });
+    },
+
+    ByPratikgetMedias: function (data, callback) {
+        var sendObj = {};
+        var matchObj = {
+            "folder": data.folder,
+            "mediatype": data.mediatype,
+            "year": data.year
+        };
+        var maxRow = Config.maxRow;
+        var page = 1;
+        if (data && data.page) {
+            page = data.page;
+        }
+        var field = data.field;
+        var options = {
+            field: data.field,
+            filters: {
+                keyword: {
+                    fields: ['medalType'],
+                    term: data.keyword
+                }
+            },
+            sort: {
+                asc: 'createdAt'
+            },
+            start: (page - 1) * maxRow,
+            count: maxRow
+        };
+
+        // sendObj.options = options;
         Media.count(matchObj, function (err, count) {
             console.log('count',count);
             sendObj.total = count;
