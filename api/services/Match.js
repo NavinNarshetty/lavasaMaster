@@ -7809,7 +7809,7 @@ var model = {
 
     generateGraphicsKnockoutIndividual: function (match, callback) {
         async.concatSeries(match, function (mainData, callback) {
-            console.log('mainData',mainData);
+            // console.log('mainData',mainData);
                 var obj = {};
                 var dateTime = moment(mainData.scheduleDate).format('DD-MM-YYYY');
                 obj.DATE = dateTime;
@@ -8256,8 +8256,8 @@ var model = {
                             }
                         }
                     }
-                    console.log('length',mainData.opponentsSingle.length);
-                    if(mainData.opponentsSingle[0]._id != undefined){
+                    // console.log('length',mainData.opponentsSingle.length);
+                    if(mainData.opponentsSingle.length > 0){
                         if (mainData.resultsRacquet.winner.opponentsSingle === mainData.opponentsSingle[0]._id.toString()) {
                             obj["WINNER NAME"] = obj["SCREEN NAME ATHLETE 1"];
                             obj["WINNER SFA ID"] = obj["SFAID 1"];
@@ -8267,7 +8267,7 @@ var model = {
                             obj["WINNER SFA ID"] = obj["SFAID 2"];
                             obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 2"];
                         }
-                    }else{
+                    } else {
                         obj["WINNER NAME"] = '';
                         obj["WINNER SFA ID"] = '';
                         obj["WINNER SCHOOL"] = '';
