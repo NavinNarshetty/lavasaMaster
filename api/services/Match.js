@@ -8256,14 +8256,21 @@ var model = {
                             }
                         }
                     }
-                    if (mainData.resultsRacquet.winner.opponentsSingle === mainData.opponentsSingle[0]._id.toString()) {
-                        obj["WINNER NAME"] = obj["SCREEN NAME ATHLETE 1"];
-                        obj["WINNER SFA ID"] = obj["SFAID 1"];
-                        obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 1"];
-                    } else {
-                        obj["WINNER NAME"] = obj["SCREEN NAME ATHLETE 2"];
-                        obj["WINNER SFA ID"] = obj["SFAID 2"];
-                        obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 2"];
+                    console.log('length',mainData.opponentsSingle.length);
+                    if(mainData.opponentsSingle[0]._id != undefined){
+                        if (mainData.resultsRacquet.winner.opponentsSingle === mainData.opponentsSingle[0]._id.toString()) {
+                            obj["WINNER NAME"] = obj["SCREEN NAME ATHLETE 1"];
+                            obj["WINNER SFA ID"] = obj["SFAID 1"];
+                            obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 1"];
+                        } else {
+                            obj["WINNER NAME"] = obj["SCREEN NAME ATHLETE 2"];
+                            obj["WINNER SFA ID"] = obj["SFAID 2"];
+                            obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 2"];
+                        }
+                    }else{
+                        obj["WINNER NAME"] = '';
+                        obj["WINNER SFA ID"] = '';
+                        obj["WINNER SCHOOL"] = '';
                     }
                 }
 
