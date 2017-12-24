@@ -249,11 +249,11 @@ var model = {
         };
 
         sendObj.options = options;
-
+        console.log('All incoming Data',data);
+        console.log('All incoming Data in match',matchObj);
         Media.count(matchObj, function (err, count) {
-            console.log('count length',count.length);
             console.log('count',count);
-            sendObj.total = count.length;
+            sendObj.total = count;
         });
 
         Media.find(matchObj).lean().skip(options.start).limit(options.count).exec(function (err, medias) {
