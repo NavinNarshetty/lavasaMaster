@@ -250,7 +250,7 @@ var model = {
 
         sendObj.options = options;
 
-        Media.find(matchObj, function (err, count) {
+        Media.count(matchObj, function (err, count) {
             console.log('count length',count.length);
             console.log('count',count);
             sendObj.total = count.length;

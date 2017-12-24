@@ -7809,6 +7809,7 @@ var model = {
 
     generateGraphicsKnockoutIndividual: function (match, callback) {
         async.concatSeries(match, function (mainData, callback) {
+            console.log('mainData',mainData);
                 var obj = {};
                 var dateTime = moment(mainData.scheduleDate).format('DD-MM-YYYY');
                 obj.DATE = dateTime;
@@ -8265,6 +8266,7 @@ var model = {
                         obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 2"];
                     }
                 }
+
                 obj["VIDEO TYPE"] = "";
                 obj["VIDEO"] = "";
 
