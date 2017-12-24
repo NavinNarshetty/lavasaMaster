@@ -253,16 +253,6 @@ var model = {
             console.log('count',count);
             found.total = count;
         });
-        // Media.find(matchObj).lean().exec(function (err, found) {
-        //     if (err) {
-        //         callback(err, null);
-        //     } else if (_.isEmpty(found)) {
-        //         callback(null, "Data is empty");
-        //     } else {
-        //         console.log('found',found);
-        //         callback(null, found);
-        //     }
-        // });
         Media.find(matchObj)
         .order(options)
         .keyword(options)
