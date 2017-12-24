@@ -249,8 +249,11 @@ var model = {
         };
 
         sendObj.options = options;
-        Media.count(matchObj, function (err, count) {
-            sendObj.total = count;
+
+        Media.find(matchObj, function (err, count) {
+            console.log('count length',count.length);
+            console.log('count',count);
+            sendObj.total = count.length;
         });
 
         Media.find(matchObj).lean().skip(options.start).limit(options.count).exec(function (err, medias) {
