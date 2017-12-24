@@ -220,7 +220,7 @@ var model = {
 
 
     getMedias: function (data, callback) {
-        var found = {};
+        var sendObj = {};
         var matchObj = {
             "folder": data.folder,
             "mediatype": data.mediatype,
@@ -253,10 +253,7 @@ var model = {
             console.log('count',count);
             found.total = count;
         });
-        Medal.find(matchObj)
-        .order(options)
-        .keyword(options)
-        .page(options, function (err, found) {
+        Medal.find(matchObj).lean().exec(options, function (err, found) {
             if (err) {
                 callback(err, null);
             } else if (_.isEmpty(found)) {
