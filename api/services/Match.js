@@ -7946,9 +7946,9 @@ var model = {
                         obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 2"];
                     }
                 } else if (mainData.resultsRacquet) {
-                    // console.log(mainData.resultsRacquet.players[0].sets);
+                    console.log('1',mainData.resultsRacquet.players[0].sets);
+                    console.log('2',mainData.resultsRacquet.players[1].sets);
                     if (mainData.resultsRacquet.players && mainData.resultsRacquet.players.length > 1) {
-                        // console.log(mainData.resultsRacquet.players[1].sets);
                         for (var i = 0; i < mainData.resultsRacquet.players[1].sets.length; i++) {
                             if (i == 0) {
                                 obj["A2 Total Service Errors"] = mainData.resultsRacquet.players[1].sets[i].serviceError;
@@ -7963,7 +7963,7 @@ var model = {
                             var code = ++i;
                             console.log("sets", mainData.resultsRacquet.players[0].sets);
                             console.log("i", code);
-                            if(mainData.resultsRacquet.players[1].sets.length == 0){
+                            if(mainData.resultsRacquet.players[1].sets.length == 0 && mainData.resultsRacquet.players[0].sets.length == 0){
                                 obj["A1 Set 1"] = "";
                                 obj["A2 Set 1"] = "";
                                 obj["A1 Set 2"] = "";
@@ -8121,7 +8121,7 @@ var model = {
                     if (mainData.resultsRacquet.players.length == 1) {
                         var sNo = 1;
                         var code = ++i;
-                        console.log("sets", mainData.resultsRacquet.players[0].sets);
+                        console.log("sets length 1", mainData.resultsRacquet.players[0].sets);
                         console.log("i", code);
                         if(mainData.resultsRacquet.players[0].sets.length == 0){
                             obj["A1 Set 1"] = "";
