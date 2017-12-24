@@ -220,7 +220,7 @@ var model = {
 
 
     getMedias: function (data, callback) {
-        var sendObj = {};
+        var found = {};
         var matchObj = {
             "folder": data.folder,
             "mediatype": data.mediatype,
