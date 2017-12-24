@@ -7946,9 +7946,9 @@ var model = {
                         obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 2"];
                     }
                 } else if (mainData.resultsRacquet) {
-                    console.log('1',mainData.resultsRacquet.players[0].sets);
-                    console.log('2',mainData.resultsRacquet.players[1].sets);
                     if (mainData.resultsRacquet.players && mainData.resultsRacquet.players.length > 1) {
+                        console.log('1',mainData.resultsRacquet.players[0].sets);
+                        console.log('2',mainData.resultsRacquet.players[1].sets);
                         for (var i = 0; i < mainData.resultsRacquet.players[1].sets.length; i++) {
                             if (i == 0) {
                                 obj["A2 Total Service Errors"] = mainData.resultsRacquet.players[1].sets[i].serviceError;
@@ -8120,7 +8120,7 @@ var model = {
                     }
                     if (mainData.resultsRacquet.players.length == 1) {
                         var sNo = 1;
-                        var code = ++i;
+                        var code = i;
                         console.log("sets length 1", mainData.resultsRacquet.players[0].sets);
                         console.log("i", code);
                         if(mainData.resultsRacquet.players[0].sets.length == 0){
