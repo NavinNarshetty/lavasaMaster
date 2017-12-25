@@ -218,15 +218,13 @@ var model = {
 
     },
 
-
     getMedias: function (data, callback) {
         var sendObj = {};
         var matchObj = {
             "folder": data.folder,
             "mediatype": data.mediatype,
             "year": data.year
-        }
-
+        };
         var maxRow = Config.maxRow;
         var page = 1;
         if (data && data.page) {
@@ -249,17 +247,18 @@ var model = {
         };
 
         sendObj.options = options;
-        Media.count(matchObj, function (err, count) {
-            sendObj.total = count;
-        });
+       
 
-        Media.find(matchObj).limit(options.count).skip(options.start)
-            .lean().exec(function (err, medias) {
+        Media.find(matchObj).lean().skip(options.start).limit(options.count).exec(function (err, medias) {
                 if (err || _.isEmpty(data)) {
                     callback(err, "Medias Not Found");
                 } else {
                     sendObj.results = medias;
-                    callback(null, sendObj);
+                    Media.count(matchObj, function (err, count) {
+                        sendObj.total = count;
+                        callback(null, sendObj);
+                    });
+                   
                 }
             });
     }
