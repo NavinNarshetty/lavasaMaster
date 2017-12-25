@@ -218,57 +218,7 @@ var model = {
 
     },
 
-
     getMedias: function (data, callback) {
-        var found = {};
-        var matchObj = {
-            "folder": data.folder,
-            "mediatype": data.mediatype,
-            "year": data.year
-        };
-        var maxRow = Config.maxRow;
-        var page = 1;
-        if (data && data.page) {
-            page = data.page;
-        }
-        var field = data.field;
-        var options = {
-            field: data.field,
-            filters: {
-                keyword: {
-                    fields: ['medalType'],
-                    term: data.keyword
-                }
-            },
-            sort: {
-                asc: 'createdAt'
-            },
-            start: (page - 1) * maxRow,
-            count: maxRow
-        };
-
-        // sendObj.options = options;
-        
-        Media.count(matchObj, function (err, count) {
-            console.log('count',count);
-            found.total = count;
-        });
-        Media.find(matchObj)
-        .order(options)
-        .keyword(options)
-        .page(options, function (err, found) {
-            if (err) {
-                callback(err, null);
-            } else if (_.isEmpty(found)) {
-                callback(null, "Data is empty");
-            } else {
-                console.log('found',found);
-                callback(null, found);
-            }
-        });
-    },
-
-    ByPratikgetMedias: function (data, callback) {
         var sendObj = {};
         var matchObj = {
             "folder": data.folder,
@@ -296,18 +246,19 @@ var model = {
             count: maxRow
         };
 
-        // sendObj.options = options;
-        Media.count(matchObj, function (err, count) {
-            console.log('count',count);
-            sendObj.total = count;
-        });
+        sendObj.options = options;
+       
 
         Media.find(matchObj).lean().skip(options.start).limit(options.count).exec(function (err, medias) {
                 if (err || _.isEmpty(data)) {
                     callback(err, "Medias Not Found");
                 } else {
                     sendObj.results = medias;
-                    callback(null, sendObj);
+                    Media.count(matchObj, function (err, count) {
+                        sendObj.total = count;
+                        callback(null, sendObj);
+                    });
+                   
                 }
             });
     }
