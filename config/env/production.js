@@ -55,3 +55,13 @@ module.exports = {
   // }
 
 };
+
+
+// var cron = require('node-cron');
+
+// cron.schedule('*/2 * * * *', function () {
+//   console.log("Running Athlete Get Draws");
+//   Match.getDrawFormats({}, function () {
+//     console.log("Completed Crons");
+//   });
+// });
