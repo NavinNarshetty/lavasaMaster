@@ -89,7 +89,8 @@
 
                                 <div class="form-group" ng-if="showTeams && allTeams.length>0">
                                     <label>Team</label>
-                                    <ui-select name="team" ng-model="medalInfoForm.team" theme="bootstrap" multiple on-select="getSchoolName($item)" on-remove="removeSchool($item)">
+                                    <ui-select name="team" ng-model="medalInfoForm.team" theme="bootstrap" multiple on-select="getSchoolName($item);getStudentTeam($item);"
+                                        on-remove="removeSchool($item)">
                                         <ui-select-match placeholder="Select teams">{{$select.selected[$index].fullName}}</ui-select-match>
                                         <ui-select-choices repeat="team._id as team in allTeams | filter: $select.search">
                                             <div>
@@ -97,9 +98,22 @@
                                             </div>
                                         </ui-select-choices>
                                     </ui-select>
-
                                     <div class="error-msg" ng-if="detailForm.team.$invalid && detailForm.team.$touched">Please Enter Filter*</div>
                                 </div>
+                                <div class="form-group" ng-if="medalInfoForm.studentTeam.length>0">
+                                    <div class="viewStudent">
+                                        <label>Team Player</label>
+                                        <ui-select disabled multiple theme="bootstrap" ng-model="medalInfoForm.studentTeam">
+                                            <ui-select-match>
+                                                <span ng-bind="$item.fullName"></span>
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="item in medalInfoForm.studentTeam">
+                                            </ui-select-choices>
+                                        </ui-select>
+                                        <div class="overlay"></div>
+                                    </div>
+                                </div>
+
                                 <div class="form-group" ng-if="showAthletes && allAtheletes.length>0">
                                     <label>player</label>
                                     <ui-select name="player" ng-model="medalInfoForm.player" theme="bootstrap" multiple on-select="getSchoolName($item)" on-remove="removeSchool($item)">

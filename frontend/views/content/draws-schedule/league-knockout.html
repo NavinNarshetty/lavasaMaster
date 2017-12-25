@@ -335,7 +335,7 @@
                         </td>
                         <td>
                           <div class="text-capitalize">
-                            <p class="knockout-dot-live v-mid" ng-if="content.opponentsTeam[1].isWinner === true"><i class="fa fa-circle"></i></p>
+                            <span class="knockout-dot-live v-mid" ng-if="content.opponentsTeam[1].isWinner === true"><i class="fa fa-circle"></i></span>
                             <span title="{{content.opponentsTeam[1].teamId | filterConcate : content.opponentsTeam[1].schoolName}}">{{content.opponentsTeam[1].teamId | filterConcate : content.opponentsTeam[1].schoolName | truncate:'30'}}
                             </span>
                             <span ng-if="content.opponentsTeam[1].teamId === undefined && isTeam">-</span>
@@ -361,9 +361,11 @@
                             </span>
                             <span class="display-block" ng-if="content.status === 'IsCompleted' && content.walkover">Won by walkover</span>
                             <span class="display-block" ng-if="content.status === 'IsCompleted' && content.isNoMatch">No Match</span>
+                            <span class="display-block" ng-if="content.isDraw">Draw</span>
                             <a class="display-block" ng-if="content.status === 'IsCompleted' && !content.isNoMatch && !content.walkover && !content.resultFencing"
                               ng-click="matchCenter(content)">Match Center</a>
                             <p class="m-clear" ng-if="content.status === 'IsCompleted' && !content.isNoMatch && !content.walkover && content.resultFencing">{{content.resultFencing.players[0].finalPoints}} - {{content.resultFencing.players[1].finalPoints}}</p>
+
                           </div>
                         </td>
                         <td hidden>
