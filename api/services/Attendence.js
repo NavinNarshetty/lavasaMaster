@@ -446,7 +446,6 @@ var model = {
                                 success: found
                             });
                         } else {
-                            console.log("found----->", found);
                             callback(null, found);
                         }
                     });
@@ -460,7 +459,6 @@ var model = {
                                 success: playersData
                             });
                         } else {
-                            console.log("playersData----->", playersData);
                             var final = {};
                             final.players = playersData;
                             final.found = found;
@@ -469,32 +467,44 @@ var model = {
                     });
                 },
                 function (final, callback) {
-                    async.eachSeries(final.players, function (n, callback) {
-                        Match.findOne({
-                            sport: objectid(data.sport)
-                        }).sort({
-                            createdAt: -1
-                        }).lean().exec(function (err, matchData) {
-                            if (err) {
-                                callback(null, {
-                                    error: "No data Found"
-                                });
-                            } else if (_.isEmpty(matchData)) {
-                                var formData = {};
-                                formData.sport = data.sport;
-                                if (!final.found.matchPrefix) {
-                                    formData.matchId = data.prefix;
+                    Match.findOne({
+                        sport: objectid(data.sport)
+                    }).sort({
+                        createdAt: -1
+                    }).lean().exec(function (err, matchData) {
+                        if (err) {
+                            callback(null, {
+                                error: "No data Found"
+                            });
+                        } else if (_.isEmpty(matchData)) {
+                            Attendence.saveQualifyingMultiplePlayers(final, data, function (err, complete) {
+                                if (err || _.isEmpty(complete)) {
+                                    err = "Headers may have wrong values";
+                                    callback(null, {
+                                        error: err,
+                                        success: complete
+                                    });
                                 } else {
-                                    formData.matchId = final.found.matchPrefix;
+                                    callback(null, complete);
                                 }
-                                formData.round = data.round;
-                                formData.opponentSingle = [];
-                                formData.opponentSingle.push(n.opponentSingle);
-                                Match.saveMatch(formData, function (err, complete) {
-                                    if (err || _.isEmpty(complete)) {
-                                        callback(err, null);
+                            });
+                        } else {
+                            if (data.matchId) {
+                                var formData = {};
+                                formData.opponentsSingle = [];
+                                if (data.opponentSingle) {
+                                    formData.opponentsSingle.push(data.opponentSingle);
+                                }
+                                Match.update({
+                                    matchId: data.matchId
+                                }, formData).exec(function (err, updateData) {
+                                    if (err || _.isEmpty(updateData)) {
+                                        callback(null, {
+                                            error: "No data found!",
+                                            success: data
+                                        });
                                     } else {
-                                        callback(null, complete);
+                                        callback(null, updateData);
                                     }
                                 });
                             } else {
@@ -505,13 +515,8 @@ var model = {
                                 } else {
                                     formData.matchId = final.found.matchPrefix;
                                 }
-                                if (data.round) {
-                                    formData.round = data.round;
-                                } else {
-                                    formData.round = matchData.round;
-                                }
-                                formData.opponentSingle = [];
-                                formData.opponentSingle.push(n.opponentSingle);
+                                formData.round = data.round;
+                                formData.opponentsSingle = [];
                                 Match.saveMatch(formData, function (err, complete) {
                                     if (err || _.isEmpty(complete)) {
                                         callback(err, null);
@@ -520,8 +525,7 @@ var model = {
                                     }
                                 });
                             }
-                        });
-
+                        }
                     });
                 },
             ],
@@ -536,7 +540,35 @@ var model = {
                     }
                 }
             });
+    },
 
+    saveQualifyingMultiplePlayers: function (final, data, callback) {
+        async.eachSeries(final.players, function (n, callback) {
+            console.log("n", n);
+            var formData = {};
+            formData.sport = data.sport;
+            if (!final.found.matchPrefix) {
+                formData.matchId = data.prefix;
+            } else {
+                formData.matchId = final.found.matchPrefix;
+            }
+            formData.round = data.round;
+            formData.opponentsSingle = [];
+            formData.opponentsSingle.push(n.opponentSingle);
+            Match.saveMatch(formData, function (err, complete) {
+                if (err || _.isEmpty(complete)) {
+                    callback(err, null);
+                } else {
+                    callback(null, complete);
+                }
+            });
+        }, function (err) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, "Added Successfully!");
+            }
+        });
     },
 
     updateMatchPrefix: function (data, callback) {
