@@ -55,6 +55,8 @@ var controller = {
                 "value": false
             });
         }
-    }
+    },
+
+
 };
 module.exports = _.assign(module.exports, controller);

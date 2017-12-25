@@ -438,9 +438,9 @@ var model = {
     createMatchQualifying: function (data, callback) {
         async.waterfall([
                 function (callback) {
-                    Attendence.getPlayersMatchSelection(data, function (err, found) {
+                    Attendence.updateMatchPrefix(data, function (err, found) {
                         if (err || _.isEmpty(found)) {
-                            err = "Sport,Event,AgeGroup,Gender may have wrong values";
+                            err = "Headers may have wrong values";
                             callback(null, {
                                 error: err,
                                 success: found
@@ -452,20 +452,76 @@ var model = {
                     });
                 },
                 function (found, callback) {
-                    async.eachSeries(found, function (n, callback) {
-                        var formData = {};
-                        formData.matchId = data.prefix;
-                        formData.sport = data.sport;
-                        formData.round = data.round;
-                        formData.opponentSingle = [];
-                        formData.opponentSingle.push(n)
-                        Match.saveMatch(formData, function (err, complete) {
-                            if (err || _.isEmpty(complete)) {
-                                callback(err, null);
+                    Attendence.getPlayersMatchSelection(data, function (err, playersData) {
+                        if (err || _.isEmpty(playersData)) {
+                            err = "Sport,Event,AgeGroup,Gender may have wrong values";
+                            callback(null, {
+                                error: err,
+                                success: playersData
+                            });
+                        } else {
+                            console.log("playersData----->", playersData);
+                            var final = {};
+                            final.players = playersData;
+                            final.found = found;
+                            callback(null, final);
+                        }
+                    });
+                },
+                function (final, callback) {
+                    async.eachSeries(final.players, function (n, callback) {
+                        Match.findOne({
+                            sport: objectid(data.sport)
+                        }).sort({
+                            createdAt: -1
+                        }).lean().exec(function (err, matchData) {
+                            if (err) {
+                                callback(null, {
+                                    error: "No data Found"
+                                });
+                            } else if (_.isEmpty(matchData)) {
+                                var formData = {};
+                                formData.sport = data.sport;
+                                if (!final.found.matchPrefix) {
+                                    formData.matchId = data.prefix;
+                                } else {
+                                    formData.matchId = final.found.matchPrefix;
+                                }
+                                formData.round = data.round;
+                                formData.opponentSingle = [];
+                                formData.opponentSingle.push(n.opponentSingle);
+                                Match.saveMatch(formData, function (err, complete) {
+                                    if (err || _.isEmpty(complete)) {
+                                        callback(err, null);
+                                    } else {
+                                        callback(null, complete);
+                                    }
+                                });
                             } else {
-                                callback(null, complete);
+                                var formData = {};
+                                formData.sport = data.sport;
+                                if (!final.found.matchPrefix) {
+                                    formData.matchId = data.prefix;
+                                } else {
+                                    formData.matchId = final.found.matchPrefix;
+                                }
+                                if (data.round) {
+                                    formData.round = data.round;
+                                } else {
+                                    formData.round = matchData.round;
+                                }
+                                formData.opponentSingle = [];
+                                formData.opponentSingle.push(n.opponentSingle);
+                                Match.saveMatch(formData, function (err, complete) {
+                                    if (err || _.isEmpty(complete)) {
+                                        callback(err, null);
+                                    } else {
+                                        callback(null, complete);
+                                    }
+                                });
                             }
                         });
+
                     });
                 },
             ],
@@ -540,7 +596,7 @@ var model = {
             });
     },
 
-    addPlayersToMatch: function (data, callback) {
+    addPlayersToMatchHeat: function (data, callback) {
         async.waterfall([
                 function (callback) {
                     var test = {};
@@ -561,9 +617,71 @@ var model = {
                     if (found.error) {
                         callback(null, found);
                     } else if (found.sportslist.sportsListSubCategory.isTeam == true) {
+                        Match.findOne({
+                            matchId: data.matchId
+                        }).exec(function (err, matchData) {
+                            if (err || _.isEmpty(matchData)) {
+                                callback(null, {
+                                    error: "No data found!",
+                                    success: data
+                                });
+                            } else {
+                                var final = {};
+                                final.opponents = matchData.opponentsTeam;
+                                if (matchData.resultHeat) {
+                                    final.teams = matchData.resultHeat.teams;
+                                }
+                                final.isTeam = true;
+                                callback(null, final);
+                            }
+                        });
+                    } else {
+                        Match.findOne({
+                            matchId: data.matchId
+                        }).exec(function (err, matchData) {
+                            if (err || _.isEmpty(matchData)) {
+                                callback(null, {
+                                    error: "No data found!",
+                                    success: data
+                                });
+                            } else {
+                                var final = {};
+                                final.opponents = matchData.opponentsSingle;
+                                if (matchData.resultHeat) {
+                                    final.players = matchData.resultHeat.players;
+                                }
+                                final.isTeam = false;
+                                callback(null, final);
+                            }
+                        });
+                    }
+                },
+                function (final, callback) {
+                    if (final.error) {
+                        callback(null, final);
+                    } else if (final.isTeam == true) {
+                        var opponets = final.opponets;
+                        var result = {};
+                        result.teams = final.teams;
+                        _.each(data.players, function (n) {
+                            opponets.push(n.team);
+                            var player = {};
+                            player.id = n.team;
+                            player.laneNo = n.laneNo;
+                            result.teams.push(player);
+                        });
+                        if (!_.isEmpty(final.teams)) {
+                            var players = [].concat.apply([], [
+                                final.teams,
+                                result.teams,
+                            ]);
+                            result.players = players;
+                        }
                         var formData = {
                             $set: {
-                                opponentsTeam: data.players
+                                opponentsTeam: opponets,
+                                resultHeat: result
+
                             }
                         };
                         Match.update({
@@ -579,9 +697,27 @@ var model = {
                             }
                         });
                     } else {
+                        var opponets = final.opponents;
+                        var result = {};
+                        result.players = [];
+                        _.each(data.players, function (n) {
+                            opponets.push(n.opponentSingle);
+                            var player = {};
+                            player.id = n.opponentSingle;
+                            player.laneNo = n.laneNo;
+                            result.players.push(player);
+                        });
+                        if (!_.isEmpty(final.players)) {
+                            var players = [].concat.apply([], [
+                                final.players,
+                                result.players,
+                            ]);
+                            result.players = players;
+                        }
                         var formData = {
                             $set: {
-                                opponentsSingle: data.players
+                                opponentsSingle: opponets,
+                                resultHeat: result
                             }
                         };
                         Match.update({
@@ -610,7 +746,9 @@ var model = {
                     }
                 }
             });
-    }
+    },
+
+
 
 };
 module.exports = _.assign(module.exports, exports, model);
