@@ -115,6 +115,25 @@
                     </div>
                     <!-- WINNER END -->
                   </div>
+                  <!-- REASON BOXING -->
+                  <div class="col-md-12" ng-if="formData.sport.sportslist.name==='Boxing' || formData.sport.sportslist.name==='Fencing'  && formData.result.winner.reason">
+                    <div class="form-group">
+                      <label>Reason</label>
+                      <select class="form-control" ng-model="formData.result.winner.reason">
+                        <option ng-repeat="reason in reasons track by $index" value="{{reason}}">{{reason}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <!-- REASON END -->
+
+                  <!-- REASON OTHER SPORTS -->
+                  <div class="col-md-12 " ng-if="formData.sport.sportslist.name !=='Boxing' && formData.sport.sportslist.name !=='Fencing'">
+                    <div class="form-group">
+                      <label>Reason</label>
+                      <input type="text" name="winnerreason" ng-model="formData.result.winner.reason" class="form-control" placeholder="Enter Reason">
+                    </div>
+                  </div>
+                  <!-- REASON OTHER SPORTS END -->
                 </div>
                 <!-- STATUS AND WINNER FOR RACQUET AND COMBAT -->
 
@@ -128,7 +147,7 @@
                     <div class="col-md-6">{{formData.resultsCombat.isDraw}}
                       <label><input type="checkbox" ng-model="formData.result.isDraw" value="formData.resultsCombat.isdraw"> isdraw</label>
                     </div>
-                    <div class="col-md-6">{{formData.resultsCombat.isNoMatch}}
+                    <div class="col-md-6">
                       <label><input type="checkbox" ng-model="formData.result.isNoMatch" value="formData.resultsCombat.isNoMatch"> isNoMatch</label>
                     </div>
                   </div>
@@ -229,7 +248,7 @@
                   <!-- CHECKBOX -->
                   <div class="checkbox form-group">
                     <div class="row">
-                      <div class="col-md-6">{{player.noShow}}
+                      <div class="col-md-6">
                         <label><input type="checkbox" ng-model="player.noShow"> noShow</label>
                       </div>
                       <div class="col-md-6">
@@ -289,7 +308,7 @@
                   <!-- CHECKBOX -->
                   <div class="checkbox form-group">
                     <div class="row">
-                      <div class="col-md-6">{{player.noShow}}
+                      <div class="col-md-6">
                         <label><input type="checkbox" ng-model="player.noShow"> noShow</label>
                       </div>
                       <div class="col-md-6">
