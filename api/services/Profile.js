@@ -1283,6 +1283,7 @@ var model = {
                                         callback(err, "error in mongoose");
                                     } else {
                                         async.each(matchData, function (singleData, callback) {
+                                            console.log("singleData", singleData);
                                             var stats = {};
                                             stats.year = new Date(singleData.createdAt).getFullYear();
                                             stats.ageGroup = singleData.sport.ageGroup.name;
@@ -1473,10 +1474,16 @@ var model = {
                                                     });
                                                 }
                                             } else if (singleData.resultHeat) {
+                                                var playerId = _.find(singleData.opponentsSingle, function (o) {
+                                                    if (o.athleteId.toString() === data.athleteId) {
+                                                        return o;
+                                                    }
+                                                });
                                                 var i = 0;
                                                 var result;
                                                 async.each(singleData.resultHeat.players, function (n, callback) {
-                                                    if (n._id === data.athleteId) {
+                                                    if (n.id.equals(playerId._id)) {
+                                                        console.log("inside true");
                                                         stats.score = n.time;
                                                         stats.result = n.result;
                                                         match.push(stats);
