@@ -609,6 +609,7 @@ myApp.controller('DetailPlayerCtrl', function ($scope, TemplateService, Navigati
   $scope.formData.scorecard = [];
 
 
+  $scope.reasons = ['WP', 'RSC', 'RSC-I', 'DSQ', 'KO', 'WO', 'NC', 'Bye'];
 
   // STATUS LIST
   $scope.statusList = ["IsLive", "IsPending", "IsCompleted"];
@@ -648,7 +649,7 @@ myApp.controller('DetailPlayerCtrl', function ($scope, TemplateService, Navigati
           if (key.athleteId.middleName == undefined) {
             key.athleteId.fullName = key.athleteId.firstName + ' ' + key.athleteId.surname;
           } else {
-            key.athleteId.fullName = key.athleteId.firstName + key.athleteId.middleName + key.athleteId.surname;
+            key.athleteId.fullName = key.athleteId.firstName + ' ' + key.athleteId.middleName + ' ' + key.athleteId.surname;
           }
 
           // key.fullName = key.firstName + ' ' + key.surname;
