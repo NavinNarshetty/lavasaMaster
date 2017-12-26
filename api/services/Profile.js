@@ -1431,14 +1431,25 @@ var model = {
                                                                 } else {
                                                                     stats.school = found.school.name;
                                                                 }
-                                                                if (singleData.resultsRacquet.status == "IsCompleted" && singleData.resultsRacquet.isNoMatch) {
+                                                                if (singleData.resultsRacquet.status == "IsCompleted" && singleData.resultsRacquet.isNoMatch == false) {
                                                                     if (singleData.resultsRacquet.winner.player === n.athleteId) {
                                                                         stats.isAthleteWinner = false;
                                                                     } else {
                                                                         stats.isAthleteWinner = true;
                                                                     }
+                                                                    var i = 0;
+                                                                    var length = singleData.resultsRacquet.players[0].sets.length;
+                                                                    while (i < length) {
+                                                                        if (i == 0) {
+                                                                            result = singleData.resultsRacquet.players[0].sets[i].point + "-" + singleData.resultsRacquet.players[1].sets[i].point;
+                                                                        } else {
+                                                                            result = result + "," + singleData.resultsRacquet.players[0].sets[i].point + "-" + singleData.resultsRacquet.players[1].sets[i].point;
+                                                                        }
+                                                                        i++;
+                                                                    }
+                                                                    stats.score = result;
                                                                     stats.status = singleData.resultsRacquet.status;
-                                                                } else if (singleData.resultsRacquet.status == "IsCompleted" && singleData.resultsRacquet.isNoMatch == "true") {
+                                                                } else if (singleData.resultsRacquet.status == "IsCompleted" && singleData.resultsRacquet.isNoMatch == true) {
                                                                     stats.status = singleData.resultsRacquet.status;
                                                                     stats.reason = "NO Match";
                                                                 } else {
@@ -1448,7 +1459,7 @@ var model = {
                                                                 callback(null, match);
                                                             });
                                                         } else {
-                                                            if (singleData.resultsRacquet.status == "IsCompleted" && singleData.resultsRacquet.isNoMatch) {
+                                                            if (singleData.resultsRacquet.status == "IsCompleted" && singleData.resultsRacquet.isNoMatch == false) {
                                                                 var i = 0;
                                                                 var length = singleData.resultsRacquet.players[0].sets.length;
                                                                 while (i < length) {
@@ -1461,7 +1472,8 @@ var model = {
                                                                 }
                                                                 stats.score = result;
                                                                 stats.status = singleData.resultsRacquet.status;
-                                                            } else if (singleData.resultsRacquet.status == "IsCompleted" && singleData.resultsRacquet.isNoMatch == "true") {
+                                                                stats.isAthleteWinner = true;
+                                                            } else if (singleData.resultsRacquet.status == "IsCompleted" && singleData.resultsRacquet.isNoMatch == true) {
                                                                 stats.status = singleData.resultsRacquet.status;
                                                                 stats.reason = "NO Match";
                                                             } else {
@@ -1731,13 +1743,14 @@ var model = {
                                                                         callback(null, match);
                                                                     } else {
                                                                         if (!singleData.opponentsTeam._id.equals(found.teamId)) {
-                                                                            console.log("inside if");
+
                                                                             stats.opponentName = found.teamId.name;
                                                                             stats.school = found.teamId.schoolName;
                                                                             stats.teamId = found.teamId.teamId;
                                                                         }
                                                                         if (singleData.resultsCombat.status == "IsCompleted" && singleData.isNoMatch == false) {
                                                                             if (singleData.resultsCombat.winner.player === n.team) {
+                                                                                console.log("inside if", n.team);
                                                                                 stats.isAthleteWinner = false;
                                                                                 var i = 0;
                                                                                 var length = singleData.resultsCombat.teams[0].sets.length;
@@ -1807,6 +1820,7 @@ var model = {
                                                             }
                                                             stats.score = result;
                                                             stats.status = singleData.resultsRacquet.status;
+                                                            stats.isAthleteWinner = true;
                                                         } else if (singleData.resultsRacquet.status == "IsCompleted" && singleData.resultsRacquet.isNoMatch == true) {
                                                             stats.status = singleData.resultsRacquet.status;
                                                             stats.reason = "NO Match";

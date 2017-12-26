@@ -892,9 +892,16 @@ var model = {
                             });
                         } else {
                             if (data.isTeam == true) {
-                                var team = _.without(matchData.opponentsTeam, data.team);
+                                var team = [];
+                                for (var i = 0, l = matchData.opponentsTeam.length; i < l; i++) {
+                                    if (matchData.opponentsTeam[i].toString() !== data.team) {
+                                        team.push(matchData.opponentsTeam[i]);
+                                    }
+                                }
                                 var matchObj = {
-                                    opponentsTeam: team
+                                    $set: {
+                                        opponentsTeam: team
+                                    }
                                 };
                                 Match.update({
                                     matchId: data.matchId
@@ -903,9 +910,16 @@ var model = {
                                         callback(null, match);
                                     });
                             } else {
-                                var single = _.without(matchData.opponentsSingle, data.opponentSingle);
+                                var single = [];
+                                for (var i = 0, l = matchData.opponentsSingle.length; i < l; i++) {
+                                    if (matchData.opponentsSingle[i].toString() !== data.opponentSingle) {
+                                        single.push(matchData.opponentsSingle[i]);
+                                    }
+                                }
                                 var matchObj = {
-                                    opponentsSingle: single
+                                    $set: {
+                                        opponentsSingle: single
+                                    }
                                 };
                                 Match.update({
                                     matchId: data.matchId
@@ -914,10 +928,23 @@ var model = {
                                         callback(null, match);
                                     });
                             }
-                            // callback(null, final);
                         }
                     });
                 },
+                function (match, callback) {
+                    Match.findOne({
+                        matchId: data.matchId
+                    }).exec(function (err, matchData) {
+                        if (err || _.isEmpty(matchData)) {
+                            callback(null, {
+                                error: "No data found!",
+                                success: data
+                            });
+                        } else {
+                            callback(null, matchData);
+                        }
+                    });
+                }
 
             ],
             function (err, data2) {
