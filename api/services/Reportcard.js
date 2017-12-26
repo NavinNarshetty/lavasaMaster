@@ -855,7 +855,7 @@ var model = {
                                             var winKnock = function (obj) {
                                                 if (singleData.type == 'indi') {
                                                     if (obj && obj.winner && obj.winner.opponentsSingle && (obj.winner.opponentsSingle == _.toString(singleData._id))) {
-                                                        console.log("won Knock Indi", singleData.sportsListSubCategory.name);
+                                                        // console.log("won Knock Indi", singleData.sportsListSubCategory.name);
                                                         singleData.won = true;
                                                     } else {
                                                         // console.log("Loose Knock Indi", singleData.sportsListSubCategory.name);                                                                                                                
@@ -908,6 +908,9 @@ var model = {
                                                 case 'Racquet Sports':
                                                 case 'Team Sports':
                                                     findByKey = 'team';
+                                                    if(singleData.sportsListSubCategory.name == "Tennis" || singleData.sportsListSubCategory.name == "Table Tennis" || singleData.sportsListSubCategory.name == "Badminton" || singleData.sportsListSubCategory.name == "Judo" ||  singleData.sportsListSubCategory.name == "Fencing"){
+                                                        findByKey = 'player';
+                                                    }
                                                     noShow = noShowKnock;
                                                     win = winKnock;
                                                     break;
