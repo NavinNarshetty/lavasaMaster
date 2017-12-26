@@ -22,7 +22,7 @@
                                         <ui-select name="selectsporttype" ng-model="formData.sportId" theme="bootstrap" ng-change="sportName($select.selected.name,formData.sportId)"
                                             required>
                                             <ui-select-match placeholder="Select Sport">{{$select.selected.name}}</ui-select-match>
-                                            <ui-select-choices repeat="sport._id as sport in sportList | filter: $select.search">
+                                            <ui-select-choices repeat="sport._id as sport in sportList | orderBy:'name' | filter: $select.search">
                                                 <div>
                                                     <p>{{sport.name}}</p>
                                                 </div>
@@ -42,7 +42,7 @@
                                         <ui-select name="eventBySport" ng-model="formData.sportslist" theme="bootstrap" ng-change="sportName($select.selected.name)"
                                             required>
                                             <ui-select-match placeholder="Select Event">{{$select.selected.name}}</ui-select-match>
-                                            <ui-select-choices repeat="sport._id as sport in getAllBySport | filter: $select.search">
+                                            <ui-select-choices repeat="sport._id as sport in getAllBySport | orderBy:'name' | filter: $select.search">
                                                 <div>
                                                     <p>{{sport.name}}</p>
                                                 </div>
