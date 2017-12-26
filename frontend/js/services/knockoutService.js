@@ -96,12 +96,15 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
   //===================Start of sorting result of league-cum-knockout==================
   //resutLeagueCumKnockout() for Team Sport
   this.resutLeagueCumKnockout = function (result) {
-    // console.log("result", result);
+    console.log("result", result);
     _.each(result.opponentsTeam, function (team, index) {
       if (result.globalResult) {
         if (result.globalResult !== undefined) {
           if (team._id === result.globalResult.winner.player) {
             team.isWinner = true;
+          }
+          if (result.globalResult.winner.reason) {
+            result.reason = result.globalResult.winner.reason;
           }
           result.status = result.globalResult.status;
           result.isNoMatch = result.globalResult.isNoMatch;
@@ -151,6 +154,9 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
           player.isWinner = true;
         } else {
           player.isWinner = false;
+        }
+        if (result.globalResultIndividual.winner.reason) {
+          result.reason = result.globalResultIndividual.winner.reason;
         }
         result.isNoMatch = result.globalResultIndividual.isNoMatch;
         result.isDraw = result.globalResultIndividual.isDraw;

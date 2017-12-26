@@ -8330,16 +8330,22 @@ var model = {
                         }
                     } else if (mainData.resultsRacquet) {
                         if (mainData.resultsRacquet.winner) {
-                            for (var i = 0; i < mainData.resultsRacquet.teams[0].sets.length; i++) {
-                                if (i == 0) {
-                                    obj["T1 Total Service Errors"] = mainData.resultsRacquet.teams[0].sets[i].serviceError;
-                                    obj["T1 Total Unforced Errors"] = mainData.resultsRacquet.teams[0].sets[i].unforcedError;
-                                    obj["T1 Total Winners"] = mainData.resultsRacquet.teams[0].sets[i].winner;
-                                } else {
-                                    obj["T1 Total Service Errors"] = obj["T1 Total Service Errors"] + mainData.resultsRacquet.teams[0].sets[i].serviceError;
-                                    obj["T1 Total Unforced Errors"] = obj["T1 Total Unforced Errors"] + mainData.resultsRacquet.teams[0].sets[i].unforcedError;
-                                    obj["T1 Total Winners"] = obj["T1 Total Winners"] + mainData.resultsRacquet.teams[0].sets[i].winner;
+                            if(mainData.resultsRacquet.teams[0].sets.length>0){
+                                for (var i = 0; i < mainData.resultsRacquet.teams[0].sets.length; i++) {
+                                    if (i == 0) {
+                                        obj["T1 Total Service Errors"] = mainData.resultsRacquet.teams[0].sets[i].serviceError;
+                                        obj["T1 Total Unforced Errors"] = mainData.resultsRacquet.teams[0].sets[i].unforcedError;
+                                        obj["T1 Total Winners"] = mainData.resultsRacquet.teams[0].sets[i].winner;
+                                    } else {
+                                        obj["T1 Total Service Errors"] = obj["T1 Total Service Errors"] + mainData.resultsRacquet.teams[0].sets[i].serviceError;
+                                        obj["T1 Total Unforced Errors"] = obj["T1 Total Unforced Errors"] + mainData.resultsRacquet.teams[0].sets[i].unforcedError;
+                                        obj["T1 Total Winners"] = obj["T1 Total Winners"] + mainData.resultsRacquet.teams[0].sets[i].winner;
+                                    }
                                 }
+                            } else {
+                                obj["T1 Total Service Errors"] = "";
+                                obj["T1 Total Unforced Errors"] = "";
+                                obj["T1 Total Winners"] = "";
                             }
                         } else {
                             obj["T1 Total Service Errors"] = "";

@@ -68,6 +68,7 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
               });
               $scope.knockout = _.flattenDeep($scope.knockoutArr);
               $scope.knockout.reverse();
+
               if ($scope.knockout.length > 0) {
                 _.each($scope.knockout, function (key) {
                   //knockout service to sort result
@@ -90,6 +91,11 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
                   });
                 }
 
+              }
+              if ($scope.matches.length > 0) {
+                $scope.getOneSport($scope.matches[0].match[0].sport);
+              } else {
+                $scope.getOneSport($scope.knockout[0].sport);
               }
               // console.log($scope.knockout, "$scope.knockout");
               // console.log($scope.matches, "$scope.matches ");
