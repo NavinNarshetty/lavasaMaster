@@ -125,8 +125,8 @@
                             <h2 class="font-semi font-FjallaOne">Participated at SFA MUMBAI 2015-16 / 2016-17</h2>
                         </div> -->
                         <div ng-class="sfaCity == 'Hyderabad'?'box-color-hyderabad':'box-color-mumbai'">
-                                <h2 class="font-semi font-FjallaOne" ng-if="sfaCity == 'Hyderabad'">Participated at SFA {{sfaCity}} {{eventYear}}</h2>
-                            <h2 class="font-semi font-FjallaOne"  ng-if="sfaCity != 'Hyderabad'">Competing at SFA {{sfaCity}} {{eventYear}}</h2>
+                            <h2 class="font-semi font-FjallaOne" ng-if="sfaCity == 'Hyderabad'">Participated at SFA {{sfaCity}} {{eventYear}}</h2>
+                            <h2 class="font-semi font-FjallaOne" ng-if="sfaCity != 'Hyderabad'">Competing at SFA {{sfaCity}} {{eventYear}}</h2>
                         </div>
                         <!-- <div class="box-color-mumbai" ng-if="sfaCity == 'Mumbai'">
                             <h2 class="font-semi font-FjallaOne">Competing at SFA MUMBAI 2017-18</h2>
@@ -238,7 +238,8 @@
                                             <p>{{stat.school}}</p>
                                         </td>
                                         <td ng-if="table.layout != 'Swiss League'">
-                                            <div>{{stat.score || '-'}}</div>
+                                            <div ng-if="!stat.score.length">{{stat.score || '-'}}</div>
+                                            <div ng-if="stat.score.length>0"><span ng-repeat="score in stat.score track by $index">{{score || '  -  '}}</span></div>
                                             <!-- score -->
                                             <!-- <div ng-if="table.layout == 'Knockout'">{{stat.score || '-'}}</div>
                                             <div ng-if="table.layout == 'League'">{{stat.score || '-'}}</div>

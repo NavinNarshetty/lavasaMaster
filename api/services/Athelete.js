@@ -3425,6 +3425,50 @@ var model = {
 
     },
 
+    updateAthleteEmailMobileNo: function (data, callback) {
+        Athelete.find({ $or: [{ firstName: { $exists: true } }, { middleName: { $exists: true } }, { surname: { $exists: true } }] }, {
+            _id: 1,
+            surname: 1,
+            firstName: 1,
+            middleName: 1,
+            email: 1,
+            mobile: 1
+        }).lean().exec(function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(found)) {
+                callback(null, 'No data found');
+
+            } else {
+                async.concatLimit(found, 10, function (key, callback) {
+                    key.mobile = data.mobile;
+                    key.email = data.email;
+                    Athelete.saveData(key, function (err, res) {
+                        if (err) {
+                            callback(err, 'no data found');
+                        } else {
+                            if (_.isEmpty(res)) {
+                                callback(null, "No data found");
+                            } else {
+                                callback(null, res);
+                            }
+                        }
+                    });
+
+                }, function (err, res) {
+                    console.log("Finished");
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        callback(null, res);
+                    }
+                });
+            }
+
+        });
+
+    }
+
 
 
 };

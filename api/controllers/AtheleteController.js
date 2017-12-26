@@ -260,6 +260,16 @@ var controller = {
         }
 
     },
+    updateAthleteEmailMobileNo: function (req, res) {
+        if (req.body) {
+            Athelete.updateAthleteEmailMobileNo(req.body, res.callback);
+        } else {
+            res.json({
+                data: "No data found",
+                value: false
+            });
+        }
+    }
 
 };
 module.exports = _.assign(module.exports, controller);
