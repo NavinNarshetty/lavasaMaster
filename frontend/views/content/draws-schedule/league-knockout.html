@@ -66,22 +66,27 @@
                 <div class="text-capitalize">
                   <span class="knockout-dot-live v-mid" ng-if="data.opponentsTeam[0].isWinner"><i class="fa fa-circle"></i></span>
                   <span title="{{data.opponentsTeam[0].teamId | filterConcate : data.opponentsTeam[0].schoolName |  truncate:'30' }}">{{data.opponentsTeam[0].teamId | filterConcate : data.opponentsTeam[0].schoolName}}</span>
-                  <span ng-if="data.opponentsTeam[0].teamId === undefined && isTeam">TBD</span>
+                  <span ng-if="!data.opponentsTeam[0].teamId && data.opponentsTeam[1].teamId && isTeam">-</span>
+                  <span ng-if="!data.opponentsTeam[0].teamId && !data.opponentsTeam[1].teamId && isTeam">TBD</span>
                   <p class="m-clear text-capitalize " title="{{data.opponentsSingle[0].fullName}}"> <span class="knockout-dot-live v-mid" style="padding:0 6px" ng-if="data.opponentsSingle[0].isWinner"><i class="fa fa-circle"></i></span>{{data.opponentsSingle[0].fullName
                     | truncate:'30'}} </p>
                   <p class="m-clear text-capitalize " title="{{data.opponentsSingle[0].schoolName}}">{{data.opponentsSingle[0].schoolName | truncate:'30'}} </p>
-                  <span ng-if="!data.opponentsSingle[0].athleteId && !isTeam">TBD</span>
+                  <span ng-if="!data.opponentsSingle[0].athleteId && !data.opponentsSingle[1].athleteId && !isTeam">TBD</span>
+                  <span ng-if="!data.opponentsSingle[0].athleteId && data.opponentsSingle[1].athleteId && !isTeam">-</span>
+
                 </div>
               </td>
               <td>
                 <div class="text-capitalize">
                   <span class="knockout-dot-live v-mid" ng-if="data.opponentsTeam[1].isWinner"><i class="fa fa-circle"></i></span>
                   <span title="{{data.opponentsTeam[1].schoolName}}" title="{{data.opponentsTeam[1].teamId | filterConcate : data.opponentsTeam[1].schoolName}}">{{data.opponentsTeam[1].teamId | filterConcate : data.opponentsTeam[1].schoolName |  truncate:'30' }}</span>
-                  <span ng-if="data.opponentsTeam[1].teamId === undefined && isTeam">TBD</span>
+                  <span ng-if="data.opponentsTeam[0].teamId && !data.opponentsTeam[1].teamId && isTeam">-</span>
+                  <span ng-if="!data.opponentsTeam[0].teamId && !data.opponentsTeam[1].teamId && isTeam">TBD</span>
                   <p class="m-clear text-capitalize " title="{{data.opponentsSingle[1].fullName}}"> <span class="knockout-dot-live v-mid" style="padding:0 6px" ng-if="data.opponentsSingle[1].isWinner"><i class="fa fa-circle"></i></span>{{data.opponentsSingle[1].fullName
                     | truncate:'30'}} </p>
                   <p class="m-clear text-capitalize " title="{{data.opponentsSingle[1].schoolName}}">{{data.opponentsSingle[1].schoolName | truncate:'30'}} </p>
-                  <span ng-if="!data.opponentsSingle[1].athleteId && !isTeam">TBD</span>
+                  <span ng-if="!data.opponentsSingle[1].athleteId && !data.opponentsSingle[0].athleteId && !isTeam">TBD</span>
+                  <span ng-if="!data.opponentsSingle[1].athleteId && data.opponentsSingle[0].athleteId && !isTeam">-</span>
                 </div>
               </td>
               <td>
@@ -93,9 +98,10 @@
                       <span class="knockout-dot-live v-mid"><i class="fa fa-circle"></i></span>
                   <span class="v-mid">Live</span>
                   </span>
-                  <span class="display-block" ng-if="data.status === 'IsCompleted' && data.walkover">Won by walkover</span>
-                  <span class="display-block" ng-if="data.status === 'IsCompleted' && data.isNoMatch">No match</span>
-                  <a class="display-block" ng-if="data.status === 'IsCompleted' && !data.isNoMatch && !data.walkover && !data.resultFencing"
+                  <span class="display-block" ng-if="data.status === 'IsCompleted' && data.walkover && !data.reason">Won by walkover</span>
+                  <span class="display-block" ng-if="data.status === 'IsCompleted' && data.isNoMatch && !data.reason">No match</span>
+                  <span class="display-block" ng-if="data.reason">Bye</span>
+                  <a class="display-block" ng-if="data.status === 'IsCompleted' && !data.isNoMatch && !data.walkover && !data.resultFencing && !data.reason"
                     ng-click="matchCenter(data)">Match Center</a>
                   <p class="m-clear" ng-if="data.status === 'IsCompleted' && !data.isNoMatch && !data.walkover && data.resultFencing">{{data.resultFencing.players[0].finalPoints}} - {{data.resultFencing.players[0].finalPoints}}</p>
                 </div>

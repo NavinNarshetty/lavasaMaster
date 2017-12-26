@@ -7809,7 +7809,7 @@ var model = {
 
     generateGraphicsKnockoutIndividual: function (match, callback) {
         async.concatSeries(match, function (mainData, callback) {
-            // console.log('mainData',mainData);
+                // console.log('mainData',mainData);
                 var obj = {};
                 var dateTime = moment(mainData.scheduleDate).format('DD-MM-YYYY');
                 obj.DATE = dateTime;
@@ -7839,7 +7839,7 @@ var model = {
                     } else {
                         obj["SCREEN NAME ATHLETE 1"] = firstName + ". " + mainData.opponentsSingle[0].athleteId.surname;
                     }
-                    if(mainData.opponentsSingle[0].athleteId.atheleteSchoolName){
+                    if (mainData.opponentsSingle[0].athleteId.atheleteSchoolName) {
                         obj["SCREEN NAME SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.atheleteSchoolName;
                     } else {
                         if (mainData.opponentsSingle[0].athleteId.school.screenName) {
@@ -7877,7 +7877,7 @@ var model = {
                                     obj["A1 Total Winners"] = obj["A1 Total Winners"] + mainData.resultsRacquet.players[0].sets[i].winner;
                                 }
                             }
-                            if(mainData.resultsRacquet.players[0].sets.length == 0){
+                            if (mainData.resultsRacquet.players[0].sets.length == 0) {
                                 obj["A1 Total Service Errors"] = "";
                                 obj["A1 Total Unforced Errors"] = "";
                                 obj["A1 Total Winners"] = "";
@@ -7909,9 +7909,9 @@ var model = {
                     } else {
                         obj["SCREEN NAME ATHLETE 2"] = fName + ". " + mainData.opponentsSingle[1].athleteId.surname;
                     }
-                    if(mainData.opponentsSingle[1].athleteId.atheleteSchoolName){
+                    if (mainData.opponentsSingle[1].athleteId.atheleteSchoolName) {
                         obj["SCREEN NAME SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.atheleteSchoolName;
-                    } else {       
+                    } else {
                         if (mainData.opponentsSingle[1].athleteId.school.screenName) {
                             obj["SCREEN NAME SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.school.screenName;
                         } else {
@@ -7948,8 +7948,8 @@ var model = {
                     }
                 } else if (mainData.resultsRacquet) {
                     if (mainData.resultsRacquet.players && mainData.resultsRacquet.players.length > 1) {
-                        console.log('1',mainData.resultsRacquet.players[0].sets);
-                        console.log('2',mainData.resultsRacquet.players[1].sets);
+                        console.log('1', mainData.resultsRacquet.players[0].sets);
+                        console.log('2', mainData.resultsRacquet.players[1].sets);
                         for (var i = 0; i < mainData.resultsRacquet.players[1].sets.length; i++) {
                             if (i == 0) {
                                 obj["A2 Total Service Errors"] = mainData.resultsRacquet.players[1].sets[i].serviceError;
@@ -7964,7 +7964,7 @@ var model = {
                             var code = ++i;
                             console.log("sets", mainData.resultsRacquet.players[0].sets);
                             console.log("i", code);
-                            if(mainData.resultsRacquet.players[1].sets.length == 0 && mainData.resultsRacquet.players[0].sets.length == 0){
+                            if (mainData.resultsRacquet.players[1].sets.length == 0 && mainData.resultsRacquet.players[0].sets.length == 0) {
                                 obj["A1 Set 1"] = "";
                                 obj["A2 Set 1"] = "";
                                 obj["A1 Set 2"] = "";
@@ -7978,7 +7978,7 @@ var model = {
                                 obj["A1 Set 6"] = "";
                                 obj["A2 Set 6"] = "";
                                 obj["A1 Set 7"] = "";
-                                obj["A2 Set 7"] = "";        
+                                obj["A2 Set 7"] = "";
                             } else {
                                 switch (code) {
                                     case 1:
@@ -8124,7 +8124,7 @@ var model = {
                         var code = i;
                         console.log("sets length 1", mainData.resultsRacquet.players[0].sets);
                         console.log("i", code);
-                        if(mainData.resultsRacquet.players[0].sets.length == 0){
+                        if (mainData.resultsRacquet.players[0].sets.length == 0) {
                             obj["A1 Set 1"] = "";
                             obj["A2 Set 1"] = "";
                             obj["A1 Set 2"] = "";
@@ -8257,7 +8257,7 @@ var model = {
                         }
                     }
                     // console.log('length',mainData.opponentsSingle.length);
-                    if(mainData.opponentsSingle.length > 0){
+                    if (mainData.opponentsSingle.length > 0) {
                         if (mainData.resultsRacquet.winner.opponentsSingle === mainData.opponentsSingle[0]._id.toString()) {
                             obj["WINNER NAME"] = obj["SCREEN NAME ATHLETE 1"];
                             obj["WINNER SFA ID"] = obj["SFAID 1"];
@@ -8330,16 +8330,22 @@ var model = {
                         }
                     } else if (mainData.resultsRacquet) {
                         if (mainData.resultsRacquet.winner) {
-                            for (var i = 0; i < mainData.resultsRacquet.teams[0].sets.length; i++) {
-                                if (i == 0) {
-                                    obj["T1 Total Service Errors"] = mainData.resultsRacquet.teams[0].sets[i].serviceError;
-                                    obj["T1 Total Unforced Errors"] = mainData.resultsRacquet.teams[0].sets[i].unforcedError;
-                                    obj["T1 Total Winners"] = mainData.resultsRacquet.teams[0].sets[i].winner;
-                                } else {
-                                    obj["T1 Total Service Errors"] = obj["T1 Total Service Errors"] + mainData.resultsRacquet.teams[0].sets[i].serviceError;
-                                    obj["T1 Total Unforced Errors"] = obj["T1 Total Unforced Errors"] + mainData.resultsRacquet.teams[0].sets[i].unforcedError;
-                                    obj["T1 Total Winners"] = obj["T1 Total Winners"] + mainData.resultsRacquet.teams[0].sets[i].winner;
+                            if(mainData.resultsRacquet.teams[0].sets.length>0){
+                                for (var i = 0; i < mainData.resultsRacquet.teams[0].sets.length; i++) {
+                                    if (i == 0) {
+                                        obj["T1 Total Service Errors"] = mainData.resultsRacquet.teams[0].sets[i].serviceError;
+                                        obj["T1 Total Unforced Errors"] = mainData.resultsRacquet.teams[0].sets[i].unforcedError;
+                                        obj["T1 Total Winners"] = mainData.resultsRacquet.teams[0].sets[i].winner;
+                                    } else {
+                                        obj["T1 Total Service Errors"] = obj["T1 Total Service Errors"] + mainData.resultsRacquet.teams[0].sets[i].serviceError;
+                                        obj["T1 Total Unforced Errors"] = obj["T1 Total Unforced Errors"] + mainData.resultsRacquet.teams[0].sets[i].unforcedError;
+                                        obj["T1 Total Winners"] = obj["T1 Total Winners"] + mainData.resultsRacquet.teams[0].sets[i].winner;
+                                    }
                                 }
+                            } else {
+                                obj["T1 Total Service Errors"] = "";
+                                obj["T1 Total Unforced Errors"] = "";
+                                obj["T1 Total Winners"] = "";
                             }
                         } else {
                             obj["T1 Total Service Errors"] = "";
@@ -15637,7 +15643,7 @@ var model = {
 
     //----------------------------------Winners-------------------------------------------
 
-    getAggregatePipeline: function (data) {
+    getAggregatePipelineIndividual: function (data) {
         var pipeline = [
             // Stage 1
             {
@@ -15680,6 +15686,7 @@ var model = {
     },
 
     getTeamAggregatePipeline: function (data) {
+        // console.log(data);
         var pipeline = [
             // Stage 1
             {
@@ -15702,18 +15709,30 @@ var model = {
             // Stage 3
             {
                 $match: {
+
+                }
+            },
+
+            // Stage 4
+            {
+                $match: {
                     sport: objectid(data.sport),
                     "opponentsTeam._id": objectid(data.team)
                 }
             },
+
+            // Stage 5
             {
                 $sort: {
                     createdAt: -1
                 }
             },
+
+            // Stage 6
             {
                 $limit: 1
             },
+
         ];
         return pipeline;
     },
@@ -15737,7 +15756,7 @@ var model = {
                     });
                 },
                 function (found, callback) {
-                    // console.log("found", found);
+                    console.log("found", found);
                     var finalData = [];
                     async.eachSeries(found, function (singleData, callback) {
                             // console.log("singleData", singleData);
@@ -15745,7 +15764,7 @@ var model = {
                                 async.eachSeries(singleData.player, function (n, callback) {
                                     console.log("n", n);
                                     data.athlete = n._id;
-                                    var pipeLine = Match.getAggregatePipeline(data);
+                                    var pipeLine = Match.getAggregatePipelineIndividual(data);
                                     Match.aggregate(pipeLine, function (err, matchData) {
                                         if (err) {
                                             callback(err, "error in mongoose");
@@ -15881,14 +15900,19 @@ var model = {
 
                             } else {
                                 async.eachSeries(singleData.team, function (n, callback) {
+                                    console.log("n in team", n);
+                                    data.sport = n.sport;
                                     data.team = n._id;
+                                    console.log("data", data);
                                     var pipeLine = Match.getTeamAggregatePipeline(data);
                                     Match.aggregate(pipeLine, function (err, matchData) {
                                         if (err) {
                                             callback(err, "error in mongoose");
                                         } else if (_.isEmpty(matchData)) {
+                                            console.log("empty match", matchData);
                                             callback(null, []);
                                         } else {
+                                            console.log("match", matchData);
                                             async.waterfall([
                                                     function (callback) {
                                                         console.log("matchData[0]", matchData[0]);
@@ -16243,7 +16267,7 @@ var model = {
                     });
                 },
                 function (singleData, callback) {
-                    var pipeLine = Match.getTeamAggregatePipeline(single);
+                    var pipeLine = Match.getTeamAggregatePipelineNew(single);
                     Match.aggregate(pipeLine, function (err, matchData) {
                         console.log("team", matchData);
                         if (err) {
@@ -16455,7 +16479,7 @@ var model = {
         return pipeline;
     },
 
-    getTeamAggregatePipeline: function (data) {
+    getTeamAggregatePipelineNew: function (data) {
         var pipeline = [
             // Stage 1
             {
