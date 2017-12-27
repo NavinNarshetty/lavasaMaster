@@ -1842,15 +1842,10 @@ var model = {
                                                                 } else if (_.isEmpty(found)) {
                                                                     callback(null, match);
                                                                 } else {
-                                                                    if (!singleData.opponentsTeam._id.equals(found.teamId)) {
-                                                                        console.log("inside if");
-                                                                        stats.opponentName = found.teamId.name;
-                                                                        stats.school = found.teamId.schoolName;
-                                                                        stats.teamId = found.teamId.teamId;
-                                                                    }
                                                                     if (singleData.resultsRacquet.status == "IsCompleted" && singleData.resultsRacquet.isNoMatch == false) {
-                                                                        if (singleData.resultsRacquet.winner.player === n) {
-                                                                            stats.isAthleteWinner = false;
+                                                                        console.log("player", singleData.resultsRacquet.winner.player, "foundTeam", found.teamId._id);
+                                                                        if (singleData.resultsRacquet.winner.player === found.teamId._id.toString()) {
+                                                                            stats.isAthleteWinner = true;
                                                                             var length = singleData.resultsRacquet.teams[0].sets.length;
                                                                             while (i < length) {
                                                                                 if (i == 0) {
@@ -1863,7 +1858,21 @@ var model = {
                                                                             }
                                                                             stats.score = result;
                                                                         } else {
-                                                                            stats.isAthleteWinner = true;
+                                                                            stats.opponentName = found.teamId.name;
+                                                                            stats.school = found.teamId.schoolName;
+                                                                            stats.teamId = found.teamId.teamId;
+                                                                            stats.isAthleteWinner = false;
+                                                                            var length = singleData.resultsRacquet.teams[0].sets.length;
+                                                                            while (i < length) {
+                                                                                if (i == 0) {
+                                                                                    result = singleData.resultsRacquet.teams[0].sets[i].point + "-" + singleData.resultsRacquet.teams[1].sets[i].point;
+                                                                                } else {
+                                                                                    result = result + "," + singleData.resultsRacquet.teams[0].sets[i].point + "-" + singleData.resultsRacquet.teams[1].sets[i].point;
+                                                                                }
+                                                                                i++;
+                                                                                console.log("i", result);
+                                                                            }
+                                                                            stats.score = result;
                                                                         }
                                                                         stats.status = singleData.resultsRacquet.status;
                                                                     } else if (singleData.resultsRacquet.status == "IsCompleted" && singleData.resultsRacquet.isNoMatch == true) {
@@ -1873,6 +1882,7 @@ var model = {
                                                                         stats.status = singleData.resultsCombat.status;
                                                                         stats.reason = "";
                                                                     }
+
                                                                     if (count == 2) {
                                                                         match.push(stats);
                                                                     }

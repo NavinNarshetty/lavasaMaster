@@ -934,7 +934,7 @@ var model = {
                 function (match, callback) {
                     Match.findOne({
                         matchId: data.matchId
-                    }).exec(function (err, matchData) {
+                    }).deepPopulate("opponentsSingle.athleteId opponentsTeam.studentTeam.studentId").exec(function (err, matchData) {
                         if (err || _.isEmpty(matchData)) {
                             callback(null, {
                                 error: "No data found!",
@@ -942,6 +942,51 @@ var model = {
                             });
                         } else {
                             callback(null, matchData);
+                        }
+                    });
+                },
+                function (matchData, callback) {
+                    Attendence.findOne({
+                        sport: matchData.sport
+                    }).exec(function (err, attendanceData) {
+                        if (err || _.isEmpty(attendanceData)) {
+                            callback(null, {
+                                error: "No data found!",
+                                success: data
+                            });
+                        } else {
+                            if (data.isTeam == true) {
+                                console.log("attendanceData", attendanceData);
+                                var attendenceListTeam = _.find(attendanceData.attendenceListTeam, function (o) {
+                                    if (o.team.toString() === data.team) {
+                                        return o;
+                                    }
+                                });
+                                attendenceListTeam.selection = false;
+                                var matchObj = {
+                                    $set: {
+                                        attendenceListTeam: attendanceData.attendenceListTeam
+                                    }
+                                };
+                            } else {
+                                var attendenceListIndividual = _.find(attendanceData.attendenceListIndividual, function (o) {
+                                    if (o.opponentSingle.toString() === data.opponentSingle) {
+                                        return o;
+                                    }
+                                });
+                                attendenceListIndividual.selection = false;
+                                var matchObj = {
+                                    $set: {
+                                        attendenceListIndividual: attendanceData.attendenceListIndividual
+                                    }
+                                };
+                            }
+                            Attendence.update({
+                                sport: matchData.sport,
+                            }, matchObj).exec(
+                                function (err, match) {
+                                    callback(null, matchData);
+                                });
                         }
                     });
                 }
@@ -958,7 +1003,10 @@ var model = {
                     }
                 }
             });
-    }
+    },
+
+
+
 
 
 };
