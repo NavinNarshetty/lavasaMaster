@@ -195,7 +195,7 @@ var model = {
     },
 
     getOne: function (data, callback) {
-        var deepSearch = "sportslist.sportsListSubCategory ageGroup weight ";
+        var deepSearch = "sportslist.sportsListSubCategory ageGroup weight sportslist.drawFormat";
         Sport.findOne({
             _id: data._id
         }).lean().deepPopulate(deepSearch).exec(function (err, found) {
@@ -1216,7 +1216,6 @@ var model = {
             });
         }
     },
-
     //page1 without sfa
     athleteData: function (data, start, maxRow, callback) {
         if (data.sportName.includes("Mix") || data.sportName.includes("mix")) {

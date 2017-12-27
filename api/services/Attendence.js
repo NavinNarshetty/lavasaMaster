@@ -467,22 +467,6 @@ var model = {
                     });
                 },
                 function (found, callback) {
-                    Attendence.getPlayersMatchSelection(data, function (err, playersData) {
-                        if (err || _.isEmpty(playersData)) {
-                            err = "Sport,Event,AgeGroup,Gender may have wrong values";
-                            callback(null, {
-                                error: err,
-                                success: playersData
-                            });
-                        } else {
-                            var final = {};
-                            final.players = playersData;
-                            final.found = found;
-                            callback(null, final);
-                        }
-                    });
-                },
-                function (final, callback) {
                     Match.findOne({
                         sport: objectid(data.sport)
                     }).sort({
@@ -493,7 +477,8 @@ var model = {
                                 error: "No data Found"
                             });
                         } else if (_.isEmpty(matchData)) {
-                            Attendence.saveQualifyingMultiplePlayers(final, data, function (err, complete) {
+                            Attendence.saveQualifyingMultiplePlayers(found, data, function (err, complete) {
+                                console.log("complete", complete);
                                 if (err || _.isEmpty(complete)) {
                                     err = "Headers may have wrong values";
                                     callback(null, {
@@ -508,8 +493,8 @@ var model = {
                             if (data.matchId) {
                                 var formData = {};
                                 formData.opponentsSingle = [];
-                                if (data.opponentSingle) {
-                                    formData.opponentsSingle.push(data.opponentSingle);
+                                if (!_.isEmpty(data.players)) {
+                                    formData.opponentsSingle.push(data.players[0].opponentSingle);
                                 }
                                 Match.update({
                                     matchId: data.matchId
@@ -526,10 +511,10 @@ var model = {
                             } else {
                                 var formData = {};
                                 formData.sport = data.sport;
-                                if (!final.found.matchPrefix) {
+                                if (!found.matchPrefix) {
                                     formData.matchId = data.prefix;
                                 } else {
-                                    formData.matchId = final.found.matchPrefix;
+                                    formData.matchId = found.matchPrefix;
                                 }
                                 formData.round = data.round;
                                 formData.opponentsSingle = [];
@@ -558,31 +543,99 @@ var model = {
             });
     },
 
-    saveQualifyingMultiplePlayers: function (final, data, callback) {
-        async.eachSeries(final.players, function (n, callback) {
-            console.log("n", n);
-            var formData = {};
-            formData.sport = data.sport;
-            if (!final.found.matchPrefix) {
-                formData.matchId = data.prefix;
-            } else {
-                formData.matchId = final.found.matchPrefix;
-            }
-            formData.round = data.round;
-            formData.opponentsSingle = [];
-            formData.opponentsSingle.push(n.opponentSingle);
-            Match.saveMatch(formData, function (err, complete) {
-                if (err || _.isEmpty(complete)) {
-                    callback(err, null);
-                } else {
-                    callback(null, complete);
+    saveQualifyingMultiplePlayers: function (found, data, callback) {
+        async.waterfall([
+                function (callback) {
+                    Attendence.getPlayersMatchSelection(data, function (err, playersData) {
+                        if (err || _.isEmpty(playersData)) {
+                            err = "Sport,Event,AgeGroup,Gender may have wrong values";
+                            callback(null, {
+                                error: err,
+                                success: playersData
+                            });
+                        } else {
+
+                            callback(null, playersData);
+                        }
+                    });
+                },
+                function (playersData, callback) {
+                    async.concatSeries(playersData, function (n, callback) {
+                        console.log("n", n);
+                        var formData = {};
+                        formData.sport = data.sport;
+                        if (!found.matchPrefix) {
+                            formData.matchId = data.prefix;
+                        } else {
+                            formData.matchId = found.matchPrefix;
+                        }
+                        formData.round = data.round;
+                        formData.opponentsSingle = [];
+                        formData.opponentsSingle.push(n.opponentSingle);
+                        console.log("formData", formData);
+                        Match.saveMatch(formData, function (err, complete) {
+                            if (err || _.isEmpty(complete)) {
+                                callback(err, null);
+                            } else {
+                                callback(null, complete);
+                            }
+                        });
+                    }, function (err, final) {
+                        console.log("final", final);
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            callback(null, final);
+                        }
+                    });
+                },
+            ],
+            function (err, data2) {
+                if (err) {
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, data2);
+                    } else {
+                        callback(null, data2);
+                    }
                 }
             });
-        }, function (err) {
-            if (err) {
-                callback(err, null);
+
+    },
+
+    addQualifyingRoundPlayers: function (data, callback) {
+        var lastRound = data.roundsListName[data.roundsListName.length - 2];
+        Match.find({
+            sport: objectid(data.sport),
+            resultQualifyingRound: {
+                $exists: true
+            },
+            round: lastRound
+        }, {
+            opponentsSingle: 1,
+            resultQualifyingRound: 1,
+        }).deepPopulate("opponentsSingle.athleteId").lean().exec(function (err, matchData) {
+            if (err || _.isEmpty(matchData)) {
+                callback(null, {
+                    error: "No data Found"
+                });
             } else {
-                callback(null, "Added Successfully!");
+                var playerList = [];
+                _.each(matchData, function (n) {
+                    console.log("qualifying", n.resultQualifyingRound.player);
+                    if (n.resultQualifyingRound.player.result == "QF" || n.resultQualifyingRound.player.result == "qf") {
+                        var formData = {};
+                        if (n.resultQualifyingRound.player.bestAttempt) {
+                            formData.bestAttempt = n.resultQualifyingRound.player.bestAttempt;
+                        }
+                        formData.attempt = n.resultQualifyingRound.player.attempt;
+                        formData.athleteId = n.opponentsSingle[0].athleteId;
+                        formData.opponentSingle = n.opponentsSingle[0]._id;
+                        playerList.push(formData);
+                    }
+                });
+                callback(null, playerList);
             }
         });
     },
@@ -990,7 +1043,6 @@ var model = {
                         }
                     });
                 }
-
             ],
             function (err, data2) {
                 if (err) {
@@ -1004,10 +1056,6 @@ var model = {
                 }
             });
     },
-
-
-
-
 
 };
 module.exports = _.assign(module.exports, exports, model);

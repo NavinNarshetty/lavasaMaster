@@ -34,9 +34,9 @@ var controller = {
     },
 
     createMatch: function (req, res) {
-        if (req.body.sportType == "Heat") {
+        if (req.body.sportType == "Heats") {
             Attendence.createMatchHeat(req.body, res.callback);
-        } else if (req.body.sportType == "Qualifying") {
+        } else if (req.body.sportType == "Qualifying Round") {
             Attendence.createMatchQualifying(req.body, res.callback);
         } else {
             res.json({
@@ -68,6 +68,15 @@ var controller = {
         }
     },
 
-
+    addQualifyingRoundPlayers: function (req, res) {
+        if (req.body) {
+            Attendence.addQualifyingRoundPlayers(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            });
+        }
+    },
 };
 module.exports = _.assign(module.exports, controller);

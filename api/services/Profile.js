@@ -6770,9 +6770,5 @@ var model = {
             });
     },
 
-    getSchoolBio: function (data, callback) {
-
-    }
-
 };
 module.exports = _.assign(module.exports, exports, model);
