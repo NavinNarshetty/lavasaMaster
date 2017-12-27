@@ -226,7 +226,7 @@
                                         </td>
                                         <td class="pointer" ng-click="drawDispatcher(stat.sport.drawFormat,stat.sport._id)">
                                             <span class="text-up">{{stat.ageGroup}}
-                                                <br> {{stat.gender}}
+                                                <br> {{stat.gender}} 
                                                 <br>{{stat.sport.firstcategory.name}}</span>
                                         </td>
                                         <td class="text-up" ng-if="(table.layout == 'Qualifying Knockout') || (table.layout
@@ -234,8 +234,8 @@
                                             || (table.layout == 'Heats') || (table.layout == 'League') || (table.layout == 'League cum Knockout')">{{stat.round || '-'}}</td>
                                         <td class="text-up" ng-if="table.layout == 'Qualifying Knockout' || table.layout == 'Knockout' || table.layout == 'League' || table.layout == 'League cum Knockout' || table.layout == 'Swiss League'">
                                             <img src="img/sf-cup-mini.png" alt="" class="table-img" ng-if="stat.isAthleteWinner == false">{{stat.opponentName
-                                            || '-' | removeSchool:stat.school }}
-                                            <p>{{stat.school}}</p>
+                                            || '-' | removeSchoolWithDash:stat.school}}
+                                            <p>{{stat.school}}</p> 
                                         </td>
                                         <td ng-if="table.layout != 'Swiss League'">
                                             <div ng-if="!stat.score.length">{{stat.score || '-'}}</div>
