@@ -22,7 +22,7 @@
                                         <ui-select name="selectsporttype" ng-model="formData.sportId" theme="bootstrap" ng-change="sportName($select.selected.name,formData.sportId)"
                                             required>
                                             <ui-select-match placeholder="Select Sport">{{$select.selected.name}}</ui-select-match>
-                                            <ui-select-choices repeat="sport._id as sport in sportList | filter: $select.search">
+                                            <ui-select-choices repeat="sport._id as sport in sportList|orderBy:'name' | filter: $select.search">
                                                 <div>
                                                     <p>{{sport.name}}</p>
                                                 </div>
@@ -39,10 +39,10 @@
                                     </div>
 
                                     <div class="inline-block championshipdraw-card-dropdown">
-                                        <ui-select name="eventBySport" ng-model="formData.sportslist" theme="bootstrap" ng-change="sportName($select.selected.name)"
+                                        <ui-select name="eventBySport" ng-model="formData.sportslist" theme="bootstrap" ng-change="eventSportFun($select.selected.name)"
                                             required>
                                             <ui-select-match placeholder="Select Event">{{$select.selected.name}}</ui-select-match>
-                                            <ui-select-choices repeat="sport._id as sport in getAllBySport | filter: $select.search">
+                                            <ui-select-choices repeat="sport._id as sport in getAllBySport |orderBy:'name' | filter: $select.search">
                                                 <div>
                                                     <p>{{sport.name}}</p>
                                                 </div>
@@ -100,7 +100,7 @@
                                         <label for="">Weight</label>
                                     </div>
                                     <div class="inline-block championshipdraw-card-dropdown">
-                                        <ui-select name="weight" ng-model="formData.weight" theme="bootstrap" required>
+                                        <ui-select name="weight" ng-model="formData.weight" theme="bootstrap">
                                             <ui-select-match placeholder="Select Weight">{{$select.selected.name}}</ui-select-match>
                                             <ui-select-choices repeat="weight._id as weight in allWeights | filter: $select.search">
                                                 <div>
@@ -117,18 +117,18 @@
 
                                 <!---->
                                 <div class="form-group">
-                                  <div class="championshipdraw-card-lable inline-block">
-                                  </div>
-                                  <div class=" championshipdraw-card-dropdown inline-block">
-                                      <button class="btn championshipdraw-card-btn" ng-click="viewDraw(formData);" ng-disabled="championshipDrawsForm.$invalid">Start Attendance</button>
-                                  </div>
+                                    <div class="championshipdraw-card-lable inline-block">
+                                    </div>
+                                    <div class=" championshipdraw-card-dropdown inline-block">
+                                        <button class="btn championshipdraw-card-btn" ng-click="viewDraw(formData);" ng-disabled="championshipDrawsForm.$invalid">Start Attendance</button>
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                  <div class="championshipdraw-card-lable inline-block">
-                                  </div>
-                                  <div class=" championshipdraw-card-dropdown inline-block">
-                                      <button class="btn championshipdraw-card-btn" ng-click="viewDraw(formData);" ng-disabled="championshipDrawsForm.$invalid">Create Matches</button>
-                                  </div>
+                                    <div class="championshipdraw-card-lable inline-block">
+                                    </div>
+                                    <div class=" championshipdraw-card-dropdown inline-block">
+                                        <button class="btn championshipdraw-card-btn" ng-click="viewDraw(formData);" ng-disabled="championshipDrawsForm.$invalid">Create Matches</button>
+                                    </div>
                                 </div>
                                 <!-- VIEW DRAW BUTTON -->
                             </form>

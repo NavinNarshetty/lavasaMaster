@@ -91,6 +91,18 @@
     margin-top: 50px;
     font-size: 40px;
   } // GALLERY END
+  // FEATURE
+  .allfeaturedheader {
+    margin-top: 55px;
+  }
+  .featurevideo-play {
+    width: 30px;
+    height: 30px;
+  }
+  .featurevideo-play .fa-play {
+    font-size: 14px;
+    line-height: 30px;
+  } // FEATURE END
 }
 
 @media screen and (max-width: 767px) {
@@ -160,6 +172,9 @@
     margin-top: 0px;
     font-size: 30px;
   } // GALLERY END
+  .allfeaturedheader {
+    margin: 0px;
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -287,4 +302,8 @@
     margin-top: 0px;
     font-size: 24px;
   } // ALL GALLERY HEADER FONT END
+  // FEATURED VIDEO
+  .allfeaturedheader {
+    font-size: 24px;
+  } // FEATURED VIDEO END
 }

@@ -183,21 +183,22 @@ myApp.controller('DigitalHomeCtrl', function ($scope, TemplateService, $state, N
         } else {
             $scope.showWeight = false;
         }
-        $scope.requestObj._id = sportId;
-        NavigationService.getAllBySport($scope.requestObj, function (data) {
-
-            errorService.errorCode(data, function (allData) {
-                if (!allData.message) {
-                    if (allData.value) {
-                        console.log("  allData.data;", allData.data);
-                        $scope.getAllBySport = allData.data;
+        if ($scope.formData.sportId) {
+            $scope.requestObj._id = $scope.formData.sportId;
+            NavigationService.getAllBySport($scope.requestObj, function (data) {
+                errorService.errorCode(data, function (allData) {
+                    if (!allData.message) {
+                        if (allData.value) {
+                            // console.log("  allData.data;", allData.data);
+                            $scope.getAllBySport = allData.data;
+                        }
+                    } else {
+                        toastr.error(allData.message, 'Error Message');
                     }
-                } else {
-                    toastr.error(allData.message, 'Error Message');
-                }
-            });
+                });
 
-        });
+            });
+        }
 
     };
 

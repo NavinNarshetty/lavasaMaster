@@ -5,12 +5,16 @@ myApp.controller('AttendanceSheetCtrl', function($scope, TemplateService, Naviga
     // CODE STARTS HERE
 
     // VARIABLE INIT
-    // $scope.sportId = {
-    //   sport: $stateParams.sport
-    // }
     $scope.sportId = {
-      sport: '5955eb87accee91486acf749'
+      sport: $stateParams.sport
     }
+    $scope.objId = {
+      _id: $scope.sportId.sport
+    }
+    // $scope.sportId = {
+    //   sport: '5955e816accee91486acf6a0'
+    //   // sport: '59563d8b97cd023787820d68'
+    // }
     $scope.search = {
       sfaId: ''
     };
@@ -28,6 +32,16 @@ myApp.controller('AttendanceSheetCtrl', function($scope, TemplateService, Naviga
     // FUNCTIONS END
 
     // API CALLS
+    NavigationService.getOneSportDetail( $scope.objId, function(data){
+      data = data.data;
+      if (data.value == true) {
+        $scope.sportdata = data.data;
+        $scope.isTeam = $scope.sportdata.sportslist.sportsListSubCategory.isTeam;
+        console.log("getonesport", $scope.sportdata);
+      } else {
+        toastr.error("Failed to get sport details.", "Error");
+      }
+    });
     // GET ATTENDANCE LIST
     $scope.getAttendanceList = function(){
       NavigationService.getAthleteForAttendance($scope.sportId, function(data){

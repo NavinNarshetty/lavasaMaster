@@ -131,15 +131,15 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
                     var knockout = data.data.data;
                     var sportType = knockout.roundsList[0].match[0].sport.sportslist.sportsListSubCategory.sportsListCategory.name;
                     var sportName = knockout.roundsList[0].match[0].sport.sportslist.name;
-                    console.log(sportType, sportName);
+                    // console.log(sportType, sportName);
                     var resultVar = ResultSportInitialization.getResultVariable(sportName, sportType);
-                    console.log(resultVar);
+                    // console.log(resultVar);
 
                     function sortOpponents(arrToSort, match1, match2, key) {
-                        console.log("arrToSort", arrToSort);
-                        console.log("match1", match1);
-                        console.log("match2", match2);
-                        console.log("key", key);
+                        // console.log("arrToSort", arrToSort);
+                        // console.log("match1", match1);
+                        // console.log("match2", match2);
+                        // console.log("key", key);
 
                         _.remove(arrToSort, function (n) {
                             return n == null;
@@ -154,7 +154,7 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
                             return [{}, {}];
                         } else if (arrToSort.length == 1) {
                             var index = _.findIndex(match1, ["_id", arrToSort[0]._id]);
-                            console.log(index);
+                            // console.log(index);
                             if (index == -1) {
                                 sortedArr[0] = {};
                                 sortedArr[1] = arrToSort[0];
@@ -162,7 +162,7 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
                                 sortedArr[0] = arrToSort[0];
                                 sortedArr[1] = {};
                             }
-                            console.log("sortedArr", sortedArr);
+                            // console.log("sortedArr", sortedArr);
                             // console.log("arrayLength 1");
                             // console.log("------------------------------------------");
 
@@ -183,12 +183,13 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
                         }
                     }
                     _.each(knockout.roundsList, function (round, key) {
-                        console.log("knockout.roundsList",knockout.roundsList);
                         if (key > 0 && key < 3) {
                             _.each(round.match, function (match, index) {
-                                console.log("key",key);
+                                // console.log(match);
                                 var match1, match2;
-                                if (round.name!="Third Place") {
+
+                                if (!($filter('firstcapitalize')(round.name,{column1:true})==='Third Place' && key==2)) {
+                                    console.log(round.name,"No Third Place");
                                     if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2] && knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar]) {
                                         match1 = knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar];
                                     }
@@ -196,20 +197,22 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
                                         match2 = knockout.roundsList[key - 1].match[index * 2 + 1][resultVar.opponentsVar];
                                     }
                                 } else {
+                                    console.log(round.name,"Third place");
                                     if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2] && knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar]) {
                                         match1 = knockout.roundsList[key - 2].match[index * 2][resultVar.opponentsVar];
                                     }
                                     if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2 + 1] && knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar]) {
                                         match2 = knockout.roundsList[key - 2].match[index * 2 + 1][resultVar.opponentsVar];
                                     }
+                                    console.log("match1 match2",match1,match2);
                                 }
-                                console.log(match[resultVar.opponentsVar], "resultVar.opponentsVar");
+                                // console.log(match[resultVar.opponentsVar], "resultVar.opponentsVar");
                                 match[resultVar.opponentsVar] = sortOpponents(match[resultVar.opponentsVar], match1, match2, key);
-                                console.log(match[resultVar.opponentsVar], "resultVar.opponentsVar");
+                                // console.log(match[resultVar.opponentsVar], "resultVar.opponentsVar");
                             });
                         }
                     });
-                    console.log(data.data.data);
+                    // console.log(data.data.data);
                     callback(data);
                 }
 
@@ -295,6 +298,42 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
             }).success(function (data) {
                 callback(data)
             });
+        },
+        addQualifyingRoundPlayers: function (formData, callback) {
+            $http({
+                url: adminurl + "Attendence/addQualifyingRoundPlayers",
+                method: "POST",
+                data: formData
+            }).success(function (data) {
+                callback(data)
+            });
+        },
+        getSportSpecificRoundsMatch: function(formData, callback){
+          $http({
+            url: adminurl + "match/getSportSpecificRounds",
+            method: "POST",
+            data: formData
+          }).success ( function (data){
+            callback(data)
+          });
+        },
+        addPlayersToMatch: function(formData, callback){
+          $http({
+            url: adminurl + 'Attendence/addPlayersToMatch',
+            method: 'POST',
+            data: formData
+          }).success(function(data) {
+            callback(data)
+          });
+        },
+        deletePlayerMatch: function(formData, callback){
+          $http({
+            url: adminurl + 'Attendence/deletePlayerMatch',
+            method: 'POST',
+            data: formData
+          }).success(function(data){
+            callback(data)
+          });
         },
 
         Boolean: function (str) {

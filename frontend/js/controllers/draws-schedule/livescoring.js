@@ -48,7 +48,7 @@ myApp.controller('LiveScoringCtrl', function ($scope, TemplateService, $state, N
 
       });
     };
-    $scope.getAllSchedule()
+    $scope.getAllSchedule();
   });
 
   $scope.formData = {};
@@ -86,7 +86,7 @@ myApp.controller('LiveScoringCtrl', function ($scope, TemplateService, $state, N
             _.each($scope.ageGroups, function (n) {
               n.ageGroupId = n.ageGroup._id;
               n.ageGroupName = n.ageGroup.name;
-            })
+            });
             // console.log($scope.ageGroups, "allData");
           }
         } else {
@@ -119,32 +119,34 @@ myApp.controller('LiveScoringCtrl', function ($scope, TemplateService, $state, N
   }
   $scope.nameOfSport = {};
   $scope.requestObj = {};
+  $scope.getAllBySport = [];
   $scope.sportName = function (sportName, sportId) {
-    // console.log("sportId", sportId);
     $scope.nameOfSport = sportName;
-    // console.log("$scope.nameOfSport", $scope.nameOfSport);
     if (sportName === 'Boxing' || sportName === 'Judo' || sportName === 'Kumite' || sportName === 'Taekwondo' || sportName === 'Sport MMA') {
       $scope.showWeight = true;
     } else {
       $scope.showWeight = false;
     }
-    $scope.requestObj._id = sportId;
-    NavigationService.getAllBySport($scope.requestObj, function (data) {
-
-      errorService.errorCode(data, function (allData) {
-        if (!allData.message) {
-          if (allData.value) {
-            // console.log("  allData.data;", allData.data);
-            $scope.getAllBySport = allData.data;
+    if ($scope.formData.sportId) {
+      $scope.requestObj._id = $scope.formData.sportId;
+      NavigationService.getAllBySport($scope.requestObj, function (data) {
+        errorService.errorCode(data, function (allData) {
+          if (!allData.message) {
+            if (allData.value) {
+              // console.log("  allData.data;", allData.data);
+              $scope.getAllBySport = allData.data;
+            }
+          } else {
+            toastr.error(allData.message, 'Error Message');
           }
-        } else {
-          toastr.error(allData.message, 'Error Message');
-        }
-      });
+        });
 
-    });
+      });
+    }
 
   };
+
+
   //get weight and age by Event
   $scope.getAgeOrWeightsByEvent = function (sportlistId) {
     // console.log("sportlistId", sportlistId);
@@ -152,9 +154,7 @@ myApp.controller('LiveScoringCtrl', function ($scope, TemplateService, $state, N
     $scope.constraintsObj.sportslist = sportlistId._id;
     $scope.getAllWeightsByEvent($scope.constraintsObj);
     $scope.getAllAgeGroupsByEvent($scope.constraintsObj);
-
-
-  }
+  };
   //view Draw Schedule 
   $scope.viewDraw = function (formData) {
     // console.log("$scope.viewDraw", $scope.nameOfSport);

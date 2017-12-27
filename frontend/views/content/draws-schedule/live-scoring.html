@@ -47,7 +47,7 @@
                   </div>
 
                   <div class="display-inline championshipdraw-card-dropdown">
-                    <ui-select name="eventBySport" ng-model="formData.sportslist" theme="bootstrap" ng-change="sportName($select.selected.name);getAgeOrWeightsByEvent($select.selected)"
+                    <ui-select name="eventBySport" ng-model="formData.sportslist" theme="bootstrap" ng-change="getAgeOrWeightsByEvent($select.selected)"
                       required>
 
                       <ui-select-match placeholder="Select Event">{{$select.selected.name}}</ui-select-match>

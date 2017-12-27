@@ -2,7 +2,7 @@
   <div class="container">
     <!-- ATTENDANCE HEADER -->
     <div class="attendancesheet-header">
-      <div class="attendancesheet-title">ATTENDANCE SHEET</div>
+      <div class="attendancesheet-title">WEIGHT SHEET</div>
       <div class="attendance-sportheading">
         <span>{{sportdata.sportslist.sportsListSubCategory.name}}</span> | <span>{{sportdata.sportslist.name}}</span> | <span>{{sportdata.gender}}</span> | <span>{{sportdata.ageGroup.name}}</span>
       </div>
@@ -24,11 +24,6 @@
               </div>
             </div>
           </form>
-            <div class="col-md-offset-2 col-md-2 col-sm-offset-8 col-sm-4 col-xs-6">
-              <div class="">
-                <button type="button" class="btn btn-green-outline btn-scoring" ng-click="saveAttendance();">Save</button>
-              </div>
-            </div>
         </div>
       </div>
     </div>
@@ -60,7 +55,12 @@
             </th>
             <th>
               <div class="">
-                Attendance
+                Weight
+              </div>
+            </th>
+            <th>
+              <div class="">
+                Save
               </div>
             </th>
           </tr>
@@ -89,7 +89,13 @@
             </td>
             <td>
               <div class="">
-                <input type="checkbox" class="form-control" ng-model="player.attendance">
+                <!-- <input type="text" class="form-control" ng-model="player.weight"> -->
+                <select class="select form-control" id="matchForm.sportType" ng-model="player.weight" ng-options="sport.type as sport.type for sport in roundType"></select>
+              </div>
+            </td>
+            <td>
+              <div class="">
+                <button type="button" name="button" class="btn btn-green-outline">Save</button>
               </div>
             </td>
           </tr>
