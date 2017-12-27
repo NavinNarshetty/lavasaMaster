@@ -5,12 +5,13 @@ myApp.controller('AttendanceSheetCtrl', function($scope, TemplateService, Naviga
     // CODE STARTS HERE
 
     // VARIABLE INIT
-    // $scope.sportId = {
-    //   sport: $stateParams.sport
-    // }
     $scope.sportId = {
-      sport: '5955eb87accee91486acf749'
+      sport: $stateParams.sport
     }
+    // $scope.sportId = {
+    //   sport: '5955e816accee91486acf6a0'
+    //   // sport: '59563d8b97cd023787820d68'
+    // }
     $scope.search = {
       sfaId: ''
     };

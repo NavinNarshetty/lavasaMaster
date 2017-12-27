@@ -178,19 +178,19 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'DigitalAttendanceCtrl'
         })
         .state('attendancesheet', {
-            url: "/attendancesheet",
+            url: "/attendancesheet/:sport",
             templateUrl: tempateURL,
             controller: 'AttendanceSheetCtrl'
         })
         .state('attendancesheet-team', {
-            url: "/team-attendancesheet",
+            url: "/team-attendancesheet/:sport",
             templateUrl: tempateURL,
             controller: 'AttendanceSheetTeamCtrl'
         })
         // ATTENDANCE PAGES
         // CREATE MATCHES
         .state('creatmatch-heats', {
-            url: "/creatematch/heats",
+            url: "/creatematch",
             templateUrl: tempateURL,
             controller: 'CreateMatchHeatsCtrl'
         })

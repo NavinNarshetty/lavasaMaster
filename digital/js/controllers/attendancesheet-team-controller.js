@@ -6,12 +6,12 @@ myApp.controller('AttendanceSheetTeamCtrl', function($scope, TemplateService, Na
 
     // VARIABLE INIT
     $scope.oneAtATime = true;
-    // $scope.sportId = {
-    //   sport: $stateParams.sport
-    // }
     $scope.sportId = {
-      sport: '594cc1c37779072cb65c2eab'
+      sport: $stateParams.sport
     }
+    // $scope.sportId = {
+    //   sport: '594cc1c37779072cb65c2eab'
+    // }
     $scope.search = {
       sfaId: ''
     };

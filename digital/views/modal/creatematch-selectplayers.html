@@ -8,9 +8,88 @@
       </div>
   </div>
   <div class="modal-content">
-    <div class="creatematch-playerholder">
+    <div class="currentmatch-playerlist">
+      <uib-accordion close-others="oneAtATime">
+        <div uib-accordion-group class="panel-default" is-open="currentMatch.open">
+          <uib-accordion-heading class="clearfix">
+
+            <a >
+              <div class="text-uppercase d-fjalla-one color-primary"> <i class="pull-right fa " ng-class="{'fa-angle-up': currentMatch.open, 'fa-angle-down': !currentMatch.open}"></i> Current Players</div>
+            </a>
+          </uib-accordion-heading>
+          <div class="attendance-teamplayer-table">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>
+                    <div class="">
+                      Sr. No
+                    </div>
+                  </th>
+                  <th>
+                    <div class="">
+                      SFA ID
+                    </div>
+                  </th>
+                  <th>
+                    <div class="">
+                      Athlete Name
+                    </div>
+                  </th>
+                  <th>
+                    <div class="">
+                      Lane No.
+                    </div>
+                  </th>
+                  <th>
+                    <div class="">
+                      Remove Player
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="player in currentMatch.opponentsSingle track by $index">
+                  <td>
+                    <div class="">
+                      {{$index + 1}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="">
+                      {{player.athleteId.sfaId}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="">
+                      {{player.athleteId.firstName}} {{player.athleteId.surname}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="">
+                      {{currentMatch.resultHeat.players[$index].laneNo}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="">
+                      <button class="btn btn-green-outline" ng-click="deletePlayerMatch(player._id, currentMatch)"><i class="fa fa-trash-o"></i> Remove</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </uib-accordion>
+    </div>
+    <div class="creatematch-playerholder" ng-if="flag == 'edit'">
       <div class="creatematch-playertitle">
-        Select Players <span class="creatematch-note"> ( Max 8 Players ) </span>
+        Select Players <span class="creatematch-note"> ( Max 8 Players ) </span> | Player Count: <span>{{checkCount}}</span>
+      </div>
+      <div class="createatch-playersearch">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Enter SFA ID" ng-model="searchId">
+        </div>
       </div>
       <div class="creatematch-playertable table-responsive">
         <table class="table">
@@ -44,7 +123,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="player in playerList track by $index">
+            <tr ng-repeat="player in playerList|filter:searchId track by $index">
               <td>
                 <div class="">{{$index + 1}}</div>
               </td>
@@ -60,12 +139,12 @@
               </td>
               <td class="creatematch-selectholder">
                 <div class="">
-                  <input type="checkbox" class="checkbox form-control">
+                  <input type="checkbox" class="checkbox form-control" ng-model="player.select" ng-change="checkSelected();">
                 </div>
               </td>
               <td class="creatematch-laneholder">
                 <div class="">
-                  <input type="number" class="form-control text-center" placeholder="0" >
+                  <input type="number" class="form-control text-center" placeholder="0" ng-model="player.laneNo">
                 </div>
               </td>
             </tr>
@@ -76,7 +155,7 @@
   </div>
   <div class="modal-footer">
     <div class="text-right">
-      <button type="button" class="btn btn-green-outline mlr-10">Save</button>
+      <button type="button" class="btn btn-green-outline mlr-10" ng-click="addPlayersToMatch(currentMatch);">Save</button>
       <button type="button" class="btn btn-green-outline mlr-10" ng-click="$dismiss()">Cancel</button>
     </div>
   </div>
