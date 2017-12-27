@@ -5,13 +5,13 @@ myApp.controller('CreateMatchHeatsCtrl', function($scope, TemplateService, Navig
     // CODE STARTS HERE
     // INITIALISE VARIABLES
     $scope.selectDisable = false;
-    // $scope.sportDetails = {
-    //   sport: $stateParams.sport
-    // }
     $scope.sportDetails = {
-      sport: '5955e816accee91486acf6a0'
-      // sport: '59563d8b97cd023787820d68'
+      sport: $stateParams.sport
     }
+    // $scope.sportDetails = {
+    //   sport: '5955e816accee91486acf6a0'
+    //   // sport: '59563d8b97cd023787820d68'
+    // }
     $scope.objId = {
       _id: $scope.sportDetails.sport
     }

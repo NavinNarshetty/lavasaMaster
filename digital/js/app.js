@@ -195,7 +195,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         // ATTENDANCE PAGES
         // CREATE MATCHES
         .state('creatmatch-heats', {
-            url: "/creatematch",
+            url: "/creatematch/:sport",
             templateUrl: tempateURL,
             controller: 'CreateMatchHeatsCtrl'
         })

@@ -82,7 +82,7 @@ myApp.controller('DigitalAttendanceCtrl', function ($scope, TemplateService, $st
     };
 
     // VIEW DRAWS
-    $scope.viewDraw = function (formData) {
+    $scope.viewDraw = function (formData, flag) {
         NavigationService.getQuickSportId(formData, function (data) {
             errorService.errorCode(data, function (allData) {
                 if (!allData.message) {
@@ -100,19 +100,30 @@ myApp.controller('DigitalAttendanceCtrl', function ($scope, TemplateService, $st
                                 case 'Swimming 4x50m Freestyle Relay':
                                 case 'Swimming 4x50m Medley Relay':
                                 case 'Athletics 4x100m Relay':
+                                  if (flag == 'attendance') {
                                     $state.go('attendancesheet-team', {
                                         sport: $scope.drawDetails.sport
-                                    });
-                                    break;
-                                //CASE TWO : Individual-Sport 
+                                      });
+                                    } else if (flag== 'matches'){
+                                      $state.go('creatmatch-heats', {
+                                          sport: $scope.drawDetails.sport
+                                        });
+                                    }
+                                break;
+                                //CASE TWO : Individual-Sport
                                 case 'Swimming':
                                 case 'Athletics':
                                 case 'Shooting':
+                                  if (flag == 'attendance') {
                                     $state.go('attendancesheet', {
                                         sport: $scope.drawDetails.sport
                                     });
-
-                                    break;
+                                  } else if(flag == 'matches') {
+                                    $state.go('creatmatch-heats', {
+                                        sport: $scope.drawDetails.sport
+                                      });
+                                  }
+                                  break;
                                 case 'Boxing':
                                 case 'Wrestling':
                                 case 'Taekwondo':
@@ -120,16 +131,25 @@ myApp.controller('DigitalAttendanceCtrl', function ($scope, TemplateService, $st
                                 case 'Sport MMA':
                                 case 'Karate':
                                     if ($scope.eventSportName != 'Kata') {
+                                      if (flag == 'attendances') {
                                         $state.go('attendancesheet', {
                                             sport: $scope.drawDetails.sport
                                         });
+                                      } else if (flag == 'matches') {
+                                        $state.go('creatematch-weight');
+                                      }
+
                                     } else {
                                         toastr.error('Attendance not available for this Sport');
                                     }
                                     break;
                                 default:
+                                  if (flag == 'attendance') {
                                     toastr.error('Attendance not available for this Sport');
-                                    break;
+                                  } else if (flag == 'matches')  {
+                                    toastr.error('Match create not available  for this Sport');
+                                  }
+                                break;
                             }
                         }
 
