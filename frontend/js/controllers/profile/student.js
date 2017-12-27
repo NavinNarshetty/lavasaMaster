@@ -408,35 +408,12 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
 
     $scope.sportsSelected = function (sport, index) {
         // console.log("$index", index);
-        // console.log(sport);
-        $scope.nowSport = sport;
+        console.log(sport);
+        $scope.nowSport = sport.sportslist.sportsListSubCategory;
         $scope.activateSports(sport.sportslist.sportsListSubCategory._id);
-        // $scope.participatedSports = _.groupBy(sport.sports, function (key) {
-        //     return key.year;
-        // });
-        // $scope.filterStatistics.category = undefined;
-        // $scope.filterStatistics.year = $scope.filter.year;
-        // $scope.filterStatistics.sport = sport._id;
         $scope.filterStatistics.sport = sport;
-        // console.log("sport.sportslist.drawFormat.name", sport.sportslist.drawFormat.name);
         $scope.table.layout = sport.sportslist.drawFormat.name;
-        // console.log(" $scope.table.layout", $scope.table.layout);
-        // NavigationService.filterCategoryBySport({
-        //     sportList: sport._id
-        // }, function (response) {
-        //     if (response.value) {
-        //         console.log(response);
-        //         $scope.dropdowns.category = response.data;
-        //         $scope.dropdowns.category.unshift({
-        //             name: ""
-        //         });
-        //         $scope.filterStatistics.category = $scope.dropdowns.category[0].name;
-        //     } else {
-        //         $scope.dropdowns.category = [];
-        //     }
-        //     // $scope.getStats();
-        // });
-        $scope.sportStats($scope.nowSport);
+        $scope.sportStats(sport);
     };
 
 
