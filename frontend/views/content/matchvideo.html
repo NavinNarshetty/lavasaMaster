@@ -1,0 +1,88 @@
+<!-- FEATURED MAIN PAGE -->
+<div class="featuredmatchvideo-page">
+  <!-- CONTAINER -->
+  <div class="container">
+    <!-- HEADER -->
+    <div class="featuredvideo-header">
+      <div class="d-fjalla-one allfeaturedheader sport-color-primary text-uppercase">Match Videos</div>
+      <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Omnis dignissimos laborum eaque, qui a vitae, sapiente ducimus
+        minus repellendus dicta est necessitatibus tempore facere perspiciatis molestiae voluptas quis corporis illum?</p>
+    </div>
+    <!-- HEADER END -->
+
+    <!-- FEATURED -->
+    <div class="featurevideo-feature">
+      <!-- FEATURED HEADER -->
+      <h4 class="text-uppercase">Featured</h4>
+      <!-- FEATURED HEADER END -->
+      <!-- FEATURED CARD -->
+      <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12" ng-repeat="feature in featured track by $index">
+          <div class="featurevideo-card" ng-repeat="card in feature .featuredCard track by $index">
+            <div class="featurevideo-cardimage relate">
+              <a class="fancybox.iframe" fancybox href="{{card.link | linkvideo:card.type}}">
+                    <img ng-src="{{card.thumbnail}}" alt="video" class="img-responsive">
+              </a>
+              <div class="featurevideo-play">
+                <span class="fa fa-play"></span>
+              </div>
+            </div>
+            <div class="featurevideo-subheader">
+              {{card.content}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FEATURED CARD END -->
+    </div>
+    <!-- FEATURED END -->
+
+    <!-- AD SPACE -->
+    <div class="featuredvideo-adspace adspace relate hidden-xs">
+      <div class="get-center">
+        AD SPACE
+      </div>
+    </div>
+    <!-- AD SPACE END -->
+
+    <!-- TOP SPORTS VIDEOS -->
+    <div class="featuredvideo-topmatch">
+      <!-- HEADER -->
+      <div class="featurevideo-topmatchheader">
+        <h3 class="d-fjalla-one text-uppercase color-sport-lightblue">
+          Top match Videos by sport
+        </h3>
+      </div>
+      <!-- HEADER END -->
+
+      <!-- TOP SPORTS START -->
+      <div class="featurevideo-sportsholder" ng-repeat="topcard in topMatch track by $index">
+        <h3 class="d-fjalla-one text-uppercase color-sport-lightblue">{{topcard.sportname}}</h3>
+        <div class="row">
+          <div class="col-md-3 col-sm-6 col-xs-6" ng-repeat="sportcard in topcard.videos track by $index">
+            <!-- SPORT VIDEO HOLDER -->
+            <div class="featurevideo-sportvideoholder">
+              <div class="featurevideo-sportvideocard relate">
+                <a class="fancybox.iframe" fancybox href="{{sportcard.link | linkvideo:sportcard.type}}">
+                          <img ng-src="{{sportcard.thumbnail}}" alt="video" class="img-responsive">
+                </a>
+                <div class="featurevideo-sportplay">
+                  <span class="fa fa-play"></span>
+                </div>
+              </div>
+              <div class="featurevideo-sportvideocardfooter" title="{{sportcard.content}}">
+                {{sportcard.content | truncate:29}}
+              </div>
+            </div>
+            <!-- SPORT VIDEO HOLDER END -->
+          </div>
+        </div>
+      </div>
+      <!-- TOP SPORTS START END -->
+    </div>
+    <!-- TOP SPORTS VIDEOS END -->
+  </div>
+  <!-- CONTAINER END -->
+</div>
+<!-- FEATURED MAIN PAGE END -->
