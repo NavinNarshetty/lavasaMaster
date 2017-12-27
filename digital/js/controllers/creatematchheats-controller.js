@@ -4,8 +4,10 @@ myApp.controller('CreateMatchHeatsCtrl', function($scope, TemplateService, Navig
     $scope.navigation = NavigationService.getNavigation();
     // CODE STARTS HERE
     // INITIALISE VARIABLES
-    // $scope.sport = $stateParams.sport;
     $scope.selectDisable = false;
+    // $scope.sportDetails = {
+    //   sport: $stateParams.sport
+    // }
     $scope.sportDetails = {
       sport: '5955e816accee91486acf6a0'
       // sport: '59563d8b97cd023787820d68'
@@ -44,6 +46,7 @@ myApp.controller('CreateMatchHeatsCtrl', function($scope, TemplateService, Navig
       NavigationService.getSportSpecificRoundsMatch($scope.sportDetails, function(data){
         if (data.value == true) {
           $scope.roundsList = data.data.roundsList;
+          $scope.roundsListName = data.data.roundsListName;
           console.log("getSportSpecificRounds.data", $scope.roundsList);
         } else {
           toastr.error("Error");
@@ -61,6 +64,8 @@ myApp.controller('CreateMatchHeatsCtrl', function($scope, TemplateService, Navig
             if (data.value == true) {
               console.log("createMatch.data",data.data);
               $scope.getSportSpecificRounds();
+              $rootScope.modalInstance.close('a');
+              $scope.matchForm.round = '';
             } else {
               toastr.error("Match create failed.","Error");
             }
@@ -92,7 +97,28 @@ myApp.controller('CreateMatchHeatsCtrl', function($scope, TemplateService, Navig
       });
     }
     // ADD MATCH PLAYERS END
-    // PLAYER SELECTION POPUP
+    $scope.addQualifyingRoundPlayers = function(){
+      $scope.sportDetails.roundsListName = $scope.roundsListName;
+      NavigationService.addQualifyingRoundPlayers($scope.sportDetails, function(data){
+        if (data.value == true) {
+          $scope.qualifyingList = data.data;
+          _.each($scope.qualifyingList, function(n){
+            n.select = false;
+            n.noOfJumps = 0;
+            _.each(n.attempt, function(m){
+              if (!_.isEmpty(m)) {
+                n.noOfJumps += 1;
+              }
+            });
+          });
+          $scope.checkSelectedQf();
+          console.log("getPlayersMatchSelection.data", $scope.qualifyingList);
+        } else {
+          toastr.error("Players not found","Error");
+        }
+      });
+    }
+    // PLAYER SELECTION POPUP HEATS
     $scope.matchEdit = function(currentMatch, flag){
       $scope.flag = flag;
       if ($scope.flag == 'view') {
@@ -111,7 +137,28 @@ myApp.controller('CreateMatchHeatsCtrl', function($scope, TemplateService, Navig
       })
       $scope.getPlayersMatchSelection();
     };
-    // PLAYER SELECTION POPUP END
+    // PLAYER SELECTION POPUP HEATS END
+
+    // PLAYER SELECTION POPUP QUALIFYING
+    $scope.matchEditQf = function(currentMatch, flag){
+      $scope.flag = flag;
+      if ($scope.flag == 'view') {
+        // $scope.match.open = true;
+      }
+      $scope.currentMatch = currentMatch;
+      console.log("current", $scope.currentMatch);
+      $rootScope.modalInstance = $uibModal.open({
+        animation: true,
+        scope: $scope,
+        // backdrop: 'static',
+        // keyboard: false,
+        templateUrl: 'views/modal/creatematchqf-selectplayers.html',
+        size: 'lg',
+        windowClass: 'creatematchqf-selectplayers'
+      })
+      $scope.addQualifyingRoundPlayers();
+    };
+    // PLAYER SELECTION POPUP QUALIFYING END
     // checkSelected
     $scope.checkSelected = function(player){
       $scope.checkCount = 0;
@@ -132,6 +179,27 @@ myApp.controller('CreateMatchHeatsCtrl', function($scope, TemplateService, Navig
       // FOR LIMITING NO OF PLAYERS END
     }
     // checkSelected END
+
+    // checkSelectedQf
+    $scope.checkSelectedQf = function(player){
+      $scope.checkCount = 0;
+      _.each($scope.qualifyingList, function(n){
+        if (n.select == true) {
+          $scope.checkCount = $scope.checkCount + 1;
+        }
+      });
+      console.log($scope.checkCount);
+      // FOR LIMITING NO OF PLAYERS/
+      if ($scope.checkCount > 1) {
+        toastr.warning("Maximum Players selected");
+        $scope.selectDisable = true;
+        player.select = false;
+      } else if($scope.checkCount <= 1){
+        $scope.selectDisable = false;
+      }
+      // FOR LIMITING NO OF PLAYERS END
+    }
+    // checkSelectedQf END
     // ADD PLAYERS
     $scope.addPlayersToMatch = function(match){
       // console.log(match);
@@ -172,6 +240,22 @@ myApp.controller('CreateMatchHeatsCtrl', function($scope, TemplateService, Navig
       });
     }
     // ADD PLAYERS END
+    // ADD PLAYERS QUALIFYING
+    $scope.addPlayersQualifying = function(match){
+      $scope.matchForm.sport= $scope.sportDetails.sport;
+      $scope.matchForm.matchId= match.matchId;
+      $scope.matchForm.players= [];
+      $scope.matchForm.round = match.round;
+      _.each($scope.qualifyingList, function(n, nkey){
+        if (n.select == true) {
+          $scope.matchForm.players.push({
+            opponentSingle: n.opponentSingle
+          })
+        }
+      });
+      $scope.createMatches();
+    }
+    // ADD PLAYERS QUALIFYING END
     // REMOVE PLAYER
     $scope.deletePlayerMatch = function(player, match){
       $scope.removeMatch = {

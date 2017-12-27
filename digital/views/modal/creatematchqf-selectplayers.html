@@ -1,0 +1,118 @@
+<div class="creatematch-selectplayers-modal">
+  <div class="modal-header">
+      <div class="matchstart-header clearfix">
+          <div class="pull-right">
+              <p class="m-clear ">match id: <span>{{currentMatch.matchId}}</span> </p>
+          </div>
+          <p class="m-clear d-fjalla-one">{{currentMatch.round}} {{currentMatch.heatNo}}</p>
+      </div>
+  </div>
+  <div class="modal-content">
+    <div class="currentmatch-playerlist hide">
+      <div class="creatematch-playertitle">Player</div>
+      <table class="table">
+        <tbody>
+          <tr ng-repeat="player in currentMatch.opponentsSingle track by $index">
+            <td>
+              <div class="">
+                {{player.athleteId.sfaId}}
+              </div>
+            </td>
+            <td>
+              <div class="">
+                {{player.athleteId.firstName}} {{player.athleteId.surname}}
+              </div>
+            </td>
+            <td>
+              <div class="">
+                {{player.athleteId.school.name}}
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="creatematch-playerholder" ng-if="flag == 'edit'">
+      <div class="creatematch-playertitle">
+        Select Player
+      </div>
+      <div class="createatch-playersearch">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Enter SFA ID" ng-model="searchId">
+        </div>
+      </div>
+      <div class="creatematch-playertable table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>
+                <div class="">
+                  No
+                </div>
+              </th>
+              <th>
+                <div class="">
+                  SFA ID
+                </div>
+              </th>
+              <th>
+                <div class="">
+                  Athlete Name
+                </div>
+              </th>
+              <th>
+                <div class="" ng-if="player.bestAttempt">
+                  Best Attempt
+                </div>
+                <div class="" ng-if="!player.bestAttempt">
+                  No. of Jumps
+                </div>
+              </th>
+              <th>
+                <div class="">
+                  Select
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="player in qualifyingList|filter:searchId track by $index">
+              <td>
+                <div class="">{{$index + 1}}</div>
+              </td>
+              <td>
+                <div class="">
+                  {{player.athleteId.sfaId}}
+                </div>
+              </td>
+              <td>
+                <div class="">
+                  {{player.athleteId.firstName}} {{player.athleteId.surname}}
+                </div>
+              </td>
+              <td>
+                <div class="" ng-if="player.bestAttempt">
+                  {{player.bestAttempt}}
+                </div>
+                <div class="" ng-if="!player.bestAttempt">
+                  {{player.noOfJumps}}
+                </div>
+              </td>
+              <td class="creatematch-selectholder">
+                <div class="">
+                  <input type="checkbox" class="checkbox form-control" ng-model="player.select" ng-change="checkSelectedQf(player);" ng-disabled="selectDisable && !player.select">
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="text-right">
+      <button type="button" class="btn btn-green-outline mlr-10" ng-click="addPlayersQualifying(currentMatch);">Save</button>
+      <button type="button" class="btn btn-green-outline mlr-10" ng-click="$dismiss()">Cancel</button>
+    </div>
+  </div>
+</div>

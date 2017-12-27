@@ -43,7 +43,7 @@
       <!-- HEADER FORM -->
       <!-- MATCH DISPLAY SECTION -->
       <div class="creatematch-displaysection">
-        <div class="creatematch-roundholder" ng-repeat="round in roundsList track by $index">
+        <div class="creatematch-roundholder" ng-repeat="round in roundsList track by $index" ng-init="round.roundIndex = $index">
           <div class="creatematch-roundhead">
             {{round.name}}
           </div>
@@ -64,14 +64,9 @@
                       Match ID
                     </div>
                   </th>
-                  <th>
+                  <th ng-if="matchForm.sportType == 'Heats'">
                     <div class="">
                       Round Name
-                    </div>
-                  </th>
-                  <th ng-if="matchForm.sportType == 'Heats'">
-                    <div class="text-right">
-                      Actions
                     </div>
                   </th>
                   <th ng-if="matchForm.sportType == 'Qualifying Round'">
@@ -89,6 +84,11 @@
                       School Name
                     </div>
                   </th>
+                  <th >
+                    <div class="text-right">
+                      Actions
+                    </div>
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -103,30 +103,43 @@
                       {{heat.matchId}}
                     </div>
                   </td>
-                  <td>
+                  <td ng-if="matchForm.sportType == 'Heats'">
                     <div class="">
                       {{heat.round}} {{heat.heatNo}}
                     </div>
                   </td>
-                  <td ng-if="matchForm.sportType == 'Heats'">
-                    <div class="text-right">
-                      <button class="btn btn-green-outline mlr-10" ng-click="matchEdit(heat, 'view');">View</button>
-                      <button class="btn btn-green-outline mlr-10" ng-click="matchEdit(heat, 'edit');">Edit</button>
-                    </div>
-                  </td>
                   <td ng-if="matchForm.sportType == 'Qualifying Round'">
-                    <div class="">
+                    <div class="" ng-if="heat.opponentsSingle.length == 0">
+                      -
+                    </div>
+                    <div class="" ng-if="heat.opponentsSingle.length != 0">
                       {{heat.opponentsSingle[0].athleteId.sfaId}}
                     </div>
                   </td>
                   <td ng-if="matchForm.sportType == 'Qualifying Round'">
-                    <div class="">
+                    <div class="" ng-if="heat.opponentsSingle.length == 0">
+                      -
+                    </div>
+                    <div class="" ng-if="heat.opponentsSingle.length != 0">
                       {{heat.opponentsSingle[0].athleteId.firstName}} {{heat.opponentsSingle[0].athleteId.surname}}
                     </div>
                   </td>
                   <td ng-if="matchForm.sportType == 'Qualifying Round'">
-                    <div class="">
+                    <div class="" ng-if="heat.opponentsSingle.length == 0">
+                      -
+                    </div>
+                    <div class="" ng-if="heat.opponentsSingle.length != 0">
                       {{heat.opponentsSingle[0].athleteId.school.name}}
+                    </div>
+                  </td>
+                  <td >
+                    <div class="text-right" ng-if="matchForm.sportType == 'Heats'">
+                      <button class="btn btn-green-outline mlr-10" ng-click="matchEdit(heat, 'view');">View</button>
+                      <button class="btn btn-green-outline mlr-10" ng-click="matchEdit(heat, 'edit');">Edit</button>
+                    </div>
+                    <div class="text-right" ng-if="matchForm.sportType == 'Qualifying Round'">
+                      <button class="btn btn-green-outline mlr-10" ng-click="matchEditQf(heat, 'edit');" ng-if="heat.opponentsSingle.length == 0">Edit</button>
+                      <button class="btn btn-green-outline mlr-10" ng-click="deleteQf();" ng-if="heat.opponentsSingle.length != 0 && round.roundIndex != 0"><i class="fa fa-trash-o"></i> Delete</button>
                     </div>
                   </td>
                 </tr>

@@ -299,6 +299,15 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
                 callback(data)
             });
         },
+        addQualifyingRoundPlayers: function (formData, callback) {
+            $http({
+                url: adminurl + "Attendence/addQualifyingRoundPlayers",
+                method: "POST",
+                data: formData
+            }).success(function (data) {
+                callback(data)
+            });
+        },
         getSportSpecificRoundsMatch: function(formData, callback){
           $http({
             url: adminurl + "match/getSportSpecificRounds",
