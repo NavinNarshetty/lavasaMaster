@@ -53,11 +53,6 @@ myApp.controller('DigitalAttendanceCtrl', function ($scope, TemplateService, $st
         console.log("sportId", sportId);
         $scope.nameOfSport = sportName;
         console.log("$scope.nameOfSport", $scope.nameOfSport);
-        if (sportName === 'Boxing' || sportName === 'Judo' || sportName === 'Kumite' || sportName === 'Taekwondo' || sportName === 'Sport MMA') {
-            $scope.showWeight = true;
-        } else {
-            $scope.showWeight = false;
-        }
         if ($scope.formData.sportId) {
             $scope.requestObj._id = $scope.formData.sportId;
             NavigationService.getAllBySport($scope.requestObj, function (data) {
@@ -79,10 +74,20 @@ myApp.controller('DigitalAttendanceCtrl', function ($scope, TemplateService, $st
     //EVENT SPORT NAME
     $scope.eventSportFun = function (eventName) {
         $scope.eventSportName = eventName;
+        if (eventName === 'Boxing' || eventName === 'Judo' || eventName === 'Kumite' || eventName === 'Taekwondo' || eventName === 'Sport MMA') {
+            $scope.showWeight = true;
+        } else {
+            $scope.showWeight = false;
+        }
     };
-
     // VIEW DRAWS
     $scope.viewDraw = function (formData, flag) {
+        if (!formData.weight) {
+            if ($scope.eventSportName === 'Boxing' || $scope.eventSportName === 'Judo' || $scope.eventSportName === 'Kumite' || $scope.eventSportName === 'Taekwondo' || $scope.eventSportName === 'Sport MMA') {
+                formData.weight = 'null';
+            }
+        }
+
         NavigationService.getQuickSportId(formData, function (data) {
             errorService.errorCode(data, function (allData) {
                 if (!allData.message) {
@@ -100,30 +105,30 @@ myApp.controller('DigitalAttendanceCtrl', function ($scope, TemplateService, $st
                                 case 'Swimming 4x50m Freestyle Relay':
                                 case 'Swimming 4x50m Medley Relay':
                                 case 'Athletics 4x100m Relay':
-                                  if (flag == 'attendance') {
-                                    $state.go('attendancesheet-team', {
-                                        sport: $scope.drawDetails.sport
-                                      });
-                                    } else if (flag== 'matches'){
-                                      $state.go('creatmatch-heats', {
-                                          sport: $scope.drawDetails.sport
+                                    if (flag == 'attendance') {
+                                        $state.go('attendancesheet-team', {
+                                            sport: $scope.drawDetails.sport
+                                        });
+                                    } else if (flag == 'matches') {
+                                        $state.go('creatmatch-heats', {
+                                            sport: $scope.drawDetails.sport
                                         });
                                     }
-                                break;
+                                    break;
                                 //CASE TWO : Individual-Sport
                                 case 'Swimming':
                                 case 'Athletics':
                                 case 'Shooting':
-                                  if (flag == 'attendance') {
-                                    $state.go('attendancesheet', {
-                                        sport: $scope.drawDetails.sport
-                                    });
-                                  } else if(flag == 'matches') {
-                                    $state.go('creatmatch-heats', {
-                                        sport: $scope.drawDetails.sport
-                                      });
-                                  }
-                                  break;
+                                    if (flag == 'attendance') {
+                                        $state.go('attendancesheet', {
+                                            sport: $scope.drawDetails.sport
+                                        });
+                                    } else if (flag == 'matches') {
+                                        $state.go('creatmatch-heats', {
+                                            sport: $scope.drawDetails.sport
+                                        });
+                                    }
+                                    break;
                                 case 'Boxing':
                                 case 'Wrestling':
                                 case 'Taekwondo':
@@ -131,25 +136,25 @@ myApp.controller('DigitalAttendanceCtrl', function ($scope, TemplateService, $st
                                 case 'Sport MMA':
                                 case 'Karate':
                                     if ($scope.eventSportName != 'Kata') {
-                                      if (flag == 'attendances') {
-                                        $state.go('attendancesheet', {
-                                            sport: $scope.drawDetails.sport
-                                        });
-                                      } else if (flag == 'matches') {
-                                        $state.go('creatematch-weight');
-                                      }
+                                        if (flag == 'attendances') {
+                                            $state.go('attendancesheet', {
+                                                sport: $scope.drawDetails.sport
+                                            });
+                                        } else if (flag == 'matches') {
+                                            $state.go('creatematch-weight');
+                                        }
 
                                     } else {
                                         toastr.error('Attendance not available for this Sport');
                                     }
                                     break;
                                 default:
-                                  if (flag == 'attendance') {
-                                    toastr.error('Attendance not available for this Sport');
-                                  } else if (flag == 'matches')  {
-                                    toastr.error('Match create not available  for this Sport');
-                                  }
-                                break;
+                                    if (flag == 'attendance') {
+                                        toastr.error('Attendance not available for this Sport');
+                                    } else if (flag == 'matches') {
+                                        toastr.error('Match create not available  for this Sport');
+                                    }
+                                    break;
                             }
                         }
 
