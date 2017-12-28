@@ -53,11 +53,6 @@ myApp.controller('DigitalAttendanceCtrl', function ($scope, TemplateService, $st
         console.log("sportId", sportId);
         $scope.nameOfSport = sportName;
         console.log("$scope.nameOfSport", $scope.nameOfSport);
-        if (sportName === 'Boxing' || sportName === 'Judo' || sportName === 'Kumite' || sportName === 'Taekwondo' || sportName === 'Sport MMA') {
-            $scope.showWeight = true;
-        } else {
-            $scope.showWeight = false;
-        }
         if ($scope.formData.sportId) {
             $scope.requestObj._id = $scope.formData.sportId;
             NavigationService.getAllBySport($scope.requestObj, function (data) {
@@ -89,7 +84,7 @@ myApp.controller('DigitalAttendanceCtrl', function ($scope, TemplateService, $st
     $scope.viewDraw = function (formData, flag) {
         if (!formData.weight) {
             if ($scope.eventSportName === 'Boxing' || $scope.eventSportName === 'Judo' || $scope.eventSportName === 'Kumite' || $scope.eventSportName === 'Taekwondo' || $scope.eventSportName === 'Sport MMA') {
-                formData.weight = null;
+                formData.weight = 'null';
             }
         }
 
