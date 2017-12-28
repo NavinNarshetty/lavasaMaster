@@ -1057,5 +1057,9 @@ var model = {
             });
     },
 
+    deleteQualifying: function (data, callback) {
+
+    }
+
 };
 module.exports = _.assign(module.exports, exports, model);
