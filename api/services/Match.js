@@ -16859,7 +16859,7 @@ var model = {
                                     data: data
                                 });
                             } else {
-                                if (match.length == 0) {
+                                if (match.length == 1) {
                                     var param = {};
                                     param._id = n._id;
                                     param.athleteId = n.athleteId._id;
@@ -16957,7 +16957,524 @@ var model = {
                 }
             });
     },
-    
+
+    addPlayerToMatch: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    Match.findOne({
+                        matchId: data.matchId,
+                        $and: [{
+                            resultsCombat: {
+                                $exists: false
+                            },
+                        }, {
+                            resultBasketball: {
+                                $exists: false
+                            }
+                        }, {
+                            resultFencing: {
+                                $exists: false
+                            }
+                        }, {
+                            resultFootball: {
+                                $exists: false
+                            }
+                        }, {
+                            resultHandball: {
+                                $exists: false
+                            }
+                        }, {
+                            resultHockey: {
+                                $exists: false
+                            }
+                        }, {
+                            resultKabaddi: {
+                                $exists: false
+                            }
+                        }, {
+                            resultsRacquet: {
+                                $exists: false
+                            }
+                        }]
+                    }).deepPopulate("sport.sportslist.sportsListSubCategory").lean().exec(function (err, matchData) {
+                        if (err || _.isEmpty(matchData)) {
+                            callback(null, {
+                                error: "No Data Found",
+                                data: data
+                            });
+                        } else {
+                            callback(null, matchData);
+                        }
+                    });
+                },
+                function (matchData, callback) {
+                    if (matchData.error) {
+                        callback(null, matchData);
+                    } else {
+                        Match.findOne({
+                            prevMatch: matchData._id,
+                            $and: [{
+                                resultsCombat: {
+                                    $exists: false
+                                },
+                            }, {
+                                resultBasketball: {
+                                    $exists: false
+                                }
+                            }, {
+                                resultFencing: {
+                                    $exists: false
+                                }
+                            }, {
+                                resultFootball: {
+                                    $exists: false
+                                }
+                            }, {
+                                resultHandball: {
+                                    $exists: false
+                                }
+                            }, {
+                                resultHockey: {
+                                    $exists: false
+                                }
+                            }, {
+                                resultKabaddi: {
+                                    $exists: false
+                                }
+                            }, {
+                                resultsRacquet: {
+                                    $exists: false
+                                }
+                            }]
+                        }).lean().exec(function (err, nextMatchData) {
+                            if (err || _.isEmpty(nextMatchData)) {
+                                callback(null, {
+                                    error: "Next Match Scored",
+                                    data: data
+                                });
+                            } else {
+                                callback(null, matchData);
+                            }
+                        });
+                    }
+                },
+                function (matchData, callback) {
+                    if (matchData.error) {
+                        callback(null, matchData);
+                    } else {
+                        if (matchData.sport.sportslist.sportsListSubCategory.isTeam == false) {
+                            var final = [];
+                            if (matchData.opponentsSingle.length == 1) {
+                                final.push(matchData.opponentsSingle[0]);
+
+                                final.push(data.opponentsSingle);
+                                var matchObj = {
+                                    $set: {
+                                        opponentsSingle: final
+                                    }
+                                };
+                                Match.update({
+                                    matchId: data.matchId
+                                }, matchObj).exec(
+                                    function (err, match) {
+                                        callback(null, match);
+                                    });
+                            } else if (mainData.opponentsSingle.length == 0) {
+                                final.push(data.opponentsSingle);
+                                var matchObj = {
+                                    $set: {
+                                        opponentsSingle: final
+                                    }
+                                };
+                                Match.update({
+                                    matchId: data.matchId
+                                }, matchObj).exec(
+                                    function (err, match) {
+                                        callback(null, match);
+                                    });
+                            } else {
+                                callback(null, {
+                                    error: "opponentsSingle have enough players",
+                                    data: matchData.opponentsSingle
+                                });
+                            }
+                        } else {
+                            var final = [];
+                            if (matchData.opponentsTeam.length == 1) {
+                                final.push(matchData.opponentsTeam[0]);
+
+                                final.push(data.opponentsTeam);
+                                var matchObj = {
+                                    $set: {
+                                        opponentsTeam: final
+                                    }
+                                };
+                                Match.update({
+                                    matchId: data.matchId
+                                }, matchObj).exec(
+                                    function (err, match) {
+                                        callback(null, match);
+                                    });
+                            } else if (mainData.opponentsTeam.length == 0) {
+                                final.push(data.opponentsTeam);
+                                var matchObj = {
+                                    $set: {
+                                        opponentsTeam: final
+                                    }
+                                };
+                                Match.update({
+                                    matchId: data.matchId
+                                }, matchObj).exec(
+                                    function (err, match) {
+                                        callback(null, match);
+                                    });
+                            } else {
+                                callback(null, {
+                                    error: "opponentsTeam have enough players",
+                                    data: matchData.opponentsTeam
+                                });
+                            }
+                        }
+                    }
+                }
+            ],
+            function (err, data2) {
+                if (err) {
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, data2);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
+    },
+
+    deletePlayerFromMatch: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    Match.findOne({
+                        matchId: data.matchId,
+                        $and: [{
+                            resultsCombat: {
+                                $exists: false
+                            },
+                        }, {
+                            resultBasketball: {
+                                $exists: false
+                            }
+                        }, {
+                            resultFencing: {
+                                $exists: false
+                            }
+                        }, {
+                            resultFootball: {
+                                $exists: false
+                            }
+                        }, {
+                            resultHandball: {
+                                $exists: false
+                            }
+                        }, {
+                            resultHockey: {
+                                $exists: false
+                            }
+                        }, {
+                            resultKabaddi: {
+                                $exists: false
+                            }
+                        }, {
+                            resultsRacquet: {
+                                $exists: false
+                            }
+                        }]
+                    }).deepPopulate("sport.sportslist.sportsListSubCategory").lean().exec(function (err, matchData) {
+                        if (err || _.isEmpty(matchData)) {
+                            callback(null, {
+                                error: "No Data Found",
+                                data: data
+                            });
+                        } else {
+                            callback(null, matchData);
+                        }
+                    });
+                },
+                function (matchData, callback) {
+                    if (matchData.error) {
+                        callback(null, matchData);
+                    } else {
+                        if (matchData.sport.sportslist.sportsListSubCategory.isTeam == false) {
+                            var final = [];
+                            if (matchData.opponentsSingle.length == 1) {
+                                final = [];
+                                var matchObj = {
+                                    $set: {
+                                        opponentsSingle: final
+                                    }
+                                };
+                                Match.update({
+                                    matchId: data.matchId
+                                }, matchObj).exec(
+                                    function (err, match) {
+                                        callback(null, match);
+                                    });
+                            } else if (mainData.opponentsSingle.length == 2) {
+                                if (mainData.opponentsSingle[0] == data.opponentsSingle) {
+                                    final.push(mainData.opponentsSingle[1]);
+                                } else {
+                                    final.push(mainData.opponentsSingle[0]);
+                                }
+                                var matchObj = {
+                                    $set: {
+                                        opponentsSingle: final
+                                    }
+                                };
+                                Match.update({
+                                    matchId: data.matchId
+                                }, matchObj).exec(
+                                    function (err, match) {
+                                        callback(null, match);
+                                    });
+                            } else {
+                                callback(null, {
+                                    error: "opponentsSingle have no players to delete",
+                                    data: matchData.opponentsSingle
+                                });
+                            }
+                        } else {
+                            var final = [];
+                            if (matchData.opponentsTeam.length == 1) {
+                                final = [];
+                                var matchObj = {
+                                    $set: {
+                                        opponentsTeam: final
+                                    }
+                                };
+                                Match.update({
+                                    matchId: data.matchId
+                                }, matchObj).exec(
+                                    function (err, match) {
+                                        callback(null, match);
+                                    });
+                            } else if (mainData.opponentsTeam.length == 2) {
+                                if (mainData.opponentsTeam[0] == data.opponentsTeam) {
+                                    final.push(mainData.opponentsTeam[1]);
+                                } else {
+                                    final.push(mainData.opponentsTeam[0]);
+                                }
+                                var matchObj = {
+                                    $set: {
+                                        opponentsTeam: final
+                                    }
+                                };
+                                Match.update({
+                                    matchId: data.matchId
+                                }, matchObj).exec(
+                                    function (err, match) {
+                                        callback(null, match);
+                                    });
+                            } else {
+                                callback(null, {
+                                    error: "opponentsTeam have no players to delete",
+                                    data: matchData.opponentsTeam
+                                });
+                            }
+                        }
+                    }
+                }
+            ],
+            function (err, data2) {
+                if (err) {
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, data2);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
+    },
+
+    deleteResult: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    Match.findOne({
+                        matchId: data.matchId
+                    }).deepPopulate("sport.sportslist.sportsListSubCategory").lean().exec(function (err, matchData) {
+                        if (err || _.isEmpty(matchData)) {
+                            callback(null, {
+                                error: "No Data Found",
+                                data: data
+                            });
+                        } else {
+                            callback(null, matchData);
+                        }
+                    });
+                },
+                function (matchData, callback) {
+                    if (matchData.error) {
+                        callback(null, matchData);
+                    } else {
+                        if (matchData.sport.sportslist.sportsListSubCategory.isTeam == false) {
+                            if (matchData.resultsCombat) {
+                                var matchObj = {
+                                    $unset: {
+                                        resultsCombat: undefined
+                                    }
+                                };
+                                Match.update({
+                                    matchId: data.matchId
+                                }, matchObj).exec(
+                                    function (err, match) {
+                                        callback(null, match);
+                                    });
+                            } else if (matchData.resultsRacquet) {
+                                var matchObj = {
+                                    $unset: {
+                                        resultsRacquet: undefined
+                                    }
+                                };
+                                Match.update({
+                                    matchId: data.matchId
+                                }, matchObj).exec(
+                                    function (err, match) {
+                                        callback(null, match);
+                                    });
+                            } else if (matchData.resultFencing) {
+                                var matchObj = {
+                                    $unset: {
+                                        resultFencing: undefined
+                                    }
+                                };
+                                Match.update({
+                                    matchId: data.matchId
+                                }, matchObj).exec(
+                                    function (err, match) {
+                                        callback(null, match);
+                                    });
+                            } else if (matchData.resultSwiss) {
+                                var matchObj = {
+                                    $unset: {
+                                        resultSwiss: undefined
+                                    }
+                                };
+                                Match.update({
+                                    matchId: data.matchId
+                                }, matchObj).exec(
+                                    function (err, match) {
+                                        callback(null, match);
+                                    });
+                            }
+                        } else {
+                            if (matchData.resultsCombat) {
+                                var matchObj = {
+                                    $unset: {
+                                        resultsCombat: undefined
+                                    }
+                                };
+                                Match.update({
+                                    matchId: data.matchId
+                                }, matchObj).exec(
+                                    function (err, match) {
+                                        callback(null, match);
+                                    });
+                            } else if (matchData.resultsRacquet) {
+                                var matchObj = {
+                                    $unset: {
+                                        resultsRacquet: undefined
+                                    }
+                                };
+                                Match.update({
+                                    matchId: data.matchId
+                                }, matchObj).exec(
+                                    function (err, match) {
+                                        callback(null, match);
+                                    });
+                            } else if (matchData.resultBasketball) {
+                                var matchObj = {
+                                    $unset: {
+                                        resultBasketball: undefined
+                                    }
+                                };
+                                Match.update({
+                                    matchId: data.matchId
+                                }, matchObj).exec(
+                                    function (err, match) {
+                                        callback(null, match);
+                                    });
+                            } else if (matchData.resultFootball) {
+                                var matchObj = {
+                                    $unset: {
+                                        resultFootball: undefined
+                                    }
+                                };
+                                Match.update({
+                                    matchId: data.matchId
+                                }, matchObj).exec(
+                                    function (err, match) {
+                                        callback(null, match);
+                                    });
+                            } else if (matchData.resultHandball) {
+                                var matchObj = {
+                                    $unset: {
+                                        resultHandball: undefined
+                                    }
+                                };
+                                Match.update({
+                                    matchId: data.matchId
+                                }, matchObj).exec(
+                                    function (err, match) {
+                                        callback(null, match);
+                                    });
+                            } else if (matchData.resultHockey) {
+                                var matchObj = {
+                                    $unset: {
+                                        resultHockey: undefined
+                                    }
+                                };
+                                Match.update({
+                                    matchId: data.matchId
+                                }, matchObj).exec(
+                                    function (err, match) {
+                                        callback(null, match);
+                                    });
+                            } else if (matchData.resultKabaddi) {
+                                var matchObj = {
+                                    $unset: {
+                                        resultKabaddi: undefined
+                                    }
+                                };
+                                Match.update({
+                                    matchId: data.matchId
+                                }, matchObj).exec(
+                                    function (err, match) {
+                                        callback(null, match);
+                                    });
+                            } else {
+                                callback(null, {
+                                    error: "no result to delet",
+                                    data: matchData
+                                });
+                            }
+                        }
+                    }
+                }
+            ],
+            function (err, data2) {
+                if (err) {
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, data2);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
+    },
+
 
 
 

@@ -948,7 +948,21 @@ var controller = {
 
     getIndividualPlayers: function (req, res) {
         Match.getIndividualPlayers(req.body, res.callback);
+    },
+
+    addPlayerToMatch: function (req, res) {
+        Match.addPlayerToMatch(req.body, res.callback);
+    },
+
+    deletePlayerFromMatch: function (req, res) {
+        Match.deletePlayerFromMatch(req.body, res.callback);
+    },
+
+    deleteResult: function (req, res) {
+        Match.deleteResult(req.body, res.callback);
     }
+
+
 
 };
 module.exports = _.assign(module.exports, controller);
