@@ -47,6 +47,7 @@ var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
     getAllStudent: function (data, callback) {
+        console.log(year);
         async.waterfall([
             function (callback) {
                 OldAthlete.find({
@@ -146,7 +147,7 @@ var model = {
 
                     },
                     function (err, found) {
-                        // callback(null, found);
+                        callback(null, found);
                     });
             }
         ], function (err, found) {
