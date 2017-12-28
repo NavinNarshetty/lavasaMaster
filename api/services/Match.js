@@ -8330,7 +8330,7 @@ var model = {
                         }
                     } else if (mainData.resultsRacquet) {
                         if (mainData.resultsRacquet.winner) {
-                            if(mainData.resultsRacquet.teams[0].sets.length>0){
+                            if (mainData.resultsRacquet.teams[0].sets.length > 0) {
                                 for (var i = 0; i < mainData.resultsRacquet.teams[0].sets.length; i++) {
                                     if (i == 0) {
                                         obj["T1 Total Service Errors"] = mainData.resultsRacquet.teams[0].sets[i].serviceError;
@@ -16764,6 +16764,202 @@ var model = {
             });
 
     },
+
+    //---------------------------Backend Players API--------------------------------------------
+
+    getIndividualPlayers: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    var test = {};
+                    test._id = data.sport;
+                    Sport.getOne(test, function (err, found) {
+                        if (err || _.isEmpty(found)) {
+                            err = "Sport,Event,AgeGroup,Gender may have wrong values";
+                            callback(null, {
+                                error: err,
+                                success: found
+                            });
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+                },
+                function (found, callback) {
+                    if (found.error) {
+                        callback(null, found);
+                    } else if (found.sportslist.sportsListSubCategory.isTeam == true) {
+                        Match.getTeam(data, function (err, found) {
+                            if (err || _.isEmpty(found)) {
+                                err = "No values";
+                                callback(null, {
+                                    error: err,
+                                    success: found
+                                });
+                            } else {
+                                callback(null, found);
+                            }
+                        });
+                    } else {
+                        Match.getindividual(data, function (err, found) {
+                            if (err || _.isEmpty(found)) {
+                                err = "No values";
+                                callback(null, {
+                                    error: err,
+                                    success: found
+                                });
+                            } else {
+                                callback(null, found);
+                            }
+                        });
+                    }
+                },
+            ],
+            function (err, data2) {
+                if (err) {
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, data2);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
+    },
+
+    getindividual: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    IndividualSport.find({
+                        sport: data.sport
+                    }, {
+                        athleteId: 1
+                    }).deepPopulate("athleteId.school").lean().exec(function (err, individualData) {
+                        if (err || _.isEmpty(individualData)) {
+                            callback(null, {
+                                error: "No data teamData",
+                                data: data
+                            });
+                        } else {
+                            callback(null, individualData);
+                        }
+                    });
+                },
+                function (individualData, callback) {
+                    var final = {};
+                    final.match = [];
+                    async.eachSeries(individualData, function (n, callback) {
+                        Match.find({
+                            sport: data.sport,
+                            opponentsSingle: n._id
+                        }).lean().exec(function (err, match) {
+                            if (err || _.isEmpty(match)) {
+                                callback(null, {
+                                    error: "No data teamData",
+                                    data: data
+                                });
+                            } else {
+                                if (match.length == 0) {
+                                    var param = {};
+                                    param._id = n._id;
+                                    param.athleteId = n.athleteId._id;
+                                    if (n.athleteId.middleName) {
+                                        param.name = n.athleteId.firstName + n.athleteId.middleName + n.athleteId.surname;
+                                    } else {
+                                        param.name = n.athleteId.firstName + n.athleteId.surname;
+                                    }
+                                    param.sfaId = n.athleteId.sfaId
+                                    param.count = match.length;
+                                    final.match.push(param);
+                                }
+                                callback();
+                            }
+                        });
+                    }, function (err) {
+                        callback(null, final);
+                    });
+
+                },
+            ],
+            function (err, data2) {
+                if (err) {
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, data2);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
+    },
+
+    getTeam: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    TeamSport.find({
+                        sport: data.sport
+                    }, {
+                        name: 1,
+                        schoolName: 1,
+                        teamId: 1
+                    }).lean().exec(function (err, studentData) {
+                        if (err || _.isEmpty(studentData)) {
+                            callback(null, {
+                                error: "No Data Found",
+                                data: data
+                            });
+                        } else {
+                            callback(null, studentData);
+                        }
+                    });
+                },
+                function (studentData, callback) {
+                    var final = {};
+                    final.match = [];
+                    async.eachSeries(studentData, function (n, callback) {
+                        Match.find({
+                            sport: data.sport,
+                            opponentsTeam: n._id
+                        }).lean().exec(function (err, match) {
+                            if (err || _.isEmpty(match)) {
+                                callback(null, {
+                                    error: "No data teamData",
+                                    data: data
+                                });
+                            } else {
+                                if (match.length == 0) {
+                                    var param = {};
+                                    param._id = n._id;
+                                    param.teamName = n.name;
+                                    param.teamId = n.teamId;
+                                    param.count = match.length;
+                                    final.match.push(param);
+                                }
+                                callback();
+                            }
+                        });
+                    }, function (err) {
+                        callback(null, final);
+                    });
+
+                },
+            ],
+            function (err, data2) {
+                if (err) {
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, data2);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
+    },
+    
+
+
 
 };
 module.exports = _.assign(module.exports, exports, model);

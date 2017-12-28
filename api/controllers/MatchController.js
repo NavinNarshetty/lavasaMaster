@@ -944,6 +944,10 @@ var controller = {
         res.connection.setTimeout(20000000000);
         req.connection.setTimeout(20000000000);
         Match.getDrawFormats(req, res.callback);
+    },
+
+    getIndividualPlayers: function (req, res) {
+        Match.getIndividualPlayers(req.body, res.callback);
     }
 
 };
