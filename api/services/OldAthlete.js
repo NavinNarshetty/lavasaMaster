@@ -67,7 +67,7 @@ var model = {
             },
             function (oldSchoolData, callback) {
                 console.log('Hi');
-                callback(null, oldSchoolData);
+                // callback(null, oldSchoolData);
                 async.concatSeries(oldSchoolData, function (mainData, callback) {
                     async.waterfall([
                         function (callback) {
