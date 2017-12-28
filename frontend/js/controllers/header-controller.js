@@ -2,7 +2,10 @@
 // var globalLinkSchoolRegister = "http://testmumbaischool.sfanow.in";
 // var globalLinkCollegeRegister = "http://testmumbaicollege.sfanow.in";
 // var globalLinkForAll = "http://testmumbai.sfanow.in/";
-var globalLinkSchoolRegister = "http://testmumbai2016.sfanow.in";
+// var globalLinkSchoolRegister = "http://testmumbai2016.sfanow.in";
+// var globalLinkCollegeRegister = "";
+// var globalLinkForAll = "http://testmumbai.sfanow.in/";
+var globalLinkSchoolRegister = "http://testmumbai2015.sfanow.in";
 var globalLinkCollegeRegister = "";
 var globalLinkForAll = "http://testmumbai.sfanow.in/";
 // var globalLinkSchoolRegister = "http://testhyderabadschool.sfanow.in";
@@ -11,9 +14,9 @@ var globalLinkForAll = "http://testmumbai.sfanow.in/";
 // var globalLinkSchoolRegister = "http://testahmedabadschool.sfanow.in";
 // var globalLinkCollegeRegister = "http://testahmedabadcollege.sfanow.in";
 // var globalLinkForAll = "http://testahmedabad.sfanow.in/";
-var year15 = '2015-16';
-var eventYear = '2016-17';
-// var year16 = '2016-17';
+// var year15 = '2015-16';
+var year16 = '2016-17';
+var eventYear = '2015-16';
 
 //For Live
 // var globalLinkSchoolRegister = "http://mumbaischool.sfanow.in";
