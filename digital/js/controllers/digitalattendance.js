@@ -87,6 +87,12 @@ myApp.controller('DigitalAttendanceCtrl', function ($scope, TemplateService, $st
     };
     // VIEW DRAWS
     $scope.viewDraw = function (formData, flag) {
+        if (!formData.weight) {
+            if ($scope.eventSportName === 'Boxing' || $scope.eventSportName === 'Judo' || $scope.eventSportName === 'Kumite' || $scope.eventSportName === 'Taekwondo' || $scope.eventSportName === 'Sport MMA') {
+                formData.weight = null;
+            }
+        }
+
         NavigationService.getQuickSportId(formData, function (data) {
             errorService.errorCode(data, function (allData) {
                 if (!allData.message) {
