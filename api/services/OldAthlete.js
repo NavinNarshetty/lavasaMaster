@@ -50,8 +50,8 @@ var model = {
         async.waterfall([
             function (callback) {
                 OldAthlete.find({
-                    year: data.year,
-                    year: "null"
+                    year: data.year
+                    // year: "null"
                 }).lean().exec(function (err, oldSchoolData) {
                     if (err) {
                         callback(err, null);
