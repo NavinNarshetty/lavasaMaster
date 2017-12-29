@@ -16864,7 +16864,7 @@ var model = {
                                     data: data
                                 });
                             } else {
-                                if (match.length == 1) {
+                                if (match.length == 0) {
                                     var param = {};
                                     param._id = n._id;
                                     param.athleteId = n.athleteId._id;
