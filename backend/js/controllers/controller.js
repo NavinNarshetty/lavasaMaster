@@ -1827,7 +1827,7 @@ myApp.controller('DetailSportsCtrl', function ($scope, TemplateService, Navigati
 });
 
 //team sport
-myApp.controller('TeamSportCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr, $uibModal) {
+myApp.controller('TeamSportCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr, $uibModal, excelService) {
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tableteamsport");
@@ -1900,6 +1900,27 @@ myApp.controller('TeamSportCtrl', function ($scope, TemplateService, NavigationS
         });
     }
 
+    // $scope.user = $.jStorage.get("user");
+    $scope.login = {};
+    var navigationUrl;
+    var filename = 'Teamsports';
+
+    // INITIALISE VARIABLES END
+    $scope.loginPopup = function (commonData, type) {
+        if (type === 'excel') {
+            navigationUrl = 'teamSport/generateExcel';
+        }
+        console.log(commonData, "*********************");
+        excelService.loginPopup(commonData, $scope, type);
+    }
+    $scope.loginSubmit = function (login) {
+        console.log(login, "check")
+
+        excelService.loginSubmit(login, navigationUrl, filename)
+
+    }
+
+    // OLD FUNCTION
     $scope.generateExcel = function () {
         $scope.url = "teamSport/generateExcel";
         NavigationService.generateExcel($scope.url, function (data) {
@@ -2064,7 +2085,7 @@ myApp.controller('StudentTeamCtrl', function ($scope, TemplateService, Navigatio
 
 //table-individualteamsport
 
-myApp.controller('IndividualTeamCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr, $uibModal, base64Service) {
+myApp.controller('IndividualTeamCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr, $uibModal, base64Service, excelService) {
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tableindividualsport");
@@ -2141,6 +2162,28 @@ myApp.controller('IndividualTeamCtrl', function ($scope, TemplateService, Naviga
         });
     }
 
+    // INITIALISE VARIABLES
+    // $scope.user = $.jStorage.get("user");
+    $scope.login = {};
+    var navigationUrl;
+    var filename = 'IndividualSport';
+
+    // INITIALISE VARIABLES END
+    $scope.loginPopup = function (commonData, type) {
+        if (type === 'excel') {
+            navigationUrl = 'individualSport/generateExcel';
+        }
+        console.log(commonData, "*********************");
+        excelService.loginPopup(commonData, $scope, type);
+    }
+    $scope.loginSubmit = function (login) {
+        console.log(login, "check")
+
+        excelService.loginSubmit(login, navigationUrl, filename)
+
+    }
+
+    // OLD GENERATE EXCEL
     $scope.generateExcel = function () {
         $scope.url = "individualSport/generateExcel";
         NavigationService.generateExcel($scope.url, function (data) {
@@ -2223,7 +2266,7 @@ myApp.controller('ViewIndividualSportCtrl', function ($scope, TemplateService, N
     $scope.getOneOldSchoolById();
 });
 
-myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, base64Service) {
+myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, base64Service, excelService) {
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tableschool");
@@ -2276,6 +2319,7 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
     }
 
 
+
     $scope.filterSchool = function () {
         $scope.url = "Registration/filterSchool";
         $scope.search = $scope.formData.keyword;
@@ -2290,15 +2334,28 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
     };
     $scope.filterSchool();
 
-    // $scope.generateExcel = function () {
-    //     NavigationService.generateSchoolExcel(function (data) {
-    //         window.location.href = adminurl + 'Registration/generateExcel';
-    //     });
-    // }
+    $scope.login = {};
+    var navigationUrl;
+    var filename = 'School';
+
+    // INITIALISE VARIABLES END
+    $scope.loginPopup = function (commonData, type) {
+        if (type === 'excel') {
+            navigationUrl = 'Registration/generateExcel';
+        }
+        console.log(commonData, "*********************");
+        excelService.loginPopup(commonData, $scope, type);
+    }
+    $scope.loginSubmit = function (login) {
+        console.log(login, "check")
+
+        excelService.loginSubmit(login, navigationUrl, filename)
+
+    }
 
     $scope.generateExcel = function (formData) {
         console.log("formdata", formData);
-        NavigationService.generateSchoolExcelWithData(formData, function (data) {});
+        NavigationService.generateSchoolExcelWithData(formData, function (data) { });
     }
 
     $scope.transferToWebsite = function (id) {
@@ -2329,8 +2386,8 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
             window.location = 'http://testhyderabadcollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
         } else if (window.location.origin == 'http://testahmedabadcollege.sfanow.in') {
             window.location = 'http://testahmedabadcollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
-        } else if (window.location.origin == 'http://localhost:8080') {
-            window.location = 'http://localhost:8080/#/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+        } else if (window.location.origin == 'http://localhost:8081') {
+            window.location = 'http://localhost:8082/#/sports-selection/' + 'school/' + $scope.constraints.schoolId;
         }
 
         // window.location = 'http://sfa5.wohlig.co.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
@@ -2356,7 +2413,7 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
     }
 })
 
-myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, base64Service) {
+myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, base64Service, $uibModal, toastr, excelService) {
     //athlete filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tableathlete");
@@ -2433,56 +2490,86 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
             $scope.excelData = data.data;
 
 
-            console.log($scope.zConstraint);  
-            // var zip = new xlsx();  
+            console.log($scope.zConstraint);
+            // var zip = new xlsx();  
             var files = [];
 
             files.push($scope.excelData);
             // console.log("inside files", files);
-            // var img = zip.folder(Athlete);  
+            // var img = zip.folder(Athlete);  
 
-            async.each(files, function (values, callback) {   
+            async.each(files, function (values, callback) {
                 callback();
                 // if (values.Image) {
                 //     var value = values.Image;
                 //     var extension = value.split(".").pop();
-                //     extension = extension.toLowerCase();   
-                //     if (extension == "jpeg") {    
-                //         extension = "jpg";   
-                //     }   
-                //     var i = value.indexOf(".");   
-                //     i--;   
+                //     extension = extension.toLowerCase();   
+                //     if (extension == "jpeg") {    
+                //         extension = "jpg";   
+                //     }   
+                //     var i = value.indexOf(".");   
+                //     i--;   
                 //     var name = values.Name;
 
                 //     getBase64FromImageUrl(adminURL + "upload/readFile?file=" + value, function (imageData) {
                 //         img.file(name + "." + extension, imageData, {
                 //             createFolders: false,
                 //             base64: true
-                //         });  
+                //         });  
                 //         callback();
-                //     }); 
+                //     }); 
                 // } else {
                 //     callback();
                 // }
             }, function (err, data) {
-                zip.generateAsync({    
+                zip.generateAsync({
                     type: "blob",
-                }).then(function (content) {     // see FileSaver.js
+                }).then(function (content) {     // see FileSaver.js
                     saveAs(content, Athlete + ".zip");
                 });
-            }); 
+            });
             // window.location.href = adminurl + 'Athelete/generateExcel';
         });
     }
 
+    // OLD FUNCTIONS
+    $scope.targetAthleteExcel = function () {
+        var param = {};
+        param.file = "targetAthlete"
+        var url = "Athelete/getTargetAthlete"
+        NavigationService.generateExcelWithoutData(url, param, function (data) { });
+    }
     $scope.generateExcel = function (formdata) {
         if (_.isEmpty(formdata.type)) {
             console.log("else");
-            NavigationService.generateAthleteExcelWithData(formdata, function (data) {});
+            NavigationService.generateAthleteExcelWithData(formdata, function (data) { });
         } else {
             console.log(formdata);
-            NavigationService.generateAthleteExcelWithData(formdata, function (data) {});
+            NavigationService.generateAthleteExcelWithData(formdata, function (data) { });
         }
+    }
+    // OLD FUNCTIONS
+    // INITIALISE VARIABLES
+    // $scope.user = $.jStorage.get("user");
+    $scope.login = {};
+    var navigationUrl;
+    var filename = 'Athlete';
+
+    // INITIALISE VARIABLES END
+    $scope.loginPopup = function (commonData, type) {
+        if (type === 'excel') {
+            navigationUrl = 'Athelete/generateExcel';
+        } else if (type === 'targetexcel') {
+            navigationUrl = "Athelete/getTargetAthlete";
+        }
+        console.log(commonData, "*********************");
+        excelService.loginPopup(commonData, $scope, type);
+    }
+    $scope.loginSubmit = function (login) {
+        console.log(login, "check")
+
+        excelService.loginSubmit(login, navigationUrl, filename)
+
     }
     $scope.transferToWebsite = function (id) {
         $scope.constraints = {};
@@ -2567,9 +2654,9 @@ myApp.controller('OldSchoolCtrl', function ($scope, TemplateService, NavigationS
         //     $scope.currentPage = 1;
         // }
         NavigationService.search('School/search', {
-                page: $scope.formData.page,
-                keyword: $scope.formData.keyword
-            }, ++i,
+            page: $scope.formData.page,
+            keyword: $scope.formData.keyword
+        }, ++i,
             function (data, ini) {
                 if (ini == i) {
                     $scope.items = data.data.results;
@@ -2634,22 +2721,22 @@ myApp.controller('ViewSchoolCtrl', function ($scope, TemplateService, Navigation
 });
 
 myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams) {
-        //old school filter view
-        //Used to name the .html file
-        $scope.template = TemplateService.changecontent("viewoldschool");
-        $scope.menutitle = NavigationService.makeactive("View Old School");
-        TemplateService.title = $scope.menutitle;
-        $scope.navigation = NavigationService.getnav();
-        $scope.getOneOldSchoolById = function () {
-            $scope.url = 'School/getOne';
-            $scope.constraints = {};
-            $scope.constraints._id = $stateParams.id;
-            NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
-                $scope.oldschool = data.data;
-            });
-        };
-        $scope.getOneOldSchoolById();
-    })
+    //old school filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("viewoldschool");
+    $scope.menutitle = NavigationService.makeactive("View Old School");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+    $scope.getOneOldSchoolById = function () {
+        $scope.url = 'School/getOne';
+        $scope.constraints = {};
+        $scope.constraints._id = $stateParams.id;
+        NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+            $scope.oldschool = data.data;
+        });
+    };
+    $scope.getOneOldSchoolById();
+})
 
 
 
@@ -2879,7 +2966,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.navigation = NavigationService.getnav();
 
 
-        JsonService.getJson($stateParams.id, function () {});
+        JsonService.getJson($stateParams.id, function () { });
 
         globalfunction.confDel = function (callback) {
             var modalInstance = $uibModal.open({
@@ -2997,9 +3084,9 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             //     $scope.currentPage = 1;
             // }
             NavigationService.search('School/search', {
-                    page: $scope.formData.page,
-                    keyword: $scope.formData.keyword
-                }, ++i,
+                page: $scope.formData.page,
+                keyword: $scope.formData.keyword
+            }, ++i,
                 function (data, ini) {
                     if (ini == i) {
                         $scope.items = data.data.results;
@@ -3056,9 +3143,10 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
                 $scope.currentPage = 1;
             }
             NavigationService.search($scope.json.json.apiCall.url, {
-                    page: $scope.currentPage,
-                    keyword: $scope.search.keyword
-                }, ++i,
+                page: $scope.currentPage,
+                keyword: $scope.search.keyword,
+                input: ''
+            }, ++i,
                 function (data, ini) {
                     if (ini == i) {
                         $scope.items = data.data.results;
@@ -3994,24 +4082,6 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 
     })
 
-    .controller('ExcelUploadCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
-        //Used to name the .html file
-        $scope.template = TemplateService.changecontent("excel-upload");
-        $scope.menutitle = NavigationService.makeactive("Excel Upload");
-        TemplateService.title = $scope.menutitle;
-        $scope.navigation = NavigationService.getnav();
-        $scope.view = "views/excelImportView/" + $stateParams.view + ".html";
-        // $scope.referenceFile = adminurl + "../importFormat/" + $stateParams.referenceFile + ".xlsx";
-        $scope.form = {};
-        $scope.url = $stateParams.controller + "/" + $stateParams.funcName;
-
-        $scope.excelUploaded = function () {
-            NavigationService.uploadExcel($scope.url, $scope.form, function (data) {
-                $scope.data = data.data;
-            });
-        };
-    })
-
     .controller('DetailRoundCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
         //Used to name the .html file
         $scope.template = TemplateService.changecontent("detailround");
@@ -4050,6 +4120,24 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 
     })
 
+    .controller('ExcelUploadCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+        //Used to name the .html file
+        $scope.template = TemplateService.changecontent("excel-upload");
+        $scope.menutitle = NavigationService.makeactive("Excel Upload");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+        $scope.view = "views/excelImportView/" + $stateParams.view + ".html";
+        // $scope.referenceFile = adminurl + "../importFormat/" + $stateParams.referenceFile + ".xlsx";
+        $scope.form = {};
+        $scope.url = $stateParams.controller + "/" + $stateParams.funcName;
+
+        $scope.excelUploaded = function () {
+            NavigationService.uploadExcel($scope.url, $scope.form, function (data) {
+                $scope.data = data.data;
+            });
+        };
+    })
+
     .controller('MatchesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
         //Used to name the .html file
         $scope.template = TemplateService.changecontent("tablematch");
@@ -4064,6 +4152,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.form.page = 1;
         $scope.form.type = '';
         $scope.form.keyword = '';
+        $scope.form.graphics = "no";
 
         $scope.searchInTable = function (data) {
             $scope.form.page = 1;
@@ -4173,8 +4262,11 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.generateExcel = function (data) {
             $scope.qwerty = data;
             console.log("data..................", data);
-            $scope.url = "match/generateExcel";
-
+            if (data.graphics == "yes") {
+                $scope.url = "match/generateGraphicsExcel";
+            } else {
+                $scope.url = "match/generateExcel";
+            }
             NavigationService.generateExcelWithData($scope.url, $scope.qwerty, function (data) {
                 // console.log("............data", data);
                 // $window.scrollTop(0);
@@ -4189,6 +4281,16 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 
             NavigationService.generateBlankExcelWithData($scope.url, $scope.blank, function (data) {
                 $state.reload();
+            });
+        }
+
+        $scope.weightUpload = function (data) {
+            $scope.url = "Match/weightUpload";
+            $scope.constraints = {};
+            $scope.constraints = data;
+            console.log("form", $scope.constraints);
+            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+                console.log("data upload", data);
             });
         }
 
@@ -4249,10 +4351,12 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             });
             if ($scope.form.sportslist.sportsListSubCategory.isTeam) {
                 console.log("in tema");
+                // TEAM SPORTS PAGE
                 $state.go('format-teamtable', {
                     type: data.sportslist.drawFormat.name
                 })
             } else {
+                // REMANING SPORT PAGE
                 $state.go('format-table', {
                     type: data.sportslist.drawFormat.name
                 });
@@ -4262,28 +4366,28 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             $scope.viewTable(data);
         }
 
-        $scope.specificFormat = function (draw, matchid, team) {
-            console.log("click")
-            console.log(team)
-            if (team == false) {
-                console.log("team fasle")
-                if (draw == "Combat Sports" || "Racquet Sports") {
-                    $state.go('detailplayer', {
-                        id: matchid
-                    });
-                } else {
-                    toastr.error("Something went wrong")
-                }
-            } else if (team == true) {
-                if (draw == "Combat Sports" || "Racquet Sports") {
-                    $state.go('detailteam', {
-                        id: matchid
-                    });
-                } else {
-                    toastr.error("team error")
-                }
-            }
-        }
+        // $scope.specificFormat = function (draw, matchid, team) {
+        //     console.log("click")
+        //     console.log(team)
+        //     if (team == false) {
+        //         console.log("team fasle")
+        //         if (draw == "Combat Sports" || "Racquet Sports") {
+        //             $state.go('detailplayer', {
+        //                 id: matchid
+        //             });
+        //         } else {
+        //             toastr.error("Something went wrong")
+        //         }
+        //     } else if (team == true) {
+        //         if (draw == "Combat Sports" || "Racquet Sports") {
+        //             $state.go('detailteam', {
+        //                 id: matchid
+        //             });
+        //         } else {
+        //             toastr.error("team error")
+        //         }
+        //     }
+        // }
 
 
         $scope.genderList = [];
@@ -4305,12 +4409,26 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 
 
 
-    .controller('MedalsCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+    .controller('MedalsCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $uibModal, $state, toastr) {
         //Used to name the .html file
         $scope.template = TemplateService.changecontent("tablemedal");
         $scope.menutitle = NavigationService.makeactive("Medal List");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
+        $scope.changeInput = function () {
+            if ($scope.formData.input != '') {
+                $scope.formData.input = '';
+            } else {
+                $scope.formData.input = $scope.formData.input;
+            }
+        };
+        $scope.changeAll = function () {
+            $scope.formData = {};
+            $scope.formData.page = 1;
+            $scope.formData.type = '';
+            $scope.formData.keyword = '';
+            $scope.viewTable();
+        };
         $scope.formData = {};
         $scope.formData.page = 1;
         $scope.formData.type = '';
@@ -4327,14 +4445,145 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             }
         }
         $scope.viewTable = function () {
-            $scope.url = "Rules/search";
+            // $scope.url = "Medal/getAllMedals";
+            $scope.url = "Medal/search";
             $scope.formData.page = $scope.formData.page++;
             NavigationService.apiCall($scope.url, $scope.formData, function (data) {
                 console.log("data.value", data);
-                $scope.items = data.data.results;
+                if (data.value) {
+                    $scope.items = data.data.results;
+                    console.log(" $scope.items", $scope.items);
+                    _.each($scope.items, function (key) {
+                        console.log("key", key);
+                        key.ageGroup = key.sport.ageGroup.name;
+                        key.gender = key.sport.gender;
+                        key.sportslist = key.sport.sportslist.name;
+                        key.sportListSubCat = key.sport.sportslist.sportsListSubCategory.name;
+                        if (key.sport.weight) {
+                            key.weight = key.sport.weight.name;
+                        }
+                        if (key.sportListSubCat !== key.sportslist && key.ageGroup && key.gender) {
+                            key.name = key.sportListSubCat + ' - ' + key.ageGroup + ' - ' + key.gender + ' - ' + key.sportslist;
+                        }
+                        if (key.sportListSubCat !== key.sportslist && key.weight && key.ageGroup && key.gender) {
+                            key.name = key.sportListSubCat + ' - ' + key.ageGroup + ' - ' + key.gender + ' - ' + '(' + key.weight + ')' + ' - ' + key.sportslist;
+
+                        }
+                        if (key.sportListSubCat === key.sportslist && key.ageGroup && key.gender) {
+                            key.name = key.sportListSubCat + ' - ' + key.ageGroup + ' - ' + key.gender;
+                        }
+                        if (key.sportListSubCat === key.sportslist && key.weight) {
+                            key.name = key.sportListSubCat + ' - ' + key.ageGroup + ' - ' + key.gender + ' - ' + '(' + key.weight + ')';
+                        }
+
+
+                    })
+                }
+
                 $scope.totalItems = data.data.total;
                 $scope.maxRow = data.data.options.count;
             });
+        }
+        $scope.viewTable();
+        $scope.updateTable = function () {
+            // $scope.url = "Medal/getAllMedals";
+            $scope.url = "Result/getSchool";
+            $scope.formData = '';
+            NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+                console.log("Hi", data);
+            });
+        }
+        $scope.confDel = function (data) {
+            $scope.id = data;
+            $scope.modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: 'views/modal/delete.html',
+                backdrop: 'static',
+                keyboard: false,
+                size: 'sm',
+                scope: $scope
+
+            });
+        };
+
+        $scope.noDelete = function () {
+            $scope.modalInstance.close();
+        }
+        $scope.delete = function (data) {
+            console.log(data);
+            $scope.url = "Medal/delete";
+            $scope.constraints = {};
+            $scope.constraints._id = data;
+            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+                console.log("data.value", data);
+                if (data.value) {
+                    toastr.success('Successfully Deleted', 'Rules Meaasge');
+                    $scope.modalInstance.close();
+                    $scope.viewTable();
+                } else {
+                    toastr.error('Something went wrong while Deleting', 'Rules Meaasge');
+                }
+
+            });
+        }
+        $scope.generateExcel = function () {
+            NavigationService.generateMedalExcel(function (data) {
+                window.location.href = adminurl + 'Medal/generateExcel';
+            });
+        }
+    })
+    .controller('MediaCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $uibModal, $state, toastr) {
+        //Used to name the .html file
+        $scope.template = TemplateService.changecontent("media");
+        $scope.menutitle = NavigationService.makeactive("Media List");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+        $scope.form = {};
+        $scope.excelUploaded = function () {
+            NavigationService.uploadExcel("Media/uploadExcel", $scope.form, function (data) {
+                console.log(data);
+                $scope.data = data.data;
+                $scope.viewTable();
+            });
+        };
+
+        $scope.generateExcel = function (press, sample) {
+            $scope.url = "media/generateExcel";
+            NavigationService.generateMediaExcel($scope.url, {
+                'press': press
+            }, function (data) {
+                window.location.href = adminurl + $scope.url + "?press=" + press + "&sample=" + sample;
+            });
+        };
+        $scope.formData = {};
+        $scope.formData.page = 1;
+        $scope.formData.type = '';
+        $scope.formData.keyword = '';
+        // $scope.selectedStatus = 'All';
+        $scope.searchInTable = function (data) {
+            $scope.formData.page = 1;
+            if (data.length >= 2) {
+                $scope.formData.keyword = data;
+                $scope.viewTable();
+            } else if (data.length == '') {
+                $scope.formData.keyword = data;
+                $scope.viewTable();
+            }
+        }
+        $scope.viewTable = function () {
+            $scope.url = "Media/search";
+            $scope.formData.page = $scope.formData.page++;
+            NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+                console.log("data.value", data);
+                if (data.value) {
+                    $scope.items = data.data.results;
+                    $scope.totalItems = data.data.total;
+                    $scope.maxRow = data.data.options.count;
+                }
+
+
+            });
+
         }
         $scope.viewTable();
         $scope.confDel = function (data) {
@@ -4355,7 +4604,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         }
         $scope.delete = function (data) {
             console.log(data);
-            $scope.url = "Rules/delete";
+            $scope.url = "Media/delete";
             $scope.constraints = {};
             $scope.constraints._id = data;
             NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
@@ -4370,44 +4619,154 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 
             });
         }
-    })
 
+    })
     .controller('DetailMedalCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
         //Used to name the .html file
         $scope.template = TemplateService.changecontent("detailmedal");
         $scope.menutitle = NavigationService.makeactive("Medal Detail");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
-        $scope.medalForm = {};
+        $scope.studentTeam = [];
+        $scope.filterObj = {};
+        $scope.medalInfoForm = {};
+        $scope.medalInfoForm.studentTeam = [];;
+        $scope.medalInfoForm.school = [];
+        $scope.medalTypeArr = ['gold', 'silver', 'bronze'];
+        $scope.genderList = ['male', 'female', 'mixed'];
 
-        $scope.sportList = [{
-            name: 'Football'
-        }, {
-            name: 'Hockey'
-        }, {
-            name: 'Kho-Kho'
-        }]
+        $scope.onCancel = function (sendTo) {
+            $state.go(sendTo);
+        }
 
         if ($stateParams.id != '') {
             $scope.title = "Edit";
+            $scope.setDisabled = true;
             $scope.getOneOldSchoolById = function () {
-                $scope.url = "SportsList/getOne";
+                $scope.url = "Medal/getOneMedal";
                 $scope.constraints = {};
                 $scope.constraints._id = $stateParams.id;
                 NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
-                    $scope.medalForm = data.data;
+                    $scope.medalInfoForm = data.data;
+                    if ($scope.medalInfoForm.team.length > 0) {
+                        _.each($scope.medalInfoForm.team, function (team, index) {
+                            $scope.medalInfoForm.school[index].uniqueId = team._id;
+                            team.fullName = team.teamId + ' - ' + team.schoolName
+                        })
+                        $scope.showTeams = true;
+                        $scope.showAthletes = false;
+                        console.log(" $scope.medalForm", $scope.medalInfoForm);
+                        _.each($scope.medalInfoForm.team, function (key) {
+                            _.each(key.studentTeam, function (value) {
+                                $scope.studentTeam.push(value);
+                            })
+                        })
+
+                        _.each($scope.studentTeam, function (val) {
+                            if (val.studentId.middleName) {
+                                val.fullName = val.studentId.firstName + ' ' + val.studentId.middleName + ' ' + val.studentId.surname
+                            } else {
+                                val.fullName = val.studentId.firstName + ' ' + val.studentId.surname
+                            }
+                        });
+                        $scope.medalInfoForm.studentTeam = _.cloneDeep($scope.studentTeam);
+
+
+                    } else {
+                        $scope.showTeams = false;
+                        $scope.showAthletes = true;
+                        _.each($scope.medalInfoForm.player, function (athelete, index) {
+                            $scope.medalInfoForm.school[index].uniqueId = athelete._id;
+                            if (athelete.athleteId !== null) {
+                                if (athelete.middleName != null || athelete.middleName != undefined) {
+                                    athelete.fullName = athelete.sfaId + ' - ' + athelete.firstName + ' ' + athelete.middleName + ' ' + athelete.surname;
+                                } else {
+                                    if (!athelete.middleName) {
+                                        athelete.fullName = athelete.sfaId + ' - ' + athelete.firstName + ' ' + athelete.surname;
+                                    }
+
+                                }
+                            }
+
+                        })
+
+                    }
+
+                    $scope.editMedalInfoObj = {};
+                    $scope.editMedalInfoObj.medalId = $stateParams.id;
+                    if ($scope.medalInfoForm.weight) {
+                        $scope.editMedalInfoObj.weight = $scope.medalInfoForm.weight._id;
+                    }
+
+                    $scope.editMedalInfoObj.ageGroup = $scope.medalInfoForm.ageGroup._id;
+                    $scope.editMedalInfoObj.gender = $scope.medalInfoForm.gender;
+                    $scope.editMedalInfoObj.sportslist = $scope.medalInfoForm.sportslist._id;
+                    $scope.editMedalInfoObj.medalType = $scope.medalInfoForm.medalType;
+
+                    NavigationService.getTeamsAthletesBySport($scope.editMedalInfoObj, function (data) {
+                        console.log(" $scope.editMedalInfoObj", $scope.editMedalInfoObj);
+                        console.log(data, "In Edit Function");
+                        if (data.data.value) {
+                            if (data.data.data.allow === false) {
+                                $scope.disableSave = true;
+                                toastr.error('This sport has already been added', 'Error Message');
+                            } else {
+                                $scope.disableSave = false;
+                            }
+                            if (data.data.data.teams && data.data.data.teams.length > 0) {
+                                $scope.showTeams = true;
+                                $scope.showAthletes = false;
+                                $scope.allTeams = data.data.data.teams;
+
+                                _.each($scope.allTeams, function (team) {
+                                    team.fullName = team.teamId + ' - ' + team.schoolName
+                                })
+
+                                // for reamoving duplicate records in $scope.allTeams
+                                // _.each($scope.medalInfoForm.team, function (key) {
+                                //     if (key._id) {
+                                //         _.remove($scope.allTeams, function (n) {
+                                //             return n._id === key._id;
+                                //         });
+                                //     }
+
+                                // })
+
+
+                            } else if (data.data.data.athletes && data.data.data.athletes.length > 0) {
+                                $scope.showAthletes = true;
+                                $scope.showTeams = false;
+                                $scope.allAtheletes = data.data.data.athletes;
+                                _.each($scope.allAtheletes, function (athelete) {
+                                    if (athelete.athleteId !== null) {
+                                        if (athelete.athleteId.middleName != null || athelete.athleteId.middleName != undefined) {
+                                            athelete.fullName = athelete.athleteId.sfaId + ' - ' + athelete.athleteId.firstName + ' ' + athelete.athleteId.middleName + ' ' + athelete.athleteId.surname;
+                                        } else {
+                                            if (!athelete.athleteId.middleName) {
+                                                athelete.fullName = athelete.athleteId.sfaId + ' - ' + athelete.athleteId.firstName + ' ' + athelete.athleteId.surname;
+                                            }
+
+                                        }
+                                    }
+
+                                })
+                                console.log("  $scope.$scope.allAtheletes ", $scope.allAtheletes);
+                            }
+                        }
+                    })
+
+
                 });
             };
             $scope.getOneOldSchoolById();
             $scope.saveData = function (data) {
                 if (data) {
-                    $scope.url = "SportsList/save";
+                    $scope.url = "Medal/saveMedal";
                     NavigationService.apiCall($scope.url, data, function (data) {
                         console.log("data.value", data);
                         if (data.data.nModified == '1') {
                             toastr.success(" Updated Successfully", "SportList Message");
-                            $state.go('sportslist');
-
+                            $state.go('medals');
                         }
 
                     });
@@ -4415,38 +4774,259 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
                     toastr.error("Invalid Data", "SportList Message");
                 }
             };
+            $scope.removeSchool = function (item) {
+                console.log(item, "item");
+                if (item) {
+                    if (item.atheleteID) {
+                        var findIndex = _.findIndex($scope.medalInfoForm.school, {
+                            'uniqueId': item._id
+                        });
+                        console.log(findIndex, "findIndex");
+                        $scope.medalInfoForm.school.splice(findIndex, 1);
+                    } else if (!item.atheleteID) {
+                        var findIndex = _.findIndex($scope.medalInfoForm.school, {
+                            'uniqueId': item._id
+                        });
+                        console.log(findIndex, "findIndex");
+                        $scope.medalInfoForm.school.splice(findIndex, 1);
+                    }
+                }
+                if (item._id) {
+                    _.remove($scope.medalInfoForm.studentTeam, function (n) {
+                        return n.teamId === item._id;
+                    });
+
+                }
+
+            }
 
         } else {
-
             $scope.title = 'Create';
-            $scope.saveData = function (data, formvalid) {
+            $scope.setDisabled = false;
+            $scope.saveData = function (data) {
                 if (data) {
-                    if (formvalid.$valid) {
-                        // data.sportsListSubCategory = $scope.sportlistsubcategory;
-                        $scope.url = "SportsList/save";
+                    if (!_.isEmpty(data)) {
+                        $scope.url = "Medal/saveMedal";
                         console.log(data);
                         NavigationService.apiCall($scope.url, data, function (data) {
                             console.log("data.value", data);
                             if (data.value === true) {
-                                toastr.success(" Saved Successfully", "SportList Message");
-                                $state.go('sportslist');
+                                toastr.success(" Saved Successfully", "MedalList Message");
+                                $state.go('medals');
 
                             } else {
-                                toastr.error("Please enter all fields", 'SportList Message')
+                                toastr.error("Please enter all fields", 'MedalList Message')
+                                if (data.error === "No Data Found") {
+                                    toastr.error("No data found", 'Error Message');
+                                }
                             }
-
                         });
                     } else {
-                        toastr.error("Please enter all fields", 'SportList Message')
+                        toastr.error("Please enter all fields", 'MedalList Message')
                     }
                 } else {
-                    toastr.error("Invalid Data", "SportList Message");
+                    toastr.error("Invalid Data", "MedalList Message");
                 }
             };
+
+
 
         }
 
 
+
+
+        //for getting AllSpotsList
+        $scope.getAllSpotsList = function (data) {
+            $scope.constraints = {};
+            $scope.constraints.keyword = data;
+            NavigationService.getAllSpotsList($scope.constraints, function (allData) {
+                if (allData.value) {
+                    $scope.sportList = allData.data.results;
+                }
+            });
+        }
+        $scope.getAllSpotsList();
+        // for getting AllAgeGroups
+        NavigationService.getAllAgeGroups(function (allData) {
+            if (allData.data.value) {
+                $scope.ageGroups = allData.data.data;
+            }
+        });
+        //for getting All Weights
+        NavigationService.getAllWeights(function (data) {
+            if (data.data.value) {
+                $scope.allWeights = data.data.data;
+            }
+        });
+        //function to be called for displaying student team
+        $scope.getStudentTeam = function (item) {
+            console.log("item", item);
+            _.each(item.studentTeam, function (val) {
+                if (val.studentId.middleName) {
+                    val.fullName = val.studentId.firstName + ' ' + val.studentId.middleName + ' ' + val.studentId.surname
+                } else {
+                    val.fullName = val.studentId.firstName + ' ' + val.studentId.surname
+                }
+                $scope.medalInfoForm.studentTeam.push(val);
+            });
+
+        }
+        //fn to be call for getting schoolName
+        $scope.getSchoolNameFun = function (constraintsObj, url, uniqueId) {
+            NavigationService.getOneSchool(constraintsObj, url, function (data) {
+                if (data.data.value) {
+                    console.log(data.data.data, "data");
+                    $scope.schoolInfo = {};
+                    $scope.schoolInfo.schoolId = data.data.data._id;
+                    $scope.schoolInfo.schoolName = data.data.data.schoolName;
+                    $scope.schoolInfo.uniqueId = uniqueId;
+                    if (!data.data.data.schoolName) {
+                        $scope.schoolInfo.schoolName = data.data.data.name;
+                    }
+                    $scope.medalInfoForm.school.push($scope.schoolInfo);
+
+                    console.log("$scope.schoolList", $scope.medalInfoForm.school);
+                }
+            })
+        }
+        //start of getSchoolName() function
+        $scope.getSchoolName = function (schoolId) {
+            console.log(schoolId, "schoolId");
+            $scope.constraintsObj = {};
+            if (!schoolId.teamId) {
+                if (schoolId.athleteId.atheleteSchoolName || schoolId.athleteId.school) {
+                    if (!_.isEmpty(schoolId.athleteId.atheleteSchoolName)) {
+                        console.log("schoolId.atheleteSchoolName", schoolId);
+                        $scope.tempObj = {};
+                        $scope.tempObj.uniqueId = schoolId.athleteId._id;
+                        $scope.tempObj.schoolName = schoolId.athleteId.atheleteSchoolName;
+                        $scope.medalInfoForm.school.push($scope.tempObj);
+                        console.log($scope.medalInfoForm.school, "  $scope.medalInfoForm.school");
+                    } else {
+                        $scope.urlTosend = 'school/getOne';
+                        if (!_.isEmpty(schoolId.athleteId.school)) {
+                            $scope.constraintsObj._id = schoolId.athleteId.school;
+                            $scope.getSchoolNameFun($scope.constraintsObj, $scope.urlTosend, schoolId.athleteId._id);
+                        }
+                    }
+
+                }
+            } else {
+                //for team 
+                if (schoolId.school) {
+                    $scope.urlTosend = 'registration/getOne'
+                    $scope.constraintsObj._id = schoolId.school;
+                    $scope.getSchoolNameFun($scope.constraintsObj, $scope.urlTosend, schoolId._id);
+                } else {
+                    $scope.schoolInfo = {};
+                    $scope.schoolInfo.schoolName = schoolId.schoolName;
+                    $scope.schoolInfo.uniqueId = schoolId._id;
+                    $scope.medalInfoForm.school.push($scope.schoolInfo);
+                }
+            }
+
+
+        }
+
+        //End  of getSchoolName() function
+
+        //for getting allAtheletes or allTeams
+
+        $scope.selectSport = function (type, id) {
+            $scope.allTeams = [];
+            $scope.allAtheletes = [];
+            if (type === 'sportName') {
+                $scope.filterObj.sportslist = id;
+            } else if (type === 'gender') {
+                $scope.filterObj.gender = id;
+            } else if (type === 'weight') {
+                $scope.filterObj.weight = id;
+            } else if (type === 'ageGroup') {
+                $scope.filterObj.ageGroup = id;
+            } else if (type === 'medalType') {
+                $scope.filterObj.medalType = id;
+            }
+
+            if ($scope.filterObj.sportslist && $scope.filterObj.gender && $scope.filterObj.ageGroup || $scope.filterObj.weight) {
+                console.log($scope.filterObj, " $scope.filterObj");
+                NavigationService.getTeamsAthletesBySport($scope.filterObj, function (data) {
+                    console.log(data, "data");
+                    if (data.data.value) {
+                        console.log("dataaaaaaa", data.data);
+                        if (data.data.data === 'No Data Found') {
+                            $scope.disableSave = true;
+                        }
+
+                        if (data.data.data.allow === false) {
+                            $scope.disableSave = true;
+                            toastr.error('This sport has already been added', 'Error Message');
+                        }
+
+                        if (data.data.data.teams && data.data.data.teams.length > 0) {
+                            $scope.showTeams = true;
+                            $scope.showAthletes = false;
+                            $scope.allTeams = data.data.data.teams;
+                            _.each($scope.allTeams, function (team) {
+                                team.fullName = team.teamId + ' - ' + team.schoolName
+                            })
+                            console.log("  $scope.allTeams  ", $scope.allTeams);
+                        } else if (data.data.data.athletes && data.data.data.athletes.length > 0) {
+                            $scope.showAthletes = true;
+                            $scope.showTeams = false;
+                            $scope.allAtheletes = data.data.data.athletes;
+                            if (!_.isEmpty($scope.filterObj.weight) && data.data.data.athletes === 0) {
+                                $scope.disableSave = true;
+                            } else {
+                                $scope.disableSave = false;
+                            }
+                            _.each($scope.allAtheletes, function (athelete) {
+                                if (athelete.athleteId !== null) {
+                                    if (athelete.athleteId.middleName != null || athelete.athleteId.middleName != undefined) {
+                                        athelete.fullName = athelete.athleteId.sfaId + ' - ' + athelete.athleteId.firstName + ' ' + athelete.athleteId.middleName + ' ' + athelete.athleteId.surname;
+                                    } else {
+                                        if (!athelete.athleteId.middleName) {
+                                            athelete.fullName = athelete.athleteId.sfaId + ' - ' + athelete.athleteId.firstName + ' ' + athelete.athleteId.surname;
+                                        }
+
+                                    }
+                                }
+
+                            })
+                            console.log("  $scope.$scope.allAtheletes ", $scope.allAtheletes);
+                        }
+                    }
+                })
+            }
+        }
+
+
+        $scope.removeSchool = function (item) {
+            console.log(item, "item");
+            if (item) {
+                if (item.athleteId) {
+                    var findIndex = _.findIndex($scope.medalInfoForm.school, {
+                        'uniqueId': item.athleteId._id
+                    });
+                    console.log(findIndex, "findIndex");
+                    $scope.medalInfoForm.school.splice(findIndex, 1);
+                } else if (!item.athleteId) {
+                    console.log("$scope.medalInfoForm.school before", $scope.medalInfoForm.school);
+                    var findIndex = _.findIndex($scope.medalInfoForm.school, {
+                        'uniqueId': item._id
+                    });
+                    $scope.medalInfoForm.school.splice(findIndex, 1);
+
+                }
+            }
+            if (item._id) {
+                _.remove($scope.medalInfoForm.studentTeam, function (n) {
+                    return n.teamId === item._id;
+                });
+
+            }
+
+        }
     })
 
     .controller('GalleryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
@@ -4706,7 +5286,6 @@ myApp.controller('DetailCertificateDetailsCtrl', function ($scope, TemplateServi
         $scope.saveData = function (data) {
             $scope.title = "Create";
             if (data) {
-
                 $scope.url = "CertificateDetails/save";
                 NavigationService.apiCall($scope.url, data, function (data) {
                     console.log("data.value", data);
@@ -4730,6 +5309,7 @@ myApp.controller('DetailCertificateDetailsCtrl', function ($scope, TemplateServi
             if (data) {
 
                 $scope.url = "CertificateDetails/save";
+                console.log(data);
                 NavigationService.apiCall($scope.url, data, function (data) {
                     console.log("data.value", data);
                     if (data.value === true) {
@@ -4746,7 +5326,20 @@ myApp.controller('DetailCertificateDetailsCtrl', function ($scope, TemplateServi
 
     }
 
-
+    $scope.getAllSportListSubCategory = function (data) {
+        console.log(data);
+        $scope.url = "SportsListSubCategory/search";
+        $scope.constraints = {};
+        $scope.constraints.keyword = data;
+        NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+            console.log("data.value", data);
+            $scope.sportstypeitems = data.data.results;
+        });
+    }
+    $scope.searchSportListSubCategory = function (data) {
+        console.log(data);
+        $scope.sportlistsubcategory = data._id;
+    }
 
     $scope.onCancel = function (sendTo) {
         $state.go(sendTo);
@@ -4754,13 +5347,147 @@ myApp.controller('DetailCertificateDetailsCtrl', function ($scope, TemplateServi
 
 
 });
+
+myApp.controller('AdditionalPaymentCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("tableadditionalpayment");
+    $scope.menutitle = NavigationService.makeactive("Additional Payment List");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+    $scope.formData = {};
+    $scope.formData.page = 1;
+    $scope.formData.type = '';
+    $scope.formData.keyword = '';
+
+    $scope.searchInTable = function (data) {
+        $scope.formData.page = 1;
+        if (data.length >= 2) {
+            $scope.formData.keyword = data;
+            $scope.viewTable();
+        } else if (data.length == '') {
+            $scope.formData.keyword = data;
+            $scope.viewTable();
+        }
+    }
+    $scope.viewTable = function () {
+
+        $scope.url = "AdditionalPayment/filter";
+        // $scope.search = $scope.formData.keyword;
+        $scope.formData.page = $scope.formData.page++;
+        NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+            // console.log("data.value", data);
+            $scope.items = data.data.results;
+            _.each($scope.items, function (n) {
+                // console.log('N', n);
+                if (n.athleteId) {
+                    if (n.athleteId.middleName) {
+                        n.athleteName = n.athleteId.firstName + ' ' + n.athleteId.middleName + ' ' + n.athleteId.surname;
+                    } else {
+                        n.athleteName = n.athleteId.firstName + ' ' + n.athleteId.surname;
+                    }
+                    n.sfaId = n.athleteId.sfaId;
+                }
+            });
+            $scope.totalItems = data.data.total;
+            $scope.maxRow = data.data.options.count;
+        });
+    }
+    $scope.viewTable();
+
+
+    $scope.confDel = function (data) {
+        $scope.id = data;
+        $scope.modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: 'views/modal/delete.html',
+            backdrop: 'static',
+            keyboard: false,
+            size: 'sm',
+            scope: $scope
+        });
+    };
+
+
+    $scope.noDelete = function () {
+        $scope.modalInstance.close();
+    }
+
+    $scope.delete = function (data) {
+        // console.log(data);
+        $scope.url = "AdditionalPayment/delete";
+        $scope.constraints = {};
+        $scope.constraints._id = data;
+        NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+            if (data.value) {
+                toastr.success('Successfully Deleted', 'Additional Payment Message');
+                $scope.modalInstance.close();
+                $scope.viewTable();
+            } else {
+                toastr.error('Something Went Wrong while Deleting', 'Additional Payment Message');
+            }
+        });
+    }
+
+    $scope.generateExcel = function () {
+        NavigationService.generateAdditionalPaymentExcel(function (data) {
+            window.location.href = adminurl + 'AdditionalPayment/generateExcel';
+        });
+    }
+
+});
+
+myApp.controller('DetailAdditionalPaymentCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("detailadditionalpayment");
+    $scope.menutitle = NavigationService.makeactive("Detail Additional Payment");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+
+    if ($stateParams.id) {
+        $scope.getOneOldSchoolById = function () {
+            $scope.url = 'AdditionalPayment/getOne';
+            $scope.constraints = {};
+            $scope.constraints._id = $stateParams.id;
+            NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+                $scope.formData = data.data;
+                if (data.data.athleteId.middleName) {
+                    $scope.formData.athleteName = data.data.athleteId.firstName + ' ' + data.data.athleteId.middleName + ' ' + data.data.athleteId.surname;
+                } else {
+                    $scope.formData.athleteName = data.data.athleteId.firstName + ' ' + data.data.athleteId.surname;
+                }
+                $scope.formData.sfaId = data.data.athleteId.sfaId;
+                $scope.formData.email = data.data.athleteId.email;
+            });
+        };
+        $scope.getOneOldSchoolById();
+    }
+
+    $scope.saveData = function (data) {
+        console.log("data", data);
+        if (data) {
+            $scope.url = "AdditionalPayment/save";
+            NavigationService.apiCall($scope.url, data, function (data) {
+                console.log("data.value", data);
+                if (data.value) {
+                    toastr.success(" Updated Successfully", "SportList Message");
+                    $state.go('additional-payment');
+                }
+            });
+        } else {
+            toastr.error("Invalid Data", "SportList Message");
+        }
+    };
+
+
+});
+
 myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
-        //Used to name the .html file
-        $scope.template = TemplateService.changecontent("dashboard");
-        $scope.menutitle = NavigationService.makeactive("Dashboard");
-        TemplateService.title = $scope.menutitle;
-        $scope.navigation = NavigationService.getnav();
-    })
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("dashboard");
+    $scope.menutitle = NavigationService.makeactive("Dashboard");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+})
 
     .controller('headerctrl', function ($scope, TemplateService, $uibModal) {
         $scope.template = TemplateService;

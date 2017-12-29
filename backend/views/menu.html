@@ -4,8 +4,15 @@
     <a ng-if="menu.sref == ''" class="o-i"><i class="ln-{{menu.icon}}"></i> <span class="{{menu.classis}}">{{menu.name}}</span></a>
     <ul ng-if="menu.subnav!='';">
       <li ng-repeat="submenu in menu.subnav">
+        <a ng-if="submenu.sref == ''" class="o-i"><i class="ln-{{submenu.icon}}"></i> <span class="{{submenu.classis}}">{{submenu.name}}</span></a>
         <a href="{{submenu.sref}}" ng-if="submenu.sref"><i class="ln-{{submenu.icon}}"></i> <span class="{{menu.classis}}">{{submenu.name}}</span></a>
         <a href="{{submenu.link}}" ng-if="submenu.link"><i class="ln-{{submenu.icon}}"></i> <span class="{{menu.classis}}">{{submenu.name}}</span></a>
+        <ul ng-if="submenu.subnavs!='';" style="padding: 5px 0px 0px;">
+          <li ng-repeat="submenus in submenu.subnavs">
+            <a href="{{submenus.sref}}" ng-if="submenus.sref"><i class="ln-{{submenus.icon}}"></i> <span class="{{menu.classis}}">{{submenus.name}}</span></a>
+            <a href="{{submenus.link}}" ng-if="submenus.link"><i class="ln-{{submenus.icon}}"></i> <span class="{{menu.classis}}">{{submenus.name}}</span></a>
+          </li>
+        </ul>
       </li>
     </ul>
   </li>
