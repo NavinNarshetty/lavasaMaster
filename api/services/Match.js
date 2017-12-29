@@ -17084,7 +17084,7 @@ var model = {
                                     function (err, match) {
                                         callback(null, match);
                                     });
-                            } else if (mainData.opponentsSingle.length == 0) {
+                            } else if (matchData.opponentsSingle.length == 0) {
                                 final.push(data.opponentsSingle);
                                 var matchObj = {
                                     $set: {
@@ -17120,7 +17120,7 @@ var model = {
                                     function (err, match) {
                                         callback(null, match);
                                     });
-                            } else if (mainData.opponentsTeam.length == 0) {
+                            } else if (matchData.opponentsTeam.length == 0) {
                                 final.push(data.opponentsTeam);
                                 var matchObj = {
                                     $set: {
