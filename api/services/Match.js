@@ -17414,7 +17414,7 @@ var model = {
                             if (matchData.opponentsSingle.length == 1) {
                                 final.push(matchData.opponentsSingle[0]);
 
-                                final.push(objectid(data.opponentsSingle));
+                                final.push(data.opponentsSingle[0]);
                                 var matchObj = {
                                     $set: {
                                         opponentsSingle: final
@@ -17427,7 +17427,7 @@ var model = {
                                         callback(null, match);
                                     });
                             } else if (matchData.opponentsSingle.length == 0) {
-                                final.push(objectid(data.opponentsSingle));
+                                final = data.opponentsSingle;
                                 var matchObj = {
                                     $set: {
                                         opponentsSingle: final
@@ -17450,7 +17450,7 @@ var model = {
                             if (matchData.opponentsTeam.length == 1) {
                                 final.push(matchData.opponentsTeam[0]);
 
-                                final.push(objectid(data.opponentsTeam));
+                                final.push(data.opponentsTeam[0]);
                                 var matchObj = {
                                     $set: {
                                         opponentsTeam: final
@@ -17463,7 +17463,7 @@ var model = {
                                         callback(null, match);
                                     });
                             } else if (matchData.opponentsTeam.length == 0) {
-                                final.push(objectid(data.opponentsTeam));
+                                final = data.opponentsTeam;
                                 var matchObj = {
                                     $set: {
                                         opponentsTeam: final
