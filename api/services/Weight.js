@@ -19,9 +19,18 @@ var model = {
                 if (_.isEmpty(found)) {
                     callback(null, []);
                 } else {
-                    console.log("found0", found);
                     callback(null, found);
                 }
+            }
+        });
+    },
+
+    getWeightsByEvent: function(data,callback){
+        Sport.find(data,"weight").deepPopulate("weight").select({"_id":0}).lean().exec(function(err,data){
+            if(err){
+                callback(err,null);
+            }else{
+                callback(null,data);
             }
         });
     },
@@ -55,5 +64,21 @@ var model = {
             }
         });
     },
+
+    getAthletesByEvent: function(data,callback){
+        // console.log("sport",data);
+        IndividualSport.find(data,"athleteId sport").deepPopulate("athleteId athleteId.school").exec(function(err,result){
+            if(err){
+                callback(err,null);
+            }else if(!_.isEmpty(result)){
+                callback(null,result);
+            }else{
+                callback("No Athletes Found",[]);
+            }
+        });
+    },
+
+   
+
 };
 module.exports = _.assign(module.exports, exports, model);
