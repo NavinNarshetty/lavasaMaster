@@ -43,7 +43,7 @@
       <!-- HEADER FORM -->
       <!-- MATCH DISPLAY SECTION -->
       <div class="creatematch-displaysection">
-        <div class="creatematch-roundholder" ng-repeat="round in roundsList track by $index" ng-init="round.roundIndex = $index">
+        <div class="creatematch-roundholder" ng-repeat="round in roundsList track by $index">
           <div class="creatematch-roundhead">
             {{round.name}}
           </div>
@@ -139,7 +139,7 @@
                     </div>
                     <div class="text-right" ng-if="matchForm.sportType == 'Qualifying Round'">
                       <button class="btn btn-green-outline mlr-10" ng-click="matchEditQf(heat, 'edit');" ng-if="heat.opponentsSingle.length == 0">Edit</button>
-                      <button class="btn btn-green-outline mlr-10" ng-click="deleteQf();" ng-if="heat.opponentsSingle.length != 0 && round.roundIndex != 0"><i class="fa fa-trash-o"></i> Delete</button>
+                      <button class="btn btn-green-outline mlr-10" ng-click="deletePopup(heat);" ng-if="heat.opponentsSingle.length != 0 && round.roundIndex != 0"><i class="fa fa-trash-o"></i> Delete</button>
                     </div>
                   </td>
                 </tr>

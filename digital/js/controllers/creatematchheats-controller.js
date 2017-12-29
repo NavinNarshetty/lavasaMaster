@@ -46,6 +46,9 @@ myApp.controller('CreateMatchHeatsCtrl', function($scope, TemplateService, Navig
       NavigationService.getSportSpecificRoundsMatch($scope.sportDetails, function(data){
         if (data.value == true) {
           $scope.roundsList = data.data.roundsList;
+          _.each($scope.roundsList, function(n,nkey){
+            n.roundIndex = nkey;
+          });
           $scope.roundsListName = data.data.roundsListName;
           console.log("getSportSpecificRounds.data", $scope.roundsList);
         } else {
@@ -64,7 +67,9 @@ myApp.controller('CreateMatchHeatsCtrl', function($scope, TemplateService, Navig
             if (data.value == true) {
               console.log("createMatch.data",data.data);
               $scope.getSportSpecificRounds();
-              $rootScope.modalInstance.close('a');
+              if ($rootScope.modalInstance) {
+                $rootScope.modalInstance.close('a');
+              }
               $scope.matchForm.round = '';
             } else {
               toastr.error("Match create failed.","Error");
@@ -280,6 +285,36 @@ myApp.controller('CreateMatchHeatsCtrl', function($scope, TemplateService, Navig
       });
     }
     // REMOVE PLAYER  END
+    // DELETE MATCH
+    $scope.deleteMatch = function(){
+      NavigationService.deleteMatch($scope.delete, function(data){
+        if (data.value == true) {
+          $scope.getSportSpecificRounds();
+          $rootScope.modalInstance.close('a');
+          toastr.success("Match deleted successfully.");
+        } else {
+          toastr.error("Match delete failed.");
+        }
+      });
+    }
+    // DELETE MATCH END
+    // DELETE MATCH POPUP
+    $scope.deletePopup = function(match){
+      $scope.delete = {
+        _id: match. _id
+      }
+      $rootScope.modalInstance = $uibModal.open({
+        animation: true,
+        scope: $scope,
+        // backdrop: 'static',
+        // keyboard: false,
+        templateUrl: 'views/modal/deletematch.html',
+        size: 'md',
+        windowClass: 'deletematch'
+      })
+    };
+    // DELETE MATCH POPUP END
+
     // FUNCTIONS END
 
     // APIS

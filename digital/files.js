@@ -84,5 +84,6 @@ module.exports = [
   'digital/js/controllers/attendancesheet-controller.js',
   'digital/js/controllers/attendancesheet-team-controller.js',
   'digital/js/controllers/creatematchheats-controller.js',
+  'digital/js/controllers/creatematchweight-controller.js',
   'digital/js/controllers/addweight-controller.js',
 ];

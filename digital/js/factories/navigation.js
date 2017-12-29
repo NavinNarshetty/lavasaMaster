@@ -335,6 +335,51 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
             callback(data)
           });
         },
+        deleteMatch: function(formData, callback){
+          $http({
+            url: adminurl + 'match/delete',
+            method: 'POST',
+            data: formData
+          }).success(function(data){
+            callback(data)
+          });
+        },
+        getAthletesByEvent: function (formData, callback) {
+            $http({
+                url: adminurl + "Weight/getAthletesByEvent",
+                method: "POST",
+                data: formData
+            }).success(function (data) {
+                callback(data)
+            });
+        },
+        getWeightsByEvent: function (formData, callback) {
+          $http({
+            url: adminurl + "Weight/getWeightsByEvent",
+            method: "POST",
+            data: formData
+          }).success(function (data){
+            callback(data)
+          });
+        },
+        updateIndividualSport: function(formData, callback){
+          $http({
+            url: adminurl + "IndividualSport/updateSport",
+            method: "POST",
+            data: formData
+          }).success(function (data){
+            callback(data)
+          });
+        },
+        generateWeightMatches: function(formData, callback){
+          $http({
+            url: adminurl + "Weight/generateMatches",
+            method: "POST",
+            data: formData
+          }).success(function (data){
+            callback(data)
+          });
+        },
 
         Boolean: function (str) {
             if (str == 'true' || str || str === true) {

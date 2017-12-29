@@ -4,7 +4,7 @@
     <div class="attendancesheet-header">
       <div class="attendancesheet-title">WEIGHT SHEET</div>
       <div class="attendance-sportheading">
-        <span>{{sportdata.sportslist.sportsListSubCategory.name}}</span> | <span>{{sportdata.sportslist.name}}</span> | <span>{{sportdata.gender}}</span> | <span>{{sportdata.ageGroup.name}}</span>
+        <span>{{sportdata.sportslist.sportsListSubCategory.name}}</span> | <span>{{sportdata.sportslist.name}}</span> | <span>{{sportdata.gender}}</span> | <span>{{sportdata.ageGroup.name}}</span> <span ng-if="sportdata.weight"> | </span> <span ng-if="sportdata.weight">{{sportdata.weight.name}}</span>
       </div>
     </div>
     <!-- ATTENDANCE HEADER END -->
@@ -66,7 +66,7 @@
           </tr>
         </thead>
         <tbody >
-          <tr ng-repeat="player in attendanceList.attendenceListIndividual track by $index" id="{{player.sfaId}}" ng-class="{'player-highlight': player.sfaId==search.sfaId}">
+          <tr ng-repeat="player in attendanceList.athletes track by $index" id="{{player.sfaId}}" ng-class="{'player-highlight': player.sfaId==search.sfaId}">
             <td>
               <div class="">
                 {{$index + 1}}
@@ -74,28 +74,28 @@
             </td>
             <td>
               <div class="">
-                {{player.sfaId}}
+                {{player.athleteId.sfaId}}
               </div>
             </td>
             <td>
               <div class="">
-                {{player.athleteName}}
+                {{player.athleteId.firstName}} {{player.athleteId.surname}}
               </div>
             </td>
             <td>
               <div class="">
-                {{player.schoolName}}
+                {{player.athleteId.school.name}}
               </div>
             </td>
             <td>
               <div class="">
                 <!-- <input type="text" class="form-control" ng-model="player.weight"> -->
-                <select class="select form-control" id="matchForm.sportType" ng-model="player.weight" ng-options="sport.type as sport.type for sport in roundType"></select>
+                <select class="select form-control" id="player.weight" ng-model="player.weight" ng-options="weight.weight._id as weight.weight.name for weight in weightList"></select>
               </div>
             </td>
             <td>
               <div class="">
-                <button type="button" name="button" class="btn btn-green-outline">Save</button>
+                <button type="button" name="button" class="btn btn-green-outline" ng-click="saveAthletePopup(player);">Save</button>
               </div>
             </td>
           </tr>
