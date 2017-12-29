@@ -17224,11 +17224,11 @@ var model = {
                                     function (err, match) {
                                         callback(null, match);
                                     });
-                            } else if (mainData.opponentsSingle.length == 2) {
-                                if (mainData.opponentsSingle[0] == data.opponentsSingle) {
-                                    final.push(mainData.opponentsSingle[1]);
+                            } else if (matchData.opponentsSingle.length == 2) {
+                                if (matchData.opponentsSingle[0].equals(data.opponentsSingle)) {
+                                    final.push(matchData.opponentsSingle[1]);
                                 } else {
-                                    final.push(mainData.opponentsSingle[0]);
+                                    final.push(matchData.opponentsSingle[0]);
                                 }
                                 var matchObj = {
                                     $set: {
@@ -17262,11 +17262,11 @@ var model = {
                                     function (err, match) {
                                         callback(null, match);
                                     });
-                            } else if (mainData.opponentsTeam.length == 2) {
-                                if (mainData.opponentsTeam[0] == data.opponentsTeam) {
-                                    final.push(mainData.opponentsTeam[1]);
+                            } else if (matchData.opponentsTeam.length == 2) {
+                                if (matchData.opponentsTeam[0].equals(data.opponentsTeam)) {
+                                    final.push(matchData.opponentsTeam[1]);
                                 } else {
-                                    final.push(mainData.opponentsTeam[0]);
+                                    final.push(matchData.opponentsTeam[0]);
                                 }
                                 var matchObj = {
                                     $set: {
