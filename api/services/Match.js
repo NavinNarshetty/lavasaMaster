@@ -8449,7 +8449,7 @@ var model = {
                     }
                 } else if (mainData.resultsRacquet) {
                     if (mainData.resultsRacquet.teams[1]) {
-                        for (var i = 0; i < mainData.resultsRacquet.teams[0].sets.length; i++) {
+                        for (var i = 0; i < mainData.resultsRacquet.teams[1].sets.length; i++) {
                             if (i == 0) {
                                 obj["T2 Total Service Errors"] = mainData.resultsRacquet.teams[1].sets[i].serviceError;
                                 obj["T2 Total Unforced Errors"] = mainData.resultsRacquet.teams[1].sets[i].unforcedError;
@@ -8473,6 +8473,10 @@ var model = {
                                     obj["T2 Set 4"] = "";
                                     obj["T1 Set 5"] = "";
                                     obj["T2 Set 5"] = "";
+                                    obj["T1 Set 6"] = "";
+                                    obj["T2 Set 6"] = "";
+                                    obj["T1 Set 7"] = "";
+                                    obj["T2 Set 7"] = "";
                                     break;
                                 case 1:
                                     obj["T1 Set 1"] = mainData.resultsRacquet.teams[0].sets[0].point;
@@ -8485,6 +8489,10 @@ var model = {
                                     obj["T2 Set 4"] = "";
                                     obj["T1 Set 5"] = "";
                                     obj["T2 Set 5"] = "";
+                                    obj["T1 Set 6"] = "";
+                                    obj["T2 Set 6"] = "";
+                                    obj["T1 Set 7"] = "";
+                                    obj["T2 Set 7"] = "";
                                     break;
                                 case 2:
                                     obj["T1 Set 1"] = mainData.resultsRacquet.teams[0].sets[0].point;
@@ -8497,6 +8505,10 @@ var model = {
                                     obj["T2 Set 4"] = "";
                                     obj["T1 Set 5"] = "";
                                     obj["T2 Set 5"] = "";
+                                    obj["T1 Set 6"] = "";
+                                    obj["T2 Set 6"] = "";
+                                    obj["T1 Set 7"] = "";
+                                    obj["T2 Set 7"] = "";
                                     break;
                                 case 3:
                                     obj["T1 Set 1"] = mainData.resultsRacquet.teams[0].sets[0].point;
@@ -8509,6 +8521,10 @@ var model = {
                                     obj["T2 Set 4"] = mainData.resultsRacquet.teams[1].sets[3].point;
                                     obj["T1 Set 5"] = "";
                                     obj["T2 Set 5"] = "";
+                                    obj["T1 Set 6"] = "";
+                                    obj["T2 Set 6"] = "";
+                                    obj["T1 Set 7"] = "";
+                                    obj["T2 Set 7"] = "";
                                     break;
                                 case 4:
                                     obj["T1 Set 1"] = mainData.resultsRacquet.teams[0].sets[0].point;
@@ -8521,6 +8537,10 @@ var model = {
                                     obj["T2 Set 4"] = mainData.resultsRacquet.teams[1].sets[3].point;
                                     obj["T1 Set 5"] = mainData.resultsRacquet.teams[0].sets[4].point;
                                     obj["T2 Set 5"] = mainData.resultsRacquet.teams[1].sets[4].point;
+                                    obj["T1 Set 6"] = "";
+                                    obj["T2 Set 6"] = "";
+                                    obj["T1 Set 7"] = "";
+                                    obj["T2 Set 7"] = "";
                                     break;
                                 case 5:
                                     obj["T1 Set 1"] = mainData.resultsRacquet.teams[0].sets[0].point;
@@ -8535,6 +8555,8 @@ var model = {
                                     obj["T2 Set 5"] = mainData.resultsRacquet.teams[1].sets[4].point;
                                     obj["T1 Set 6"] = mainData.resultsRacquet.teams[0].sets[5].point;
                                     obj["T2 Set 6"] = mainData.resultsRacquet.teams[1].sets[5].point;
+                                    obj["T1 Set 7"] = "";
+                                    obj["T2 Set 7"] = "";
                                     break;
                                 case 6:
                                     obj["T1 Set 1"] = mainData.resultsRacquet.teams[0].sets[0].point;
