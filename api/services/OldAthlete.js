@@ -67,7 +67,7 @@ var model = {
             },
             function (oldSchoolData, callback) {
                 console.log('Hi');
-                // callback(null, oldSchoolData);
+                callback(null, oldSchoolData);
                 async.concatSeries(oldSchoolData, function (mainData, callback) {
                     async.waterfall([
                         function (callback) {
@@ -140,7 +140,7 @@ var model = {
                         }
                     ], function (err, found) {
                         if (found) {
-                            console.log('Hi function');
+                            // console.log('Hi function');
                             callback(null, found);
                         } else {
                             callback(null, found);
@@ -149,13 +149,13 @@ var model = {
                     
                 },
                 function (err, found) {
-                    console.log('Hi final');
+                    // console.log('Hi final');
                     callback(null, found);
                 });
             }
         ], function (err, found) {
             if (found) {
-                console.log('Hi final found');
+                // console.log('Hi final found');
                 callback(null, found);
             } else {
                 callback(null, found);
