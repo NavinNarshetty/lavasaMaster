@@ -16858,11 +16858,24 @@ var model = {
                             sport: data.sport,
                             opponentsSingle: n._id
                         }).lean().exec(function (err, match) {
-                            if (err || _.isEmpty(match)) {
+                            if (err) {
                                 callback(null, {
                                     error: "No data teamData",
                                     data: data
                                 });
+                            } else if (_.isEmpty(match)) {
+                                var param = {};
+                                param._id = n._id;
+                                param.athleteId = n.athleteId._id;
+                                if (n.athleteId.middleName) {
+                                    param.name = n.athleteId.firstName + n.athleteId.middleName + n.athleteId.surname;
+                                } else {
+                                    param.name = n.athleteId.firstName + n.athleteId.surname;
+                                }
+                                param.sfaId = n.athleteId.sfaId
+                                param.count = match.length;
+                                final.match.push(param);
+                                callback();
                             } else {
                                 if (match.length == 0) {
                                     var param = {};
