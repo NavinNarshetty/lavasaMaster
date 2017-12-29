@@ -51,6 +51,7 @@ var schema = new Schema({
     resultSwiss: Schema.Types.Mixed,
     resultFencing: Schema.Types.Mixed,
     resultImages: Schema.Types.Mixed,
+    resultThrowball: Schema.Types.Mixed,
     scheduleDate: Date,
     scheduleTime: String,
     video: String,
@@ -370,6 +371,11 @@ var model = {
                             finalData.resultsCombat = "";
                         } else {
                             finalData.resultsCombat = found.resultsCombat;
+                        }
+                        if (_.isEmpty(found.resultThrowball)) {
+                            finalData.resultThrowball = "";
+                        } else {
+                            finalData.resultThrowball = found.resultThrowball;
                         }
                         if (_.isEmpty(found.resultsRacquet)) {
                             finalData.resultsRacquet = "";
@@ -7037,7 +7043,7 @@ var model = {
             });
     },
 
-    //-------------------------------EXCEL FOR GRAPHICS------------------------------------------
+    //-----------------------------------EXCEL FOR GRAPHICS------------------------------------------
 
     generateGraphicsQualifying: function (data, res) {
         async.waterfall([
@@ -7097,7 +7103,6 @@ var model = {
                                     obj["RESULT"] = mainData.resultQualifyingRound.player.result;
                                     //
                                 } else {
-
                                     obj["FINAL SCORE"] = "";
                                     obj["RANK"] = "";
                                     obj["RESULT"] = "";
@@ -10069,7 +10074,7 @@ var model = {
 
     },
 
-    //  ----------------------------  UPDATE SCORE RESULT  --------------------------------------
+    //--------------------------------  UPDATE SCORE RESULT  ------------------------------------------
     //update from digital score
     updateResult: function (data, callback) {
         var updateObj = {};
@@ -17474,9 +17479,5 @@ var model = {
                 }
             });
     },
-
-
-
-
 };
 module.exports = _.assign(module.exports, exports, model);
