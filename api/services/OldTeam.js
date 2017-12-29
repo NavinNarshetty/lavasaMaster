@@ -18,7 +18,8 @@ var model = {
         async.waterfall([
                 function (callback) {
                     OldTeam.find({
-                        _id: data.team
+                        // _id: data.team
+                        year: data.year
                     }).lean().exec(function (err, found) {
                         if (err) {
                             callback(err, null);
@@ -31,7 +32,7 @@ var model = {
                     console.log("count", found.length);
                     async.concatSeries(found, function (sportData, callback) {
                             var team = {};
-                            team.sport = data.sport;
+                            team.sport = sportData.sport;
                             team.athleteTeam = [];
                             async.waterfall([
                                     function (callback) {
