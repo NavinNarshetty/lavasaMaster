@@ -188,16 +188,21 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'AttendanceSheetTeamCtrl'
         })
         .state('addweight', {
-            url: "/addweight",
+            url: "/addweight/:sport",
             templateUrl: tempateURL,
             controller: 'AddWeightCtrl'
         })
         // ATTENDANCE PAGES
         // CREATE MATCHES
         .state('creatmatch-heats', {
-            url: "/creatematch/:sport",
+            url: "/creatematch/athletics/:sport",
             templateUrl: tempateURL,
             controller: 'CreateMatchHeatsCtrl'
+        })
+        .state('creatmatch-weight', {
+            url: "/creatematch/weight",
+            templateUrl: tempateURL,
+            controller: 'CreateMatchWeightCtrl'
         })
         // CREATE MATCHES END
         .state('form', {

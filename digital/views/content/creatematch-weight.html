@@ -1,0 +1,41 @@
+<div class="creatematch-page">
+  <div class="container">
+    <!-- HEADING -->
+    <div class="creatematch-title">Create Match</div>
+    <div class="attendance-sportheading">
+      <span>{{sportdata.sportslist.sportsListSubCategory.name}}</span> | <span>{{sportdata.sportslist.name}}</span> | <span>{{sportdata.gender}}</span> | <span>{{sportdata.ageGroup.name}}</span>
+    </div>
+    <!-- HEADING END -->
+    <!-- CREATE MATCH FORM -->
+    <div class="creatematch-formholder">
+      <form >
+        <div class="row">
+          <div class="col-md-offset-3 col-md-6">
+            <div class="creatematch-formcard">
+              <div class="form-group">
+                <label for="matchForm.range">Select Range</label>
+                <select class="form-control" id="matchForm.range" ng-model="matchForm.range" ng-options="range for range in rangeList" ng-change="calcRoundNo(matchForm.range);"></select>
+              </div>
+              <div class="form-group">
+                <label for="matchForm.prefix">Enter MatchId Prefix</label>
+                <input type="text" class="form-control" id="matchForm.prefix" ng-model="matchForm.prefix">
+              </div>
+              <div class="form-group">
+                <label for="matchForm.thirdPlace">Third Place</label>
+                <input type="checkbox" class="form-control" id="matchForm.thirdPlace" ng-model="matchForm.thirdPlace">
+              </div>
+              <div class="form-group">
+                <label for="matchForm.rounds"> {{noRound}} Round Names (List of Round Names comma separated. Third Place should not be mentioned.)</label>
+                <input type="text" id="matchForm.rounds" placeholder="E.g.: Round 1, Round 2, Semi Final, Final" class="form-control" ng-model="matchForm.rounds">
+              </div>
+              <div class="form-group">
+                <button type="button" name="button" class="btn btn-green-outline btn-scoring" ng-click="generateMatches();">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!-- CREATE MATCH FORM END -->
+  </div>
+</div>

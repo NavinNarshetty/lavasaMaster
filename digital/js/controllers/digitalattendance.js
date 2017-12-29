@@ -136,8 +136,8 @@ myApp.controller('DigitalAttendanceCtrl', function ($scope, TemplateService, $st
                                 case 'Sport MMA':
                                 case 'Karate':
                                     if ($scope.eventSportName != 'Kata') {
-                                        if (flag == 'attendances') {
-                                            $state.go('attendancesheet', {
+                                        if (flag == 'attendance') {
+                                            $state.go('addweight', {
                                                 sport: $scope.drawDetails.sport
                                             });
                                         } else if (flag == 'matches') {
@@ -147,7 +147,7 @@ myApp.controller('DigitalAttendanceCtrl', function ($scope, TemplateService, $st
                                     } else {
                                         toastr.error('Attendance not available for this Sport');
                                     }
-                                    break;
+                                break;
                                 default:
                                     if (flag == 'attendance') {
                                         toastr.error('Attendance not available for this Sport');

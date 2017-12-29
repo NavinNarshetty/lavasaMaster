@@ -937,16 +937,18 @@ header {
   font-weight: 700;
 }
 .confirmationmodal-button{
-  padding: 5px;
+  display: flex;
+  flex-wrap: nowrap;
 }
 
 .btn-modalconfirm{
-  width: 49%;
-  margin: 0;
+  // width: 49%;
+  margin: 0 5px;
   border: 1px solid #ccc;
-  display: inline-block;
+  // display: inline-block;
   background-color: transparent;
   color: #27b465;
+  flex: auto;
   font-weight: 700;
 
   &:active, &:hover, &:focus {
@@ -1489,3 +1491,12 @@ header {
   width: 90px;
 }
 // CREATE MATCH HEATS END
+// CREATE MATCH WEIGHTS
+.creatematch-formholder{
+  margin: 30px 0;
+}
+.creatematch-formcard{
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+// CREATE MATCH WEIGHTS END
