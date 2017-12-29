@@ -90,5 +90,31 @@ var controller = {
             })
         }
     },
+
+    searchForEventPdf: function (req, res) {
+        if (req.body) {
+            Sport.searchForEventPdf(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            })
+        }
+    },
+
+    setEventPdf: function (req, res) {
+        if (req.body) {
+            if (req.body.sportsListSubCategory) {
+                Sport.setEventPdfViaSportsListSubCategory(req.body, res.callback);
+            } else {
+                Sport.setEventPdf(req.body, res.callback);
+            }
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            });
+        }
+    },
 };
 module.exports = _.assign(module.exports, controller);

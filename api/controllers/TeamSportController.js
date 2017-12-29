@@ -3,7 +3,42 @@ var controller = {
 
     saveInTeam: function (req, res) {
         if (req.body) {
-            TeamSport.saveInTeam(req.body, res.callback);
+            async.waterfall([
+                    function (callback) {
+                        ConfigProperty.find().lean().exec(function (err, property) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(property)) {
+                                    callback(null, []);
+                                } else {
+                                    console.log('controller property', property);
+                                    callback(null, property);
+                                }
+                            }
+                        });
+                    },
+                    function (property, callback) {
+                        console.log('controller property', property);
+                        req.body.property = property[0];
+                        TeamSport.saveInTeam(req.body, function (err, teamData) {
+                            if (err) {
+                                console.log("err", err);
+                                callback("There was an error ", null);
+                            } else {
+                                if (_.isEmpty(teamData)) {
+                                    callback("No data found", null);
+                                } else {
+                                    callback(null, teamData);
+                                }
+                            }
+                        });
+
+                    }
+                ],
+                function (err, data2) {
+                    res.callback(null, data2)
+                });
         } else {
             res.json({
                 value: false,
@@ -105,6 +140,8 @@ var controller = {
     },
 
     generateExcel: function (req, res) {
+        res.connection.setTimeout(200000000);
+        req.connection.setTimeout(200000000);
         TeamSport.generateExcel(res);
     },
 
