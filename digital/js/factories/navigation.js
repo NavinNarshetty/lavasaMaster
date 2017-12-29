@@ -1,5 +1,5 @@
 var uploadurl = adminurl + "upload/";
-myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
+myApp.factory('NavigationService', function ($http, ResultSportInitialization, $filter) {
     var navigation = [{
         name: "Home",
         classis: "active",
