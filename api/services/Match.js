@@ -17411,22 +17411,7 @@ var model = {
                     } else {
                         if (matchData.sport.sportslist.sportsListSubCategory.isTeam == false) {
                             var final = [];
-                            if (matchData.opponentsSingle.length == 1) {
-                                final.push(matchData.opponentsSingle[0]);
-
-                                final.push(data.opponentsSingle[0]);
-                                var matchObj = {
-                                    $set: {
-                                        opponentsSingle: final
-                                    }
-                                };
-                                Match.update({
-                                    matchId: data.matchId
-                                }, matchObj).exec(
-                                    function (err, match) {
-                                        callback(null, match);
-                                    });
-                            } else if (matchData.opponentsSingle.length == 0) {
+                            if (matchData.opponentsSingle.length == 1||matchData.opponentsSingle.length == 0) {
                                 final = data.opponentsSingle;
                                 var matchObj = {
                                     $set: {
@@ -17447,22 +17432,7 @@ var model = {
                             }
                         } else {
                             var final = [];
-                            if (matchData.opponentsTeam.length == 1) {
-                                final.push(matchData.opponentsTeam[0]);
-
-                                final.push(data.opponentsTeam[0]);
-                                var matchObj = {
-                                    $set: {
-                                        opponentsTeam: final
-                                    }
-                                };
-                                Match.update({
-                                    matchId: data.matchId
-                                }, matchObj).exec(
-                                    function (err, match) {
-                                        callback(null, match);
-                                    });
-                            } else if (matchData.opponentsTeam.length == 0) {
+                            if (matchData.opponentsTeam.length == 1||matchData.opponentsTeam.length == 0) {
                                 final = data.opponentsTeam;
                                 var matchObj = {
                                     $set: {

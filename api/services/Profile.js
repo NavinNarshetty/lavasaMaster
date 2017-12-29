@@ -1973,6 +1973,62 @@ var model = {
                                                             callback(null, match);
                                                         });
                                                     }
+                                                } else if (singleData.resultThrowball) {
+                                                    var i = 0;
+                                                    var result;
+                                                    if (singleData.resultThrowball.teams.length == 1) {
+                                                        stats.score = singleData.resultThrowball.teams[0].teamResults.finalGoalPoints;
+                                                        stats.isAthleteWinner = true;
+                                                        match.push(stats);
+                                                        callback(null, match);
+                                                    } else {
+                                                        async.each(singleData.resultThrowball.teams, function (n, callback) {
+                                                            StudentTeam.findOne({
+                                                                teamId: n.team
+                                                            }).lean().deepPopulate("studentId.school").exec(function (err, found) {
+                                                                if (err) {
+                                                                    callback(null, err);
+                                                                } else if (_.isEmpty(found)) {
+                                                                    callback(null, match);
+                                                                } else {
+                                                                    if (!singleData.opponentsTeam._id.equals(found.teamId)) {
+                                                                        if (found.studentId.middleName) {
+                                                                            stats.opponentName = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                                        } else {
+                                                                            stats.opponentName = found.studentId.firstName + " " + found.studentId.surname;
+                                                                        }
+                                                                        if (found.studentId.atheleteSchoolName) {
+                                                                            stats.school = found.studentId.atheleteSchoolName;
+                                                                        } else {
+                                                                            stats.school = found.studentId.school.name;
+                                                                        }
+                                                                    } else {
+                                                                        if (singleData.resultThrowball.status == "IsCompleted" && singleData.resultThrowball.isNoMatch == false) {
+                                                                            stats.score = singleData.resultThrowball.teams[0].teamResults.finalGoalPoints + "-" + singleData.resultThrowball.teams[1].teamResults.finalGoalPoints;
+                                                                            if (singleData.resultThrowball.winner.player === n.team) {
+                                                                                stats.isAthleteWinner = false;
+                                                                            } else {
+                                                                                stats.isAthleteWinner = true;
+                                                                            }
+                                                                            stats.status = singleData.resultThrowball.status;
+                                                                        } else if (singleData.resultThrowball.status == "IsCompleted" && singleData.resultThrowball.isNoMatch == true) {
+                                                                            stats.status = singleData.resultThrowball.status;
+                                                                            stats.reason = "No Match";
+                                                                        } else {
+                                                                            stats.status = singleData.resultThrowball.status;
+                                                                            stats.reason = "";
+                                                                        }
+                                                                    }
+                                                                    match.push(stats);
+                                                                    callback(null, match);
+                                                                }
+
+                                                            });
+
+                                                        }, function (err) {
+                                                            callback(null, match);
+                                                        });
+                                                    }
                                                 } else if (singleData.resultFootball) {
                                                     var i = 0;
                                                     var result;
@@ -2784,6 +2840,83 @@ var model = {
                                                         stats.reason = "No Match";
                                                     } else {
                                                         stats.status = singleData.resultBasketball.status;
+                                                        stats.reason = "";
+                                                    }
+                                                    match.push(stats);
+                                                    callback(null, match);
+                                                }
+
+                                            });
+                                        }
+                                    },
+                                    function (err) {
+                                        callback(null, match);
+                                    });
+                            }
+                        } else if (singleData.resultThrowball) {
+                            var i = 0;
+                            var result;
+                            if (singleData.opponentsTeam.length == 1) {
+                                if (singleData.resultThrowball.status == "IsCompleted" && singleData.resultThrowball.isNoMatch == false) {
+                                    stats.score = singleData.resultThrowball.teams[0].teamResults.finalGoalPoints;
+                                    stats.isAthleteWinner = true;
+                                    stats.status = singleData.resultThrowball.status;
+                                    match.push(stats);
+                                } else if (singleData.resultThrowball.status == "IsCompleted" && singleData.resultThrowball.isNoMatch == false) {
+                                    stats.status = singleData.resultThrowball.status;
+                                    stats.reason = "No Match";
+                                } else {
+                                    stats.status = singleData.resultThrowball.status;
+                                    stats.reason = "";
+                                }
+                                callback(null, match);
+                            } else {
+                                async.each(singleData.opponentsTeam, function (n, callback) {
+                                        console.log("n", n, "data.teamId", data.teamId);
+                                        if (n.equals(data.teamId)) {
+                                            callback();
+                                        } else {
+                                            TeamSport.findOne({
+                                                _id: n,
+                                            }).lean().exec(function (err, found) {
+                                                if (err) {
+                                                    callback(null, err);
+                                                } else if (_.isEmpty(found)) {
+                                                    callback(null, match);
+                                                } else {
+                                                    stats.opponentName = found.name;
+                                                    stats.school = found.schoolName;
+                                                    stats.teamId = found.teamId;
+                                                    if (singleData.resultThrowball.status == "IsCompleted" && singleData.resultThrowball.isNoMatch == false) {
+                                                        if (singleData.resultThrowball.teams[0].team === n.toString()) {
+                                                            if (singleData.resultThrowball.teams[0].noShow == true && singleData.resultThrowball.teams[0].walkover == false) {
+                                                                stats.reason = "Walkover";
+                                                            } else if (singleData.resultThrowball.teams[0].noShow == false && singleData.resultThrowball.teams[0].walkover == true) {
+                                                                stats.reason = "No Show";
+                                                            } else {
+                                                                stats.reason = "";
+                                                            }
+                                                        } else {
+                                                            if (singleData.resultThrowball.teams[1].noShow == true && singleData.resultThrowball.teams[1].walkover == false) {
+                                                                stats.reason = "Walkover";
+                                                            } else if (singleData.resultThrowball.teams[1].noShow == false && singleData.resultThrowball.teams[1].walkover == true) {
+                                                                stats.reason = "No Show";
+                                                            } else {
+                                                                stats.reason = "";
+                                                            }
+                                                        }
+                                                        stats.score = singleData.resultThrowball.teams[0].teamResults.finalGoalPoints + "-" + singleData.resultThrowball.teams[1].teamResults.finalGoalPoints;
+                                                        if (singleData.resultThrowball.winner.player === n) {
+                                                            stats.isAthleteWinner = false;
+                                                        } else {
+                                                            stats.isAthleteWinner = true;
+                                                        }
+                                                        stats.status = singleData.resultThrowball.status;
+                                                    } else if (singleData.resultThrowball.status == "IsCompleted" && singleData.resultThrowball.isNoMatch == true) {
+                                                        stats.status = singleData.resultThrowball.status;
+                                                        stats.reason = "No Match";
+                                                    } else {
+                                                        stats.status = singleData.resultThrowball.status;
                                                         stats.reason = "";
                                                     }
                                                     match.push(stats);
