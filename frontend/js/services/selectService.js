@@ -517,13 +517,26 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
         switch (this.sportType) {
             case "K":
                 var arr = athelete.sport;
-                var weights = athelete.event2Weights;
-                // athelete.isValidSelection = (arr.length == 0 && (!weights || weights.length == 0)) ? false : (weights && weights.length == 0 && athelete.sport[0]) ? true : (weights.length != 0 && athelete.sport[1]) ? true : false;
-                // athelete.isValidSelection = (arr.length == 0 && (!weights || (weights.length == 0))) ? false : ((arr.length >= 1 && arr[0].data[0].sport!=null) && (!weights || weights.length == 0)) ? true : ((arr.length >= 1 && arr[0].data[0].sport==null) && weights && weights.length!= 0 && weights.data[0].sport!=null && athelete.sport[1]) ? true : false;
-                athelete.isValidSelection = ((arr.length == 0 || arr[0] && arr[0].data && arr[0].data[0].sport == null) && (!weights || (weights.length == 0))) ? false : (((arr.length >= 1 && arr[0].data[0].sport != null) && (!weights || weights.length == 0 || weights.data[0].sport == null)) || ((arr.length >= 1 && arr[0].data[0].sport == null) && weights && weights.length != 0 && weights.data[0].sport != null && athelete.sport[1]) || ((arr.length >= 1 && arr[0].data[0].sport != null) && weights && weights.length != 0 && weights.data[0].sport != null && athelete.sport[1])) ? true : false;
-                // athelete.isValidSelection = ((arr.length == 0 || arr[0] && arr[0].data && arr[0].data[0].sport==null || arr[0] && arr[0].sport==null) && (!weights || (weights.length == 0))) ? false : (((arr.length >= 1 && arr[0].data[0].sport!=null) && (!weights || weights.length == 0 || weights.data[0].sport==null)) || ((arr.length >= 1 && (arr[0] && arr[0].data && arr[0].data[0].sport!=null || arr[0] && arr[0].sport!=null)) && weights && weights.length!= 0 && weights.data[0].sport!=null && athelete.sport[1]) || ((arr.length >= 1 && (arr[0] && arr[0].data && arr[0].data[0].sport!=null || arr[0] && arr[0].sport!=null)) && weights && weights.length!= 0 && weights.data[0].sport!=null && athelete.sport[1]))? true :false;
+                var weights = _.cloneDeep(athelete.event2Weights);
+                console.log("athelete", athelete);
+                if (athelete.event2Weights) {
+                    var obj = _.find(weights.data, function (n) {
+                        if (!n.weight) {
+                            console.log("n", n);
+                            return n
+                        }
+                    });
 
-                // by properlogic // athelete.isValidSelection=((arr && arr.length>=1 && arr[0].data[0].sport!=null) ||((arr && arr.length>=1 && arr[1] && arr[1].sport!=null)&&(weights && weights.length>=1 && weights.data[0] && weights.data[0].sport!=null)))?true:false;
+                    if (obj) {
+                        arr[1] = obj;
+
+                    } else {
+                        arr[1] = {};
+                    }
+                }
+                console.log("arr", arr);
+                athelete.isValidSelection = (arr.length == 0 || ((arr[0] && arr[0].data && arr[0].data[0].sport == null) && ((arr[1] && !arr[1].sport) || (arr[1] && arr[1].sport == null)))) ? false : ((arr.length >= 1 && arr[0] && arr[0].data && arr[0].data[0] && arr[0].data[0].sport != null) || ((arr.length >= 1 && arr[0] && arr[0].data[0].sport == null) && (arr.length >= 1 && arr[1] && arr[1].sport != null)) || ((arr.length >= 1 && arr[0] && arr[0].data[0] && arr[0].data[0].sport != null) && (arr.length >= 1 && arr[1] && arr[1].sport != null))) ? true : false;
+
                 break;
             case "FA":
                 if (this.sportName == 'Fencing') {
@@ -570,8 +583,11 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                 break;
             case "I":
                 var st = this.sportName;
+                console.log("athelete", athelete);
                 if (st == 'Judo' || st == 'Boxing' || st == 'Taekwondo' || st == 'Sport MMA' || st == 'Wrestling') {
-                    athelete.isValidSelection = (athelete.sport && athelete.sport[1] && athelete.sport[1] != '') ? true : false;
+                    // athelete.isValidSelection = (athelete.sport && athelete.sport[1] && athelete.sport[1] != '') ? true : false;
+                    athelete.isValidSelection = (athelete.sport && athelete.sport[0] && athelete.sport[0] != '') ? true : false;
+
                 } else {
                     var arr = _.compact(athelete.sport);
                     athelete.isValidSelection = arr.length > 0;

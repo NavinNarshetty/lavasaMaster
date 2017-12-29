@@ -100,6 +100,17 @@ var controller = {
         IndividualSport.generateExcel(res);
     },
 
+    updateSport:function(req,res){
+        if(req.body && req.body.oldSportId && req.body.individualSportId && req.body.ageGroup && req.body.sportslist && req.body.gender && req.body.weight){
+            IndividualSport.updateSport(req.body,res.callback);
+        }else{
+            res.json({
+                data:"Insufficient Data",
+                value:false
+            });
+        }
+    }
+    
 
 
 };
