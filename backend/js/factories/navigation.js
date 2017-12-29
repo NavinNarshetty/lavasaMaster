@@ -311,17 +311,18 @@ myApp.factory('NavigationService', function ($http) {
         },
 
         apiCall: function (url, formData, callback) {
+            console.log(formData);
+            console.log(url);
             $http.post(adminurl + url, formData).then(function (data) {
+                console.log(data);
                 data = data.data;
                 callback(data);
-
             });
         },
         saveRising: function (url, formData, callback) {
             $http.post(adminurl + url, formData).then(function (data) {
                 data = data.data;
                 callback(data);
-
             });
         },
         searchCall: function (url, formData, i, callback) {
