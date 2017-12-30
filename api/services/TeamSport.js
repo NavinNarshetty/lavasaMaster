@@ -974,7 +974,7 @@ var model = {
             count: maxRow
         };
         // var deepSearch = "sportslist ageGroup weight";
-        var Search = Model.find(data.keyword)
+        var Search = Model.find()
 
             .order(options)
             // .deepPopulate(deepSearch)

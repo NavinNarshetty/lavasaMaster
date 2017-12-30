@@ -2020,7 +2020,7 @@ var model = {
         };
         if (data.keyword == "") {
             var deepSearch = "athleteId sportsListSubCategory";
-            var Search = Model.find(data.keyword)
+            var Search = Model.find()
 
                 .order(options)
                 .deepPopulate(deepSearch)
