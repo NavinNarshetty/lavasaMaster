@@ -100,7 +100,7 @@ myApp.controller('QualifyingScoreCtrl', function ($scope, TemplateService, Navig
                     "player": {
                       "id": n.opponentsSingle[0]._id,
                       "noShow": false,
-                      "attempt": ["", "", ""],
+                      "attempt": ["", "", "", "", "", ""],
                       "bestAttempt": "",
                       "result": ""
                     },
