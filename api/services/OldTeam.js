@@ -31,7 +31,7 @@ var model = {
                 function (found, callback) {
                     // console.log("count", found.length);
                     async.concatSeries(found, function (sportData, callback) {
-                            console.log('Hi',sportData);
+                            // console.log('Hi',sportData);
                             var team = {};
                             team.sport = sportData.sport;
                             team.athleteTeam = [];
@@ -47,8 +47,8 @@ var model = {
                                                         if (_.isEmpty(sport)) {
                                                             callback(null, []);
                                                         } else {
-                                                            console.log('SPORT', sport);
-                                                            console.log('SPORTdata', sportData);
+                                                            // console.log('SPORT', sport);
+                                                            // console.log('SPORTdata', sportData);
                                                             team.id = sportData._id;
                                                             var studentTeam = {};
                                                             studentTeam.studentId = sport._id;

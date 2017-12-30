@@ -308,11 +308,11 @@ var model = {
                             }
                         } else {
                             if (mainData.property.sfaCity == 'Mumbai') {
-                                // console.log("autoID", team.autoID);
+                                console.log("autoID", team.autoID);
                                 var year = '15';
                                 // var year = new Date().getFullYear().toString().substr(2, 2);
                                 var teamid = "M" + "T" + year + ++team.autoID;
-                                // console.log("teamid", teamid);
+                                console.log("teamid", teamid);
                                 callback(null, teamid);
                             } else if (mainData.property.sfaCity == "Hyderabad") {
                                 console.log("autoID", team.autoID);
@@ -362,8 +362,8 @@ var model = {
     },
 
     createStudentTeam: function (team, data, callback) {
-        // console.log('TEAM',team);
-        // console.log('DATA',data);
+        console.log('TEAM',team);
+        console.log('DATA',data);
         var atheleteName = [];
         var i = 0;
         async.concatSeries(data.athleteTeam, function (n, callback) {
@@ -376,7 +376,7 @@ var model = {
                         teamStudent.isCaptain = n.isCaptain;
                         teamStudent.isGoalKeeper = n.isGoalKeeper;
                         teamStudent.perSportUniqueId = team._id + data.sport;
-                        // console.log('TEAM STUDENT',teamStudent);
+                        console.log('TEAM STUDENT',teamStudent);
                         StudentTeam.saveInTeam(teamStudent, function (err, saveData) {
                             if (err) {
                                 callback(err, null);
