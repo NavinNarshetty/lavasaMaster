@@ -29,8 +29,10 @@ var model = {
                     });
                 },
                 function (found, callback) {
+                    console.log("DATA", data);
                     console.log("count", found.length);
                     async.concatSeries(found, function (sportData, callback) {
+                            console.log('Hi');
                             var team = {};
                             team.sport = sportData.sport;
                             team.athleteTeam = [];
