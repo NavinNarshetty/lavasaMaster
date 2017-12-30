@@ -1868,7 +1868,7 @@ var model = {
         };
         if (data.keyword === "") {
             var deepSearch = "sportslist ageGroup weight";
-            var Search = Model.find(data.keyword)
+            var Search = Model.find(data)
 
                 .order(options)
                 .deepPopulate(deepSearch)
