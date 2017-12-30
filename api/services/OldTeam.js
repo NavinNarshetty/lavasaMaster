@@ -33,7 +33,7 @@ var model = {
                     async.concatSeries(found, function (sportData, callback) {
                             console.log('Hi');
                             var team = {};
-                            team.sport = data.sport;
+                            team.sport = sportData.sport;
                             team.athleteTeam = [];
                             async.waterfall([
                                     function (callback) {
