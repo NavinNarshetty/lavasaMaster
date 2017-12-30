@@ -282,6 +282,7 @@ var model = {
 
     saveInTeam: function (data, mainData, callback) {
         console.log("mainData", mainData);
+        console.log("DATA", data);
         async.waterfall([
                 function (callback) {
                     TeamSport.findOne().sort({
@@ -359,6 +360,8 @@ var model = {
     },
 
     createStudentTeam: function (team, data, callback) {
+        console.log('TEAM',team);
+        console.log('DATA',data);
         var atheleteName = [];
         var i = 0;
         async.eachSeries(data.athleteTeam, function (n, callback) {
@@ -371,7 +374,7 @@ var model = {
                         teamStudent.isCaptain = n.isCaptain;
                         teamStudent.isGoalKeeper = n.isGoalKeeper;
                         teamStudent.perSportUniqueId = team._id + data.sport;
-
+                        console.log('TEAM STUDENT',teamStudent);
                         StudentTeam.saveInTeam(teamStudent, function (err, saveData) {
                             if (err) {
                                 callback(err, null);
