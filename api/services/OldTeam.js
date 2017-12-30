@@ -47,6 +47,8 @@ var model = {
                                                         if (_.isEmpty(sport)) {
                                                             callback(null, []);
                                                         } else {
+                                                            console.log('SPORT', sport);
+                                                            console.log('SPORTdata', sportData);
                                                             team.id = sportData._id;
                                                             var studentTeam = {};
                                                             studentTeam.studentId = sport._id;
