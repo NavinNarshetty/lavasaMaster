@@ -31,7 +31,7 @@ var model = {
                 function (found, callback) {
                     console.log("count", found.length);
                     async.concatSeries(found, function (sportData, callback) {
-                            console.log('Hi');
+                            console.log('Hi',sportData);
                             var team = {};
                             team.sport = sportData.sport;
                             team.athleteTeam = [];
@@ -260,7 +260,20 @@ var model = {
     teamConfirm: function (data, callback) {
         console.log("data", data);
         async.waterfall([
-                function (callback) {
+            function (callback) {
+                ConfigProperty.find().lean().exec(function (err, property) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(property)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, property);
+                        }
+                    }
+                });
+            },
+                function (property, callback) {
                     var team = {};
                     team.name = data.name;
                     team.sport = data.sport;
@@ -284,12 +297,13 @@ var model = {
                         team.isVideoAnalysis = data.isVideoAnalysis;
                     }
                     team.oldId = data.oldId;
-
+                    data.property = property[0];
+                    console.log('DATA TEAM', data);
                     callback(null, team);
                 },
                 function (team, callback) {
                     team.sfaid = data.sfaid;
-                    TeamSport.saveInTeam(team, function (err, complete) {
+                    TeamSport.saveInTeam(team, data, function (err, complete) {
                         if (err) {
                             callback(err, null);
                         } else {
