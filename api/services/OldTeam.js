@@ -29,7 +29,7 @@ var model = {
                     });
                 },
                 function (found, callback) {
-                    console.log("count", found.length);
+                    // console.log("count", found.length);
                     async.concatSeries(found, function (sportData, callback) {
                             console.log('Hi',sportData);
                             var team = {};
@@ -37,7 +37,7 @@ var model = {
                             team.athleteTeam = [];
                             async.waterfall([
                                     function (callback) {
-                                        async.eachSeries(sportData.players, function (player, callback) {
+                                        async.concatSeries(sportData.players, function (player, callback) {
                                                 var playerData = {};
                                                 playerData.athlete = player;
                                                 OldTeam.getAthleteId(playerData, sportData, function (err, sport) {
@@ -260,7 +260,7 @@ var model = {
     },
 
     teamConfirm: function (data, callback) {
-        console.log("data", data);
+        // console.log("data", data);
         async.waterfall([
             function (callback) {
                 ConfigProperty.find().lean().exec(function (err, property) {
@@ -300,7 +300,7 @@ var model = {
                     }
                     team.oldId = data.oldId;
                     data.property = property[0];
-                    console.log('DATA TEAM', data);
+                    // console.log('DATA TEAM', data);
                     callback(null, team);
                 },
                 function (team, callback) {
