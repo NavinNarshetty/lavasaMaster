@@ -333,7 +333,7 @@
                             <span class="knockout-dot-live v-mid" ng-if="content.opponentsTeam[0].isWinner === true"><i class="fa fa-circle"></i></span>
                             <span title="{{content.opponentsTeam[0].teamId | filterConcate : content.opponentsTeam[0].schoolName}}">{{content.opponentsTeam[0].teamId | filterConcate : content.opponentsTeam[0].schoolName | truncate:'30'}} </span>
                             <span ng-if="content.opponentsTeam[0].teamId === undefined && isTeam">-</span>
-                            <p class="m-clear text-capitalize " title="{{content.opponentsSingle[0].fullName}}"><span class="knockout-dot-live v-mid" ng-if="content.opponentsSingle[0].isWinner === true">{{content.opponentsSingle[0].fullName | truncate:'30'}} </p>
+                            <p class="m-clear text-capitalize " title="{{content.opponentsSingle[0].fullName}}"><span class="knockout-dot-live v-mid" ng-if="content.opponentsSingle[0].isWinner === true"><i class="fa fa-circle"></i></span>{{content.opponentsSingle[0].fullName | truncate:'30'}} </p>
                             <p class="m-clear text-capitalize " title="{{content.opponentsSingle[0].schoolName}}">{{content.opponentsSingle[0].schoolName | truncate:'30'}} </p>
 
                             <span ng-if="!content.opponentsSingle[0].athleteId && !isTeam">-</span>

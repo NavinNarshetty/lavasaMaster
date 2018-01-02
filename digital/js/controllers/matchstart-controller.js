@@ -13,9 +13,402 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
   $scope.showError = false;
   $scope.removeReset = true;
   $scope.drawFormat = $stateParams.drawFormat;
+  $scope.savePlayerList = [];
+  $scope.savePlayers = {};
   // VARIABLE INITIALISE END
 
   //INTEGRATION
+  // GET MATCH PLAYERS
+  $scope.getIndividualPlayers = function(){
+    $scope.individualPlayers = {
+      sport: $stateParams.sport
+    }
+    NavigationService.getIndividualPlayers($scope.individualPlayers, function(data){
+      if (data.value == true) {
+        $scope.playerLists = data.data;
+        console.log("player success", data.data);
+      } else {
+        console.log("player fail", data);
+      }
+    });
+  }
+  $scope.getIndividualPlayers();
+  // GET MATCH PLAYERS
+  // addPlayersMatch
+  $scope.addPlayersMatch = function(){
+    $scope.savePlayers.matchId = $scope.matchDetails.matchId;
+    $scope.savePlayers.opponentsSingle = [];
+    _.each($scope.savePlayerList, function(n){
+      if (n._id !="") {
+        $scope.savePlayers.opponentsSingle.push(n._id);
+      }
+    });
+    console.log("$scope.savePlayerList", $scope.savePlayers);
+    NavigationService.addPlayersMatch($scope.savePlayers, function(data){
+      if (data.value == true) {
+        // $scope.
+        console.log("$scope.savePlayerList", data.data);
+      } else {
+        toastr.error("Save Failed","Error");
+      }
+    });
+  };
+  // addPlayersMatch END
+  // INITIALSE MATCH RESULTS
+  $scope.initialiseResults = function(){
+    // INITIALISE RESULTS
+    switch ($scope.matchDetails.sportType) {
+      case "Combat Sports":
+        if ($scope.matchDetails.isTeam == false) {
+          console.log("COMBAT SINGLE!");
+          if ($scope.drawFormat == "League cum Knockout") {
+            if ($scope.matchDetails.resultFencing == null || $scope.matchDetails.resultFencing == "" || $scope.matchDetails.resultFencing == undefined) {
+              $scope.matchDetails.resultFencing = {};
+              $scope.formData = {
+                "players": [],
+                "matchPhoto": [],
+                "scoreSheet": [],
+                "winner": {},
+                "isNoMatch": false
+              }
+              _.each($scope.matchDetails.players, function (n, key) {
+                $scope.formData.players[key] = {
+                  "player": n._id,
+                  "firstName": n.firstName,
+                  "surname": n.surname,
+                  "fullName": n.firstName + " " + n.surname,
+                  "sfaId": n.sfaId,
+                  "noShow": false,
+                  "walkover": false,
+                  "finalPoints" : ""
+                }
+              })
+              console.log('EPRR', $scope.formData);
+            } else {
+              $scope.formData = $scope.matchDetails.resultFencing;
+              if ($scope.matchDetails.resultFencing.status == 'IsCompleted') {
+                toastr.warning("This match has already been scored.", "Match Complete");
+              }
+            }
+          } else{
+            if ($scope.matchDetails.resultsCombat == null || $scope.matchDetails.resultsCombat == "" || $scope.matchDetails.resultsCombat == undefined) {
+              $scope.matchDetails.resultsCombat = {};
+              $scope.formData = {
+                "players": [],
+                "matchPhoto": [],
+                "scoreSheet": [],
+                "winner": {},
+                "isNoMatch": false
+              }
+              _.each($scope.matchDetails.players, function (n, key) {
+                $scope.formData.players[key] = {
+                  "player": n._id,
+                  "firstName": n.firstName,
+                  "surname": n.surname,
+                  "fullName": n.firstName + " " + n.surname,
+                  "sfaId": n.sfaId,
+                  "noShow": false,
+                  "walkover": false,
+                  "sets": [{
+                    point: "",
+                  }]
+                }
+              })
+            } else {
+              $scope.formData = $scope.matchDetails.resultsCombat;
+              if ($scope.matchDetails.resultsCombat.status == 'IsCompleted') {
+                toastr.warning("This match has already been scored.", "Match Complete");
+                if ($stateParams.drawFormat === 'Knockout') {
+                  $state.go('knockout', {
+                    drawFormat: $stateParams.drawFormat,
+                    id: $stateParams.sport
+                  });
+                } else if ($stateParams.drawFormat === 'Heats') {
+                  $state.go('heats', {
+                    drawFormat: $stateParams.drawFormat,
+                    id: $stateParams.sport
+                  });
+                }
+              }
+            }
+          }
+        } else if ($scope.matchDetails.isTeam == true) {
+          console.log("COMBAT TEAM");
+          if ($scope.matchDetails.resultsCombat == null || $scope.matchDetails.resultsCombat == "" || $scope.matchDetails.resultsCombat == undefined) {
+            $scope.matchDetails.resultsCombat = {};
+            $scope.formData = {
+              "teams": [],
+              "matchPhoto": [],
+              "scoreSheet": [],
+              "winner": {},
+              "isNoMatch": false
+            }
+            _.each($scope.matchDetails.teams, function (n, key) {
+              $scope.formData.teams[key] = {
+                "team": n._id,
+                "teamId": n.teamId,
+                "schoolName": n.schoolName,
+                "noShow": false,
+                "walkover": false,
+                "sets": [{
+                  point: "",
+                }]
+              }
+            })
+            _.each($scope.matchDetails.teams[key].studentTeam, function (m, mkey) {
+              $scope.formData.teams[key].players[mkey] = {
+                "player": m.studentId._id,
+                "firstName": m.studentId.firstName,
+                "surname": m.studentId.surname,
+                "fullName": m.studentId.firstName + " " + m.studentId.surname,
+                "sfaId": m.sfaId,
+                "isPlaying": false,
+                "jerseyNo": "",
+              }
+            })
+          } else {
+            $scope.formData = $scope.matchDetails.resultsCombat;
+            if ($scope.matchDetails.resultsCombat.status == 'IsCompleted') {
+              toastr.warning("This match has already been scored.", "Match Complete");
+              if ($stateParams.drawFormat === 'Knockout') {
+                $state.go('knockout-team', {
+                  drawFormat: $stateParams.drawFormat,
+                  id: $stateParams.sport
+                });
+              } else if ($stateParams.drawFormat === 'Heats') {
+                $state.go('heats', {
+                  drawFormat: $stateParams.drawFormat,
+                  id: $stateParams.sport
+                });
+              }
+            }
+          }
+        }
+        break;
+      case "Racquet Sports":
+        if ($scope.matchDetails.isTeam == false) {
+          console.log("RACQUET SINGLE!");
+          if ($scope.matchDetails.resultsRacquet == null || $scope.matchDetails.resultsRacquet == "" || $scope.matchDetails.resultsRacquet == undefined) {
+            $scope.matchDetails.resultsRacquet = {};
+            $scope.formData = {
+              "players": [],
+              "matchPhoto": [],
+              "scoreSheet": [],
+              "winner": {},
+              "isNoMatch": false
+            }
+            _.each($scope.matchDetails.players, function (n, key) {
+              $scope.formData.players[key] = {
+                "player": n._id,
+                "firstName": n.firstName,
+                "surname": n.surname,
+                "fullName": n.firstName + " " + n.surname,
+                "sfaId": n.sfaId,
+                "noShow": false,
+                "walkover": false,
+                "sets": [{
+                  point: "",
+                  ace: "",
+                  winner: "",
+                  unforcedError: "",
+                  serviceError: "",
+                  doubleFaults: ""
+                }]
+              }
+            })
+          } else {
+            $scope.formData = $scope.matchDetails.resultsRacquet;
+            if ($scope.matchDetails.resultsRacquet.status == 'IsCompleted') {
+              if ($stateParams.drawFormat === 'Knockout') {
+                toastr.warning("This match has already been scored.", 'Scoring Completed');
+                $state.go('knockout', {
+                  drawFormat: $stateParams.drawFormat,
+                  id: $stateParams.sport
+                });
+              } else if ($stateParams.drawFormat === 'Heats') {
+                toastr.warning("This match has already been scored.", 'Scoring Completed');
+                $state.go('heats', {
+                  drawFormat: $stateParams.drawFormat,
+                  id: $stateParams.sport
+                });
+              }
+            }
+          }
+        } else if ($scope.matchDetails.isTeam == true) {
+          console.log("RACQUET TEAMS!");
+          if ($scope.matchDetails.resultsRacquet == null || $scope.matchDetails.resultsRacquet == "" || $scope.matchDetails.resultsRacquet == undefined) {
+            $scope.matchDetails.resultsRacquet = {};
+            $scope.formData = {
+              "teams": [],
+              "matchPhoto": [],
+              "scoreSheet": [],
+              "winner": {},
+              "isNoMatch": false
+            }
+            _.each($scope.matchDetails.teams, function (n, key) {
+              $scope.formData.teams[key] = {
+                "team": n._id,
+                "teamId": n.teamId,
+                "schoolName": n.schoolName,
+                "noShow": false,
+                "walkover": false,
+                "sets": [{
+                  point: "",
+                  ace: "",
+                  winner: "",
+                  unforcedError: "",
+                  serviceError: "",
+                  doubleFaults: ""
+                }],
+                "players": []
+              }
+              _.each($scope.matchDetails.teams[key].studentTeam, function (m, mkey) {
+                $scope.formData.teams[key].players[mkey] = {
+                  "player": m.studentId._id,
+                  "firstName": m.studentId.firstName,
+                  "surname": m.studentId.surname,
+                  "fullName": m.studentId.firstName + " " + m.studentId.surname,
+                  "sfaId": m.studentId.sfaId,
+                  "isPlaying": false,
+                }
+              })
+            })
+          } else {
+            $scope.formData = $scope.matchDetails.resultsRacquet;
+            if ($scope.matchDetails.resultsRacquet.status == 'IsCompleted') {
+              toastr.warning("This match has already been scored.", "Match Complete");
+              if ($stateParams.drawFormat === 'Knockout') {
+                $state.go('knockout-doubles', {
+                  drawFormat: $stateParams.drawFormat,
+                  id: $stateParams.sport
+                });
+              } else if ($stateParams.drawFormat === 'Heats') {
+                $state.go('heats', {
+                  drawFormat: $stateParams.drawFormat,
+                  id: $stateParams.sport
+                });
+              }
+            }
+          }
+        }
+        break;
+      case "Team Sports":
+        switch ($scope.matchDetails.sportsName) {
+          case "Throwball":
+          case "Kho Kho":
+            console.log('throwball ? KHO KHO');
+            if ($scope.matchDetails.resultsCombat == null || $scope.matchDetails.resultsCombat == "" || $scope.matchDetails.resultsCombat == undefined) {
+              $scope.matchDetails.resultsCombat = {};
+              $scope.formData = {
+                "teams": [],
+                "matchPhoto": [],
+                "scoreSheet": [],
+                "winner": {},
+                "isNoMatch": false
+              }
+              _.each($scope.matchDetails.teams, function (n, key) {
+                $scope.formData.teams[key] = {
+                  "team": n._id,
+                  "teamId": n.teamId,
+                  "schoolName": n.schoolName,
+                  "noShow": false,
+                  "walkover": false,
+                  "coach": "",
+                  "players": [],
+                  "sets": [{
+                    point: "",
+                  }]
+                }
+                _.each($scope.matchDetails.teams[key].studentTeam, function (m, mkey) {
+                  $scope.formData.teams[key].players[mkey] = {
+                    "player": m.studentId._id,
+                    "firstName": m.studentId.firstName,
+                    "surname": m.studentId.surname,
+                    "fullName": m.studentId.firstName + " " + m.studentId.surname,
+                    "sfaId": m.studentId.sfaId,
+                    "isPlaying": false,
+                    "jerseyNo": "",
+                  }
+                })
+              })
+            } else {
+              $scope.formData = $scope.matchDetails.resultsCombat;
+              console.log($scope.formData, 'form');
+              if ($scope.matchDetails.resultsCombat.status == 'IsCompleted') {
+                toastr.warning("This match has already been scored.", "Match Complete");
+                if ($stateParams.drawFormat === 'Knockout') {
+                  $state.go('knockout-team', {
+                    drawFormat: $stateParams.drawFormat,
+                    id: $stateParams.sport
+                  });
+                } else if ($stateParams.drawFormat === 'Heats') {
+                  $state.go('heats', {
+                    drawFormat: $stateParams.drawFormat,
+                    id: $stateParams.sport
+                  });
+                }
+              }
+            }
+            break;
+          case "Football":
+            if ($scope.matchDetails.resultFootball == null || $scope.matchDetails.resultFootball == "" || $scope.matchDetails.resultFootball == undefined) {
+              $scope.matchDetails.resultFootball = {};
+              $scope.formData = {
+                "teams": [],
+                "matchPhoto": [],
+                "scoreSheet": [],
+                "status": "",
+                "winner": {},
+                "isNoMatch": false
+              }
+              _.each($scope.matchDetails.teams, function (n, key) {
+                $scope.formData.teams[key] = {
+                  "team": n._id,
+                  "noShow": false,
+                  "walkover": false,
+                  "players": [],
+                  "teamResults": {
+                    halfPoints: "",
+                    finalPoints: "",
+                    penalityPoints: "",
+                    shotsOnGoal: "",
+                    totalShots: "",
+                    corners: "",
+                    penality: "",
+                    saves: "",
+                    fouls: "",
+                    offSide: "",
+                    cleanSheet: ""
+                  }
+                }
+                _.each($scope.matchDetails.teams[key].studentTeam, function (m, mkey) {
+                  $scope.formData.teams[key].players[mkey] = {
+                    "player": m.studentId._id,
+                    "isPlaying": false,
+                    "jerseyNo": "",
+                    "playerPoints": {
+                      "goals": [],
+                      "assist": [],
+                      "redCard": [],
+                      "yellowCard": [],
+                      "penalityPoint": "",
+                      "in": [],
+                      "out": []
+                    }
+                  }
+                })
+              });
+            } else {
+              toastr.success('Wallah habibi');
+            }
+            console.log($scope.formData, 'football result');
+            break;
+        }
+        break;
+    }
+    // INITIALISE RESULTS END
+  }
+  // INITIALSE MATCH RESULTS END
   // GET MATCH
   $scope.getOneMatch = function () {
     $scope.matchData.matchId = $stateParams.id;
@@ -29,357 +422,26 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
         $scope.matchDetails = data.data;
         $scope.matchDetails.matchId = $scope.matchData.matchId;
         console.log($scope.matchDetails, '$scope.matchDetails');
-        // INITIALISE RESULTS
-        switch ($scope.matchDetails.sportType) {
-          case "Combat Sports":
-            if ($scope.matchDetails.isTeam == false) {
-              console.log("COMBAT SINGLE!");
-              if ($scope.drawFormat == "League cum Knockout") {
-                if ($scope.matchDetails.resultFencing == null || $scope.matchDetails.resultFencing == "" || $scope.matchDetails.resultFencing == undefined) {
-                  $scope.matchDetails.resultFencing = {};
-                  $scope.formData = {
-                    "players": [],
-                    "matchPhoto": [],
-                    "scoreSheet": [],
-                    "winner": {},
-                    "isNoMatch": false
-                  }
-                  _.each($scope.matchDetails.players, function (n, key) {
-                    $scope.formData.players[key] = {
-                      "player": n._id,
-                      "firstName": n.firstName,
-                      "surname": n.surname,
-                      "fullName": n.firstName + " " + n.surname,
-                      "sfaId": n.sfaId,
-                      "noShow": false,
-                      "walkover": false,
-                      "finalPoints" : ""
-                    }
-                  })
-                  console.log('EPRR', $scope.formData);
-                } else {
-                  $scope.formData = $scope.matchDetails.resultFencing;
-                  if ($scope.matchDetails.resultFencing.status == 'IsCompleted') {
-                    toastr.warning("This match has already been scored.", "Match Complete");
-                  }
-                }
-              } else{
-                if ($scope.matchDetails.resultsCombat == null || $scope.matchDetails.resultsCombat == "" || $scope.matchDetails.resultsCombat == undefined) {
-                  $scope.matchDetails.resultsCombat = {};
-                  $scope.formData = {
-                    "players": [],
-                    "matchPhoto": [],
-                    "scoreSheet": [],
-                    "winner": {},
-                    "isNoMatch": false
-                  }
-                  _.each($scope.matchDetails.players, function (n, key) {
-                    $scope.formData.players[key] = {
-                      "player": n._id,
-                      "firstName": n.firstName,
-                      "surname": n.surname,
-                      "fullName": n.firstName + " " + n.surname,
-                      "sfaId": n.sfaId,
-                      "noShow": false,
-                      "walkover": false,
-                      "sets": [{
-                        point: "",
-                      }]
-                    }
-                  })
-                } else {
-                  $scope.formData = $scope.matchDetails.resultsCombat;
-                  if ($scope.matchDetails.resultsCombat.status == 'IsCompleted') {
-                    toastr.warning("This match has already been scored.", "Match Complete");
-                    if ($stateParams.drawFormat === 'Knockout') {
-                      $state.go('knockout', {
-                        drawFormat: $stateParams.drawFormat,
-                        id: $stateParams.sport
-                      });
-                    } else if ($stateParams.drawFormat === 'Heats') {
-                      $state.go('heats', {
-                        drawFormat: $stateParams.drawFormat,
-                        id: $stateParams.sport
-                      });
-                    }
-                  }
-                }
-              }
-            } else if ($scope.matchDetails.isTeam == true) {
-              console.log("COMBAT TEAM");
-              if ($scope.matchDetails.resultsCombat == null || $scope.matchDetails.resultsCombat == "" || $scope.matchDetails.resultsCombat == undefined) {
-                $scope.matchDetails.resultsCombat = {};
-                $scope.formData = {
-                  "teams": [],
-                  "matchPhoto": [],
-                  "scoreSheet": [],
-                  "winner": {},
-                  "isNoMatch": false
-                }
-                _.each($scope.matchDetails.teams, function (n, key) {
-                  $scope.formData.teams[key] = {
-                    "team": n._id,
-                    "teamId": n.teamId,
-                    "schoolName": n.schoolName,
-                    "noShow": false,
-                    "walkover": false,
-                    "sets": [{
-                      point: "",
-                    }]
-                  }
-                })
-                _.each($scope.matchDetails.teams[key].studentTeam, function (m, mkey) {
-                  $scope.formData.teams[key].players[mkey] = {
-                    "player": m.studentId._id,
-                    "firstName": m.studentId.firstName,
-                    "surname": m.studentId.surname,
-                    "fullName": m.studentId.firstName + " " + m.studentId.surname,
-                    "sfaId": m.sfaId,
-                    "isPlaying": false,
-                    "jerseyNo": "",
-                  }
-                })
-              } else {
-                $scope.formData = $scope.matchDetails.resultsCombat;
-                if ($scope.matchDetails.resultsCombat.status == 'IsCompleted') {
-                  toastr.warning("This match has already been scored.", "Match Complete");
-                  if ($stateParams.drawFormat === 'Knockout') {
-                    $state.go('knockout-team', {
-                      drawFormat: $stateParams.drawFormat,
-                      id: $stateParams.sport
-                    });
-                  } else if ($stateParams.drawFormat === 'Heats') {
-                    $state.go('heats', {
-                      drawFormat: $stateParams.drawFormat,
-                      id: $stateParams.sport
-                    });
-                  }
-                }
-              }
-            }
-            break;
-          case "Racquet Sports":
-            if ($scope.matchDetails.isTeam == false) {
-              console.log("RACQUET SINGLE!");
-              if ($scope.matchDetails.resultsRacquet == null || $scope.matchDetails.resultsRacquet == "" || $scope.matchDetails.resultsRacquet == undefined) {
-                $scope.matchDetails.resultsRacquet = {};
-                $scope.formData = {
-                  "players": [],
-                  "matchPhoto": [],
-                  "scoreSheet": [],
-                  "winner": {},
-                  "isNoMatch": false
-                }
-                _.each($scope.matchDetails.players, function (n, key) {
-                  $scope.formData.players[key] = {
-                    "player": n._id,
-                    "firstName": n.firstName,
-                    "surname": n.surname,
-                    "fullName": n.firstName + " " + n.surname,
-                    "sfaId": n.sfaId,
-                    "noShow": false,
-                    "walkover": false,
-                    "sets": [{
-                      point: "",
-                      ace: "",
-                      winner: "",
-                      unforcedError: "",
-                      serviceError: "",
-                      doubleFaults: ""
-                    }]
-                  }
-                })
-              } else {
-                $scope.formData = $scope.matchDetails.resultsRacquet;
-                if ($scope.matchDetails.resultsRacquet.status == 'IsCompleted') {
-                  if ($stateParams.drawFormat === 'Knockout') {
-                    toastr.warning("This match has already been scored.", 'Scoring Completed');
-                    $state.go('knockout', {
-                      drawFormat: $stateParams.drawFormat,
-                      id: $stateParams.sport
-                    });
-                  } else if ($stateParams.drawFormat === 'Heats') {
-                    toastr.warning("This match has already been scored.", 'Scoring Completed');
-                    $state.go('heats', {
-                      drawFormat: $stateParams.drawFormat,
-                      id: $stateParams.sport
-                    });
-                  }
-                }
-              }
-            } else if ($scope.matchDetails.isTeam == true) {
-              console.log("RACQUET TEAMS!");
-              if ($scope.matchDetails.resultsRacquet == null || $scope.matchDetails.resultsRacquet == "" || $scope.matchDetails.resultsRacquet == undefined) {
-                $scope.matchDetails.resultsRacquet = {};
-                $scope.formData = {
-                  "teams": [],
-                  "matchPhoto": [],
-                  "scoreSheet": [],
-                  "winner": {},
-                  "isNoMatch": false
-                }
-                _.each($scope.matchDetails.teams, function (n, key) {
-                  $scope.formData.teams[key] = {
-                    "team": n._id,
-                    "teamId": n.teamId,
-                    "schoolName": n.schoolName,
-                    "noShow": false,
-                    "walkover": false,
-                    "sets": [{
-                      point: "",
-                      ace: "",
-                      winner: "",
-                      unforcedError: "",
-                      serviceError: "",
-                      doubleFaults: ""
-                    }],
-                    "players": []
-                  }
-                  _.each($scope.matchDetails.teams[key].studentTeam, function (m, mkey) {
-                    $scope.formData.teams[key].players[mkey] = {
-                      "player": m.studentId._id,
-                      "firstName": m.studentId.firstName,
-                      "surname": m.studentId.surname,
-                      "fullName": m.studentId.firstName + " " + m.studentId.surname,
-                      "sfaId": m.studentId.sfaId,
-                      "isPlaying": false,
-                    }
-                  })
-                })
-              } else {
-                $scope.formData = $scope.matchDetails.resultsRacquet;
-                if ($scope.matchDetails.resultsRacquet.status == 'IsCompleted') {
-                  toastr.warning("This match has already been scored.", "Match Complete");
-                  if ($stateParams.drawFormat === 'Knockout') {
-                    $state.go('knockout-doubles', {
-                      drawFormat: $stateParams.drawFormat,
-                      id: $stateParams.sport
-                    });
-                  } else if ($stateParams.drawFormat === 'Heats') {
-                    $state.go('heats', {
-                      drawFormat: $stateParams.drawFormat,
-                      id: $stateParams.sport
-                    });
-                  }
-                }
-              }
-            }
-            break;
-          case "Team Sports":
-            switch ($scope.matchDetails.sportsName) {
-              case "Throwball":
-              case "Kho Kho":
-                console.log('throwball ? KHO KHO');
-                if ($scope.matchDetails.resultsCombat == null || $scope.matchDetails.resultsCombat == "" || $scope.matchDetails.resultsCombat == undefined) {
-                  $scope.matchDetails.resultsCombat = {};
-                  $scope.formData = {
-                    "teams": [],
-                    "matchPhoto": [],
-                    "scoreSheet": [],
-                    "winner": {},
-                    "isNoMatch": false
-                  }
-                  _.each($scope.matchDetails.teams, function (n, key) {
-                    $scope.formData.teams[key] = {
-                      "team": n._id,
-                      "teamId": n.teamId,
-                      "schoolName": n.schoolName,
-                      "noShow": false,
-                      "walkover": false,
-                      "coach": "",
-                      "players": [],
-                      "sets": [{
-                        point: "",
-                      }]
-                    }
-                    _.each($scope.matchDetails.teams[key].studentTeam, function (m, mkey) {
-                      $scope.formData.teams[key].players[mkey] = {
-                        "player": m.studentId._id,
-                        "firstName": m.studentId.firstName,
-                        "surname": m.studentId.surname,
-                        "fullName": m.studentId.firstName + " " + m.studentId.surname,
-                        "sfaId": m.studentId.sfaId,
-                        "isPlaying": false,
-                        "jerseyNo": "",
-                      }
-                    })
-                  })
-                } else {
-                  $scope.formData = $scope.matchDetails.resultsCombat;
-                  console.log($scope.formData, 'form');
-                  if ($scope.matchDetails.resultsCombat.status == 'IsCompleted') {
-                    toastr.warning("This match has already been scored.", "Match Complete");
-                    if ($stateParams.drawFormat === 'Knockout') {
-                      $state.go('knockout-team', {
-                        drawFormat: $stateParams.drawFormat,
-                        id: $stateParams.sport
-                      });
-                    } else if ($stateParams.drawFormat === 'Heats') {
-                      $state.go('heats', {
-                        drawFormat: $stateParams.drawFormat,
-                        id: $stateParams.sport
-                      });
-                    }
-                  }
-                }
-                break;
-              case "Football":
-                if ($scope.matchDetails.resultFootball == null || $scope.matchDetails.resultFootball == "" || $scope.matchDetails.resultFootball == undefined) {
-                  $scope.matchDetails.resultFootball = {};
-                  $scope.formData = {
-                    "teams": [],
-                    "matchPhoto": [],
-                    "scoreSheet": [],
-                    "status": "",
-                    "winner": {},
-                    "isNoMatch": false
-                  }
-                  _.each($scope.matchDetails.teams, function (n, key) {
-                    $scope.formData.teams[key] = {
-                      "team": n._id,
-                      "noShow": false,
-                      "walkover": false,
-                      "players": [],
-                      "teamResults": {
-                        halfPoints: "",
-                        finalPoints: "",
-                        penalityPoints: "",
-                        shotsOnGoal: "",
-                        totalShots: "",
-                        corners: "",
-                        penality: "",
-                        saves: "",
-                        fouls: "",
-                        offSide: "",
-                        cleanSheet: ""
-                      }
-                    }
-                    _.each($scope.matchDetails.teams[key].studentTeam, function (m, mkey) {
-                      $scope.formData.teams[key].players[mkey] = {
-                        "player": m.studentId._id,
-                        "isPlaying": false,
-                        "jerseyNo": "",
-                        "playerPoints": {
-                          "goals": [],
-                          "assist": [],
-                          "redCard": [],
-                          "yellowCard": [],
-                          "penalityPoint": "",
-                          "in": [],
-                          "out": []
-                        }
-                      }
-                    })
-                  });
-                } else {
-                  toastr.success('Wallah habibi');
-                }
-                console.log($scope.formData, 'football result');
-                break;
-            }
-            break;
+        if ($scope.matchDetails.opponentsSingle) {
+          _.each($scope.matchDetails.opponentsSingle, function(n){
+            $scope.savePlayerList.push({
+              _id: n
+            })
+          });
+          if ($scope.matchDetails.opponentsSingle.length < 2) {
+            $scope.savePlayerList.push({
+              _id: ''
+            })
+          }
+        } else {
+          $scope.savePlayerList = [{
+            _id: ''
+          },{
+            _id: ''
+          }]
         }
-        // INITIALISE RESULTS END
+
+        console.log("players", $scope.savePlayerList);
       } else {
         console.log("ERROR IN getOneMatch");
         //redirect back to sportselection page
@@ -423,6 +485,7 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
   // TEAM NO MATCH END
   // SAVE RESULT
   $scope.saveResult = function (formData) {
+    $scope.initialiseResults();
     console.log(formData, 'svae data');
     if (formData) {
       if ($scope.matchDetails.players.length == 1) {
@@ -544,6 +607,7 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
   // SAVE RESULT END
   // SAVE TEAM RESULT
   $scope.saveTeamResult = function (formData) {
+    $scope.initialiseResults();
     console.log(formData, 'svae data');
     if (formData) {
       if ($scope.matchDetails.teams.length == 1) {
@@ -869,6 +933,7 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
 
   // OPEN MATCH-NO MATCH MODAL
   $scope.showNoMatch = function () {
+    $scope.initialiseResults();
     if ($scope.formData) {
       if ($scope.matchDetails.isTeam == false) {
         $uibModal.open({

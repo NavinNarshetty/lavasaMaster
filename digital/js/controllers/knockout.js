@@ -47,7 +47,7 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
     // START SCORING FUNCTION
     $scope.startScoring = function (card) {
         console.log(card, 'startScoring');
-        if (_.isEmpty(card.opponentsSingle[0]) && _.isEmpty(card.opponentsSingle[1])) {
+        if (!(_.isEmpty(card.prevMatch)) && _.isEmpty(card.opponentsSingle[0]) && _.isEmpty(card.opponentsSingle[1])) {
             toastr.error('No players found for match.', 'No match');
         } else {
             if (card.status == 'IsCompleted') {

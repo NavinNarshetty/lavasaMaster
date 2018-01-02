@@ -10,7 +10,7 @@
 
       <div class="creatematch-header">
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-4 col-sm-4">
             <div class="form-group">
               <label for="matchForm.sportType">Sport Type</label>
               <input type="text" class="form-control" ng-model="matchForm.sportType" disabled>
@@ -18,13 +18,13 @@
               <!-- <pre>{{match.draw}}</pre> -->
             </div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-4 col-sm-4">
             <div class="form-group">
               <label for="matchForm.prefix"> Enter Match ID Prefix</label>
               <input type="text" id="matchForm.prefix" class="form-control" ng-model="matchForm.prefix">
             </div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-4 col-sm-4">
             <div class="form-group">
               <label for="matchForm.round"> Select Round Type</label>
               <select class="select form-control" id="matchForm.round" ng-model="matchForm.round" ng-options="sport.type as sport.type for sport in listRound"></select>
@@ -33,7 +33,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-offset-8 col-md-4">
+          <div class="col-md-offset-8 col-md-4 col-sm-offset-3 col-sm-6">
             <div class="form-group">
               <button type="button" name="button" class="btn btn-green-outline btn-scoring" ng-click="createMatches()">Create Match</button>
             </div>

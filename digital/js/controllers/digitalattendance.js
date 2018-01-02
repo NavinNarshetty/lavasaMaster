@@ -105,12 +105,13 @@ myApp.controller('DigitalAttendanceCtrl', function ($scope, TemplateService, $st
                                 case 'Swimming 4x50m Freestyle Relay':
                                 case 'Swimming 4x50m Medley Relay':
                                 case 'Athletics 4x100m Relay':
+                                console.log("ath");
                                     if (flag == 'attendance') {
                                         $state.go('attendancesheet-team', {
                                             sport: $scope.drawDetails.sport
                                         });
                                     } else if (flag == 'matches') {
-                                        $state.go('creatmatch-heats', {
+                                        $state.go('creatematch-heats', {
                                             sport: $scope.drawDetails.sport
                                         });
                                     }
@@ -119,12 +120,13 @@ myApp.controller('DigitalAttendanceCtrl', function ($scope, TemplateService, $st
                                 case 'Swimming':
                                 case 'Athletics':
                                 case 'Shooting':
+                                console.log("swim");
                                     if (flag == 'attendance') {
                                         $state.go('attendancesheet', {
                                             sport: $scope.drawDetails.sport
                                         });
                                     } else if (flag == 'matches') {
-                                        $state.go('creatmatch-heats', {
+                                        $state.go('creatematch-heats', {
                                             sport: $scope.drawDetails.sport
                                         });
                                     }
@@ -135,13 +137,19 @@ myApp.controller('DigitalAttendanceCtrl', function ($scope, TemplateService, $st
                                 case 'Judo':
                                 case 'Sport MMA':
                                 case 'Karate':
+                                console.log("weight");
                                     if ($scope.eventSportName != 'Kata') {
+                                      console.log("no Kata");
                                         if (flag == 'attendance') {
+                                          console.log("yo atten");
                                             $state.go('addweight', {
                                                 sport: $scope.drawDetails.sport
                                             });
                                         } else if (flag == 'matches') {
-                                            $state.go('creatematch-weight');
+                                          console.log("yo match");
+                                            $state.go('creatematch-weight',{
+                                                sport: $scope.drawDetails.sport
+                                            });
                                         }
 
                                     } else {

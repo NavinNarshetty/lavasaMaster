@@ -16,7 +16,43 @@
     </div>
   </div>
   <div class="matchstart-section get-center">
-  <div class="container">
+    <!-- PLAYER SELECTION SECTION -->
+    <div class="matchstart-playerheader" ng-if="matchDetails.prevMatch && (matchDetails.opponentsSingle.length < 2 || !matchDetails.opponentsSingle)">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-5 col-sm-5" ng-repeat="single in savePlayerList track by $index">
+            <div class="matchstart-playerselect form-group">
+              <label for="">Select Player {{$index + 1}}</label>
+              <ui-select id="selectedPlayer{{$index}}" ng-model="single._id" theme="bootstrap">
+                  <ui-select-match placeholder="Select Player"> {{$select.selected.sfaId}}  {{$select.selected.name}}</ui-select-match>
+                  <ui-select-choices repeat="player._id as player in playerLists.match | filter: $select.search">
+                        <p class="opponentsingle-selector">{{player.sfaId}} - {{player.name}}</p>
+                  </ui-select-choices>
+              </ui-select>
+            </div>
+          </div>
+          <!-- <div class="col-md-5 col-sm-5">
+            <div class="matchstart-playerselect form-group">
+              <label for="">Select Player {{$index + 1}}</label>
+              <ui-select id="matchWinnerPlayer" ng-model="match.resultsCombat.winner.player" theme="bootstrap">
+                  <ui-select-match placeholder="Select Winner"> {{$select.selected.sfaId}} {{$select.selected.name}}</ui-select-match>
+                  <ui-select-choices repeat="player._id as player in playerLists.match | filter: $select.search">
+                        <p class="opponentsingle-selector" ng-click="match.resultsCombat.winner.opponentsSingle=match.opponentsSingle[$index]">{{player.sfaId}} - {{player.name}}</p>
+                  </ui-select-choices>
+              </ui-select>
+            </div>
+          </div> -->
+          <div class="col-md-2 col-sm-2">
+            <div class="form-group">
+              <label for=""></label>
+              <button type="button" name="button" class="btn btn-green-outline btn-scoring" ng-click="addPlayersMatch();">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- PLAYER SELECTION SECTION END -->
+    <div class="container">
     <div class="row">
       <div class="col-md-offset-1 col-md-6 col-sm-6">
         <!-- FOR INDIVIDUALS CARD -->

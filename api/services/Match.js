@@ -17877,9 +17877,33 @@ var model = {
                                     function (err, match) {
                                         callback(null, match);
                                     });
+                            } else if (matchData.resultVolleyball) {
+                                var matchObj = {
+                                    $unset: {
+                                        resultVolleyball: undefined
+                                    }
+                                };
+                                Match.update({
+                                    matchId: data.matchId
+                                }, matchObj).exec(
+                                    function (err, match) {
+                                        callback(null, match);
+                                    });
+                            } else if (matchData.resultWaterPolo) {
+                                var matchObj = {
+                                    $unset: {
+                                        resultWaterPolo: undefined
+                                    }
+                                };
+                                Match.update({
+                                    matchId: data.matchId
+                                }, matchObj).exec(
+                                    function (err, match) {
+                                        callback(null, match);
+                                    });
                             } else {
                                 callback(null, {
-                                    error: "no result to delet",
+                                    error: "no result to delete",
                                     data: matchData
                                 });
                             }

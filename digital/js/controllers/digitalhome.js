@@ -1,6 +1,6 @@
 myApp.controller('DigitalHomeCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, $rootScope, $uibModal) {
     $scope.template = TemplateService.getHTML("content/digital-home.html");
-    TemplateService.title = "Direct Final"; //This is the Title of the Website
+    TemplateService.title = "Digital Scoring Sports Selection"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
 
     $scope.sportList = ['football', 'Basketball', 'tennis', 'chess'];
