@@ -1,4 +1,4 @@
-myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationService, ResultSportInitialization, $timeout, $uibModal, $stateParams, $state, $interval, toastr) {
+myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationService, ResultSportInitialization, $timeout, $uibModal,$rootScope, $stateParams, $state, $interval, toastr) {
 
   $scope.matchData = {};
   $scope.drawFormat = $stateParams.drawFormat;
@@ -7,6 +7,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
     "drawFormat": $stateParams.drawFormat,
     "sport": $stateParams.sport
   };
+  
   $scope.matchId = $stateParams.id;
   var teamSelectionModal;
   var completeMatchModal;
@@ -14,6 +15,20 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
   var penaltyShootoutModal;
   var resultVar;
   $scope.btnDisable = false;
+
+  // CLEAVE FUNCTION OPTIONS
+  $scope.options = {
+    formation: {
+          blocks: [1, 1, 1, 1],
+          uppercase: true,
+          delimiters: ['-']
+      },
+      score: {
+        blocks: [2],
+        numeral: true
+      }
+  }
+  // CLEAVE FUNCTION OPTIONS END
 
   var initPage = function () {
     $scope.template = TemplateService.getHTML("content/" + $scope.matchData.html);
@@ -45,7 +60,8 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
         console.log($scope.match);
         console.log($scope.matchData);
         console.log(resultVar);
-        if ($scope.match[resultVar].teams[0] == "" || $scope.match[resultVar].teams[0].formation == "" || $scope.match[resultVar].teams[1].coach == "" || $scope.match[resultVar].teams[1] == '') {
+        if ($scope.match[resultVar].teams[0] == "" || $scope.match[resultVar].teams[1].coach == "" || $scope.match[resultVar].teams[1] == '') {
+          console.log("aa gya",$scope.match[resultVar].teams[0]);
           $scope.selectTeam($scope.match);
         }
       } else {
@@ -412,6 +428,65 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
       $scope.match[resultVar].isDraw = false;
     }
   }
+
+  // ADD SET
+  $scope.setLength = [];
+  $scope.addSet = function () {
+    _.each($scope.match.resultVolleyball.teams, function (n) {
+      n.teamResults.sets.push({
+        points: ''
+      });
+    })
+    _.each($scope.match.resultVolleyball.teams[0].teamResults.sets, function (n, key) {
+      $scope.setLength[key] = {
+        setShow: true
+      }
+    })
+    $scope.setDisplay = {
+      value: 0
+    };
+    $scope.setDelete = {
+      value: 0
+    };
+  }
+  // ADD SET END
+  // REMOVE SET
+  $scope.removeSets = function () {
+    var modalSetDelete;
+    $rootScope.modalInstance = $uibModal.open({
+      animation: true,
+      scope: $scope,
+      keyboard: false,
+      templateUrl: 'views/modal/removeset.html',
+      windowClass: 'removeset-modal'
+    })
+  }
+  $scope.deleteSet = function (index) {
+    console.log(index, 'index che');
+    _.each($scope.match.resultVolleyball.teams, function (n) {
+      if (n.teamResults.sets.length > 1) {
+        n.teamResults.sets.splice(index, 1);
+        $scope.setLength = [];
+        _.each($scope.match.resultVolleyball.teams[0].teamResults.sets, function (n, key) {
+          $scope.setLength[key] = {
+            setShow: true
+          }
+        });
+        $scope.setDisplay = {
+          value: 0
+        };
+        $scope.setDelete = {
+          value: 0
+        };
+        toastr.success('Set deleted successfully');
+        $rootScope.modalInstance.close('a');
+        console.log($scope.match.resultVolleyball, 'After delete');
+      } else {
+        toastr.warning('Minimum 1 Set required');
+      }
+    });
+  }
+  // REMOVE SET END
   // MATCH DRAW END
 
   // $scope.matchComplete = function () {
