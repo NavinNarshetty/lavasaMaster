@@ -1,0 +1,188 @@
+<div class="scorecombatteam-page">
+    <div class="matchstart-header clearfix">
+        <div class="container">
+            <!-- <pre>{{match|json}}</pre> -->
+            <div class="pull-right">
+                <p class="m-clear">match id: <span>{{match.matchId}}</span> </p>
+            </div>
+            <p class="m-clear"><span>{{match.sportsName}}</span> - <span>{{match.age}}</span> <span>{{match.gender}}</span> <span>{{match.round}}</span></p>
+            <!-- <p style="color:red">{{match.resultsCombat.status}}</p> -->
+        </div>
+    </div>
+    <div class="football-scoring">
+        <div class="container">
+            <!-- TEAM HEADERS -->
+            <div class="row">
+                <div class="col-md-6 col-sm-6" ng-repeat="team in match.teams track by $index">
+                    <div class="teamcard mainteamcard">
+                        <div class="teamcard-header text-uppercase">
+                            <p title="{{team.schoolName}}">{{team.schoolName}}</p>
+                            <p>Team ID: <span> {{team.teamId}} </span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="row">
+                <button type="button" name="button" class="btn" ng-click="selectTeam(match.resultsCombat)"> Team init</button>
+            </div> -->
+            <!-- TEAM HEADERS -->
+            <!-- TEAM SCORING -->
+            <div class="teamscoring-section">
+                <div class="row">
+                    <!-- TEAM 1 PLAYER DETAILS -->
+                    <div class="col-md-6 col-sm-6">
+                        <p class="clearfix m-clear"><span class="pull-right">Jersey No.</span><span>Player Name</span></p>
+                        <div class="teamplaying">
+                            <div class="teamplaying-title">
+                                <p>Players</p>
+                            </div>
+                            <div class="team-playing" ng-repeat="player in match.resultsCombat.teams[0].players track by $index">
+                                <!-- <p ng-if="$index==0">Players</p> -->
+                                <div class="teamplayer" ng-if="player.isPlaying==true">
+                                    <p class="clearfix m-clear" title="{{match.teams[0].studentTeam[$index].studentId.firstName}} {{match.teams[0].studentTeam[$index].studentId.surname}}"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[0].studentTeam[$index].studentId.firstName}} {{match.teams[0].studentTeam[$index].studentId.surname}}</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="teamsubstitute">
+                            <div class="teamplaying-title">
+                                <p>Substitues</p>
+                            </div>
+                            <div class="team-substitute" ng-repeat="player in match.resultsCombat.teams[0].players track by $index">
+                                <!-- <p ng-if="$index==0">Substitues</p> -->
+                                <div class="teamplayer" ng-if="player.isPlaying==false" >
+                                  <!-- ng-click="addPlayerPoints(player,$index)" -->
+                                    <p class="clearfix m-clear" title="{{match.teams[0].studentTeam[$index].studentId.firstName}} {{match.teams[0].studentTeam[$index].studentId.surname}}"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[0].studentTeam[$index].studentId.firstName}} {{match.teams[0].studentTeam[$index].studentId.surname}}</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <pre>{{match.resultsCombat.teams[0]|json}}</pre> -->
+                    </div>
+                    <!-- TEAM 1 PLAYER DETAILS END -->
+                    <!-- TEAM SCORES -->
+                    <div class="col-md-2 col-sm-2" ng-repeat="team in match.resultsCombat.teams track by $index" hidden>
+                        <div class="team-teampoints">
+                            <!-- totalShots DATA POINT -->
+                            <div class="relate teamscore-point mtb-10" ng-repeat="set in team.sets track by $index">
+                                <label class="teamdatapoint-name">Points</label>
+                                <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="decrementScore(set,'point');"><i class="fa fa-minus"></i></button>
+                                <input type="number" ng-model="set.point" min="0" placeholder="0" max="99" class="score-number teamscore-number display-inline form-control" limit-to-max>
+                                <button class="btn score-buttons teamscore-buttons score-increment" ng-click="incrementScore(set,'point');"><i class="fa fa-plus"></i></button>
+                            </div>
+                            <!-- totalShots DATA POINT -->
+                        </div>
+                    </div>
+                    <!-- TEAM SCORES END -->
+                    <!-- TEAM 2 PLAYER DETAILS -->
+                    <div class="col-md-6 col-sm-6">
+                        <p class="clearfix m-clear"><span class="pull-right">Jersey No.</span><span>Player Name</span></p>
+                        <div class="teamplaying">
+                            <div class="teamplaying-title">
+                                <p>Players</p>
+                            </div>
+                            <div class="team-playing" ng-repeat="player in match.resultsCombat.teams[1].players track by $index">
+                                <div class="teamplayer" ng-if="player.isPlaying==true" >
+                                    <p class="clearfix m-clear" title="{{match.teams[0].studentTeam[$index].studentId.firstName}} {{match.teams[0].studentTeam[$index].studentId.surname}}"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[1].studentTeam[$index].studentId.firstName}} {{match.teams[1].studentTeam[$index].studentId.surname}}</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="teamsubstitute">
+                            <div class="teamplaying-title">
+                                <p>Substitues</p>
+                            </div>
+                            <div class="team-substitute" ng-repeat="player in match.resultsCombat.teams[1].players track by $index">
+                                <div class="teamplayer" ng-if="player.isPlaying==false" >
+                                  <!-- ng-click="addPlayerPoints(player,$index)" -->
+                                    <p class="clearfix m-clear" title="{{match.teams[0].studentTeam[$index].studentId.firstName}} {{match.teams[0].studentTeam[$index].studentId.surname}}"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[1].studentTeam[$index].studentId.firstName}} {{match.teams[1].studentTeam[$index].studentId.surname}}</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <pre>{{match.resultsCombat.teams[1]|json}}</pre> -->
+                    </div>
+                    <!-- TEAM 2 PLAYER DETAILS END -->
+                </div>
+
+            </div>
+            <!-- TEAM SCORING END -->
+            <!-- FINAL POINTS UPLOADS -->
+            <div class="racquet-setscore">
+                <div class="scoring-set no-border form-group" ng-repeat="team in match.resultsCombat.teams track by $index">
+                  <!-- <pre>{{team|json}}</pre> -->
+                    <div class="matchteam-combatname">
+                        <p>{{team.schoolName}}</p>
+                    </div>
+                    <div class="relate setpoint-element" ng-repeat="set in team.sets track by $index">
+                        <label for="player1score" class="text-uppercase">Final Points</label>
+                        <input type="number" ng-model="set.point" id="player1score" min="0" placeholder="0" max="99" class="score-number display-inline form-control" limit-to-max>
+                    </div>
+                </div>
+            </div>
+            <!-- FINAL POINTS UPLOADS END -->
+            <!-- FINAL DETAILS SECTION -->
+            <div class="combatscore-uploads text-center">
+                <!-- RESULT PICS -->
+                <div class="combatscore-pics">
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-5 col-sm-6">
+                            <div class="matchstart-uploadholder text-uppercase ">
+                                <button class="btn btn-green-outline btn-scoring btn-uploadscoring">Upload Picture</button>
+                                <upload-image ng-model="match.resultsCombat.matchPhoto" ng-callback="getMatchPhoto(data)" allow-type="image/*" no-view class="pointer upload-scorecard" multiple inobj></upload-image>
+                            </div>
+                            <div class=" digital-swiper">
+                                <div class="combatscore-uploadpic text-uppercase" ng-repeat="pic in match.resultsCombat.matchPhoto track by $index">
+                                    <span class="remove-pic" ng-click="removeMatchScore(pic,'matchPhoto')"><i class="fa fa-times"></i></span>
+                                    <img ng-src="{{pic.image|serverimage}}" alt="" class="img-responsive">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-6">
+                            <div class="matchstart-uploadholder text-uppercase ">
+                                <button class="btn btn-green-outline btn-scoring btn-uploadscoring">Upload Scorecard</button>
+                                <upload-image ng-model="match.resultsCombat.scoreSheet" ng-callback="getMatchPhoto(data)" allow-type="image/*" no-view class="pointer upload-scorecard" multiple inobj></upload-image>
+                            </div>
+                            <div class="digital-swiper">
+                                <div class="combatscore-uploadpic text-uppercase" ng-repeat="pic in match.resultsCombat.scoreSheet">
+                                    <span class="remove-pic" ng-click="removeMatchScore(pic,'scoreSheet')"><i class="fa fa-times"></i></span>
+                                    <img ng-src="{{pic.image|serverimage}}" alt="" class="img-responsive">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- RESULT PICS END -->
+                <!-- RESULT SELECTS -->
+                <div class="combatscore-selects">
+                    <div class="row">
+                        <div class="col-md-offset-4 col-md-4 col-sm-6">
+                            <div class="match-selectwinner text-left">
+                                <label for="matchWinnerPlayer" class="text-uppercase">Select Winner</label>
+                                <!-- UI SELECT -->
+                                <ui-select id="matchWinnerPlayer" ng-model="match.resultsCombat.winner.player" theme="bootstrap">
+                                    <ui-select-match placeholder="Select Winner"> {{$select.selected.schoolName}}</ui-select-match>
+                                    <ui-select-choices repeat="team._id as team in match.teams | filter: $select.search">
+                                        <p class="opponentsingle-selector">{{team.schoolName}}</p>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <!-- UI SELECT END -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- RESULT SELECTS END -->
+                <!-- FINAL BUTTONS -->
+                <div class="row">
+                    <div class="col-md-4 col-sm-4">
+                        <button class="btn btn-green-outline btn-scoring" ui-sref="matchstart({'drawFormat':stateParam.drawFormat, 'sport': stateParam.sport, 'id':matchId})">back</button>
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                        <button class="btn btn-green-outline btn-scoring" promise-btn="yourPromise" ng-click="saveResult(match)">Save</button>
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                        <button class="btn btn-green-outline btn-scoring" ng-click="completePopup();">complete</button>
+                    </div>
+                </div>
+                <!-- FINAL BUTTONS END -->
+            </div>
+            <!-- FINAL DETAILS SECTION END -->
+        </div>
+    </div>
+</div>
