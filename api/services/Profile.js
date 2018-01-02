@@ -3526,7 +3526,6 @@ var model = {
                         },
                         function (found, callback) {
                             if (found.isTeam == false) {
-                                // console.log("found", found);
                                 var pipeLine = Profile.getAthleteStatAggregatePipeline(data);
                                 var newPipeLine = _.cloneDeep(pipeLine);
                                 if (_.isEmpty(data.age) && _.isEmpty(data.gender) && _.isEmpty(data.event)) {
@@ -4530,6 +4529,7 @@ var model = {
                                                                                 stats.isAthleteWinner = false;
                                                                             } else {
                                                                                 stats.isAthleteWinner = true;
+                                                                                stats.walkover = player.walkover;
                                                                             }
                                                                         } else if (singleData.resultsCombat.status == "IsCompleted" && singleData.resultsCombat.isNoMatch == true) {
                                                                             stats.reason = "NO Match";
@@ -4615,6 +4615,7 @@ var model = {
                                                                                 stats.isAthleteWinner = false;
                                                                             } else {
                                                                                 stats.isAthleteWinner = true;
+                                                                                stats.walkover = player.walkover;
                                                                             }
                                                                             stats.status = singleData.resultsRacquet.status;
                                                                         } else if (singleData.resultsRacquet.status == "IsCompleted" && singleData.resultsRacquet.isNoMatch == true) {
@@ -4773,6 +4774,7 @@ var model = {
                                                                 stats.isAthleteWinner = false;
                                                             } else {
                                                                 stats.isAthleteWinner = true;
+                                                                stats.walkover = player.walkover;
                                                             }
                                                             profile.match.push(stats);
                                                             callback(null, profile);
@@ -4889,6 +4891,7 @@ var model = {
                                                             result = singleData.resultFencing.players[0].finalPoints;
                                                             if (singleData.resultFencing.status == "IsCompleted" && singleData.resultFencing.isNoMatch == false) {
                                                                 stats.isAthleteWinner = true;
+
                                                             } else if (singleData.resultFencing.status == "IsCompleted" && singleData.resultFencing.isNoMatch == true) {
                                                                 stats.reason = "NO Match";
                                                             } else {
@@ -4921,6 +4924,7 @@ var model = {
                                                                                 stats.isAthleteWinner = false;
                                                                             } else {
                                                                                 stats.isAthleteWinner = true;
+                                                                                stats.walkover = player.walkover;
                                                                             }
                                                                         } else if (singleData.resultFencing.status == "IsCompleted" && singleData.resultFencing.isNoMatch == true) {
                                                                             stats.reason = "NO Match";
@@ -5636,6 +5640,7 @@ var model = {
                                                                                             stats.isAthleteWinner = false;
                                                                                         } else {
                                                                                             stats.isAthleteWinner = true;
+                                                                                            stats.walkover = player.walkover;
                                                                                         }
                                                                                         callback(null, profile.match);
                                                                                     }
@@ -5705,6 +5710,7 @@ var model = {
                                                         stats.score = result;
                                                         if (singleData.resultsRacquet.status == "IsCompleted" && singleData.resultsRacquet.isNoMatch == false) {
                                                             stats.isAthleteWinner = true;
+                                                            // stats.walkover = player.walkover;
                                                             stats.status = singleData.resultsRacquet.status;
                                                         } else if (singleData.resultsRacquet.status == "IsCompleted" && singleData.resultsRacquet.isNoMatch == true) {
                                                             stats.status = singleData.resultsRacquet.status;
@@ -5735,6 +5741,7 @@ var model = {
                                                                                                 stats.isAthleteWinner = false;
                                                                                             } else {
                                                                                                 stats.isAthleteWinner = true;
+                                                                                                stats.walkover = player.walkover;
                                                                                             }
                                                                                             stats.status = singleData.resultsRacquet.status;
                                                                                         } else if (singleData.resultsRacquet.status == "IsCompleted" && singleData.resultsRacquet.isNoMatch == true) {
@@ -5873,7 +5880,6 @@ var model = {
                                                         async.each(singleData.resultBasketball.teams, function (n, callback) {
                                                             async.waterfall([
                                                                     function (callback) {
-
                                                                         StudentTeam.findOne({
                                                                             teamId: n.team
                                                                         }).lean().deepPopulate("studentId.school teamId.school").exec(function (err, found) {
@@ -5914,6 +5920,7 @@ var model = {
                                                                                     stats.isAthleteWinner = false;
                                                                                 } else {
                                                                                     stats.isAthleteWinner = true;
+                                                                                    stats.walkover = player.walkover;
                                                                                 }
                                                                                 console.log("team", found.teamId);
                                                                                 stats.opponentName = found.teamId.name;
@@ -6021,6 +6028,7 @@ var model = {
                                                                                     stats.isAthleteWinner = false;
                                                                                 } else {
                                                                                     stats.isAthleteWinner = true;
+                                                                                    stats.walkover = player.walkover;
                                                                                 }
                                                                                 // console.log("team", found.teamId);
                                                                                 stats.opponentName = found.teamId.name;
@@ -6136,6 +6144,7 @@ var model = {
                                                                                     stats.isAthleteWinner = false;
                                                                                 } else {
                                                                                     stats.isAthleteWinner = true;
+                                                                                    stats.walkover = player.walkover;
                                                                                 }
                                                                                 stats.opponentName = found.teamId.name;
                                                                                 if (found.teamId.schoolName) {
@@ -6239,6 +6248,7 @@ var model = {
                                                                                     stats.isAthleteWinner = false;
                                                                                 } else {
                                                                                     stats.isAthleteWinner = true;
+                                                                                    stats.walkover = player.walkover;
                                                                                 }
                                                                                 console.log("team", found.teamId);
                                                                                 stats.opponentName = found.teamId.name;
@@ -6343,6 +6353,7 @@ var model = {
                                                                                     stats.isAthleteWinner = false;
                                                                                 } else {
                                                                                     stats.isAthleteWinner = true;
+                                                                                    stats.walkover = player.walkover;
                                                                                 }
                                                                                 console.log("team", found.teamId);
                                                                                 stats.opponentName = found.teamId.name;
@@ -6447,6 +6458,7 @@ var model = {
                                                                                     stats.isAthleteWinner = false;
                                                                                 } else {
                                                                                     stats.isAthleteWinner = true;
+                                                                                    stats.walkover = player.walkover;
                                                                                 }
                                                                                 console.log("team", found.teamId);
                                                                                 stats.opponentName = found.teamId.name;
@@ -6551,6 +6563,7 @@ var model = {
                                                                                     stats.isAthleteWinner = false;
                                                                                 } else {
                                                                                     stats.isAthleteWinner = true;
+                                                                                    stats.walkover = player.walkover;
                                                                                 }
                                                                                 console.log("team", found.teamId);
                                                                                 stats.opponentName = found.teamId.name;
