@@ -8,6 +8,16 @@ var controller = {
         Vimeo.generateToken(req.body, res.callback);
     },
 
+    getAllFolderNameCloud: function (req, res) {
+        console.log("vimeo");
+        Vimeo.getAllFolderNameCloud(req.body, res.callback);
+    },
+
+    getFilesPerFolder: function (req, res) {
+        console.log("vimeo");
+        Vimeo.getFilesPerFolder(req.body, res.callback);
+    },
+
     authenticateCloud: function (req, res) {
         console.log("vimeo");
         Vimeo.authenticateCloud(req.body, res.callback);

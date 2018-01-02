@@ -277,7 +277,8 @@ var model = {
             projectId: projectId,
             keyFilename: '/home/wohlig/Documents/htdocs/lavasaBackend/config/googleKey/SFA New-f0fd1402dc91.json'
         });
-        const bucketName = 'match-videos';
+        const bucketName = 'mumbai-gallery';
+        const prefix = '2017/Sport';
         storage
             .bucket(bucketName)
             .getFiles()
@@ -294,6 +295,77 @@ var model = {
             .catch(err => {
                 console.error('ERROR:', err);
                 callback(err, null);
+            });
+    },
+
+    getAllFolderNameCloud: function (data, callback) {
+        var final = [];
+        console.log("inside");
+        const Storage = require('@google-cloud/storage');
+        const projectId = 'future-oasis-145313';
+        const storage = new Storage({
+            projectId: projectId,
+            keyFilename: '/home/wohlig/Documents/htdocs/lavasaBackend/config/googleKey/SFA New-f0fd1402dc91.json'
+        });
+        const bucketName = 'mumbai-gallery';
+        const prefix = '2017/Sport';
+        const options = {
+            prefix: prefix,
+        };
+        // Lists files in the bucket, filtered by a prefix
+        storage
+            .bucket(bucketName)
+            .getFiles(options)
+            .then(results => {
+                var files = results[0];
+                console.log('Files:', files);
+                files.forEach(file => {
+                    var temp = {};
+                    var foldername = file.name.split("/");
+                    console.log("foldername", foldername);
+                    if (foldername.length == 4) {
+                        temp.fileName = foldername[2];
+                        final.push(temp);
+                    }
+                    final = _.uniqBy(final, "fileName");
+                });
+                callback(null, final);
+            })
+            .catch(err => {
+                console.error('ERROR:', err);
+            });
+    },
+
+    getFilesPerFolder: function (data, callback) {
+        var final = [];
+        console.log("inside");
+        const Storage = require('@google-cloud/storage');
+        const projectId = 'future-oasis-145313';
+        const storage = new Storage({
+            projectId: projectId,
+            keyFilename: '/home/wohlig/Documents/htdocs/lavasaBackend/config/googleKey/SFA New-f0fd1402dc91.json'
+        });
+        const bucketName = 'mumbai-gallery';
+        const prefix = '2017/Sport';
+        const options = {
+            prefix: prefix,
+        };
+        // Lists files in the bucket, filtered by a prefix
+        storage
+            .bucket(bucketName)
+            .getFiles(options)
+            .then(results => {
+                var files = results[0];
+                console.log('Files:', files);
+                files.forEach(file => {
+                    var temp = {};
+                    temp.fileName = file.name;
+                    final.push(temp);
+                });
+                callback(null, final);
+            })
+            .catch(err => {
+                console.error('ERROR:', err);
             });
     },
 
