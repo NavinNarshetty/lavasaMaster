@@ -184,11 +184,20 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
         if (card && card.status == 'IsCompleted') {
           toastr.warning("This match has already been scored.", 'Scoring Completed');
         } else {
-          $state.go("matchteam", {
-            drawFormat: $stateParams.drawFormat,
-            sport: $stateParams.id,
-            id: card.matchId
-          });
+          if ($scope.oneSportDetail.sportslist.name == 'Throwball' || $scope.oneSportDetail.sportslist.name == 'Handball') {
+            $state.go("matchstart", {
+              drawFormat: $stateParams.drawFormat,
+              sport: $stateParams.id,
+              id: card.matchId
+            });
+          } else {
+            $state.go("matchteam", {
+              drawFormat: $stateParams.drawFormat,
+              sport: $stateParams.id,
+              id: card.matchId
+            });
+          }
+
           // console.log("YOOOOo");
         }
       }
