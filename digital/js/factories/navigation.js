@@ -380,6 +380,24 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization, $
             callback(data)
           });
         },
+        getIndividualPlayers: function(formData, callback){
+          $http({
+            url: adminurl + "Match/getIndividualPlayers",
+            method: "POST",
+            data: formData
+          }).success(function (data){
+            callback(data)
+          });
+        },
+        addPlayersMatch: function(formData, callback){
+          $http({
+            url: adminurl + "Match/addPlayerToMatch",
+            method: "POST",
+            data: formData
+          }).success(function(data){
+            callback(data)
+          });
+        },
 
         Boolean: function (str) {
             if (str == 'true' || str || str === true) {
