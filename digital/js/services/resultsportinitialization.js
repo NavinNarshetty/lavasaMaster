@@ -63,7 +63,7 @@ myApp.factory('ResultSportInitialization', function () {
                     format.playerPoints.out = [];
                     break;
                 case "Football":
-                    format.playerPoints.goal = [];
+                    format.playerPoints.goals = [];
                     format.playerPoints.assist = [];
                     format.playerPoints.redCard = [];
                     format.playerPoints.yellowCard = [];
@@ -151,25 +151,27 @@ myApp.factory('ResultSportInitialization', function () {
                     format.teamResults.saves = "";
                     break;
                 case "Volleyball":
-                    format.teamResults.set = [];
+                    format.teamResults.sets = [{
+                        "points":''
+                    }];
                     format.teamResults.fouls = "";
                     format.teamResults.spike = "";
                     format.teamResults.block = "";
                     break;
                 case "Football":
                     format.formation = "";
-                    format.teamResults.halfPoints = 0;
-                    format.teamResults.finalPoints = 0;
-                    format.teamResults.shotsOnGoal = 0;
-                    format.teamResults.totalShots = 0;
-                    format.teamResults.corners = 0;
-                    format.teamResults.penalty = 0;
-                    format.teamResults.saves = 0;
-                    format.teamResults.fouls = 0;
-                    format.teamResults.offSide = 0;
-                    format.teamResults.cleanSheet = 0;
-                    format.teamResults.noShow = 0;
-                    format.teamResults.walkover = 0;
+                    format.teamResults.halfPoints = "";
+                    format.teamResults.finalPoints = "";
+                    format.teamResults.shotsOnGoal = "";
+                    format.teamResults.totalShots = "";
+                    format.teamResults.corners = "";
+                    format.teamResults.penalty = "";
+                    format.teamResults.saves = "";
+                    format.teamResults.fouls = "";
+                    format.teamResults.offSide = "";
+                    format.teamResults.cleanSheet = "";
+                    format.teamResults.noShow = "";
+                    format.teamResults.walkover = "";
                     break;
             };
 
@@ -419,26 +421,28 @@ myApp.factory('ResultSportInitialization', function () {
                     break;
 
                 case "Volleyball":
-                    format.teamResults.set = [];
-                    format.teamResults.fouls = "";
-                    format.teamResults.spike = "";
-                    format.teamResults.block = "";
+                    _.each(format.teamResults.sets,function(n){
+                        n.points = n.points || 0; 
+                    })
+                    format.teamResults.fouls = format.teamResults.fouls || 0;
+                    format.teamResults.spike = format.teamResults.spike || 0;
+                    format.teamResults.block = format.teamResults.block || 0;
                     break;
 
                 case "Football":
                     format.formation = "";
-                    format.teamResults.halfPoints = 0;
-                    format.teamResults.finalPoints = 0;
-                    format.teamResults.shotsOnGoal = 0;
-                    format.teamResults.totalShots = 0;
-                    format.teamResults.corners = 0;
-                    format.teamResults.penalty = 0;
-                    format.teamResults.saves = 0;
-                    format.teamResults.fouls = 0;
-                    format.teamResults.offSide = 0;
-                    format.teamResults.cleanSheet = 0;
-                    format.teamResults.noShow = 0;
-                    format.teamResults.walkover = 0;
+                    format.teamResults.halfPoints = format.teamResults.halfPoints || 0;
+                    format.teamResults.finalPoints = format.teamResults.finalPoints || 0;
+                    format.teamResults.shotsOnGoal = format.teamResults.shotsOnGoal || 0;
+                    format.teamResults.totalShots = format.teamResults.totalShots || 0;
+                    format.teamResults.corners = format.teamResults.corners || 0;
+                    format.teamResults.penalty = format.teamResults.penalty || 0;
+                    format.teamResults.saves = format.teamResults.saves || 0;
+                    format.teamResults.fouls = format.teamResults.fouls || 0;
+                    format.teamResults.offSide = format.teamResults.offSide || 0;
+                    format.teamResults.cleanSheet = format.teamResults.cleanSheet || 0;
+                    format.teamResults.noShow = format.teamResults.noShow || 0;
+                    format.teamResults.walkover = format.teamResults.walkover || 0;
                     break;
             };
             return format;

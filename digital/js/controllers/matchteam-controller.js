@@ -88,147 +88,7 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                     // INITIALISE RESULTS
                     switch ($scope.matchDetails.sportsName) {
                         case "Football":
-                            if ($scope.matchDetails.resultFootball == null || $scope.matchDetails.resultFootball == "" || $scope.matchDetails.resultFootball == undefined) {
-                                $scope.matchDetails.resultFootball = {};
-                                $scope.formData = {
-                                    "teams": [],
-                                    "matchPhoto": [],
-                                    "scoreSheet": [],
-                                    "status": "",
-                                    "winner": {},
-                                    "isNoMatch": false,
-                                    "isDraw": false
-                                }
-                                _.each($scope.matchDetails.teams, function (n, key) {
-                                    $scope.formData.teams[key] = {
-                                        "team": n._id,
-                                        "teamId": n.teamId,
-                                        "schoolName": n.schoolName,
-                                        "noShow": false,
-                                        "walkover": false,
-                                        "coach": "",
-                                        "formation": "",
-                                        "players": [],
-                                        "teamResults": {
-                                            halfPoints: "",
-                                            finalPoints: "",
-                                            shotsOnGoal: "",
-                                            totalShots: "",
-                                            corners: "",
-                                            penalty: "",
-                                            saves: "",
-                                            fouls: "",
-                                            offSide: "",
-                                            cleanSheet: false
-                                        }
-                                    }
-                                    _.each($scope.matchDetails.teams[key].studentTeam, function (m, mkey) {
-                                        $scope.formData.teams[key].players[mkey] = {
-                                            "player": m.studentId._id,
-                                            "firstName": m.studentId.firstName,
-                                            "surname": m.studentId.surname,
-                                            "fullName": m.studentId.firstName + " " + m.studentId.surname,
-                                            "sfaId": m.studentId.sfaId,
-                                            "isPlaying": false,
-                                            "jerseyNo": "",
-                                            "playerPoints": {
-                                                "goals": [],
-                                                "assist": [],
-                                                "redCard": [],
-                                                "yellowCard": [],
-                                                "penaltyPoint": "",
-                                                "in": [],
-                                                "out": []
-                                            }
-                                        }
-                                    })
-                                });
-                            } else {
-                                $scope.formData = $scope.matchDetails.resultFootball;
-                                if ($scope.matchDetails.resultFootball.status == 'IsCompleted') {
-                                    toastr.warning("This match has already been scored.", "Match Complete");
-                                    if ($stateParams.drawFormat === 'Knockout') {
-                                        $state.go('knockout-team', {
-                                            drawFormat: $stateParams.drawFormat,
-                                            id: $stateParams.sport
-                                        });
-                                    } else if ($stateParams.drawFormat === 'League cum Knockout') {
-                                        $state.go('league-knockoutTeam', {
-                                            drawFormat: $stateParams.drawFormat,
-                                            id: $stateParams.sport
-                                        });
-                                    }
-                                }
-                            }
-                            console.log($scope.formData, 'football result');
-                            break;
                         case "Volleyball":
-                            if ($scope.matchDetails.resultVolleyball == null || $scope.matchDetails.resultVolleyball == "" || $scope.matchDetails.resultVolleyball == undefined) {
-                                $scope.matchDetails.resultVolleyball = {};
-                                $scope.formData = {
-                                    "teams": [],
-                                    "matchPhoto": [],
-                                    "scoreSheet": [],
-                                    "status": "",
-                                    "winner": {},
-                                    "isNoMatch": false,
-                                    "isDraw": false
-                                }
-                                _.each($scope.matchDetails.teams, function (n, key) {
-                                    $scope.formData.teams[key] = {
-                                        "team": n._id,
-                                        "teamId": n.teamId,
-                                        "schoolName": n.schoolName,
-                                        "noShow": false,
-                                        "walkover": false,
-                                        "coach": "",
-                                        "formation": "",
-                                        "players": [],
-                                        "teamResults": {
-                                            sets: [{
-                                                points: ""
-                                            }],
-                                            spike: "",
-                                            fouls: "",
-                                            block: "",
-                                            finalPoints: "",
-                                        }
-                                    }
-                                    _.each($scope.matchDetails.teams[key].studentTeam, function (m, mkey) {
-                                        $scope.formData.teams[key].players[mkey] = {
-                                            "player": m.studentId._id,
-                                            "firstName": m.studentId.firstName,
-                                            "surname": m.studentId.surname,
-                                            "fullName": m.studentId.firstName + " " + m.studentId.surname,
-                                            "sfaId": m.studentId.sfaId,
-                                            "isPlaying": false,
-                                            "jerseyNo": "",
-                                            "playerPoints": {
-                                                "in": [],
-                                                "out": []
-                                            }
-                                        }
-                                    })
-                                });
-                            } else {
-                                $scope.formData = $scope.matchDetails.resultVolleyball;
-                                if ($scope.matchDetails.resultVolleyball.status == 'IsCompleted') {
-                                    toastr.warning("This match has already been scored.", "Match Complete");
-                                    if ($stateParams.drawFormat === 'Knockout') {
-                                        $state.go('knockout-team', {
-                                            drawFormat: $stateParams.drawFormat,
-                                            id: $stateParams.sport
-                                        });
-                                    } else if ($stateParams.drawFormat === 'League cum Knockout') {
-                                        $state.go('league-knockoutTeam', {
-                                            drawFormat: $stateParams.drawFormat,
-                                            id: $stateParams.sport
-                                        });
-                                    }
-                                }
-                            }
-                            console.log($scope.formData, 'Volleyball result');
-                            break;
                         case 'Basketball':
                         case 'Hockey':
                         case 'Kabaddi':
@@ -286,17 +146,7 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                     }
                     switch ($scope.matchDetails.sportsName) {
                         case "Volleyball":
-                            $scope.matchResult.resultVolleyball = formData;
-                            if (!$scope.matchResult.resultVolleyball.status) {
-                                $scope.matchResult.resultVolleyball.status = "IsLive";
-                            }
-                            break;
                         case "Football":
-                            $scope.matchResult.resultFootball = formData;
-                            if (!$scope.matchResult.resultFootball.status) {
-                                $scope.matchResult.resultFootball.status = "IsLive";
-                            }
-                            break;
                         case "Basketball":
                         case 'Hockey':
                         case 'Kabaddi':
@@ -313,19 +163,7 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                             if (data.value == true) {
                                 switch ($scope.matchDetails.sportsName) {
                                     case "Volleyball":
-                                        $state.go("scorevolleyball", {
-                                            drawFormat: $stateParams.drawFormat,
-                                            sport: $stateParams.sport,
-                                            id: $scope.matchData.matchId
-                                        });
-                                        break;
                                     case "Football":
-                                        $state.go("scorefootball",  {
-                                            drawFormat: $stateParams.drawFormat,
-                                            sport: $stateParams.sport,
-                                            id: $scope.matchData.matchId
-                                        });
-                                        break;
                                     case "Basketball":
                                     case 'Hockey':
                                     case 'Kabaddi':
@@ -346,19 +184,7 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                             if (data.value == true) {
                                 switch ($scope.matchDetails.sportsName) {
                                     case "Volleyball":
-                                        $state.go("scorevolleyball", {
-                                            drawFormat: $stateParams.drawFormat,
-                                            sport: $stateParams.sport,
-                                            id: $scope.matchData.matchId
-                                        });
-                                        break;
                                     case "Football":
-                                        $state.go("scorefootball", {
-                                            drawFormat: $stateParams.drawFormat,
-                                            sport: $stateParams.sport,
-                                            id: $scope.matchData.matchId
-                                        });
-                                        break;
                                     case "Basketball":
                                     case 'Hockey':
                                     case 'Kabaddi':
