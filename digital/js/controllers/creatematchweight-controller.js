@@ -5,13 +5,13 @@ myApp.controller('CreateMatchWeightCtrl', function($scope, TemplateService, Navi
     // CODE STARTS HERE
     // INITIALISE VARIABLES
     $scope.selectDisable = false;
-    // $scope.sportDetails = {
-    //   sport: $stateParams.sport
-    // }
     $scope.sportDetails = {
-      sport: '5955e816accee91486acf6a0'
-      // sport: '59563d8b97cd023787820d68'
+      sport: $stateParams.sport
     }
+    // $scope.sportDetails = {
+    //   sport: '5955e816accee91486acf6a0'
+    //   sport: '59563d8b97cd023787820d68'
+    // }
     // MATCH FORM
     $scope.matchForm = {
       sport: $scope.sportDetails.sport,
