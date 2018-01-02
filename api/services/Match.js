@@ -17348,6 +17348,13 @@ var model = {
                     async.eachSeries(studentData, function (n, callback) {
                         Match.find({
                             sport: data.sport,
+                            $or: [{
+                                excelType: {
+                                    $exists: false
+                                }
+                            }, {
+                                excelType: "Knockout"
+                            }],
                             opponentsTeam: n._id
                         }).lean().exec(function (err, match) {
                             if (err) {
