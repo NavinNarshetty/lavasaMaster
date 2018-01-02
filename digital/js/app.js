@@ -108,6 +108,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'QualifyingScoreCtrl'
         })
+        .state('scorethrowball', {
+            url: "/scorethrowball/",
+            templateUrl: tempateURL,
+            controller: 'ScoringCtrl'
+        })
         .state('knockout-doubles', {
             url: "/doubles/:drawFormat/:id",
             templateUrl: tempateURL,
