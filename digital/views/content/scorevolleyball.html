@@ -35,7 +35,7 @@
                             </div>
                             <div class="team-playing" ng-repeat="player in match.resultVolleyball.teams[0].players track by $index">
                                 <!-- <p ng-if="$index==0">Players</p> -->
-                                <div class="teamplayer" ng-if="player.isPlaying==true" ng-click="addPlayerPoints(player,$index, 0)">
+                                <div class="teamplayer" ng-if="player.isPlaying==true" ng-click="modalPlayerPoints(player,0,$index)">
                                     <p class="clearfix m-clear" title="{{player.firstName}} {{player.surname}}"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[0].studentTeam[$index].studentId.firstName}} {{match.teams[0].studentTeam[$index].studentId.surname}}</span></p>
                                 </div>
                             </div>
@@ -47,7 +47,7 @@
                             <div class="team-substitute" ng-repeat="player in match.resultVolleyball.teams[0].players track by $index">
                                 <!-- <p ng-if="$index==0">Substitues</p> -->
                                 <div class="teamplayer" ng-if="player.isPlaying==false" >
-                                  <!-- ng-click="addPlayerPoints(player,$index)" -->
+                                  <!-- ng-click="modalPlayerPoints(player,$index)" -->
                                     <p class="clearfix m-clear" title="{{player.firstName}} {{player.surname}}"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[0].studentTeam[$index].studentId.firstName}} {{match.teams[0].studentTeam[$index].studentId.surname}}</span></p>
                                 </div>
                             </div>
@@ -60,25 +60,25 @@
                             <!-- fouls DATA POINT -->
                             <div class="relate teamscore-point mtb-10">
                                 <label class="teamdatapoint-name">Fouls</label>
-                                <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="decrementTeamPoint(team, 'fouls');"><i class="fa fa-minus"></i></button>
+                                <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="scoreTeamPoints(team, 'fouls','-');"><i class="fa fa-minus"></i></button>
                                 <input type="number" ng-model="team.teamResults.fouls" min="0" placeholder="0" max="99" class="score-number teamscore-number display-inline form-control" limit-to-max>
-                                <button class="btn score-buttons teamscore-buttons score-increment" ng-click="incrementTeamPoint(team, 'fouls');"><i class="fa fa-plus"></i></button>
+                                <button class="btn score-buttons teamscore-buttons score-increment" ng-click="scoreTeamPoints(team, 'fouls','+');"><i class="fa fa-plus"></i></button>
                             </div>
                             <!-- fouls DATA POINT -->
                             <!-- spike DATA POINT -->
                             <div class="relate teamscore-point mtb-10">
                                 <label class="teamdatapoint-name">Spike</label>
-                                <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="decrementTeamPoint(team, 'spike');"><i class="fa fa-minus"></i></button>
+                                <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="scoreTeamPoints(team, 'spike','-');"><i class="fa fa-minus"></i></button>
                                 <input type="number" ng-model="team.teamResults.spike" min="0" placeholder="0" max="99" class="score-number teamscore-number display-inline form-control" limit-to-max>
-                                <button class="btn score-buttons teamscore-buttons score-increment" ng-click="incrementTeamPoint(team, 'spike');"><i class="fa fa-plus"></i></button>
+                                <button class="btn score-buttons teamscore-buttons score-increment" ng-click="scoreTeamPoints(team, 'spike','+');"><i class="fa fa-plus"></i></button>
                             </div>
                             <!-- spike DATA POINT -->
                             <!-- block DATA POINT -->
                             <div class="relate teamscore-point mtb-10">
                                 <label class="teamdatapoint-name">Block</label>
-                                <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="decrementTeamPoint(team, 'block');"><i class="fa fa-minus"></i></button>
+                                <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="scoreTeamPoints(team, 'block','-');"><i class="fa fa-minus"></i></button>
                                 <input type="number" ng-model="team.teamResults.block" min="0" placeholder="0" max="99" class="score-number teamscore-number display-inline form-control" limit-to-max>
-                                <button class="btn score-buttons teamscore-buttons score-increment" ng-click="incrementTeamPoint(team, 'block');"><i class="fa fa-plus"></i></button>
+                                <button class="btn score-buttons teamscore-buttons score-increment" ng-click="scoreTeamPoints(team, 'block','+');"><i class="fa fa-plus"></i></button>
                             </div>
                             <!-- block DATA POINT -->
                         </div>
@@ -92,7 +92,7 @@
                                 <p>Players</p>
                             </div>
                             <div class="team-playing" ng-repeat="player in match.resultVolleyball.teams[1].players track by $index">
-                                <div class="teamplayer" ng-if="player.isPlaying==true" ng-click="addPlayerPoints(player,$index, 1)">
+                                <div class="teamplayer" ng-if="player.isPlaying==true" ng-click="modalPlayerPoints(player,1,$index)">
                                     <p class="clearfix m-clear" title="{{player.firstName}} {{player.surname}}"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[1].studentTeam[$index].studentId.firstName}} {{match.teams[1].studentTeam[$index].studentId.surname}}</span></p>
                                 </div>
                             </div>
@@ -103,7 +103,7 @@
                             </div>
                             <div class="team-substitute" ng-repeat="player in match.resultVolleyball.teams[1].players track by $index">
                                 <div class="teamplayer" ng-if="player.isPlaying==false" >
-                                  <!-- ng-click="addPlayerPoints(player,$index)" -->
+                                  <!-- ng-click="modalPlayerPoints(player,$index)" -->
                                     <p class="clearfix m-clear" title="{{player.firstName}} {{player.surname}}"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[1].studentTeam[$index].studentId.firstName}} {{match.teams[1].studentTeam[$index].studentId.surname}}</span></p>
                                 </div>
                             </div>
@@ -215,10 +215,10 @@
                         <button class="btn btn-green-outline btn-scoring" ui-sref="matchteam({'drawFormat':stateParam.drawFormat, 'sport': stateParam.sport, 'id':matchId})">back</button>
                     </div>
                     <div class="col-md-4 col-sm-4">
-                        <button class="btn btn-green-outline btn-scoring" promise-btn="yourPromise" ng-click="saveResult(match)">Save</button>
+                        <button class="btn btn-green-outline btn-scoring" promise-btn="yourPromise" ng-click="saveMatch(match,'2')">Save</button>
                     </div>
                     <div class="col-md-4 col-sm-4">
-                        <button class="btn btn-green-outline btn-scoring" ng-click="completePopup();">complete</button>
+                        <button class="btn btn-green-outline btn-scoring" ng-click="saveMatch(match,'3');">complete</button>
                     </div>
                 </div>
                 <!-- FINAL BUTTONS END -->

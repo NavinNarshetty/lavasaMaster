@@ -131,6 +131,19 @@ myApp.controller('FormatTableTeamCtrl', function ($scope, TemplateService, Navig
     });
   }
 
+  // RULES MODAL
+  $scope.rulesToFollow = function () {
+    $scope.modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: 'views/modal/ruletofollow.html',
+      // backdrop: 'static',
+      // keyboard: false,
+      size: 'md',
+      scope: $scope
+    });
+  }
+  // RULES MODAL END
+
 })
 
 // TEAM SPORTS END
@@ -166,6 +179,146 @@ myApp.controller('DetailSportTeamCtrl', function ($scope, TemplateService, Navig
 
   $scope.data = [1, 2, 3, 4, 5, 6];
 
+  // DELETE RESULT
+  $scope.deleteResultModal = function (data) {
+    console.log(data, "modal id")
+    $scope.id = data;
+    console.log(data, "delete")
+    $scope.modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: 'views/modal/deleteresult.html',
+      backdrop: 'static',
+      keyboard: false,
+      size: 'sm',
+      scope: $scope
+    });
+  };
+
+  // COMMON NO DELETE
+  $scope.noDelete = function () {
+    $scope.modalInstance.close();
+  }
+  // COMMON NO DELETE
+  // DELETE RESULT API
+  $scope.deleteResult = function (data) {
+    console.log(data, "delete result match id")
+    $scope.url = "Match/deleteResult"
+    $scope.constraints = {};
+    $scope.constraints.matchId = data;
+    NavigationService.apiCall($scope.url, $scope.constraints, function () {
+      console.log(data);
+      if (data) {
+        $scope.modalInstance.close();
+        $state.reload();
+      }
+
+    });
+  }
+  // DELETE RESULT END
+
+
+  // TO DELETE OPPONENT TEAM
+  $scope.deleteOpponentModal = function (data, opponent) {
+    console.log(data, opponent, "modal id")
+    $scope.id = data;
+    $scope.athlete = opponent;
+    console.log(data, "delete")
+    $scope.modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: 'views/modal/deleteopponent.html',
+      // backdrop: 'static',
+      // keyboard: false,
+      size: 'sm',
+      scope: $scope
+    });
+  };
+  $scope.deleteOpponent = function (data) {
+    console.log(data, "in delete opponent")
+    $scope.url = "Match/deletePlayerFromMatch";
+    $scope.constraints = {};
+    $scope.constraints.matchId = $stateParams.id;
+    $scope.constraints.opponentsTeam = data;
+    console.log($scope.constraints, "in delete opponent constraints")
+    NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+      console.log(data);
+      if (!data.data.error) {
+        if (data) {
+          $scope.modalInstance.close();
+          $state.reload();
+          toastr.success("Opponent Deleted Successfully")
+        }
+      } else if (data.data.error === "No Data Found") {
+        toastr.error("Opponent Can't be Deleted", 'Error');
+      }
+    })
+  }
+  // TO DELETE OPPONENT TEAM END
+
+
+  // TO GET OPPONENT TEAM
+  $scope.teamOpponent = function (data) {
+    console.log("inside function", data);
+    $scope.url = "Match/getIndividualPlayers"
+    console.log($scope.matchDetails, "data in formData")
+    if ($scope.matchDetails.opponentsTeam.length === 1) {
+      console.log("in legth ==1")
+      $scope.opponent1 = true
+    } else {
+      $scope.opponent1 = false;
+    }
+    $scope.constraints = {}
+    $scope.constraints.sport = data;
+    NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+      console.log(data, "oppo single")
+      if (data) {
+        $scope.playerSignles = data.data.match;
+        _.each($scope.playerSignles, function (key) {
+          console.log(key, "iniside each of player singles")
+          key.sfaIdName = key.teamId + '-' + key.teamName;
+        });
+      }
+      console.log($scope.playerSignles, "playerSingles");
+    });
+  }
+  // TO GET OPPONENT TEAM END
+
+
+  // SAVE OPPONENT TEAM
+  $scope.saveOpponentTeam = function (data) {
+    console.log(data, "in save opponent")
+    $scope.url = "Match/addPlayerToMatch"
+    $scope.constraints = {};
+    $scope.constraints.matchId = $stateParams.id;
+    if (_.isPlainObject(data[0])) {
+      console.log("in the object case")
+      $scope.constraints.opponentsTeam = []
+      $scope.opponent1 = data[0]._id;
+      console.log($scope.opponent1, "this is opponent1");
+      $scope.opponent2 = data[1];
+      $scope.constraints.opponentsTeam.push($scope.opponent1, $scope.opponent2);
+      console.log($scope.constraints, "in object case")
+    } else {
+      $scope.constraints.opponentsTeam = data
+      console.log($scope.constraints, "in no object case object case")
+    }
+    NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+      if (!data.data.error) {
+        if (data) {
+          toastr.success("Opponent updated Successfully");
+          $state.reload();
+        }
+      } else if (data.data.error === "Next Match Scored") {
+        toastr.error("Next Match Already Scored", 'Error');
+      } else if (data.data.error === "opponentsTeam have enough players") {
+        toastr.error("opponentsTeam have enough players", 'Error')
+      } else if (data.data.error === "No Data Found") {
+        toastr.error("No Data found", "Error");
+      }
+
+    });
+  }
+  // SAVE OPPONENT TEAM END
+
   // STATUS LIST END
   $scope.getOneBackend = function () {
     $scope.matchData.matchId = $stateParams.id;
@@ -175,17 +328,15 @@ myApp.controller('DetailSportTeamCtrl', function ($scope, TemplateService, Navig
         $scope.matchDetails = data.data;
         $scope.matchDetails.matchId = $scope.matchData.matchId;
         $scope.formData = data.data;
+        $scope.sportId = data.data.sport._id;
         $scope.formData.scheduleTime = new Date();
         console.log($scope.formData, "form")
+        console.log($scope.sportId, "the sport ID which need to be sent")
 
 
-        // })
-
-        // console.log($scope.formData, "****************form")
 
         _.each($scope.formData.opponentsTeam, function (key) {
           _.each(key.studentTeam, function (n) {
-            console.log(n, "n");
             if (n.studentId.middleName == undefined) {
               n.studentId.fullName = n.studentId.firstName + ' ' + n.studentId.surname;
             } else {
@@ -246,14 +397,42 @@ myApp.controller('DetailSportTeamCtrl', function ($scope, TemplateService, Navig
           })
 
         });
-        console.log($scope.formData, "****************form")
+        // console.log($scope.formData, "****************form")
 
+        // TO MAKE A COMMON RESULT OBJECT FOR ALL SPORTS
+        $scope.sportName = $scope.formData.sport.sportslist.sportsListSubCategory.name;
+        console.log($scope.sportName, "check the sport name given here")
+        switch ($scope.sportName) {
+          case "Volleyball":
+            $scope.formData.result = $scope.formData.resultVolleyball;
+            break;
+          case "Hockey":
+            $scope.formData.result = $scope.formData.resultHockey;
+            break;
+          case "Football":
+            $scope.formData.result = $scope.formData.resultFootball;
+            break;
+          case "Basketball":
+            $scope.formData.result = $scope.formData.resultBasketball;
+            break;
+          case "Handball":
+            $scope.formData.result = $scope.formData.resultHandball;
+            break;
+          case "WaterPolo":
+            $scope.formData.result = $scope.formData.resultWaterPolo;
+            break;
+          case "Kabaddi":
+            $scope.formData.result = $scope.formData.resultKabaddi;
+            break;
+          case "Throwball":
+            $scope.formData.result = $scope.formData.resultsCombat;
+            break;
+        }
+        // TO MAKE A COMMON RESULT OBJECT FOR ALL SPORTS END
 
-
-        console.log($scope.formData)
-
-
-
+        // FUNCTION TO GET OPPONENT TEAM
+        $scope.teamOpponent($scope.sportId);
+        // FUNCTION TO GET OPPONENT TEAM
       } else {
         console.log("ERROR IN getOneMatch");
         //redirect back to sportselection page
@@ -262,7 +441,7 @@ myApp.controller('DetailSportTeamCtrl', function ($scope, TemplateService, Navig
     })
   };
   $scope.getOneBackend();
-  console.log($scope.formData, "last");
+  // console.log($scope.formData, "last");
   // GET MATCH END
 
 
@@ -332,7 +511,7 @@ myApp.controller('DetailSportTeamCtrl', function ($scope, TemplateService, Navig
 
 
 // TEAM SPORT ONLY FOR RACQUET
-myApp.controller('DetailTeamCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+myApp.controller('DetailTeamCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
   //Used to name the .html file
   $scope.template = TemplateService.changecontent("detailteam");
   $scope.menutitle = NavigationService.makeactive("Detail Team");
@@ -340,6 +519,7 @@ myApp.controller('DetailTeamCtrl', function ($scope, TemplateService, Navigation
   $scope.navigation = NavigationService.getnav();
   $scope.matchData = {};
   $scope.formData = {};
+  $scope.matchDetails = {};
 
   $scope.statusList = ["IsLive", "IsPending", "IsCompleted"];
 
@@ -352,20 +532,162 @@ myApp.controller('DetailTeamCtrl', function ($scope, TemplateService, Navigation
   }
   // BACK END
 
+
+  // DELETE RESULT
+  $scope.deleteResultModal = function (data) {
+    console.log(data, "modal id")
+    $scope.id = data;
+    console.log(data, "delete")
+    $scope.modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: 'views/modal/deleteresult.html',
+      backdrop: 'static',
+      keyboard: false,
+      size: 'sm',
+      scope: $scope
+    });
+  };
+
+  // COMMON NO DELETE
+  $scope.noDelete = function () {
+    $scope.modalInstance.close();
+  }
+  // COMMON NO DELETE
+  // DELETE RESULT API
+  $scope.deleteResult = function (data) {
+    console.log(data, "delete result match id")
+    $scope.url = "Match/deleteResult"
+    $scope.constraints = {};
+    $scope.constraints.matchId = data;
+    NavigationService.apiCall($scope.url, $scope.constraints, function () {
+      console.log(data);
+      if (data) {
+        $scope.modalInstance.close();
+        $state.reload();
+      }
+
+    });
+  }
+  // DELETE RESULT END
+
+
+  // TO DELETE OPPONENT TEAM
+  $scope.deleteOpponentModal = function (data, opponent) {
+    console.log(data, opponent, "modal id")
+    $scope.id = data;
+    $scope.athlete = opponent;
+    console.log(data, "delete")
+    $scope.modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: 'views/modal/deleteopponent.html',
+      // backdrop: 'static',
+      // keyboard: false,
+      size: 'sm',
+      scope: $scope
+    });
+  };
+  $scope.deleteOpponent = function (data) {
+    console.log(data, "in delete opponent")
+    $scope.url = "Match/deletePlayerFromMatch";
+    $scope.constraints = {};
+    $scope.constraints.matchId = $stateParams.id;
+    $scope.constraints.opponentsTeam = data;
+    console.log($scope.constraints, "in delete opponent constraints")
+    NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+      console.log(data);
+      if (data) {
+        $scope.modalInstance.close();
+        $state.reload();
+        toastr.success("Opponent Deleted Successfully", 'Success');
+      }
+    })
+  }
+  // TO DELETE OPPONENT TEAM END
+
+
+  // TO GET OPPONENT TEAM
+  $scope.teamOpponent = function (data) {
+    console.log("inside function", data);
+    $scope.url = "Match/getIndividualPlayers"
+    console.log($scope.formData, "data in formData")
+    if ($scope.formData.opponentsTeam.length === 1) {
+      console.log("in legth ==1")
+      $scope.opponent1 = true
+    } else {
+      $scope.opponent1 = false;
+    }
+    $scope.constraints = {}
+    $scope.constraints.sport = data;
+    NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+      console.log(data, "oppo single")
+      if (data) {
+        $scope.playerSignles = data.data.match;
+        _.each($scope.playerSignles, function (key) {
+          console.log(key, "iniside each of player singles")
+          key.sfaIdName = key.teamId + '-' + key.teamName;
+        });
+      }
+      console.log($scope.playerSignles, "playerSingles");
+    });
+  }
+  // TO GET OPPONENT TEAM END
+
+
+  // SAVE OPPONENT TEAM
+  $scope.saveOpponentTeam = function (data) {
+    console.log(data, "in save opponent")
+    $scope.url = "Match/addPlayerToMatch"
+    $scope.constraints = {};
+    $scope.constraints.matchId = $stateParams.id;
+    if (_.isPlainObject(data[0])) {
+      console.log("in the object case")
+      $scope.constraints.opponentsTeam = []
+      $scope.opponent1 = data[0]._id;
+      console.log($scope.opponent1, "this is opponent1");
+      $scope.opponent2 = data[1];
+      $scope.constraints.opponentsTeam.push($scope.opponent1, $scope.opponent2);
+      console.log($scope.constraints, "in object case")
+    } else {
+      $scope.constraints.opponentsTeam = data
+      console.log($scope.constraints, "in no object case object case")
+    }
+    NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+      if (!data.data.error) {
+        if (data) {
+          toastr.success("Opponent updated Successfully");
+          $state.reload();
+        }
+      } else if (data.data.error === "Next Match Scored") {
+        toastr.error("Next Match Already Scored", 'Error');
+      } else if (data.data.error === "opponentsTeam have enough players") {
+        toastr.error("Teams have enough players", 'Error')
+        $state.reload();
+      } else if (data.data.error === "No Data Found") {
+        toastr.error("No Data found", "Error");
+      }
+
+    });
+  }
+  // SAVE OPPONENT TEAM END
+
   // GET ONE
-  $scope.getOneMatch = function () {
+  $scope.getOneBackend = function () {
     $scope.matchData.matchId = $stateParams.id;
     console.log($scope.matchData.matchId, "id");
-    NavigationService.getOneMatch($scope.matchData, function (data) {
-      if (data.value == true) {
+    NavigationService.getOneBackend($scope.matchData, function (data) {
+      if (data.value) {
         $scope.formData = data.data;
+        $scope.matchDetails = data.data;
+        $scope.sportId = data.data.sport._id;
         console.log($scope.formData, 'detail team data')
+        $scope.teamOpponent($scope.sportId);
       } else {
         toastr.error("error");
       }
     })
+
   }
-  $scope.getOneMatch();
+  $scope.getOneBackend();
 
   // END GET ONE
   // SAVE

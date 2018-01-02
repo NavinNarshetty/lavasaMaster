@@ -23,6 +23,9 @@
                   <span>
                     Total-Items:  {{totalItems}}
                     </span>
+                  <span class="btn btn-dark pull-right" ng-click="rulesToFollow()">
+                        EDIT RULES
+                  </span>
                 </div>
                 <div class="col-md-4">
                   <form class="search-form mr-form">
@@ -81,7 +84,7 @@
             </div>
             <!-- HEATS HOLDER -->
             <!-- KNOCKOUT  -->
-            <div class="knockout-league-holder" ng-if="form.sportslist.name == 'Badminton Doubles'|| form.sportslist.name=='Tennis Doubles'|| form.sportlist.name=='Tennis Mixed Doubles' || form.sportlist.name =='Table Tennis Doubles'">
+            <div class="knockout-league-holder" ng-if="form.sportslist.name == 'Badminton Doubles'|| form.sportslist.name=='Tennis Doubles'|| form.sportslist.name=='Tennis Mixed Doubles' || form.sportslist.name =='Table Tennis Doubles'">
               <div class="table-responsive">
                 <!--<div class="table-responsive " ng-show="totalItems>0 ">-->
                 <table class="table">
@@ -119,11 +122,11 @@
                                       <pre>{{item.matchId}}</pre>
                                       <pre>{{item.sport.sportslist.sportsListSubCategory.isTeam}}</pre> -->
                       </td>
-                      <td title="{{item.resultsRacquet.teams[0].schoolName}}">
-                        {{item.resultsRacquet.teams[0].teamId}}-{{item.resultsRacquet.teams[0].schoolName | truncate:10;}}
+                      <td title="{{item.opponentsTeam[0].schoolName}}">
+                        {{item.opponentsTeam[0].teamId}}-{{item.opponentsTeam[0].schoolName | truncate:10;}}
                       </td>
-                      <td title="{{item.resultsRacquet.teams[1].schoolName}}">
-                        {{item.resultsRacquet.teams[0].teamId}}-{{item.resultsRacquet.teams[1].schoolName | truncate:10;}}
+                      <td title="{{item.opponentsTeam[1].schoolName}}">
+                        {{item.opponentsTeam[1].teamId}}-{{item.opponentsTeam[1].schoolName | truncate:10;}}
                       </td>
                       <td>
                         <span ng-class="{'fz10':item.resultsRacquet.teams[0].sets.length > 2 }">  <span ng-repeat="set in item.resultsRacquet.teams[0].sets track by $index">{{item.resultsRacquet.teams[0].sets[$index].point}} <span ng-if="item.resultsRacquet.teams.length > 1">-</span>                        {{item.resultsRacquet.teams[1].sets[$index].point}} <span ng-if="item.resultsRacquet.teams[0].sets.length!==1 && item.resultsRacquet.teams[0].sets.length!==0 && $index!==item.resultsRacquet.teams[0].sets.length-1">,</span>                        </span>

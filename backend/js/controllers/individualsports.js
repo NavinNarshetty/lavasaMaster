@@ -592,6 +592,20 @@ myApp.controller('FormatTableCtrl', function ($scope, TemplateService, Navigatio
     }
 
   }
+
+
+  // RULES MODAL
+  $scope.rulesToFollow = function () {
+    $scope.modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: 'views/modal/ruletofollow.html',
+      // backdrop: 'static',
+      // keyboard: false,
+      size: 'md',
+      scope: $scope
+    });
+  }
+  // RULES MODAL END
 })
 // FORMAT TABLE END
 
@@ -614,15 +628,157 @@ myApp.controller('DetailPlayerCtrl', function ($scope, TemplateService, Navigati
   // STATUS LIST
   $scope.statusList = ["IsLive", "IsPending", "IsCompleted"];
   // STATUS LIST END
+
+
+  // TO DELETE OPPONENT SINGLES
+  $scope.deleteOpponentModal = function (data, opponent) {
+    console.log(data, opponent, "modal id")
+    $scope.id = data;
+    $scope.athlete = opponent;
+    console.log(data, "delete")
+    $scope.modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: 'views/modal/deleteopponent.html',
+      // backdrop: 'static',
+      // keyboard: false,
+      size: 'sm',
+      scope: $scope
+    });
+  };
+  $scope.deleteOpponent = function (data) {
+    console.log(data, "in delete opponent")
+    $scope.url = "Match/deletePlayerFromMatch";
+    $scope.constraints = {};
+    $scope.constraints.matchId = $stateParams.id;
+    $scope.constraints.opponentsSingle = data;
+    console.log($scope.constraints, "in delete opponent constraints")
+    NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+      console.log(data);
+      if (!data.data.error) {
+        $scope.modalInstance.close();
+        $state.reload();
+        toastr.success("Opponent Deleted Successfully")
+      } else if (data.data.error === "No Data Found") {
+        toastr.error("Opponent Can't be Deleted", 'Error');
+      }
+    })
+  }
+  // TO DELETE OPPONENT SINGLES END
+
+  // TO GET OPPONENT SINGLES
+  $scope.singlesOpponent = function (data) {
+    console.log("inside function", data);
+    $scope.url = "Match/getIndividualPlayers"
+    console.log($scope.matchDetails, "data in formData")
+    if ($scope.matchDetails.opponentsSingle.length === 1) {
+      console.log("in legth ==1")
+      $scope.opponent1 = true
+    } else {
+      $scope.opponent1 = false;
+    }
+    $scope.constraints = {}
+    $scope.constraints.sport = data;
+    NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+      console.log(data, "oppo single")
+      if (data) {
+        $scope.playerSignles = data.data.match;
+        _.each($scope.playerSignles, function (key) {
+          console.log(key, "iniside each of player singles")
+          key.sfaIdName = key.sfaId + '-' + key.name;
+        });
+      }
+      console.log($scope.playerSignles, "playerSingles");
+    });
+  }
+  // TO GET OPPONENT SINGLES END
+
+
+  // SAVE OPPONENT SINGLE
+  $scope.saveOpponentSingle = function (data) {
+    console.log(data, "in save opponent")
+    $scope.url = "Match/addPlayerToMatch"
+    $scope.constraints = {};
+    $scope.constraints.matchId = $stateParams.id;
+    if (_.isPlainObject(data[0])) {
+      console.log("in the object case")
+      $scope.constraints.opponentsSingle = []
+      $scope.opponent1 = data[0]._id;
+      console.log($scope.opponent1, "this is opponent1");
+      $scope.opponent2 = data[1];
+      $scope.constraints.opponentsSingle.push($scope.opponent1, $scope.opponent2);
+      console.log($scope.constraints, "in object case")
+    } else {
+      $scope.constraints.opponentsSingle = data
+      console.log($scope.constraints, "in no object case object case")
+    }
+    NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+      if (!data.data.error) {
+        if (data) {
+          toastr.success("Opponent updated Successfully");
+          $state.reload();
+        }
+      } else if (data.data.error === "Next Match Scored") {
+        toastr.error("Next Match Already Scored", 'Error');
+      } else if (data.data.error === "opponentsSingle have enough players") {
+        toastr.error("Opponents have enough players", 'Error')
+        $state.reload();
+      } else if (data.data.error === "No Data Found") {
+        toastr.error("Opponent Cannot be Added", 'Error');
+      }
+
+    });
+    console.log($scope.constraints.opponentsSingle, "after in save")
+  }
+  // SAVE OPPONENT SINGLE END
+
+  // DELETE RESULT
+
+  $scope.deleteResultModal = function (data) {
+    console.log(data, "modal id")
+    $scope.id = data;
+    console.log(data, "delete")
+    $scope.modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: 'views/modal/deleteresult.html',
+      backdrop: 'static',
+      keyboard: false,
+      size: 'sm',
+      scope: $scope
+    });
+  };
+
+  // COMMON NO DELETE
+  $scope.noDelete = function () {
+    $scope.modalInstance.close();
+  }
+  $scope.deleteResult = function (data) {
+    console.log(data, "delete result match id")
+    $scope.url = "Match/deleteResult"
+    $scope.constraints = {};
+    $scope.constraints.matchId = data;
+    NavigationService.apiCall($scope.url, $scope.constraints, function () {
+      console.log(data);
+      if (data) {
+        $scope.modalInstance.close();
+        $state.reload();
+      }
+
+    });
+  }
+  // DELETE RESULT END
+
+  // GET ONE BACKEND
   $scope.getOneBackend = function () {
     $scope.matchData.matchId = $stateParams.id;
     console.log($scope.matchData, "match id")
     NavigationService.getOneBackend($scope.matchData, function (data) {
       console.log(data, "get data");
+      $scope.sportId = data.data.sport._id;
       if (data.value == true) {
         $scope.matchDetails = data.data;
         $scope.matchDetails.matchId = $scope.matchData.matchId;
         $scope.formData = data.data;
+        $scope.sportId = data.data.sport._id;
 
         $scope.sportName = $scope.formData.sport.sportslist.sportsListSubCategory.sportsListCategory.name;
         switch ($scope.sportName) {
@@ -677,8 +833,9 @@ myApp.controller('DetailPlayerCtrl', function ($scope, TemplateService, Navigati
           }
 
         })
-
-        console.log($scope.formData)
+        // console.log($scope.formData)
+        console.log($scope.sportId, "check sportid")
+        $scope.singlesOpponent($scope.sportId);
 
       } else {
         console.log("ERROR IN getOneMatch");
@@ -688,7 +845,8 @@ myApp.controller('DetailPlayerCtrl', function ($scope, TemplateService, Navigati
     })
   };
   $scope.getOneBackend();
-  console.log($scope.formData, "last");
+
+
   $scope.dateOptions = {
     dateFormat: "dd/mm/yy",
     changeYear: true,
@@ -703,6 +861,7 @@ myApp.controller('DetailPlayerCtrl', function ($scope, TemplateService, Navigati
   // BACK
   $scope.back = function () {
     $scope.obj = $.jStorage.get("detail")
+    console.log($scope.obj, "in for cancel");
     $state.go('format-table', {
       type: $scope.obj.sportslist.drawFormat.name
     })
@@ -758,6 +917,9 @@ myApp.controller('DetailPlayerCtrl', function ($scope, TemplateService, Navigati
 
   }
   // SAVE-END
+
+
+
 })
 // END EDIT PLAYER
 

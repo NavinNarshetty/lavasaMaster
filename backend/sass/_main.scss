@@ -1455,21 +1455,28 @@
      z-index: 2;
  }
 
- .rotate-0{
-   @include transform(rotate(0deg));
+ .delete-opponent {
+     position: absolute;
+     right: 0px;
+     top: 0px;
+     cursor: pointer;
  }
- .rotate-90{
-   @include transform(rotate(90deg));
-  //  @include transform-origin(100%);
+
+ .rotate-0 {
+     @include transform(rotate(0deg));
  }
- .rotate-180{
-   @include transform(rotate(180deg));
+
+ .rotate-90 {
+     @include transform(rotate(90deg)); //  @include transform-origin(100%);
  }
- .rotate-270{
-   @include transform(rotate(270deg));
-  //  @include transform-origin(100%);
+
+ .rotate-180 {
+     @include transform(rotate(180deg));
  }
- // ROTATE IMAGE DIRECTIVE  END
+
+ .rotate-270 {
+     @include transform(rotate(270deg)); //  @include transform-origin(100%);
+ } // ROTATE IMAGE DIRECTIVE  END
  //  TILE WIREFRAME END
  @import "fancybox-override";
  @import "other/mobile";

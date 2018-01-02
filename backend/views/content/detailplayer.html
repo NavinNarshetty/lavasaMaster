@@ -74,14 +74,77 @@
                     <div class="form-group">
                       <label>Schedule Time</label>
                       <!-- <input type="text" name="schTime" ng-model="formData.nextMatch" class="form-control" placeholder="Enter Schedule Time"> -->
-                      <input name="schDate" type="text" ng-model="formData.scheduleTime" class="form-control" ng-required="true" placeholder="Enter Schedule Date">
+                      <input name="schDate" type="text" ng-model="formData.scheduleTime" class="form-control" placeholder="Enter Schedule Date">
                       <!-- <div uib-timepicker ng-model="formData.scheduleTime" hour-step="1" minute-step="1" show-meridian="true"></div> -->
-                      <div class="error-msg" ng-if="detailForm.schTime.$invalid && detailForm.schTime.$touched">Please Enter Schedule Time *</div>
+                      <!-- <div class="error-msg" ng-if="detailForm.schTime.$invalid && detailForm.schTime.$touched">Please Enter Schedule Time *</div> -->
                     </div>
                     <!-- END TIME -->
                   </div>
                 </div>
                 <!-- DATE TIME END -->
+
+                <!-- OPPONENT SINGLE ONLY FOR DISPLAY -->
+                <div class="row">
+                  <div class="col-md-6" ng-repeat="opponent in formData.opponentsSingle track by $index">
+                    <div class="form-group">
+                      <span class="delete-opponent" ng-click="deleteOpponentModal(opponent._id,opponent.athleteId.fullName)" ng-if="!formData.result"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+                      <label for="">Opponent{{$index + 1}}</label>
+                      <input type="text" placeholder="Name" class="form-control" ng-model="opponent.athleteId.fullName" readonly>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <p><strong>Note:If you want to change the Opponent, Please Delete result of the Match.</strong> </p>
+                    </div>
+                  </div>
+                </div>
+                <!-- OPPONENT SINGLE ONLY FOR DISPLAY END -->
+
+                <!-- OPPONENTS SINGLES -->
+                <div class="row">
+                  <div class="col-md-5">
+                    <div class="form-group">
+                      <label>Opponent 1</label>
+                      <div class="display-inline override-glyp">
+                        <ui-select name="playername" ng-model="formData.opponentsSingle[0]" theme="bootstrap" ng-disabled="opponent1" required>
+                          <ui-select-match placeholder="search by Sfa ID and Name" title="{{$select.selected.sfaIdName}}">
+                            {{$select.selected.sfaIdName}}
+                          </ui-select-match>
+                          <ui-select-choices refresh-delay="0" repeat="player._id as player in playerSignles | filter: $select.search track by $index"
+                            refresh="playerRefresh($select.search)">
+                            <div>
+                              <span class="text-capitalize" ng-bind-html="player.sfaIdName"></span>
+                            </div>
+                          </ui-select-choices>
+                        </ui-select>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="col-md-5">
+                    <div class="form-group">
+                      <label>Opponent 2</label>
+                      <div class="display-inline override-glyp">
+                        <ui-select name="playername" ng-model="formData.opponentsSingle[1]" theme="bootstrap" required>
+                          <ui-select-match placeholder="search by Sfa ID and Name" title="{{$select.selected.sfaIdName}}">
+                            {{$select.selected.sfaIdName}}
+                          </ui-select-match>
+                          <ui-select-choices refresh-delay="0" repeat="player._id as player in playerSignles | filter: $select.search track by $index"
+                            refresh="playerRefresh($select.search)">
+                            <div>
+                              <span class="text-capitalize" ng-bind-html="player.sfaIdName"></span>
+                            </div>
+                          </ui-select-choices>
+                        </ui-select>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="col-md-2" style="margin-top:22px;">
+                    <button type="submit" ng-click="saveOpponentSingle(formData.opponentsSingle)" class="btn btn-dark form-control">Save Opponents</button>
+                  </div>
+                </div>
+                <!-- OPPONENTS SINGLES END -->
 
                 <!-- STATUS AND WINNER FOR RACQUET AND COMBAT -->
                 <div class="row" ng-if="formData.sport.sportslist.name !=='Chess'">
@@ -406,6 +469,9 @@
                 <div class="text-center mt20 odd-even-button">
                   <button class="btn btn-default" type="submit" ng-click="saveDataMatch(formData)">Save</button>
                   <button class="btn btn-default" ng-click="back()">Cancel</button>
+                  <!-- DELETE BUTTON -->
+                  <button type="submit" ng-click="deleteResultModal(formData.matchId)" ng-if="formData.result" class="btn btn-danger">Delete Result</button>
+                  <!-- DELETE BUTTON END -->
                 </div>
               </div>
             </div>
