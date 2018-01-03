@@ -68,13 +68,15 @@ var schema = new Schema({
     }],
     termsAndCondition: String,
     // university: String
-    sports:[ {
+    sports: [{
         type: String,
-       
+
     }],
     goldMedal: Number,
     silverMedal: Number,
-    bronzeMedal: Number
+    bronzeMedal: Number,
+    bucketName: String,
+    cloudUrlPrefix: String
 
 });
 

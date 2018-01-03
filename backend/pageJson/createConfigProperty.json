@@ -808,6 +808,32 @@
                 ""
             ],
             "url": ""
+        },
+        {
+            "name": "Bucket Name",
+            "type": "text",
+            "tableRef": "bucketName",
+            "placeholder": "Enter Bucket Name",
+            "id": "bucketName",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "url": ""
+        },
+        {
+            "name": "CloudUrlPrefix",
+            "type": "text",
+            "tableRef": "cloudUrlPrefix",
+            "placeholder": "Enter Cloud Url Prefix",
+            "id": "cloudUrlPrefix",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "url": ""
         }
     ],
     "action": [
