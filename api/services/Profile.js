@@ -1951,6 +1951,7 @@ var model = {
                                                         match.push(stats);
                                                         callback(null, match);
                                                     } else {
+                                                        var count = 1;
                                                         async.each(singleData.resultBasketball.teams, function (n, callback) {
                                                             StudentTeam.findOne({
                                                                 teamId: n.team
@@ -1992,7 +1993,10 @@ var model = {
                                                                             stats.reason = "";
                                                                         }
                                                                     }
-                                                                    match.push(stats);
+                                                                    if (count == 2) {
+                                                                        match.push(stats);
+                                                                    }
+                                                                    count++;
                                                                     callback(null, match);
                                                                 }
 
@@ -2011,6 +2015,7 @@ var model = {
                                                         match.push(stats);
                                                         callback(null, match);
                                                     } else {
+                                                        var count = 1;
                                                         async.each(singleData.resultThrowball.teams, function (n, callback) {
                                                             StudentTeam.findOne({
                                                                 teamId: n.team
@@ -2053,7 +2058,10 @@ var model = {
                                                                             stats.reason = "";
                                                                         }
                                                                     }
-                                                                    match.push(stats);
+                                                                    if (count == 2) {
+                                                                        match.push(stats);
+                                                                    }
+                                                                    count++;
                                                                     callback(null, match);
                                                                 }
 
