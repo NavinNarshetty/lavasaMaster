@@ -72,7 +72,8 @@
                 <div class="text-capitalize" ng-if="eventName === 'Swimming 4x50m Medley Relay'|| eventName==='Swimming 4x50m Freestyle Relay'">
                   {{win.teamId |filterConcate : win.school | truncate :40}}
                 </div>
-                <div class="text-capitalize" ng-if="eventName!='Swimming 4x50m Medley Relay' && eventName!='Swimming 4x50m Freestyle Relay'" title="{{win.name}}">
+                <div class="text-capitalize" ng-if="eventName!='Swimming 4x50m Medley Relay' && eventName!='Swimming 4x50m Freestyle Relay'"
+                  title="{{win.name}}">
                   {{win.name}}
                 </div>
               </td>
@@ -83,7 +84,7 @@
               </td>
               <td>
                 <div class="text-capitalize">
-                  {{win.result}}
+                  {{win.result || '-'}}
                 </div>
               </td>
             </tr>

@@ -120,13 +120,9 @@ myApp.controller('LiveScoringCtrl', function ($scope, TemplateService, $state, N
   $scope.nameOfSport = {};
   $scope.requestObj = {};
   $scope.getAllBySport = [];
+  $scope.eventSportName = ''
   $scope.sportName = function (sportName, sportId) {
     $scope.nameOfSport = sportName;
-    if (sportName === 'Boxing' || sportName === 'Judo' || sportName === 'Kumite' || sportName === 'Taekwondo' || sportName === 'Sport MMA') {
-      $scope.showWeight = true;
-    } else {
-      $scope.showWeight = false;
-    }
     if ($scope.formData.sportId) {
       $scope.requestObj._id = $scope.formData.sportId;
       NavigationService.getAllBySport($scope.requestObj, function (data) {
@@ -144,6 +140,16 @@ myApp.controller('LiveScoringCtrl', function ($scope, TemplateService, $state, N
       });
     }
 
+  };
+
+  //EVENT SPORT NAME
+  $scope.eventSportFun = function (eventName) {
+    $scope.eventSportName = eventName;
+    if (eventName === 'Boxing' || eventName === 'Judo' || eventName === 'Kumite' || eventName === 'Taekwondo' || eventName === 'Sport MMA') {
+      $scope.showWeight = true;
+    } else {
+      $scope.showWeight = false;
+    }
   };
 
 

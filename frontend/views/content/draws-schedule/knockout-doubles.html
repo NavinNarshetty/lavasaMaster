@@ -142,7 +142,7 @@
             <div class=" knockout-doubles-cardholder">
               <div class="knockoutdouble-teamplayer" ng-repeat="players in card.opponentsTeam track by $index">
                 <div class="knockout-card knockout-custom-padding" ng-repeat="player in players.studentTeam track by $index " ng-class="{'knockout-winnercard':players.isWinner===true}">
-                  <div class="knockout-cardimage display-inline ver-mid " >
+                  <div class="knockout-cardimage display-inline ver-mid ">
                     <img ng-src="{{player.studentId.photograph|serverimage}}" alt="{{player.fullName}}" class="img-responsive ">
                   </div>
                   <div class="display-inline knockout-cardplayername ver-mid ">
@@ -200,7 +200,7 @@
             <div class=" knockout-doubles-cardholder">
               <div class="knockoutdouble-teamplayer" ng-repeat="players in card.opponentsTeam track by $index" ng-class="{'knockout-winnercard':players.isWinner==true}">
                 <div class="knockout-card knockout-custom-padding " ng-repeat="player in players.studentTeam track by $index">
-                  <div class="knockout-cardimage display-inline ver-mid " >
+                  <div class="knockout-cardimage display-inline ver-mid ">
                     <img ng-src="{{player.studentId.photograph|serverimage}}" alt="{{player.fullName}}" class="img-responsive ">
                   </div>
                   <div class="display-inline knockout-cardplayername ver-mid ">
@@ -254,8 +254,8 @@
         <div class="knockout-winnercardholder" ng-repeat="winner in winnerDoubles | orderBy :'rank' track by $index">
           <div class="display-inline knockout-winnercardname">
             <div class="knockout-winnercardname-holder" ng-repeat="doubles in winner.players track by $index">
-              <div class="knockout-winnercardimgage display-inline" ng-if="doubles.profile">
-                <img ng-src="{{doubles.profile | serverimage2:50:50:'cover' }}" alt="" class="img-responsive">
+              <div class="knockout-winnercardimgage display-inline">
+                <img ng-src="{{winner.profile | serverimage2:50:50:'cover' }}" alt="" class="img-responsive">
               </div>
               <div class="knockout-winnercardplayername display-inline">
                 <p class="m-clear sport-color-primary">{{doubles.name}}</p>
