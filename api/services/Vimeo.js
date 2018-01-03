@@ -53,15 +53,16 @@ var model = {
                                                 console.log(complete);
                                                 if (err || _.isEmpty(complete)) {
                                                     callback(null, {
-                                                        error: err,
+                                                        error: "error found",
                                                         success: file
                                                     });
                                                 } else {
                                                     if (_.isEmpty(complete.video)) {
                                                         callback(null, file);
                                                     } else {
+                                                        console.log("inside found video", complete);
                                                         callback(null, {
-                                                            error: err,
+                                                            error: "error found",
                                                             success: file
                                                         });
                                                     }
@@ -92,49 +93,57 @@ var model = {
                                             }
                                         },
                                         function (result, callback) {
-                                            console.log("uri", result.body.uri);
-                                            var str = result.body.uri.toString();
-                                            var i = str.lastIndexOf("/");
-                                            console.log("index", i);
-                                            var uri = str.slice(++i, str.length).toString();
-                                            result.videoId = uri;
-                                            console.log("uri", uri);
-                                            var obj = {
-                                                $set: {
-                                                    video: uri,
-                                                    videoType: "vimeo"
-                                                }
-                                            };
-                                            Match.update({
-                                                matchId: result.body.name
-                                            }, obj).exec(function (err, complete) {
-                                                console.log(complete);
-                                                if (err || _.isEmpty(complete)) {
-                                                    callback(null, {
-                                                        error: err,
-                                                        success: result
-                                                    });
-                                                } else {
-                                                    callback(null, result);
-                                                }
-                                            });
+                                            if (result.error) {
+                                                callback(null, result);
+                                            } else {
+                                                console.log("uri", result.body.uri);
+                                                var str = result.body.uri.toString();
+                                                var i = str.lastIndexOf("/");
+                                                console.log("index", i);
+                                                var uri = str.slice(++i, str.length).toString();
+                                                result.videoId = uri;
+                                                console.log("uri", uri);
+                                                var obj = {
+                                                    $set: {
+                                                        video: uri,
+                                                        videoType: "vimeo"
+                                                    }
+                                                };
+                                                Match.update({
+                                                    matchId: result.body.name
+                                                }, obj).exec(function (err, complete) {
+                                                    console.log(complete);
+                                                    if (err || _.isEmpty(complete)) {
+                                                        callback(null, {
+                                                            error: err,
+                                                            success: result
+                                                        });
+                                                    } else {
+                                                        callback(null, result);
+                                                    }
+                                                });
+                                            }
                                         },
                                         function (result, callback) {
-                                            var urlData = {};
-                                            urlData.description = "match video";
-                                            urlData.videoId = result.videoId;
-                                            lib.descriptionUpload(urlData,
-                                                function (err, body, status, headers) {
-                                                    if (err) {
-                                                        return console.log(err);
+                                            if (result.error) {
+                                                callback(null, result);
+                                            } else {
+                                                var urlData = {};
+                                                urlData.description = "match video";
+                                                urlData.videoId = result.videoId;
+                                                lib.descriptionUpload(urlData,
+                                                    function (err, body, status, headers) {
+                                                        if (err) {
+                                                            return console.log(err);
+                                                        }
+                                                        var result = {};
+                                                        result.body = body;
+                                                        result.status = status;
+                                                        result.headers = headers;
+                                                        callback(null, result);
                                                     }
-                                                    var result = {};
-                                                    result.body = body;
-                                                    result.status = status;
-                                                    result.headers = headers;
-                                                    callback(null, result);
-                                                }
-                                            );
+                                                );
+                                            }
                                         }
                                     ],
                                     function (err, data2) {
