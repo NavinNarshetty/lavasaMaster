@@ -43,23 +43,53 @@ var model = {
                             async.concatLimit(data, 4, function (file, callback) {
                                 async.waterfall([
                                         function (callback) {
-                                            console.log("file", file);
-                                            var urlData = {};
-                                            // urlData.description = "match description saved";
-                                            urlData.link = "https://storage.googleapis.com/match-videos/" + file.fileName;
-                                            console.log("link", urlData.link);
-                                            lib.streamingUpload(urlData,
-                                                function (err, body, status, headers) {
-                                                    if (err) {
-                                                        return console.log(err);
+                                            var index = file.fileName.lastIndexOf(".");
+                                            // index--;
+                                            var matchId = file.fileName.substring(0, index);
+                                            console.log("******matchId****", matchId);
+                                            Match.findOne({
+                                                matchId: matchId
+                                            }).exec(function (err, complete) {
+                                                console.log(complete);
+                                                if (err || _.isEmpty(complete)) {
+                                                    callback(null, {
+                                                        error: err,
+                                                        success: file
+                                                    });
+                                                } else {
+                                                    if (_.isEmpty(complete.video)) {
+                                                        callback(null, file);
+                                                    } else {
+                                                        callback(null, {
+                                                            error: err,
+                                                            success: file
+                                                        });
                                                     }
-                                                    var result = {};
-                                                    result.body = body;
-                                                    result.status = status;
-                                                    result.headers = headers;
-                                                    callback(null, result);
                                                 }
-                                            );
+                                            });
+                                        },
+                                        function (file, callback) {
+                                            if (file.error) {
+                                                callback(null, file);
+                                            } else {
+                                                console.log("file", file);
+                                                var urlData = {};
+                                                // urlData.description = "match description saved";
+                                                urlData.link = "https://storage.googleapis.com/match-videos/" + file.fileName;
+                                                console.log("link", urlData.link);
+                                                lib.streamingUpload(urlData,
+                                                    function (err, body, status, headers) {
+                                                        if (err) {
+                                                            return console.log(err);
+                                                        }
+                                                        var result = {};
+                                                        result.body = body;
+                                                        result.status = status;
+                                                        result.headers = headers;
+                                                        callback(null, result);
+                                                    }
+                                                );
+                                            }
                                         },
                                         function (result, callback) {
                                             console.log("uri", result.body.uri);
@@ -277,8 +307,7 @@ var model = {
             projectId: projectId,
             keyFilename: '/home/wohlig/Documents/htdocs/lavasaBackend/config/googleKey/SFA New-f0fd1402dc91.json'
         });
-        const bucketName = 'mumbai-gallery';
-        const prefix = '2017/Sport';
+        const bucketName = 'match-videos';
         storage
             .bucket(bucketName)
             .getFiles()
@@ -346,7 +375,7 @@ var model = {
             keyFilename: '/home/wohlig/Documents/htdocs/lavasaBackend/config/googleKey/SFA New-f0fd1402dc91.json'
         });
         const bucketName = 'mumbai-gallery';
-        const prefix = '2017/Sport';
+        const prefix = '2017/Sport/Archery';
         const options = {
             prefix: prefix,
         };
