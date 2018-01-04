@@ -345,33 +345,63 @@ var model = {
             projectId: projectId,
             keyFilename: '/home/wohlig/Documents/htdocs/lavasaBackend/config/googleKey/SFA New-f0fd1402dc91.json'
         });
-        const bucketName = 'mumbai-gallery';
-        const prefix = '2017/Sport';
-        const options = {
-            prefix: prefix,
-        };
-        // Lists files in the bucket, filtered by a prefix
-        storage
-            .bucket(bucketName)
-            .getFiles(options)
-            .then(results => {
-                var files = results[0];
-                console.log('Files:', files);
-                files.forEach(file => {
-                    var temp = {};
-                    var foldername = file.name.split("/");
-                    console.log("foldername", foldername);
-                    if (foldername.length == 4) {
-                        temp.fileName = foldername[2];
-                        final.push(temp);
+
+        async.waterfall([
+            function (callback) {
+                ConfigProperty.findOne().lean().exec(function (err, foundConfig) {
+                    if (err) {
+                        callback(err, null)
+                    } else if (!_.isEmpty(foundConfig)) {
+                        if (foundConfig.bucketName && foundConfig.year) {
+                            var prefix = foundConfig.year + "/" + data.type;
+                            var bucketName = foundConfig.bucketName;
+                            callback(null, bucketName, prefix);
+                        } else {
+                            callback("Details Not Found In Config", null);
+                        }
+                    } else {
+                        callback("Config Is Empty", []);
                     }
-                    final = _.uniqBy(final, "fileName");
                 });
-                callback(null, final);
-            })
-            .catch(err => {
-                console.error('ERROR:', err);
-            });
+            },
+            function (bucketName, prefix, callback) {
+                // const bucketName = 'mumbai-gallery';
+                // const prefix = '2017/Sport';
+                const options = {
+                    prefix: prefix,
+                };
+                // Lists files in the bucket, filtered by a prefix
+                storage
+                    .bucket(bucketName)
+                    .getFiles(options)
+                    .then(results => {
+                        var files = results[0];
+                        console.log('Files:', files);
+                        files.forEach(file => {
+                            var temp = {};
+                            var foldername = file.name.split("/");
+                            console.log("foldername", foldername);
+                            if (foldername.length == 4) {
+                                temp.fileName = foldername[2];
+                                final.push(temp);
+                            }
+                            final = _.uniqBy(final, "fileName");
+                        });
+                        callback(null, final);
+                    })
+                    .catch(err => {
+                        console.error('ERROR:', err);
+                    });
+            }
+        ], function (err, finalResult) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, finalResult);
+            }
+        });
+
+
     },
 
     getFilesPerFolder: function (data, callback) {
@@ -383,28 +413,94 @@ var model = {
             projectId: projectId,
             keyFilename: '/home/wohlig/Documents/htdocs/lavasaBackend/config/googleKey/SFA New-f0fd1402dc91.json'
         });
-        const bucketName = 'mumbai-gallery';
-        const prefix = '2017/Sport/Archery';
-        const options = {
-            prefix: prefix,
-        };
+
         // Lists files in the bucket, filtered by a prefix
-        storage
-            .bucket(bucketName)
-            .getFiles(options)
-            .then(results => {
-                var files = results[0];
-                console.log('Files:', files);
-                files.forEach(file => {
-                    var temp = {};
-                    temp.fileName = file.name;
-                    final.push(temp);
+
+
+        async.waterfall([
+            function (callback) {
+                ConfigProperty.findOne().lean().exec(function (err, foundConfig) {
+                    if (err) {
+                        callback(err, null)
+                    } else if (!_.isEmpty(foundConfig)) {
+                        if (foundConfig.bucketName && foundConfig.year) {
+                            var prefix = foundConfig.year + "/" + data.type + "/" + data.folderName;
+                            var bucketName = foundConfig.bucketName;
+                            var eventName = "SFA " + foundConfig.sfaCity + " " + foundConfig.eventYear
+                            callback(null, bucketName, prefix, eventName);
+                        } else {
+                            callback("Details Not Found In Config", null);
+                        }
+                    } else {
+                        callback("Config Is Empty", []);
+                    }
                 });
-                callback(null, final);
-            })
-            .catch(err => {
-                console.error('ERROR:', err);
-            });
+            },
+            function (bucketName, prefix, eventName, callback) {
+                // const bucketName = 'mumbai-gallery';
+                // const prefix = '2017/Sport/Archery';
+                // const options = {
+                //     prefix: prefix,
+                // };
+                const options = {
+                    prefix: prefix,
+                };
+                // Lists files in the bucket, filtered by a prefix
+                console.log("bucketName",bucketName);
+                console.log("prefix",prefix);
+                
+                storage
+                    .bucket(bucketName)
+                    .getFiles(options)
+                    .then(results => {
+                        var files = results[0];
+                        async.concatSeries(files,function(singleData,callback){
+                            var filePropArr = _.split(singleData.name,'/');
+                            if(filePropArr[3]){
+                                var saveObj={
+                                    "folderType":filePropArr[1],
+                                    "year":filePropArr[0],
+                                    "mediaLink":bucketName + "/" + singleData.name,
+                                    "mediaType":"photo",
+                                    "folderName":filePropArr[2],
+                                    "title":_.split(filePropArr[3],".")[0],
+                                    "shareUrl":"",
+                                    "eventName":eventName
+                                }
+
+                                Gallery.saveData(saveObj,function(err,data){
+                                    if(err){
+                                        callback(null,err);
+                                    }else{
+                                        callback(null,data);
+                                    }
+                                });
+                            }else{
+                                callback();
+                            }   
+                           
+                        },function(err,finalResult){
+                            if(err){
+                                callback(err,null);
+                            }else{
+                                callback(null,finalResult);
+                            }
+                        })
+                    })
+                    .catch(err => {
+                        console.error('ERROR:', err);
+                    });
+            }
+        ], function (err, finalResult) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, finalResult);
+            }
+        });
+
+
+
     },
 
     videoUpload: function (data, callback) {

@@ -1,5 +1,8 @@
 var schema = new Schema({
-    title: String,
+    title: {
+        type:String,
+        unique:true
+    },
     folderName: String,
     gender: [{
         type: String
@@ -9,9 +12,10 @@ var schema = new Schema({
     }],
     shareUrl: String,
     mediaType: String,
-    videoType: String,
     mediaLink: String,
-    year: String
+    year: String,
+    folderType:String,
+    eventName:String
 });
 
 schema.plugin(deepPopulate, {});

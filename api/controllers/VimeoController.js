@@ -10,12 +10,26 @@ var controller = {
 
     getAllFolderNameCloud: function (req, res) {
         console.log("vimeo");
-        Vimeo.getAllFolderNameCloud(req.body, res.callback);
+        if(req.body && req.body.type){
+            Vimeo.getAllFolderNameCloud(req.body, res.callback);
+        }else{
+            res.json({
+                "data":"Insufficient Data",
+                "value":false
+            });
+        }
     },
 
     getFilesPerFolder: function (req, res) {
         console.log("vimeo");
-        Vimeo.getFilesPerFolder(req.body, res.callback);
+        if(req.body && req.body.type && req.body.folderName){
+            Vimeo.getFilesPerFolder(req.body, res.callback);
+        }else{
+            res.json({
+                "data":"Insufficient Data",
+                "value":false
+            });
+        }
     },
 
     authenticateCloud: function (req, res) {
