@@ -56,6 +56,7 @@ var schema = new Schema({
     scheduleTime: String,
     video: String,
     videoType: String,
+    thumbnails: [],
     matchCenter: String,
     excelType: String,
     heatNo: String,

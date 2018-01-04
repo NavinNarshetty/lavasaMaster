@@ -10,24 +10,24 @@ var controller = {
 
     getAllFolderNameCloud: function (req, res) {
         console.log("vimeo");
-        if(req.body && req.body.folderType){
+        if (req.body && req.body.folderType) {
             Vimeo.getAllFolderNameCloud(req.body, res.callback);
-        }else{
+        } else {
             res.json({
-                "data":"Insufficient Data",
-                "value":false
+                "data": "Insufficient Data",
+                "value": false
             });
         }
     },
 
     getFilesPerFolder: function (req, res) {
         console.log("vimeo");
-        if(req.body && req.body.folderType && req.body.folderName){
+        if (req.body && req.body.folderType && req.body.folderName) {
             Vimeo.getFilesPerFolder(req.body, res.callback);
-        }else{
+        } else {
             res.json({
-                "data":"Insufficient Data",
-                "value":false
+                "data": "Insufficient Data",
+                "value": false
             });
         }
     },
@@ -43,6 +43,10 @@ var controller = {
 
     setVideoDescription: function (req, res) {
         Vimeo.setVideoDescription(req.body, res.callback);
+    },
+
+    thumbnailsUpdate: function (req, res) {
+        Vimeo.thumbnailsUpdate(req.body, res.callback);
     },
 };
 module.exports = _.assign(module.exports, controller);

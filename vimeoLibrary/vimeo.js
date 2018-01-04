@@ -447,3 +447,28 @@ Vimeo.prototype.descriptionUpload = function (formData, video_uri, callback, pro
 
 	});
 };
+
+Vimeo.prototype.thumbnails = function (formData, video_uri, callback, progress_callback) {
+	var videoId = formData.videoId;
+	var path = "/videos/" + videoId;
+	var _self = this;
+	if (typeof video_uri === 'function') {
+		progress_callback = callback;
+		callback = video_uri;
+		video_uri = undefined;
+	}
+
+	var options = {
+		method: 'GET',
+		path: path,
+	};
+	this.request(options, function (err, ticket, status, headers) {
+		if (err) {
+			console.log("err", err);
+			return callback(err);
+		} else {
+			return callback(null, ticket, status, headers);
+		}
+
+	});
+};

@@ -135,16 +135,19 @@ var model = {
                                                     function (err, body, status, headers) {
                                                         if (err) {
                                                             return console.log(err);
+                                                            callback(err, null);
+                                                        } else {
+                                                            var result = {};
+                                                            result.body = body;
+                                                            result.status = status;
+                                                            result.headers = headers;
+                                                            result.videoId = urlData.videoId;
+                                                            callback(null, result);
                                                         }
-                                                        var result = {};
-                                                        result.body = body;
-                                                        result.status = status;
-                                                        result.headers = headers;
-                                                        callback(null, result);
                                                     }
                                                 );
                                             }
-                                        }
+                                        },
                                     ],
                                     function (err, data2) {
 
@@ -179,7 +182,6 @@ var model = {
                     }
                 }
             });
-
     },
 
     setVideoDescription: function (data, callback) {
@@ -446,44 +448,44 @@ var model = {
                     prefix: prefix,
                 };
                 // Lists files in the bucket, filtered by a prefix
-                console.log("bucketName",bucketName);
-                console.log("prefix",prefix);
-                
+                console.log("bucketName", bucketName);
+                console.log("prefix", prefix);
+
                 storage
                     .bucket(bucketName)
                     .getFiles(options)
                     .then(results => {
                         var files = results[0];
-                        async.concatSeries(files,function(singleData,callback){
-                            var filePropArr = _.split(singleData.name,'/');
-                            if(filePropArr[3]){
-                                var saveObj={
-                                    "folderType":filePropArr[1],
-                                    "year":filePropArr[0],
-                                    "mediaLink":bucketName + "/" + singleData.name,
-                                    "mediaType":"photo",
-                                    "folderName":filePropArr[2],
-                                    "title":_.split(filePropArr[3],".")[0],
-                                    "shareUrl":"",
-                                    "eventName":eventName
+                        async.concatSeries(files, function (singleData, callback) {
+                            var filePropArr = _.split(singleData.name, '/');
+                            if (filePropArr[3]) {
+                                var saveObj = {
+                                    "folderType": filePropArr[1],
+                                    "year": filePropArr[0],
+                                    "mediaLink": bucketName + "/" + singleData.name,
+                                    "mediaType": "photo",
+                                    "folderName": filePropArr[2],
+                                    "title": _.split(filePropArr[3], ".")[0],
+                                    "shareUrl": "",
+                                    "eventName": eventName
                                 }
 
-                                Gallery.saveData(saveObj,function(err,data){
-                                    if(err){
-                                        callback(null,err);
-                                    }else{
-                                        callback(null,data);
+                                Gallery.saveData(saveObj, function (err, data) {
+                                    if (err) {
+                                        callback(null, err);
+                                    } else {
+                                        callback(null, data);
                                     }
                                 });
-                            }else{
+                            } else {
                                 callback();
-                            }   
-                           
-                        },function(err,finalResult){
-                            if(err){
-                                callback(err,null);
-                            }else{
-                                callback(null,finalResult);
+                            }
+
+                        }, function (err, finalResult) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                callback(null, finalResult);
                             }
                         })
                     })
@@ -549,7 +551,128 @@ var model = {
                 }
             });
 
-    }
+    },
+
+    thumbnailsUpdate: function (data, callback) {
+        Match.find({
+            video: {
+                $exists: true
+            },
+            videoType: "vimeo",
+            thumbnails: {
+                $exists: false
+            }
+        }).exec(function (err, complete) {
+            console.log(complete);
+            if (err || _.isEmpty(complete)) {
+                callback(null, {
+                    error: "error found",
+                    success: []
+                });
+            } else {
+                async.eachSeries(complete, function (n, callback) {
+                    console.log("n in video", n);
+                    var urlData = {};
+                    urlData.videoId = n.video;
+                    Vimeo.getThumnailsFromVimeo(urlData, function (err, pictures) {
+                        console.log("pictures", pictures);
+                        if (err || _.isEmpty(pictures)) {
+                            err = "Sport,Event,AgeGroup,Gender may have wrong values";
+                            callback(null, {
+                                error: err,
+                                success: vimeoData
+                            });
+                        } else {
+                            var obj = {
+                                $set: {
+                                    thumbnails: pictures.sizes
+                                }
+                            };
+                            Match.update({
+                                video: n.video
+                            }, obj).exec(function (err, complete) {
+                                console.log(complete);
+                                if (err || _.isEmpty(complete)) {
+                                    callback(null, {
+                                        error: err,
+                                        success: pictures
+                                    });
+                                } else {
+                                    callback(null, pictures);
+                                }
+                            });
+                        }
+                    });
+                }, function (err) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        callback(null, complete);
+                    }
+                });
+            }
+        });
+
+
+    },
+
+    getThumnailsFromVimeo: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    Vimeo.findOne().lean().exec(function (err, client) {
+                        if (err || _.isEmpty(client)) {
+                            callback(null, {
+                                error: "No Data"
+                            });
+                        } else {
+                            callback(null, client);
+                        }
+                    });
+                },
+                function (client, callback) {
+                    console.log("client", client);
+                    if (client.error) {
+                        callback(null, client);
+                    } else {
+                        CLIENT_ID = client.clientId;
+                        CLIENT_SECRET = client.clientSecret;
+                        console.log('1');
+                        var lib = new vimeo(CLIENT_ID, CLIENT_SECRET);
+                        console.log('2');
+                        if (client.accessToken) {
+                            lib.access_token = client.accessToken;
+                            var urlData = {};
+
+                            urlData.videoId = data.videoId;
+                            lib.thumbnails(urlData,
+                                function (err, body, status, headers) {
+                                    if (err) {
+                                        return console.log(err);
+                                        callback(err, null);
+                                    } else {
+                                        callback(null, body.pictures);
+                                    }
+                                }
+                            );
+                        } else {
+                            callback(null, "Access Token Not Found");
+                        }
+                    }
+                },
+            ],
+            function (err, data2) {
+
+                if (err) {
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, data2);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
+    },
 
 };
 module.exports = _.assign(module.exports, exports, model);
