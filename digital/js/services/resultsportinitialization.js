@@ -353,7 +353,7 @@ myApp.factory('ResultSportInitialization', function () {
                         return {
                             resultVar: "resultThrowball",
                             opponentsVar: "opponentsTeam",
-                            html:"scorethrowball.html"
+                            html: "scorethrowball.html"
                         };
                     case "Kho Kho":
                         return {
@@ -455,6 +455,14 @@ myApp.factory('ResultSportInitialization', function () {
                     format.teamResults.cleanSheet = format.teamResults.cleanSheet || 0;
                     format.teamResults.noShow = format.teamResults.noShow || 0;
                     format.teamResults.walkover = format.teamResults.walkover || 0;
+                    break;
+
+                case "Throwball":
+                    _.each(format.teamResults.sets, function (n) {
+                        n.points = n.points || 0;
+                    })
+                    format.teamResults.finalPoints = format.teamResults.finalPoints || 0;
+                    
                     break;
             };
             return format;
