@@ -105,6 +105,9 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
                   } else if (value && value.resultKabaddi && value.resultKabaddi.teams) {
                     value.finalResult = value.resultKabaddi;
                     knockoutService.sortResult($scope.roundsList);
+                  } else if (value && value.resultThrowball && value.resultThrowball.teams) {
+                    value.finalResult = value.resultThrowball;
+                    knockoutService.sortResult($scope.roundsList);
                   } else if (value && value.resultsCombat && value.resultsCombat.teams) {
                     value.finalResult = value.resultsCombat;
                     knockoutService.sortResult($scope.roundsList);
@@ -149,8 +152,10 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
         $scope.currentMatch.result = $scope.currentMatch.resultVolleyball;
       break;
       case "Kho Kho":
-      case "Throwball":
         $scope.currentMatch.result = $scope.currentMatch.resultsCombat;
+      break;
+      case "Throwball":
+        $scope.currentMatch.result = $scope.currentMatch.resultThrowball;
       break;
     }
       modal = $uibModal.open({

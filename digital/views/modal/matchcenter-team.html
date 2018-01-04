@@ -80,7 +80,7 @@
                 </div>
                 <!-- WATER POLO FINAL POINTS END-->
                 <!-- VOLLEYBALL FINAL POINTS -->
-                <div class="sportwise-finalpointholder" ng-if = "currentMatch.sportName == 'Volleyball'">
+                <div class="sportwise-finalpointholder" ng-if = "currentMatch.sportName == 'Volleyball' || currentMatch.sportName == 'Throwball'">
                   <!-- sets -->
                   <div class="relate setpoint-element" ng-repeat="set in team.teamResults.sets track by $index">
                     <label class="text-uppercase setpointlabel">Set {{$index + 1}}</label>
@@ -127,7 +127,7 @@
                         </div>
                         <!-- TEAM CARD END -->
                         <!-- TEAM POINTS -->
-                        <div class="teamdetail-pointholder"  ng-if = "currentMatch.sportName != 'Basketball'">
+                        <div class="teamdetail-pointholder"  ng-if = "currentMatch.sportName != 'Basketball' || currentMatch.sportName != 'Throwball'">
                           <!-- <pre>{{team.teamResults | json}}</pre> -->
                             <!-- TEAM POINTS HOCKEY -->
                             <div class="teamdetail-points" ng-if="currentMatch.sportName == 'Hockey'">
@@ -351,7 +351,7 @@
                         <uib-accordion close-others="oneAtATime" class="teamplayer-accordion">
                             <div uib-accordion-group class="panel-default" is-open="player.open" ng-repeat="player in team.players track by $index" is-disabled="currentMatch.sportName == 'Volleyball'">
                                 <uib-accordion-heading class="clearfix">
-                                    <span class="pull-right playerangle-accordion fa " ng-class="{'fa-angle-up': player.open, 'fa-angle-down': !player.open}" ng-hide="currentMatch.sportName == 'Volleyball'"></span>
+                                    <span class="pull-right playerangle-accordion fa " ng-class="{'fa-angle-up': player.open, 'fa-angle-down': !player.open}" ng-hide="currentMatch.sportName == 'Volleyball' || currentMatch.sportName == 'Throwball'"></span>
                                     <p class="m-clear playerhead-accordion">
                                         <span>{{player.fullName|firstcapitalize:true}}</span>
                                     </p>
