@@ -432,12 +432,12 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
   // ADD SET
   $scope.setLength = [];
   $scope.addSet = function () {
-    _.each($scope.match.resultVolleyball.teams, function (n) {
+    _.each($scope.match[resultVar].teams, function (n) {
       n.teamResults.sets.push({
         points: ''
       });
     })
-    _.each($scope.match.resultVolleyball.teams[0].teamResults.sets, function (n, key) {
+    _.each($scope.match[resultVar].teams[0].teamResults.sets, function (n, key) {
       $scope.setLength[key] = {
         setShow: true
       }
@@ -463,11 +463,11 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
   }
   $scope.deleteSet = function (index) {
     console.log(index, 'index che');
-    _.each($scope.match.resultVolleyball.teams, function (n) {
+    _.each($scope.match[resultVar].teams, function (n) {
       if (n.teamResults.sets.length > 1) {
         n.teamResults.sets.splice(index, 1);
         $scope.setLength = [];
-        _.each($scope.match.resultVolleyball.teams[0].teamResults.sets, function (n, key) {
+        _.each($scope.match[resultVar].teams[0].teamResults.sets, function (n, key) {
           $scope.setLength[key] = {
             setShow: true
           }
@@ -480,7 +480,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
         };
         toastr.success('Set deleted successfully');
         $rootScope.modalInstance.close('a');
-        console.log($scope.match.resultVolleyball, 'After delete');
+        console.log($scope.match[resultVar], 'After delete');
       } else {
         toastr.warning('Minimum 1 Set required');
       }

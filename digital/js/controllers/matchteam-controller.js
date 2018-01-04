@@ -93,6 +93,7 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                         case 'Hockey':
                         case 'Kabaddi':
                         case 'Handball':
+                        case "Throwball":
                         case 'Water Polo':
                             console.log("For Data Initialization");
                             initilizeMyTemplate();
@@ -145,6 +146,7 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                         matchId: $scope.matchData.matchId
                     }
                     switch ($scope.matchDetails.sportsName) {
+                        case "Throwball":
                         case "Volleyball":
                         case "Football":
                         case "Basketball":
@@ -162,6 +164,7 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                         NavigationService.saveFootball($scope.matchResult, function (data) {
                             if (data.value == true) {
                                 switch ($scope.matchDetails.sportsName) {
+                                    case "Throwball":
                                     case "Volleyball":
                                     case "Football":
                                     case "Basketball":
@@ -183,6 +186,7 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                         NavigationService.saveMatch($scope.matchResult, function (data) {
                             if (data.value == true) {
                                 switch ($scope.matchDetails.sportsName) {
+                                    case "Throwball":
                                     case "Volleyball":
                                     case "Football":
                                     case "Basketball":

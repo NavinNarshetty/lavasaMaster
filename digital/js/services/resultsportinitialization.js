@@ -152,7 +152,7 @@ myApp.factory('ResultSportInitialization', function () {
                     break;
                 case "Volleyball":
                     format.teamResults.sets = [{
-                        "points":''
+                        "points": ''
                     }];
                     format.teamResults.fouls = "";
                     format.teamResults.spike = "";
@@ -172,6 +172,12 @@ myApp.factory('ResultSportInitialization', function () {
                     format.teamResults.cleanSheet = "";
                     format.teamResults.noShow = "";
                     format.teamResults.walkover = "";
+                    break;
+                case "Throwball":
+                    format.teamResults.sets = [{
+                        "points": ''
+                    }];
+                    format.teamResults.finalPoints = "";
                     break;
             };
 
@@ -232,6 +238,11 @@ myApp.factory('ResultSportInitialization', function () {
                 case "Handball":
                     returnResult.resultHandball = format;
                     obj.initializeTeamAndPlayers(sportName, returnResult.resultHandball, match);
+                    return returnResult;
+
+                case "Throwball":
+                    returnResult.resultThrowball = format;
+                    obj.initializeTeamAndPlayers(sportName, returnResult.resultThrowball, match);
                     return returnResult;
 
                 case "Water Polo":
@@ -340,8 +351,9 @@ myApp.factory('ResultSportInitialization', function () {
                         };
                     case "Throwball":
                         return {
-                            resultVar: "resultsCombat",
-                            opponentsVar: "opponentsTeam"
+                            resultVar: "resultThrowball",
+                            opponentsVar: "opponentsTeam",
+                            html:"scorethrowball.html"
                         };
                     case "Kho Kho":
                         return {
@@ -368,61 +380,61 @@ myApp.factory('ResultSportInitialization', function () {
             return obj;
         },
 
-        nullOrEmptyTo0:function(sportName,format){
+        nullOrEmptyTo0: function (sportName, format) {
             switch (sportName) {
                 case "Basketball":
-                    format.teamResults.quarterPoints[0].basket=format.teamResults.quarterPoints[0].basket||0;
-                    format.teamResults.quarterPoints[1].basket=format.teamResults.quarterPoints[1].basket||0;
-                    format.teamResults.quarterPoints[2].basket=format.teamResults.quarterPoints[2].basket||0;
-                    format.teamResults.quarterPoints[3].basket=format.teamResults.quarterPoints[3].basket||0;
-                    format.teamResults.finalGoalPoints = format.teamResults.finalGoalPoints||0;
+                    format.teamResults.quarterPoints[0].basket = format.teamResults.quarterPoints[0].basket || 0;
+                    format.teamResults.quarterPoints[1].basket = format.teamResults.quarterPoints[1].basket || 0;
+                    format.teamResults.quarterPoints[2].basket = format.teamResults.quarterPoints[2].basket || 0;
+                    format.teamResults.quarterPoints[3].basket = format.teamResults.quarterPoints[3].basket || 0;
+                    format.teamResults.finalGoalPoints = format.teamResults.finalGoalPoints || 0;
                     break;
 
                 case "Handball":
                     format.teamResults.halfPoints = format.teamResults.halfPoints || 0;
-                    format.teamResults.finalPoints = format.teamResults.finalPoints||0;
-                    format.teamResults.shotsOnGoal = format.teamResults.shotsOnGoal||0;
-                    format.teamResults.penalty = format.teamResults.penalty||0;
-                    format.teamResults.saves = format.teamResults.saves||0;
+                    format.teamResults.finalPoints = format.teamResults.finalPoints || 0;
+                    format.teamResults.shotsOnGoal = format.teamResults.shotsOnGoal || 0;
+                    format.teamResults.penalty = format.teamResults.penalty || 0;
+                    format.teamResults.saves = format.teamResults.saves || 0;
                     break;
 
                 case "Hockey":
-                    format.teamResults.halfPoints = format.teamResults.halfPoints||0;
-                    format.teamResults.finalPoints = format.teamResults.finalPoints||0;
-                    format.teamResults.shotsOnGoal = format.teamResults.shotsOnGoal||0;
-                    format.teamResults.totalShots = format.teamResults.totalShots||0;
-                    format.teamResults.penalty = format.teamResults.penalty||0;
-                    format.teamResults.penaltyPoints = format.teamResults.penaltyPoints||0;
-                    format.teamResults.penaltyCorners = format.teamResults.penaltyCorners||0;
-                    format.teamResults.penaltyStroke = format.teamResults.penaltyStroke||0;
-                    format.teamResults.saves = format.teamResults.saves||0;
-                    format.teamResults.fouls = format.teamResults.fouls||0;
+                    format.teamResults.halfPoints = format.teamResults.halfPoints || 0;
+                    format.teamResults.finalPoints = format.teamResults.finalPoints || 0;
+                    format.teamResults.shotsOnGoal = format.teamResults.shotsOnGoal || 0;
+                    format.teamResults.totalShots = format.teamResults.totalShots || 0;
+                    format.teamResults.penalty = format.teamResults.penalty || 0;
+                    format.teamResults.penaltyPoints = format.teamResults.penaltyPoints || 0;
+                    format.teamResults.penaltyCorners = format.teamResults.penaltyCorners || 0;
+                    format.teamResults.penaltyStroke = format.teamResults.penaltyStroke || 0;
+                    format.teamResults.saves = format.teamResults.saves || 0;
+                    format.teamResults.fouls = format.teamResults.fouls || 0;
                     break;
 
                 case "Kabaddi":
-                    format.teamResults.halfPoints = format.teamResults.halfPoints||0;
-                    format.teamResults.finalPoints = format.teamResults.finalPoints||0;
-                    format.teamResults.superTackle = format.teamResults.superTackle||0;
-                    format.teamResults.allOut = format.teamResults.allOut||0;
+                    format.teamResults.halfPoints = format.teamResults.halfPoints || 0;
+                    format.teamResults.finalPoints = format.teamResults.finalPoints || 0;
+                    format.teamResults.superTackle = format.teamResults.superTackle || 0;
+                    format.teamResults.allOut = format.teamResults.allOut || 0;
                     break;
 
                 case "Water Polo":
-                    format.teamResults.quarterPoints[0].points=format.teamResults.quarterPoints[0].points||0;
-                    format.teamResults.quarterPoints[1].points=format.teamResults.quarterPoints[1].points||0;
-                    format.teamResults.quarterPoints[2].points=format.teamResults.quarterPoints[2].points||0;
-                    format.teamResults.quarterPoints[3].points=format.teamResults.quarterPoints[3].points||0;
-                    format.teamResults.finalGoalPoints = format.teamResults.finalGoalPoints||0;
-                    format.teamResults.shotsOnGoal = format.teamResults.shotsOnGoal||0;
-                    format.teamResults.totalShots = format.teamResults.totalShots||0;
-                    format.teamResults.penalty = format.teamResults.penalty||0;
-                    format.teamResults.penaltyPoints = format.teamResults.penaltyPoints||0;
-                    format.teamResults.penalty = format.teamResults.penalty||0;
-                    format.teamResults.saves = format.teamResults.saves||0;
+                    format.teamResults.quarterPoints[0].points = format.teamResults.quarterPoints[0].points || 0;
+                    format.teamResults.quarterPoints[1].points = format.teamResults.quarterPoints[1].points || 0;
+                    format.teamResults.quarterPoints[2].points = format.teamResults.quarterPoints[2].points || 0;
+                    format.teamResults.quarterPoints[3].points = format.teamResults.quarterPoints[3].points || 0;
+                    format.teamResults.finalGoalPoints = format.teamResults.finalGoalPoints || 0;
+                    format.teamResults.shotsOnGoal = format.teamResults.shotsOnGoal || 0;
+                    format.teamResults.totalShots = format.teamResults.totalShots || 0;
+                    format.teamResults.penalty = format.teamResults.penalty || 0;
+                    format.teamResults.penaltyPoints = format.teamResults.penaltyPoints || 0;
+                    format.teamResults.penalty = format.teamResults.penalty || 0;
+                    format.teamResults.saves = format.teamResults.saves || 0;
                     break;
 
                 case "Volleyball":
-                    _.each(format.teamResults.sets,function(n){
-                        n.points = n.points || 0; 
+                    _.each(format.teamResults.sets, function (n) {
+                        n.points = n.points || 0;
                     })
                     format.teamResults.fouls = format.teamResults.fouls || 0;
                     format.teamResults.spike = format.teamResults.spike || 0;
