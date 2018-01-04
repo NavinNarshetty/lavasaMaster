@@ -10,7 +10,7 @@ var controller = {
 
     getAllFolderNameCloud: function (req, res) {
         console.log("vimeo");
-        if(req.body && req.body.type){
+        if(req.body && req.body.folderType){
             Vimeo.getAllFolderNameCloud(req.body, res.callback);
         }else{
             res.json({
@@ -22,7 +22,7 @@ var controller = {
 
     getFilesPerFolder: function (req, res) {
         console.log("vimeo");
-        if(req.body && req.body.type && req.body.folderName){
+        if(req.body && req.body.folderType && req.body.folderName){
             Vimeo.getFilesPerFolder(req.body, res.callback);
         }else{
             res.json({

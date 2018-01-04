@@ -353,7 +353,7 @@ var model = {
                         callback(err, null)
                     } else if (!_.isEmpty(foundConfig)) {
                         if (foundConfig.bucketName && foundConfig.year) {
-                            var prefix = foundConfig.year + "/" + data.type;
+                            var prefix = foundConfig.year + "/" + data.folderType;
                             var bucketName = foundConfig.bucketName;
                             callback(null, bucketName, prefix);
                         } else {
@@ -424,7 +424,7 @@ var model = {
                         callback(err, null)
                     } else if (!_.isEmpty(foundConfig)) {
                         if (foundConfig.bucketName && foundConfig.year) {
-                            var prefix = foundConfig.year + "/" + data.type + "/" + data.folderName;
+                            var prefix = foundConfig.year + "/" + data.folderType + "/" + data.folderName;
                             var bucketName = foundConfig.bucketName;
                             var eventName = "SFA " + foundConfig.sfaCity + " " + foundConfig.eventYear
                             callback(null, bucketName, prefix, eventName);
