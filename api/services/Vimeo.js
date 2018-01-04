@@ -485,7 +485,8 @@ var model = {
                             if (err) {
                                 callback(err, null);
                             } else {
-                                callback(null, finalResult);
+                                 //callback(null,finalResult);    For Debugging
+                                 callback(null,"Saved Successfully");
                             }
                         })
                     })
@@ -673,6 +674,71 @@ var model = {
                 }
             });
     },
+
+    thumbnailsUpdateMedia: function (data, callback) {
+        Media.find({
+            medialink: {
+                $exists: true
+            },
+            mediatype:"video",
+            videotype: "vimeo",
+            thumbnails: {
+                $exists: false
+            }
+        }).exec(function (err, complete) {
+            console.log(complete);
+            if (err || _.isEmpty(complete)) {
+                callback(null, {
+                    error: "error found",
+                    success: []
+                });
+            } else {
+                async.eachSeries(complete, function (n, callback) {
+                    console.log("n in video", n);
+                    var urlData = {};
+                    urlData.videoId = n.medialink;
+                    Vimeo.getThumnailsFromVimeo(urlData, function (err, pictures) {
+                        console.log("pictures", pictures);
+                        if (err || _.isEmpty(pictures)) {
+                            err = "Sport,Event,AgeGroup,Gender may have wrong values";
+                            callback(null, {
+                                error: err,
+                                success: vimeoData
+                            });
+                        } else {
+                            var obj = {
+                                $set: {
+                                    thumbnails: pictures.sizes
+                                }
+                            };
+                            Media.update({
+                                medialink: n.medialink
+                            }, obj).exec(function (err, complete) {
+                                console.log(complete);
+                                if (err || _.isEmpty(complete)) {
+                                    callback(null, {
+                                        error: err,
+                                        success: pictures
+                                    });
+                                } else {
+                                    callback(null, pictures);
+                                }
+                            });
+                        }
+                    });
+                }, function (err) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        callback(null, complete);
+                    }
+                });
+            }
+        });
+
+
+    },
+
 
 };
 module.exports = _.assign(module.exports, exports, model);

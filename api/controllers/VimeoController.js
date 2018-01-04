@@ -48,5 +48,10 @@ var controller = {
     thumbnailsUpdate: function (req, res) {
         Vimeo.thumbnailsUpdate(req.body, res.callback);
     },
+
+    thumbnailsUpdateMedia: function (req, res) {
+        Vimeo.thumbnailsUpdateMedia(req.body, res.callback);
+    },
+
 };
 module.exports = _.assign(module.exports, controller);
