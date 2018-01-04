@@ -353,7 +353,7 @@
                                 <uib-accordion-heading class="clearfix">
                                     <span class="pull-right playerangle-accordion fa " ng-class="{'fa-angle-up': player.open, 'fa-angle-down': !player.open}" ng-hide="currentMatch.sportName == 'Volleyball'"></span>
                                     <p class="m-clear playerhead-accordion">
-                                        <span>{{player.fullName}}</span>
+                                        <span>{{player.fullName|firstcapitalize:true}}</span>
                                     </p>
                                 </uib-accordion-heading>
                                 <div class="matchcenter-playerpointholder">

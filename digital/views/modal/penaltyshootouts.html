@@ -20,7 +20,7 @@
                         <!-- <p ng-if="$index==0">Players</p> -->
                         <div class="teamplayer" ng-if="player.isPlaying==true">
                             <div class="penaltyshoot-player">
-                                <p class="clearfix m-clear"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{player.fullName}}</span></p>
+                                <p class="clearfix m-clear"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{player.fullName|firstcapitalize:true}}</span></p>
                             </div>
                             <!-- PENALTY POINTS -->
                             <div class="relate penalty-point">

@@ -23,8 +23,8 @@
         </div>
         <div class="racquet-setscore">
           <div class="scoring-set form-group" ng-repeat="player in currentMatch.resultsRacquet.players track by $index">
-            <div class="matchplayer-image" title="{{currentMatch.opponentsSingle[$index].athleteId.fullName}} | {{currentMatch.opponentsSingle[$index].athleteId.sfaId}}">
-              <img ng-src="{{currentMatch.opponentsSingle[$index].athleteId.photograph|serverimage}}" alt="{{currentMatch.opponentsSingle[$index].athleteId.fullName}}"
+            <div class="matchplayer-image" title="{{currentMatch.opponentsSingle[$index].athleteId.fullName|firstcapitalize:true}} | {{currentMatch.opponentsSingle[$index].athleteId.sfaId}}">
+              <img ng-src="{{currentMatch.opponentsSingle[$index].athleteId.photograph|serverimage}}" alt="{{currentMatch.opponentsSingle[$index].athleteId.fullName|firstcapitalize:true}}"
                 class="img-responsive">
             </div>
             <div class="relate setpoint-element" ng-repeat="set in player.sets track by $index">
@@ -44,10 +44,10 @@
                 <p>SFA ID: <span>{{currentMatch.opponentsSingle[$index].athleteId.sfaId}}</span></p>
               </div>
               <div class="matchplayer-image">
-                <img ng-src="{{currentMatch.opponentsSingle[$index].athleteId.photograph | serverimage}}" alt="{{currentMatch.opponentsSingle[$index].athleteId.fullName}}" class="img-responsive">
+                <img ng-src="{{currentMatch.opponentsSingle[$index].athleteId.photograph | serverimage}}" alt="{{currentMatch.opponentsSingle[$index].athleteId.fullName|firstcapitalize:true}}" class="img-responsive">
               </div>
               <div class="matchplayer-details">
-                <p class="matchplayer-name"><span> {{currentMatch.opponentsSingle[$index].athleteId.fullName}}</span></p>
+                <p class="matchplayer-name"><span> {{currentMatch.opponentsSingle[$index].athleteId.fullName |firstcapitalize: true}}</span></p>
                 <p class="matchplayer-school" title="{{currentMatch.opponentsSingle[$index].athleteId.school.name}}">{{currentMatch.opponentsSingle[$index].athleteId.school.name | truncate:'22'}}</p>
               </div>
             </div>

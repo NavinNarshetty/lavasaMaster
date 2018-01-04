@@ -57,7 +57,7 @@
             <!-- TEAM PLAYERS -->
             <div class="teamdetail-playerholder">
               <div class="teamdetail-player" ng-repeat = "player in currentMatch.opponentsTeam[$index].studentTeam track by $index">
-                <p class="m-clear"><span class="pull-right"> Sfa ID: {{player.studentId.sfaId}}</span><span>{{player.studentId.firstName}} {{player.studentId.surname}}</span></p>
+                <p class="m-clear"><span class="pull-right"> Sfa ID: {{player.studentId.sfaId}}</span><span>{{player.studentId.firstName|firstcapitalize:true}} {{player.studentId.surname|firstcapitalize:true}}</span></p>
               </div>
             </div>
             <!-- TEAM PLAYERS END -->
