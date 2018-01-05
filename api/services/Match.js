@@ -7128,49 +7128,55 @@ var model = {
                                     obj["P2 SCORE"] = mainData.resultSwiss.players[1].score;
                                     obj["P1 RANK"] = mainData.resultSwiss.players[0].rank;
                                     obj["P2 RANK"] = mainData.resultSwiss.players[1].score;
+
                                 } else {
                                     obj["P1 SCORE"] = mainData.resultSwiss.players[0].score;
                                     obj["P2 SCORE"] = "";
                                     obj["P1 RANK"] = mainData.resultSwiss.players[0].rank;
                                     obj["P2 RANK"] = "";
+
                                 }
                                 if (mainData.opponentsSingle.length == 1) {
                                     obj["RESULT 1"] = "Bye";
                                 } else if (mainData.resultSwiss.winner.player === mainData.opponentsSingle[0]._id.toString()) {
-                                    if (mainData.resultSwiss.teams[0].walkover == true) {
+                                    if (mainData.resultSwiss.players[0].walkover == true) {
                                         obj["RESULT 1"] = "walkover";
                                     } else {
                                         obj["RESULT 1"] = "Won";
                                     }
                                 } else {
                                     if (mainData.resultSwiss.isNoMatch == false) {
-                                        if (mainData.resultSwiss.teams[0].walkover == false && mainData.resultSwiss.teams[0].noShow == false) {
+                                        if (mainData.resultSwiss.players[0].walkover == false && mainData.resultSwiss.players[0].noShow == false) {
                                             obj["RESULT 1"] = "Lost";
-                                        } else if (mainData.resultSwiss.teams[0].walkover == true) {
+                                        } else if (mainData.resultSwiss.players[0].walkover == true) {
                                             obj["RESULT 1"] = "walkover";
                                         } else {
                                             obj["RESULT 1"] = "noShow";
                                         }
+                                    } else if (mainData.resultSwiss.isDraw == true) {
+                                        obj["RESULT 1"] = "Draw";
                                     } else {
                                         obj["RESULT 1"] = "No Match";
                                     }
                                 }
                                 if (mainData.opponentsSingle.length == 2) {
                                     if (mainData.resultSwiss.winner.player === mainData.opponentsSingle[1]._id.toString()) {
-                                        if (mainData.resultSwiss.teams[1].walkover == true) {
+                                        if (mainData.resultSwiss.players[1].walkover == true) {
                                             obj["RESULT 2"] = "walkover";
                                         } else {
                                             obj["RESULT 2"] = "Won";
                                         }
                                     } else {
                                         if (mainData.resultSwiss.isNoMatch == false) {
-                                            if (mainData.resultSwiss.teams[1].walkover == false && mainData.resultSwiss.teams[1].noShow == false) {
+                                            if (mainData.resultSwiss.players[1].walkover == false && mainData.resultSwiss.players[1].noShow == false) {
                                                 obj["RESULT 2"] = "Lost";
-                                            } else if (mainData.resultSwiss.teams[1].walkover == true) {
+                                            } else if (mainData.resultSwiss.players[1].walkover == true) {
                                                 obj["RESULT 2"] = "walkover";
                                             } else {
                                                 obj["RESULT 2"] = "noShow";
                                             }
+                                        } else if (mainData.resultSwiss.isDraw == true) {
+                                            obj["RESULT 2"] = "Draw";
                                         } else {
                                             obj["RESULT 2"] = "No Match";
                                         }
@@ -7204,6 +7210,8 @@ var model = {
                                 obj["P2 SCORE"] = "";
                                 obj["P1 RANK"] = "";
                                 obj["P2 RANK"] = "";
+                                obj["RESULT 1"] = "";
+                                Obj["RESULT 2"] = "";
                                 obj["WINNER NAME"] = "";
                                 obj["WINNER SFAID"] = "";
                                 obj["VIDEO TYPE"] = "";
@@ -15529,6 +15537,7 @@ var model = {
                                                     });
                                                 } else {
                                                     singleData["NAME 1"] = complete._id;
+                                                    singleData["Athlete 1"] = complete.athleteId;
                                                     callback(null, singleData);
                                                 }
                                             });
@@ -15544,7 +15553,6 @@ var model = {
                                         if (_.isEmpty(singleData["SFAID 2"])) {
                                             callback(null, singleData);
                                         } else {
-                                            // console.log("singleData1", singleData);
                                             var paramData = {};
                                             paramData.participant = singleData["SFAID 2"];
                                             paramData.sport = singleData.SPORT;
@@ -15558,6 +15566,7 @@ var model = {
                                                     });
                                                 } else {
                                                     singleData["NAME 2"] = complete._id;
+                                                    singleData["Athlete 2"] = complete.athleteId;
                                                     callback(null, singleData);
                                                 }
                                             });
@@ -15582,28 +15591,49 @@ var model = {
                                         paramData.round = singleData["ROUND NAME"];
                                         if (_.isEmpty(singleData["NAME 1"]) && _.isEmpty(singleData["NAME 2"])) {
                                             paramData.opponentsSingle = "";
+                                            resultData.isNoMatch = true;
                                         } else {
                                             if (_.isEmpty(singleData["NAME 1"])) {
                                                 paramData.opponentsSingle.push(singleData["NAME 2"]);
                                                 player.id = singleData["NAME 2"];
+                                                player.player = singleData["Athlete 2"];
                                                 player.score = singleData["P2 SCORE"];
                                                 player.rank = singleData["P2 RANK"];
                                                 resultData.players.push(player);
+                                                resultData.isNoMatch = false;
                                             } else if (_.isEmpty(singleData["NAME 2"])) {
                                                 paramData.opponentsSingle.push(singleData["NAME 1"]);
                                                 player.id = singleData["NAME 1"];
+                                                player.player = singleData["Athlete 1"];
                                                 player.score = singleData["P1 SCORE"];
                                                 player.rank = singleData["P1 RANK"];
                                                 resultData.players.push(player);
+                                                resultData.isNoMatch = false;
                                             } else {
                                                 paramData.opponentsSingle.push(singleData["NAME 1"]);
                                                 player.id = singleData["NAME 1"];
-                                                player.score = singleData["P1 SCORE"];
-                                                player.rank = singleData["P1 RANK"];
+                                                player.player = singleData["Athlete 1"];
+                                                if (_.isEmpty(singleData["P1 SCORE"]) && _.isEmpty(singleData["P1 RANK"])) {
+                                                    player.noShow = true;
+                                                    player.walkover = false;
+                                                    player1.walkover = true;
+                                                    player1.noShow = false;
+                                                } else {
+                                                    player.score = singleData["P1 SCORE"];
+                                                    player.rank = singleData["P1 RANK"];
+                                                }
                                                 paramData.opponentsSingle.push(singleData["NAME 2"]);
                                                 player1.id = singleData["NAME 2"];
-                                                player1.score = singleData["P2 SCORE"];
-                                                player1.rank = singleData["P2 RANK"];
+                                                player1.player = singleData["Athlete 2"];
+                                                if (_.isEmpty(singleData["P2 SCORE"]) && _.isEmpty(singleData["P2 RANK"])) {
+                                                    player1.noShow = true;
+                                                    player1.walkover = false;
+                                                    player.noShow = false;
+                                                    player.walkover = true;
+                                                } else {
+                                                    player1.score = singleData["P2 SCORE"];
+                                                    player1.rank = singleData["P2 RANK"];
+                                                }
                                                 resultData.players.push(player);
                                                 resultData.players.push(player1);
 
@@ -15612,8 +15642,12 @@ var model = {
 
                                         if (singleData["WINNER SFAID"] == singleData["SFAID 1"]) {
                                             winner.player = singleData["NAME 1"];
+                                            resultData.isDraw = false;
                                         } else if (singleData["WINNER SFAID"] == singleData["SFAID 2"]) {
                                             winner.player = singleData["NAME 2"];
+                                            resultData.isDraw = false;
+                                        } else {
+                                            resultData.isDraw = false;
                                         }
                                         resultData.winner = winner;
                                         paramData.resultSwiss = resultData;
