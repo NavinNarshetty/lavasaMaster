@@ -219,13 +219,14 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
         }
         switch ($scope.matchDetails.sportsName) {
             case "Football":
-                $scope.matchResult.resultFootball = $scope.formData;
-                $scope.matchResult.resultFootball.status = "IsCompleted";
-                break;
+                // $scope.matchResult.resultFootball = $scope.formData;
+                // $scope.matchResult.resultFootball.status = "IsCompleted";
+                // break;
             case "Volleyball":
-                $scope.matchResult.resultVolleyball = $scope.formData;
-                $scope.matchResult.resultVolleyball.status = "IsCompleted";
-                break;
+                // $scope.matchResult.resultVolleyball = $scope.formData;
+                // $scope.matchResult.resultVolleyball.status = "IsCompleted";
+                // break;
+            case "Throwball":
             case "Basketball":
             case 'Hockey':
             case 'Kabaddi':
@@ -350,17 +351,18 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
         }
         switch ($scope.matchDetails.sportsName) {
             case "Football":
-                $scope.matchResult.resultFootball = $scope.formData;
+                // $scope.matchResult.resultFootball = $scope.formData;
                 // if (!$scope.matchResult.resultFootball.status) {
                 //     $scope.matchResult.resultFootball.status = "IsPending";
                 // }
-                break;
+                // break;
             case "Volleyball":
-                $scope.matchResult.resultVolleyball = $scope.formData;
+                // $scope.matchResult.resultVolleyball = $scope.formData;
                 // if (!$scope.matchResult.resultVolleyball.status) {
                 //     $scope.matchResult.resultVolleyball.status = "IsPending";
                 // }
-                break;
+                // break;
+            case "Throwball":                
             case "Basketball":
             case 'Hockey':
             case 'Kabaddi':

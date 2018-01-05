@@ -184,7 +184,7 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
         if (card && card.status == 'IsCompleted') {
           toastr.warning("This match has already been scored.", 'Scoring Completed');
         } else {
-          if ($scope.oneSportDetail.sportslist.name == 'Throwball' || $scope.oneSportDetail.sportslist.name == 'Handball') {
+          if ($scope.oneSportDetail.sportslist.name == 'Kho Kho') {
             $state.go("matchstart", {
               drawFormat: $stateParams.drawFormat,
               sport: $stateParams.id,
@@ -245,6 +245,8 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
       $scope.currentMatch.result = $scope.currentMatch.resultWaterPolo;
     } else if ($scope.currentMatch.resultKabaddi) {
       $scope.currentMatch.result = $scope.currentMatch.resultKabaddi;
+    } else if ($scope.currentMatch.resultThrowball) {
+      $scope.currentMatch.result = $scope.currentMatch.resultThrowball;
     } else if ($scope.currentMatch.resultsCombat) {
       $scope.currentMatch.result = $scope.currentMatch.resultsCombat;
     }

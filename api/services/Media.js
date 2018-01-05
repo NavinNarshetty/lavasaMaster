@@ -37,7 +37,8 @@ var schema = new Schema({
     },
     videotype: {
         type: String
-    }
+    },
+    thumbnails: []
 });
 
 schema.plugin(deepPopulate, {});

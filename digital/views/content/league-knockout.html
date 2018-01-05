@@ -385,9 +385,10 @@
                             <span class="display-block" ng-if="content.status === 'IsCompleted' && content.walkover">Won by walkover</span>
                             <span class="display-block" ng-if="content.status === 'IsCompleted' && content.isNoMatch">No match</span>
                             <span class="display-block" ng-if="content.status === 'IsCompleted' && content.reason == 'Bye'">Bye</span>
-                            <a class="display-block" ng-if="content.status === 'IsCompleted' && !content.isNoMatch && !content.walkover  && !content.resultFencing && content.reason != 'Bye'"
+                            <span class="display-block" ng-if="content.status === 'IsCompleted' && !content.isNoMatch && !content.walkover  && !content.resultFencing && content.reason != 'Bye' && content.resultsCombat"></span>
+                            <a class="display-block" ng-if="content.status === 'IsCompleted' && !content.isNoMatch && !content.walkover  && !content.resultFencing && content.reason != 'Bye'  && !content.resultsCombat"
                               ng-click="matchCenter(content)">Match Center</a>
-                            <p class="m-clear" ng-if="content.status === 'IsCompleted' && !content.isNoMatch && !content.walkover && content.resultFencing">{{content.resultFencing.players[0].finalPoints}} - {{content.resultFencing.players[1].finalPoints}}</p>
+                            <p class="m-clear" ng-if="content.status === 'IsCompleted' && !content.isNoMatch && !content.walkover && content.resultFencing && !content.resultsCombat">{{content.resultFencing.players[0].finalPoints}} - {{content.resultFencing.players[1].finalPoints}}</p>
                           </div>
                         </td>
                         <td>
