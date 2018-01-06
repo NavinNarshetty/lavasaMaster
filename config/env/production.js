@@ -25,11 +25,11 @@ module.exports = {
    * Set the port in the production environment to 80                        *
    ***************************************************************************/
 
-  port: 1337,
-  // port: 878,
+  // port: 1337,
+  port: 878,
   // realHost: "http://sfa2.wohlig.co.in",
   // realHost: "http://mumbaischool.sfanow.in",
-  // realHost: "http://mumbaicollege.sfanow.in",
+  realHost: "http://mumbaicollege.sfanow.in",
   // realHost: "http://hyderabadschool.sfanow.in",
   // realHost: "http://hyderabadcollege.sfanow.in",
   // realHost: "http://ahmedabadschool.sfanow.in",
@@ -38,7 +38,7 @@ module.exports = {
   // realHost: "http://testmumbai2015.sfanow.in",
   // realHost: "http://testmumbai2016.sfanow.in",
   // realHost: "http://testmumbaicollege.sfanow.in",
-  realHost: "http://testhyderabadschool.sfanow.in",
+  // realHost: "http://testhyderabadschool.sfanow.in",
   // realHost: "http://testhyderabadcollege.sfanow.in",
   // realHost: "http://testahmedabadschool.sfanow.in",
   // realHost: "http://testahmedabadcollege.sfanow.in",
