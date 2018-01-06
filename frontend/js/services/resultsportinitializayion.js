@@ -279,7 +279,19 @@ myApp.factory('ResultSportInitialization', function () {
               opponentsVar: "opponentsSingle"
             };
         }
-
+      } else if(sportType == "Individual Sports"){
+        switch (sportName){
+         case "Carrom":
+             return {
+                 resultVar: "resultCombat",
+                 opponentsVar: "opponentsSingle"
+             };
+         default:
+             return {
+                 resultVar: "resultsCombat",
+                 opponentsVar: "opponentsSingle"
+             };
+        }
       } else {
         switch (sportName) {
           case "Basketball":
