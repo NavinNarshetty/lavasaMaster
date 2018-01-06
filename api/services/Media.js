@@ -24,7 +24,9 @@ var schema = new Schema({
     },
     mediatitle: {
         type: String,
-        required: true
+        required: function (v){
+            return this.mediatype === 'photo';
+          }
     },
     mediatype: {
         type: String,

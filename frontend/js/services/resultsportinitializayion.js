@@ -17,10 +17,10 @@ myApp.factory('ResultSportInitialization', function () {
         surname: player.studentId.surname,
         fullName: player.studentId.firstName + " " + player.studentId.surname
       };
-      if(player.studentId.middleName){
-         format.middleName = player.studentId.middleName;
-        } else {
-          format.middleName = " ";
+      if (player.studentId.middleName) {
+        format.middleName = player.studentId.middleName;
+      } else {
+        format.middleName = " ";
       }
       switch (sportName) {
         case "Basketball":
@@ -83,7 +83,7 @@ myApp.factory('ResultSportInitialization', function () {
     },
 
     getTeamTemplate: function (sportName, team) {
-      // console.log("getTeamTemplate", team);
+      console.log("getTeamTemplate", team);
       var format = {
         teamId: team.teamId,
         team: team._id,
@@ -92,7 +92,8 @@ myApp.factory('ResultSportInitialization', function () {
         coach: "",
         schoolName: team.schoolName,
         teamResults: {},
-        players: []
+        players: [],
+        isDraw: false
       };
       switch (sportName) {
         case "Basketball":
@@ -119,7 +120,8 @@ myApp.factory('ResultSportInitialization', function () {
           format.teamResults.finalPoints = "";
           format.teamResults.shotsOnGoal = "";
           format.teamResults.totalShots = "";
-          format.teamResults.penaltyPoint = "";
+          format.teamResults.penalty = "";
+          format.teamResults.penaltyPoints = "";
           format.teamResults.penaltyCorners = "";
           format.teamResults.penaltyStroke = "";
           format.teamResults.saves = "";
@@ -148,30 +150,39 @@ myApp.factory('ResultSportInitialization', function () {
           format.teamResults.finalGoalPoints = "";
           format.teamResults.shotsOnGoal = "";
           format.teamResults.totalShots = "";
-          format.teamResults.penaltyPoint = "";
+          format.teamResults.penalty = "";
+          format.teamResults.penaltyPoints = "";
           format.teamResults.penalty = "";
           format.teamResults.saves = "";
           break;
         case "Volleyball":
-          format.teamResults.set = [];
+          format.teamResults.sets = [{
+            "points": ''
+          }];
           format.teamResults.fouls = "";
           format.teamResults.spike = "";
           format.teamResults.block = "";
           break;
         case "Football":
           format.formation = "";
-          format.teamResults.halfPoints = 0;
-          format.teamResults.finalPoints = 0;
-          format.teamResults.shotsOnGoal = 0;
-          format.teamResults.totalShots = 0;
-          format.teamResults.corners = 0;
-          format.teamResults.penalty = 0;
-          format.teamResults.saves = 0;
-          format.teamResults.fouls = 0;
-          format.teamResults.offSide = 0;
-          format.teamResults.cleanSheet = 0;
-          format.teamResults.noShow = 0;
-          format.teamResults.walkover = 0;
+          format.teamResults.halfPoints = "";
+          format.teamResults.finalPoints = "";
+          format.teamResults.shotsOnGoal = "";
+          format.teamResults.totalShots = "";
+          format.teamResults.corners = "";
+          format.teamResults.penalty = "";
+          format.teamResults.saves = "";
+          format.teamResults.fouls = "";
+          format.teamResults.offSide = "";
+          format.teamResults.cleanSheet = "";
+          format.teamResults.noShow = "";
+          format.teamResults.walkover = "";
+          break;
+        case "Throwball":
+          format.teamResults.sets = [{
+            "points": ''
+          }];
+          format.teamResults.finalPoints = "";
           break;
       };
 
@@ -234,6 +245,11 @@ myApp.factory('ResultSportInitialization', function () {
           obj.initializeTeamAndPlayers(sportName, returnResult.resultHandball, match);
           return returnResult;
 
+        case "Throwball":
+          returnResult.resultThrowball = format;
+          obj.initializeTeamAndPlayers(sportName, returnResult.resultThrowball, match);
+          return returnResult;
+
         case "Water Polo":
           returnResult.resultWaterPolo = format;
           obj.initializeTeamAndPlayers(sportName, returnResult.resultWaterPolo, match);
@@ -266,6 +282,7 @@ myApp.factory('ResultSportInitialization', function () {
             opponentsVar: "opponentsTeam"
           };
         }
+
       } else if (sportType == "Combat Sports") {
         switch (sportName) {
           case "Karate Team Kumite":
@@ -279,18 +296,19 @@ myApp.factory('ResultSportInitialization', function () {
               opponentsVar: "opponentsSingle"
             };
         }
-      } else if(sportType == "Individual Sports"){
-        switch (sportName){
-         case "Carrom":
-             return {
-                 resultVar: "resultCombat",
-                 opponentsVar: "opponentsSingle"
-             };
-         default:
-             return {
-                 resultVar: "resultsCombat",
-                 opponentsVar: "opponentsSingle"
-             };
+
+      } else if (sportType == "Individual Sports") {
+        switch (sportName) {
+          case "Carrom":
+            return {
+              resultVar: "resultCombat",
+              opponentsVar: "opponentsSingle"
+            };
+          default:
+            return {
+              resultVar: "resultsCombat",
+              opponentsVar: "opponentsSingle"
+            };
         }
       } else {
         switch (sportName) {
@@ -351,8 +369,9 @@ myApp.factory('ResultSportInitialization', function () {
             };
           case "Throwball":
             return {
-              resultVar: "resultsCombat",
-              opponentsVar: "opponentsTeam"
+              resultVar: "resultThrowball",
+              opponentsVar: "opponentsTeam",
+              html: "scorethrowball.html"
             };
           case "Kho Kho":
             return {
@@ -361,8 +380,6 @@ myApp.factory('ResultSportInitialization', function () {
             };
         }
       }
-
-
     },
     //for getting result variable that sport contains ends     
 
