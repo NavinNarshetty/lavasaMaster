@@ -854,23 +854,34 @@ var model = {
                                             //for knockout and league knockout
                                             var winKnock = function (obj) {
                                                 if (singleData.type == 'indi') {
-                                                    if (obj && obj.winner && obj.winner.opponentsSingle && (obj.winner.opponentsSingle == _.toString(singleData._id))) {
-                                                        // console.log("won Knock Indi", singleData.sportsListSubCategory.name);
-                                                        singleData.won = true;
+                                                    if (obj.status == "IsCompleted" && !(obj && obj.winner && !_.isEmpty(obj.winner))) {
+                                                        singleData.isDraw = true;                                                        
+                                                        singleData.delete = true;
                                                     } else {
-                                                        // console.log("Loose Knock Indi", singleData.sportsListSubCategory.name);                                                                                                                
-                                                        singleData.won = false;
+                                                        if (obj && obj.winner && obj.winner.opponentsSingle && (obj.winner.opponentsSingle == _.toString(singleData._id))) {
+                                                            // console.log("won Knock Indi", singleData.sportsListSubCategory.name);
+                                                            singleData.won = true;
+                                                        } else {
+                                                            // console.log("Loose Knock Indi", singleData.sportsListSubCategory.name);                                                                                                                
+                                                            singleData.won = false;
+                                                        }
                                                     }
                                                 } else if (singleData.type == 'team') {
-                                                    // console.log(obj, singleData.sportsListSubCategory.name);
-                                                    if (obj && obj.winner && obj.winner.player && (obj.winner.player == _.toString(singleData._id))) {
-
-                                                        // console.log("won Knock Team", singleData.sportsListSubCategory.name);
-                                                        singleData.won = true;
+                                                    if (obj.status == "IsCompleted" && !(obj && obj.winner && !_.isEmpty(obj.winner))) {
+                                                        singleData.isDraw = true;                                                                                                                
+                                                        singleData.delete = true;
                                                     } else {
-                                                        // console.log("Loose Knock Team", singleData.sportsListSubCategory.name);                                                        
-                                                        singleData.won = false;
+                                                        // console.log(obj, singleData.sportsListSubCategory.name);
+                                                        if (obj && obj.winner && obj.winner.player && (obj.winner.player == _.toString(singleData._id))) {
+
+                                                            // console.log("won Knock Team", singleData.sportsListSubCategory.name);
+                                                            singleData.won = true;
+                                                        } else {
+                                                            // console.log("Loose Knock Team", singleData.sportsListSubCategory.name);                                                        
+                                                            singleData.won = false;
+                                                        }
                                                     }
+
                                                 }
                                             }
 
@@ -908,7 +919,7 @@ var model = {
                                                 case 'Racquet Sports':
                                                 case 'Team Sports':
                                                     findByKey = 'team';
-                                                    if(singleData.sportsListSubCategory.name == "Tennis" || singleData.sportsListSubCategory.name == "Table Tennis" || singleData.sportsListSubCategory.name == "Badminton" || singleData.sportsListSubCategory.name == "Judo" ||  singleData.sportsListSubCategory.name == "Fencing"){
+                                                    if (singleData.sportsListSubCategory.name == "Tennis" || singleData.sportsListSubCategory.name == "Table Tennis" || singleData.sportsListSubCategory.name == "Badminton" || singleData.sportsListSubCategory.name == "Judo" || singleData.sportsListSubCategory.name == "Fencing") {
                                                         findByKey = 'player';
                                                     }
                                                     noShow = noShowKnock;
@@ -1017,19 +1028,20 @@ var model = {
                         })
                     },
 
-                    function (winLoose, callback) {                        
+                    function (winLoose, callback) {
+                        var isDrawCount =  (_.filter(winLoose.arr, ['isDraw', true])).length;
                         _.remove(winLoose.arr, function (n) {
                             return n.delete == true;
                         });
-                        
+
                         var wonArr = _.filter(winLoose.arr, ['won', true]);
                         var looseArr = _.filter(winLoose.arr, ['won', false]);
 
                         saveObj.winCount = wonArr.length;
                         saveObj.looseCount = looseArr.length;
-                        var winPercent = _.round((saveObj.winCount / (saveObj.winCount + saveObj.looseCount)) * 100);
+                        var winPercent = _.round((saveObj.winCount / (saveObj.winCount + saveObj.looseCount + isDrawCount)) * 100);
                         saveObj.winPercent = _.isNaN(winPercent) ? 0 : winPercent;
-                        callback(null,winLoose);
+                        callback(null, winLoose);
                     },
 
                     function (mainObj, callback) {
