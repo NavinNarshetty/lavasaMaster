@@ -3657,7 +3657,7 @@ var model = {
                                     Match.getSportId(paramData, function (err, sportData) {
                                         if (err || _.isEmpty(sportData)) {
                                             singleData.SPORT = null;
-                                            err = "Sport,Event,AgeGroup,Gender may have wrong values";
+                                            var err = "Sport,Event,AgeGroup,Gender may have wrong values";
                                             callback(null, {
                                                 error: err,
                                                 success: singleData
@@ -3683,7 +3683,7 @@ var model = {
                                             Match.getAthleteId(paramData, function (err, complete) {
                                                 if (err || _.isEmpty(complete)) {
                                                     singleData["NAME 1"] = "";
-                                                    err = "SFAID 1 may have wrong values";
+                                                    var err = "SFAID 1 may have wrong values";
                                                     callback(null, {
                                                         error: err,
                                                         success: singleData
@@ -3713,8 +3713,11 @@ var model = {
                                             Match.getAthleteId(paramData, function (err, complete) {
                                                 if (err || _.isEmpty(complete)) {
                                                     singleData["NAME 2"] = null;
-                                                    err = "SFAID 2 may have wrong values";
-                                                    callback(err, null);
+                                                    var err = "SFAID 2 may have wrong values";
+                                                    callback(null, {
+                                                        error: err,
+                                                        success: singleData
+                                                    });
                                                 } else {
                                                     singleData["NAME 2"] = complete._id;
                                                     callback(null, singleData);
@@ -3753,7 +3756,11 @@ var model = {
                                         }
                                         Match.saveMatch(paramData, function (err, complete) {
                                             if (err || _.isEmpty(complete)) {
-                                                callback(err, null);
+                                                var err = "SFAID 2 may have wrong values";
+                                                callback(null, {
+                                                    error: err,
+                                                    success: singleData
+                                                });
                                             } else {
                                                 callback(null, complete);
                                             }
@@ -3775,25 +3782,24 @@ var model = {
                 function (singleData, callback) {
                     async.concatSeries(singleData, function (n, callback) {
                             // console.log("n", n);
-                            if (countError != 0 && n.error == null) {
-                                // console.log("inside", n.success._id, "count", countError);
-                                Match.remove({
-                                    _id: n.success._id
-                                }).exec(function (err, found) {
-                                    if (err || _.isEmpty(found)) {
-                                        callback(null, found);
-                                    } else {
-                                        callback(null, n);
-                                    }
-                                });
-                            } else {
-                                callback(null, n);
-                            }
+                         if (countError != 0 && n.error == null) {
+                              // console.log("inside", n.success._id, "count", countError);
+                              Match.remove({
+                                 _id: n.success._id
+                                    }).exec(function (err, found) {
+                                        if (err || _.isEmpty(found)) {
+                                            callback(null, found);
+                                        } else {
+                                            callback(null, n);
+                                        }
+                                    });
+                                } else {
+                                    callback(null, n);
+                                }
                         },
                         function (err, singleData) {
                             callback(null, singleData);
                         });
-
                 }
             ],
             function (err, results) {
