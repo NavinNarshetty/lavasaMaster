@@ -1694,6 +1694,9 @@ myApp.controller('DetailSportsCtrl', function ($scope, TemplateService, Navigati
         $scope.saveData = function (data) {
             console.log(data);
             if (data) {
+                if (_.isEmpty(data.weight) && !data.weight) {
+                    data.weight = null;
+                }
                 if (data.maxTeamPlayers >= data.minTeamPlayers) {
                     if (data.fromDate && data.toDate) {
                         $scope.url = "Sport/saveSport";
@@ -1733,6 +1736,9 @@ myApp.controller('DetailSportsCtrl', function ($scope, TemplateService, Navigati
         $scope.saveData = function (data, formvalid) {
             console.log(data);
             if (data) {
+                if (_.isEmpty(data.weight) && !data.weight) {
+                    data.weight = null;
+                }
                 if (data.maxTeamPlayers >= data.minTeamPlayers) {
 
                     if (formvalid.$valid) {
@@ -5029,12 +5035,118 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         }
     })
 
-    .controller('GalleryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+    .controller('GalleryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, $uibModal, toastr) {
         //Used to name the .html file
         $scope.template = TemplateService.changecontent("tablegallery");
         $scope.menutitle = NavigationService.makeactive("Gallery");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
+        $scope.changeInput = function () {
+            if ($scope.formData.input != '') {
+                $scope.formData.input = '';
+            } else {
+                $scope.formData.input = $scope.formData.input;
+            }
+        };
+        $scope.changeAll = function () {
+            $scope.formData = {};
+            $scope.formData.page = 1;
+            $scope.formData.type = '';
+            $scope.formData.keyword = '';
+            $scope.viewTable();
+        };
+        $scope.formData = {};
+        $scope.formData.page = 1;
+        $scope.formData.type = '';
+        $scope.formData.keyword = '';
+        // $scope.selectedStatus = 'All';
+        $scope.searchInTable = function (data) {
+            $scope.formData.page = 1;
+            if (data.length >= 2) {
+                $scope.formData.keyword = data;
+                $scope.viewTable();
+            } else if (data.length == '') {
+                $scope.formData.keyword = data;
+                $scope.viewTable();
+            }
+        }
+        $scope.viewTable = function () {
+            $scope.url = "gallery/search";
+            $scope.formData.page = $scope.formData.page++;
+            NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+                console.log("data.value", data);
+                if (data.value) {
+                    $scope.items = data.data.results;
+                    console.log(" $scope.items", $scope.items);
+                }
+
+                $scope.totalItems = data.data.total;
+                $scope.maxRow = data.data.options.count;
+            });
+        }
+        $scope.viewTable();
+
+        $scope.confDel = function (data) {
+            $scope.id = data;
+            $scope.modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: 'views/modal/delete.html',
+                backdrop: 'static',
+                keyboard: false,
+                size: 'sm',
+                scope: $scope
+
+            });
+        };
+
+        $scope.noDelete = function () {
+            $scope.modalInstance.close();
+        }
+        $scope.delete = function (data) {
+            console.log(data);
+            $scope.url = "gallery/delete";
+            $scope.constraints = {};
+            $scope.constraints._id = data;
+            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+                console.log("data.value", data);
+                if (data.value) {
+                    toastr.success('Successfully Deleted', 'Gallery Meaasge');
+                    $scope.modalInstance.close();
+                    $scope.viewTable();
+                } else {
+                    toastr.error('Something went wrong while Deleting', 'Gallery Meaasge');
+                }
+
+            });
+        },
+            $scope.filterAthlete = function (formData) {
+                console.log("formData", formData);
+                $scope.url = "gallery/search";
+                $scope.formData.filter = {};
+                $scope.formData.page = $scope.formData.page++;
+                if (formData.type == 'title') {
+                    $scope.formData.filter.title = {};
+                    $scope.formData.filter.title.$regex = formData.input;
+                    $scope.formData.filter.title.$options = "i";
+                } else if (formData.type == 'Folder Name') {
+                    $scope.formData.filter.folderName = {}
+                    $scope.formData.filter.folderName.$regex = formData.input;
+                    $scope.formData.filter.folderName.$options = "i";
+                } else if (formData.type == 'Folder Type') {
+                    $scope.formData.filter.folderType = {};
+                    $scope.formData.filter.folderType.$regex = formData.input;
+                    $scope.formData.filter.folderType.$options = "i";
+                }
+                NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+                    $scope.items = data.data.results;
+                    $scope.totalItems = data.data.total;
+                    $scope.maxRow = data.data.options.count;
+                });
+
+            };
+
+
+
     })
 
     .controller('DetailGalleryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
@@ -5043,6 +5155,44 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.menutitle = NavigationService.makeactive("Gallery Detail");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
+        $scope.formData = {};
+        $scope.getFolderNames = function (formData, flag) {
+            if (flag) {
+                $scope.formData.folderName = '';
+            }
+            NavigationService.getAllFolderNameCloud(formData, function (data) {
+                if (data.data.value) {
+                    console.log("data.data", data.data);
+                    $scope.folderNames = data.data.data;
+                }
+            })
+        };
+
+
+
+        $scope.title = "Create";
+        $scope.saveData = function (data) {
+            if (data) {
+                $scope.url = "vimeo/getFilesPerFolder";
+                console.log(data);
+                NavigationService.apiCall($scope.url, data, function (data) {
+                    console.log("data.value", data);
+                    if (data.value === true && data.data[0].errors) {
+                        toastr.error("Folder Name Already Exists");
+                    } else if (data.value === true && data.data === 'Saved Successfully') {
+                        toastr.success("Saved Successfully", 'Success Message');
+                        $state.go('gallery');
+                    }
+                });
+            } else {
+                toastr.error("Invalid Data", "Gallery Details Message");
+            }
+        };
+
+
+        $scope.onCancel = function (sendTo) {
+            $state.go(sendTo);
+        }
     })
 
 //Certificate Banner

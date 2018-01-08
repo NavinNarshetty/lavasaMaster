@@ -15,26 +15,64 @@
                 <div class="table-area ">
                     <div class="widget-title ">
                         <div class="pull-right">
-                            <!--<div class="pull-right">-->
-                            <form class="search-form mr-form ">
+                            <!-- <form class="search-form mr-form ">
                                 <input type="text " ng-change="searchInTable(search) " placeholder="Search Here...
                              " ng-model="search" />
-                            </form>
+                            </form> -->
                             <a class="btn btn-success" ui-sref="galleryDetail">
                  Create
               </a>
                         </div>
                         <h3>List of Gallery<span class="tableTotal ">(Total : {{totalItems}}) </span></h3>
                     </div>
-                    <div class="table-responsive ">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="dropdown">
+                                <button class="btn default btn-md dropdown-toggle" type="button" data-toggle="dropdown">Filter
+                                                    <span class="caret"></span>
+                                                </button>
+                                <ul class="dropdown-menu cur">
+                                    <li>
+                                        <input type="radio" id="radio8" ng-model="formData.type" value="title">
+                                        <label for="radio8">Title</label>
+                                    </li>
+                                    <li>
+                                        <input type="radio" id="radio1" ng-model="formData.type" value="Folder Name">
+                                        <label for="radio1">Folder Name</label>
+                                    </li>
+                                    <li>
+                                        <input type="radio" id="radio2" ng-model="formData.type" value="Folder Type" ng-change="changeInput()">
+                                        <label for="radio2">Folder Type</label>
+                                    </li>
+
+                                </ul>
+                            </div>
+                            <div class="row" ng-if="formData.type">
+                                <div class="col-md-6 mtp5">
+                                    <input type="text" ng-model="formData.input" class="form-control" placeholder="Enter {{formData.type}}">
+                                </div>
+                                <div class="col-md-4 mtp5">
+                                    <button class="btn btn-sm school" type="button" ng-click="filterAthlete(formData)">Go</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
                         <!--<div class="table-responsive " ng-show="totalItems>0 ">-->
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th>#</th>
                                     <th>
-                                        Name
+                                        Title
                                     </th>
+                                    <th>
+                                        folderName
+                                    </th>
+                                    <th>
+                                        folderType
+                                    </th>
+
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -44,11 +82,13 @@
                                     <!--<tr>-->
                                     <td>{{($index + 1)+((formData.page-1)*maxRow)}}</td>
                                     <!--<td>{{($index + 1)}}</td>-->
-                                    <td>{{item.name}}</td>
+                                    <td>{{item.title}}</td>
+                                    <td>{{item.folderName}}</td>
+                                    <td>{{item.folderType}}</td>
                                     <td>
-                                        <a class="btn btn-primary" target="_blank" ui-sref="gallerydetail({id:item._id})">
-                      <i class="fa fa-pencil"></i> Edit
-                    </a>
+                                        <!-- <a class="btn btn-primary" target="_blank" ui-sref="galleryDetail({id:item._id})">
+                      <i class="fa fa-pencil"></i> Edit -->
+                                        </a>
                                         <a class="btn btn-danger" ng-click="confDel(item._id)">
                       <i class="fa fa-trash"></i> Delete
                     </a>
