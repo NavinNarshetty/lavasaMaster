@@ -364,7 +364,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
         //galleryDetail
         .state('galleryDetail', {
-            url: "/gallerydetail",
+            url: "/gallerydetail/:id",
             templateUrl: "views/template.html",
             controller: 'DetailGalleryCtrl'
         })

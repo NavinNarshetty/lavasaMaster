@@ -235,7 +235,7 @@
                                         <td class="text-up" ng-if="table.layout == 'Qualifying Knockout' || table.layout == 'Knockout' || table.layout == 'League' || table.layout == 'League cum Knockout' || table.layout == 'Swiss League'">
                                             <img src="img/sf-cup-mini.png" alt="" class="table-img" ng-if="stat.isAthleteWinner == false">{{stat.opponentName
                                             || '-' | removeSchoolWithDash:stat.school}}
-                                            <p>{{stat.school}}</p> 
+                                            <p>{{stat.school}}</p>
                                         </td>
                                         <td ng-if="table.layout != 'Swiss League'">
                                             <div ng-if="!stat.score.length">{{stat.score || '-'}}</div>
@@ -267,6 +267,7 @@
                                                 <div class="sf-play" ng-if="!stat.result && table.layout == 'Knockout' || table.layout == 'League' || table.layout == 'League cum Knockout'">
                                                     <span ng-if="stat.isAthleteWinner == true && !stat.reason && stat.opponentName && stat.walkover == false">Won</span>
                                                     <span ng-if="stat.isAthleteWinner == false">Loss</span>
+
                                                     <span ng-if="stat.isAthleteWinner != false && stat.isAthleteWinner != true && !stat.reason && stat.walkover != false && stat.walkover != true">-</span>
                                                     <span ng-if="stat.isAthleteWinner != false && stat.isAthleteWinner != true && stat.reason">{{stat.reason}}</span>
                                                     <span ng-if="stat.isAthleteWinner == true && stat.reason">{{stat.reason}}</span>
@@ -280,6 +281,9 @@
                                                 </div>
                                                 <div class="sf-play" ng-if="stat.result">
                                                     <span>{{stat.result || '-'}}</span>
+                                                </div>
+                                                <div class="sf-play">
+                                                    <span ng-if="stat.draw === true">Draw</span>
                                                 </div>
 
                                                 <!-- <div class="replay-img" ng-if="stat.knockout.video || stat.heat.video || stat.league.video || stat.leagueknockout.video || stat.qualifyinground.video || stat.qualifyingknockout.video">

@@ -185,14 +185,14 @@
             </div>
             <div class="col-md-offset-1 col-md-10">
                 <div class="sport-slider mt40">
-                    <flex-slider class="carousel" flex-slide="sportDetails in schoolSports | orderBy:'name' track by $index" slideshow="false" animation="slide"
-                    item-width="200" item-margin="40">
+                    <flex-slider class="carousel" flex-slide="sportDetails in schoolSports | orderBy:'name' track by $index" slideshow="false"
+                        animation="slide" item-width="200" item-margin="40">
                         <li>
                             <a>
                                 <div class="sports-participate text-center">
                                     <!-- <img ng-src="{{sportDetails.inactiveimage | serverimage2}}" alt="" class="img-responsive image-width"> -->
                                     <img ng-src="{{ sportDetails.name !== filter.sport.name?(sportDetails.inactiveimage | serverimage2):(sportDetails.image  | serverimage2)}}"
-                                    alt="" class="img-responsive image-width" ng-click="selectSport(sportDetails);">
+                                        alt="" class="img-responsive image-width" ng-click="selectSport(sportDetails);">
                                     <span class="color-base text-up f16 mt10 equalSpacing">{{sportDetails.name}}</span>
                                     <div class="combine mt10">
                                         <div class="boy-sec display-inline color-base icon-right">
@@ -474,7 +474,8 @@
                                                         <!-- <img src="img/sf-cup-mini.png" alt="" class="table-img" ng-if="stat.opponent.result == 'Won' || stat.opponent.result == 'Bye' || stat.opponent.result == 'Walkover'">{{stat.opponentName.detail.name || '-' | removeSchool:stat.opponent.detail.school.name
                                                         }}
                                                         <p>{{stat.opponent.detail.school.name}}</p> -->
-                                                        <img src="img/sf-cup-mini.png" alt="" class="table-img" ng-if="stat.isAthleteWinner == false">{{stat.opponentName || '-' | removeSchoolWithDash:stat.school}}
+                                                        <img src="img/sf-cup-mini.png" alt="" class="table-img" ng-if="stat.isAthleteWinner == false">{{stat.opponentName
+                                                        || '-' | removeSchoolWithDash:stat.school}}
                                                         <p>{{stat.school}}</p>
                                                     </td>
                                                     <td ng-if="table.layout != 'Swiss League'">
@@ -490,12 +491,12 @@
                                                                 <span ng-if="stat.isAthleteWinner == true && stat.reason">{{stat.reason}}</span>
                                                                 <span ng-if="stat.isAthleteWinner == true && !stat.reason && !stat.opponentName">Bye</span> -->
                                                                 <span ng-if="stat.isAthleteWinner == true && !stat.reason && stat.opponentName && stat.walkover == false">Won</span>
-                                                    <span ng-if="stat.isAthleteWinner == false">Loss</span>
-                                                    <span ng-if="stat.isAthleteWinner != false && stat.isAthleteWinner != true && !stat.reason && stat.walkover != false && stat.walkover != true">-</span>
-                                                    <span ng-if="stat.isAthleteWinner != false && stat.isAthleteWinner != true && stat.reason">{{stat.reason}}</span>
-                                                    <span ng-if="stat.isAthleteWinner == true && stat.reason">{{stat.reason}}</span>
-                                                    <span ng-if="stat.isAthleteWinner == true && stat.walkover == true">Walkover</span>
-                                                    <span ng-if="stat.isAthleteWinner == true && !stat.reason && !stat.opponentName">Bye</span>
+                                                                <span ng-if="stat.isAthleteWinner == false">Loss</span>
+                                                                <span ng-if="stat.isAthleteWinner != false && stat.isAthleteWinner != true && !stat.reason && stat.walkover != false && stat.walkover != true">-</span>
+                                                                <span ng-if="stat.isAthleteWinner != false && stat.isAthleteWinner != true && stat.reason">{{stat.reason}}</span>
+                                                                <span ng-if="stat.isAthleteWinner == true && stat.reason">{{stat.reason}}</span>
+                                                                <span ng-if="stat.isAthleteWinner == true && stat.walkover == true">Walkover</span>
+                                                                <span ng-if="stat.isAthleteWinner == true && !stat.reason && !stat.opponentName">Bye</span>
                                                             </div>
                                                             <div class="sf-play" ng-if=" !stat.result && table.layout  !== 'Knockout' && table.layout  !== 'League' && table.layout !== 'League cum Knockout'">
                                                                 <span ng-if="stat.isAthleteWinner == true">Won</span>
@@ -504,6 +505,9 @@
                                                             </div>
                                                             <div class="sf-play" ng-if="stat.result">
                                                                 <span>{{stat.result || '-'}}</span>
+                                                            </div>
+                                                            <div class="sf-play">
+                                                                <span ng-if="stat.draw === true">Draw</span>
                                                             </div>
                                                             <!-- <div class="sf-play">
                                                                 <span>{{(table.layout == 'Qualifying Knockout'&& (stat.qualifyingknockout.heats.length
