@@ -800,6 +800,9 @@ var controller = {
                 if (!_.isEmpty(req.body.weight)) {
                     matchObj.weight = req.body.weight;
                 }
+                if(_.isNull(req.body.weight)){
+                    matchObj.weight = req.body.weight;
+                }
                 Match.getQuickSportId(matchObj, res.callback);
             } else {
                 res.json({

@@ -2961,11 +2961,6 @@ var model = {
                 } else {
                     obj.degree = "";
                 }
-                if (n.isBib == true) {
-                    obj.BIB = "YES";
-                } else {
-                    obj.BIB = "NO";
-                }
                 var parentInfo;
                 var countParent = 0;
                 var levelInfo;
@@ -3042,6 +3037,11 @@ var model = {
                     obj.utm_source = n.utm_source;
                 } else {
                     obj.utm_source = "";
+                }
+                if (n.isBib == true) {
+                    obj.BIB = "YES";
+                } else {
+                    obj.BIB = "NO";
                 }
                 excelData.push(obj);
             });
