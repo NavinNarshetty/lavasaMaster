@@ -26,13 +26,15 @@ mongoose = require('mongoose');
 
 // global["database"] = "sfanew";
 // global["database"] = "sfa1";
-global["database"] = "live-sfa";
+// global["database"] = "live-sfa";
 // global["database"] = "livescoring";
 // global["database"] = "test-sfa";
 // global["database"] = "forMatches";
 // global["database"] = "digitalScoring";
 // global["database"] = "sfa";
 // global["database"] = "liveHy";
+global["database"] = "masterMigration";
+
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/' + database, function (err) {
     if (err) {
@@ -53,7 +55,6 @@ mongoose.connect('mongodb://localhost:27017/' + database, function (err) {
         console.error('but if it doesn\'t, the app will run with the global sails instead!');
         return;
     }
-
     // Try to get `rc` dependency
     var rc;
     try {
@@ -71,7 +72,6 @@ mongoose.connect('mongodb://localhost:27017/' + database, function (err) {
             };
         }
     }
-
     // Start server
     sails.lift(rc('sails'));
 })();
