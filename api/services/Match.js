@@ -3782,20 +3782,20 @@ var model = {
                 function (singleData, callback) {
                     async.concatSeries(singleData, function (n, callback) {
                             // console.log("n", n);
-                         if (countError != 0 && n.error == null) {
-                              // console.log("inside", n.success._id, "count", countError);
-                              Match.remove({
-                                 _id: n.success._id
-                                    }).exec(function (err, found) {
-                                        if (err || _.isEmpty(found)) {
-                                            callback(null, found);
-                                        } else {
-                                            callback(null, n);
-                                        }
-                                    });
-                                } else {
-                                    callback(null, n);
-                                }
+                            if (countError != 0 && n.error == null) {
+                                // console.log("inside", n.success._id, "count", countError);
+                                Match.remove({
+                                    _id: n.success._id
+                                }).exec(function (err, found) {
+                                    if (err || _.isEmpty(found)) {
+                                        callback(null, found);
+                                    } else {
+                                        callback(null, n);
+                                    }
+                                });
+                            } else {
+                                callback(null, n);
+                            }
                         },
                         function (err, singleData) {
                             callback(null, singleData);
@@ -6000,6 +6000,8 @@ var model = {
                                     }
 
                                 } else {
+                                    obj["Player 1 Attendence"] = "";
+                                    obj["Player 2 Attendence"] = "";
                                     obj["FINAL SCORE "] = "";
                                     obj["SHOOTOUT SCORE"] = "";
                                     obj["WINNER NAME"] = "";
@@ -12116,7 +12118,7 @@ var model = {
                                         singleData.playerId1 = complete.athleteId;
                                         var info = {};
                                         info.playerId = singleData["PARTICIPANT 1"];
-                                        info.noShow = singleData["Player 1 Attendence"];
+                                        info.noShow = singleData["Player 1 Attendence"].toLowerCase();
                                         info.walkover = false;
                                         result.players.push(info);
                                         callback(null, singleData);
@@ -12146,7 +12148,7 @@ var model = {
                                         singleData.playerId2 = complete.athleteId;
                                         var info = {};
                                         info.playerId2 = singleData["PARTICIPANT 2"];
-                                        info.noShow = singleData["Player 2 Attendence"];
+                                        info.noShow = singleData["Player 2 Attendence"].toLowerCase();
                                         info.walkover = false;
                                         result.players.push(info);
                                         // console.log("result", result);
