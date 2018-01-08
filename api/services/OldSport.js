@@ -249,14 +249,26 @@ var model = {
                 console.log("n", n.sportslist);
                 var formData = {};
                 formData.name = n.sportslist.sportsListSubCategory.sportsListCategory.name;
-                SportsListCategory.saveData(formData, function (err, complete) {
-                    if (err || _.isEmpty(complete)) {
-                        callback(null, {
-                            error: "Error",
-                            success: complete
-                        });
+                SportsListCategory.findOne({
+                    name: formData.name
+                }).lean().exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
                     } else {
-                        callback(null, complete);
+                        if (_.isEmpty(found)) {
+                            SportsListCategory.saveData(formData, function (err, complete) {
+                                if (err || _.isEmpty(complete)) {
+                                    callback(null, {
+                                        error: "Error",
+                                        success: complete
+                                    });
+                                } else {
+                                    callback(null, complete);
+                                }
+                            });
+                        } else {
+                            callback(null, found);
+                        }
                     }
                 });
             } else {
@@ -281,14 +293,26 @@ var model = {
                 console.log("n", n.sportslist);
                 var formData = {};
                 formData.name = n.sportslist.sportsListSubCategory.rules.name;
-                Rules.saveData(formData, function (err, complete) {
-                    if (err || _.isEmpty(complete)) {
-                        callback(null, {
-                            error: "Error",
-                            success: complete
-                        });
+                Rules.findOne({
+                    name: formData.name
+                }).lean().exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
                     } else {
-                        callback(null, complete);
+                        if (_.isEmpty(found)) {
+                            Rules.saveData(formData, function (err, complete) {
+                                if (err || _.isEmpty(complete)) {
+                                    callback(null, {
+                                        error: "Error",
+                                        success: complete
+                                    });
+                                } else {
+                                    callback(null, complete);
+                                }
+                            });
+                        } else {
+                            callback(null, found);
+                        }
                     }
                 });
             } else {
@@ -312,14 +336,26 @@ var model = {
             if (n.age != null) {
                 var formData = {};
                 formData.name = n.ageGroup.name;
-                AgeGroup.saveData(formData, function (err, complete) {
-                    if (err || _.isEmpty(complete)) {
-                        callback(null, {
-                            error: "Error",
-                            success: complete
-                        });
+                AgeGroup.findOne({
+                    name: formData.name
+                }).lean().exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
                     } else {
-                        callback(null, complete);
+                        if (_.isEmpty(found)) {
+                            AgeGroup.saveData(formData, function (err, complete) {
+                                if (err || _.isEmpty(complete)) {
+                                    callback(null, {
+                                        error: "Error",
+                                        success: complete
+                                    });
+                                } else {
+                                    callback(null, complete);
+                                }
+                            });
+                        } else {
+                            callback(null, found);
+                        }
                     }
                 });
             } else {
@@ -343,14 +379,26 @@ var model = {
             if (n.weight != null) {
                 var formData = {};
                 formData.name = n.weight.name;
-                Weight.saveData(formData, function (err, complete) {
-                    if (err || _.isEmpty(complete)) {
-                        callback(null, {
-                            error: "Error",
-                            success: complete
-                        });
+                Weight.findOne({
+                    name: formData.name
+                }).lean().exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
                     } else {
-                        callback(null, complete);
+                        if (_.isEmpty(found)) {
+                            Weight.saveData(formData, function (err, complete) {
+                                if (err || _.isEmpty(complete)) {
+                                    callback(null, {
+                                        error: "Error",
+                                        success: complete
+                                    });
+                                } else {
+                                    callback(null, complete);
+                                }
+                            });
+                        } else {
+                            callback(null, found);
+                        }
                     }
                 });
             } else {
@@ -427,17 +475,58 @@ var model = {
                             sportData.maxTeamPlayers = n.maxTeamPlayers;
                             sportData.toDate = n.toDate;
                             sportData.fromDate = n.fromDate;
-                            Sport.saveData(sportData, function (err, complete) {
-                                if (err || _.isEmpty(complete)) {
-                                    callback(null, {
-                                        error: "Error",
-                                        success: complete
-                                    });
-                                } else {
-                                    callback(null, complete);
-                                }
-                            });
-                            callback(null, result);
+                            if (sportData.weight != null) {
+                                Sport.findOne({
+                                    sportslist: sportData.sportslist,
+                                    gender: sportData.gender,
+                                    ageGroup: sportData.ageGroup,
+                                    weight: sportData.weight
+                                }).lean().exec(function (err, found) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else {
+                                        if (_.isEmpty(found)) {
+                                            Sport.saveData(sportData, function (err, complete) {
+                                                if (err || _.isEmpty(complete)) {
+                                                    callback(null, {
+                                                        error: "Error",
+                                                        success: complete
+                                                    });
+                                                } else {
+                                                    callback(null, complete);
+                                                }
+                                            });
+                                        } else {
+                                            callback(null, found);
+                                        }
+                                    }
+                                });
+                            } else {
+                                Sport.findOne({
+                                    sportslist: sportData.sportslist,
+                                    gender: sportData.gender,
+                                    ageGroup: sportData.ageGroup,
+                                }).lean().exec(function (err, found) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else {
+                                        if (_.isEmpty(found)) {
+                                            Sport.saveData(sportData, function (err, complete) {
+                                                if (err || _.isEmpty(complete)) {
+                                                    callback(null, {
+                                                        error: "Error",
+                                                        success: complete
+                                                    });
+                                                } else {
+                                                    callback(null, complete);
+                                                }
+                                            });
+                                        } else {
+                                            callback(null, found);
+                                        }
+                                    }
+                                });
+                            }
                         }
                     });
                 } else {
