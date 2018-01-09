@@ -84,7 +84,7 @@ myApp.controller('DigitalAttendanceCtrl', function ($scope, TemplateService, $st
     $scope.viewDraw = function (formData, flag) {
         if (!formData.weight) {
             if ($scope.eventSportName === 'Boxing' || $scope.eventSportName === 'Judo' || $scope.eventSportName === 'Kumite' || $scope.eventSportName === 'Taekwondo' || $scope.eventSportName === 'Sport MMA') {
-                formData.weight = 'null';
+                formData.weight = null;
             }
         }
 
