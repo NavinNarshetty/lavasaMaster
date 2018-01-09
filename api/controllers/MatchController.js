@@ -582,6 +582,17 @@ var controller = {
         }
     },
 
+    getMatchDummy: function (req, res) {
+        if (req.body) {
+            Match.getMatchDummy(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            })
+        }
+    },
+
     generateExcel: function (req, res) {
         async.waterfall([
                 function (callback) {
@@ -611,10 +622,11 @@ var controller = {
                             "value": false
                         })
                     } else {
-                        // console.log("sports", sportData, req.body);
                         req.body.sport = sportData.sportId;
                         if (req.body.resultType == "knockout") {
                             Match.generateExcelKnockout(req.body, res);
+                        } else if (req.body.resultType == "heat" && req.body.playerType == "team" && req.body.playerSpecific == "yes") {
+                            Match.generatePlayerSpecificHeat(req.body, res);
                         } else if (req.body.resultType == "heat") {
                             Match.generateExcelHeat(req.body, res);
                         } else if (req.body.resultType == "qualifying-round" || req.body.resultType == "direct-final") {
@@ -800,7 +812,7 @@ var controller = {
                 if (!_.isEmpty(req.body.weight)) {
                     matchObj.weight = req.body.weight;
                 }
-                if(_.isNull(req.body.weight)){
+                if (_.isNull(req.body.weight)) {
                     matchObj.weight = req.body.weight;
                 }
                 Match.getQuickSportId(matchObj, res.callback);
