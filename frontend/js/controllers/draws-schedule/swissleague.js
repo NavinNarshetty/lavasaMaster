@@ -99,6 +99,16 @@ myApp.controller('swissLeagueCtrl', function ($scope, TemplateService, $state, N
                   }
 
                   if (value.opponentsSingle.length > 0) {
+                    _.each(value.opponentsSingle, function (obj, index1) {
+                      if (!_.isEmpty(obj.athleteId)) {
+                        if (obj.athleteId.middleName) {
+                          obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.middleName + ' ' + obj.athleteId.surname;
+                        } else {
+                          obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
+                        }
+
+                      }
+                    });
                     // console.log(value.resultSwiss);
                     if (value.resultSwiss != undefined && value.resultSwiss.players) {
                       if (value.opponentsSingle.length < value.resultSwiss.players.length) {
@@ -111,6 +121,7 @@ myApp.controller('swissLeagueCtrl', function ($scope, TemplateService, $state, N
                       }
 
                       _.each(value.opponentsSingle, function (obj, index1) {
+                        console.log("obj", obj);
                         if (!_.isEmpty(obj.athleteId)) {
                           obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
                         }
@@ -134,7 +145,7 @@ myApp.controller('swissLeagueCtrl', function ($scope, TemplateService, $state, N
               });
 
               // console.log($scope.roundsListName, " $scope.roundsListName ");
-              // console.log($scope.roundsList, " $scope.roundsList ");
+              console.log($scope.roundsList, " $scope.roundsList ");
             }
           } else {
             toastr.error(allData.message, 'Error Message');
