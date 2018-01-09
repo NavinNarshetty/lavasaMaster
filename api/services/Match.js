@@ -5327,10 +5327,14 @@ var model = {
                         Match.generateExcelHeatIndividual(match, function (err, singleData) {
                             Config.generateExcel("KnockoutIndividual", singleData, res);
                         });
-                    } else if (data.playerType == "team") {
+                    } else if (data.playerType == "team" && req.body.playerSpecific == "no") {
                         Match.generateExcelHeatTeam(match, function (err, singleData) {
                             Config.generateExcel("KnockoutTeam", singleData, res);
                         });
+                    } else if (data.playerType == "team" && req.body.playerSpecific == "yes") {
+                        // Match.generatePlayerSpecific(match, function (err, singleData) {
+                        //     Config.generateExcel("KnockoutTeam", singleData, res);
+                        // });
                     } else {
                         res.json({
                             "data": "Body not Found",
@@ -5665,7 +5669,7 @@ var model = {
                 } else {
                     obj["WEIGHT CATEGORIES"] = "";
                 }
-                var dateTime = moment(mainData.scheduleDate).format('DD-MM-YYYY');
+                var dateTime = moment(matchData.scheduleDate).format('DD/MM/YYYY');
                 obj.DATE = dateTime;
                 obj.TIME = mainData.scheduleTime;
                 if (mainData.opponentsSingle[0]) {
@@ -5789,7 +5793,7 @@ var model = {
                     async.concatSeries(match, function (mainData, callback) {
                             var obj = {};
                             obj["MATCH ID"] = mainData.matchId;
-                            var dateTime = moment(mainData.scheduleDate).format('DD-MM-YYYY');
+                            var dateTime = moment(matchData.scheduleDate).format('DD/MM/YYYY');
                             obj.DATE = dateTime;
                             obj.TIME = mainData.scheduleTime;
                             obj.SPORT = mainData.sport.sportslist.sportsListSubCategory.name;
@@ -5928,7 +5932,7 @@ var model = {
                             } else {
                                 obj["WEIGHT CATEGORIES"] = "";
                             }
-                            var dateTime = moment(mainData.scheduleDate).format('DD-MM-YYYY');
+                            var dateTime = moment(matchData.scheduleDate).format('DD/MM/YYYY');
                             obj.DATE = dateTime;
                             obj.TIME = mainData.scheduleTime;
                             if (mainData.opponentsSingle.length > 0) {
@@ -5965,10 +5969,22 @@ var model = {
 
                                 if (mainData.resultKnockout) {
                                     if (mainData.resultKnockout.players.length == 2) {
-                                        obj["Player 1 Attendence"] = mainData.players[0].player.noShow;
-                                        obj["Player 2 Attendence"] = mainData.players[1].player.noShow;
+                                        if (mainData.players[0].player.noShow == true) {
+                                            obj["Player 1 Attendence"] = "P";
+                                        } else {
+                                            obj["Player 1 Attendence"] = "A";
+                                        }
+                                        if (mainData.players[1].player.noShow == true) {
+                                            obj["Player 2 Attendence"] = "P";
+                                        } else {
+                                            obj["Player 2 Attendence"] = "A";
+                                        }
                                     } else if (mainData.resultKnockout.players.length == 1) {
-                                        obj["Player 1 Attendence"] = mainData.players[0].player.noShow;
+                                        if (mainData.players[0].player.noShow == true) {
+                                            obj["Player 1 Attendence"] = "YES";
+                                        } else {
+                                            obj["Player 1 Attendence"] = "NO";
+                                        }
                                     }
                                     obj["FINAL SCORE "] = mainData.resultKnockout.finalScore;
                                     if (mainData.resultKnockout.shootOutScore) {
@@ -6078,7 +6094,7 @@ var model = {
                     async.concatSeries(match, function (mainData, callback) {
                             var obj = {};
                             obj["MATCH ID"] = mainData.matchId;
-                            var dateTime = moment(mainData.scheduleDate).format('DD-MM-YYYY');
+                            var dateTime = moment(matchData.scheduleDate).format('DD/MM/YYYY');
                             obj.DATE = dateTime;
                             obj.TIME = mainData.scheduleTime;
                             obj.SPORT = mainData.sport.sportslist.sportsListSubCategory.name;
@@ -6782,7 +6798,7 @@ var model = {
                     async.concatSeries(match, function (mainData, callback) {
                             var obj = {};
                             obj["MATCH ID"] = mainData.matchId;
-                            var dateTime = moment(mainData.scheduleDate).format('DD-MM-YYYY');
+                            var dateTime = moment(matchData.scheduleDate).format('DD/MM/YYYY');
                             obj.DATE = dateTime;
                             obj.TIME = mainData.scheduleTime;
                             obj.SPORT = mainData.sport.sportslist.sportsListSubCategory.name;
@@ -6988,7 +7004,7 @@ var model = {
                 } else {
                     obj["WEIGHT CATEGORIES"] = "";
                 }
-                var dateTime = moment(mainData.scheduleDate).format('DD-MM-YYYY');
+                var dateTime = moment(matchData.scheduleDate).format('DD/MM/YYYY');
                 obj.DATE = dateTime;
                 obj.TIME = mainData.scheduleTime;
                 if (mainData.opponentsSingle[0]) {
@@ -7087,7 +7103,7 @@ var model = {
                             }
                             obj["AGE GROUP"] = mainData.sport.ageGroup.name;
                             obj.EVENT = mainData.sport.sportslist.name;
-                            var dateTime = moment(mainData.scheduleDate).format('DD-MM-YYYY');
+                            var dateTime = moment(matchData.scheduleDate).format('DD/MM/YYYY');
                             obj.DATE = dateTime;
                             obj.TIME = mainData.scheduleTime;
                             if (mainData.opponentsSingle.length > 0) {
@@ -11274,6 +11290,8 @@ var model = {
                                     var result = {};
                                     result.players = [];
                                     async.concatSeries(arrData, function (singleData, callback) {
+                                        var dateTime = moment(singleData.DATE, "DD-MM-YYYY").add(1, 'days');
+                                        singleData.DATE = dateTime;
                                         async.waterfall([
                                                 function (callback) {
                                                     var paramData = {};
@@ -11354,6 +11372,7 @@ var model = {
                                                 countError++;
                                                 callback(null, n);
                                             } else {
+                                                // console.log("n", n.success);
                                                 var player = {};
                                                 paramData.matchId = n.success["MATCH ID"];
                                                 paramData.round = n.success["ROUND"];
@@ -11389,7 +11408,7 @@ var model = {
                                                 countError++;
                                                 callback(null, n);
                                             } else {
-                                                console.log("param", paramData);
+                                                // console.log("param", paramData);
                                                 Match.update({
                                                     matchId: paramData.matchId
                                                 }, paramData).exec(
@@ -11430,6 +11449,8 @@ var model = {
         async.waterfall([
                 function (callback) {
                     async.concatSeries(importData, function (singleData, callback) {
+                        var dateTime = moment(singleData.DATE, "DD-MM-YYYY").add(1, 'days');
+                        singleData.DATE = dateTime;
                         async.waterfall([
                                 function (callback) {
                                     // console.log("singleData", singleData);
@@ -11727,6 +11748,8 @@ var model = {
                                     var result = {};
                                     result.teams = [];
                                     async.concatSeries(arrData, function (singleData, callback) {
+                                        var dateTime = moment(singleData.DATE, "DD-MM-YYYY").add(1, 'days');
+                                        singleData.DATE = dateTime;
                                         async.waterfall([
                                                 // Find SportId
                                                 function (callback) {
@@ -11881,13 +11904,10 @@ var model = {
         async.waterfall([
                 function (callback) {
                     async.concatSeries(importData, function (singleData, callback) {
+                        var dateTime = moment(singleData.DATE, "DD-MM-YYYY").add(1, 'days');
+                        singleData.DATE = dateTime;
                         async.waterfall([
                                 function (callback) {
-                                    var date = moment(singleData.DATE, "DD-MM-YYYY");
-                                    // singleData.DATE = date;
-                                    callback(null, singleData);
-                                },
-                                function (singleData, callback) {
                                     // console.log("singleData", singleData);
                                     var paramData = {};
                                     paramData.name = singleData['EVENT'];
@@ -12058,16 +12078,13 @@ var model = {
         var updateObj1 = {};
         var countError = 0;
         async.concatSeries(importData, function (singleData, callback) {
+            var dateTime = moment(singleData.DATE, "DD-MM-YYYY").add(1, 'days');
+            singleData.DATE = dateTime;
             var result = {};
             result.players = [];
             result.winner = {};
             async.waterfall([
                     function (callback) {
-                        var date = moment(singleData.DATE, "DD-MM-YYYY");
-                        // singleData.DATE = date;
-                        callback(null, singleData);
-                    },
-                    function (singleData, callback) {
                         console.log("singleData", singleData);
                         var paramData = {};
                         paramData.name = singleData.EVENT;
@@ -12118,7 +12135,11 @@ var model = {
                                         singleData.playerId1 = complete.athleteId;
                                         var info = {};
                                         info.playerId = singleData["PARTICIPANT 1"];
-                                        info.noShow = singleData["Player 1 Attendence"].toLowerCase();
+                                        if (singleData["Player 1 Attendence"].toLowerCase() === "p") {
+                                            info.noShow = true;
+                                        } else {
+                                            info.noShow = false;
+                                        }
                                         info.walkover = false;
                                         result.players.push(info);
                                         callback(null, singleData);
@@ -12148,10 +12169,13 @@ var model = {
                                         singleData.playerId2 = complete.athleteId;
                                         var info = {};
                                         info.playerId2 = singleData["PARTICIPANT 2"];
-                                        info.noShow = singleData["Player 2 Attendence"].toLowerCase();
+                                        if (singleData["Player 2 Attendence"].toLowerCase() === "p") {
+                                            info.noShow = true;
+                                        } else {
+                                            info.noShow = false;
+                                        }
                                         info.walkover = false;
                                         result.players.push(info);
-                                        // console.log("result", result);
                                         callback(null, singleData);
                                     }
                                 });
@@ -12217,7 +12241,6 @@ var model = {
                             paramData.scheduleTime = singleData.TIME;
                             paramData.video = singleData["VIDEO"];
                             paramData.video = singleData["VIDEO TYPE"];
-                            // console.log("***result***", result);
                             paramData.resultKnockout = result;
                             Match.update({
                                 matchId: paramData.matchId
@@ -12250,13 +12273,10 @@ var model = {
         async.waterfall([
                 function (callback) {
                     async.concatSeries(importData, function (singleData, callback) {
+                        var dateTime = moment(singleData.DATE, "DD-MM-YYYY").add(1, 'days');
+                        singleData.DATE = dateTime;
                         async.waterfall([
                                 function (callback) {
-                                    var date = moment(singleData.DATE, "DD-MM-YYYY");
-                                    // singleData.DATE = date;
-                                    callback(null, singleData);
-                                },
-                                function (singleData, callback) {
                                     console.log("singleData", singleData);
                                     var paramData = {};
                                     paramData.name = singleData['EVENT'];
@@ -12415,14 +12435,10 @@ var model = {
         async.waterfall([
                 function (callback) {
                     async.concatSeries(importData, function (singleData, callback) {
+                            var dateTime = moment(singleData.DATE, "DD-MM-YYYY").add(1, 'days');
+                            singleData.DATE = dateTime;
                             async.waterfall([
                                     function (callback) {
-                                        // console.log("date", singleData.DATE);
-                                        var date = moment(singleData.DATE, "DD-MM-YYYY");
-                                        callback(null, singleData);
-                                    },
-                                    function (singleData, callback) {
-                                        // console.log("singleData", singleData);
                                         var paramData = {};
                                         paramData.name = singleData.EVENT;
                                         paramData.age = singleData["AGE GROUP"];
@@ -12634,14 +12650,10 @@ var model = {
         async.waterfall([
                 function (callback) {
                     async.concatSeries(importData, function (singleData, callback) {
+                            var dateTime = moment(singleData.DATE, "DD-MM-YYYY").add(1, 'days');
+                            singleData.DATE = dateTime;
                             async.waterfall([
                                     function (callback) {
-                                        var date = moment(singleData.DATE, "DD-MM-YYYY");
-                                        // singleData.DATE = date;
-                                        callback(null, singleData);
-                                    },
-                                    function (singleData, callback) {
-                                        // console.log("singleData", singleData);
                                         var paramData = {};
                                         paramData.name = singleData.EVENT;
                                         paramData.age = singleData["AGE GROUP"];
@@ -12827,7 +12839,6 @@ var model = {
                 }
             });
     },
-
     //update from digitalscore
 
     updateFootball: function (data, callback) {
@@ -15492,14 +15503,10 @@ var model = {
         async.waterfall([
                 function (callback) {
                     async.concatSeries(importData, function (singleData, callback) {
+                        var dateTime = moment(singleData.DATE, "DD-MM-YYYY").add(1, 'days');
+                        singleData.DATE = dateTime;
                         async.waterfall([
                                 function (callback) {
-                                    var date = moment(singleData.DATE, "DD-MM-YYYY");
-                                    // singleData.DATE = date;
-                                    callback(null, singleData);
-                                },
-                                function (singleData, callback) {
-                                    // console.log("singleData", singleData);
                                     var paramData = {};
                                     paramData.name = singleData['EVENT'];
                                     paramData.age = singleData["AGE GROUP"];
@@ -15774,13 +15781,10 @@ var model = {
         async.waterfall([
                 function (callback) {
                     async.concatSeries(importData, function (singleData, callback) {
+                            var dateTime = moment(singleData.DATE, "DD-MM-YYYY").add(1, 'days');
+                            singleData.DATE = dateTime;
                             async.waterfall([
                                     function (callback) {
-                                        var date = moment(singleData.DATE, "DD-MM-YYYY");
-                                        // singleData.DATE = date;
-                                        callback(null, singleData);
-                                    },
-                                    function (singleData, callback) {
                                         var paramData = {};
                                         paramData.name = _.trim(singleData.EVENT);
                                         paramData.age = _.trim(singleData["AGE GROUP"]);
@@ -15935,14 +15939,10 @@ var model = {
         async.waterfall([
                 function (callback) {
                     async.concatSeries(importData, function (singleData, callback) {
-                            // console.log("singleData", singleData);
+                            var dateTime = moment(singleData.DATE, "DD-MM-YYYY").add(1, 'days');
+                            singleData.DATE = dateTime;
                             async.waterfall([
                                     function (callback) {
-                                        var date = moment(singleData.DATE, "DD-MM-YYYY");
-                                        // singleData.DATE = date;
-                                        callback(null, singleData);
-                                    },
-                                    function (singleData, callback) {
                                         var paramData = {};
                                         paramData.name = _.trim(singleData.EVENT);
                                         paramData.age = _.trim(singleData["AGE GROUP"]);
