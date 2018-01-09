@@ -5412,7 +5412,6 @@ var model = {
     getMatchDummy: function (data, callback) {
         async.waterfall([
                 function (callback) {
-                    // var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
                     Match.find({
                         sport: data.sport,
                         resultHeat: {
@@ -5435,6 +5434,7 @@ var model = {
                 },
                 function (match, callback) {
                     var finalData = [];
+                    var team = {};
                     async.eachSeries(match, function (teams, callback) {
                         var players = [];
                         var matchId = teams.matchId;
@@ -5465,7 +5465,15 @@ var model = {
                                 }
                             });
                         }, function (err) {
-                            players = _.groupBy(players, "teamId");
+                            players = _(players)
+                                .groupBy('teamId')
+                                .map(function (items, name) {
+                                    return {
+                                        name: name,
+                                        items:items,
+                                        count: items.length
+                                    };
+                                }).value();
                             finalData.push(players);
                             callback(null, finalData);
                         });
@@ -12376,7 +12384,7 @@ var model = {
                                         // console.log("complete", complete);
                                         singleData.playerId1 = complete.athleteId;
                                         var info = {};
-                                        info.id = singleData["PARTICIPANT 1"];
+                                        info.player = singleData["PARTICIPANT 1"];
                                         if (singleData["Player 1 Attendence"].toLowerCase() === "p") {
                                             info.noShow = false;
                                         } else {
