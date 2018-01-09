@@ -54,8 +54,248 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
     });
   };
   // addPlayersMatch END
+  // START SCORING SINGLE REDIRECT
+  $scope.scoringRedirect = function(formData){
+    console.log("hello");
+    if (formData) {
+      if ($scope.matchDetails.players.length == 1) {
+        toastr.error('Minimum 2 Players required to start scoring');
+      } else {
+        // if (formData.matchPhoto.length == 0) {
+        //   toastr.error('Please upload match photo.', 'Data Incomplete');
+        // }
+        //  else {
+        // FOR IMG COMPULSORY
+        $scope.matchResult = {
+          matchId: $scope.matchData.matchId
+        }
+        switch ($scope.matchDetails.sportType) {
+          case "Combat Sports":
+            if ($scope.drawFormat == "League cum Knockout") {
+              $scope.matchResult.resultFencing = formData;
+              if (!$scope.matchResult.resultFencing.status) {
+                $scope.matchResult.resultFencing.status = "IsLive";
+              }
+            } else {
+              $scope.matchResult.resultsCombat = formData;
+              if (!$scope.matchResult.resultsCombat.status) {
+                $scope.matchResult.resultsCombat.status = "IsLive";
+              }
+            }
+            break;
+          case "Racquet Sports":
+            $scope.matchResult.resultsRacquet = formData;
+            if (!$scope.matchResult.resultsRacquet.status) {
+              $scope.matchResult.resultsRacquet.status = "IsLive";
+            }
+            break;
+          case "Team Sports":
+            switch ($scope.matchDetails.sportsName) {
+              case "Kho Kho":
+              case "Throwball":
+                $scope.matchResult.resultsCombat = formData;
+                if (!$scope.matchResult.resultsCombat.status) {
+                  $scope.matchResult.resultsCombat.status = "IsLive";
+                }
+                break;
+            }
+            break;
+          case "Individual Sports":
+            console.log("IN Individual SPORT")
+            if ($scope.drawFormat == "League cum Knockout") {
+              $scope.matchResult.resultFencing = formData;
+              if (!$scope.matchResult.resultFencing.status) {
+                $scope.matchResult.resultFencing.status = "IsLive";
+              }
+            } else {
+              console.log("IN IF ELSE")
+              $scope.matchResult.resultsCombat = formData;
+              if (!$scope.matchResult.resultsCombat.status) {
+                $scope.matchResult.resultsCombat.status = "IsLive";
+              }
+            }
+            break;
+
+        }
+        if ($scope.drawFormat == "League cum Knockout") {
+          console.log($scope.matchResult, 'saveijk');
+          NavigationService.saveFencing($scope.matchResult, function (data) {
+            if (data.value == true) {
+              $state.go("scoreleague", {
+                drawFormat: $stateParams.drawFormat,
+                sport: $stateParams.sport,
+                id: $scope.matchData.matchId
+              });
+            } else {
+              toastr.error('Data save failed. Please try again or check your internet connection.', 'Save Error');
+            }
+          })
+        } else {
+          NavigationService.saveMatch($scope.matchResult, function (data) {
+            if (data.value == true) {
+              switch ($scope.matchDetails.sportType) {
+                case "Combat Sports":
+                  if ($scope.matchDetails.isTeam == false) {
+                    $state.go("scorecombat", {
+                      drawFormat: $stateParams.drawFormat,
+                      sport: $stateParams.sport,
+                      id: $scope.matchData.matchId
+                    });
+                  } else if ($scope.matchDetails.isTeam == true) {
+                    $state.go("scorecombatteam", {
+                      drawFormat: $stateParams.drawFormat,
+                      sport: $stateParams.sport,
+                      id: $scope.matchData.matchId
+                    });
+                  }
+
+                  break;
+                case "Racquet Sports":
+                  if ($scope.matchDetails.isTeam == false) {
+                    $state.go("scoreracquet", {
+                      drawFormat: $stateParams.drawFormat,
+                      sport: $stateParams.sport,
+                      id: $scope.matchData.matchId
+                    });
+                  } else if ($scope.matchDetails.isTeam == true) {
+                    $state.go("scoreracquetdoubles", {
+                      drawFormat: $stateParams.drawFormat,
+                      sport: $stateParams.sport,
+                      id: $scope.matchData.matchId
+                    });
+                  }
+                  break;
+                case "Team Sports":
+                  switch ($scope.matchDetails.sportsName) {
+                    case "Kho Kho":
+                    case "Throwball":
+                      $state.go("scorecombatteam", {
+                        drawFormat: $stateParams.drawFormat,
+                        sport: $stateParams.sport,
+                        id: $scope.matchData.matchId
+                      });
+                      break;
+                  }
+                  break;
+                case "Individual Sports":
+                  if ($scope.matchDetails.isTeam == false) {
+                    $state.go("scorecombat", {
+                      drawFormat: $stateParams.drawFormat,
+                      sport: $stateParams.sport,
+                      id: $scope.matchData.matchId
+                    });
+                  } else if ($scope.matchDetails.isTeam == true) {
+                    $state.go("scorecombatteam", {
+                      drawFormat: $stateParams.drawFormat,
+                      sport: $stateParams.sport,
+                      id: $scope.matchData.matchId
+                    });
+                  }
+                  break;
+
+              }
+            } else {
+              toastr.error('Data save failed. Please try again or check your internet connection.', 'Save Error');
+            }
+          });
+        }
+        // }
+        // FOR IMG COMPULSORY
+      }
+    } else {
+      toastr.error('No data to save. Please check for valid MatchID.', 'Save Error');
+    }
+  }
+  // START SCORING SINGLE REDIRECT END
+  // START SCORING TEAM REDIRECT
+  $scope.scoringRedirectTeam = function(formData){
+    console.log("hello");
+    if (formData) {
+      if ($scope.matchDetails.teams.length == 1) {
+        toastr.error('Minimum 2 Teams required to start scoring');
+      } else {
+        // if (formData.matchPhoto.length == 0) {
+        //   toastr.error('Please upload match photo.', 'Data Incomplete');
+        // }
+        //  else {
+
+        $scope.matchResult = {
+          matchId: $scope.matchData.matchId
+        }
+        switch ($scope.matchDetails.sportType) {
+          case "Combat Sports":
+            $scope.matchResult.resultsCombat = formData;
+            if (!$scope.matchResult.resultsCombat.status) {
+              $scope.matchResult.resultsCombat.status = "IsLive";
+            }
+            break;
+          case "Racquet Sports":
+            $scope.matchResult.resultsRacquet = formData;
+            if (!$scope.matchResult.resultsRacquet.status) {
+              $scope.matchResult.resultsRacquet.status = "IsLive";
+            }
+            break;
+          case "Team Sports":
+            switch ($scope.matchDetails.sportsName) {
+              case "Kho Kho":
+              case "Throwball":
+                $scope.matchResult.resultsCombat = formData;
+                if (!$scope.matchResult.resultsCombat.status) {
+                  $scope.matchResult.resultsCombat.status = "IsLive";
+                }
+                break;
+            }
+            break;
+        }
+        NavigationService.saveMatch($scope.matchResult, function (data) {
+          if (data.value == true) {
+            switch ($scope.matchDetails.sportType) {
+              case "Combat Sports":
+                $state.go("scorecombatteam", {
+                  drawFormat: $stateParams.drawFormat,
+                  sport: $stateParams.sport,
+                  id: $scope.matchData.matchId
+                });
+
+                break;
+              case "Racquet Sports":
+                $state.go("scoreracquetdoubles", {
+                  drawFormat: $stateParams.drawFormat,
+                  sport: $stateParams.sport,
+                  id: $scope.matchData.matchId
+                });
+                break;
+              case "Team Sports":
+                switch ($scope.matchDetails.sportsName) {
+                  case "Kho Kho":
+                  case "Throwball":
+                    $state.go("scorecombatteam", {
+                      drawFormat: $stateParams.drawFormat,
+                      sport: $stateParams.sport,
+                      id: $scope.matchData.matchId
+                    });
+                    break;
+                }
+                break;
+            }
+          } else {
+            toastr.error('Data save failed. Please try again.', 'Save Error');
+          }
+        });
+        // }
+      }
+    } else {
+      toastr.error('No data to save. Please check for valid MatchID.', 'Save Error');
+    }
+  }
+  // START SCORING TEAM REDIRECT END
+  // SHOW MATCH NO MATCH MODAL
+  $scope.showNoModal = function(){
+
+  }
+  // SHOW MATCH NO MATCH MODAL END
   // INITIALSE MATCH RESULTS
-  $scope.initialiseResults = function () {
+  $scope.initialiseResults = function (flag, size) {
     // INITIALISE RESULTS
     switch ($scope.matchDetails.sportType) {
       case "Combat Sports":
@@ -485,7 +725,22 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
         break;
     }
     // INITIALISE RESULTS END
-    return true;
+    switch (size) {
+      case 'single':
+        if (flag == 'redirect') {
+          $scope.scoringRedirect($scope.formData);
+        } else if (flag == 'modal') {
+          $scope.showNoModal();
+        }
+      break;
+      case 'team':
+        if (flag == 'redirect') {
+          $scope.scoringRedirectTeam($scope.formData);
+        } else if (flag == 'modal') {
+          $scope.showNoModalTeam();
+        }
+      break;
+    }
   }
   // INITIALSE MATCH RESULTS END
   // GET MATCH
@@ -564,241 +819,14 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
   // TEAM NO MATCH END
   // SAVE RESULT
   $scope.saveResult = function (formData) {
-    $scope.initialiseResults();
+    $scope.initialiseResults('redirect', 'single');
     console.log(formData, 'svae data');
-    if (formData) {
-      if ($scope.matchDetails.players.length == 1) {
-        toastr.error('Minimum 2 Players required to start scoring');
-      } else {
-        // if (formData.matchPhoto.length == 0) {
-        //   toastr.error('Please upload match photo.', 'Data Incomplete');
-        // }
-        //  else {
-        // FOR IMG COMPULSORY
-        $scope.matchResult = {
-          matchId: $scope.matchData.matchId
-        }
-        switch ($scope.matchDetails.sportType) {
-          case "Combat Sports":
-            if ($scope.drawFormat == "League cum Knockout") {
-              $scope.matchResult.resultFencing = formData;
-              if (!$scope.matchResult.resultFencing.status) {
-                $scope.matchResult.resultFencing.status = "IsLive";
-              }
-            } else {
-              $scope.matchResult.resultsCombat = formData;
-              if (!$scope.matchResult.resultsCombat.status) {
-                $scope.matchResult.resultsCombat.status = "IsLive";
-              }
-            }
-            break;
-          case "Racquet Sports":
-            $scope.matchResult.resultsRacquet = formData;
-            if (!$scope.matchResult.resultsRacquet.status) {
-              $scope.matchResult.resultsRacquet.status = "IsLive";
-            }
-            break;
-          case "Team Sports":
-            switch ($scope.matchDetails.sportsName) {
-              case "Kho Kho":
-              case "Throwball":
-                $scope.matchResult.resultsCombat = formData;
-                if (!$scope.matchResult.resultsCombat.status) {
-                  $scope.matchResult.resultsCombat.status = "IsLive";
-                }
-                break;
-            }
-            break;
-          case "Individual Sports":
-            console.log("IN Individual SPORT")
-            if ($scope.drawFormat == "League cum Knockout") {
-              $scope.matchResult.resultFencing = formData;
-              if (!$scope.matchResult.resultFencing.status) {
-                $scope.matchResult.resultFencing.status = "IsLive";
-              }
-            } else {
-              console.log("IN IF ELSE")
-              $scope.matchResult.resultsCombat = formData;
-              if (!$scope.matchResult.resultsCombat.status) {
-                $scope.matchResult.resultsCombat.status = "IsLive";
-              }
-            }
-            break;
-
-        }
-        if ($scope.drawFormat == "League cum Knockout") {
-          console.log($scope.matchResult, 'saveijk');
-          NavigationService.saveFencing($scope.matchResult, function (data) {
-            if (data.value == true) {
-              $state.go("scoreleague", {
-                drawFormat: $stateParams.drawFormat,
-                sport: $stateParams.sport,
-                id: $scope.matchData.matchId
-              });
-            } else {
-              toastr.error('Data save failed. Please try again or check your internet connection.', 'Save Error');
-            }
-          })
-        } else {
-          NavigationService.saveMatch($scope.matchResult, function (data) {
-            if (data.value == true) {
-              switch ($scope.matchDetails.sportType) {
-                case "Combat Sports":
-                  if ($scope.matchDetails.isTeam == false) {
-                    $state.go("scorecombat", {
-                      drawFormat: $stateParams.drawFormat,
-                      sport: $stateParams.sport,
-                      id: $scope.matchData.matchId
-                    });
-                  } else if ($scope.matchDetails.isTeam == true) {
-                    $state.go("scorecombatteam", {
-                      drawFormat: $stateParams.drawFormat,
-                      sport: $stateParams.sport,
-                      id: $scope.matchData.matchId
-                    });
-                  }
-
-                  break;
-                case "Racquet Sports":
-                  if ($scope.matchDetails.isTeam == false) {
-                    $state.go("scoreracquet", {
-                      drawFormat: $stateParams.drawFormat,
-                      sport: $stateParams.sport,
-                      id: $scope.matchData.matchId
-                    });
-                  } else if ($scope.matchDetails.isTeam == true) {
-                    $state.go("scoreracquetdoubles", {
-                      drawFormat: $stateParams.drawFormat,
-                      sport: $stateParams.sport,
-                      id: $scope.matchData.matchId
-                    });
-                  }
-                  break;
-                case "Team Sports":
-                  switch ($scope.matchDetails.sportsName) {
-                    case "Kho Kho":
-                    case "Throwball":
-                      $state.go("scorecombatteam", {
-                        drawFormat: $stateParams.drawFormat,
-                        sport: $stateParams.sport,
-                        id: $scope.matchData.matchId
-                      });
-                      break;
-                  }
-                  break;
-                case "Individual Sports":
-                  if ($scope.matchDetails.isTeam == false) {
-                    $state.go("scorecombat", {
-                      drawFormat: $stateParams.drawFormat,
-                      sport: $stateParams.sport,
-                      id: $scope.matchData.matchId
-                    });
-                  } else if ($scope.matchDetails.isTeam == true) {
-                    $state.go("scorecombatteam", {
-                      drawFormat: $stateParams.drawFormat,
-                      sport: $stateParams.sport,
-                      id: $scope.matchData.matchId
-                    });
-                  }
-                  break;
-
-              }
-            } else {
-              toastr.error('Data save failed. Please try again or check your internet connection.', 'Save Error');
-            }
-          });
-        }
-        // }
-        // FOR IMG COMPULSORY
-      }
-    } else {
-      toastr.error('No data to save. Please check for valid MatchID.', 'Save Error');
-    }
   }
   // SAVE RESULT END
   // SAVE TEAM RESULT
   $scope.saveTeamResult = function (formData) {
-    var bool = $scope.initialiseResults();
+    $scope.initialiseResults('redirect', team);
     console.log(bool, formData, 'svae data');
-    if (bool) {
-      if (formData) {
-        if ($scope.matchDetails.teams.length == 1) {
-          toastr.error('Minimum 2 Teams required to start scoring');
-        } else {
-          // if (formData.matchPhoto.length == 0) {
-          //   toastr.error('Please upload match photo.', 'Data Incomplete');
-          // }
-          //  else {
-
-          $scope.matchResult = {
-            matchId: $scope.matchData.matchId
-          }
-          switch ($scope.matchDetails.sportType) {
-            case "Combat Sports":
-              $scope.matchResult.resultsCombat = formData;
-              if (!$scope.matchResult.resultsCombat.status) {
-                $scope.matchResult.resultsCombat.status = "IsLive";
-              }
-              break;
-            case "Racquet Sports":
-              $scope.matchResult.resultsRacquet = formData;
-              if (!$scope.matchResult.resultsRacquet.status) {
-                $scope.matchResult.resultsRacquet.status = "IsLive";
-              }
-              break;
-            case "Team Sports":
-              switch ($scope.matchDetails.sportsName) {
-                case "Kho Kho":
-                case "Throwball":
-                  $scope.matchResult.resultsCombat = formData;
-                  if (!$scope.matchResult.resultsCombat.status) {
-                    $scope.matchResult.resultsCombat.status = "IsLive";
-                  }
-                  break;
-              }
-              break;
-          }
-          NavigationService.saveMatch($scope.matchResult, function (data) {
-            if (data.value == true) {
-              switch ($scope.matchDetails.sportType) {
-                case "Combat Sports":
-                  $state.go("scorecombatteam", {
-                    drawFormat: $stateParams.drawFormat,
-                    sport: $stateParams.sport,
-                    id: $scope.matchData.matchId
-                  });
-
-                  break;
-                case "Racquet Sports":
-                  $state.go("scoreracquetdoubles", {
-                    drawFormat: $stateParams.drawFormat,
-                    sport: $stateParams.sport,
-                    id: $scope.matchData.matchId
-                  });
-                  break;
-                case "Team Sports":
-                  switch ($scope.matchDetails.sportsName) {
-                    case "Kho Kho":
-                    case "Throwball":
-                      $state.go("scorecombatteam", {
-                        drawFormat: $stateParams.drawFormat,
-                        sport: $stateParams.sport,
-                        id: $scope.matchData.matchId
-                      });
-                      break;
-                  }
-                  break;
-              }
-            } else {
-              toastr.error('Data save failed. Please try again.', 'Save Error');
-            }
-          });
-          // }
-        }
-      } else {
-        toastr.error('No data to save. Please check for valid MatchID.', 'Save Error');
-      }
-    }
   }
   // SAVE TEAM RESULT END
   // UPDATE WINNER RESULT
