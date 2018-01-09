@@ -5303,6 +5303,248 @@ var model = {
         }
     },
 
+    generatePlayerSpecificHeat: function (match, callback) {
+        var count = 0;
+        var prevRound = undefined;
+        async.concatSeries(match, function (matchData, callback) {
+                if (prevRound == undefined) {
+                    count++;
+                    prevRound = matchData.round;
+                } else if (prevRound == matchData.round) {
+                    count++;
+                    prevRound = matchData.round;
+                } else {
+                    count = 1;
+                    prevRound = matchData.round;
+                }
+                var i = 0;
+                if (!_.isEmpty(matchData.resultHeat)) {
+                    async.concatSeries(matchData.resultHeat.players, function (mainData, callback) {
+                            var obj = {};
+                            obj["MATCH ID"] = mainData.matchId;
+                            obj["TEAM 1"] = mainData.teamId1;
+                            if (!_.isEmpty(mainData.team1) && mainData.team1[i] != undefined) {
+                                obj["SFA ID 1"] = mainData.team1[i].sfaId;
+                                if (mainData.team1[i].middleName) {
+                                    obj["STARTING LINE UP SCREEN NAME 1"] = mainData.team1[i].firstName.charAt(0) + "." + mainData.team1[i].middleName.charAt(0) + "." + mainData.team1[i].surname;
+                                } else {
+                                    obj["STARTING LINE UP SCREEN NAME 1"] = mainData.team1[i].firstName.charAt(0) + "." + mainData.team1[i].surname;
+                                }
+                            } else {
+                                obj["SFA ID 1"] = "-";
+                                obj["STARTING LINE UP SCREEN NAME 1"] = "-";
+                            }
+                            if (!_.isEmpty(mainData.team1Sub) && mainData.team1Sub[i] != undefined) {
+                                obj["SUBSTITUTES SFA ID 1"] = mainData.team1Sub[i].sub1;
+                                if (mainData.team1Sub[i].middleName) {
+                                    obj["SUBSTITUTES SCREEN NAME 1"] = mainData.team1Sub[i].firstName.charAt(0) + "." + mainData.team1Sub[i].middleName.charAt(0) + "." + mainData.team1Sub[i].surname;
+                                } else {
+                                    obj["SUBSTITUTES SCREEN NAME 1"] = mainData.team1Sub[i].firstName.charAt(0) + "." + mainData.team1Sub[i].surname;
+                                }
+                            } else {
+                                obj["SUBSTITUTES ID 1"] = "-";
+                                obj["SUBSTITUTES SCREEN NAME 1"] = "-";
+                            }
+                            obj["TEAM 2"] = mainData.teamId2;
+
+                            if (!_.isEmpty(mainData.team2) && mainData.team2[i] != undefined) {
+                                obj["SFA ID 2"] = mainData.team2[i].sfaId2;
+                                if (mainData.team2[i].middleName) {
+                                    obj["STARTING LINE UP SCREEN NAME 2"] = mainData.team2[i].firstName.charAt(0) + "." + mainData.team2[i].middleName.charAt(0) + "." + mainData.team2[i].surname;
+                                } else {
+                                    obj["STARTING LINE UP SCREEN NAME 2"] = mainData.team2[i].firstName.charAt(0) + "." + mainData.team2[i].surname;
+                                }
+                            } else {
+                                obj["SFA ID 2"] = "-";
+                                obj["STARTING LINE UP SCREEN NAME 2"] = "-";
+                            }
+                            if (!_.isEmpty(mainData.team2Sub) && mainData.team2Sub[i] != undefined) {
+                                obj["SUBSTITUTES SFA ID 2"] = mainData.team2Sub[i].sub2;
+                                if (mainData.team2Sub[i].middleName) {
+                                    obj["SUBSTITUTES SCREEN NAME 2"] = mainData.team2Sub[i].firstName.charAt(0) + "." + mainData.team2Sub[i].middleName.charAt(0) + "." + mainData.team2Sub[i].surname;
+                                } else {
+                                    obj["SUBSTITUTES SCREEN NAME 2"] = mainData.team2Sub[i].firstName.charAt(0) + "." + mainData.team2Sub[i].surname;
+                                }
+                            } else {
+                                obj["SUBSTITUTES SFA ID 2"] = "-";
+                                obj["SUBSTITUTES SCREEN NAME 2"] = "-";
+                            }
+
+                            callback(null, obj);
+                        },
+                        function (err, singleData) {
+                            callback(null, singleData);
+                        });
+                } else {
+                    var obj = {};
+                    obj["MATCH ID"] = matchData.matchId;
+                    var dateTime = moment(matchData.scheduleDate).format('DD/MM/YYYY');
+                    obj.DATE = dateTime;
+                    obj.TIME = matchData.scheduleTime;
+                    obj.SPORT = matchData.sport.sportslist.sportsListSubCategory.name;
+                    if (matchData.sport.gender == "male") {
+                        obj.GENDER = "Male";
+                    } else if (matchData.sport.gender == "female") {
+                        obj.GENDER = "Female";
+                    } else {
+                        obj.GENDER = "Male & Female"
+                    }
+                    obj["AGE GROUP"] = matchData.sport.ageGroup.name;
+                    obj.EVENT = matchData.sport.sportslist.name;
+                    obj["ROUND"] = matchData.round;
+                    obj["HEAT NUMBER"] = matchData.heatNo;
+                    obj["LANE NUMBER"] = "";
+                    obj["SFA ID"] = " ";
+                    obj["NAME"] = " ";
+                    obj["SCHOOL"] = "";
+                    obj["TIMING"] = " ";
+                    obj["RESULT"] = " ";
+                    obj["VIDEO TYPE"] = "";
+                    obj["VIDEO"] = "";
+                    callback(null, obj);
+                }
+            },
+            function (err, singleData) {
+                callback(null, singleData);
+            });
+    },
+
+    getMatchDummy: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    // var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
+                    Match.find({
+                        sport: data.sport,
+                        resultHeat: {
+                            $exists: true
+                        },
+                        opponentsTeam: {
+                            $ne: []
+                        }
+                    }).lean().exec(function (err, match) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(match)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, match);
+                            }
+                        }
+                    });
+                },
+                function (match, callback) {
+                    var finalData = [];
+                    async.eachSeries(match, function (teams, callback) {
+                        var players = [];
+                        var matchId = teams.matchId;
+                        async.eachSeries(teams.opponentsTeam, function (team, callback) {
+                            StudentTeam.find({
+                                teamId: team
+                            }).lean().deepPopulate("studentId.school teamId").exec(function (err, playerData) {
+                                if (err) {
+                                    callback(err, null);
+                                } else {
+                                    if (_.isEmpty(playerData)) {
+                                        callback(null, []);
+                                    } else {
+                                        _.each(playerData, function (n) {
+                                            var final = {};
+                                            final.matchId = matchId;
+                                            final.teamId = n.teamId.teamId;
+                                            final.sfaId = n.studentId.sfaId;
+                                            final.firstName = n.studentId.firstName;
+                                            final.surname = n.studentId.surname;
+                                            if (n.studentId.middleName) {
+                                                final.middleName = n.studentId.middleName;
+                                            }
+                                            players.push(final);
+                                        });
+                                        callback(null, players);
+                                    }
+                                }
+                            });
+                        }, function (err) {
+                            players = _.groupBy(players, "teamId");
+                            finalData.push(players);
+                            callback(null, finalData);
+                        });
+                    }, function (err) {
+                        callback(null, finalData);
+                    });
+                },
+                // function (finalData, callback) {
+                //     var excelData = [];
+                //     _.each(finalData, function (n) {
+                //         _.each(n, function (mainData) {
+                //             var obj = {};
+
+                //             obj["MATCH ID"] = mainData.matchId;
+                //             obj["TEAM 1"] = mainData.teamId;
+                //             if (!_.isEmpty(mainData.team1) && mainData.team1[i] != undefined) {
+                //                 obj["SFA ID 1"] = mainData.team1[i].sfaId;
+                //                 if (mainData.team1[i].middleName) {
+                //                     obj["STARTING LINE UP SCREEN NAME 1"] = mainData.team1[i].firstName.charAt(0) + "." + mainData.team1[i].middleName.charAt(0) + "." + mainData.team1[i].surname;
+                //                 } else {
+                //                     obj["STARTING LINE UP SCREEN NAME 1"] = mainData.team1[i].firstName.charAt(0) + "." + mainData.team1[i].surname;
+                //                 }
+                //             } else {
+                //                 obj["SFA ID 1"] = "-";
+                //                 obj["STARTING LINE UP SCREEN NAME 1"] = "-";
+                //             }
+                //             if (!_.isEmpty(mainData.team1Sub) && mainData.team1Sub[i] != undefined) {
+                //                 obj["SUBSTITUTES SFA ID 1"] = mainData.team1Sub[i].sub1;
+                //                 if (mainData.team1Sub[i].middleName) {
+                //                     obj["SUBSTITUTES SCREEN NAME 1"] = mainData.team1Sub[i].firstName.charAt(0) + "." + mainData.team1Sub[i].middleName.charAt(0) + "." + mainData.team1Sub[i].surname;
+                //                 } else {
+                //                     obj["SUBSTITUTES SCREEN NAME 1"] = mainData.team1Sub[i].firstName.charAt(0) + "." + mainData.team1Sub[i].surname;
+                //                 }
+                //             } else {
+                //                 obj["SUBSTITUTES ID 1"] = "-";
+                //                 obj["SUBSTITUTES SCREEN NAME 1"] = "-";
+                //             }
+                //             obj["TEAM 2"] = mainData.teamId2;
+
+                //             if (!_.isEmpty(mainData.team2) && mainData.team2[i] != undefined) {
+                //                 obj["SFA ID 2"] = mainData.team2[i].sfaId2;
+                //                 if (mainData.team2[i].middleName) {
+                //                     obj["STARTING LINE UP SCREEN NAME 2"] = mainData.team2[i].firstName.charAt(0) + "." + mainData.team2[i].middleName.charAt(0) + "." + mainData.team2[i].surname;
+                //                 } else {
+                //                     obj["STARTING LINE UP SCREEN NAME 2"] = mainData.team2[i].firstName.charAt(0) + "." + mainData.team2[i].surname;
+                //                 }
+                //             } else {
+                //                 obj["SFA ID 2"] = "-";
+                //                 obj["STARTING LINE UP SCREEN NAME 2"] = "-";
+                //             }
+                //             if (!_.isEmpty(mainData.team2Sub) && mainData.team2Sub[i] != undefined) {
+                //                 obj["SUBSTITUTES SFA ID 2"] = mainData.team2Sub[i].sub2;
+                //                 if (mainData.team2Sub[i].middleName) {
+                //                     obj["SUBSTITUTES SCREEN NAME 2"] = mainData.team2Sub[i].firstName.charAt(0) + "." + mainData.team2Sub[i].middleName.charAt(0) + "." + mainData.team2Sub[i].surname;
+                //                 } else {
+                //                     obj["SUBSTITUTES SCREEN NAME 2"] = mainData.team2Sub[i].firstName.charAt(0) + "." + mainData.team2Sub[i].surname;
+                //                 }
+                //             } else {
+                //                 obj["SUBSTITUTES SFA ID 2"] = "-";
+                //                 obj["SUBSTITUTES SCREEN NAME 2"] = "-";
+                //             }
+                //         });
+                //     });
+                // }
+            ],
+            function (err, excelData) {
+                if (err) {
+                    console.log(err);
+                    callback(null, []);
+                } else if (excelData) {
+                    if (_.isEmpty(excelData)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, excelData);
+                    }
+                }
+            });
+    },
+
     generateExcelHeat: function (data, res) {
         async.waterfall([
                 function (callback) {
@@ -5932,7 +6174,7 @@ var model = {
                             } else {
                                 obj["WEIGHT CATEGORIES"] = "";
                             }
-                            var dateTime = moment(matchData.scheduleDate).format('DD/MM/YYYY');
+                            var dateTime = moment(mainData.scheduleDate).format('DD/MM/YYYY');
                             obj.DATE = dateTime;
                             obj.TIME = mainData.scheduleTime;
                             if (mainData.opponentsSingle.length > 0) {
@@ -5970,20 +6212,20 @@ var model = {
                                 if (mainData.resultKnockout) {
                                     if (mainData.resultKnockout.players.length == 2) {
                                         if (mainData.players[0].player.noShow == true) {
-                                            obj["Player 1 Attendence"] = "P";
-                                        } else {
                                             obj["Player 1 Attendence"] = "A";
+                                        } else {
+                                            obj["Player 1 Attendence"] = "P";
                                         }
                                         if (mainData.players[1].player.noShow == true) {
-                                            obj["Player 2 Attendence"] = "P";
-                                        } else {
                                             obj["Player 2 Attendence"] = "A";
+                                        } else {
+                                            obj["Player 2 Attendence"] = "P";
                                         }
                                     } else if (mainData.resultKnockout.players.length == 1) {
                                         if (mainData.players[0].player.noShow == true) {
-                                            obj["Player 1 Attendence"] = "YES";
+                                            obj["Player 1 Attendence"] = "A";
                                         } else {
-                                            obj["Player 1 Attendence"] = "NO";
+                                            obj["Player 1 Attendence"] = "P";
                                         }
                                     }
                                     obj["FINAL SCORE "] = mainData.resultKnockout.finalScore;
@@ -12134,11 +12376,11 @@ var model = {
                                         // console.log("complete", complete);
                                         singleData.playerId1 = complete.athleteId;
                                         var info = {};
-                                        info.playerId = singleData["PARTICIPANT 1"];
+                                        info.id = singleData["PARTICIPANT 1"];
                                         if (singleData["Player 1 Attendence"].toLowerCase() === "p") {
-                                            info.noShow = true;
-                                        } else {
                                             info.noShow = false;
+                                        } else {
+                                            info.noShow = true;
                                         }
                                         info.walkover = false;
                                         result.players.push(info);
@@ -12168,11 +12410,11 @@ var model = {
                                         singleData["PARTICIPANT 2"] = complete._id;
                                         singleData.playerId2 = complete.athleteId;
                                         var info = {};
-                                        info.playerId2 = singleData["PARTICIPANT 2"];
+                                        info.id = singleData["PARTICIPANT 2"];
                                         if (singleData["Player 2 Attendence"].toLowerCase() === "p") {
-                                            info.noShow = true;
-                                        } else {
                                             info.noShow = false;
+                                        } else {
+                                            info.noShow = true;
                                         }
                                         info.walkover = false;
                                         result.players.push(info);
