@@ -129,16 +129,21 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
     };
 
     this.getAgeGroupByAthelete = function (athelete, confirmPageKey, events) {
+        console.log("confirmPageKey",confirmPageKey);
+        console.log("events",events);
+        
         var birthdate = moment(athelete.dob);
         var st = this.sportName;
 
         //Events are filtered as per age and weights
         function getAgeGroups(events) {
+
             var event = _.cloneDeep(events);
             _.each(event, function (i, key) {
                 i.data = _.filter(i.data, function (j) {
                     var startDate = moment(j.fromAge);
                     var endDate = moment(j.toAge);
+                    console.log("----");
                     if ((j.gender == athelete.gender) && birthdate.isBetween(startDate, endDate, null, '[]')) {
                         return true;
                     } else {
@@ -146,9 +151,11 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                     }
                 });
             });
+           console.log("event",event);
             event = _.reject(event, function (n) {
                 return n.data.length == 0;
             });
+            console.log("event",event);
             return event;
         }
 
@@ -221,12 +228,14 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                 n.data = _.filter(n.data, ['eventName', 'Kata']);
             });
             athelete.eventKata = getAgeGroups(kata);
-
+            console.log("eventKata",athelete.eventKata);
             // kumite
             _.each(kumite, function (n, i) {
                 n.data = _.filter(n.data, ['eventName', 'Kumite']);
             });
             athelete.eventKumite = getAgeGroups(kumite);
+            console.log("eventKumite",athelete.eventKumite);
+            
             athelete.sport = [];
             athelete.eventKata.unshift({
                 '_id': 'None',
@@ -390,7 +399,9 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
     };
 
     this.findOverAllFormValidation = function () {
+        console.log("findOverAllFormValidation");
         this.isValidForm = (_.findIndex(this.team, ['isValidSelection', false]) == -1);
+        console.log();
         if (this.isValidForm) {
             this.showMissingFields = false;
         } else {
@@ -400,8 +411,11 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
     };
 
     this.confirmSelection = function (data) {
-        // console.log(this.team);
-        var formData = _.cloneDeep(this.team);
+        console.log("save");
+        console.log("data",data);
+        console.log("this.team",this.team);
+        var formData =_.cloneDeep(this.team);
+        console.log("formData",formData);
         switch (this.sportType) {
             case "K":
                 this.findOverAllFormValidation();
@@ -439,10 +453,13 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                 var st = this.sportName
                 if (st == 'Judo' || st == 'Boxing' || st == 'Taekwondo' || st == 'Sport MMA' || st == 'Wrestling') {
                     this.findOverAllFormValidation();
+                    console.log("this.team[0].sport[0].data",this.team[0].sport[0].data);
                     _.each(formData, function (n, i) {
-                        n.sport = _.filter(n.sport, function (o, i) {
-                            return i == 1
+                        arr = _.filter(n.sport[0].data, function (o, i) {
+                            return !_.has(o,'weight')
                         });
+                        console.log("arr",arr);
+                        n.sport = _.map(arr,'sport');
                     });
                 } else {
                     this.findOverAllFormValidation();
@@ -459,6 +476,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                 n.athleteId = n._id
                 formData[i] = _.pick(n, ['sport', 'sportsListSubCategory', 'athleteId']);
             });
+            console.log("finalData",formData);
             this.saveData(formData, data);
         } else {
             // console.log("Some Fields are Missing");
@@ -529,15 +547,21 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
 
                     if (obj) {
                         arr[1] = obj;
-
                     } else {
                         arr[1] = {};
                     }
                 }
                 console.log("arr", arr);
-                athelete.isValidSelection = (arr.length == 0 || ((arr[0] && arr[0].data && arr[0].data[0].sport == null) && ((arr[1] && !arr[1].sport) || (arr[1] && arr[1].sport == null)))) ? false : ((arr.length >= 1 && arr[0] && arr[0].data && arr[0].data[0] && arr[0].data[0].sport != null) || ((arr.length >= 1 && arr[0] && arr[0].data[0].sport == null) && (arr.length >= 1 && arr[1] && arr[1].sport != null)) || ((arr.length >= 1 && arr[0] && arr[0].data[0] && arr[0].data[0].sport != null) && (arr.length >= 1 && arr[1] && arr[1].sport != null))) ? true : false;
-
-                break;
+                // athelete.isValidSelection = (arr.length == 0 || ((arr[0] && arr[0].data && arr[0].data[0].sport == null) && ((arr[1] && !arr[1].sport) || (arr[1] && arr[1].sport == null)))) ? false : ((arr.length >= 1 && arr[0] && arr[0].data && arr[0].data[0] && arr[0].data[0].sport != null) || ((arr.length >= 1 && arr[0] && arr[0].data[0].sport == null) && (arr.length >= 1 && arr[1] && arr[1].sport != null)) || ((arr.length >= 1 && arr[0] && arr[0].data[0] && arr[0].data[0].sport != null) && (arr.length >= 1 && arr[1] && arr[1].sport != null))) ? true : false;
+                  
+                console.log("(arr.length >= 1 && arr[0] && arr[0].data && arr[0].data[0] && arr[0].data[0].sport != null)",(arr.length >= 1 && arr[0] && arr[0].data && arr[0].data[0] && arr[0].data[0].sport != null));
+                console.log("((arr.length >= 1 && (!arr[0] || arr[0] && arr[0].data[0].sport == null)) && (arr.length >= 1 && arr[1] && arr[1].sport != null))",((arr.length >= 1 && (!arr[0] || arr[0] && arr[0].data[0].sport == null)) && (arr.length >= 1 && arr[1] && arr[1].sport != null)));
+                console.log("((arr.length >= 1 && arr[0] && arr[0].data[0] && arr[0].data[0].sport != null) && (arr.length >= 1 && arr[1] && arr[1].sport != null)",((arr.length >= 1 && arr[0] && arr[0].data[0] && arr[0].data[0].sport != null) && (arr.length >= 1 && arr[1] && arr[1].sport != null)));
+                
+                
+                athelete.isValidSelection = (arr.length == 0 || ((!arr[0] || arr[0] && arr[0].data && arr[0].data[0].sport == null) && ((arr[1] && !arr[1].sport) || (arr[1] && arr[1].sport == null)))) ? false : ((arr.length >= 1 && arr[0] && arr[0].data && arr[0].data[0] && arr[0].data[0].sport != null) || ((arr.length >= 1 && (!arr[0] || arr[0] && arr[0].data[0].sport == null)) && (arr.length >= 1 && arr[1] && arr[1].sport != null)) || ((arr.length >= 1 && arr[0] && arr[0].data[0] && arr[0].data[0].sport != null) && (arr.length >= 1 && arr[1] && arr[1].sport != null))) ? true : false;
+                console.log("athelete.isValidSelection",athelete.isValidSelection);
+                   break;
             case "FA":
                 if (this.sportName == 'Fencing') {
                     var arr = _.compact(athelete.sport);
