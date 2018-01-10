@@ -71,6 +71,7 @@ myApp.controller('AddWeightCtrl', function($scope, TemplateService, NavigationSe
             n.weight = "";
           });
         } else {
+          $scope.attendanceList = [];
           toastr.error("No Athletes Found","Error");
         }
       });
