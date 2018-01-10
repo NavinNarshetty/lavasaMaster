@@ -15755,12 +15755,28 @@ var model = {
                                                         player.noShow = false;
                                                         player.walkover = false;
                                                     } else {
-                                                        player.score="";
-                                                        player.rank = "";
-                                                        player.noShow = true;
-                                                        player.walkover = false;
-                                                        player1.walkover = true;
-                                                        player1.noShow = false;
+                                                        if (singleData["WINNER SFAID"] == singleData["SFAID 1"]) {
+                                                            player.score = "";
+                                                            player.rank = "";
+                                                            player.noShow = false;
+                                                            player.walkover = true;
+                                                            player1.walkover = false;
+                                                            player1.noShow = true;
+                                                        } else if (singleData["WINNER SFAID"] == singleData["SFAID 2"]) {
+                                                            player.score = "";
+                                                            player.rank = "";
+                                                            player.noShow = true;
+                                                            player.walkover = false;
+                                                            player1.walkover = true;
+                                                            player1.noShow = false;
+                                                        } else {
+                                                            player.score = "";
+                                                            player.rank = "";
+                                                            player.noShow = false;
+                                                            player.walkover = false;
+                                                            player1.walkover = false;
+                                                            player1.noShow = false;
+                                                        }
                                                     }
                                                     paramData.opponentsSingle.push(singleData["NAME 2"]);
                                                     player1.id = singleData["NAME 2"];
@@ -15776,19 +15792,33 @@ var model = {
                                                         player1.noShow = false;
                                                         player1.walkover = false;
                                                     } else {
-                                                        player1.score="";
-                                                        player1.rank = "";
-                                                        player1.noShow = true;
-                                                        player1.walkover = false;
-                                                        player.noShow = false;
-                                                        player.walkover = true;
+                                                        if (singleData["WINNER SFAID"] == singleData["SFAID 1"]) {
+                                                            player1.score = "";
+                                                            player1.rank = "";
+                                                            player1.noShow = false;
+                                                            player1.walkover = true;
+                                                            player.noShow = true;
+                                                            player.walkover = false;
+                                                        } else if (singleData["WINNER SFAID"] == singleData["SFAID 2"]) {
+                                                            player1.score = "";
+                                                            player1.rank = "";
+                                                            player1.noShow = true;
+                                                            player1.walkover = false;
+                                                            player.walkover = true;
+                                                            player.noShow = false;
+                                                        } else {
+                                                            player1.score = "";
+                                                            player1.rank = "";
+                                                            player.noShow = false;
+                                                            player.walkover = false;
+                                                            player1.walkover = false;
+                                                            player1.noShow = false;
+                                                        }
                                                     }
                                                     resultData.players.push(player);
                                                     resultData.players.push(player1);
-
                                                 }
                                             }
-
                                             if (singleData["WINNER SFAID"] == singleData["SFAID 1"]) {
                                                 winner.player = singleData["NAME 1"];
                                                 resultData.isDraw = false;

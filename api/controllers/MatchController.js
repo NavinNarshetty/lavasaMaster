@@ -975,9 +975,7 @@ var controller = {
 
     deleteResult: function (req, res) {
         Match.deleteResult(req.body, res.callback);
-    }
-
-
+    },
 
 };
 module.exports = _.assign(module.exports, controller);
