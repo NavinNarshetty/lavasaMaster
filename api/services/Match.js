@@ -12287,7 +12287,7 @@ var model = {
                                         singleData["PARTICIPANT 2"] = complete._id;
                                         singleData.playerId2 = complete.athleteId;
                                         var info = {};
-                                        info.id = singleData["PARTICIPANT 2"];
+                                        info.player = singleData["PARTICIPANT 2"];
                                         if (singleData["Player 2 Attendence"].toLowerCase() === "p") {
                                             info.noShow = false;
                                         } else {
@@ -15747,7 +15747,7 @@ var model = {
                                                 paramData.opponentsSingle.push(singleData["NAME 1"]);
                                                 player.id = singleData["NAME 1"];
                                                 player.player = singleData["Athlete 1"];
-                                                if (singleData["P1 SCORE"] == undefined && singleData["P1 RANK"] == undefined) {
+                                                if ((singleData["P1 SCORE"] == undefined || _.isEmpty(singleData["P1 SCORE"])) && (singleData["P1 RANK"] == undefined || _.isEmpty(singleData["P1 RANK"]))) {
                                                     player.noShow = true;
                                                     player.walkover = false;
                                                     player1.walkover = true;
@@ -15761,7 +15761,7 @@ var model = {
                                                 paramData.opponentsSingle.push(singleData["NAME 2"]);
                                                 player1.id = singleData["NAME 2"];
                                                 player1.player = singleData["Athlete 2"];
-                                                if (singleData["P2 SCORE"] == undefined && singleData["P2 RANK"] == undefined) {
+                                                if ((singleData["P2 SCORE"] == undefined || _.isEmpty(singleData["P2 SCORE"])) && (singleData["P2 RANK"] == undefined || _.isEmpty(singleData["P2 RANK"]))) {
                                                     player1.noShow = true;
                                                     player1.walkover = false;
                                                     player.noShow = false;
