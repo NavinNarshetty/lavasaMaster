@@ -9367,9 +9367,25 @@ var model = {
                         obj["T2 Total Unforced Errors"] = "";
                         obj["T2 Total Winners"] = "";
 
-                        var i = mainData.resultsRacquet.teams[0].sets.length + 1;
+                        var i = mainData.resultsRacquet.teams[0].sets.length;
 
                         switch (i) {
+                            case 0:
+                                obj["T1 Set 1"] = "";
+                                obj["T2 Set 1"] = "";
+                                obj["T1 Set 2"] = "";
+                                obj["T2 Set 2"] = "";
+                                obj["T1 Set 3"] = "";
+                                obj["T2 Set 3"] = "";
+                                obj["T1 Set 4"] = "";
+                                obj["T2 Set 4"] = "";
+                                obj["T1 Set 5"] = "";
+                                obj["T2 Set 5"] = "";
+                                obj["T1 Set 6"] = "";
+                                obj["T2 Set 6"] = "";
+                                obj["T1 Set 7"] = "";
+                                obj["T2 Set 7"] = "";
+                                break;
                             case 1:
                                 obj["T1 Set 1"] = mainData.resultsRacquet.teams[0].sets[0].point;
                                 obj["T2 Set 1"] = "";
