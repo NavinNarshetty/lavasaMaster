@@ -15622,202 +15622,213 @@ var model = {
         async.waterfall([
                 function (callback) {
                     async.concatSeries(importData, function (singleData, callback) {
-                        var dateTime = moment(singleData.DATE, "DD-MM-YYYY").add(1, 'days');
-                        singleData.DATE = dateTime;
-                        async.waterfall([
-                                function (callback) {
-                                    var paramData = {};
-                                    paramData.name = singleData['EVENT'];
-                                    paramData.age = singleData["AGE GROUP"];
-                                    if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
-                                        paramData.gender = "male";
-                                    } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
-                                        paramData.gender = "female";
-                                    }
-                                    Match.getSportId(paramData, function (err, sportData) {
-                                        if (err || _.isEmpty(sportData)) {
-                                            singleData.SPORT = null;
-                                            err = "Sport,Event,AgeGroup,Gender may have wrong values";
-                                            callback(null, {
-                                                error: err,
-                                                success: singleData
-                                            });
-                                        } else {
-                                            singleData.SPORT = sportData.sportId;
-                                            callback(null, singleData);
-                                        }
-                                    });
-                                },
-                                function (singleData, callback) {
-                                    // console.log("logssss", singleData);
-                                    if (singleData.error) {
-                                        countError++;
-                                        callback(null, singleData);
-                                    } else {
-                                        if (_.isEmpty(singleData["SFAID 1"])) {
-                                            callback(null, singleData);
-                                        } else {
-                                            // console.log("singleData1", singleData);
-                                            var paramData = {};
-                                            paramData.participant = singleData["SFAID 1"];
-                                            paramData.sport = singleData.SPORT;
-                                            Match.getAthleteId(paramData, function (err, complete) {
-                                                if (err || _.isEmpty(complete)) {
-                                                    singleData["NAME 1"] = null;
-                                                    var err = "SFAID 1 may have wrong values";
-                                                    callback(null, {
-                                                        error: err,
-                                                        success: singleData
-                                                    });
-                                                } else {
-                                                    singleData["NAME 1"] = complete._id;
-                                                    singleData["Athlete 1"] = complete.athleteId;
-                                                    callback(null, singleData);
-                                                }
-                                            });
-                                        }
-                                    }
-                                },
-                                function (singleData, callback) {
-                                    // console.log("logssss", singleData);
-                                    if (singleData.error) {
-                                        countError++;
-                                        callback(null, singleData);
-                                    } else {
-                                        if (_.isEmpty(singleData["SFAID 2"])) {
-                                            callback(null, singleData);
-                                        } else {
-                                            var paramData = {};
-                                            paramData.participant = singleData["SFAID 2"];
-                                            paramData.sport = singleData.SPORT;
-                                            Match.getAthleteId(paramData, function (err, complete) {
-                                                if (err || _.isEmpty(complete)) {
-                                                    singleData["NAME 2"] = null;
-                                                    var err = "SFAID 2 may have wrong values";
-                                                    callback(null, {
-                                                        error: err,
-                                                        success: singleData
-                                                    });
-                                                } else {
-                                                    singleData["NAME 2"] = complete._id;
-                                                    singleData["Athlete 2"] = complete.athleteId;
-                                                    callback(null, singleData);
-                                                }
-                                            });
-                                        }
-                                    }
-                                },
-                                function (singleData, callback) {
-                                    console.log("logssss", singleData);
-                                    if (singleData.error) {
-                                        countError++;
-                                        callback(null, singleData);
-                                    } else {
+                            var dateTime = moment(singleData.DATE, "DD-MM-YYYY").add(1, 'days');
+                            singleData.DATE = dateTime;
+                            async.waterfall([
+                                    function (callback) {
                                         var paramData = {};
-                                        var resultData = {};
-                                        resultData.players = [];
-                                        var player = {};
-                                        var player1 = {};
-                                        var winner = {};
-
-                                        paramData.opponentsSingle = [];
-                                        paramData.matchId = singleData["MATCH ID"];
-                                        paramData.round = singleData["ROUND NAME"];
-                                        if (_.isEmpty(singleData["NAME 1"]) && _.isEmpty(singleData["NAME 2"])) {
-                                            paramData.opponentsSingle = "";
-                                            resultData.isNoMatch = true;
-                                        } else {
-                                            if (_.isEmpty(singleData["NAME 1"])) {
-                                                paramData.opponentsSingle.push(singleData["NAME 2"]);
-                                                player.id = singleData["NAME 2"];
-                                                player.player = singleData["Athlete 2"];
-                                                player.score = singleData["P2 SCORE"];
-                                                player.rank = singleData["P2 RANK"];
-                                                resultData.players.push(player);
-                                                resultData.isNoMatch = false;
-                                            } else if (_.isEmpty(singleData["NAME 2"])) {
-                                                paramData.opponentsSingle.push(singleData["NAME 1"]);
-                                                player.id = singleData["NAME 1"];
-                                                player.player = singleData["Athlete 1"];
-                                                player.score = singleData["P1 SCORE"];
-                                                player.rank = singleData["P1 RANK"];
-                                                resultData.players.push(player);
-                                                resultData.isNoMatch = false;
+                                        paramData.name = singleData['EVENT'];
+                                        paramData.age = singleData["AGE GROUP"];
+                                        if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
+                                            paramData.gender = "male";
+                                        } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
+                                            paramData.gender = "female";
+                                        }
+                                        Match.getSportId(paramData, function (err, sportData) {
+                                            if (err || _.isEmpty(sportData)) {
+                                                singleData.SPORT = null;
+                                                err = "Sport,Event,AgeGroup,Gender may have wrong values";
+                                                callback(null, {
+                                                    error: err,
+                                                    success: singleData
+                                                });
                                             } else {
-                                                paramData.opponentsSingle.push(singleData["NAME 1"]);
-                                                player.id = singleData["NAME 1"];
-                                                player.player = singleData["Athlete 1"];
-                                                if ((singleData["P1 SCORE"] == undefined || _.isEmpty(singleData["P1 SCORE"])) && (singleData["P1 RANK"] == undefined || _.isEmpty(singleData["P1 RANK"]))) {
-                                                    player.noShow = true;
-                                                    player.walkover = false;
-                                                    player1.walkover = true;
-                                                    player1.noShow = false;
-                                                } else {
-                                                    player.score = singleData["P1 SCORE"];
-                                                    player.rank = singleData["P1 RANK"];
-                                                    player.noShow = false;
-                                                    player.walkover = false;
-                                                }
-                                                paramData.opponentsSingle.push(singleData["NAME 2"]);
-                                                player1.id = singleData["NAME 2"];
-                                                player1.player = singleData["Athlete 2"];
-                                                if ((singleData["P2 SCORE"] == undefined || _.isEmpty(singleData["P2 SCORE"])) && (singleData["P2 RANK"] == undefined || _.isEmpty(singleData["P2 RANK"]))) {
-                                                    player1.noShow = true;
-                                                    player1.walkover = false;
-                                                    player.noShow = false;
-                                                    player.walkover = true;
-                                                } else {
-                                                    console.log("Player 2", player1);
-                                                    player1.score = singleData["P2 SCORE"];
-                                                    player1.rank = singleData["P2 RANK"];
-                                                    player1.noShow = false;
-                                                    player1.walkover = false;
-                                                }
-                                                resultData.players.push(player);
-                                                resultData.players.push(player1);
-
+                                                singleData.SPORT = sportData.sportId;
+                                                callback(null, singleData);
+                                            }
+                                        });
+                                    },
+                                    function (singleData, callback) {
+                                        if (singleData.error) {
+                                            countError++;
+                                            callback(null, singleData);
+                                        } else {
+                                            if (_.isEmpty(singleData["SFAID 1"])) {
+                                                callback(null, singleData);
+                                            } else {
+                                                // console.log("singleData1", singleData);
+                                                var paramData = {};
+                                                paramData.participant = singleData["SFAID 1"];
+                                                paramData.sport = singleData.SPORT;
+                                                Match.getAthleteId(paramData, function (err, complete) {
+                                                    if (err || _.isEmpty(complete)) {
+                                                        singleData["NAME 1"] = null;
+                                                        var err = "SFAID 1 may have wrong values";
+                                                        callback(null, {
+                                                            error: err,
+                                                            success: singleData
+                                                        });
+                                                    } else {
+                                                        singleData["NAME 1"] = complete._id;
+                                                        singleData["Athlete 1"] = complete.athleteId;
+                                                        callback(null, singleData);
+                                                    }
+                                                });
                                             }
                                         }
-
-                                        if (singleData["WINNER SFAID"] == singleData["SFAID 1"]) {
-                                            winner.player = singleData["NAME 1"];
-                                            resultData.isDraw = false;
-                                        } else if (singleData["WINNER SFAID"] == singleData["SFAID 2"]) {
-                                            winner.player = singleData["NAME 2"];
-                                            resultData.isDraw = false;
+                                    },
+                                    function (singleData, callback) {
+                                        // console.log("logssss", singleData);
+                                        if (singleData.error) {
+                                            countError++;
+                                            callback(null, singleData);
                                         } else {
-                                            resultData.isDraw = false;
+                                            if (_.isEmpty(singleData["SFAID 2"])) {
+                                                callback(null, singleData);
+                                            } else {
+                                                var paramData = {};
+                                                paramData.participant = singleData["SFAID 2"];
+                                                paramData.sport = singleData.SPORT;
+                                                Match.getAthleteId(paramData, function (err, complete) {
+                                                    if (err || _.isEmpty(complete)) {
+                                                        singleData["NAME 2"] = null;
+                                                        var err = "SFAID 2 may have wrong values";
+                                                        callback(null, {
+                                                            error: err,
+                                                            success: singleData
+                                                        });
+                                                    } else {
+                                                        singleData["NAME 2"] = complete._id;
+                                                        singleData["Athlete 2"] = complete.athleteId;
+                                                        callback(null, singleData);
+                                                    }
+                                                });
+                                            }
                                         }
-                                        resultData.winner = winner;
-                                        paramData.resultSwiss = resultData;
-                                        paramData.sport = singleData.SPORT;
-                                        paramData.scheduleDate = singleData.DATE;
-                                        paramData.scheduleTime = singleData.TIME;
-                                        paramData.video = singleData["VIDEO"];
-                                        paramData.video = singleData["VIDEO TYPE"];
-                                        Match.update({
-                                            matchId: paramData.matchId
-                                        }, paramData).exec(
-                                            function (err, complete) {
-                                                if (err || _.isEmpty(complete)) {
-                                                    var err = "Not updated";
-                                                    callback(null, {
-                                                        error: err,
-                                                        success: paramData
-                                                    });
+                                    },
+                                    function (singleData, callback) {
+                                        console.log("logssss", singleData);
+                                        if (singleData.error) {
+                                            countError++;
+                                            callback(null, singleData);
+                                        } else {
+                                            var paramData = {};
+                                            var resultData = {};
+                                            resultData.players = [];
+                                            var player = {};
+                                            var player1 = {};
+                                            var winner = {};
+                                            paramData.opponentsSingle = [];
+                                            paramData.matchId = singleData["MATCH ID"];
+                                            paramData.round = singleData["ROUND NAME"];
+                                            if (_.isEmpty(singleData["NAME 1"]) && _.isEmpty(singleData["NAME 2"])) {
+                                                paramData.opponentsSingle = "";
+                                                resultData.isNoMatch = true;
+                                            } else {
+                                                if (_.isEmpty(singleData["NAME 1"])) {
+                                                    paramData.opponentsSingle.push(singleData["NAME 2"]);
+                                                    player.id = singleData["NAME 2"];
+                                                    player.player = singleData["Athlete 2"];
+                                                    player.score = singleData["P2 SCORE"];
+                                                    player.rank = singleData["P2 RANK"];
+                                                    resultData.players.push(player);
+                                                    resultData.isNoMatch = false;
+                                                } else if (_.isEmpty(singleData["NAME 2"])) {
+                                                    paramData.opponentsSingle.push(singleData["NAME 1"]);
+                                                    player.id = singleData["NAME 1"];
+                                                    player.player = singleData["Athlete 1"];
+                                                    player.score = singleData["P1 SCORE"];
+                                                    player.rank = singleData["P1 RANK"];
+                                                    resultData.players.push(player);
+                                                    resultData.isNoMatch = false;
                                                 } else {
-                                                    callback(null, complete);
+                                                    paramData.opponentsSingle.push(singleData["NAME 1"]);
+                                                    player.id = singleData["NAME 1"];
+                                                    player.player = singleData["Athlete 1"];
+                                                    if (singleData["P1 SCORE"] !== undefined || !_.isEmpty(singleData["P1 SCORE"])) {
+                                                        player.score = singleData["P1 SCORE"];
+                                                        if (singleData["P1 RANK"] !== undefined || !_.isEmpty(singleData["P1 RANK"])) {
+                                                            player.rank = singleData["P1 RANK"];
+                                                        } else {
+                                                            player.rank = "";
+                                                        }
+                                                        player.noShow = false;
+                                                        player.walkover = false;
+                                                    } else {
+                                                        player.score="";
+                                                        player.rank = "";
+                                                        player.noShow = true;
+                                                        player.walkover = false;
+                                                        player1.walkover = true;
+                                                        player1.noShow = false;
+                                                    }
+                                                    paramData.opponentsSingle.push(singleData["NAME 2"]);
+                                                    player1.id = singleData["NAME 2"];
+                                                    player1.player = singleData["Athlete 2"];
+                                                    if (singleData["P2 SCORE"] !== undefined || !_.isEmpty(singleData["P2 SCORE"])) {
+                                                        console.log("Player 2", player1);
+                                                        player1.score = singleData["P2 SCORE"];
+                                                        if (singleData["P2 RANK"] !== undefined || !_.isEmpty(singleData["P2 RANK"])) {
+                                                            player1.rank = singleData["P2 RANK"];
+                                                        } else {
+                                                            player1.rank = "";
+                                                        }
+                                                        player1.noShow = false;
+                                                        player1.walkover = false;
+                                                    } else {
+                                                        player1.score="";
+                                                        player1.rank = "";
+                                                        player1.noShow = true;
+                                                        player1.walkover = false;
+                                                        player.noShow = false;
+                                                        player.walkover = true;
+                                                    }
+                                                    resultData.players.push(player);
+                                                    resultData.players.push(player1);
+
                                                 }
-                                            });
+                                            }
+
+                                            if (singleData["WINNER SFAID"] == singleData["SFAID 1"]) {
+                                                winner.player = singleData["NAME 1"];
+                                                resultData.isDraw = false;
+                                            } else if (singleData["WINNER SFAID"] == singleData["SFAID 2"]) {
+                                                winner.player = singleData["NAME 2"];
+                                                resultData.isDraw = false;
+                                            } else {
+                                                resultData.isDraw = false;
+                                            }
+                                            resultData.winner = winner;
+                                            paramData.resultSwiss = resultData;
+                                            paramData.sport = singleData.SPORT;
+                                            paramData.scheduleDate = singleData.DATE;
+                                            paramData.scheduleTime = singleData.TIME;
+                                            paramData.video = singleData["VIDEO"];
+                                            paramData.video = singleData["VIDEO TYPE"];
+                                            Match.update({
+                                                matchId: paramData.matchId
+                                            }, paramData).exec(
+                                                function (err, complete) {
+                                                    if (err || _.isEmpty(complete)) {
+                                                        var err = "Not updated";
+                                                        callback(null, {
+                                                            error: err,
+                                                            success: paramData
+                                                        });
+                                                    } else {
+                                                        callback(null, complete);
+                                                    }
+                                                });
+                                        }
                                     }
-                                }
-                            ],
-                            function (err, results) {
-                                callback(null, results);
-                            });
-                    }, function (err, singleData) {
-                        callback(null, singleData)
-                    });
+                                ],
+                                function (err, results) {
+                                    callback(null, results);
+                                });
+                        },
+                        function (err, singleData) {
+                            callback(null, singleData)
+                        });
                 },
                 function (singleData, callback) {
                     async.concatSeries(singleData, function (n, callback) {
