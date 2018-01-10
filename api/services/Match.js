@@ -9362,13 +9362,12 @@ var model = {
                             obj["T1 Set 7"] = "";
                             obj["T2 Set 7"] = "";
                         }
-
                     } else {
                         obj["T2 Total Service Errors"] = "";
                         obj["T2 Total Unforced Errors"] = "";
                         obj["T2 Total Winners"] = "";
 
-                        var i = mainData.resultsRacquet.teams[0].sets.length;
+                        var i = mainData.resultsRacquet.teams[0].sets.length + 1;
 
                         switch (i) {
                             case 1:
