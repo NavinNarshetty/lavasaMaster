@@ -81,7 +81,7 @@
                               <th>Gender</th>
                               <th>Event 1</th>
                               <th>Event 2</th>
-                              <th>Weight Category</th>
+                              <th class="hide">Weight Category</th>
                             </thead>
                             <tbody>
                               <tr ng-class="{'missing-fields':selectService.showMissingFields && !athelete.isValidSelection}" ng-repeat="athelete in selectService.team track by $index">
@@ -112,7 +112,7 @@
                                   </select>
                                   <!--event 2 selection ends-->
                                 </td>
-                                <td>
+                                <td class="hide">
                                   <!--weight selection starts-->
                                   <select class="form-control" ng-init="selectService.isValidSelection(athelete)" ng-model="athelete.sport[1]" placeholder="Select Kumite First"
                                     ng-options="weights as weights.weight for weights in athelete.event2Weights.data" ng-change="selectService.isValidSelection(athelete)">

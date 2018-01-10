@@ -280,22 +280,7 @@ myApp.controller('ConfirmIndividualCtrl', function ($scope, TemplateService, Nav
             }
         }
     }
-    // function configureVariables() {
-    // if ($scope.selectService && $scope.selectService.sportName) {
-    // var st = $scope.selectService.sportName;
-    // if (st == 'Judo' || st == 'Boxing' || st == 'Taekwondo' || st == 'Sport MMA') {
-    // $scope.config.weightsReq = true;
-    // $scope.config.ageVar = 'athelete.ageSelected';
-    // $scope.config.weightVar = 'athelete.sport';
-    // $scope.config.selectAgeExpression = "age._id for age in athelete.ageGroups";
-    // } else {
-    // $scope.config.weightsReq = false;
-    // $scope.config.ageVar = 'athelete.sport';
-    // $scope.config.weightVar = '';
-    // $scope.config.selectAgeExpression = "{'sport[0]':age.data[0].sport,'_id':age._id} as age._id for age in athelete.ageGroups";
-    // }
-    // }
-    // }
+
 
     configureVariables();
 
