@@ -83,7 +83,7 @@
                               <th>SFA ID-Name</th>
                               <th>Gender</th>
                               <th>Age Group</th>
-                              <th ng-if="st == 'Judo' || st == 'Boxing' || st == 'Taekwondo' || st == 'Sport MMA' || st == 'Wrestling'">Weight Category</th>
+                              <th class="hide" ng-if="st == 'Judo' || st == 'Boxing' || st == 'Taekwondo' || st == 'Sport MMA' || st == 'Wrestling'">Weight Category</th>
                             </thead>
                             <tbody>
                               <tr ng-class="{'missing-fields':selectService.showMissingFields && !athelete.isValidSelection}" ng-repeat="athelete in selectService.team track by $index">
@@ -103,7 +103,7 @@
                                   </select>
                                   <!--ageGroup column end-->
                                 </td>
-                                <td ng-if="st == 'Judo' || st == 'Boxing' || st == 'Taekwondo' || st == 'Sport MMA' || st == 'Wrestling'">
+                                <td class="hide" ng-if="st == 'Judo' || st == 'Boxing' || st == 'Taekwondo' || st == 'Sport MMA' || st == 'Wrestling'">
                                   <!--weights column start-->
                                   <select class="form-control" ng-init="selectService.isValidSelection(athelete)" ng-model="athelete.sport[1]" ng-options="weight.sport as weight.weight for weight in athelete.sport[0].data"
                                     ng-change="selectService.isValidSelection(athelete)">
