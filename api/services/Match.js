@@ -5406,21 +5406,15 @@ var model = {
                             for (var i = 0; i < final.max; i++) {
                                 teamCount = teamCount + 1;
                                 if (!_.isEmpty(n.team[i])) {
-                                    console.log("team********", n.team[i].items[c]);
-                                    console.log("i", i, "c", c);
-                                    // _.each(n.team[i].items, function (player) {
-                                    // console.log("player", player);
                                     obj["MATCH ID"] = n.team[i].items[c].matchId;
                                     obj["TEAM " + teamCount] = n.team[i].name;
-                                    obj["TEAM " + teamCount + " SFA ID " + playerCount] = n.team[i].items[c].sfaId;
+                                    obj["TEAM " + teamCount + " SFA ID "] = n.team[i].items[c].sfaId;
                                     if (n.team[i].items[c].middleName) {
-                                        obj["TEAM " + teamCount + " SCREEN NAME " + playerCount] = n.team[i].items[c].firstName.charAt(0) + "." + n.team[i].items[c].middleName.charAt(0) + "." + n.team[i].items[c].surname;
+                                        obj["TEAM " + teamCount + " SCREEN NAME"] = n.team[i].items[c].firstName.charAt(0) + "." + n.team[i].items[c].middleName.charAt(0) + "." + n.team[i].items[c].surname;
                                     } else {
-                                        obj["TEAM " + teamCount + " SCREEN NAME " + playerCount] = n.team[i].items[c].firstName.charAt(0) + "." + n.team[i].items[c].surname;
+                                        obj["TEAM " + teamCount + " SCREEN NAME"] = n.team[i].items[c].firstName.charAt(0) + "." + n.team[i].items[c].surname;
                                     }
-                                    console.log("obj", obj);
-                                    // count++;
-                                    // });
+
                                 } else {
                                     obj["TEAM " + teamCount] = "";
                                     obj["SFA ID" + playerCount] = "";
