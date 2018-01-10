@@ -228,7 +228,18 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
 
     return result;
   };
+
   //===================End of sorting result of league-cum-knockout==================
+
+  //Qualifying Knockout 
+  this.sortQfKnockout = function (obj) {
+    console.log("obj", obj);
+    if (obj.resultKnockout) {
+      obj.globalResultIndividual = obj.resultKnockout;
+      this.resutLeagueCumKnockoutIndividual(obj);
+    }
+  };
+  //Qualifying Knockout End
   this.scrollTo = function (destination, type) {
     if (type == 'id') {
       var destination = '#' + destination;

@@ -88,6 +88,9 @@ myApp.controller('QfKnockoutCtrl', function ($scope, knockoutService, TemplateSe
                   $scope.knockoutArr.push(data.match);
                 });
                 $scope.knockout = _.flattenDeep($scope.knockoutArr);
+                _.each($scope.knockout, function (key) {
+                  knockoutService.sortQfKnockout(key);
+                });
                 _.each($scope.qualifying, function (data, index) {
                   _.each(data.match, function (key) {
                     _.each(key.opponentsSingle, function (obj) {
