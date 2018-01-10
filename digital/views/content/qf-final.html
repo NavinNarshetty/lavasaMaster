@@ -232,7 +232,7 @@
                     <div>
                       {{final.opponentsSingle[0].result}}
                     </div>
-                    <div ng-if="final.opponentsSingle[0].result === undefined ">
+                    <div ng-if="!final.opponentsSingle[0].result">
                       -
                     </div>
                   </td>
@@ -240,14 +240,15 @@
                     <div>
                       {{final.opponentsSingle[0].result}}
                     </div>
-                    <div ng-if="final.opponentsSingle[0].result === undefined">
+                    <div ng-if="!final.opponentsSingle[0].result">
                       -
                     </div>
                   </td>
                   <td ng-if="roundsList[0].match[0].sport.sportslist.name === 'High jump'">
                     <div>
-                      {{final.opponentsSingle[0].noOfJumps}}
+                      {{final.opponentsSingle[0].noOfJumps || ' - '}}
                     </div>
+
                   </td>
                   <td ng-if="roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name === 'Shooting'">
                     <div>
@@ -261,7 +262,7 @@
                     <div>
                       {{final.opponentsSingle[0].result}}
                     </div>
-                    <div ng-if="final.opponentsSingle[0].result === undefined">
+                    <div ng-if="!final.opponentsSingle[0].result">
                       -
                     </div>
                   </td>
@@ -269,7 +270,7 @@
                     <div>
                       {{final.opponentsSingle[0].result}}
                     </div>
-                    <div ng-if="final.opponentsSingle[0].result === undefined">
+                    <div ng-if="!final.opponentsSingle[0].result">
                       -
                     </div>
                   </td>
