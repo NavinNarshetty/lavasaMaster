@@ -87,7 +87,6 @@ myApp.controller('QfKnockoutCtrl', function ($scope, knockoutService, TemplateSe
 
                     }
                     _.each(key.opponentsSingle, function (obj) {
-                      console.log("obj", obj);
                       if (obj.athleteId.middleName) {
                         obj.athleteId.fullName = obj.athleteId.sfaId + " - " + obj.athleteId.firstName + ' ' + obj.athleteId.middleName + ' ' + obj.athleteId.surname;
                       } else {
@@ -103,6 +102,10 @@ myApp.controller('QfKnockoutCtrl', function ($scope, knockoutService, TemplateSe
                 });
                 $scope.knockout = _.flattenDeep($scope.knockoutArr);
 
+                _.each($scope.knockout, function (key) {
+                  knockoutService.sortQfKnockout(key);
+                });
+                console.log("$scope.knockout", $scope.knockout);
 
               }
 
@@ -126,7 +129,7 @@ myApp.controller('QfKnockoutCtrl', function ($scope, knockoutService, TemplateSe
                   });
                 });
               }
-              console.log("$scope.knockout", $scope.knockout);
+
               if ($scope.knockout.length > 0) {
                 $scope.sportsListSubCategoryName = $scope.knockout[0].sport.sportslist.sportsListSubCategory.name;
                 $scope.sportsListSubCategoryGender = $scope.knockout[0].sport.gender;
