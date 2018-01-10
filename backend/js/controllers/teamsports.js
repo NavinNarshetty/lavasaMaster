@@ -32,12 +32,6 @@ myApp.controller('FormatTableTeamCtrl', function ($scope, TemplateService, Navig
   // SEARCH IN TABLE END
   $scope.remove = function () {
     console.log("enter")
-    // $.jStorage.flush();
-    // $state.go('matches');
-
-    // NavigationService.removeDetail();
-    // $state.go('matches');
-    // $.jStorage.set("detail", null);
     $.jStorage.deleteKey('detail');
     $state.go('matches');
 
@@ -320,6 +314,8 @@ myApp.controller('DetailSportTeamCtrl', function ($scope, TemplateService, Navig
   // SAVE OPPONENT TEAM END
 
   // STATUS LIST END
+
+  // GET ONE BACKEND
   $scope.getOneBackend = function () {
     $scope.matchData.matchId = $stateParams.id;
     console.log($stateParams.id, "check")
@@ -343,7 +339,7 @@ myApp.controller('DetailSportTeamCtrl', function ($scope, TemplateService, Navig
               n.studentId.fullName = n.studentId.firstName + ' ' + n.studentId.middleName + ' ' + n.studentId.surname;
             }
 
-
+            // FOOTBALL
             if ($scope.formData.resultFootball) {
               _.each($scope.formData.resultFootball.teams, function (value) {
                 _.each(value.players, function (j, index) {
@@ -425,6 +421,9 @@ myApp.controller('DetailSportTeamCtrl', function ($scope, TemplateService, Navig
             $scope.formData.result = $scope.formData.resultKabaddi;
             break;
           case "Throwball":
+            $scope.formData.result = $scope.formData.resultThrowball;
+            break;
+          case "Kho Kho":
             $scope.formData.result = $scope.formData.resultsCombat;
             break;
         }
@@ -441,8 +440,8 @@ myApp.controller('DetailSportTeamCtrl', function ($scope, TemplateService, Navig
     })
   };
   $scope.getOneBackend();
-  // console.log($scope.formData, "last");
-  // GET MATCH END
+
+  // GET ONE BACKEND
 
 
   // SAVE
@@ -488,21 +487,21 @@ myApp.controller('DetailSportTeamCtrl', function ($scope, TemplateService, Navig
   // ADD AND REMOVE FUNCTION END
 
 
-  // ADD SET VOLLEYBALL
-  $scope.addVolleyballSet = function (data) {
-    console.log(data, 'in add')
-    $scope.formData.resultVolleyball.teams[data].teamResults.sets.push({
+  // ADD SET 
+  $scope.addTeamSet = function (data, result) {
+    console.log(data, result, 'in add')
+    $scope.formData[result].teams[data].teamResults.sets.push({
       points: ''
-    })
+    });
   }
-  // ADD SET VOLLEYBALL END
+  // ADD SET  END
 
-  // REMOVE VOLLEYBALL SET
-  $scope.removeVolleyballSet = function (data, index) {
+  // REMOVE  SET
+  $scope.removeTeamSet = function (data, index, result) {
     console.log(data, index, 'in remove');
-    $scope.formData.resultVolleyball.teams[data].teamResults.sets.splice(index, 1);
+    $scope.formData[result].teams[data].teamResults.sets.splice(index, 1);
   }
-  // REMOVE VOLLEYBALL SET END
+  // REMOVE  SET END
 
 
 

@@ -23,7 +23,7 @@ myApp.controller('DetailHeatCtrl', function ($scope, TemplateService, Navigation
 
         // })
 
-        console.log($scope.formData, "****************form")
+        // console.log($scope.formData, "****************form")
         _.each($scope.formData.opponentsSingle, function (key) {
           // console.log($scope.formData.players, 'plr');
           key.sfaId = key.athleteId.sfaId;
@@ -38,7 +38,7 @@ myApp.controller('DetailHeatCtrl', function ($scope, TemplateService, Navigation
         var i = 0;
         if ($scope.formData.resultHeat) {
           _.each($scope.formData.resultHeat.players, function (n) {
-            console.log("******", n);
+            // console.log("******", n);
             if (n.id) {
               n.fullname = $scope.formData.opponentsSingle[i].fullname;
               n.sfaId = $scope.formData.opponentsSingle[i].sfaId;
@@ -173,13 +173,36 @@ myApp.controller('DetailQualifyingCtrl', function ($scope, TemplateService, Navi
         $scope.matchDetails = data.data;
         $scope.matchDetails.matchId = $scope.matchData.matchId;
         $scope.formData = data.data;
+        $scope.sportName = data.data.sport.sportslist.sportsListSubCategory.name
         $scope.formData.scheduleTime = new Date();
         console.log($scope.formData, "form")
 
 
+        // FOR ARCHERY
+        if ($scope.sportName === 'Archery') {
+
+          _.each($scope.formData.opponentsSingle, function (key) {
+            console.log(key, 'new')
+            key.sfaId = key.athleteId.sfaId;
+            key.schoolname = key.athleteId.school.name
+            if (key.athleteId.middleName == undefined || key.athleteId.middleName == '') {
+              key.fullname = key.athleteId.firstName + ' ' + key.athleteId.surname;
+            } else {
+              key.fullname = key.athleteId.firstName + ' ' + key.middleName + ' ' + key.athleteId.surname;
+            }
+          })
+          if ($scope.formData.excelType === 'knockout') {
+            $scope.formData.result = $scope.formData.resultKnockout;
+          } else if ($scope.formData.excelType === 'qualifying') {
+            $scope.formData.result = $scope.formData.resultQualifyingRound;
+          }
+        }
+        // FOR ARCHERY END
+
         // })
         console.log($scope.formData, "****************form")
-        if ($scope.formData.resultQualifyingRound && $scope.formData.sport.sportslist.sportsListSubCategory.name != 'Shooting') {
+        if ($scope.formData.resultQualifyingRound && $scope.formData.sport.sportslist.sportsListSubCategory.sportsListCategory.name === 'Individual Sports') {
+          console.log("SHOULD NOT BE HERE")
           _.each($scope.formData.opponentsSingle, function (key) {
             // console.log($scope.formData.players, 'plr');
             key.sfaId = key.athleteId.sfaId;
@@ -193,7 +216,6 @@ myApp.controller('DetailQualifyingCtrl', function ($scope, TemplateService, Navi
               key.fullname = key.athleteId.firstName + ' ' + key.middleName + ' ' + key.athleteId.surname
               $scope.formData.resultQualifyingRound.player.fullname = key.fullname;
             }
-            // $scope.formData.resultHeat.players[i]
           });
           var i = 0;
           _.each($scope.formData.resultQualifyingRound.player.attempt, function (n) {

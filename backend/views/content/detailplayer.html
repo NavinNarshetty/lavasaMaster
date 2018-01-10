@@ -101,7 +101,7 @@
                 <!-- OPPONENT SINGLE ONLY FOR DISPLAY END -->
 
                 <!-- OPPONENTS SINGLES -->
-                <div class="row">
+                <div class="row" ng-if="!formData.result">
                   <div class="col-md-5">
                     <div class="form-group">
                       <label>Opponent 1</label>
@@ -286,7 +286,8 @@
                 </div>
                 <!-- PLAYER SWISS END -->
                 <!-- PLAYER COMBAT  -->
-                <div class="test" ng-if="formData.sport.sportslist.sportsListSubCategory.sportsListCategory.name=='Combat Sports'" ng-repeat="player in formData.resultsCombat.players track by $index">
+                <div class="test" ng-if="formData.sport.sportslist.sportsListSubCategory.sportsListCategory.name=='Combat Sports' || formData.sport.sportslist.sportsListSubCategory.sportsListCategory.name==='Individual Sports'"
+                  ng-repeat="player in formData.resultsCombat.players track by $index">
                   <div class="form-group">
                     <h6 class="text-center">Player {{$index+1}}</h6>
                   </div>

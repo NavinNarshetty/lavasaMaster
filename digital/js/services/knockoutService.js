@@ -220,7 +220,18 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
 
     return result;
   };
+
+
   //===================End of sorting result of league-cum-knockout==================
+  //Qualifying Knockout 
+  this.sortQfKnockout = function (obj) {
+    console.log("obj", obj);
+    if (obj.resultKnockout) {
+      obj.globalResultIndividual = obj.resultKnockout;
+      this.resutLeagueCumKnockoutIndividual(obj);
+    }
+  };
+  //Qualifying Knockout End
 
   this.scrollTo = function (destination, type, offset) {
     console.log(destination, type, offset);
@@ -237,7 +248,7 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
     }
     console.log(destination, type, 'in dir')
     $('html,body').animate({
-      scrollTop: $(destination).offset().top-off
+      scrollTop: $(destination).offset().top - off
     },
       'slow');
   };

@@ -65,19 +65,31 @@
               </td>
               <td>
                 <div class="text-left">
-                  <p class="m-clear text-capitalize" title="{{data.opponentsSingle[0].athleteId.fullName}}">{{data.opponentsSingle[0].athleteId.fullName}}</p>
-                  <p class="m-clear text-capitalize" title="{{data.opponentsSingle[0].athleteId.school.name}}">{{data.opponentsSingle[0].athleteId.school.name}}</p>
+                  <span class="knockout-dot-live v-mid" ng-if="data.opponentsSingle[0].isWinner === true"><i class="fa fa-circle"></i></span>
+                  <span class="m-clear text-capitalize" title="TBD" ng-if="!data.opponentsSingle[0].athleteId && !data.opponentsSingle[1].athleteId">TBD</span>
+                  <span class="m-clear text-capitalize" ng-if="!data.opponentsSingle[0].athleteId && data.opponentsSingle[1].athleteId">-</span>
+                  <span class="m-clear text-capitalize" title="{{data.opponentsSingle[0].athleteId.fullName}}">{{data.opponentsSingle[0].athleteId.fullName | shorten:35}}</span>
+                  <p class="m-clear text-capitalize" title="{{data.opponentsSingle[0].athleteId.school.name}}">{{data.opponentsSingle[0].athleteId.school.name | shorten:35}}</p>
                 </div>
               </td>
               <td>
                 <div class="text-left">
-                  <p class="m-clear text-capitalize" title="{{data.opponentsSingle[1].athleteId.fullName}}">{{data.opponentsSingle[1].athleteId.fullName}}</p>
-                  <p class="m-clear text-capitalize" title="{{data.opponentsSingle[1].athleteId.school.name}}">{{data.opponentsSingle[1].athleteId.school.name}}</p>
+                  <span class="knockout-dot-live v-mid" ng-if="data.opponentsSingle[1].isWinner === true"><i class="fa fa-circle"></i></span>
+                  <span class="m-clear text-capitalize" title="" ng-if="data.opponentsSingle[0].athleteId && !data.opponentsSingle[1].athleteId">-</span>
+                  <span class="m-clear text-capitalize" title="TBD" ng-if="!data.opponentsSingle[0].athleteId && !data.opponentsSingle[1].athleteId">TBD</span>
+                  <span class="m-clear text-capitalize" title="{{data.opponentsSingle[1].athleteId.fullName}}">{{data.opponentsSingle[1].athleteId.fullName  | shorten:35}}</span>
+                  <p class="m-clear text-capitalize" title="{{data.opponentsSingle[1].athleteId.school.name}}">{{data.opponentsSingle[1].athleteId.school.name | shorten:35}}</p>
                 </div>
               </td>
               <td>
                 <div>
                   {{data.resultKnockout.finalScore}}
+                </div>
+                <div>
+                  <span class="display-block" ng-if="data.status === 'IsCompleted' && data.walkover && !data.reason">Won by walkover</span>
+                  <span class="display-block" ng-if="data.status === 'IsCompleted' && data.isNoMatch && !data.reason">No match</span>
+                  <span class="display-block" ng-if="data.reason">Bye</span>
+                  <span ng-if="!data.resultKnockout.finalScore">-</span>
                 </div>
               </td>
               <td hidden>
