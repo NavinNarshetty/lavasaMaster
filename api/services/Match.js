@@ -15664,7 +15664,7 @@ var model = {
                                             Match.getAthleteId(paramData, function (err, complete) {
                                                 if (err || _.isEmpty(complete)) {
                                                     singleData["NAME 1"] = null;
-                                                    err = "SFAID 1 may have wrong values";
+                                                    var err = "SFAID 1 may have wrong values";
                                                     callback(null, {
                                                         error: err,
                                                         success: singleData
@@ -15693,7 +15693,7 @@ var model = {
                                             Match.getAthleteId(paramData, function (err, complete) {
                                                 if (err || _.isEmpty(complete)) {
                                                     singleData["NAME 2"] = null;
-                                                    err = "SFAID 2 may have wrong values";
+                                                    var err = "SFAID 2 may have wrong values";
                                                     callback(null, {
                                                         error: err,
                                                         success: singleData
@@ -15747,7 +15747,7 @@ var model = {
                                                 paramData.opponentsSingle.push(singleData["NAME 1"]);
                                                 player.id = singleData["NAME 1"];
                                                 player.player = singleData["Athlete 1"];
-                                                if (_.isEmpty(singleData["P1 SCORE"]) && _.isEmpty(singleData["P1 RANK"])) {
+                                                if (singleData["P1 SCORE"] == undefined && singleData["P1 RANK"] == undefined) {
                                                     player.noShow = true;
                                                     player.walkover = false;
                                                     player1.walkover = true;
@@ -15755,18 +15755,23 @@ var model = {
                                                 } else {
                                                     player.score = singleData["P1 SCORE"];
                                                     player.rank = singleData["P1 RANK"];
+                                                    player.noShow = false;
+                                                    player.walkover = false;
                                                 }
                                                 paramData.opponentsSingle.push(singleData["NAME 2"]);
                                                 player1.id = singleData["NAME 2"];
                                                 player1.player = singleData["Athlete 2"];
-                                                if (_.isEmpty(singleData["P2 SCORE"]) && _.isEmpty(singleData["P2 RANK"])) {
+                                                if (singleData["P2 SCORE"] == undefined && singleData["P2 RANK"] == undefined) {
                                                     player1.noShow = true;
                                                     player1.walkover = false;
                                                     player.noShow = false;
                                                     player.walkover = true;
                                                 } else {
+                                                    console.log("Player 2", player1);
                                                     player1.score = singleData["P2 SCORE"];
                                                     player1.rank = singleData["P2 RANK"];
+                                                    player1.noShow = false;
+                                                    player1.walkover = false;
                                                 }
                                                 resultData.players.push(player);
                                                 resultData.players.push(player1);
@@ -15795,6 +15800,7 @@ var model = {
                                         }, paramData).exec(
                                             function (err, complete) {
                                                 if (err || _.isEmpty(complete)) {
+                                                    var err = "Not updated";
                                                     callback(null, {
                                                         error: err,
                                                         success: paramData
@@ -15815,9 +15821,9 @@ var model = {
                 },
                 function (singleData, callback) {
                     async.concatSeries(singleData, function (n, callback) {
-                            console.log("n", n);
+                            // console.log("n", n);
                             if (countError != 0 && n.error == null) {
-                                console.log("inside", n.success._id, "count", countError);
+                                // console.log("inside", n.success._id, "count", countError);
                                 Match.remove({
                                     _id: n.success._id
                                 }).exec(function (err, found) {
@@ -15840,6 +15846,7 @@ var model = {
                 if (err || _.isEmpty(results)) {
                     callback(err, null);
                 } else {
+                    console.log("data******", importData[0]);
                     callback(null, results);
                 }
             });
