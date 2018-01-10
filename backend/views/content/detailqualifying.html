@@ -274,22 +274,21 @@
                   <!-- ATTEMPT END -->
                 </div>
                 <!-- QUALIFYING ROUND END -->
-                <!-- INDIAN BOW -->
-                <div class="excel-qualifying-holder" ng-if="formData.excelType=='qualifying'">
+                <!-- ARCHERY  QUALIFYING-->
+                <div class="excel-qualifying-holder" ng-if="sportName==='Archery' && formData.excelType==='qualifying'">
                   <div class="row">
                     <h4>Player Details</h4>
                     <div class="col-md-4 ">
                       <div class="form-group ">
                         <label>SFAId</label>
-                        <input type="text " name="round " ng-model="formData.resultQualifyingRound.player.sfaId " class="form-control " placeholder="Round "
-                          readonly>
+                        <input type="text " name="round " ng-model="formData.result.player.sfaId " class="form-control " placeholder="Round " readonly>
                         <div class="error-msg " ng-if="detailForm.round.$invalid && detailForm.round.$touched ">Please Enter Round *</div>
                       </div>
                     </div>
                     <div class="col-md-4 ">
                       <div class="form-group ">
                         <label>Name</label>
-                        <input type="text " name="round " ng-model="formData.resultQualifyingRound.player.fullname " class="form-control " placeholder="Round "
+                        <input type="text " name="round " ng-model="formData.result.player.fullname " class="form-control " placeholder="Round "
                           readonly>
                         <div class="error-msg " ng-if="detailForm.round.$invalid && detailForm.round.$touched ">Please Enter Round *</div>
                       </div>
@@ -297,18 +296,17 @@
                     <div class="col-md-4 ">
                       <div class="form-group ">
                         <label>School</label>
-                        <input type="text " name="round " ng-model="formData.resultQualifyingRound.player.schoolname " class="form-control " placeholder="Round "
+                        <input type="text " name="round " ng-model="formData.result.player.schoolname " class="form-control " placeholder="Round "
                           readonly>
                         <div class="error-msg " ng-if="detailForm.round.$invalid && detailForm.round.$touched ">Please Enter Round *</div>
                       </div>
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-6" ng-repeat="bow in formData.resultQualifyingRound.player.attempt track by $index">
+                    <div class="col-md-6" ng-repeat="bow in formData.result.player.attempt track by $index">
                       <div class="form-group ">
                         <label for="">Attempt {{$index +1 }}</label>
-                        <input type="text " name="round " ng-model="formData.resultQualifyingRound.player.attempt[$index] " class="form-control "
-                          placeholder="Round ">
+                        <input type="text " name="round " ng-model="formData.result.player.attempt[$index] " class="form-control " placeholder="Round ">
                         <div class="error-msg " ng-if="detailForm.round.$invalid && detailForm.round.$touched ">Please Enter Round *</div>
                       </div>
                     </div>
@@ -317,12 +315,60 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <label for="">Final Score</label>
-                        <input type="text " name="round " ng-model="formData.resultQualifyingRound.player.finalScore" class="form-control " placeholder="Round ">
+                        <input type="text " name="round " ng-model="formData.result.player.finalScore" class="form-control " placeholder="Round ">
                       </div>
                     </div>
                   </div>
                 </div>
-                <!-- INDIAN BOW END -->
+                <!-- ARCHERY QUALIFYING END -->
+
+
+                <!-- ARCHERY KNOCKOUT -->
+                <div class="excel-knocout-holder" ng-if="sportName==='Archery' && formData.excelType==='knockout'">
+                  <div class="row" ng-repeat="knockout in formData.opponentsSingle track by $index">
+                    <h4>Player Details {{$index + 1}}</h4>
+                    <div class="col-md-4 ">
+                      <div class="form-group ">
+                        <label>SFAId</label>
+                        <input type="text " name="round " ng-model="knockout.sfaId" class="form-control " placeholder="SFAID " readonly>
+                        <div class="error-msg " ng-if="detailForm.round.$invalid && detailForm.round.$touched ">Please Enter Round *</div>
+                      </div>
+                    </div>
+                    <div class="col-md-4 ">
+                      <div class="form-group ">
+                        <label>Name</label>
+                        <input type="text " name="round " ng-model="knockout.fullname " class="form-control " placeholder="Name" readonly>
+                        <div class="error-msg " ng-if="detailForm.round.$invalid && detailForm.round.$touched ">Please Enter Round *</div>
+                      </div>
+                    </div>
+                    <div class="col-md-4 ">
+                      <div class="form-group ">
+                        <label>School</label>
+                        <input type="text " name="round " ng-model="knockout.schoolname " class="form-control " placeholder="SCHOOL NAME " readonly>
+                        <div class="error-msg " ng-if="detailForm.round.$invalid && detailForm.round.$touched ">Please Enter Round *</div>
+                      </div>
+                    </div>
+                    <div class="checkbox form-group">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label><input type="checkbox" ng-model="formData.result.players[$index].noShow"> noShow</label>
+                        </div>
+                        <div class="col-md-6">
+                          <label><input type="checkbox" ng-model="formData.result.players[$index].walkover"> walkover</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label for="">Final Score</label>
+                        <input type="text " name="round " ng-model="formData.result.finalScore" class="form-control " placeholder="Round ">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- ARCHERY KNOCKOUT END -->
 
                 <!-- SHOOTING QUALIFYING ROUND -->
                 <div class="excel-qualifying-holder" ng-if="formData.sport.sportslist.sportsListSubCategory.name === 'Shooting'">

@@ -165,7 +165,7 @@
                   <div class="row">
                     <div class="col-md-6" ng-repeat="opponent in formData.opponentsTeam track by $index">
                       <div class="form-group">
-                        <span class="delete-opponent" ng-click="deleteOpponentModal(opponent._id,opponent.schoolName)" ng-if="!formData.result"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+                        <span class="delete-opponent" ng-click="deleteOpponentModal(opponent._id,opponent.schoolName)" ng-if="!formData.result" ng-hide="formData.sport.sportslist.drawFormat.name=='Heats'"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
                         <label for="">Opponent{{$index + 1}}</label>
                         <input type="text" placeholder="Name" class="form-control" ng-model="opponent.schoolName" readonly>
                       </div>
@@ -179,7 +179,7 @@
                   <!-- TO DISPLAY OPPONENTS END -->
 
                   <!-- OPPONENTS TEAM -->
-                  <div class="row">
+                  <div class="row" ng-hide="formData.sport.sportslist.drawFormat.name=='Heats'">
                     <div class="col-md-5">
                       <div class="form-group">
                         <label>Opponent 1</label>
@@ -338,7 +338,7 @@
                         <!-- TEAM STATUS -->
                         <div class="form-group">
                           <label>Status</label>
-                          <ui-select name="status" id="status" theme="bootstrap" ng-model="formData.resultsCombat.status" ng-disabled="formData.resultsCombat.status==='IsCompleted'"
+                          <ui-select name="status" id="status" theme="bootstrap" ng-model="formData.result.status" ng-disabled="formData.resultsCombat.status==='IsCompleted'"
                             required>
                             <ui-select-match placeholder="Please Enter Status">
                               {{$select.selected}}
@@ -358,10 +358,10 @@
                         <div class="checkbox  checkbox-mb from-group">
                           <div class="row">
                             <div class="col-md-6">
-                              <label><input type="checkbox" ng-model="formData.resultsCombat.isDraw" value="formData.resultVolleyball.isdraw"> isdraw</label>
+                              <label><input type="checkbox" ng-model="formData.result.isDraw" value="formData.resultVolleyball.isdraw"> isdraw</label>
                             </div>
                             <div class="col-md-6">
-                              <label><input type="checkbox" ng-model="formData.resultsCombat.isNoMatch" value="formData.resultVolleyball.isNoMatch"> isNoMatch</label>
+                              <label><input type="checkbox" ng-model="formData.result.isNoMatch" value="formData.resultVolleyball.isNoMatch"> isNoMatch</label>
                             </div>
                           </div>
                         </div>
@@ -371,13 +371,13 @@
                     <!-- SCORE CARD -->
                     <div class="form-group" fields>
                       <label>Score Card <span ng-show="type.required">*</span></label>
-                      <upload-image ng-model="formData.resultsCombat.scoreSheet" multiple inObj></upload-image>
+                      <upload-image ng-model="formData.result.scoreSheet" multiple inObj></upload-image>
                     </div>
                     <!-- END SCORE CARD -->
                     <!-- MATCH PHOTO -->
                     <div class="form-group">
                       <label>Match<span ng-show="type.required">*</span></label>
-                      <upload-image ng-model="formData.resultsCombat.matchPhoto" multiple inObj></upload-image>
+                      <upload-image ng-model="formData.result.matchPhoto" multiple inObj></upload-image>
                     </div>
                     <!-- END MATCH PHOTO -->
                     <!-- WINNER HOLDER -->
@@ -387,8 +387,7 @@
                         <!-- WINNER -->
                         <div class="form-group">
                           <label>Winner Team</label>
-                          <select name="sponsortype" class="form-control" ng-model="formData.resultsCombat.winner.player" placeholder="Enter Video Type"
-                            required>
+                          <select name="sponsortype" class="form-control" ng-model="formData.result.winner.player" placeholder="Enter Video Type" required>
                                        <option value="{{team._id}}" ng-repeat="team in formData.opponentsTeam">{{team.schoolName}}</option>
                                 </select>
                           <div class="error-msg" ng-if="sponsorForm.sponsortype.$invalid && sponsorForm.sponsortype.$touched">Please Enter Valid Type *</div>
@@ -399,7 +398,7 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <label>Reason</label>
-                          <input type="text" name="winnerreason" ng-model="formData.resultsCombat.winner.reason" class="form-control" placeholder="Enter Reason">
+                          <input type="text" name="winnerreason" ng-model="formData.result.winner.reason" class="form-control" placeholder="Enter Reason">
                         </div>
                       </div>
                       <!-- REASON END -->
@@ -411,7 +410,7 @@
                         <!-- VIDEO LINK -->
                         <div class="form-group">
                           <label>Video Link</label>
-                          <input type="text" name="video" ng-model="formData.resultsCombat.videolink" class="form-control" placeholder="Enter video link">
+                          <input type="text" name="video" ng-model="formData.result.videolink" class="form-control" placeholder="Enter video link">
                           <div class="error-msg" ng-if="detailForm.video.$invalid && detailForm.video.$touched">Please Enter Video Link*</div>
                         </div>
                         <!-- VIDEO LINK END -->
@@ -420,7 +419,7 @@
                         <!-- MATCHCENTER LINK -->
                         <div class="form-group">
                           <label>Matchcenter Link</label>
-                          <input type="text" name="match" ng-model="formData.resultsCombat.matchcenter" class="form-control" placeholder="Enter Match link">
+                          <input type="text" name="match" ng-model="formData.result.matchcenter" class="form-control" placeholder="Enter Match link">
                           <div class="error-msg" ng-if="detailForm.match.$invalid && detailForm.match.$touched">Please Enter Video Link*</div>
                         </div>
                       </div>
@@ -435,7 +434,7 @@
                       <!-- RADIO BUTTON -->
                       <div class="col-md-8">
                         <div class="radio-control-holder">
-                          <label class="radio-inline" ng-repeat="radio in formData.resultsCombat.teams track by $index">
+                          <label class="radio-inline" ng-repeat="radio in formData.result.teams track by $index">
                                                               <input type="radio" ng-model="radioData.radio1" value="{{$index}}" name="optradio">Team {{$index + 1}}
                                                 </label>
                         </div>
@@ -444,11 +443,11 @@
                     </div>
 
                   </div>
-                  <div class="team-volleyball-holder" ng-repeat="team in formData.resultsCombat.teams track by $index" ng-init="teamIndex = $index"
+                  <div class="team-volleyball-holder" ng-repeat="team in formData.result.teams track by $index" ng-init="teamIndex = $index"
                     ng-if="radioData.radio1==$index">
                     <!-- TEAM DETAILS HEADER -->
                     <div class="team-header">
-                      <h5 class="text-uppercase text-center">Team Details </h5>
+                      <h5 class="text-uppercase text-center">Team Details</h5>
                     </div>
                     <!-- TEAM DETAILS HEADER END -->
                     <!-- TEAM CARD HOLDER -->
@@ -503,12 +502,22 @@
                           <h5> TEAM DATA POINTS</h5>
                           <div class="team-data-points-1">
                             <div class="row mb15">
-                              <!-- SETS  POINTS -->
-                              <div class="col-md-2" ng-repeat="set in team.sets track by $index">
+                              <!-- SETS THROWBALL -->
+                              <button class="btn btn-dark pull-right" type="submit " ng-click="addTeamSet($index,'result')">ADD</button>
+                              <div class="col-md-2" ng-repeat="set in team.teamResults.sets track by $index" ng-if="formData.sport.sportslist.name==='Throwball'">
+                                <label for="">Set {{$index+1}}</label>
+                                <span class="cross-team-set" ng-click="removeTeamSet(teamIndex,$index,'result')"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                <input type="number" name="setpoints" ng-model="set.points" class="form-control" placeholder="Enter Points">
+                              </div>
+                              <!-- SETS THROWBALL END -->
+                              <!-- SETS  POINTS KHO KHO -->
+                              <div class="col-md-2" ng-repeat="set in team.sets track by $index" ng-if="formData.sport.sportslist.name==='Kho Kho'">
                                 <label for="">Set {{$index+1}}</label>
                                 <input type="number" name="setpoints" ng-model="set.point" class="form-control" placeholder="Enter Points">
                               </div>
                               <!-- SETS POINTS END -->
+
+
                             </div>
                           </div>
                         </div>
@@ -1473,14 +1482,14 @@
                       <div class="volleyball-team-data-holder">
                         <!-- SETS HOLDER -->
                         <div class="form-group team-data-points-holder">
-                          <button class="btn btn-dark pull-right" type="submit " ng-click="addVolleyballSet($index)">ADD</button>
+                          <button class="btn btn-dark pull-right" type="submit " ng-click="addTeamSet($index,'resultVolleyball')">ADD</button>
                           <h5> TEAM DATA POINTS</h5>
                           <div class="team-data-points-1">
                             <div class="row mb15">
                               <!-- SETS  POINTS -->
                               <div class="col-md-2 relative" ng-repeat="set in team.teamResults.sets track by $index">
                                 <label for="">Set {{$index+1}}</label>
-                                <span class="cross-team-set" ng-click="removeVolleyballSet($parent.$index,$index)"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                <span class="cross-team-set" ng-click="removeTeamSet($parent.$index,$index,'resultVolleyball')"><i class="fa fa-times" aria-hidden="true"></i></span>
                                 <input type="number" name="setpoints" ng-model="set.points" class="form-control" placeholder="Enter Points">
                               </div>
                               <!-- SETS POINTS END -->

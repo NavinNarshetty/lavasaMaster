@@ -83,7 +83,7 @@
               </div>
             </div>
             <!-- HEATS HOLDER -->
-            <!-- KNOCKOUT  -->
+            <!-- KNOCKOUT RACQUET -->
             <div class="knockout-league-holder" ng-if="form.sportslist.name == 'Badminton Doubles'|| form.sportslist.name=='Tennis Doubles'|| form.sportslist.name=='Tennis Mixed Doubles' || form.sportslist.name =='Table Tennis Doubles'">
               <div class="table-responsive">
                 <!--<div class="table-responsive " ng-show="totalItems>0 ">-->
@@ -110,30 +110,36 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <!--<tr ng-repeat="item in items">-->
-                    <!-- <tr ng-repeat="item in items"> -->
                     <tr ng-repeat="item in items|filter:item.matchId">
-                      <!--<tr>-->
                       <td>{{($index + 1)+((form.page-1)*maxRow)}}</td>
-                      <!--<td>{{($index + 1)}}</td>-->
-                      <td>{{item.matchId}}</td>
-                      <td>{{item.round}}
-                        <!-- <pre>{{item.sport.sportslist.sportsListSubCategory.sportsListCategory.name}}</pre>
-                                      <pre>{{item.matchId}}</pre>
-                                      <pre>{{item.sport.sportslist.sportsListSubCategory.isTeam}}</pre> -->
-                      </td>
-                      <td title="{{item.opponentsTeam[0].schoolName}}">
-                        {{item.opponentsTeam[0].teamId}}-{{item.opponentsTeam[0].schoolName | truncate:10;}}
-                      </td>
-                      <td title="{{item.opponentsTeam[1].schoolName}}">
-                        {{item.opponentsTeam[1].teamId}}-{{item.opponentsTeam[1].schoolName | truncate:10;}}
+                      <td>
+                        <div class="fz12">
+                          {{item.matchId}}
+                        </div>
                       </td>
                       <td>
-                        <span ng-class="{'fz10':item.resultsRacquet.teams[0].sets.length > 2 }">  <span ng-repeat="set in item.resultsRacquet.teams[0].sets track by $index">{{item.resultsRacquet.teams[0].sets[$index].point}} <span ng-if="item.resultsRacquet.teams.length > 1">-</span>                        {{item.resultsRacquet.teams[1].sets[$index].point}} <span ng-if="item.resultsRacquet.teams[0].sets.length!==1 && item.resultsRacquet.teams[0].sets.length!==0 && $index!==item.resultsRacquet.teams[0].sets.length-1">,</span>                        </span>
-                        </span>
-                        <!-- <span ng-repeat="set in item.resultsRacquestqq"></span> -->
-
-
+                        <div class="fz12">
+                          {{item.round}}
+                        </div>
+                      </td>
+                      <td title="{{item.opponentsTeam[0].schoolName}}">
+                        <div class="fz12 text-capitalize">
+                          {{item.opponentsTeam[0].teamId}}-{{item.opponentsTeam[0].schoolName | truncate:10;}}
+                        </div>
+                      </td>
+                      <td title="{{item.opponentsTeam[1].schoolName}}">
+                        <div class="fz12 text-capitalize">
+                          {{item.opponentsTeam[1].teamId}}-{{item.opponentsTeam[1].schoolName | truncate:10;}}
+                        </div>
+                      </td>
+                      <td>
+                        <div class="fz12">
+                          <span ng-if="item.resultsRacquet.isNoMatch">No Match</span>
+                          <span ng-if="item.resultsRacquet.winner.reason==='Bye'">Bye</span>
+                          <span ng-repeat="wresult in item.resultsRacquet.teams"> <span ng-if="wresult.walkover">Won by Walker</span></span>
+                          <span ng-class="{'fz10':item.resultsRacquet.teams[0].sets.length > 2 }">  <span ng-repeat="set in item.resultsRacquet.teams[0].sets track by $index">{{item.resultsRacquet.teams[0].sets[$index].point}} <span ng-if="item.resultsRacquet.teams.length > 1">-</span>                          {{item.resultsRacquet.teams[1].sets[$index].point}} <span ng-if="item.resultsRacquet.teams[0].sets.length!==1 && item.resultsRacquet.teams[0].sets.length!==0 && $index!==item.resultsRacquet.teams[0].sets.length-1">,</span>                          </span>
+                          </span>
+                        </div>
                       </td>
                       <td>
                         <a class="btn btn-primary" target="_blank" ng-click="specificFormat(item)">
@@ -143,11 +149,6 @@
                                           <i class="fa fa-trash"></i> Delete
                                         </a>
                       </td>
-                      <!--<td ng-repeat="but in json.json.action">
-                                                            <a class="btn" ng-class="but.buttonClass" ng-click="json.eventAction(but,item) ">
-                                                                <i class="fa" ng-class="but.icon"></i>{{but.name}}
-                                                            </a>
-                                                        </td>-->
                     </tr>
                   </tbody>
                 </table>
@@ -182,27 +183,52 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <!--<tr ng-repeat="item in items">-->
-                    <!-- <tr ng-repeat="item in items"> -->
                     <tr ng-repeat="item in items|filter:item.matchId">
-                      <!--<tr>-->
+
                       <td>{{($index + 1)+((form.page-1)*maxRow)}}</td>
-                      <!--<td>{{($index + 1)}}</td>-->
-                      <td>{{item.matchId}}</td>
-                      <td>{{item.round}}
-                        <!-- <pre>{{item.sport.sportslist.sportsListSubCategory.sportsListCategory.name}}</pre>
-                                                          <pre>{{item.matchId}}</pre>
-                                                          <pre>{{item.sport.sportslist.sportsListSubCategory.isTeam}}</pre> -->
-                      </td>
-                      <td title="{{item.opponentsTeam[0].schoolName}}">
-                        {{item.opponentsTeam[0].teamId}}-{{item.opponentsTeam[0].schoolName | truncate:10;}}
-                      </td>
-                      <td title="{{item.opponentsTeam[1].schoolName}}">
-                        {{item.opponentsTeam[1].teamId}}-{{item.opponentsTeam[1].schoolName | truncate:10;}}
+
+                      <td>
+                        <div class="fz12">
+                          {{item.matchId}}
+                        </div>
                       </td>
                       <td>
-                        <span ng-repeat="set in item.resultsCombat.teams[0].sets track by $index">{{item.resultsCombat.teams[0].sets[$index].point}} <span ng-if="item.resultsCombat.teams.length > 1">-</span>                        {{item.resultsCombat.teams[1].sets[$index].point}} <span ng-if="item.resultsCombat.teams[0].sets.length!==1 && item.resultsCombat.teams[0].sets.length!==0 && $index!==item.resultsCombat.teams[0].sets.length-1">,</span>                        </span>
-                        <!-- <span ng-repeat="set in item.resultsRacquestqq"></span> -->
+                        <div class="fz12">
+                          {{item.round}}
+                        </div>
+                      </td>
+                      <td title="{{item.opponentsTeam[0].schoolName}}">
+                        <div class="fz12">
+                          {{item.opponentsTeam[0].teamId}}-{{item.opponentsTeam[0].schoolName | truncate:10;}}
+                        </div>
+                      </td>
+                      <td title="{{item.opponentsTeam[1].schoolName}}">
+                        <div class="fz12">
+                          {{item.opponentsTeam[1].teamId}}-{{item.opponentsTeam[1].schoolName | truncate:10;}}
+                        </div>
+                      </td>
+                      <td>
+                        <!-- KHO KHO -->
+                        <div class="fz12" ng-if="form.sportslist.name == 'Kho Kho'">
+                          <span ng-if="item.resultsCombat.isNoMatch">No Match</span>
+                          <span ng-if="item.resultsCombat.winner.reason==='Bye'">Bye</span>
+                          <span ng-repeat="wresult in item.resultsCombat.teams track by $index">
+                                   <span ng-if="wresult.walkover">Won by Walker</span>
+                          </span>
+                          <span ng-repeat="set in item.resultsCombat.teams[0].sets track by $index">{{item.resultsCombat.teams[0].sets[$index].point}} <span ng-if="item.resultsCombat.teams.length > 1" ng-hide="item.resultsCombat.winner.reason ==='Bye'|| item.resultsCombat.teams[0].walkover===true || item.resultsCombat.teams[1].walkover===true">-</span>                          {{item.resultsCombat.teams[1].sets[$index].point}} <span ng-if="item.resultsCombat.teams[0].sets.length!==1 && item.resultsCombat.teams[0].sets.length!==0 && $index!==item.resultsCombat.teams[0].sets.length-1">,</span>                          </span>
+                        </div>
+                        <!-- KHO KHO END -->
+
+                        <!-- THROWBALL -->
+                        <div class="fz12" ng-if="form.sportslist.name == 'Throwball'">
+                          <span ng-if="item.resultThrowball.isNoMatch">No Match</span>
+                          <span ng-if="item.resultThrowball.winner.reason==='Bye'">Bye</span>
+                          <span ng-repeat="wresult in item.resultThrowball.teams track by $index">
+                                     <span ng-if="wresult.walkover">Won by Walker</span>
+                          </span>
+                          <span>{{item.resultThrowball.teams[0].teamResults.finalPoints}}</span> <span ng-hide="item.resultThrowball.winner.reason==='Bye'|| item.resultThrowball.teams[0].walkover===true || item.resultThrowball.teams[1].walkover===true">-</span>                          <span>{{item.resultThrowball.teams[1].teamResults.finalPoints}}</span>
+                        </div>
+                        <!-- THROWBALL END -->
 
                       </td>
                       <td>
@@ -213,11 +239,6 @@
                                                               <i class="fa fa-trash"></i> Delete
                                                             </a>
                       </td>
-                      <!--<td ng-repeat="but in json.json.action">
-                                                                                <a class="btn" ng-class="but.buttonClass" ng-click="json.eventAction(but,item) ">
-                                                                                    <i class="fa" ng-class="but.icon"></i>{{but.name}}
-                                                                                </a>
-                                                                            </td>-->
                     </tr>
                   </tbody>
                 </table>
@@ -295,8 +316,8 @@
                 </table>
               </div>
             </div>
-            <!-- LEAGUE KNOCKOUT HOLDER END BASKETBALL -->
-            <!--LEAGUE KNOCKOUT HOLDER -->
+            <!-- LEAGUE KNOCKOUT HOLDER END  -->
+            <!--LEAGUE KNOCKOUT BASKETBALL HOLDER -->
             <div class="knockout-league-holder" ng-if="form.sportslist.name == 'Basketball'">
               <div class="table-responsive">
                 <!--<div class="table-responsive " ng-show="totalItems>0 ">-->
@@ -323,43 +344,47 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <!--<tr ng-repeat="item in items">-->
-                    <!-- <tr ng-repeat="item in items"> -->
                     <tr ng-repeat="item in items|filter:item.matchId">
-                      <!--<tr>-->
                       <td>{{($index + 1)+((form.page-1)*maxRow)}}</td>
-                      <!--<td>{{($index + 1)}}</td>-->
-                      <td>{{item.matchId}}</td>
-                      <td>{{item.round}}
-                        <!-- <pre>{{item.sport.sportslist.sportsListSubCategory.sportsListCategory.name}}</pre>
-                                              <pre>{{item.matchId}}</pre>
-                                              <pre>{{item.sport.sportslist.sportsListSubCategory.isTeam}}</pre> -->
-                      </td>
-                      <td title="{{item.opponentsTeam[0].schoolName}}">
-                        {{item.opponentsTeam[0].teamId}}-{{item.opponentsTeam[0].schoolName | truncate:10;}}
-                      </td>
-                      <td title="{{item.opponentsTeam[1].schoolName}}">
-                        {{item.opponentsTeam[1].teamId}}-{{item.opponentsTeam[1].schoolName | truncate:10;}}
+                      <td>
+                        <div class="fz12">
+                          {{item.matchId}}
+                        </div>
                       </td>
                       <td>
-                        <!-- <span ng-repeat="set in item.resultsRacquet.teams[0].sets track by $index">{{item.resultsRacquet.teams[0].sets[$index].point}} <span ng-if="item.resultsRacquet.teams.length > 1">-</span>                        {{item.resultsRacquet.teams[1].sets[$index].point}} <span ng-if="item.resultsRacquet.teams[0].sets.length!==1 && item.resultsRacquet.teams[0].sets.length!==0 && $index!==item.resultsRacquet.teams[0].sets.length-1">,</span>                        </span> -->
-                        <!-- <span ng-repeat="set in item.resultsRacquestqq"></span> -->
-                        <span>{{item.resultBasketball.teams[0].teamResults.finalGoalPoints}}</span> <span>-</span> <span>{{item.resultBasketball.teams[1].teamResults.finalGoalPoints}}</span>
+                        <div class="fz12">
+                          {{item.round}}
+                        </div>
+                      </td>
+                      <td title="{{item.opponentsTeam[0].schoolName}}">
+                        <div class="fz12">
+                          {{item.opponentsTeam[0].teamId}}-{{item.opponentsTeam[0].schoolName | truncate:10;}}
+                        </div>
+                      </td>
+                      <td title="{{item.opponentsTeam[1].schoolName}}">
+                        <div class="fz12">
+                          {{item.opponentsTeam[1].teamId}}-{{item.opponentsTeam[1].schoolName | truncate:10;}}
+                        </div>
+                      </td>
+                      <td>
+                        <div class="fz12">
+                          <span ng-if="item.resultBasketball.isNoMatch">No Match</span>
+                          <span ng-if="item.resultBasketball.winner.reason==='Bye'">Bye</span>
+                          <span ng-repeat="wresult in item.resultBasketball.teams track by $index">
+                             <span ng-if="wresult.walkover">Won by Walker</span>
+                          </span>
+                          <span>{{item.resultBasketball.teams[0].teamResults.finalGoalPoints}}</span> <span ng-hide="item.resultBasketball.winner.reason==='Bye'|| item.resultBasketball.teams[0].walkover===true || item.resultBasketball.teams[1].walkover===true">-</span>                          <span>{{item.resultBasketball.teams[1].teamResults.finalGoalPoints}}</span>
+                        </div>
 
                       </td>
                       <td>
-                        <a class="btn btn-primary" target="_blank" ng-click="specificFormat(item)">
-                                                  <i class="fa fa-pencil"></i> Edit
-                                                </a>
-                        <a class="btn btn-danger" ng-click="confDel(item._id)">
-                                                  <i class="fa fa-trash"></i> Delete
-                                                </a>
+                        <a class="btn btn-primary " target="_blank " ng-click="specificFormat(item) ">
+                                                  <i class="fa fa-pencil "></i> Edit
+                        </a>
+                        <a class="btn btn-danger " ng-click="confDel(item._id) ">
+                                                  <i class="fa fa-trash "></i> Delete
+                        </a>
                       </td>
-                      <!--<td ng-repeat="but in json.json.action">
-                                                                    <a class="btn" ng-class="but.buttonClass" ng-click="json.eventAction(but,item) ">
-                                                                        <i class="fa" ng-class="but.icon"></i>{{but.name}}
-                                                                    </a>
-                                                                </td>-->
                     </tr>
                   </tbody>
                 </table>
@@ -368,9 +393,8 @@
             <!-- LEAGUE KNOCKOUT HOLDER END BASKET BALL -->
 
             <!--LEAGUE KNOCKOUT HOLDER HANDBALL -->
-            <div class="knockout-league-holder" ng-if="form.sportslist.name == 'Handball'">
-              <div class="table-responsive">
-                <!--<div class="table-responsive " ng-show="totalItems>0 ">-->
+            <div class="knockout-league-holder " ng-if="form.sportslist.name=='Handball' ">
+              <div class="table-responsive ">
                 <table class="table">
                   <thead>
                     <tr>
@@ -394,28 +418,40 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <!--<tr ng-repeat="item in items">-->
-                    <!-- <tr ng-repeat="item in items"> -->
                     <tr ng-repeat="item in items|filter:item.matchId">
-                      <!--<tr>-->
+
                       <td>{{($index + 1)+((form.page-1)*maxRow)}}</td>
-                      <!--<td>{{($index + 1)}}</td>-->
-                      <td>{{item.matchId}}</td>
-                      <td>{{item.round}}
-                        <!-- <pre>{{item.sport.sportslist.sportsListSubCategory.sportsListCategory.name}}</pre>
-                                                            <pre>{{item.matchId}}</pre>
-                                                            <pre>{{item.sport.sportslist.sportsListSubCategory.isTeam}}</pre> -->
-                      </td>
-                      <td title="{{item.opponentsTeam[0].schoolName}}">
-                        {{item.opponentsTeam[0].teamId}}-{{item.opponentsTeam[0].schoolName | truncate:10;}}
-                      </td>
-                      <td title="{{item.opponentsTeam[1].schoolName}}">
-                        {{item.opponentsTeam[1].teamId}}-{{item.opponentsTeam[1].schoolName | truncate:10;}}
+
+                      <td>
+                        <div class="fz12">
+                          {{item.matchId}}
+                        </div>
                       </td>
                       <td>
-                        <!-- <span ng-repeat="set in item.resultsRacquet.teams[0].sets track by $index">{{item.resultsRacquet.teams[0].sets[$index].point}} <span ng-if="item.resultsRacquet.teams.length > 1">-</span>                        {{item.resultsRacquet.teams[1].sets[$index].point}} <span ng-if="item.resultsRacquet.teams[0].sets.length!==1 && item.resultsRacquet.teams[0].sets.length!==0 && $index!==item.resultsRacquet.teams[0].sets.length-1">,</span>                        </span> -->
-                        <!-- <span ng-repeat="set in item.resultsRacquestqq"></span> -->
-                        <span>{{item.resultHandball.teams[0].teamResults.finalPoints}}</span> <span>-</span> <span>{{item.resultHandball.teams[1].teamResults.finalPoints}}</span>
+                        <div class="fz12">
+                          {{item.round}}
+                        </div>
+                      </td>
+                      <td title="{{item.opponentsTeam[0].schoolName}}">
+                        <div class="fz12">
+                          {{item.opponentsTeam[0].teamId}}-{{item.opponentsTeam[0].schoolName | truncate:10;}}
+                        </div>
+                      </td>
+                      <td title="{{item.opponentsTeam[1].schoolName}}">
+                        <div class="fz12">
+                          {{item.opponentsTeam[1].teamId}}-{{item.opponentsTeam[1].schoolName | truncate:10;}}
+                        </div>
+                      </td>
+                      <td>
+                        <div class="fz12">
+                          <span ng-if="item.resultHandball.isNoMatch">No Match</span>
+                          <span ng-if="item.resultHandball.winner.reason==='Bye'">Bye</span>
+                          <span ng-repeat="wresult in item.resultHandball.teams track by $index">
+                               <span ng-if="wresult.walkover">Won by Walker</span>
+                          </span>
+                          <span>{{item.resultHandball.teams[0].teamResults.finalPoints}}</span> <span ng-hide="item.resultHandball.winner.reason==='Bye'|| item.resultHandball.teams[0].walkover===true || item.resultHandball.teams[1].walkover===true">-</span>                          <span>{{item.resultHandball.teams[1].teamResults.finalPoints}}</span>
+                        </div>
+
 
                       </td>
                       <td>
@@ -426,11 +462,6 @@
                                                                 <i class="fa fa-trash"></i> Delete
                                                               </a>
                       </td>
-                      <!--<td ng-repeat="but in json.json.action">
-                                                                                  <a class="btn" ng-class="but.buttonClass" ng-click="json.eventAction(but,item) ">
-                                                                                      <i class="fa" ng-class="but.icon"></i>{{but.name}}
-                                                                                  </a>
-                                                                              </td>-->
                     </tr>
                   </tbody>
                 </table>
@@ -465,29 +496,38 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <!--<tr ng-repeat="item in items">-->
-                    <!-- <tr ng-repeat="item in items"> -->
                     <tr ng-repeat="item in items|filter:item.matchId">
-                      <!--<tr>-->
+
                       <td>{{($index + 1)+((form.page-1)*maxRow)}}</td>
-                      <!--<td>{{($index + 1)}}</td>-->
-                      <td>{{item.matchId}}</td>
-                      <td>{{item.round}}
-                        <!-- <pre>{{item.sport.sportslist.sportsListSubCategory.sportsListCategory.name}}</pre>
-                                                                          <pre>{{item.matchId}}</pre>
-                                                                          <pre>{{item.sport.sportslist.sportsListSubCategory.isTeam}}</pre> -->
-                      </td>
-                      <td title="{{item.opponentsTeam[0].schoolName}}">
-                        {{item.opponentsTeam[0].teamId}}-{{item.opponentsTeam[0].schoolName | truncate:10;}}
-                      </td>
-                      <td title="{{item.opponentsTeam[1].schoolName}}">
-                        {{item.opponentsTeam[1].teamId}}-{{item.opponentsTeam[1].schoolName | truncate:10;}}
+                      <td>
+                        <div class="fz12">
+                          {{item.matchId}}
+                        </div>
                       </td>
                       <td>
-                        <!-- <span ng-repeat="set in item.resultsRacquet.teams[0].sets track by $index">{{item.resultsRacquet.teams[0].sets[$index].point}} <span ng-if="item.resultsRacquet.teams.length > 1">-</span>                        {{item.resultsRacquet.teams[1].sets[$index].point}} <span ng-if="item.resultsRacquet.teams[0].sets.length!==1 && item.resultsRacquet.teams[0].sets.length!==0 && $index!==item.resultsRacquet.teams[0].sets.length-1">,</span>                        </span> -->
-                        <!-- <span ng-repeat="set in item.resultsRacquestqq"></span> -->
-                        <span>{{item.resultKabaddi.teams[0].teamResults.finalPoints}}</span> <span>-</span> <span>{{item.resultKabaddi.teams[1].teamResults.finalPoints}}</span>
-
+                        <div class="fz12">
+                          {{item.round}}
+                        </div>
+                      </td>
+                      <td title="{{item.opponentsTeam[0].schoolName}}">
+                        <div class="fz12">
+                          {{item.opponentsTeam[0].teamId}}-{{item.opponentsTeam[0].schoolName | truncate:10;}}
+                        </div>
+                      </td>
+                      <td title="{{item.opponentsTeam[1].schoolName}}">
+                        <div class="fz12">
+                          {{item.opponentsTeam[1].teamId}}-{{item.opponentsTeam[1].schoolName | truncate:10;}}
+                        </div>
+                      </td>
+                      <td>
+                        <div class="fz12">
+                          <span ng-if="item.resultKabaddi.isNoMatch">No Match</span>
+                          <span ng-if="item.resultKabaddi.winner.reason==='Bye'">Bye</span>
+                          <span ng-repeat="wresult in item.resultKabaddi.teams track by $index">
+                                 <span ng-if="wresult.walkover">Won by Walker</span>
+                          </span>
+                          <span>{{item.resultKabaddi.teams[0].teamResults.finalPoints}}</span> <span ng-hide="item.resultKabaddi.winner.reason==='Bye'|| item.resultKabaddi.teams[0].walkover===true || item.resultKabaddi.teams[1].walkover===true">-</span>                          <span>{{item.resultKabaddi.teams[1].teamResults.finalPoints}}</span>
+                        </div>
                       </td>
                       <td>
                         <a class="btn btn-primary" target="_blank" ng-click="specificFormat(item)">
@@ -495,13 +535,8 @@
                                                                             </a>
                         <a class="btn btn-danger" ng-click="confDel(item._id)">
                                                                               <i class="fa fa-trash"></i> Delete
-                                                                            </a>
+                        </a>
                       </td>
-                      <!--<td ng-repeat="but in json.json.action">
-                                                                                                <a class="btn" ng-class="but.buttonClass" ng-click="json.eventAction(but,item) ">
-                                                                                                    <i class="fa" ng-class="but.icon"></i>{{but.name}}
-                                                                                                </a>
-                                                                                            </td>-->
                     </tr>
                   </tbody>
                 </table>
@@ -536,28 +571,39 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <!--<tr ng-repeat="item in items">-->
-                    <!-- <tr ng-repeat="item in items"> -->
                     <tr ng-repeat="item in items|filter:item.matchId">
-                      <!--<tr>-->
+
                       <td>{{($index + 1)+((form.page-1)*maxRow)}}</td>
-                      <!--<td>{{($index + 1)}}</td>-->
-                      <td>{{item.matchId}}</td>
-                      <td>{{item.round}}
-                        <!-- <pre>{{item.sport.sportslist.sportsListSubCategory.sportsListCategory.name}}</pre>
-                                                                                        <pre>{{item.matchId}}</pre>
-                                                                                        <pre>{{item.sport.sportslist.sportsListSubCategory.isTeam}}</pre> -->
-                      </td>
-                      <td title="{{item.opponentsTeam[0].schoolName}}">
-                        {{item.opponentsTeam[0].teamId}}-{{item.opponentsTeam[0].schoolName | truncate:10;}}
-                      </td>
-                      <td title="{{item.opponentsTeam[1].schoolName}}">
-                        {{item.opponentsTeam[1].teamId}}-{{item.opponentsTeam[1].schoolName | truncate:10;}}
+
+                      <td>
+                        <div class="fz12">
+                          {{item.matchId}}
+                        </div>
                       </td>
                       <td>
-                        <!-- <span ng-repeat="set in item.resultsRacquet.teams[0].sets track by $index">{{item.resultsRacquet.teams[0].sets[$index].point}} <span ng-if="item.resultsRacquet.teams.length > 1">-</span>                        {{item.resultsRacquet.teams[1].sets[$index].point}} <span ng-if="item.resultsRacquet.teams[0].sets.length!==1 && item.resultsRacquet.teams[0].sets.length!==0 && $index!==item.resultsRacquet.teams[0].sets.length-1">,</span>                        </span> -->
-                        <!-- <span ng-repeat="set in item.resultsRacquestqq"></span> -->
-                        <span>{{item.resultHockey.teams[0].teamResults.finalPoints}}</span> <span>-</span> <span>{{item.resultHockey.teams[1].teamResults.finalPoints}}</span>
+                        <div class="fz12">
+                          {{item.round}}
+                        </div>
+                      </td>
+                      <td title="{{item.opponentsTeam[0].schoolName}}">
+                        <div class="fz12">
+                          {{item.opponentsTeam[0].teamId}}-{{item.opponentsTeam[0].schoolName | truncate:10;}}
+                        </div>
+                      </td>
+                      <td title="{{item.opponentsTeam[1].schoolName}}">
+                        <div class="fz12">
+                          {{item.opponentsTeam[1].teamId}}-{{item.opponentsTeam[1].schoolName | truncate:10;}}
+                        </div>
+                      </td>
+                      <td>
+                        <div class="fz12">
+                          <span ng-if="item.resultHockey.isNoMatch">No Match</span>
+                          <span ng-if="item.resultHockey.winner.reason==='Bye'">Bye</span>
+                          <span ng-repeat="wresult in item.resultHockey.teams track by $index">
+                                   <span ng-if="wresult.walkover">Won by Walker</span>
+                          </span>
+                          <span>{{item.resultHockey.teams[0].teamResults.finalPoints}}</span> <span ng-hide="item.resultHockey.winner.reason==='Bye'|| item.resultHockey.teams[0].walkover===true || item.resultHockey.teams[1].walkover===true">-</span>                          <span>{{item.resultHockey.teams[1].teamResults.finalPoints}}</span>
+                        </div>
 
                       </td>
                       <td>
@@ -568,11 +614,6 @@
                                                                                             <i class="fa fa-trash"></i> Delete
                                                                                           </a>
                       </td>
-                      <!--<td ng-repeat="but in json.json.action">
-                                                                                                              <a class="btn" ng-class="but.buttonClass" ng-click="json.eventAction(but,item) ">
-                                                                                                                  <i class="fa" ng-class="but.icon"></i>{{but.name}}
-                                                                                                              </a>
-                                                                                                          </td>-->
                     </tr>
                   </tbody>
                 </table>
@@ -607,29 +648,39 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <!--<tr ng-repeat="item in items">-->
-                    <!-- <tr ng-repeat="item in items"> -->
                     <tr ng-repeat="item in items|filter:item.matchId">
-                      <!--<tr>-->
+
                       <td>{{($index + 1)+((form.page-1)*maxRow)}}</td>
-                      <!--<td>{{($index + 1)}}</td>-->
-                      <td>{{item.matchId}}</td>
-                      <td>{{item.round}}
-                        <!-- <pre>{{item.sport.sportslist.sportsListSubCategory.sportsListCategory.name}}</pre>
-                                                                                                      <pre>{{item.matchId}}</pre>
-                                                                                                      <pre>{{item.sport.sportslist.sportsListSubCategory.isTeam}}</pre> -->
-                      </td>
-                      <td title="{{item.opponentsTeam[0].schoolName}}">
-                        {{item.opponentsTeam[0].teamId}}-{{item.opponentsTeam[0].schoolName | truncate:10;}}
-                      </td>
-                      <td title="{{item.opponentsTeam[1].schoolName}}">
-                        {{item.opponentsTeam[1].teamId}}-{{item.opponentsTeam[1].schoolName | truncate:10;}}
+
+                      <td>
+                        <div class="fz12">
+                          {{item.matchId}}
+                        </div>
                       </td>
                       <td>
-                        <!-- <span ng-repeat="set in item.resultsRacquet.teams[0].sets track by $index">{{item.resultsRacquet.teams[0].sets[$index].point}} <span ng-if="item.resultsRacquet.teams.length > 1">-</span>                        {{item.resultsRacquet.teams[1].sets[$index].point}} <span ng-if="item.resultsRacquet.teams[0].sets.length!==1 && item.resultsRacquet.teams[0].sets.length!==0 && $index!==item.resultsRacquet.teams[0].sets.length-1">,</span>                        </span> -->
-                        <!-- <span ng-repeat="set in item.resultsRacquestqq"></span> -->
-                        <span>{{item.resultWaterPolo.teams[0].teamResults.finalGoalPoints}}</span> <span>-</span> <span>{{item.resultWaterPolo.teams[1].teamResults.finalGoalPoints}}</span>
-
+                        <div class="fz12">
+                          {{item.round}}
+                        </div>
+                      </td>
+                      <td title="{{item.opponentsTeam[0].schoolName}}">
+                        <div class="fz12">
+                          {{item.opponentsTeam[0].teamId}}-{{item.opponentsTeam[0].schoolName | truncate:10;}}
+                        </div>
+                      </td>
+                      <td title="{{item.opponentsTeam[1].schoolName}}">
+                        <div class="fz12">
+                          {{item.opponentsTeam[1].teamId}}-{{item.opponentsTeam[1].schoolName | truncate:10;}}
+                        </div>
+                      </td>
+                      <td>
+                        <div class="fz-12">
+                          <span ng-if="item.resultWaterPolo.isNoMatch">No Match</span>
+                          <span ng-if="item.resultWaterPolo.winner.reason==='Bye'">Bye</span>
+                          <span ng-repeat="wresult in item.resultWaterPolo.teams track by $index">
+                                   <span ng-if="wresult.walkover">Won by Walker</span>
+                          </span>
+                          <span>{{item.resultWaterPolo.teams[0].teamResults.finalGoalPoints}}</span> <span ng-hide="item.resultWaterPolo.winner.reason==='Bye'|| item.resultWaterPolo.teams[0].walkover===true || item.resultWaterPolo.teams[1].walkover===true">-</span>                          <span>{{item.resultWaterPolo.teams[1].teamResults.finalGoalPoints}}</span>
+                        </div>
                       </td>
                       <td>
                         <a class="btn btn-primary" target="_blank" ng-click="specificFormat(item)">
@@ -639,11 +690,7 @@
                                                                                                           <i class="fa fa-trash"></i> Delete
                                                                                                         </a>
                       </td>
-                      <!--<td ng-repeat="but in json.json.action">
-                                                                                                                            <a class="btn" ng-class="but.buttonClass" ng-click="json.eventAction(but,item) ">
-                                                                                                                                <i class="fa" ng-class="but.icon"></i>{{but.name}}
-                                                                                                                            </a>
-                                                                                                                        </td>-->
+
                     </tr>
                   </tbody>
                 </table>
@@ -678,30 +725,42 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <!--<tr ng-repeat="item in items">-->
-                    <!-- <tr ng-repeat="item in items"> -->
                     <tr ng-repeat="item in items|filter:item.matchId">
-                      <!--<tr>-->
+
                       <td>{{($index + 1)+((form.page-1)*maxRow)}}</td>
-                      <!--<td>{{($index + 1)}}</td>-->
-                      <td>{{item.matchId}}</td>
-                      <td>{{item.round}}
-                        <!-- <pre>{{item.sport.sportslist.sportsListSubCategory.sportsListCategory.name}}</pre>
-                                                                                                                    <pre>{{item.matchId}}</pre>
-                                                                                                                    <pre>{{item.sport.sportslist.sportsListSubCategory.isTeam}}</pre> -->
-                      </td>
-                      <td title="{{item.opponentsTeam[0].schoolName}}">
-                        {{item.opponentsTeam[0].teamId}}-{{item.opponentsTeam[0].schoolName | truncate:10;}}
-                      </td>
-                      <td title="{{item.opponentsTeam[1].schoolName}}">
-                        {{item.opponentsTeam[1].teamId}}-{{item.opponentsTeam[1].schoolName | truncate:10;}}
+
+                      <td>
+                        <div class="fz12">
+                          {{item.matchId}}
+                        </div>
                       </td>
                       <td>
-                        <span ng-class="{'fz10':item.resultVolleyball.teams[0].teamResults.sets.length > 2 }">  <span ng-repeat="set in item.resultVolleyball.teams[0].teamResults.sets track by $index">{{item.resultVolleyball.teams[0].teamResults.sets[$index].points}} <span ng-if="item.resultVolleyball.teams.length > 1">-</span>                        {{item.resultVolleyball.teams[1].teamResults.sets[$index].points}} <span ng-if="item.resultVolleyball.teams[0].teamResults.sets.length!==1 && item.resultVolleyball.teams[0].teamResults.sets.length!==0 && $index!==item.resultVolleyball.teams[0].teamResults.sets.length-1">,</span>                        </span>
-                        </span>
-                        <!-- <span ng-repeat="set in item.resultsRacquestqq"></span> -->
+                        <div class="fz12">
+                          {{item.round}}
+                        </div>
+                      </td>
+                      <td title="{{item.opponentsTeam[0].schoolName}}">
+                        <div class="fz12">
+                          {{item.opponentsTeam[0].teamId}}-{{item.opponentsTeam[0].schoolName | truncate:10;}}
+                        </div>
+                      </td>
+                      <td title="{{item.opponentsTeam[1].schoolName}}">
+                        <div class="fz12">
+                          {{item.opponentsTeam[1].teamId}}-{{item.opponentsTeam[1].schoolName | truncate:10;}}
+                        </div>
+                      </td>
+                      <td>
+                        <div class="fz12">
 
-
+                          <div class="fz12">
+                            <span ng-if="item.resultVolleyball.isNoMatch">No Match</span>
+                            <span ng-if="item.resultVolleyball.winner.reason =='Bye'">Bye</span>
+                            <span ng-repeat="wresult in item.resultVolleyball.teams track by $index">
+                                         <span ng-if="wresult.walkover">Won by Walker</span>
+                            </span>
+                            <span ng-class="{'fz10':item.resultVolleyball.teams[0].teamResults.sets.length > 2 }">  <span ng-repeat="set in item.resultVolleyball.teams[0].teamResults.sets track by $index">{{item.resultVolleyball.teams[0].teamResults.sets[$index].points}} <span ng-if="item.resultVolleyball.teams.length > 1" ng-hide="item.resultVolleyball.winner.reason==='Bye'|| item.resultVolleyball.teams[0].walkover===true || item.resultVolleyball.teams[1].walkover===true" >-</span>                            {{item.resultVolleyball.teams[1].teamResults.sets[$index].points}} <span ng-if="item.resultVolleyball.teams[0].teamResults.sets.length!==1 && item.resultVolleyball.teams[0].teamResults.sets.length!==0 && $index!==item.resultVolleyball.teams[0].teamResults.sets.length-1">,</span>                            </span>
+                            </span>
+                          </div>
                       </td>
                       <td>
                         <a class="btn btn-primary" target="_blank" ng-click="specificFormat(item)">
@@ -711,25 +770,20 @@
                                                                                                                         <i class="fa fa-trash"></i> Delete
                                                                                                                       </a>
                       </td>
-                      <!--<td ng-repeat="but in json.json.action">
-                                                                                                                                          <a class="btn" ng-class="but.buttonClass" ng-click="json.eventAction(but,item) ">
-                                                                                                                                              <i class="fa" ng-class="but.icon"></i>{{but.name}}
-                                                                                                                                          </a>
-                                                                                                                                      </td>-->
                     </tr>
                   </tbody>
                 </table>
+                </div>
               </div>
+              <!-- LEAGUE KNOCKOUT HOLDER END VOLLEYBALL -->
+
+
+
+              <ul ng-if="totalItems" ng-change="viewTable()" uib-pagination total-items="totalItems" items-per-page="maxRow" ng-model="form.page"
+                max-size="template.pageMax" class="pagination-sm" boundary-links="true " force-ellipses="true "></ul>
             </div>
-            <!-- LEAGUE KNOCKOUT HOLDER END VOLLEYBALL -->
-
-
-
-            <ul ng-if="totalItems" ng-change="viewTable()" uib-pagination total-items="totalItems" items-per-page="maxRow" ng-model="form.page"
-              max-size="template.pageMax" class="pagination-sm" boundary-links="true " force-ellipses="true "></ul>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
