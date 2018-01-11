@@ -700,6 +700,7 @@ var controller = {
                         if (req.body.resultType == "knockout") {
                             Match.generateGraphicsKnockout(req.body, res);
                         } else if (req.body.resultType == "heat") {
+                            console.log("inside generateGraphicsExcel", req.body);
                             Match.generateGraphicsHeat(req.body, res);
                         } else if (req.body.resultType == "qualifying-round" || req.body.resultType == "direct-final") {
                             Match.generateGraphicsQualifyingRound(req.body, res);

@@ -2907,6 +2907,7 @@ var model = {
                 }
             });
     },
+
     //except page1 without sfa
     editAthleteData1: function (data, start, maxRow, callback) {
         if (data.sportName.includes("Mix") || data.sportName.includes("mix")) {
@@ -2975,6 +2976,7 @@ var model = {
                 }
             });
     },
+
     //with sfa
     editAtheleteDataIncludingSfa: function (data, start, maxRow, callback) {
         if (data.sportName.includes("Mix") || data.sportName.includes("mix")) {
@@ -3516,6 +3518,6 @@ var model = {
                     }
                 }
             });
-    }
+    },
 };
 module.exports = _.assign(module.exports, exports, model);

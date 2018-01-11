@@ -105,7 +105,6 @@ var model = {
                     });
                 },
                 function (property, callback) {
-
                     var team = {};
                     team.name = data.name;
                     team.sport = data.sport;

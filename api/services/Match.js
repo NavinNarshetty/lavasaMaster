@@ -5462,14 +5462,10 @@ var model = {
                         Match.generateExcelHeatIndividual(match, function (err, singleData) {
                             Config.generateExcel("KnockoutIndividual", singleData, res);
                         });
-                    } else if (data.playerType == "team" && req.body.playerSpecific == "no") {
+                    } else if (data.playerType == "team" && data.playerSpecific == "no") {
                         Match.generateExcelHeatTeam(match, function (err, singleData) {
                             Config.generateExcel("KnockoutTeam", singleData, res);
                         });
-                    } else if (data.playerType == "team" && req.body.playerSpecific == "yes") {
-                        // Match.generatePlayerSpecific(match, function (err, singleData) {
-                        //     Config.generateExcel("KnockoutTeam", singleData, res);
-                        // });
                     } else {
                         res.json({
                             "data": "Body not Found",
@@ -7861,7 +7857,7 @@ var model = {
     generateGraphicsHeat: function (data, res) {
         async.waterfall([
                 function (callback) {
-                    var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
+                    var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId.school";
                     Match.find({
                         sport: data.sport
                     }).lean().deepPopulate(deepSearch).exec(function (err, match) {
@@ -7871,7 +7867,6 @@ var model = {
                             if (_.isEmpty(match)) {
                                 callback(null, []);
                             } else {
-                                // console.log("found0", match);
                                 callback(null, match);
                             }
                         }
@@ -7883,6 +7878,7 @@ var model = {
                             Config.generateExcel("KnockoutIndividual", singleData, res);
                         });
                     } else if (data.playerType == "team") {
+                        console.log("match", match);
                         Match.generateGraphicsHeatTeam(match, function (err, singleData) {
                             Config.generateExcel("KnockoutTeam", singleData, res);
                         });
@@ -8045,7 +8041,8 @@ var model = {
                 var laneNo = 1;
                 var i = 0;
                 if (!_.isEmpty(matchData.resultHeat)) {
-                    async.concatSeries(matchData.resultHeat.players, function (mainData, callback) {
+                    async.concatSeries(matchData.resultHeat.teams, function (mainData, callback) {
+                            console.log("mainData", mainData, "matchData", matchData.opponentsTeam[0].studentTeam[0].studentId.school);
                             var obj = {};
                             var dateTime = moment(matchData.scheduleDate).format('DD/MM/YYYY');
                             obj.DATE = dateTime;
@@ -8064,10 +8061,12 @@ var model = {
                             obj["LANE NUMBER"] = mainData.laneNo;
                             if (mainData.id) {
                                 obj["TEAM ID"] = matchData.opponentsTeam[i].teamId;
-                                if (matchData.opponentsTeam[i].studentTeam.studentId.school && matchData.opponentsTeam[i].studentTeam.studentId.school.screenName) {
+                                if (matchData.opponentsTeam[i].studentTeam[0].studentId.school && matchData.opponentsTeam[i].studentTeam[0].studentId.school.screenName) {
                                     obj["SCREEN NAME SCHOOL"] = matchData.opponentsTeam[i].studentTeam[0].studentId.school.screenName;
+                                } else if (matchData.opponentsTeam[i].studentTeam[0].studentId.school) {
+                                    obj["SCREEN NAME SCHOOL"] = matchData.opponentsTeam[i].studentTeam[0].studentId.school.name;
                                 } else {
-                                    obj["SCREEN NAME SCHOOL"] = obj["SCREEN NAME SCHOOL"] = matchData.opponentsTeam[i].studentTeam[0].studentId.school.name;
+                                    obj["SCREEN NAME SCHOOL"] = matchData.schoolName;
                                 }
                                 i++;
                             } else {
@@ -8104,7 +8103,6 @@ var model = {
                     var dateTime = moment(matchData.scheduleDate).format('DD/MM/YYYY');
                     obj.DATE = dateTime;
                     obj["MATCH ID"] = matchData.matchId;
-                    // console.log("sport", matchData.sport.sportslist.sportsListSubCategory.name);
                     obj.SPORT = matchData.sport.sportslist.sportsListSubCategory.name;
                     obj.EVENT = matchData.sport.sportslist.name;
                     if (matchData.sport.gender == "male") {
