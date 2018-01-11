@@ -18,7 +18,6 @@ var model = {
         async.waterfall([
                 function (callback) {
                     OldTeam.find({
-                        // _id: data.team
                         year: data.year
                     }).lean().exec(function (err, found) {
                         if (err) {
@@ -31,12 +30,38 @@ var model = {
                 function (found, callback) {
                     // console.log("count", found.length);
                     async.concatSeries(found, function (sportData, callback) {
-                            // console.log('Hi',sportData);
+                            // console.log('Hi', sportData);
                             var team = {};
-                            team.sport = sportData.sport;
+                            // team.sport = sportData.sport;
                             team.athleteTeam = [];
                             async.waterfall([
                                     function (callback) {
+                                        var paramData = {};
+                                        paramData.sportslist = sportData.sport;
+                                        paramData.age = sportData.agegroup;
+                                        if (sportData.gender == "Boys") {
+                                            sportData.gender = "male";
+                                        } else {
+                                            sportData.gender = "female";
+                                        }
+                                        paramData.gender = sportData.gender;
+                                        paramData.weight = undefined;
+                                        OldTeam.getSportId(paramData, function (err, sport) {
+                                            if (err) {
+                                                callback(err, null);
+                                            } else {
+                                                if (_.isEmpty(sport)) {
+                                                    callback(null, []);
+                                                } else {
+                                                    // console.log("sport", sport);
+                                                    team.sport = sport.sportId;
+                                                    team.name = sportData.name;
+                                                    callback(null, sportData);
+                                                }
+                                            }
+                                        });
+                                    },
+                                    function (sportData, callback) {
                                         async.concatSeries(sportData.players, function (player, callback) {
                                                 var playerData = {};
                                                 playerData.athlete = player;
@@ -45,13 +70,13 @@ var model = {
                                                         callback(err, null);
                                                     } else {
                                                         if (_.isEmpty(sport)) {
+                                                            console.log("sport", sport, "captain", sportData.captain);
                                                             callback(null, []);
                                                         } else {
-                                                            // console.log('SPORT', sport);
-                                                            // console.log('SPORTdata', sportData);
                                                             team.id = sportData._id;
                                                             var studentTeam = {};
                                                             studentTeam.studentId = sport._id;
+                                                            console.log("sport", sport, "captain", sportData.captain);
                                                             if (sport._id.equals(sportData.captain)) {
                                                                 studentTeam.isCaptain = true;
                                                             } else {
@@ -62,13 +87,14 @@ var model = {
                                                             team.school = sport.school;
                                                             team.schoolName = sport.schoolName;
                                                             team.createdBy = "School";
-                                                            team.name = sportData.name;
+
                                                             team.sfaid = sportData.sfaid;
                                                             team.oldId = sportData._id;
                                                             callback(null, team);
                                                         }
                                                     }
                                                 });
+                                                // callback(null, player);
                                             },
                                             function (err) {
                                                 callback(null, team);
@@ -76,21 +102,20 @@ var model = {
                                                     final.push(team);
                                                 }
                                             });
-
                                     },
-                                    function (team, callback) {
-                                        OldTeam.teamConfirm(team, function (err, sport) {
-                                            if (err) {
-                                                callback(err, null);
-                                            } else {
-                                                if (_.isEmpty(sport)) {
-                                                    callback(null, []);
-                                                } else {
-                                                    callback(null, sportData);
-                                                }
-                                            }
-                                        });
-                                    }
+                                    // function (team, callback) {
+                                    //     OldTeam.teamConfirm(team, function (err, sport) {
+                                    //         if (err) {
+                                    //             callback(err, null);
+                                    //         } else {
+                                    //             if (_.isEmpty(sport)) {
+                                    //                 callback(null, []);
+                                    //             } else {
+                                    //                 callback(null, sportData);
+                                    //             }
+                                    //         }
+                                    //     });
+                                    // }
                                 ],
                                 function (err, found) {
                                     if (err) {
@@ -140,27 +165,32 @@ var model = {
                     });
                 },
                 function (sport, callback) {
-                    AgeGroup.findOne({
-                        oldId: data.age
-                    }).lean().exec(function (err, found) {
-                        if (err || _.isEmpty(found)) {
-                            callback(null, {
-                                error: "No Age found!",
-                                success: data
-                            });
-                        } else {
-                            sport.age = found._id;
-                            // console.log("sport", sport);
-                            callback(null, sport);
-                        }
-                    });
+                    if (sport.error) {
+                        callback(null, sport);
+                    } else {
+                        AgeGroup.findOne({
+                            oldId: data.age.toString()
+                        }).lean().exec(function (err, found) {
+                            if (err || _.isEmpty(found)) {
+                                callback(null, {
+                                    error: "No Age found!",
+                                    success: data
+                                });
+                            } else {
+                                sport.age = found._id;
+                                callback(null, sport);
+                            }
+                        });
+                    }
                 },
                 function (sport, callback) {
-                    if (_.isEmpty(data.weight) || data.weight == undefined) {
+                    if (sport.error) {
+                        callback(null, sport);
+                    } else if (_.isEmpty(data.weight) || data.weight == undefined) {
                         callback(null, sport);
                     } else {
                         Weight.findOne({
-                            name: data.weight
+                            name: data.weight.toString()
                         }).lean().exec(function (err, found) {
                             if (err || _.isEmpty(found)) {
                                 callback(null, {
@@ -186,12 +216,13 @@ var model = {
                         if (sport.weight) {
                             matchObj.weight = sport.weight;
                         }
-                        // console.log("matchObj", matchObj);
+                        console.log("matchObj", matchObj);
                         Sport.findOne(matchObj).lean().exec(function (err, found) {
                             if (err || _.isEmpty(found)) {
+                                // sport.sportId = null;
                                 callback(null, {
-                                    error: "No Sport found!",
-                                    success: data
+                                    error: "No sport found",
+                                    data: matchObj
                                 });
                             } else {
                                 sport.sportId = found._id;
@@ -204,11 +235,7 @@ var model = {
 
             ],
             function (err, results) {
-                if (results.error) {
-                    callback(null, []);
-                } else {
-                    callback(null, results);
-                }
+                callback(null, results);
             });
 
     },
@@ -262,19 +289,19 @@ var model = {
     teamConfirm: function (data, callback) {
         // console.log("data", data);
         async.waterfall([
-            function (callback) {
-                ConfigProperty.find().lean().exec(function (err, property) {
-                    if (err) {
-                        callback(err, null);
-                    } else {
-                        if (_.isEmpty(property)) {
-                            callback(null, []);
+                function (callback) {
+                    ConfigProperty.find().lean().exec(function (err, property) {
+                        if (err) {
+                            callback(err, null);
                         } else {
-                            callback(null, property);
+                            if (_.isEmpty(property)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, property);
+                            }
                         }
-                    }
-                });
-            },
+                    });
+                },
                 function (property, callback) {
                     var team = {};
                     team.name = data.name;

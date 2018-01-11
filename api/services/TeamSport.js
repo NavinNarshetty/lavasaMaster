@@ -129,7 +129,7 @@ var model = {
                         team.isVideoAnalysis = data.isVideoAnalysis;
                     }
                     data.property = property[0];
-                    console.log("data", data);
+                    // console.log("data", data);
                     callback(null, team);
                 },
                 function (team, callback) {
@@ -307,24 +307,24 @@ var model = {
                             }
                         } else {
                             if (mainData.property.sfaCity == 'Mumbai') {
-                                console.log("autoID", team.autoID);
+                                // console.log("autoID", team.autoID);
                                 var year = mainData.property.year.substr(2, 2);
                                 // var year = new Date().getFullYear().toString().substr(2, 2);
                                 var teamid = "M" + "T" + year + ++team.autoID;
-                                console.log("teamid", teamid);
+                                // console.log("teamid", teamid);
                                 callback(null, teamid);
                             } else if (mainData.property.sfaCity == "Hyderabad") {
-                                console.log("autoID", team.autoID);
+                                // console.log("autoID", team.autoID);
                                 var year = mainData.property.year.substr(2, 2);
                                 var teamid = "H" + "T" + year + ++team.autoID;
-                                console.log("teamid", teamid);
+                                // console.log("teamid", teamid);
                                 callback(null, teamid);
                             } else {
-                                console.log("autoID", team.autoID);
+                                // console.log("autoID", team.autoID);
                                 var city = mainData.property.sfaCity.substr(0, 1);
                                 var year = mainData.property.year.substr(2, 2);
                                 var teamid = city + "T" + year + ++team.autoID;
-                                console.log("teamid", teamid);
+                                // console.log("teamid", teamid);
                                 callback(null, teamid);
                             }
                         }
@@ -334,7 +334,7 @@ var model = {
                     data.teamId = teamid;
                     TeamSport.saveData(data, function (err, teamData) {
                         if (err) {
-                            console.log("err", err);
+                            // console.log("err", err);
                             callback("There was an error ", null);
                         } else {
                             if (_.isEmpty(teamData)) {
@@ -361,8 +361,8 @@ var model = {
     },
 
     createStudentTeam: function (team, data, callback) {
-        console.log('TEAM', team);
-        console.log('DATA', data);
+        // console.log('TEAM', team);
+        // console.log('DATA', data);
         var atheleteName = [];
         var i = 0;
         async.concatSeries(data.athleteTeam, function (n, callback) {
@@ -375,7 +375,7 @@ var model = {
                         teamStudent.isCaptain = n.isCaptain;
                         teamStudent.isGoalKeeper = n.isGoalKeeper;
                         teamStudent.perSportUniqueId = team._id + data.sport;
-                        console.log('TEAM STUDENT', teamStudent);
+                        // console.log('TEAM STUDENT', teamStudent);
                         StudentTeam.saveInTeam(teamStudent, function (err, saveData) {
                             if (err) {
                                 callback(err, null);
@@ -397,7 +397,7 @@ var model = {
                             } else if (_.isEmpty(found)) {
                                 callback(null, "Data is empty");
                             } else {
-                                console.log(" found athlete");
+                                // console.log(" found athlete");
                                 var athleteInfo = {};
                                 athleteInfo.srno = ++i;
                                 if (found.middleName) {
@@ -418,7 +418,7 @@ var model = {
                 ],
                 function (err, atheleteName) {
                     if (err) {
-                        console.log(err);
+                        // console.log(err);
                         callback(null, []);
                     } else if (atheleteName) {
                         if (_.isEmpty(atheleteName)) {
@@ -430,10 +430,10 @@ var model = {
                 });
         }, function (err) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err, null);
             } else {
-                console.log("array", atheleteName);
+                // console.log("array", atheleteName);
                 callback(null, atheleteName);
             }
         });

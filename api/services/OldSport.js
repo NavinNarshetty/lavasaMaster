@@ -2000,11 +2000,11 @@ var model = {
                                 sportslist.oldId = data[0].sportslist._id;
                             } else {
                                 sportslist.name = data[0].sportslist.name + " " + data[0].firstcategory.name;
-                                if (data[0].firstcategory._id) {
-                                    sportslist.oldId = data[0].firstcategory._id;
-                                } else {
-                                    sportslist.oldId = data[0].sportslist._id;
-                                }
+                                // if (data[0].sportslist._id) {
+                                //     sportslist.oldId = data[0].sportslist._id;
+                                // } else {
+                                sportslist.oldId = data[0].sportslist._id;
+                                // }
                             }
                         } else if (data[0].sportslist.name == "Athletics") {
                             sportslist.name = data[0].firstcategory.name;
@@ -2394,6 +2394,112 @@ var model = {
                 } else {
                     callback(null, subCategory);
                 }
+            }
+        });
+    },
+
+    saveAgeWithoutId: function (data, callback) {
+        async.waterfall([
+            function (callback) {
+                OldSport.find({
+                    year: data.year,
+                    "agegroup._id": {
+                        $exists: false
+                    }
+                }).lean().exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        callback(null, found);
+                    }
+                });
+            },
+            function (found, callback) {
+                async.concatSeries(found, function (n, callback) {
+                    console.log("n", n);
+                    async.waterfall([
+                        function (callback) {
+                            OldAgeGroup.findOne({
+                                name: n.agegroup.name
+                            }).lean().exec(function (err, oldage) {
+                                if (err) {
+                                    callback(err, null);
+                                } else {
+                                    console.log("oldage", oldage);
+                                    callback(null, oldage);
+                                }
+                            });
+                        },
+                        function (oldage, callback) {
+                            AgeGroup.find({
+                                name: oldage.name,
+                                oldId: {
+                                    $exists: true
+                                }
+                            }).lean().exec(function (err, ageData) {
+                                if (err) {
+                                    callback(null, {
+                                        error: err
+                                    });
+                                } else if (_.isEmpty(ageData)) {
+                                    var updateObj = {
+                                        $set: {
+                                            oldId: oldage._id
+                                        }
+                                    };
+                                    AgeGroup.update({
+                                        name: oldage.name,
+                                    }, updateObj).exec(
+                                        function (err, updated) {
+                                            callback(null, "updated");
+                                        });
+                                    // var ageGroup = {};
+                                    // ageGroup.name = oldage.name;
+                                    // if (oldage._id) {
+                                    //     ageGroup.oldId = old._id;
+                                    // }
+                                    // AgeGroup.saveData(ageGroup, function (err, ageGroup) {
+                                    //     if (err) {
+                                    //         callback(err, null);
+                                    //     } else {
+                                    //         if (_.isEmpty(ageGroup)) {
+                                    //             callback(null, []);
+                                    //         } else {
+                                    //             callback(null, ageGroup);
+                                    //         }
+                                    //     }
+                                    // });
+                                } else {
+                                    // if (ageData.oldId) {
+                                    callback(null, oldage);
+                                    // } else {
+
+                                    // }
+
+                                }
+                            });
+                        },
+                    ], function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+
+                }, function (err, complete) {
+                    callback(null, complete);
+                });
+            }
+        ], function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(found)) {
+                callback(null, []);
+            } else {
+                callback(null, found);
             }
         });
     },
