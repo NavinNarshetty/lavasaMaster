@@ -103,19 +103,19 @@ var model = {
                                                 }
                                             });
                                     },
-                                    // function (team, callback) {
-                                    //     OldTeam.teamConfirm(team, function (err, sport) {
-                                    //         if (err) {
-                                    //             callback(err, null);
-                                    //         } else {
-                                    //             if (_.isEmpty(sport)) {
-                                    //                 callback(null, []);
-                                    //             } else {
-                                    //                 callback(null, sportData);
-                                    //             }
-                                    //         }
-                                    //     });
-                                    // }
+                                    function (team, callback) {
+                                        OldTeam.teamConfirm(team, function (err, sport) {
+                                            if (err) {
+                                                callback(err, null);
+                                            } else {
+                                                if (_.isEmpty(sport)) {
+                                                    callback(null, []);
+                                                } else {
+                                                    callback(null, sportData);
+                                                }
+                                            }
+                                        });
+                                    }
                                 ],
                                 function (err, found) {
                                     if (err) {
