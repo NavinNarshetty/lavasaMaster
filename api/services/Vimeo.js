@@ -336,6 +336,7 @@ var model = {
                 console.error('ERROR:', err);
                 callback(err, null);
             });
+
     },
 
     getAllFolderNameCloud: function (data, callback) {
@@ -485,8 +486,8 @@ var model = {
                             if (err) {
                                 callback(err, null);
                             } else {
-                                 //callback(null,finalResult);    For Debugging
-                                 callback(null,"Saved Successfully");
+                                //callback(null,finalResult);    For Debugging
+                                callback(null, "Saved Successfully");
                             }
                         })
                     })
@@ -680,7 +681,7 @@ var model = {
             medialink: {
                 $exists: true
             },
-            mediatype:"video",
+            mediatype: "video",
             videotype: "vimeo",
             thumbnails: {
                 $exists: false
@@ -737,6 +738,34 @@ var model = {
         });
 
 
+    },
+
+    getFilePublicUrl(data, callback) {
+        const Storage = require('@google-cloud/storage');
+        const projectId = 'future-oasis-145313';
+        const storage = new Storage({
+            projectId: projectId,
+            keyFilename: '/home/wohlig/Documents/htdocs/lavasaBackend/config/googleKey/SFA New-f0fd1402dc91.json'
+        });
+        const bucketName = data.bucketName;
+        const options = {
+            action: 'read',
+            expires: '03-17-2025',
+        };
+        storage
+            .bucket(bucketName)
+            .file(data.fileName)
+            .getSignedUrl(options)
+            .then(results => {
+                var url = results[0].toString();
+                var temp = {};
+                temp.url = url.substring(0, url.lastIndexOf("?"));
+                console.log("url", temp.url);
+                callback(null, temp);
+            })
+            .catch(err => {
+                console.error('ERROR:', err);
+            });
     },
 
 
