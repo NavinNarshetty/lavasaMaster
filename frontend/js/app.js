@@ -214,7 +214,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'SfaGalleryCtrl'
         })
         .state('featuredgallery', {
-            url: "/featuredgallery",
+            url: "/gallery/folder/:type/:name",
             templateUrl: tempateURL,
             controller: 'featuredGalleryCtrl'
         })

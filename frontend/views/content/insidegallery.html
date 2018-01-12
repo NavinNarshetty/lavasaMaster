@@ -49,18 +49,18 @@
         <h3 class="d-fjalla-one text-uppercase sport-blue-table">Photos</h3>
       </div>
       <!-- CATEGORY -->
-      <div class="event-gallery-category" ng-repeat="gallerycategory in category track by $index">
+      <div class="event-gallery-category">
           <div class="event-gallery-subtitle text-uppercase">
-              {{gallerycategory.name}}
+            view category
           </div>
           <div class="row">
-            <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="card in gallerycategory.cardDetail track by $index">
+            <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="card in allPhotosbyCategory track by $index">
               <div class="album-holder pointer">
-                <div class="album-pic-holder" style="background-image:url('{{card.image}}')">
+                <div class="album-pic-holder" style="background-image:url('{{card.mediaLink | mediapathtwo}}')" ui-sref="featuredgallery({type:'Category',name:card._id})">
                 </div>
                 <div class="album-title-holder">
-                  <p class="fjalla-one text-capitalize m-clear album-subtitle" title="{{card.title}}">{{card.title | truncate:'22'}}</p>
-                  <p><span><i class="fa fa-picture-o color-darkgrey"></i></span><span> <span>{{card.count}}</span> <span>Albums</span></span>
+                  <p class="fjalla-one text-capitalize m-clear album-subtitle" title="{{card._id}}">{{card._id | truncate:'22'}}</p>
+                  <p><span><i class="fa fa-picture-o color-darkgrey"></i></span><span> <span>{{card.totalCount}}</span> <span>Albums</span></span>
           </p>
         </div>
       </div>
@@ -78,19 +78,19 @@
 <!-- AD SPACE END -->
 
 <!-- VIEW BY SPORT -->
-<div class="event-gallery-category" ng-repeat="gallerysport in viewBySport track by $index">
+<div class="event-gallery-category">
   <div class="event-gallery-subtitle text-uppercase">
-    {{gallerysport.name}}
+    view by Sport
   </div>
   <div class="row">
-    <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="card in gallerysport.sportDetail track by $index">
+    <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="card in allPhotosbySport track by $index">
       <div class="album-holder pointer">
-        <div class="album-pic-holder" style="background-image:url('{{card.image}}')">
+        <div class="album-pic-holder" style="background-image:url('{{card.mediaLink |mediapathtwo}}')" ui-sref="featuredgallery({type:'Sport',name:card._id})">
         </div>
         <div class="album-title-holder">
-          <p class="fjalla-one text-capitalize m-clear album-subtitle ">{{card.title | truncate:'25'}}</p>
+          <p class="fjalla-one text-capitalize m-clear album-subtitle ">{{card._id | truncate:'25'}}</p>
           <p><span>
-                                            <i class="fa fa-picture-o color-darkgrey"></i></span><span> <span>{{card.count}}</span>            <span>Albums</span></span>
+             <i class="fa fa-picture-o color-darkgrey"></i></span><span> <span>{{card.totalCount}}</span> <span>Albums</span></span>
           </p>
         </div>
       </div>

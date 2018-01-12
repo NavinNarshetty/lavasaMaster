@@ -1,4 +1,4 @@
-myApp.controller('SfaGalleryCtrl', function ($scope, TemplateService, NavigationService, $timeout) {
+myApp.controller('SfaGalleryCtrl', function ($scope, TemplateService, errorService, NavigationService, $timeout) {
   //Used to name the .html file
 
   $scope.template = TemplateService.getHTML("content/insidegallery.html");
@@ -56,60 +56,56 @@ myApp.controller('SfaGalleryCtrl', function ($scope, TemplateService, Navigation
   }]
 
   // VIEW BY CATEGORY
-  $scope.category = [{
-    name: 'view category',
-    cardDetail: [{
-      image: '/img/day-04.png',
-      title: 'All',
-      count: '12'
-    }, {
-      image: '/img/day-03.png',
-      title: 'Champion Moment',
-      count: '12'
-    }, {
-      image: '/img/day-02.png',
-      title: 'Girl day celebration with Sfa abcd',
-      count: '12'
-    }, {
-      image: '/img/day-03.png',
-      title: 'Prize Distribution',
-      count: '12'
-    }, {
-      image: '/img/day-02.png',
-      title: 'behind the scene',
-      count: '12'
-    }, {
-      image: '/img/day-04.png',
-      title: 'Champion moment',
-      count: '12'
-    }, {
-      image: '/img/day-02.png',
-      title: 'Prize distribution',
-      count: '12'
-    }]
-  }]
+  $scope.getAllPhotosByCategory = function () {
+    $scope.photosbyCategory = {};
+    $scope.photosbyCategory.folderType = 'Category';
+    NavigationService.getAllPhotosByType($scope.photosbyCategory, function (data) {
+      console.log(data, "response");
+      errorService.errorCode(data, function (allData) {
+        if (!allData.message) {
+          if (allData.value === true) {
+            // console.log(allData, "alldata");
+            $scope.allPhotosbyCategory = allData.data;
+
+          } else {
+            console.log("im in else");
+          }
+        } else {
+
+          toastr.error(allData.message, 'Error Message');
+        }
+      });
+    })
+
+  };
+  $scope.getAllPhotosByCategory();
   // VIEW BY CATEGORY END
 
   // VIEW BY SPORT
-  $scope.viewBySport = [{
-    name: 'view by Sport',
-    sportDetail: [{
-      image: '/img/sa2.jpg',
-      title: 'Football',
-      count: '12'
-    }, {
-      image: '/img/sa3.jpg',
-      title: 'Athletics',
-      count: '14'
-    }, {
-      image: '/img/day-04.png',
-      title: 'Swimming',
-      count: '15'
-    }, {
-      image: '/img/day-03.png',
-      title: 'Basketball',
-      count: '12'
-    }]
-  }]
+  $scope.getAllPhotosBySport = function () {
+    $scope.photosbySport = {};
+    $scope.photosbySport.folderType = 'Sport';
+    NavigationService.getAllPhotosByType($scope.photosbySport, function (data) {
+      console.log(data, "response");
+      errorService.errorCode(data, function (allData) {
+        if (!allData.message) {
+          if (allData.value === true) {
+            $scope.allPhotosbySport = allData.data;
+
+          } else {
+
+          }
+        } else {
+
+          toastr.error(allData.message, 'Error Message');
+        }
+      });
+    });
+
+  };
+  $scope.getAllPhotosBySport();
   // VIEW BY SPORT END
+
+
+
 });

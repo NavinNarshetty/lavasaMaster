@@ -1,4 +1,4 @@
-myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, NavigationService, $timeout) {
+myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, NavigationService, $state, errorService, $stateParams, $timeout) {
   //Used to name the .html file
 
   $scope.template = TemplateService.getHTML("content/featured-gallery.html");
@@ -6,14 +6,22 @@ myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, Navig
   $scope.navigation = NavigationService.getNavigation();
 
   $scope.showFolderFilter = false;
-  $scope.defaultFolder = 'all';
+  $scope.defaultFolder = $stateParams.name;
+  $scope.selectedType = $stateParams.type;
   $scope.selectfolder = '';
   // SELECT FOLDER
   $scope.viewFolder = function () {
+
+    $state.go('featuredgallery', {
+      type: $stateParams.type,
+      name: $scope.defaultFolder
+    });
+
     if ($scope.showFolderFilter == false) {
       $scope.showFolderFilter = true;
+
     } else {
-      $scope.showFolderFilter = false
+      $scope.showFolderFilter = false;
     }
   }
 
@@ -22,9 +30,9 @@ myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, Navig
       $scope.selectfolder = '';
 
     } else {
-      $scope.selectfolder = folder;
+      $scope.selectfolder = folder._id;
     }
-    $scope.defaultFolder = folder;
+    $scope.defaultFolder = folder._id;
     $scope.viewFolder();
   }
   $scope.folderName = ['Girl celebrations with Sania', 'Prize distribution', 'Children Day', 'Behind scene'];
@@ -117,6 +125,54 @@ myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, Navig
     img: 'sa7.jpg',
     type: 'photo'
   }]
+
+  if ($stateParams.type && $stateParams.name) {
+    $scope.filterObj = {};
+    $scope.filterObj.folderType = $stateParams.type;
+    $scope.filterObj.folderName = $stateParams.name;
+    NavigationService.getAllPhotosByFolder($scope.filterObj, function (data) {
+      if (data) {
+        console.log(data, "data");
+        errorService.errorCode(data, function (allData) {
+          if (!allData.message) {
+            if (allData.value === true) {
+              console.log(allData, "alldata");
+              $scope.allphotosbyfolder = allData.data;
+              console.log("allphotosbyfolder", $scope.allphotosbyfolder);
+            } else {
+
+            }
+          } else {
+
+            toastr.error(allData.message, 'Error Message');
+          }
+        });
+      }
+    });
+  }
+
+  if ($stateParams.type) {
+    $scope.typefilter = {};
+    $scope.typefilter.folderType = $stateParams.type;
+    NavigationService.getAllPhotosByType($scope.typefilter, function (data) {
+      console.log(data, "response");
+      errorService.errorCode(data, function (allData) {
+        if (!allData.message) {
+          if (allData.value === true) {
+
+            $scope.allfolderName = allData.data;
+            console.log($scope.allfolderName, "$scope.allfolderName ");
+
+          } else {
+
+          }
+        } else {
+
+          toastr.error(allData.message, 'Error Message');
+        }
+      });
+    });
+  }
 
 
 });

@@ -1043,8 +1043,8 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
                                 // console.log(match);
                                 var match1, match2;
 
-                                if (!($filter('firstcapitalize')(round.name,{column1:true})==='Third Place' && key==2)) {
-                                    console.log(round.name,"No Third Place");
+                                if (!($filter('firstcapitalize')(round.name, { column1: true }) === 'Third Place' && key == 2)) {
+                                    console.log(round.name, "No Third Place");
                                     if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2] && knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar]) {
                                         match1 = knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar];
                                     }
@@ -1052,14 +1052,14 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
                                         match2 = knockout.roundsList[key - 1].match[index * 2 + 1][resultVar.opponentsVar];
                                     }
                                 } else {
-                                    console.log(round.name,"Third place");                                    
+                                    console.log(round.name, "Third place");
                                     if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2] && knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar]) {
                                         match1 = knockout.roundsList[key - 2].match[index * 2][resultVar.opponentsVar];
                                     }
                                     if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2 + 1] && knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar]) {
                                         match2 = knockout.roundsList[key - 2].match[index * 2 + 1][resultVar.opponentsVar];
                                     }
-                                    console.log("match1 match2",match1,match2);
+                                    console.log("match1 match2", match1, match2);
                                 }
                                 // console.log(match[resultVar.opponentsVar], "resultVar.opponentsVar");
                                 match[resultVar.opponentsVar] = sortOpponents(match[resultVar.opponentsVar], match1, match2, key);
@@ -1252,14 +1252,28 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
                 callback(data.data);
             });
         },
-        getOneReportCard: function(request, callback) {
-          $http({
-            url: adminUrl2 + 'Reportcard/getOneReportCard',
-            method: 'POST',
-            data: request
-          }).then(function(data){
-            callback(data.data);
-          });
+        getAllPhotosByType: function (request, callback) {
+            $http({
+                url: adminUrl2 + 'gallery/getAllPhotosByType',
+                method: 'POST',
+                data: request
+            }).then(callback);
+        },
+        getAllPhotosByFolder: function (request, callback) {
+            $http({
+                url: adminUrl2 + 'gallery/getAllPhotosByFolder',
+                method: 'POST',
+                data: request
+            }).then(callback);
+        },
+        getOneReportCard: function (request, callback) {
+            $http({
+                url: adminUrl2 + 'Reportcard/getOneReportCard',
+                method: 'POST',
+                data: request
+            }).then(function (data) {
+                callback(data.data);
+            });
         }
     };
 });
