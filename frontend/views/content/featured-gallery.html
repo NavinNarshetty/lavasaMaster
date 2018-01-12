@@ -17,7 +17,7 @@
             <div class="featured-gallery-dropdown">
               <span ng-click="viewFolder();">{{defaultFolder}} <i class="fa" ng-class = " { 'fa-chevron-up' : showFolderFilter == true , 'fa-chevron-down' :  showFolderFilter == false } "></i></span>
               <div class="featured-gallery-dropdownfilter" ng-if="showFolderFilter">
-                <ul class="list-unstyled">
+                <ul class="list-unstyled m-clear">
                   <li ng-click="selectFolder('all');"></li>
                   <li class="custom-featuredgallery-dropdown" ng-repeat="folder in allfolderName track by $index" ng-click="selectFolder(folder);">
                     {{folder._id}}
@@ -30,7 +30,7 @@
             <div class="featured-gallery-dropdown-boysgirls">
               <span ng-click="viewGender();">{{defaultGender}} <i class="fa" ng-class = " { 'fa-chevron-up' : showGenderFilter == true , 'fa-chevron-down' :  showGenderFilter == false } "></i></span>
               <div class="featured-gallery-dropdownfilter" ng-show="showGenderFilter">
-                <ul class="list-unstyled">
+                <ul class="list-unstyled m-clear">
                   <li ng-click="selectGender('all');"></li>
                   <li class="custom-featuredgallery-dropdown" ng-repeat="gender in genderItem track by $index" ng-click="selectGender(gender);">
                     {{gender}}</li>
