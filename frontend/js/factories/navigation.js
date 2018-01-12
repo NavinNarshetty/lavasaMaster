@@ -750,7 +750,9 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
         // },
 
         logout: function (request, callback) {
-            $.jStorage.flush();
+            // $.jStorage.flush();
+            $.jStorage.deleteKey("userDetails");
+            $.jStorage.deleteKey("userType");
             $http({
                 url: adminUrl2 + 'login/logout',
                 method: 'POST',
