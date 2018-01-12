@@ -37,6 +37,9 @@
                     Athlete Name
                   </th>
                   <th>
+                    School
+                  </th>
+                  <th>
                     Sports Name
                   </th>
                   <th>
@@ -54,6 +57,8 @@
 
                   <td>{{item.athleteId.sfaId}}</td>
                   <td>{{item.athleteId.firstName}} {{item.athleteId.middleName}} {{item.athleteId.surname}} </td>
+                  <td ng-if="!item.athleteId.atheleteSchoolName">{{item.athleteId.school.name}}</td>
+                  <td ng-if="item.athleteId.atheleteSchoolName">{{item.athleteId.atheleteSchoolName}}</td>
                   <td>{{item.sportsListSubCategory.name}} </td>
 
                   <td>{{item.createdBy}}</td>

@@ -28,6 +28,9 @@ schema.plugin(deepPopulate, {
         'athleteId': {
             select: '_id firstName middleName surname school atheleteSchoolName sfaId gender age dob city'
         },
+        'athleteId.school': {
+            select: '_id name'
+        },
         'sportsListSubCategory': {
             select: '_id name inactiveimage image'
         }
@@ -1941,7 +1944,7 @@ var model = {
     },
 
     getSearchPipeLine: function (data) {
-
+console.log(data);
         var pipeline = [
             // Stage 1
             {
@@ -1955,6 +1958,19 @@ var model = {
             {
                 $unwind: {
                     path: "$athleteId",
+                }
+            },
+            {
+                $lookup: {
+                    "from": "schools",
+                    "localField": "athleteId.school",
+                    "foreignField": "_id",
+                    "as": "athleteId.school"
+                }
+            },
+            {
+                $unwind: {
+                    path: "$athleteId.school",
                 }
             },
             {
@@ -2017,19 +2033,27 @@ var model = {
                                 $options: "i"
                             }
                         }, {
+                            "athleteId.atheleteSchoolName": {
+                                $regex: data.keyword,
+                                $options: "i"
+                            }
+                        }, {
+                            "athleteId.school.name": {
+                                $regex: data.keyword,
+                                $options: "i"
+                            }
+                        }, {
                             "athleteId.firstName": {
                                 $regex: data.keyword,
                                 $options: "i"
                             }
-                        },
-                        {
+                        }, {
                             "athleteId.sfaId": {
                                 $regex: data.keyword,
                                 $options: "i"
                             }
                         }
                     ],
-
                 }
             },
             {
@@ -2066,7 +2090,7 @@ var model = {
             count: maxRow
         };
         if (data.keyword == "") {
-            var deepSearch = "athleteId sportsListSubCategory";
+            var deepSearch = "athleteId athleteId.school sportsListSubCategory";
             var Search = Model.find(data.keyword)
 
                 .order(options)
@@ -2092,7 +2116,6 @@ var model = {
                                 }
                             }
                         });
-
                     },
                     function (dataFinal, callback) {
                         var pipeLine = IndividualSport.getSearchPipeLine(data);
@@ -2103,7 +2126,8 @@ var model = {
                                 '$skip': parseInt(options.start)
                             }, {
                                 '$limit': maxRow
-                            });
+                            }
+                        );
                         IndividualSport.aggregate(newPipeLine, function (err, totals) {
                             if (err) {
                                 console.log(err);
@@ -2120,7 +2144,6 @@ var model = {
                             }
                         });
                     }
-
                 ],
                 function (err, data2) {
                     if (err) {
