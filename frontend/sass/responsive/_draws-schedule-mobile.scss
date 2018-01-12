@@ -194,6 +194,25 @@
   .championsarchive-bgbanner {
     margin-top: 0px;
   }
+  .championsarchive-rankingtableholder>table>tbody>tr>td {
+    &:nth-child(n+3) {
+      padding: 18px;
+    }
+    &:last-child() {
+      padding: 8px;
+    }
+  }
+  .rankingtable-score {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .rankingtable-medal {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .championsarchive-rankingtableholder .rankingtable-medal {
+    width: 15px;
+  }
 }
 
 @media screen and (max-width: 480px) {
