@@ -69,6 +69,7 @@ module.exports = [
   'frontend/js/services/knockoutService.js',
   'frontend/js/services/resultsportinitializayion.js',
   'frontend/js/services/masonry-edited.js',
+  'frontend/js/services/mediapopup.js',
 
   //Factories
   'frontend/js/factories/navigation.js',

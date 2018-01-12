@@ -13,8 +13,144 @@ $light-blue:#00aaff !default;
 $light-orange:#ffad25 !default;
 $bg-color-male: #99ddff !default;
 $bg-color-female: #ffcd7b !default;
+$grey: #e1e1e1;
 // COLORS END
 // COMMON CLASSES
+// PHOTO VIDEO POPUP
+.photovideo-modal{
+  top: 50%;
+  bottom: auto;
+  @include transform(translateY(-50%));
+
+  .modal-content{
+    border-radius: 0;
+  }
+  ::-webkit-scrollbar {
+   width: 10px;
+   height: 10px;
+ }
+  ::-webkit-scrollbar-track {
+   background-color: transparent;
+ }
+  ::-webkit-scrollbar-thumb {
+   background-color: $grey;
+ }
+}
+.photovideo-modal + .modal-backdrop.in{
+  opacity: 0.7;
+}
+.photovideo-popup {
+  padding-right: 300px;
+  position: relative;
+  background: #fff;
+}
+// PHOTO VIDEO NAV
+.photovideo-nav {
+  padding: 10px;
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  cursor: pointer;
+  font-size: 48px;
+  line-height: 1;
+  @include transform(translateY(-50%)) ;
+}
+.photovideo-navleft {
+    left: -40px;
+}
+.photovideo-navright {
+    right: -40px;
+}
+// PHOTO VIDEO NAV END
+// PHOTO VIDEO MEDIA HOLDER
+.photovideo-mediaholder {
+  width: 100%;
+}
+// PHOTO VIDEO MEDIA HOLDER END
+// PHOTO VIDEO SIDE
+.photovideo-sidesection {
+  width: 300px;
+  height: 100%;
+  padding: 20px;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.photovideo-sidecontent{
+  height: 100%;
+  position: relative;
+}
+.photovideo-sidescroll{
+  height: calc(100% - 130px);
+  overflow-y: auto;
+}
+.photovideo-sidetitle{
+  font-size: 16px;
+  font-weight: 700;
+}
+.photovideo-footer {
+  width: 100%;
+  padding: 5px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  font-size: 12px;
+}
+// PHOTO VIDEO SIDE FOOTER
+.photovideo-loginfoot{
+  .input-group{
+    font-weight: 700;
+    text-transform: uppercase;
+      .input-group-addon{
+        padding: 0px;
+        border: none;
+        background-color: transparent;
+        font-size: 16px;
+        font-weight: 700;
+      }
+      .form-control{
+        width: 100%;
+        height: auto;
+        padding: 0 5px;
+        margin-left: 5px;
+        border: none;
+        border-bottom: 1px solid #000;
+        font-size: 12px;
+      }
+  }
+}
+// FOOTER SHARE
+.photovideo-footershare{
+  margin-top: 10px;
+  p{
+    font-weight: 700;
+  }
+}
+.photovideo-shareholder {
+    display: flex;
+    flex-wrap: nowrap;
+}
+.photovideo-sharebox {
+    flex: auto;
+    text-align: center;
+}
+.photovideo-socialbutton {
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+    display: inline-block;
+    background: $brand-primary;
+    font-size: 15px;
+    line-height: 25px;
+    text-align: center;
+    a{
+      color: #fff;
+    }
+}
+// FOOTER SHARE END
+// PHOTO VIDEO SIDE FOOTER END
+// PHOTO VIDEO SIDE END
+// PHOTO VIDEO POPUP END
 .full-height {
     height: 100%;
 }
