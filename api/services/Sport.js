@@ -31,7 +31,11 @@ var schema = new Schema({
     fromDate: Date,
     toDate: Date,
     eventPdf: String,
-    matchPrefix: String
+    matchPrefix: String,
+    oldId: {
+        type: Schema.Types.ObjectId,
+        index: true
+    },
 });
 
 schema.plugin(deepPopulate, {

@@ -94,7 +94,6 @@ var model = {
                                                         }
                                                     }
                                                 });
-                                                // callback(null, player);
                                             },
                                             function (err) {
                                                 callback(null, team);

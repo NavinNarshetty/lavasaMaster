@@ -150,6 +150,7 @@ var model = {
                         if (_.isEmpty(complete)) {
                             callback(null, complete);
                         } else {
+                            console.log("complete.count", complete.length);
                             callback(null, complete);
                         }
                     }
@@ -298,7 +299,21 @@ var model = {
                 },
                 function (athelete, callback) {
                     if (athelete.error) {
-                        callback(null, athelete);
+                        individualSport.athleteId = null;
+                        individualSport.createdBy = "School";
+                        individualSport.oldId = singleData._id;
+                        IndividualSport.saveData(individualSport, function (err, saveData) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(saveData)) {
+                                    callback(null, []);
+                                } else {
+                                    individualSport.sport = [];
+                                    callback(null, saveData);
+                                }
+                            }
+                        });
                     } else {
                         individualSport.athleteId = athelete._id;
                         individualSport.createdBy = "School";
@@ -848,7 +863,5 @@ var model = {
             }
         });
     },
-
-
 };
 module.exports = _.assign(module.exports, exports, model);

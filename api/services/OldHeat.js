@@ -189,7 +189,21 @@ var model = {
                     },
                     function (athelete, callback) {
                         if (athelete.error) {
-                            callback(null, athelete);
+                            individualSport.athleteId = null;
+                            individualSport.createdBy = "School";
+                            individualSport.oldId = singleData;
+                            IndividualSport.saveData(individualSport, function (err, saveData) {
+                                if (err) {
+                                    callback(err, null);
+                                } else {
+                                    if (_.isEmpty(saveData)) {
+                                        callback(null, []);
+                                    } else {
+                                        individualSport.sport = [];
+                                        callback(null, saveData);
+                                    }
+                                }
+                            });
                         } else {
                             individualSport.athleteId = athelete._id;
                             individualSport.createdBy = "School";
@@ -540,6 +554,7 @@ var model = {
     },
 
     saveHeatMatchTeam: function (data, callback) {
+        console.log("Inside", data);
         async.waterfall([
             function (callback) {
                 OldHeat.find({
@@ -551,6 +566,7 @@ var model = {
                     } else if (_.isEmpty(found)) {
                         callback(null, []);
                     } else {
+                        console.log("found", found);
                         callback(null, found);
                     }
                 });
@@ -612,7 +628,7 @@ var model = {
                     } else if (_.isEmpty(found)) {
                         callback(null, []);
                     } else {
-                        console.log("sport", found);
+                        // console.log("sport", found);
                         match.sport = found[0]._id;
                         match.scheduleDate = data.date;
                         var round = data.round.toLowerCase();
@@ -634,16 +650,15 @@ var model = {
                             if (err) {
                                 callback(err, null);
                             } else if (_.isEmpty(individualData)) {
-                                console.log("empty");
+                                // console.log("empty");
                                 callback(null, []);
                             } else {
-                                console.log("inside push", individualData);
+                                // console.log("inside push", individualData);
 
                                 var player = {};
                                 player.id = individualData[0]._id;
                                 players.push(player);
                                 match.resultHeat = {};
-
                                 match.opponentsTeam.push(individualData[0]._id);
                                 callback(null, individualData);
                             }
