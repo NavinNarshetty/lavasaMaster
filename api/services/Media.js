@@ -24,9 +24,9 @@ var schema = new Schema({
     },
     mediatitle: {
         type: String,
-        required: function (v){
+        required: function (v) {
             return this.mediatype === 'photo';
-          }
+        }
     },
     mediatype: {
         type: String,
@@ -53,9 +53,10 @@ var model = {
 
     uploadExcel: function (importData, callback) {
         var errorFound = false;
+        console.log(importData.length);
         async.concatSeries(importData, function (singleData, callback) {
+            // callback(null,singleData);
             singleData.date = new Date(Math.round((singleData.date - 25569) * 86400 * 1000));
-
             Media.saveData(singleData, function (err, data) {
                 if (err) {
                     errorFound = true;
@@ -71,27 +72,32 @@ var model = {
                 }
             });
         }, function (err, result) {
-            callback(null, result);
-            if (errorFound) {
-                async.each(result, function (singleData, callback) {
-                    if (!singleData.error && singleData.data._id) {
-                        Media.deleteData({
-                            '_id': singleData.data._id
-                        }, function (err, deleted) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, result);
+                if (errorFound) {
+                    async.each(result, function (singleData, callback) {
+                        if (!singleData.error && singleData.data._id) {
+                            Media.deleteData({
+                                '_id': singleData.data._id
+                            }, function (err, deleted) {
+                                callback(null);
+                            })
+                        } else {
                             callback(null);
-                        })
-                    } else {
-                        callback(null);
-                    }
-                }, function (err) {
-                    if (err) {
+                        }
+                    }, function (err) {
+                        if (err) {
 
-                    } else {
-                        console.log("Successfully Deleted");
-                    }
-                });
+                        } else {
+                            console.log("Successfully Deleted");
+                        }
+                    });
 
+                }
             }
+
         });
 
     },
@@ -103,17 +109,17 @@ var model = {
         function populatedExcel(matchObj) {
             Media.find(matchObj).lean().exec(function (err, medias) {
                 async.concatSeries(medias, function (singleMedia, callback) {
-                    var obj = {};
-                    obj.year = singleMedia.year;
-                    obj.folder = singleMedia.folder;
-                    obj.order = singleMedia.order;
-                    obj.imageorder = singleMedia.imageorder;
-                    obj.date = moment(singleMedia.date).format('DD-MM-YY');
-                    obj.mediatitle = singleMedia.mediatitle;
-                    obj.mediatype = singleMedia.mediatype;
-                    obj.medialink = singleMedia.medialink;
-                    callback(null, obj);
-                },
+                        var obj = {};
+                        obj.year = singleMedia.year;
+                        obj.folder = singleMedia.folder;
+                        obj.order = singleMedia.order;
+                        obj.imageorder = singleMedia.imageorder;
+                        obj.date = moment(singleMedia.date).format('DD-MM-YY');
+                        obj.mediatitle = singleMedia.mediatitle;
+                        obj.mediatype = singleMedia.mediatype;
+                        obj.medialink = singleMedia.medialink;
+                        callback(null, obj);
+                    },
                     function (err, allMedias) {
                         Config.generateExcel(name, allMedias, res);
                     });
@@ -225,8 +231,7 @@ var model = {
         var sendObj = {};
         var matchObj = {
             "folder": data.folder,
-            "mediatype": data.mediatype,
-            "year": data.year
+            "mediatype": data.mediatype
         };
         var maxRow = Config.maxRow;
         var page = 1;
@@ -250,20 +255,76 @@ var model = {
         };
 
         sendObj.options = options;
-       
+
 
         Media.find(matchObj).lean().skip(options.start).limit(options.count).exec(function (err, medias) {
-                if (err || _.isEmpty(data)) {
-                    callback(err, "Medias Not Found");
-                } else {
-                    sendObj.results = medias;
-                    Media.count(matchObj, function (err, count) {
-                        sendObj.total = count;
-                        callback(null, sendObj);
-                    });
-                   
+            if (err || _.isEmpty(data)) {
+                callback(err, "Medias Not Found");
+            } else {
+                sendObj.results = medias;
+                Media.count(matchObj, function (err, count) {
+                    sendObj.total = count;
+                    callback(null, sendObj);
+                });
+
+            }
+        });
+    },
+
+    getAllVideos:function(callback){
+        Media.aggregate(
+            [{
+                $match: {
+                "mediatype":"video"
                 }
-            });
+            },{
+                $group: {
+                    "_id": "$folder",
+                    "medialink":{
+                        "$first":"$medialink"
+                    },
+                    "folder":{
+                        "$first":"$folder"
+                    },
+                    "thumbnails":{
+                        "$first":"$thumbnails"
+                    },
+                    "mediatype":{
+                        "$first":"$mediatype"
+                    }
+                }
+            }],
+            function (err, videos) {
+                if (err) {
+                    callback(err, null);
+                } else if (!_.isEmpty(videos)) {
+                    // var videos=_.map(videos,function(n){
+                    //     n.mediaLink=n.mediaLink[0];
+                    //     return n;
+                    // });
+                    callback(null, videos);
+                } else {
+                    callback(null, []);
+                }
+            }
+        );
+    },
+
+    getAllVideosByFolder:function(data,callback){
+
+        Media.find({
+            "mediatype":"video",
+            "folder":data.folder
+        },"medialink thumbnails mediatitle").lean().exec(function(err,photos){
+            if(err){
+                callback(err,null);
+            }else if(!_.isEmpty(photos)){
+                callback(null,photos);
+            }else{
+                callback(null,[]);
+            }
+        });
+
     }
 };
 module.exports = _.assign(module.exports, exports, model);

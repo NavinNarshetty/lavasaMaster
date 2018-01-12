@@ -208,6 +208,7 @@ var model = {
             ], function (err, result) {
                 callback(obj);
             });
+
         };
 
         async.waterfall([
@@ -606,7 +607,6 @@ var model = {
                                     $unwind: {
                                         path: "$athleteId",
                                         includeArrayIndex: "arrayIndex", // optional
-                                        preserveNullAndEmptyArrays: false // optional
                                     }
                                 }, {
                                     $lookup: {
@@ -640,7 +640,6 @@ var model = {
                                     $unwind: {
                                         path: "$sportsListSubCategory",
                                         includeArrayIndex: "arrayIndex", // optional
-                                        preserveNullAndEmptyArrays: true // optional
                                     }
                                 }, {
                                     $lookup: {
@@ -653,7 +652,6 @@ var model = {
                                     $unwind: {
                                         path: "$sportsListSubCategory.sportsListCategory",
                                         includeArrayIndex: "arrayIndex", // optional
-                                        preserveNullAndEmptyArrays: true // optional
                                     }
                                 }, {
                                     $project: {
@@ -695,7 +693,6 @@ var model = {
                                     $unwind: {
                                         path: "$sport",
                                         includeArrayIndex: "arrayIndex", // optional
-                                        preserveNullAndEmptyArrays: false // optional
                                     }
                                 }, {
                                     $lookup: {
@@ -708,7 +705,6 @@ var model = {
                                     $unwind: {
                                         path: "$sport.sportslist",
                                         includeArrayIndex: "arrayIndex", // optional
-                                        preserveNullAndEmptyArrays: false // optional
                                     }
                                 }, {
                                     $lookup: {
@@ -721,7 +717,6 @@ var model = {
                                     $unwind: {
                                         path: "$sport.sportslist.sportsListSubCategory",
                                         includeArrayIndex: "arrayIndex", // optional
-                                        preserveNullAndEmptyArrays: false // optional
                                     }
                                 }, {
                                     $lookup: {
@@ -734,7 +729,6 @@ var model = {
                                     $unwind: {
                                         path: "$sport.sportslist.sportsListSubCategory.sportsListCategory",
                                         includeArrayIndex: "arrayIndex", // optional
-                                        preserveNullAndEmptyArrays: false // optional
                                     }
                                 }, {
                                     $lookup: {
@@ -747,7 +741,7 @@ var model = {
                                     $unwind: {
                                         path: "$studentTeam",
                                         includeArrayIndex: "arrayIndex", // optional
-                                        preserveNullAndEmptyArrays: false // optional
+                                        preserveNullAndEmptyArrays: true // optional
                                     }
                                 }, {
                                     $lookup: {
@@ -760,7 +754,6 @@ var model = {
                                     $unwind: {
                                         path: "$studentTeam.studentId",
                                         includeArrayIndex: "arrayIndex", // optional
-                                        preserveNullAndEmptyArrays: false // optional
                                     }
                                 }, {
                                     $project: {
