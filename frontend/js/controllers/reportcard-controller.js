@@ -13,12 +13,12 @@ myApp.controller('ReportCardCtrl', function ($scope, TemplateService, $state, Na
   });
 
   // VARIABLE INITITALISE
-  // $scope.school = {
-  //   name: $stateParams.school
-  // }
   $scope.school = {
-    name: "Silver Oaks International School"
+    name: $stateParams.school
   }
+  // $scope.school = {
+  //   name: "Silver Oaks International School"
+  // }
   $scope.schoolData = {};
   // VARIABLE INITITALISE END
 
