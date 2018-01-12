@@ -35,26 +35,6 @@ myApp.controller('SfaGalleryCtrl', function ($scope, TemplateService, errorServi
   }
   $scope.initSwiper();
 
-  $scope.eventVideos = [{
-    thumbnail: '/img/sa2.jpg',
-    content: '10 moments on the Football court you cannot miss check out now at sfa website',
-  }, {
-    thumbnail: '/img/sa3.jpg',
-    content: '10 moments on the Athletics court you cannot miss check out now at sfa website',
-
-  }, {
-    thumbnail: '/img/day-04.png',
-    content: '10 moments on the Swimming court you cannot miss check out now at sfa website',
-
-  }, {
-    thumbnail: '/img/day-03.png',
-    content: '10 moments on the  Basketball court you cannot miss check out now at sfa website',
-  }, {
-    thumbnail: '/img/sa4.jpg',
-    content: ' 10 moments on the Hockey court you cannot miss check out now at sfa website',
-
-  }]
-
   // VIEW BY CATEGORY
   $scope.getAllPhotosByCategory = function () {
     $scope.photosbyCategory = {};
@@ -64,14 +44,11 @@ myApp.controller('SfaGalleryCtrl', function ($scope, TemplateService, errorServi
       errorService.errorCode(data, function (allData) {
         if (!allData.message) {
           if (allData.value === true) {
-            // console.log(allData, "alldata");
             $scope.allPhotosbyCategory = allData.data;
-
           } else {
             console.log("im in else");
           }
         } else {
-
           toastr.error(allData.message, 'Error Message');
         }
       });
@@ -86,12 +63,10 @@ myApp.controller('SfaGalleryCtrl', function ($scope, TemplateService, errorServi
     $scope.photosbySport = {};
     $scope.photosbySport.folderType = 'Sport';
     NavigationService.getAllPhotosByType($scope.photosbySport, function (data) {
-      console.log(data, "response");
       errorService.errorCode(data, function (allData) {
         if (!allData.message) {
           if (allData.value === true) {
             $scope.allPhotosbySport = allData.data;
-
           } else {
 
           }
@@ -105,6 +80,23 @@ myApp.controller('SfaGalleryCtrl', function ($scope, TemplateService, errorServi
   };
   $scope.getAllPhotosBySport();
   // VIEW BY SPORT END
+
+  // get all videos
+  NavigationService.getAllVideos(function (data) {
+    errorService.errorCode(data, function (allData) {
+      if (!allData.message) {
+        if (allData.value === true) {
+          $scope.eventVideos = allData.data;
+        } else {
+          console.log("im in else");
+        }
+      } else {
+
+        toastr.error(allData.message, 'Error Message');
+      }
+    });
+  });
+
 
 
 

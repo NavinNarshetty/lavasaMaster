@@ -1266,6 +1266,20 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
                 data: request
             }).then(callback);
         },
+        getAllVideos: function (callback) {
+            $http({
+                url: adminUrl2 + 'media/getAllVideos',
+                method: 'POST',
+            }).then(callback);
+        },
+        getAllVideosByFolder: function (request, callback) {
+            $http({
+                url: adminUrl2 + 'media/getAllVideosByFolder',
+                method: 'POST',
+                data: request
+            }).then(callback);
+        },
+
         getOneReportCard: function (request, callback) {
             $http({
                 url: adminUrl2 + 'Reportcard/getOneReportCard',

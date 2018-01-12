@@ -10,7 +10,7 @@
 
     <!-- FOLDER SELECT -->
     <div class="feature-gallery-photoholder">
-      <div class="featured-gallery-select">
+      <div class="featured-gallery-select" ng-if="mediaType == 'photo'">
         <!-- FILTER AS PER SPORT -->
         <div class="row">
           <div class="col-md-4">
@@ -47,7 +47,10 @@
         <div class="row" masonry preserve-order>
           <div class="col-md-4 col-sm-4 col-xs-6 masonry-brick" ng-repeat="folderImage in allphotosbyfolder track by $index">
             <div class="feature-masonry-picholder">
-              <img ng-src="{{folderImage.mediaLink | mediapathtwo}}" alt="| Sfa Photos" class="img-responsive">
+              <img ng-src="{{folderImage.mediaLink | mediapathtwo}}" alt="{{folderImage.title}} | SFA Photos" title="{{folderImage.title}} | SFA Photos"
+                class="img-responsive" ng-if="mediaType == 'photo'">
+              <img ng-src="{{folderImage.thumbnail}}" alt="{{folderImage.mediatitle}} | SFA Videos" title="{{folderImage.mediatitle}}  | SFA Videos"
+                class="img-responsive" ng-if="mediaType == 'video'">
             </div>
           </div>
         </div>

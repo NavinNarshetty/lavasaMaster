@@ -5,6 +5,9 @@ myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, Navig
   TemplateService.title = "SFA Gallery";
   $scope.navigation = NavigationService.getNavigation();
 
+
+  $scope.mediaType = $stateParams.mediaType;
+
   $scope.showFolderFilter = false;
   $scope.defaultFolder = $stateParams.name;
   $scope.selectedType = $stateParams.type;
@@ -126,45 +129,68 @@ myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, Navig
     type: 'photo'
   }]
 
-  if ($stateParams.type && $stateParams.name) {
-    $scope.filterObj = {};
-    $scope.filterObj.folderType = $stateParams.type;
-    $scope.filterObj.folderName = $stateParams.name;
-    NavigationService.getAllPhotosByFolder($scope.filterObj, function (data) {
-      if (data) {
-        console.log(data, "data");
+  if ($stateParams.mediaType == 'photo') {
+    if ($stateParams.type && $stateParams.name) {
+      $scope.filterObj = {};
+      $scope.filterObj.folderType = $stateParams.type;
+      $scope.filterObj.folderName = $stateParams.name;
+      NavigationService.getAllPhotosByFolder($scope.filterObj, function (data) {
+        if (data) {
+          errorService.errorCode(data, function (allData) {
+            if (!allData.message) {
+              if (allData.value === true) {
+                $scope.allphotosbyfolder = allData.data;
+              } else {
+
+              }
+            } else {
+
+              toastr.error(allData.message, 'Error Message');
+            }
+          });
+        }
+      });
+    }
+
+    if ($stateParams.type) {
+      $scope.typefilter = {};
+      $scope.typefilter.folderType = $stateParams.type;
+      NavigationService.getAllPhotosByType($scope.typefilter, function (data) {
         errorService.errorCode(data, function (allData) {
           if (!allData.message) {
             if (allData.value === true) {
-              console.log(allData, "alldata");
-              $scope.allphotosbyfolder = allData.data;
-              console.log("allphotosbyfolder", $scope.allphotosbyfolder);
+              $scope.allfolderName = allData.data;
             } else {
-
+              console.log("im in else");
             }
           } else {
 
             toastr.error(allData.message, 'Error Message');
           }
         });
-      }
-    });
-  }
-
-  if ($stateParams.type) {
-    $scope.typefilter = {};
-    $scope.typefilter.folderType = $stateParams.type;
-    NavigationService.getAllPhotosByType($scope.typefilter, function (data) {
-      console.log(data, "response");
+      });
+    }
+  } else if ($stateParams.mediaType == 'video') {
+    $scope.constraints = {};
+    $scope.constraints.folder = $stateParams.name;
+    NavigationService.getAllVideosByFolder($scope.constraints, function (data) {
       errorService.errorCode(data, function (allData) {
         if (!allData.message) {
           if (allData.value === true) {
-
-            $scope.allfolderName = allData.data;
-            console.log($scope.allfolderName, "$scope.allfolderName ");
-
+            $scope.allphotosbyfolder = allData.data;
+            _.each($scope.allphotosbyfolder, function (key) {
+              if (key.thumbnails != undefined) {
+                if (key.thumbnails.length === 0) {
+                  key.thumbnail = 'img/media-video-thumb.jpg';
+                } else {
+                  key.thumbnail = key.thumbnails[3].link;
+                }
+              } else {
+                key.thumbnail = 'img/media-video-thumb.jpg';
+              }
+            });
           } else {
-
+            console.log("im in else");
           }
         } else {
 
@@ -173,6 +199,10 @@ myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, Navig
       });
     });
   }
+
+
+
+
 
 
 });
