@@ -103,6 +103,19 @@
     font-size: 14px;
     line-height: 30px;
   } // FEATURE END
+  // CHAMPIONS ARCHIVE
+  .archive-scheduledetail {
+    font-size: 11px;
+  }
+  .archive-datacardvalue {
+    font-size: 30px;
+  }
+  .archive-datacardtext {
+    font-size: 14px;
+  }
+  .championsarchive-bgbanner {
+    margin-top: 90px;
+  } // CHAMPIONS END
 }
 
 @media screen and (max-width: 767px) {
@@ -174,6 +187,12 @@
   } // GALLERY END
   .allfeaturedheader {
     margin: 0px;
+  }
+  .championsarchive-videoarchiveholder {
+    flex: none;
+  }
+  .championsarchive-bgbanner {
+    margin-top: 0px;
   }
 }
 
@@ -306,4 +325,52 @@
   .allfeaturedheader {
     font-size: 24px;
   } // FEATURED VIDEO END
+  // CHAMPIONS ARCHIVE
+  .archive-sportspecificcardholder {
+    width: 50px;
+  }
+  .archive-sportspecificcardholder p {
+    font-size: 8px;
+  }
+  .archive-venuholder {
+    width: auto;
+  }
+  .archive-scheduledetail {
+    font-size: 10px;
+  }
+  .archive-remainingdataholder {
+    width: 100%;
+    margin-left: 0px;
+  }
+  .archive-venutitle {
+    width: 40%;
+  }
+  .archive-datacardvalue {
+    font-size: 24px;
+  }
+  .archive-datacardtext {
+    font-size: 10px;
+  }
+  .championsarchive-bgbanner {
+    height: calc(100vh - 15vh);
+  } // MANIPLUATION IN TABLE FLIP
+  .championsarchive-rankingtableholder>table>tbody>tr>td {
+    &:nth-child(n+3) {
+      padding: 18px;
+    }
+    &:last-child() {
+      padding: 8px;
+    }
+  } // MANIPLUATION IN TABLE FLIP END
+  .rankingtable-score {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .rankingtable-medal {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .championsarchive-rankingtableholder .rankingtable-medal {
+    width: 15px;
+  } // CHAMPIONS ARCHIVE END
 }

@@ -1,283 +1,341 @@
  @media (max-width: $screen-xs-max) {
-     // Mobile
-    //  ATHLETE PROFILE CARD
-    .profileathleteimage-holder{
-      width: 55px;
-      height: 55px;
-    }
-    .profileathlete-cardcontent{
-      width: calc(100% - 70px);
-    }
-    .athletecard-starflag{
-      top: -10px;
-    }
-    .athletecard-starholder{
-      width: 25px;
-    }
-    .athletecard-flagholder{
-      width: 25px;
-    }
-    .profile-bluemedals{
-      width: 15px;
-    }
-    //  ATHLETE PROFILE CARD END
-    // RESULT PAGE
-    .resultsport-topplayer {
-        width: auto;
-        margin-right: 0;
-        float: none;
-    }
-    .resultsport-viewmedalwinner{
-      .btn-viewmore{
-        display: block;
-      }
-    }
-    .allmedal-winnercard{
-      .allmedal-studentdetails{
-        width: calc(100% - 85px);
-      }
-    }
-    .result-titlesection{
-      .result-title{
-        font-size: 30px;
-      }
-    }
-    .result-schooltitle{
-      h3{
-        font-size: 18px;
-      }
-    }
-    .schoolranktable-head{
-      h3{
-        font-size: 18px;
-      }
-    }
-    .result-sportfilter{
-      .sportfilter-select{
-        width: 100%;
-      }
-    }
-    .allmedal-studentname{
-      font-size: 12px;
-    }
-    .resulttable-schoolname{
-      width: 180px;
-      white-space: normal;
-    }
-    // RESULT PAGE END
-    // MATCH CENTER
-    .matchcenter-modal{
-      .racquet-setscore .scoring-set{
-        &:last-child{
-          .setpointlabel{
-            display: block;
-          }
-        }
-      }
-      .setpoint-element{
-        margin: 5px 0;
-      }
-      .matchplayer-image{
-        width: 40px;
-        height: 40px;
-      }
-      .score-number{
-        width: 40px;
-        height: 40px;
-        font-size: 18px;
-      }
-      .scoringset-school{
-        width: auto;
-        display: block;
-        padding: 0 10px;
-      }
-      .matchwinner{
-        position: static;
-        font-size: 14px;
-        padding: 0 10px;
-        p{
-          margin: 0;
-        }
-      }
-      .matchstart-header{
-        padding-left: 15px;
-      }
-      .matchcenter-sporticon{
-        width: 50px;
-        display: inline-block;
-        position: static;
-        vertical-align: middle;
-      }
-      .matchcenter-heading{
-        width: calc(100% - 55px);
-        display: inline-block;
-        font-size: 14px;
-        vertical-align: middle;
-      }
-      .matchwinner-title{
-        font-size: 14px;
-      }
-    }
-    // MATCH CENTER END
-    // TEAM MATCH CENTER
-    .teammatchcenter-modal{
-      .modal-container{
-        padding: 0;
-      }
-       .matchstart-header{
-         padding-left: 15px;
-       }
-       .matchwinner{
-         position: static;
-         font-size: 14px;
-         p{
-           margin: 0;
+   // Mobile
+   //  ATHLETE PROFILE CARD
+   .profileathleteimage-holder {
+     width: 55px;
+     height: 55px;
+   }
+   .profileathlete-cardcontent {
+     width: calc(100% - 70px);
+   }
+   .athletecard-starflag {
+     top: -10px;
+   }
+   .athletecard-starholder {
+     width: 25px;
+   }
+   .athletecard-flagholder {
+     width: 25px;
+   }
+   .profile-bluemedals {
+     width: 15px;
+   } //  ATHLETE PROFILE CARD END
+   // RESULT PAGE
+   .resultsport-topplayer {
+     width: auto;
+     margin-right: 0;
+     float: none;
+   }
+   .resultsport-viewmedalwinner {
+     .btn-viewmore {
+       display: block;
+     }
+   }
+   .allmedal-winnercard {
+     .allmedal-studentdetails {
+       width: calc(100% - 85px);
+     }
+   }
+   .result-titlesection {
+     .result-title {
+       font-size: 30px;
+     }
+   }
+   .result-schooltitle {
+     h3 {
+       font-size: 18px;
+     }
+   }
+   .schoolranktable-head {
+     h3 {
+       font-size: 18px;
+     }
+   }
+   .result-sportfilter {
+     .sportfilter-select {
+       width: 100%;
+     }
+   }
+   .allmedal-studentname {
+     font-size: 12px;
+   }
+   .resulttable-schoolname {
+     width: 180px;
+     white-space: normal;
+   } // RESULT PAGE END
+   // MATCH CENTER
+   .matchcenter-modal {
+     .racquet-setscore .scoring-set {
+       &:last-child {
+         .setpointlabel {
+           display: block;
          }
        }
-       .matchcenter-teamschool{
-         width: auto;
-         display: block;
+     }
+     .setpoint-element {
+       margin: 5px 0;
+     }
+     .matchplayer-image {
+       width: 40px;
+       height: 40px;
+     }
+     .score-number {
+       width: 40px;
+       height: 40px;
+       font-size: 18px;
+     }
+     .scoringset-school {
+       width: auto;
+       display: block;
+       padding: 0 10px;
+     }
+     .matchwinner {
+       position: static;
+       font-size: 14px;
+       padding: 0 10px;
+       p {
+         margin: 0;
        }
-       .matchcenter-sporticon{
-         width: 50px;
-         display: inline-block;
-         position: static;
-         vertical-align: middle;
+     }
+     .matchstart-header {
+       padding-left: 15px;
+     }
+     .matchcenter-sporticon {
+       width: 50px;
+       display: inline-block;
+       position: static;
+       vertical-align: middle;
+     }
+     .matchcenter-heading {
+       width: calc(100% - 55px);
+       display: inline-block;
+       font-size: 14px;
+       vertical-align: middle;
+     }
+     .matchwinner-title {
+       font-size: 14px;
+     }
+   } // MATCH CENTER END
+   // TEAM MATCH CENTER
+   .teammatchcenter-modal {
+     .modal-container {
+       padding: 0;
+     }
+     .matchstart-header {
+       padding-left: 15px;
+     }
+     .matchwinner {
+       position: static;
+       font-size: 14px;
+       p {
+         margin: 0;
        }
-       .matchcenter-heading{
-         width: calc(100% - 55px);
-         display: inline-block;
-         font-size: 14px;
-         vertical-align: middle;
-       }
-       .matchwinner-title{
-         font-size: 14px;
-       }
-       .matchcenter-teamcol{
-         &:nth-child(even){
-           .team-formationholder{
-              padding-left: 25px;
-              padding-right: 0px;
-              text-align: left;
-           }
-           .team-formationicon{
-             left: 0;
-             right: auto;
-           }
+     }
+     .matchcenter-teamschool {
+       width: auto;
+       display: block;
+     }
+     .matchcenter-sporticon {
+       width: 50px;
+       display: inline-block;
+       position: static;
+       vertical-align: middle;
+     }
+     .matchcenter-heading {
+       width: calc(100% - 55px);
+       display: inline-block;
+       font-size: 14px;
+       vertical-align: middle;
+     }
+     .matchwinner-title {
+       font-size: 14px;
+     }
+     .matchcenter-teamcol {
+       &:nth-child(even) {
+         .team-formationholder {
+           padding-left: 25px;
+           padding-right: 0px;
+           text-align: left;
+         }
+         .team-formationicon {
+           left: 0;
+           right: auto;
          }
        }
-    }
-    // TEAM MATCH CENTER END
-    // SPECIAL EVENT
-    .event-card {
-      margin: 5px 0;
-    }
-    .evencard-datetile{
-      padding: 10px;
-    }
-    .eventcard-date{
-      font-size: 48px;
-    }
-    .eventcard-day{
-      font-size: 20px;
-    }
-    .eventdetail-title{
-      padding: 0;
-      font-size: 14px;
-      line-height: 1;
-    }
-    .eventdetail-content{
-      padding: 0;
-      line-height: 1;
-    }
-    .datearrow-left, .datearrow-bottom{
-      &:after{
-        border-width: 8px !important;
-      }
-    }
-    // SPECIAL EVENT END
-    // REPORT CARD
-    .mob-floatclear{
-      float: none !important;
-    }
-    .reportcard-school{
-      font-size: 21px;
-    }
-    .reportcard-sfaid{
-      font-size: 16px;
-    }
-    .report-cupcard{
-      margin-top: 10px;
-      .report-ranktext-big{
-        font-size: 30px;
-      }
-      .report-ranktext-small{
-        font-size: 21px;
-      }
-    }
-    .report-cupholder{
-      width: 35px;
-    }
-    .report-summarycard{
-      max-width: initial;
-      margin: 10px 0;
-      display: block;
-    }
-    .report-schoolheader{
-      font-size: 16px;
-    }
-    .report-schoolheader{
-      padding: 10px;
-    }
-    .reportsummary-schooltable{
-      padding: 10px;
-    }
-    .report-content{
-      padding: 0 10px;
-    }
-    .report-contingentprogress{
-      width: 130px;
-    }
-    .reportperformance-content{
-      .report-cupcard{
-        padding: 10px;
-      }
-      .report-cupholder{
-        width: 50px;
-      }
-      .report-cuprank{
-        .report-schoolranktitle{
-          font-size: 14px;
-        }
-        .report-schoolrank{
-          font-size: 24px;
-        }
-      }
-    }
-    .reportperformance-medallist{
-      padding: 10px;
-      .report-medalholder{
-        width: 16px;
-      }
-      .report-rankholder{
-        width: calc( 100% - 20px);
-      }
-    }
-    .report-schoolsummaryholder{
-      text-align: center;
-    }
-    .report-summarycard{
-      text-align: left;
-    }
-    .report-wingraph{
-      width: 50%;
-    }
-    .reporttable-schoolheader{
-      font-size: 14px;
-    }
-    .reportschool-tableholder{
-      padding-bottom: 20px;
-    }
-    // REPORT CARD  END
-     // Mobile End
+     }
+   } // TEAM MATCH CENTER END
+   // SPECIAL EVENT
+   .event-card {
+     margin: 5px 0;
+   }
+   .evencard-datetile {
+     padding: 10px;
+   }
+   .eventcard-date {
+     font-size: 48px;
+   }
+   .eventcard-day {
+     font-size: 20px;
+   }
+   .eventdetail-title {
+     padding: 0;
+     font-size: 14px;
+     line-height: 1;
+   }
+   .eventdetail-content {
+     padding: 0;
+     line-height: 1;
+   }
+   .datearrow-left,
+   .datearrow-bottom {
+     &:after {
+       border-width: 8px !important;
+     }
+   } // SPECIAL EVENT END
+   // REPORT CARD
+   .mob-floatclear {
+     float: none !important;
+   }
+   .reportcard-school {
+     font-size: 21px;
+   }
+   .reportcard-sfaid {
+     font-size: 16px;
+   }
+   .report-cupcard {
+     margin-top: 10px;
+     .report-ranktext-big {
+       font-size: 30px;
+     }
+     .report-ranktext-small {
+       font-size: 21px;
+     }
+   }
+   .report-cupholder {
+     width: 35px;
+   }
+   .report-summarycard {
+     max-width: initial;
+     margin: 10px 0;
+     display: block;
+   }
+   .report-schoolheader {
+     font-size: 16px;
+   }
+   .report-schoolheader {
+     padding: 10px;
+   }
+   .reportsummary-schooltable {
+     padding: 10px;
+   }
+   .report-content {
+     padding: 0 10px;
+   }
+   .report-contingentprogress {
+     width: 130px;
+   }
+   .reportperformance-content {
+     .report-cupcard {
+       padding: 10px;
+     }
+     .report-cupholder {
+       width: 50px;
+     }
+     .report-cuprank {
+       .report-schoolranktitle {
+         font-size: 14px;
+       }
+       .report-schoolrank {
+         font-size: 24px;
+       }
+     }
+   }
+   .reportperformance-medallist {
+     padding: 10px;
+     .report-medalholder {
+       width: 16px;
+     }
+     .report-rankholder {
+       width: calc( 100% - 20px);
+     }
+   }
+   .report-schoolsummaryholder {
+     text-align: center;
+   }
+   .report-summarycard {
+     text-align: left;
+   }
+   .report-wingraph {
+     width: 50%;
+   }
+   .reporttable-schoolheader {
+     font-size: 14px;
+   }
+   .reportschool-tableholder {
+     padding-bottom: 20px;
+   } // REPORT CARD  END
+   // Mobile End
+   //  TABLE FLIP
+   .table-flip table {
+     width: 100%;
+     border-collapse: collapse;
+     border-spacing: 0;
+   }
+   .table-flip th,
+   .table-flip td {
+     margin: 0;
+     vertical-align: top;
+   }
+   .table-flip th {
+     text-align: left;
+   }
+   .table-flip table {
+     display: block;
+     position: relative;
+     width: 100%;
+   }
+   .table-flip thead {
+     display: block;
+     float: left;
+   }
+   .table-flip tbody {
+     display: block;
+     width: auto;
+     position: relative;
+     overflow-x: auto;
+     white-space: nowrap;
+   }
+   .table-flip thead tr {
+     display: block;
+   }
+   .table-flip th {
+     display: block;
+     text-align: right;
+   }
+   .table-flip tbody tr {
+     display: inline-block;
+     vertical-align: top;
+   }
+   .table-flip td {
+     display: block;
+     min-height: 1.25em;
+     text-align: left;
+   }
+   /* sort out borders */
+   .table-flip th {
+     border-bottom: 0;
+     border-left: 0;
+   }
+   .table-flip td {
+     border-left: 0;
+     border-right: 0;
+     border-bottom: 0;
+   }
+   .table-flip tbody tr {
+     border-left: 1px solid #babcbf;
+   }
+   .table-flip th:last-child,
+   .table-flip td:last-child {
+     border-bottom: 1px solid #babcbf;
+   } // TABLE FLIP END
  }

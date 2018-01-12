@@ -1799,6 +1799,9 @@ $sport-table-grey:#efeeee !default;
   .custom-featuredgallery-dropdown {
     border-bottom: 1px solid #e1e1e1;
     padding: 8px;
+    &:last-child {
+      border-bottom: none;
+    }
   }
 }
 
@@ -1880,3 +1883,190 @@ $sport-table-grey:#efeeee !default;
 }
 
 // FEATURED VIDEO END
+// CHAMPIONS ARCHIVE PAGE
+.championsarchive-page {
+  min-height: 100vh;
+}
+
+.championsarchive-bgbanner {
+  height: calc( 100vh - 30vh);
+  background-image: url('/img/archivechampions.jpg');
+  background-position: 50% 30%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: 0 5px 15px #ccc;
+  .container {
+    height: 100%;
+  }
+}
+
+.championsarchive-videoholder {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.championsarchive-videoarchiveholder {
+  flex: auto;
+  margin: 0px 10px 10px 0px;
+}
+
+.videoarchive-play {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  background-color: #d8485a;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  color: #fff;
+  .fa-play {
+    font-size: 12px;
+    line-height: 30px;
+  }
+}
+
+.videoarchive-card {
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover; // width: 240px;
+  height: 150px;
+  margin: 8px 0px;
+}
+
+.championsarchive-rankingtableholder {
+  table>thead>tr {
+    background-color: $sport-primary;
+    color: #fff;
+  }
+  table>thead>tr>th {
+    vertical-align: middle;
+    text-align: center;
+  }
+  .rankingtable-medal {
+    width: 18px;
+    margin: 5px auto;
+  }
+  .rankingtable-score {
+    text-align: center;
+  }
+}
+
+.archive-sportspecificcardholder {
+  width: 85px;
+  margin: 10px 20px;
+  display: inline-block;
+  p {
+    font-weight: bold;
+  }
+}
+
+.archive-sportspecificcard {
+  margin-bottom: 5px;
+}
+
+.archive-photovideocardplay {
+  padding: 4px 12px;
+  border: 1px solid #da495b;
+  background-color: #da495b;
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  .archive-photovideoplaye {
+    font-size: 16px;
+    color: #fff;
+  }
+}
+
+.archive-photovideocard {
+  margin: 10px 0px;
+}
+
+.archivechampions-cardholder {
+  position: relative;
+  height: 100%;
+}
+
+.archivecontent-card {
+  position: absolute;
+  width: 100%;
+  bottom: 0px;
+  left: 0px;
+}
+
+.archive-venuholder {
+  width: 30%;
+  display: inline-block; // font-size: 35px;
+  background: #fff;
+  padding: 10px 15px;
+  vertical-align: bottom;
+}
+
+.archive-remainingdataholder {
+  width: 70%;
+  display: inline-block;
+  margin-left: -4px;
+  background: $sport-green-graph;
+  padding: 10px 15px;
+}
+
+.archive-datacardholder {
+  display: flex;
+  flex-wrap: nowrap; // justify-content: space-between;
+  text-align: center;
+}
+
+.archive-datacards {
+  flex: auto;
+  border-right: 1px solid #fff;
+  &:last-child {
+    border-right: none;
+  }
+}
+
+.archive-datacardvalue {
+  font-size: 42px;
+  color: #ffffff;
+  line-height: 1;
+  @extend .d-teko-semibold;
+}
+
+.archive-datacardtext {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.archive-venutitle {
+  width: 60%;
+  margin-bottom: 10px;
+}
+
+.archive-scheduledetail {
+  border-top: 1px solid #000;
+  padding-top: 10px;
+}
+
+.archive-scheduledate {
+  margin-bottom: 10px;
+  display: block
+}
+
+.championsarchive-sportspecificimageholder {
+  text-align: center;
+}
+
+.archive-readmore {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.championsarchive-highlightsholder,
+.championsarchive-championsresult,
+.championsarchive-specificsportholder,
+.championsarchive-headersection,
+.championsarchive-photovideoholder {
+  margin: 40px 0px;
+}
+
+// CHAMPIONS ARCHIVE PAGE END

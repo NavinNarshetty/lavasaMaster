@@ -499,6 +499,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             url: "/reportcard/:school",
             templateUrl: tempateURL,
             controller: 'ReportCardCtrl'
+        })
+        .state('champions-archive', {
+            url: "/champions-archive",
+            templateUrl: tempateURL,
+            controller: 'championArchiveCtrl'
         });
     // if (window.location.origin != "http://testmumbaischool.sfanow.in") {
     if (window.location.origin == "http://mumbaischool.sfanow.in") {

@@ -108,5 +108,6 @@ module.exports = [
   'frontend/js/controllers/reportcard-controller.js',
   'frontend/js/controllers/galleryController.js',
   'frontend/js/controllers/featuredgallery.js',
-  'frontend/js/controllers/matchvideo.js'
+  'frontend/js/controllers/matchvideo.js',
+  'frontend/js/controllers/championshipArchive.js'
 ];
