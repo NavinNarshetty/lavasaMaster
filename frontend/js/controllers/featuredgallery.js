@@ -1,20 +1,32 @@
-myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, NavigationService, $state, errorService, $stateParams, $timeout) {
+myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, NavigationService, $state, errorService, $stateParams, $timeout, MediaPopupService) {
   //Used to name the .html file
 
   $scope.template = TemplateService.getHTML("content/featured-gallery.html");
   TemplateService.title = "SFA Gallery";
   $scope.navigation = NavigationService.getNavigation();
 
-
+  // VARIABLE INITIALISE
   $scope.mediaType = $stateParams.mediaType;
-
   $scope.showFolderFilter = false;
   $scope.defaultFolder = $stateParams.name;
   $scope.selectedType = $stateParams.type;
   $scope.selectfolder = '';
+  // VARIABLE INITIALISE END
+  // PHOTO VIDEO POPUP FUNCTION
+  var photoPopUp;
+  $scope.showPopup = function(picIndex, picList){
+    MediaPopupService.openMediaPopup(picIndex, picList, $scope);
+  }
+  $scope.nextSlides = function(){
+    MediaPopupService.nextSlide();
+  }
+  $scope.prevSlides = function(){
+    MediaPopupService.prevSlide();
+  }
+  // PHOTO VIDEO POPUP FUNCTION END
+  // FUNCTIONS
   // SELECT FOLDER
   $scope.viewFolder = function () {
-
     $state.go('featuredgallery', {
       type: $stateParams.type,
       name: $scope.defaultFolder
@@ -22,7 +34,6 @@ myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, Navig
 
     if ($scope.showFolderFilter == false) {
       $scope.showFolderFilter = true;
-
     } else {
       $scope.showFolderFilter = false;
     }
@@ -31,16 +42,12 @@ myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, Navig
   $scope.selectFolder = function (folder) {
     if ($scope.selectFolder == 'all') {
       $scope.selectfolder = '';
-
     } else {
       $scope.selectfolder = folder._id;
     }
     $scope.defaultFolder = folder._id;
     $scope.viewFolder();
   }
-  $scope.folderName = ['Girl celebrations with Sania', 'Prize distribution', 'Children Day', 'Behind scene'];
-
-
   // END FOLDER END
   // GENDER
   $scope.showGenderFilter = false;
@@ -57,14 +64,12 @@ myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, Navig
   $scope.selectGender = function (gender) {
     if ($scope.selectGender == 'all') {
       $scope.selectgender = '';
-
     } else {
       $scope.selectgender = gender;
     }
     $scope.defaultGender = gender;
     $scope.viewGender();
   }
-
   $scope.genderItem = ['Boys', 'Girls', 'Boys & Girls']
   // GENDER END
 
@@ -83,52 +88,16 @@ myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, Navig
   $scope.selectSport = function (sport) {
     if ($scope.selectSport == 'all') {
       $scope.selectsport = '';
-
     } else {
       $scope.selectsport = sport;
     }
     $scope.defaultSport = sport;
     $scope.viewSport();
   }
-
-  $scope.sports = ['Badminton', 'Tennis', 'Football', 'Hockey', 'Table Tennis']
   // SPORTS END
+  // FUNCTIONS END
 
-  $scope.Images = [{
-    img: 'drone-video.png',
-    type: 'photo'
-  }, {
-    img: 'sa8.jpg',
-    type: 'video'
-  }, {
-    img: 'sa2.jpg',
-    type: 'photo'
-  }, {
-    img: 'sa3.jpg',
-    type: 'video'
-  }, {
-    img: 'sa4.jpg',
-    type: 'photo'
-  }, {
-    img: 'sa11.jpg',
-    type: 'video'
-  }, {
-    img: 'sa6.jpg',
-    type: 'video'
-  }, {
-    img: 'mobweb-3.jpg',
-    type: 'photo'
-  }, {
-    img: 'day-02.png',
-    type: 'photo'
-  }, {
-    img: 'day-03.png',
-    type: 'photo'
-  }, {
-    img: 'sa7.jpg',
-    type: 'photo'
-  }]
-
+  // API CALLS
   if ($stateParams.mediaType == 'photo') {
     if ($stateParams.type && $stateParams.name) {
       $scope.filterObj = {};
@@ -141,10 +110,8 @@ myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, Navig
               if (allData.value === true) {
                 $scope.allphotosbyfolder = allData.data;
               } else {
-
               }
             } else {
-
               toastr.error(allData.message, 'Error Message');
             }
           });
@@ -164,7 +131,6 @@ myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, Navig
               console.log("im in else");
             }
           } else {
-
             toastr.error(allData.message, 'Error Message');
           }
         });
@@ -193,16 +159,11 @@ myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, Navig
             console.log("im in else");
           }
         } else {
-
           toastr.error(allData.message, 'Error Message');
         }
       });
     });
   }
-
-
-
-
-
+  // API CALLS END
 
 });
