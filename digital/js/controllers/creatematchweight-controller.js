@@ -8,6 +8,9 @@ myApp.controller('CreateMatchWeightCtrl', function($scope, TemplateService, Navi
     $scope.sportDetails = {
       sport: $stateParams.sport
     }
+    $scope.objId = {
+      _id: $stateParams.sport
+    }
     // $scope.sportDetails = {
     //   sport: '5955e816accee91486acf6a0'
     //   sport: '59563d8b97cd023787820d68'
@@ -54,7 +57,8 @@ myApp.controller('CreateMatchWeightCtrl', function($scope, TemplateService, Navi
             // API CALL
             NavigationService.generateWeightMatches($scope.matchForm, function(data){
               if (data.value == true) {
-                console.log("match created");
+                toastr.success("Matches created successfully.");
+                $state.go('digital-attendance');
               } else {
                 toaster.error("Error");
               }
@@ -74,7 +78,7 @@ myApp.controller('CreateMatchWeightCtrl', function($scope, TemplateService, Navi
     // FUNCTIONS END
 
     // APIS
-    NavigationService.getOneSportDetail( $scope.objId, function(data){
+    NavigationService.getOneSportDetail($scope.objId, function(data){
       data = data.data;
       if (data.value == true) {
         $scope.sportdata = data.data;
