@@ -54,51 +54,78 @@ var model = {
     uploadExcel: function (importData, callback) {
         var errorFound = false;
         console.log(importData.length);
-        async.concatSeries(importData, function (singleData, callback) {
-            // callback(null,singleData);
-            singleData.date = new Date(Math.round((singleData.date - 25569) * 86400 * 1000));
-            Media.saveData(singleData, function (err, data) {
-                if (err) {
-                    errorFound = true;
-                    callback(null, {
-                        error: true,
-                        data: err
-                    });
-                } else {
-                    callback(null, {
-                        error: false,
-                        data: data
-                    });
-                }
-            });
-        }, function (err, result) {
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, result);
-                if (errorFound) {
-                    async.each(result, function (singleData, callback) {
-                        if (!singleData.error && singleData.data._id) {
-                            Media.deleteData({
-                                '_id': singleData.data._id
-                            }, function (err, deleted) {
-                                callback(null);
-                            })
-                        } else {
-                            callback(null);
-                        }
-                    }, function (err) {
+        async.waterfall([
+            function (callback) {
+                ConfigProperty.findOne({}, "year").lean().exec(function (err, configs) {
+                    if(err){
+                        callback(err,null);
+                    }else if(!_.isEmpty(configs)){
+                        var year = configs.year;
+                        callback(null,year);
+                    }else{
+                        callback(null,[]);
+                    }
+                });
+            },
+            function (year,callback) {
+                if(_.isEmpty(year)){
+                    callback(null,[])
+                }else{
+                    async.concatSeries(importData, function (singleData, callback) {
+                    singleData.date = new Date(Math.round((singleData.date - 25569) * 86400 * 1000));
+                    singleData.year = year;
+                        Media.saveData(singleData, function (err, data) {
+                            if (err) {
+                                errorFound = true;
+                                callback(null, {
+                                    error: true,
+                                    data: err
+                                });
+                            } else {
+                                callback(null, {
+                                    error: false,
+                                    data: data
+                                });
+                            }
+                        });
+                    }, function (err, result) {
                         if (err) {
-
+                            callback(err, null);
                         } else {
-                            console.log("Successfully Deleted");
+                            callback(null, result);
+                            if (errorFound) {
+                                async.each(result, function (singleData, callback) {
+                                    if (!singleData.error && singleData.data._id) {
+                                        Media.deleteData({
+                                            '_id': singleData.data._id
+                                        }, function (err, deleted) {
+                                            callback(null);
+                                        })
+                                    } else {
+                                        callback(null);
+                                    }
+                                }, function (err) {
+                                    if (err) {
+    
+                                    } else {
+                                        console.log("Successfully Deleted");
+                                    }
+                                });
+    
+                            }
                         }
+    
                     });
-
                 }
             }
-
+        ], function (err, finalResult) {
+            if(err){
+                callback(err,null);
+            }else{
+                callback(null,finalResult);                
+            }
         });
+
 
     },
 
@@ -271,26 +298,26 @@ var model = {
         });
     },
 
-    getAllVideos:function(callback){
+    getAllVideos: function (callback) {
         Media.aggregate(
             [{
                 $match: {
-                "mediatype":"video"
+                    "mediatype": "video"
                 }
-            },{
+            }, {
                 $group: {
                     "_id": "$folder",
-                    "medialink":{
-                        "$first":"$medialink"
+                    "medialink": {
+                        "$first": "$medialink"
                     },
-                    "folder":{
-                        "$first":"$folder"
+                    "folder": {
+                        "$first": "$folder"
                     },
-                    "thumbnails":{
-                        "$first":"$thumbnails"
+                    "thumbnails": {
+                        "$first": "$thumbnails"
                     },
-                    "mediatype":{
-                        "$first":"$mediatype"
+                    "mediatype": {
+                        "$first": "$mediatype"
                     }
                 }
             }],
@@ -310,18 +337,18 @@ var model = {
         );
     },
 
-    getAllVideosByFolder:function(data,callback){
+    getAllVideosByFolder: function (data, callback) {
 
         Media.find({
-            "mediatype":"video",
-            "folder":data.folder
-        },"medialink thumbnails mediatitle").lean().exec(function(err,photos){
-            if(err){
-                callback(err,null);
-            }else if(!_.isEmpty(photos)){
-                callback(null,photos);
-            }else{
-                callback(null,[]);
+            "mediatype": "video",
+            "folder": data.folder
+        }, "medialink thumbnails mediatitle").lean().exec(function (err, photos) {
+            if (err) {
+                callback(err, null);
+            } else if (!_.isEmpty(photos)) {
+                callback(null, photos);
+            } else {
+                callback(null, []);
             }
         });
 

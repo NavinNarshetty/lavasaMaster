@@ -54,7 +54,7 @@ var controller = {
     },
 
     getAllVideosByFolder:function(req,res){
-        console.log(req.body);
+        console.log(req.body); 
         if(req.body && req.body.folder){
             Media.getAllVideosByFolder(req.body,res.callback);        
         }else{
