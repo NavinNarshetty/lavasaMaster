@@ -47,6 +47,8 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
     NavigationService.addPlayersMatch($scope.savePlayers, function (data) {
       if (data.value == true) {
         // $scope.
+        toastr.success("Players added successfully.");
+        $scope.getOneMatch();
         console.log("$scope.savePlayerList", data.data);
       } else {
         toastr.error("Save Failed", "Error");
