@@ -15754,9 +15754,13 @@ var model = {
                                             var player = {};
                                             var player1 = {};
                                             var winner = {};
+                                            var temp = {};
+                                            temp.isNoMatch1 = false;
+                                            temp.isNoMatch2 = false;
                                             paramData.opponentsSingle = [];
                                             paramData.matchId = singleData["MATCH ID"];
                                             paramData.round = singleData["ROUND NAME"];
+
                                             if (_.isEmpty(singleData["NAME 1"]) && _.isEmpty(singleData["NAME 2"])) {
                                                 paramData.opponentsSingle = "";
                                                 resultData.isNoMatch = true;
@@ -15812,6 +15816,7 @@ var model = {
                                                             player.walkover = false;
                                                             player1.walkover = false;
                                                             player1.noShow = false;
+                                                            temp.isNoMatch1 = true;
                                                         }
                                                     }
                                                     paramData.opponentsSingle.push(singleData["NAME 2"]);
@@ -15849,6 +15854,7 @@ var model = {
                                                             player.walkover = false;
                                                             player1.walkover = false;
                                                             player1.noShow = false;
+                                                            temp.isNoMatch2 = true;
                                                         }
                                                     }
                                                     resultData.players.push(player);
@@ -15861,6 +15867,8 @@ var model = {
                                             } else if (singleData["WINNER SFAID"] == singleData["SFAID 2"]) {
                                                 winner.player = singleData["NAME 2"];
                                                 resultData.isDraw = false;
+                                            } else if (temp.isNoMatch1 == true && temp.isNoMatch2 == true) {
+                                                resultData.isNoMatch = true;
                                             } else {
                                                 resultData.isDraw = true;
                                             }

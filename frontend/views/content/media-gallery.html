@@ -130,7 +130,7 @@ Press release
                             <div class="row text-center" ng-if="!(folders.length > 0)">
                                 {{folders === undefined && 'Loading ..' || 'No Videos Found.'}}
                             </div>
-                            <div class="col-md-4 mb15 col-xs-12 col-sm-6" ng-repeat="item in folders track by $index" ui-sref="media-gallery-inside({type:'video',folder:item._id})">
+                            <div class="col-md-4 mb15 col-xs-12 col-sm-6" ng-repeat="item in folders | orderBy:'_id' track by $index" ui-sref="media-gallery-inside({type:'video',folder:item._id})">
                                 <a href="">
                                     <div class="folder-box sf-relative h226">
                                         <!-- <img ng-src="{{'YWdQ9ByptFE' | videothumbnail}}" alt="Sports For All" class="img-responsive width100 hover-min m-h"> -->

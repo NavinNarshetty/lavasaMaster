@@ -78,7 +78,7 @@ var model = {
             }
         });
     },
-    
+
     manageArrayObject: function (Model, id, data, key, action, callback) {
         Model.findOne({
             "_id": id
@@ -511,7 +511,7 @@ var model = {
         });
 
     },
-    
+
     excelDateToDate: function isDate(value) {
         value = (value - (25567 + 1)) * 86400 * 1000;
         var mom = moment(value);
@@ -1079,6 +1079,56 @@ var model = {
                 callback(null, filename);
             });
         }
+    },
+
+    removeChunkCover: function (callback, res) {
+        // var readstream = gfs.createReadStream({
+        //     filename: {
+        //         $regex: "cover",
+        //         $options: "i"
+        //     }
+        // });
+        // readstream.on('error', function (err) {
+        //     callback({
+        //         value: false,
+        //         error: err
+        //     });
+        // });
+        var buf;
+        var newNameExtire;
+        var bufs = [];
+        var proceedI = 0;
+        var wi;
+        var he;
+        Jimp.read(buf, function (err, image) {
+            gfs.files.find({
+                filename: {
+                    $regex: "-cover",
+                    $options: "i"
+                }
+            }).toArray(function (err, files) {
+                if (err) {
+                    res.json(err);
+                } else if (_.isEmpty(files)) {
+                    callback(null, []);
+                } else {
+                    _.each(files, function (n) {
+                        console.log("inside remove each", n);
+                        gfs.files.remove({
+                            _id: n._id
+                        }, function (err, found) {
+                            if (err) {
+                                console.log("error");
+                            } else {
+                                console.log("removed image", image);
+                            }
+                        });
+
+                    });
+                    callback(null, "data removed");
+                }
+            });
+        });
     }
 };
 module.exports = _.assign(module.exports, exports, model);
