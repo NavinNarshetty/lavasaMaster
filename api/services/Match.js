@@ -15862,7 +15862,7 @@ var model = {
                                                 winner.player = singleData["NAME 2"];
                                                 resultData.isDraw = false;
                                             } else {
-                                                resultData.isDraw = false;
+                                                resultData.isDraw = true;
                                             }
                                             resultData.winner = winner;
                                             paramData.resultSwiss = resultData;
