@@ -141,7 +141,7 @@ var model = {
                     function (callback) {
                         var athelete = {};
                         athelete._id = singleData;
-                        // individualSport.oldId = singleData;
+                        individualSport.oldId = singleData;
                         OldKnockout.getAthleteId(athelete, function (err, athelete) {
                             if (err) {
                                 callback(err, null);
@@ -191,7 +191,7 @@ var model = {
                         if (athelete.error) {
                             individualSport.athleteId = null;
                             individualSport.createdBy = "School";
-                            individualSport.oldId = singleData;
+                            // individualSport.oldId = singleData;
                             IndividualSport.saveData(individualSport, function (err, saveData) {
                                 if (err) {
                                     callback(err, null);
@@ -207,7 +207,7 @@ var model = {
                         } else {
                             individualSport.athleteId = athelete._id;
                             individualSport.createdBy = "School";
-                            individualSport.oldId = singleData;
+                            // individualSport.oldId = singleData;
                             IndividualSport.saveData(individualSport, function (err, saveData) {
                                 if (err) {
                                     callback(err, null);

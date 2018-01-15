@@ -115,7 +115,7 @@ var model = {
         return pipeline;
     },
 
-    getAllPlayer1: function (data, callback) {
+    getAllPlayer: function (data, callback) {
         var individualSport = {};
         async.waterfall([
             function (callback) {
@@ -133,50 +133,24 @@ var model = {
                 });
             },
             function (complete, callback) {
-                OldKnockout.saveIn(complete, individualSport, function (err, saveData) {
-                    if (err) {
-                        callback(err, null);
-                    } else {
-                        if (_.isEmpty(saveData)) {
-                            var err = {
-                                error: "no saveData",
-                                data: saveData
-                            }
-                            callback(null, err);
-                        } else {
-                            callback(null, saveData);
-                        }
-                    }
-                });
-            },
-        ], function (err, data3) {
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, data3);
-            }
-        });
-    },
-
-    getAllPlayer2: function (data, callback) {
-        var individualSport = {};
-        async.waterfall([
-            function (callback) {
                 var pipeLine = OldSwissLeague.getknockoutPlayer2AggregatePipeLine(data);
-                OldSwissLeague.aggregate(pipeLine, function (err, complete) {
+                OldSwissLeague.aggregate(pipeLine, function (err, complete1) {
                     if (err) {
                         callback(err, "error in mongoose");
                     } else {
-                        if (_.isEmpty(complete)) {
-                            callback(null, complete);
+                        if (_.isEmpty(complete1)) {
+                            callback(null, complete1);
                         } else {
-                            callback(null, complete);
+                            var final = _.concat(complete, complete1);
+                            console.log("final", final);
+                            final = _.uniqBy(final, '_id');
+                            callback(null, final);
                         }
                     }
                 });
             },
-            function (complete, callback) {
-                OldKnockout.saveIn(complete, individualSport, function (err, saveData) {
+            function (final, callback) {
+                OldKnockout.saveIn(final, individualSport, function (err, saveData) {
                     if (err) {
                         callback(err, null);
                     } else {
