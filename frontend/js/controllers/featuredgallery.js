@@ -11,17 +11,20 @@ myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, Navig
   $scope.defaultFolder = $stateParams.name;
   $scope.selectedType = $stateParams.type;
   $scope.selectfolder = '';
+  $scope.allphotosbyfolder = {};
   // VARIABLE INITIALISE END
   // PHOTO VIDEO POPUP FUNCTION
   var photoPopUp;
-  $scope.showPopup = function(picIndex, picList){
+  $scope.showPopup = function (picIndex, picList) {
     MediaPopupService.openMediaPopup(picIndex, picList, $scope);
   }
-  $scope.nextSlides = function(){
-    MediaPopupService.nextSlide();
+  $scope.nextSlides = function (currentindex) {
+
+    MediaPopupService.nextSlide(currentindex, $scope.allphotosbyfolder, $scope);
   }
-  $scope.prevSlides = function(){
-    MediaPopupService.prevSlide();
+  $scope.prevSlides = function (currentindex) {
+
+    MediaPopupService.prevSlide(currentindex, $scope.allphotosbyfolder, $scope);
   }
   // PHOTO VIDEO POPUP FUNCTION END
   // FUNCTIONS
@@ -57,7 +60,7 @@ myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, Navig
     if ($scope.showGenderFilter == false) {
       $scope.showGenderFilter = true;
     } else {
-      $scope.showGenderFilter = false
+      $scope.showGenderFilter = false;
     }
   }
 

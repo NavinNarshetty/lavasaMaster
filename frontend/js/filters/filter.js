@@ -204,7 +204,12 @@ myApp.filter('myFilter', function () {
             };
         }
     ])
+    .filter('trusted', ['$sce', function ($sce) {
+        return function (url) {
+            return $sce.trustAsResourceUrl(url);
+        };
 
+    }])
     .filter('englishNumeralDate', function () {
         return function (value) {
             if (value) {
