@@ -501,6 +501,12 @@
                         <div class="form-group team-data-points-holder">
                           <h5> TEAM DATA POINTS</h5>
                           <div class="team-data-points-1">
+                            <div class="row mb15" ng-if="formData.sport.sportslist.name==='Throwball'">
+                              <div class="col-md-2">
+                                <label for="finalpoints">finalPoints</label>
+                                <input type="text" name="finalpoint" id="finalpoint" class="form-control" ng-model="team.teamResults.finalPoints">
+                              </div>
+                            </div>
                             <div class="row mb15">
                               <!-- SETS THROWBALL -->
                               <button class="btn btn-dark pull-right" type="submit " ng-click="addTeamSet($index,'result')">ADD</button>
