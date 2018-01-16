@@ -1,4 +1,4 @@
-myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, NavigationService, $state, errorService, $stateParams, $timeout, MediaPopupService) {
+myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, toastr, NavigationService, $state, errorService, $stateParams, $timeout, MediaPopupService) {
   //Used to name the .html file
 
   $scope.template = TemplateService.getHTML("content/featured-gallery.html");
@@ -111,7 +111,13 @@ myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, Navig
           errorService.errorCode(data, function (allData) {
             if (!allData.message) {
               if (allData.value === true) {
-                $scope.allphotosbyfolder = allData.data;
+                if (allData.data.length > 0) {
+                  $scope.allphotosbyfolder = allData.data;
+                } else {
+                  toastr.error('No Photos Found', 'Error Message');
+                  $state.go('eventgallery');
+                }
+
               } else {
               }
             } else {
@@ -146,18 +152,24 @@ myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, Navig
       errorService.errorCode(data, function (allData) {
         if (!allData.message) {
           if (allData.value === true) {
-            $scope.allphotosbyfolder = allData.data;
-            _.each($scope.allphotosbyfolder, function (key) {
-              if (key.thumbnails != undefined) {
-                if (key.thumbnails.length === 0) {
-                  key.thumbnail = 'img/media-video-thumb.jpg';
+            if (allData.data.length > 0) {
+              $scope.allphotosbyfolder = allData.data;
+              _.each($scope.allphotosbyfolder, function (key) {
+                if (key.thumbnails != undefined) {
+                  if (key.thumbnails.length === 0) {
+                    key.thumbnail = 'img/media-video-thumb.jpg';
+                  } else {
+                    key.thumbnail = key.thumbnails[3].link;
+                  }
                 } else {
-                  key.thumbnail = key.thumbnails[3].link;
+                  key.thumbnail = 'img/media-video-thumb.jpg';
                 }
-              } else {
-                key.thumbnail = 'img/media-video-thumb.jpg';
-              }
-            });
+              });
+            } else {
+              toastr.error('No Videos found');
+              $state.go('eventgallery');
+            }
+
           } else {
             console.log("im in else");
           }
