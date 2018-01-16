@@ -1213,6 +1213,8 @@ var model = {
                                 "resultVolleyball.teams.team": teamid,
                             }, {
                                 "resultWaterPolo.teams.team": teamid,
+                            }, {
+                                "resultThrowball.teams.team": teamid,
                             }],
 
                             round: standings.name
@@ -1389,6 +1391,27 @@ var model = {
                                     scores.win = ++scores.win;
                                     scores.points = scores.points + 3;
                                 } else if (_.isEmpty(match.resultWaterPolo.winner.player) && match.resultWaterPolo.isDraw == true) {
+                                    scores.draw = ++scores.draw;
+                                    scores.points = scores.points + 1;
+                                } else {
+                                    scores.loss = ++scores.loss;
+                                }
+                            }else if (match.resultThrowball) {
+                                if (match.resultThrowball.teams.length == 2) {
+                                    if (teamData._id == match.resultThrowball.teams[0].team && match.resultThrowball.teams[0].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    } else if (teamData._id == match.resultThrowball.teams[1].team && match.resultThrowball.teams[1].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    }
+                                } else {
+                                    if (teamData._id == match.resultThrowball.teams[0].team && match.resultThrowball.teams[0].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    }
+                                }
+                                if (teamData._id == match.resultThrowball.winner.player) {
+                                    scores.win = ++scores.win;
+                                    scores.points = scores.points + 3;
+                                } else if (_.isEmpty(match.resultThrowball.winner.player) && match.resultThrowball.isDraw == true) {
                                     scores.draw = ++scores.draw;
                                     scores.points = scores.points + 1;
                                 } else {
