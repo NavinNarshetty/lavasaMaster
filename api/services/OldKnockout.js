@@ -637,7 +637,6 @@ var model = {
                         } else if (_.isEmpty(found)) {
                             callback(null, []);
                         } else {
-                            // console.log("sport", found);
                             match.sport = found._id;
                             match.scheduleDate = data.date;
                             match.round = data.round;
@@ -659,7 +658,6 @@ var model = {
                             } else if (_.isEmpty(individualData)) {
                                 callback(null, []);
                             } else {
-                                // console.log("inside push", individualData);
                                 match.opponentsSingle.push(individualData._id);
                                 callback(null, found);
                             }
@@ -679,35 +677,34 @@ var model = {
                             } else if (_.isEmpty(individualData)) {
                                 callback(null, []);
                             } else {
-                                // console.log("inside push1", individualData);
                                 match.opponentsSingle.push(individualData._id);
                                 callback(null, individualData);
                             }
                         });
                     } else {
-                        callback(null, {
-                            error: "no player",
-                            data: data
-                        });
+                        callback(null, found);
                     }
                 },
                 function (found, callback) {
-                    // console.log("match********", match);
-                    OldHeat.saveMatch(match, function (err, matchData) {
-                        if (err) {
-                            callback(err, null);
-                        } else {
-                            if (_.isEmpty(matchData)) {
-                                var err = {
-                                    error: "no matchData",
-                                    data: matchData
-                                }
-                                callback(null, err);
+                    if (!_.isEmpty(data.player1) || !_.isEmpty(data.player2)) {
+                        OldHeat.saveMatch(match, function (err, matchData) {
+                            if (err) {
+                                callback(err, null);
                             } else {
-                                callback(null, matchData);
+                                if (_.isEmpty(matchData)) {
+                                    var err = {
+                                        error: "no matchData",
+                                        data: matchData
+                                    }
+                                    callback(null, err);
+                                } else {
+                                    callback(null, matchData);
+                                }
                             }
-                        }
-                    });
+                        });
+                    } else {
+                        callback(null, match);
+                    }
                 },
             ],
             function (err, data3) {
@@ -725,7 +722,13 @@ var model = {
             function (callback) {
                 OldKnockout.find({
                     participantType: "team",
-                    year: data.year
+                    year: data.year,
+                    team1: {
+                        $ne: ObjectId("57eb7a6e418a945c43a7bc7a")
+                    },
+                    team2: {
+                        $ne: ObjectId("57eb7a6e418a945c43a7bc7a")
+                    }
                 }).sort({
                     order: 1,
                     roundno: 1
@@ -820,65 +823,74 @@ var model = {
                     } else if (_.isEmpty(found)) {
                         callback(null, []);
                     } else {
-                        // console.log("sport", found);
                         match.sport = found._id;
                         match.scheduleDate = data.date;
-                        // var round = data.round.toLowerCase();
                         match.round = data.round;
                         match.incrementalId = data.matchid;
+                        match.oldId = data._id;
                         match.matchId = "Knockout";
                         callback(null, found);
                     }
                 });
             },
             function (found, callback) {
-                TeamSport.find({
-                    oldId: data.team1
-                }).lean().exec(function (err, individualData) {
-                    if (err) {
-                        callback(err, null);
-                    } else if (_.isEmpty(individualData)) {
-                        // console.log("empty");
-                        callback(null, []);
-                    } else {
-                        // console.log("inside push", individualData);
-                        match.opponentsTeam.push(individualData[0]._id);
-                        callback(null, found);
-                    }
-                });
-            },
-            function (found, callback) {
-                TeamSport.find({
-                    oldId: data.team2
-                }).lean().exec(function (err, individualData) {
-                    if (err) {
-                        callback(err, null);
-                    } else if (_.isEmpty(individualData)) {
-                        // console.log("empty");
-                        callback(null, []);
-                    } else {
-                        // console.log("inside push", individualData);
-                        match.opponentsTeam.push(individualData[0]._id);
-                        callback(null, individualData);
-                    }
-                });
-            },
-            function (found, callback) {
-                OldHeat.saveMatch(match, function (err, matchData) {
-                    if (err) {
-                        callback(err, null);
-                    } else {
-                        if (_.isEmpty(matchData)) {
-                            var err = {
-                                error: "no matchData",
-                                data: matchData
-                            }
-                            callback(null, err);
+                if (data.team1) {
+                    TeamSport.findOne({
+                        oldId: data.team1,
+                        sport: found._id
+                    }).lean().exec(function (err, individualData) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(individualData)) {
+                            callback(null, []);
                         } else {
-                            callback(null, matchData);
+                            match.opponentsTeam.push(individualData._id);
+                            callback(null, found);
                         }
-                    }
-                });
+                    });
+                } else {
+                    callback(null, found);
+                }
+            },
+            function (found, callback) {
+                if (data.team2) {
+                    TeamSport.findOne({
+                        oldId: data.team2,
+                        sport: found._id
+                    }).lean().exec(function (err, individualData) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(individualData)) {
+                            callback(null, []);
+                        } else {
+                            match.opponentsTeam.push(individualData._id);
+                            callback(null, individualData);
+                        }
+                    });
+                } else {
+                    callback(null, found);
+                }
+            },
+            function (found, callback) {
+                if (!_.isEmpty(data.team1) || !_.isEmpty(data.team2)) {
+                    OldHeat.saveMatch(match, function (err, matchData) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(matchData)) {
+                                var err = {
+                                    error: "no matchData",
+                                    data: matchData
+                                }
+                                callback(null, err);
+                            } else {
+                                callback(null, matchData);
+                            }
+                        }
+                    });
+                } else {
+                    callback(null, match);
+                }
             },
         ], function (err, data3) {
             if (err) {

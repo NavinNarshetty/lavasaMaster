@@ -92,7 +92,6 @@ var controller = {
                 function (err, found) {
                     res.callback(null, found);
                 });
-            // OldKnockout.getAllIndividual(req.body, res.callback);
         } else {
             res.json({
                 value: false,

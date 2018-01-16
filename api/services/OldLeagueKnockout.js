@@ -524,6 +524,12 @@ var model = {
                     OldLeagueKnockout.find({
                         participantType: "team",
                         year: data.year,
+                        team1: {
+                            $ne: ObjectId("57eb7a6e418a945c43a7bc7a")
+                        },
+                        team2: {
+                            $ne: ObjectId("57eb7a6e418a945c43a7bc7a")
+                        },
                         $and: [{
                             leagueknockoutround: {
                                 $exists: true
@@ -602,6 +608,12 @@ var model = {
                     OldLeagueKnockout.find({
                         participantType: "team",
                         year: data.year,
+                        team1: {
+                            $ne: ObjectId("57eb7a6e418a945c43a7bc7a")
+                        },
+                        team2: {
+                            $ne: ObjectId("57eb7a6e418a945c43a7bc7a")
+                        },
                         $and: [{
                             leagueknockoutround: {
                                 $exists: true
@@ -688,9 +700,9 @@ var model = {
                         console.log("sport", found);
                         match.sport = found._id;
                         match.scheduleDate = data.date;
-                        // var round = data.round.toLowerCase();
                         match.round = data.roundName;
                         match.incrementalId = data.matchid;
+                        match.oldId = data._id;
                         match.excelType = data.excelType;
                         match.matchId = "League";
                         callback(null, found);
