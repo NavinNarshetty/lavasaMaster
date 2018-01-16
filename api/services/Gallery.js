@@ -11,7 +11,7 @@ var schema = new Schema({
         type: String
     }],
     shareUrl: String,
-    mediaType: String,
+    mediatype: String,
     mediaLink: String,
     year: String,
     folderType: String,
@@ -30,7 +30,7 @@ var model = {
         Gallery.aggregate(
             [{
                 $match: {
-                    "mediaType": "photo",
+                    "mediatype": "photo",
                     "folderType": data.folderType
                 }
             }, {
@@ -44,6 +44,9 @@ var model = {
                     },
                     "mediaLink": {
                         "$first": "$mediaLink"
+                    },
+                    "mediatype": {
+                        "$first": "$mediatype"
                     }
                 }
             }],
@@ -62,10 +65,10 @@ var model = {
     getAllPhotosByFolder:function(data,callback){
        
             Gallery.find({
-                "mediaType":"photo",
+                "mediatype":"photo",
                 "folderType":data.folderType,
                 "folderName":data.folderName
-            },"mediaLink title tags shareUrl").lean().exec(function(err,photos){
+            },"mediaLink title tags shareUrl mediatype").lean().exec(function(err,photos){
                 if(err){
                     callback(err,null);
                 }else if(!_.isEmpty(photos)){

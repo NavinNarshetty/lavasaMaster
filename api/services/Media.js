@@ -342,7 +342,7 @@ var model = {
         Media.find({
             "mediatype": "video",
             "folder": data.folder
-        }, "medialink thumbnails mediatitle").lean().exec(function (err, photos) {
+        }, "medialink thumbnails mediatitle mediatype").lean().exec(function (err, photos) {
             if (err) {
                 callback(err, null);
             } else if (!_.isEmpty(photos)) {

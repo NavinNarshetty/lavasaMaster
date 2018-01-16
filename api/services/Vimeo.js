@@ -464,7 +464,7 @@ var model = {
                                     "folderType": filePropArr[1],
                                     "year": filePropArr[0],
                                     "mediaLink": bucketName + "/" + singleData.name,
-                                    "mediaType": "photo",
+                                    "mediatype": "photo",
                                     "folderName": filePropArr[2],
                                     "title": _.split(filePropArr[3], ".")[0],
                                     "shareUrl": "",
