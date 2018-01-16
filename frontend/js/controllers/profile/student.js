@@ -107,93 +107,89 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
     $scope.getStudentProfile = function () {
         NavigationService.getStudentProfile($stateParams.id, function (data) {
             if (data.value) {
-                if (data.data.length > 0) {
-                    $scope.studentProfile = data.data;
-                    $scope.athlete = $scope.studentProfile.athlete;
-                    if ($scope.athlete) {
-                        if ($scope.athlete.middleName) {
-                            $scope.fullName = $scope.athlete.firstName + ' ' + $scope.athlete.middleName + ' ' + $scope.athlete.surname;
-                        } else {
-                            $scope.fullName = $scope.athlete.firstName + ' ' + $scope.athlete.surname;
-                        }
-
-                        if ($scope.athlete.atheleteSchoolName) {
-                            $scope.schoolName = $scope.athlete.atheleteSchoolName;
-                        } else {
-                            $scope.schoolName = $scope.athlete.school.name;
-                        }
-                    }
-
-
-                    if ($scope.studentProfile.sport.length > 0) {
-                        $scope.certificate = true;
+                $scope.studentProfile = data.data;
+                $scope.athlete = $scope.studentProfile.athlete;
+                if ($scope.athlete) {
+                    if ($scope.athlete.middleName) {
+                        $scope.fullName = $scope.athlete.firstName + ' ' + $scope.athlete.middleName + ' ' + $scope.athlete.surname;
                     } else {
-                        $scope.certificate = false;
-                    }
-                    var arrLength = 0;
-                    var subArrLength = 0;
-
-                    _.each($scope.studentProfile.sport, function (n) {
-                        n.subCategory = [];
-                        n.subCategory.push(n.sportslist.sportsListSubCategory._id);
-                        arrLength = arrLength + 1;
-                    });
-                    if (arrLength == $scope.studentProfile.sport.length) {
-                        _.each($scope.studentProfile.sport, function (n, key) {
-                            var sportArr = [];
-                            var sportName = [];
-                            if (n.sportslist.sportsListSubCategory.name == 'Kho Kho' || n.sportslist.sportsListSubCategory.name == 'Water Polo' || n.sportslist.sportsListSubCategory.name == 'Table Tennis' || n.sportslist.sportsListSubCategory.name == 'Sport MMA') {
-                                sportArr[0] = n.sportslist.sportsListSubCategory.name;
-                                sportName = sportArr;
-                            } else {
-                                sportName = _.split(n.sportslist.sportsListSubCategory.name, " ");
-                            }
-                            // console.log(sportName);
-                            if (n.sportslist.sportsListSubCategory.name == 'Table Tennis Doubles') {
-                                var bindName = sportName[0] + ' ' +
-                                    sportName[1];
-                                $scope.sportObj = _.findIndex($scope.studentProfile.sport, ['sportslist.sportsListSubCategory.name', bindName]);
-                            } else {
-                                $scope.sportObj = _.findIndex($scope.studentProfile.sport, ['sportslist.sportsListSubCategory.name', sportName[0]]);
-                            }
-                            if ($scope.sportObj != key && $scope.sportObj != -1) {
-                                $scope.studentProfile.sport[$scope.sportObj].subCategory.push(n.sportslist.sportsListSubCategory._id);
-                                n.removeElement = true;
-                            } else if ($scope.sportObj != key && $scope.sportObj == -1) {
-                                if (n.sportslist.sportsListSubCategory.name == 'Table Tennis Doubles') {
-                                    n.sportslist.sportsListSubCategory.name = sportName[0] + ' ' +
-                                        sportName[1];
-                                } else {
-                                    n.sportslist.sportsListSubCategory.name = sportName[0];
-                                }
-                            }
-                            subArrLength = subArrLength + 1;
-                        });
-                        $scope.studentProfile.sport = _.filter($scope.studentProfile.sport, function (n) {
-                            return !n.removeElement;
-                        });
-                    }
-                    if (subArrLength >= $scope.studentProfile.sport.length) {
-                        // console.log(" $scope.studentProfile.sport", $scope.studentProfile.sport);
-                        $scope.sport = $scope.studentProfile.sport;
+                        $scope.fullName = $scope.athlete.firstName + ' ' + $scope.athlete.surname;
                     }
 
-                    $scope.specialAward = $scope.studentProfile.isSpecialAward;
-                    $scope.medals = $scope.studentProfile.medalData;
-                    _.each($scope.medals, function (n) {
-                        // console.log('n', n);
-                        if (n.name == 'gold') {
-                            $scope.goldCount = n.count;
-                        } else if (n.name == 'silver') {
-                            $scope.silverCount = n.count;
-                        } else if (n.name == 'bronze') {
-                            $scope.bronzeCount = n.count;
-                        }
-                    });
-                } else {
-                    $state.go('students');
-                    toastr.error('No Athlete Profile Found', 'Error Message');
+                    if ($scope.athlete.atheleteSchoolName) {
+                        $scope.schoolName = $scope.athlete.atheleteSchoolName;
+                    } else {
+                        $scope.schoolName = $scope.athlete.school.name;
+                    }
                 }
+
+
+                if ($scope.studentProfile.sport.length > 0) {
+                    $scope.certificate = true;
+                } else {
+                    $scope.certificate = false;
+                }
+                var arrLength = 0;
+                var subArrLength = 0;
+
+                _.each($scope.studentProfile.sport, function (n) {
+                    n.subCategory = [];
+                    n.subCategory.push(n.sportslist.sportsListSubCategory._id);
+                    arrLength = arrLength + 1;
+                });
+                if (arrLength == $scope.studentProfile.sport.length) {
+                    _.each($scope.studentProfile.sport, function (n, key) {
+                        var sportArr = [];
+                        var sportName = [];
+                        if (n.sportslist.sportsListSubCategory.name == 'Kho Kho' || n.sportslist.sportsListSubCategory.name == 'Water Polo' || n.sportslist.sportsListSubCategory.name == 'Table Tennis' || n.sportslist.sportsListSubCategory.name == 'Sport MMA') {
+                            sportArr[0] = n.sportslist.sportsListSubCategory.name;
+                            sportName = sportArr;
+                        } else {
+                            sportName = _.split(n.sportslist.sportsListSubCategory.name, " ");
+                        }
+                        // console.log(sportName);
+                        if (n.sportslist.sportsListSubCategory.name == 'Table Tennis Doubles') {
+                            var bindName = sportName[0] + ' ' +
+                                sportName[1];
+                            $scope.sportObj = _.findIndex($scope.studentProfile.sport, ['sportslist.sportsListSubCategory.name', bindName]);
+                        } else {
+                            $scope.sportObj = _.findIndex($scope.studentProfile.sport, ['sportslist.sportsListSubCategory.name', sportName[0]]);
+                        }
+                        if ($scope.sportObj != key && $scope.sportObj != -1) {
+                            $scope.studentProfile.sport[$scope.sportObj].subCategory.push(n.sportslist.sportsListSubCategory._id);
+                            n.removeElement = true;
+                        } else if ($scope.sportObj != key && $scope.sportObj == -1) {
+                            if (n.sportslist.sportsListSubCategory.name == 'Table Tennis Doubles') {
+                                n.sportslist.sportsListSubCategory.name = sportName[0] + ' ' +
+                                    sportName[1];
+                            } else {
+                                n.sportslist.sportsListSubCategory.name = sportName[0];
+                            }
+                        }
+                        subArrLength = subArrLength + 1;
+                    });
+                    $scope.studentProfile.sport = _.filter($scope.studentProfile.sport, function (n) {
+                        return !n.removeElement;
+                    });
+                }
+                if (subArrLength >= $scope.studentProfile.sport.length) {
+                    // console.log(" $scope.studentProfile.sport", $scope.studentProfile.sport);
+                    $scope.sport = $scope.studentProfile.sport;
+                }
+
+                $scope.specialAward = $scope.studentProfile.isSpecialAward;
+                $scope.medals = $scope.studentProfile.medalData;
+                _.each($scope.medals, function (n) {
+                    // console.log('n', n);
+                    if (n.name == 'gold') {
+                        $scope.goldCount = n.count;
+                    } else if (n.name == 'silver') {
+                        $scope.silverCount = n.count;
+                    } else if (n.name == 'bronze') {
+                        $scope.bronzeCount = n.count;
+                    }
+                });
+
 
             } else {
                 $scope.studentProfile = [];
