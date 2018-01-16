@@ -425,6 +425,7 @@ var model = {
                         match.scheduleDate = data.date;
                         var round = data.round.toLowerCase();
                         match.round = data.name;
+                        match.oldId = data._id
                         // match.heatNo = data.name.lastIndexOf(" " + 1);
                         match.incrementalId = data.matchid;
                         match.matchId = "heat";
@@ -443,17 +444,20 @@ var model = {
                                 callback(err, null);
                             } else if (_.isEmpty(individualData)) {
                                 var player = {};
+                                if (n.laneno) {
+                                    player.laneno = n.laneno;
+                                }
                                 players.push(player);
                                 match.resultHeat = {};
                                 callback(null, []);
                             } else {
-                                console.log("inside push", individualData);
+                                // console.log("inside push", individualData);
                                 // var players = [];
                                 var player = {};
                                 player.id = individualData[0]._id;
+                                player.laneno = n.laneno;
                                 players.push(player);
                                 match.resultHeat = {};
-
                                 match.opponentsSingle.push(individualData[0]._id);
                                 callback(null, individualData);
                             }

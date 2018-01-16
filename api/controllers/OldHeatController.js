@@ -27,11 +27,11 @@ var controller = {
         if (req.body) {
             async.waterfall([
                     function (callback) {
-                        //     OldHeat.saveHeatMatchIndividual(req.body, function (err, matchData) {
-                        //         callback(null, matchData);
-                        //     });
-                        // },
-                        // function (importData, callback) {
+                        OldHeat.saveHeatMatchIndividual(req.body, function (err, matchData) {
+                            callback(null, matchData);
+                        });
+                    },
+                    function (importData, callback) {
                         OldHeat.saveHeatMatchTeam(req.body, function (err, matchData) {
                             callback(null, matchData);
                         });

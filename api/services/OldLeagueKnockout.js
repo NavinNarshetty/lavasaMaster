@@ -82,7 +82,7 @@ module.exports = mongoose.model('OldLeagueKnockout', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
-    getAllPlayer: function (data, callback) {
+    getAllPlayer1: function (data, callback) {
         var individualSport = {};
         async.waterfall([
             function (callback) {
@@ -100,24 +100,7 @@ var model = {
                 });
             },
             function (complete, callback) {
-                var pipeLine = OldKnockout.getknockoutPlayer2AggregatePipeLine(data);
-                OldLeagueKnockout.aggregate(pipeLine, function (err, complete1) {
-                    if (err) {
-                        callback(err, "error in mongoose");
-                    } else {
-                        if (_.isEmpty(complete1)) {
-                            callback(null, complete1);
-                        } else {
-                            var final = _.concat(complete, complete1);
-                            console.log("final", final);
-                            final = _.uniqBy(final, '_id');
-                            callback(null, final);
-                        }
-                    }
-                });
-            },
-            function (final, callback) {
-                OldKnockout.saveIn(final, individualSport, function (err, saveData) {
+                OldKnockout.saveIn(complete, individualSport, function (err, saveData) {
                     if (err) {
                         callback(err, null);
                     } else {
@@ -141,6 +124,50 @@ var model = {
             }
         });
     },
+
+    getAllPlayer2: function (data, callback) {
+        var individualSport = {};
+        async.waterfall([
+            function (callback) {
+                var pipeLine = OldKnockout.getknockoutPlayer2AggregatePipeLine(data);
+                OldLeagueKnockout.aggregate(pipeLine, function (err, complete) {
+                    if (err) {
+                        callback(err, "error in mongoose");
+                    } else {
+                        if (_.isEmpty(complete)) {
+                            callback(null, complete);
+                        } else {
+                            callback(null, complete);
+                        }
+                    }
+                });
+            },
+            function (complete, callback) {
+                OldKnockout.saveIn(complete, individualSport, function (err, saveData) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(saveData)) {
+                            var err = {
+                                error: "no saveData",
+                                data: saveData
+                            }
+                            callback(null, err);
+                        } else {
+                            callback(null, saveData);
+                        }
+                    }
+                });
+            },
+        ], function (err, data3) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, data3);
+            }
+        });
+    },
+
 
     getAllTeam1: function (data, callback) {
         var individualSport = {};
@@ -232,6 +259,12 @@ var model = {
                     OldLeagueKnockout.find({
                         participantType: "player",
                         year: data.year,
+                        player1: {
+                            $ne: ObjectId("57eb7a3f418a945c43a7bc77")
+                        },
+                        player2: {
+                            $ne: ObjectId("57eb7a3f418a945c43a7bc77")
+                        },
                         $and: [{
                             leagueknockoutround: {
                                 $exists: true
@@ -310,6 +343,12 @@ var model = {
                     OldLeagueKnockout.find({
                         participantType: "player",
                         year: data.year,
+                        player1: {
+                            $ne: ObjectId("57eb7a3f418a945c43a7bc77")
+                        },
+                        player2: {
+                            $ne: ObjectId("57eb7a3f418a945c43a7bc77")
+                        },
                         $and: [{
                             leagueknockoutround: {
                                 $exists: true
@@ -399,6 +438,7 @@ var model = {
                             match.round = data.roundName;
                             match.incrementalId = data.matchid;
                             match.excelType = data.excelType;
+                            match.oldId = data._id;
                             match.matchId = "League";
                             callback(null, found);
                         }

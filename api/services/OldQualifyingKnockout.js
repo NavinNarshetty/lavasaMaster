@@ -319,11 +319,12 @@ var model = {
                             } else if (_.isEmpty(found)) {
                                 callback(null, []);
                             } else {
-                                console.log("sport", found);
+                                // console.log("sport", found);
                                 match.sport = found._id;
                                 match.scheduleDate = data.date;
                                 match.round = data.roundName;
                                 match.incrementalId = data.matchid;
+                                match.oldId = data._id;
                                 match.excelType = data.excelType;
                                 match.matchId = "Q.k.";
                                 callback(null, found);

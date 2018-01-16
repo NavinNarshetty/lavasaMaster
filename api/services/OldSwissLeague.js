@@ -115,7 +115,7 @@ var model = {
         return pipeline;
     },
 
-    getAllPlayer: function (data, callback) {
+    getAllPlayer1: function (data, callback) {
         var individualSport = {};
         async.waterfall([
             function (callback) {
@@ -133,24 +133,50 @@ var model = {
                 });
             },
             function (complete, callback) {
-                var pipeLine = OldSwissLeague.getknockoutPlayer2AggregatePipeLine(data);
-                OldSwissLeague.aggregate(pipeLine, function (err, complete1) {
+                OldKnockout.saveIn(complete, individualSport, function (err, saveData) {
                     if (err) {
-                        callback(err, "error in mongoose");
+                        callback(err, null);
                     } else {
-                        if (_.isEmpty(complete1)) {
-                            callback(null, complete1);
+                        if (_.isEmpty(saveData)) {
+                            var err = {
+                                error: "no saveData",
+                                data: saveData
+                            }
+                            callback(null, err);
                         } else {
-                            var final = _.concat(complete, complete1);
-                            console.log("final", final);
-                            final = _.uniqBy(final, '_id');
-                            callback(null, final);
+                            callback(null, saveData);
                         }
                     }
                 });
             },
-            function (final, callback) {
-                OldKnockout.saveIn(final, individualSport, function (err, saveData) {
+        ], function (err, data3) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, data3);
+            }
+        });
+    },
+
+    getAllPlayer2: function (data, callback) {
+        var individualSport = {};
+        async.waterfall([
+            function (callback) {
+                var pipeLine = OldSwissLeague.getknockoutPlayer2AggregatePipeLine(data);
+                OldSwissLeague.aggregate(pipeLine, function (err, complete) {
+                    if (err) {
+                        callback(err, "error in mongoose");
+                    } else {
+                        if (_.isEmpty(complete)) {
+                            callback(null, complete);
+                        } else {
+                            callback(null, complete);
+                        }
+                    }
+                });
+            },
+            function (complete, callback) {
+                OldKnockout.saveIn(complete, individualSport, function (err, saveData) {
                     if (err) {
                         callback(err, null);
                     } else {
@@ -182,7 +208,13 @@ var model = {
                 function (callback) {
                     OldSwissLeague.find({
                         participantType: "player",
-                        year: data.year
+                        year: data.year,
+                        player1: {
+                            $ne: ObjectId("57eb7a3f418a945c43a7bc77")
+                        },
+                        player2: {
+                            $ne: ObjectId("57eb7a3f418a945c43a7bc77")
+                        }
                     }).lean().exec(function (err, found) {
                         if (err) {
                             callback(err, null);

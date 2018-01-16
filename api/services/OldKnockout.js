@@ -97,10 +97,7 @@ var model = {
         var pipeline = [{
                 $match: {
                     "participantType": "player",
-                    "year": data.year,
-                    "player1": {
-                        $ne: null
-                    }
+                    "year": data.year
                 }
             },
             // Stage 2
@@ -123,10 +120,7 @@ var model = {
         var pipeline = [{
                 $match: {
                     "participantType": "player",
-                    "year": data.year,
-                    "player2": {
-                        $ne: null
-                    }
+                    "year": data.year
                 }
             },
             // Stage 2
@@ -144,7 +138,7 @@ var model = {
         return pipeline;
     },
 
-    getAllPlayer: function (data, callback) {
+    getAllPlayer1: function (data, callback) {
         var individualSport = {};
         async.waterfall([
             function (callback) {
@@ -163,24 +157,50 @@ var model = {
                 });
             },
             function (complete, callback) {
-                var pipeLine = OldKnockout.getknockoutPlayer2AggregatePipeLine(data);
-                OldKnockout.aggregate(pipeLine, function (err, complete1) {
+                OldKnockout.saveIn(complete, individualSport, function (err, saveData) {
                     if (err) {
-                        callback(err, "error in mongoose");
+                        callback(err, null);
                     } else {
-                        if (_.isEmpty(complete1)) {
-                            callback(null, complete1);
+                        if (_.isEmpty(saveData)) {
+                            var err = {
+                                error: "no saveData",
+                                data: saveData
+                            }
+                            callback(null, err);
                         } else {
-                            var final = _.concat(complete, complete1);
-                            console.log("final", final);
-                            final = _.uniqBy(final, '_id');
-                            callback(null, final);
+                            callback(null, saveData);
                         }
                     }
                 });
             },
-            function (final, callback) {
-                OldKnockout.saveIn(final, individualSport, function (err, saveData) {
+        ], function (err, data3) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, data3);
+            }
+        });
+    },
+
+    getAllPlayer2: function (data, callback) {
+        var individualSport = {};
+        async.waterfall([
+            function (callback) {
+                var pipeLine = OldKnockout.getknockoutPlayer2AggregatePipeLine(data);
+                OldKnockout.aggregate(pipeLine, function (err, complete) {
+                    if (err) {
+                        callback(err, "error in mongoose");
+                    } else {
+                        if (_.isEmpty(complete)) {
+                            callback(null, complete);
+                        } else {
+                            callback(null, complete);
+                        }
+                    }
+                });
+            },
+            function (complete, callback) {
+                OldKnockout.saveIn(complete, individualSport, function (err, saveData) {
                     if (err) {
                         callback(err, null);
                     } else {
@@ -240,7 +260,6 @@ var model = {
     saveIn: function (complete, individualSport, callback) {
         async.concatSeries(complete, function (singleData, callback) {
             individualSport.sport = [];
-            individualSport.oldId = singleData._id;
             async.waterfall([
                 function (callback) {
                     OldKnockout.getAthleteId(singleData, function (err, athelete) {
@@ -260,73 +279,77 @@ var model = {
                     });
                 },
                 function (athelete, callback) {
-                    _.each(singleData.sport, function (n) {
-                        var param = {};
-                        param.sport = n;
-                        OldKnockout.getSportId(param, function (err, sport) {
-                            if (singleData._id == null) {
-                                console.log("singleData", singleData);
-                                console.log("sport", sport);
-                            } else {
-                                individualSport.sport.push(sport._id);
-                                individualSport.sportsListSubCategory = sport.sportslist.sportsListSubCategory._id;
-                            }
+                    if (athelete.error) {
+                        callback(null, athelete);
+                    } else {
+                        async.eachSeries(singleData.sport, function (n, callback) {
+                            var param = {};
+                            param.sport = n;
+                            OldKnockout.getSportId(param, function (err, sport) {
+                                if (sport.error) {
+                                    callback(null, sport);
+                                } else {
+                                    individualSport.sport.push(sport._id);
+                                    individualSport.sportsListSubCategory = sport.sportslist.sportsListSubCategory._id;
+                                    callback(null, individualSport);
+                                }
+                            });
+                        }, function (err) {
+                            callback(null, athelete);
                         });
-                    });
-                    callback(null, athelete);
+                    }
                 },
                 function (athelete, callback) {
                     if (athelete.error) {
-                        if (_.isEmpty(singleData.sport)) {
-                            callback(null, athelete);
-                        } else {
-                            individualSport.athleteId = null;
-                            individualSport.createdBy = "School";
-                            IndividualSport.saveData(individualSport, function (err, saveData) {
-                                if (err) {
-                                    callback(err, null);
+                        individualSport.athleteId = null;
+                        individualSport.createdBy = "School";
+                        individualSport.oldId = singleData._id;
+                        IndividualSport.saveData(individualSport, function (err, saveData) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(saveData)) {
+                                    callback(null, []);
                                 } else {
-                                    if (_.isEmpty(saveData)) {
-                                        callback(null, []);
-                                    } else {
-                                        individualSport.sport = [];
-                                        callback(null, saveData);
-                                    }
+                                    individualSport.sport = [];
+                                    callback(null, saveData);
                                 }
-                            });
-                        }
+                            }
+                        });
                     } else {
-                        if (_.isEmpty(singleData.sport)) {
-                            callback(null, athelete);
-                        } else {
-                            IndividualSport.findOne({
-                                athleteId: athelete._id,
-                                sport: individualSport.sport
-                            }).lean().exec(function (err, found) {
-                                if (err) {
-                                    callback(err, null);
-                                } else if (_.isEmpty(found)) {
-                                    individualSport.athleteId = athelete._id;
-                                    individualSport.createdBy = "School";
-                                    IndividualSport.saveData(individualSport, function (err, saveData) {
-                                        if (err) {
-                                            callback(err, null);
+                        console.log("sport", individualSport.sport);
+                        IndividualSport.findOne({
+                            athleteId: athelete._id,
+                            sport: individualSport.sport
+                        }).lean().exec(function (err, found) {
+                            if (err) {
+                                callback(null, {
+                                    error: "No SportsList found!",
+                                    success: data
+                                });
+                            } else if (_.isEmpty(found)) {
+                                individualSport.athleteId = athelete._id;
+                                individualSport.createdBy = "School";
+                                individualSport.oldId = singleData._id;
+                                IndividualSport.saveData(individualSport, function (err, saveData) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else {
+                                        if (_.isEmpty(saveData)) {
+                                            callback(null, []);
                                         } else {
-                                            if (_.isEmpty(saveData)) {
-                                                callback(null, []);
-                                            } else {
-                                                individualSport.sport = [];
-                                                callback(null, saveData);
-                                            }
+                                            individualSport.sport = [];
+                                            callback(null, saveData);
                                         }
-                                    });
-                                } else {
-                                    callback(null, found);
-                                }
-                            });
-                        }
+                                    }
+                                });
+                            } else {
+                                callback(null, found);
+                            }
+                        });
+
                     }
-                },
+                }
             ], function (err, data3) {
                 if (err) {
                     callback(err, null);
@@ -505,7 +528,13 @@ var model = {
                 function (callback) {
                     OldKnockout.find({
                         participantType: "player",
-                        year: data.year
+                        year: data.year,
+                        player1: {
+                            $ne: ObjectId("57eb7a3f418a945c43a7bc77")
+                        },
+                        player2: {
+                            $ne: ObjectId("57eb7a3f418a945c43a7bc77")
+                        }
                     }).sort({
                         order: 1,
                         roundno: 1
@@ -520,9 +549,11 @@ var model = {
                     });
                 },
                 function (found, callback) {
+                    var final = {};
                     var complete = _.groupBy(found, "sport");
                     async.concatSeries(complete, function (mainData, callback) {
                             async.concatSeries(mainData, function (singleData, callback) {
+                                    console.log("singleData", singleData);
                                     if (singleData.round != "Third Place") {
                                         OldKnockout.getMatchDetails(singleData, function (err, matchData) {
                                             if (err) {
@@ -606,11 +637,12 @@ var model = {
                         } else if (_.isEmpty(found)) {
                             callback(null, []);
                         } else {
-                            console.log("sport", found);
+                            // console.log("sport", found);
                             match.sport = found._id;
                             match.scheduleDate = data.date;
                             match.round = data.round;
                             match.incrementalId = data.matchid;
+                            match.oldId = data._id;
                             match.matchId = "Knockout";
                             callback(null, found);
                         }
@@ -627,16 +659,13 @@ var model = {
                             } else if (_.isEmpty(individualData)) {
                                 callback(null, []);
                             } else {
-                                console.log("inside push", individualData);
+                                // console.log("inside push", individualData);
                                 match.opponentsSingle.push(individualData._id);
                                 callback(null, found);
                             }
                         });
                     } else {
-                        callback(null, {
-                            error: "no player",
-                            data: data
-                        });
+                        callback(null, found);
                     }
                 },
                 function (found, callback) {
@@ -650,7 +679,7 @@ var model = {
                             } else if (_.isEmpty(individualData)) {
                                 callback(null, []);
                             } else {
-                                console.log("inside push1", individualData);
+                                // console.log("inside push1", individualData);
                                 match.opponentsSingle.push(individualData._id);
                                 callback(null, individualData);
                             }
@@ -663,6 +692,7 @@ var model = {
                     }
                 },
                 function (found, callback) {
+                    // console.log("match********", match);
                     OldHeat.saveMatch(match, function (err, matchData) {
                         if (err) {
                             callback(err, null);
@@ -790,7 +820,7 @@ var model = {
                     } else if (_.isEmpty(found)) {
                         callback(null, []);
                     } else {
-                        console.log("sport", found);
+                        // console.log("sport", found);
                         match.sport = found._id;
                         match.scheduleDate = data.date;
                         // var round = data.round.toLowerCase();
@@ -808,10 +838,10 @@ var model = {
                     if (err) {
                         callback(err, null);
                     } else if (_.isEmpty(individualData)) {
-                        console.log("empty");
+                        // console.log("empty");
                         callback(null, []);
                     } else {
-                        console.log("inside push", individualData);
+                        // console.log("inside push", individualData);
                         match.opponentsTeam.push(individualData[0]._id);
                         callback(null, found);
                     }
@@ -824,10 +854,10 @@ var model = {
                     if (err) {
                         callback(err, null);
                     } else if (_.isEmpty(individualData)) {
-                        console.log("empty");
+                        // console.log("empty");
                         callback(null, []);
                     } else {
-                        console.log("inside push", individualData);
+                        // console.log("inside push", individualData);
                         match.opponentsTeam.push(individualData[0]._id);
                         callback(null, individualData);
                     }

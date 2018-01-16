@@ -121,7 +121,10 @@ var model = {
             function (callback) {
                 OldQualifyingRound.find({
                     participantType: "player",
-                    year: data.year
+                    year: data.year,
+                    player: {
+                        $ne: ObjectId("57eb7a3f418a945c43a7bc77")
+                    }
                 }).lean().exec(function (err, found) {
                     if (err) {
                         callback(err, null);

@@ -56,6 +56,10 @@ var schema = new Schema({
     matchCenter: String,
     excelType: String,
     heatNo: String,
+    oldId: {
+        type: Schema.Types.ObjectId,
+        index: true
+    },
 });
 
 schema.plugin(deepPopulate, {
