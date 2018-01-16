@@ -2101,7 +2101,7 @@ var model = {
                                                     var i = 0;
                                                     var result;
                                                     if (singleData.resultThrowball.teams.length == 1) {
-                                                        stats.score = singleData.resultThrowball.teams[0].teamResults.finalGoalPoints;
+                                                        stats.score = singleData.resultThrowball.teams[0].teamResults.finalPoints;
                                                         stats.isAthleteWinner = true;
                                                         match.push(stats);
                                                         callback(null, match);
@@ -2129,7 +2129,7 @@ var model = {
                                                                         }
                                                                     } else {
                                                                         if (singleData.resultThrowball.status == "IsCompleted" && singleData.resultThrowball.isNoMatch == false) {
-                                                                            stats.score = singleData.resultThrowball.teams[0].teamResults.finalGoalPoints + "-" + singleData.resultThrowball.teams[1].teamResults.finalGoalPoints;
+                                                                            stats.score = singleData.resultThrowball.teams[0].teamResults.finalPoints + "-" + singleData.resultThrowball.teams[1].teamResults.finalPoints;
                                                                             if (singleData.resultThrowball.winner.player === n.team) {
                                                                                 stats.isAthleteWinner = false;
                                                                             } else {
@@ -3037,7 +3037,7 @@ var model = {
                             var result;
                             if (singleData.opponentsTeam.length == 1) {
                                 if (singleData.resultThrowball.status == "IsCompleted" && singleData.resultThrowball.isNoMatch == false) {
-                                    stats.score = singleData.resultThrowball.teams[0].teamResults.finalGoalPoints;
+                                    stats.score = singleData.resultThrowball.teams[0].teamResults.finalPoints;
                                     stats.isAthleteWinner = true;
                                     stats.status = singleData.resultThrowball.status;
                                     match.push(stats);
@@ -3084,7 +3084,7 @@ var model = {
                                                                 stats.reason = "";
                                                             }
                                                         }
-                                                        stats.score = singleData.resultThrowball.teams[0].teamResults.finalGoalPoints + "-" + singleData.resultThrowball.teams[1].teamResults.finalGoalPoints;
+                                                        stats.score = singleData.resultThrowball.teams[0].teamResults.finalPoints + "-" + singleData.resultThrowball.teams[1].teamResults.finalPoints;
                                                         if (singleData.resultThrowball.winner.player === n) {
                                                             stats.isAthleteWinner = false;
                                                         } else {
@@ -6197,7 +6197,7 @@ var model = {
                                                 } else if (singleData.resultVolleyball) {
                                                     var i = 0;
                                                     var result;
-                                                    if (singleData.resultFootball.teams.length == 1) {
+                                                    if (singleData.resultVolleyball.teams.length == 1) {
                                                         StudentTeam.findOne({
                                                             teamId: new objectid(singleData.resultVolleyball.teams[0].team)
                                                         }).lean().deepPopulate('studentId.school').exec(function (err, found) {
@@ -6295,6 +6295,120 @@ var model = {
                                                                             profile.match.push(stats);
                                                                         } else {
                                                                             stats.status = singleData.resultVolleyball.status;
+                                                                            stats.reason = "";
+                                                                            profile.match.push(stats);
+                                                                        }
+                                                                        callback(null, profile);
+                                                                    }
+                                                                ],
+                                                                function (err, data2) {
+                                                                    callback(null, data2);
+                                                                });
+                                                        }, function (err) {
+                                                            callback(null, profile.match);
+                                                        });
+                                                    }
+                                                } else if (singleData.resultThrowball) {
+                                                    var i = 0;
+                                                    var result;
+                                                    if (singleData.resultThrowball.teams.length == 1) {
+                                                        StudentTeam.findOne({
+                                                            teamId: new objectid(singleData.resultThrowball.teams[0].team)
+                                                        }).lean().deepPopulate('studentId.school').exec(function (err, found) {
+                                                            if (found.studentId.middleName) {
+                                                                var name = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                            } else {
+                                                                var name = found.studentId.firstName + " " + found.studentId.surname;
+                                                            }
+                                                            if (found.studentId.atheleteSchoolName) {
+                                                                var school = found.studentId.atheleteSchoolName;
+                                                            } else {
+                                                                var school = found.studentId.school.name;
+                                                            }
+                                                            var player = {};
+                                                            player.name = name;
+                                                            player.school = school;
+                                                            player.sfaId = found.studentId.sfaId;
+                                                            player.athleteId = found.studentId._id;
+                                                            player.profilePic = found.studentId.photograph;
+                                                            profile.players.push(player);
+                                                            stats.score = singleData.resultThrowball.teams[0].teamResults.finalPoints;
+                                                            stats.isAthleteWinner = true;
+                                                            profile.match.push(stats);
+                                                            callback(null, profile);
+                                                        });
+                                                    } else {
+                                                        async.each(singleData.resultThrowball.teams, function (n, callback) {
+                                                            async.waterfall([
+                                                                    function (callback) {
+                                                                        StudentTeam.findOne({
+                                                                            teamId: n.team
+                                                                        }).lean().deepPopulate("studentId.school teamId.school").exec(function (err, found) {
+                                                                            if (err) {
+                                                                                callback(null, err);
+                                                                            } else if (_.isEmpty(found)) {
+                                                                                callback(null, profile.match);
+                                                                            } else {
+                                                                                if (found.studentId.middleName) {
+                                                                                    var name = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                                                } else {
+                                                                                    var name = found.studentId.firstName + " " + found.studentId.surname;
+                                                                                }
+                                                                                if (found.studentId.atheleteSchoolName) {
+                                                                                    var school = found.studentId.atheleteSchoolName;
+                                                                                } else {
+                                                                                    var school = found.studentId.school.name;
+                                                                                }
+                                                                                var player = {};
+                                                                                player.name = name;
+                                                                                player.school = school;
+                                                                                player.sfaId = found.studentId.sfaId;
+                                                                                player.athleteId = found.studentId._id;
+                                                                                player.profilePic = found.studentId.photograph;
+                                                                                if (n.team === singleData.opponentsTeam._id.toString()) {
+                                                                                    profile.players.push(player);
+                                                                                }
+                                                                                callback(null, found);
+                                                                            }
+                                                                        });
+                                                                    },
+                                                                    function (found, callback) {
+                                                                        if (singleData.resultThrowball.status == "IsCompleted" && singleData.resultThrowball.isNoMatch == false) {
+                                                                            if (n.team === singleData.opponentsTeam._id.toString()) {
+                                                                                var length = singleData.resultThrowball.teams[0].teamResults.sets.length;
+                                                                                while (i < length) {
+                                                                                    if (i == 0) {
+                                                                                        result = singleData.resultThrowball.teams[0].teamResults.sets[i].point + "-" + singleData.resultThrowball.teams[1].teamResults.sets[i].point;
+                                                                                    } else {
+                                                                                        result = result + "," + singleData.resultThrowball.teams[0].teamResults.sets[i].point + "-" + singleData.resultThrowball.teams[1].teamResults.sets[i].point;
+                                                                                    }
+                                                                                    i++;
+                                                                                }
+                                                                                stats.score = result;
+                                                                            } else {
+                                                                                if (singleData.resultThrowball.winner.player === n.team) {
+                                                                                    stats.isAthleteWinner = false;
+                                                                                } else {
+                                                                                    stats.isAthleteWinner = true;
+                                                                                    stats.walkover = player.walkover;
+                                                                                }
+                                                                                stats.opponentName = found.teamId.name;
+                                                                                if (found.teamId.schoolName) {
+                                                                                    stats.school = found.teamId.schoolName;
+                                                                                } else {
+                                                                                    stats.school = found.teamId.school.schoolName;
+                                                                                }
+                                                                                stats.teamId = found.teamId.teamId;
+                                                                                profile.match.push(stats);
+                                                                            }
+                                                                            stats.status = singleData.resultThrowball.status;
+                                                                            stats.draw = singleData.resultThrowball.isDraw;
+                                                                        } else if (singleData.resultThrowball.status == "IsCompleted" && singleData.resultThrowball.isNoMatch == true) {
+                                                                            stats.status = singleData.resultThrowball.status;
+                                                                            stats.reason = "NO Match";
+                                                                            profile.match.push(stats);
+                                                                        } else {
+                                                                            stats.status = singleData.resultThrowball.status;
                                                                             stats.reason = "";
                                                                             profile.match.push(stats);
                                                                         }
