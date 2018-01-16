@@ -18,13 +18,13 @@ myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, Navig
   $scope.showPopup = function (picIndex, picList) {
     MediaPopupService.openMediaPopup(picIndex, picList, $scope);
   }
-  $scope.nextSlides = function (currentindex) {
+  $scope.nextSlides = function (currentindex, click) {
 
-    MediaPopupService.nextSlide(currentindex, $scope.allphotosbyfolder, $scope);
+    MediaPopupService.nextSlide(currentindex, $scope.allphotosbyfolder, $scope, click);
   }
-  $scope.prevSlides = function (currentindex) {
+  $scope.prevSlides = function (currentindex, click) {
 
-    MediaPopupService.prevSlide(currentindex, $scope.allphotosbyfolder, $scope);
+    MediaPopupService.prevSlide(currentindex, $scope.allphotosbyfolder, $scope, click);
   }
   // PHOTO VIDEO POPUP FUNCTION END
   // FUNCTIONS

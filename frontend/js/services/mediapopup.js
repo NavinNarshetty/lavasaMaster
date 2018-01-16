@@ -7,18 +7,40 @@ myApp.service('MediaPopupService', function ($http, $uibModal, TemplateService, 
   // VARIABLE INITIATIALISATION END
   // FUNCTIONS
   // NEXT SLIDE FUNCTION
-  this.nextSlide = function (currentIndex, sliderArr, pageScope) {
-    pageScope.currentIndex = currentIndex + 1;
-    pageScope.currentPic = sliderArr[currentIndex + 1];
-    this.checkSlide(pageScope.currentIndex, sliderArr, pageScope);
+  this.nextSlide = function (currentIndex, sliderArr, pageScope, click) {
+    pageScope.tempIndex = currentIndex + 1;
+    if (pageScope.tempIndex == 0 || pageScope.tempIndex > 0 && pageScope.tempIndex < sliderArr.length) {
+      pageScope.currentIndex = currentIndex + 1;
+      if (pageScope.currentIndex == 0 || pageScope.currentIndex > 0 && pageScope.currentIndex < sliderArr.length) {
+        pageScope.currentPic = sliderArr[currentIndex + 1];
+        this.checkSlide(pageScope.currentIndex, sliderArr, pageScope);
+        if (!click) {
+          pageScope.$apply();
+        }
+      }
+    }
+
+
+
 
   };
   // NEXT SLIDE FUNCTION END
   // PREVIOUS SLIDE FUNCTION
-  this.prevSlide = function (currentIndex, sliderArr, pageScope) {
-    pageScope.currentIndex = currentIndex - 1;
-    pageScope.currentPic = sliderArr[currentIndex - 1];
-    this.checkSlide(pageScope.currentIndex, sliderArr, pageScope);
+  this.prevSlide = function (currentIndex, sliderArr, pageScope, click) {
+    pageScope.tempIndex = currentIndex - 1;
+    if (pageScope.tempIndex == 0 || pageScope.tempIndex > 0 && pageScope.tempIndex < sliderArr.length) {
+      pageScope.currentIndex = currentIndex - 1;
+      if (pageScope.currentIndex == 0 || pageScope.currentIndex > 0 && pageScope.currentIndex != -1 && pageScope.currentIndex < sliderArr.length) {
+        pageScope.currentPic = sliderArr[currentIndex - 1];
+      }
+      if (!click) {
+        pageScope.$apply();
+      }
+      this.checkSlide(pageScope.currentIndex, sliderArr, pageScope);
+    }
+
+
+
   };
   // PREVIOUS SLIDE FUNCTION END
   // CHECK SLIDE FOR ARROW
@@ -40,11 +62,28 @@ myApp.service('MediaPopupService', function ($http, $uibModal, TemplateService, 
   // CHECK SLIDE FOR ARROW END
   // OPEN POPUP
   this.openMediaPopup = function (index, slideArr, pageScope) {
+    console.log("page", page);
     pageScope.currentPic = slideArr[index];
     pageScope.currentIndex = index;
     pageScope.firstSlide = false;
     pageScope.lastSlide = false;
-    console.log(pageScope.currentPic);
+    $timeout(function () {
+      document.onkeydown = function (e) {
+        switch (e.keyCode) {
+          case 37:
+          case 38:
+            page.prevSlide(pageScope.currentIndex, slideArr, pageScope);
+            // e.preventDefault();
+            break;
+          case 39:
+          case 40:
+            page.nextSlide(pageScope.currentIndex, slideArr, pageScope);
+
+            // e.preventDefault();
+            break;
+        }
+      };
+    }, 300);
     this.checkSlide(pageScope.currentIndex, slideArr, pageScope);
     modalInstance = $uibModal.open({
       animation: true,
@@ -61,22 +100,7 @@ myApp.service('MediaPopupService', function ($http, $uibModal, TemplateService, 
       };
     });
     // INITIALISE KEY NEXT PREV
-    $timeout(function () {
-      document.keydown = function (e) {
-        switch (e.keyCode) {
-          case 37:
-          case 38:
-            page.prevSlide();
-            // e.preventDefault();
-            break;
-          case 39:
-          case 40:
-            page.nextSlide();
-            // e.preventDefault();
-            break;
-        }
-      };
-    }, 300);
+
   };
   // OPEN POPUP END
   // FUNCTIONS END
