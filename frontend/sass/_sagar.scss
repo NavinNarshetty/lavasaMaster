@@ -81,7 +81,8 @@ $grey: #e1e1e1;
   position: relative;
 }
 .photovideo-sidescroll{
-  height: calc(100% - 130px);
+  // height: calc(100% - 130px);
+  height: calc(100% - 80px);
   overflow-y: auto;
 }
 .photovideo-sidetitle{

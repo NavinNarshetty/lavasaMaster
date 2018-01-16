@@ -10,10 +10,11 @@
 
     <!-- FOLDER SELECT -->
     <div class="feature-gallery-photoholder">
-      <div class="featured-gallery-select" ng-if="mediaType == 'photo'">
+      <div class="featured-gallery-select">
         <!-- FILTER AS PER SPORT -->
         <div class="row">
-          <div class="col-md-4">
+          <!-- PHOTO FILTER -->
+          <div class="col-md-4" ng-if="mediaType == 'photo'">
             <div class="featured-gallery-dropdown">
               <span ng-click="viewFolder();">{{defaultFolder}} <i class="fa" ng-class = " { 'fa-chevron-up' : showFolderFilter == true , 'fa-chevron-down' :  showFolderFilter == false } "></i></span>
               <div class="featured-gallery-dropdownfilter" ng-if="showFolderFilter">
@@ -26,7 +27,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4" ng-if="selectedType === 'Sport'">
+          <div class="col-md-4" ng-if="selectedType === 'Sport' && mediaType == 'photo'">
             <div class="featured-gallery-dropdown-boysgirls">
               <span ng-click="viewGender();">{{defaultGender}} <i class="fa" ng-class = " { 'fa-chevron-up' : showGenderFilter == true , 'fa-chevron-down' :  showGenderFilter == false } "></i></span>
               <div class="featured-gallery-dropdownfilter" ng-show="showGenderFilter">
@@ -38,6 +39,22 @@
               </div>
             </div>
           </div>
+          <!-- PHOTO FILTER END -->
+          <!-- VIDEO FILTER END -->
+          <div class="col-md-4" ng-if="mediaType == 'video'">
+            <div class="featured-gallery-dropdown">
+              <span ng-click="viewVideoFolder();">{{defaultFolder}} <i class="fa" ng-class = " { 'fa-chevron-up' : showFolderFilter == true , 'fa-chevron-down' :  showFolderFilter == false } "></i></span>
+              <div class="featured-gallery-dropdownfilter" ng-if="showFolderFilter">
+                <ul class="list-unstyled m-clear">
+                  <li ng-click="selectFolder('all');"></li>
+                  <li class="custom-featuredgallery-dropdown" ng-repeat="folder in allfolderName track by $index" ng-click="selectFolder(folder);">
+                    {{folder._id}}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- VIDEO FILTER END -->
         </div>
         <!-- FILTER AS PER SPORT END -->
       </div>

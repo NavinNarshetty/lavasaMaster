@@ -28,7 +28,7 @@ myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, toast
   }
   // PHOTO VIDEO POPUP FUNCTION END
   // FUNCTIONS
-  // SELECT FOLDER
+  // SELECT PHOTO FOLDER
   $scope.viewFolder = function () {
     $state.go('featuredgallery', {
       type: $stateParams.type,
@@ -51,7 +51,20 @@ myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, toast
     $scope.defaultFolder = folder._id;
     $scope.viewFolder();
   }
-  // END FOLDER END
+  // END PHOTO FOLDER END
+  // SHOW VIDEO FOLDER
+  $scope.viewVideoFolder = function(){
+    $state.go('featuredvideogallery', {
+      mediaType: $scope.mediaType,
+      name: $scope.defaultFolder
+    });
+    if ($scope.showFolderFilter == false) {
+      $scope.showFolderFilter = true;
+    } else {
+      $scope.showFolderFilter = false;
+    }
+  }
+  // SHOW VIDEO FOLDER END
   // GENDER
   $scope.showGenderFilter = false;
   $scope.defaultGender = 'all';
