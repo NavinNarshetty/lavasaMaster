@@ -22,7 +22,7 @@ var schema = new Schema({
     },
     school: {
         type: Schema.Types.ObjectId,
-        ref: 'School',
+        ref: 'OldSchool',
         index: true
     },
 
@@ -111,7 +111,7 @@ var schema = new Schema({
 
 schema.plugin(deepPopulate, {
     populate: {
-        school: "_id name"
+        school: ""
     }
 });
 schema.plugin(uniqueValidator);
