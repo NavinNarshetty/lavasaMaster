@@ -1193,7 +1193,6 @@ var model = {
         return pipeline;
     },
 
-
     getAthleteStats: function (data, callback) {
         var match = [];
         var stats = {};
