@@ -1122,26 +1122,26 @@ var model = {
                         match.name = arr[i];
 
                         var n = matchesPerPool[name].length;
-                        // console.log("n", n, "matchName", matchesPerPool[name]);
+                        console.log("n", n, "matchName", matchesPerPool[name]);
                         _.each(matchesPerPool[name], function (match) {
-                            // console.log("match", match);
+                            console.log("match", match);
                             var team = {};
                             var team1 = {};
                             if (match.opponentsTeam[0]) {
                                 team = match.opponentsTeam[0];
-                                // console.log("team7777", team);
+                                console.log("team7777", team);
                                 teams.push(team);
 
-                                // console.log("teams1", teams);
+                                console.log("teams1", teams);
                             }
                             if (match.opponentsTeam[1]) {
                                 team1 = match.opponentsTeam[1];
-                                // console.log("team2222", team1);
+                                console.log("team2222", team1);
                                 teams.push(team1);
-                                // console.log("Teams2", teams);
+                                console.log("Teams2", teams);
                             }
                         });
-                        // console.log("teams****", teams);
+                        console.log("teams****", teams);
                         var t = _.uniq(teams, function (x) {
                             return x;
                         });
@@ -1155,9 +1155,9 @@ var model = {
                     callback(null, standings);
                 },
                 function (standings, callback) {
-                    // console.log("unique", standings);
+                    console.log("unique", standings);
                     async.eachSeries(standings, function (n, callback) {
-                        // console.log("*****", n);
+                        console.log("*****", n);
                         Match.getPointsPerPool(n, data, function (err, complete) {
                             if (err || _.isEmpty(complete)) {
                                 callback(err, null);
@@ -1185,6 +1185,8 @@ var model = {
     },
 
     getPointsPerPool: function (standings, data, callback) {
+        console.log('get pool standings', standings);
+        console.log('get pool data', data);
         async.concatSeries(standings.teams, function (team, callback) {
             async.waterfall([
                     function (callback) {
@@ -1216,9 +1218,9 @@ var model = {
                             }, {
                                 "resultThrowball.teams.team": teamid,
                             }],
-
                             round: standings.name
                         }
+                        console.log('MatchObj',matchObj);
                         Match.find(matchObj).lean().deepPopulate("opponentsTeam").sort({
                             createdAt: 1
                         }).exec(function (err, found) {
@@ -1226,9 +1228,11 @@ var model = {
                                 callback(err, null);
                             } else {
                                 if (_.isEmpty(found)) {
+                                    console.log('Without Data',found);
                                     teamData.matches = found;
                                     callback(null, teamData);
                                 } else {
+                                    console.log('With Data',found);
                                     teamData.matches = found;
                                     callback(null, teamData);
                                 }
@@ -1236,6 +1240,7 @@ var model = {
                         });
                     },
                     function (teamData, callback) {
+                        console.log('teamdata',teamData);
                         var scores = {};
                         scores._id = teamData._id;
                         scores.teamid = teamData.teamId;
@@ -1246,7 +1251,7 @@ var model = {
                         scores.loss = 0;
                         scores.matchCount = 0;
                         scores.noShow = 0;
-
+                        console.log('teamdata matches',teamData.matches);
                         _.each(teamData.matches, function (match) {
                             scores.matchCount = teamData.matches.length;
                             if (match.resultFootball) {
@@ -1396,8 +1401,9 @@ var model = {
                                 } else {
                                     scores.loss = ++scores.loss;
                                 }
-                            }else if (match.resultThrowball) {
-                                if (match.resultThrowball.teams.length == 2) {
+                            } else if (match.resultThrowball) {
+                                console.log('Inside match result', match.resultThrowball);
+                                if (match.resultThrowball.teams.length === 2) {
                                     if (teamData._id == match.resultThrowball.teams[0].team && match.resultThrowball.teams[0].noShow == true) {
                                         scores.noShow = ++scores.noShow;
                                     } else if (teamData._id == match.resultThrowball.teams[1].team && match.resultThrowball.teams[1].noShow == true) {
