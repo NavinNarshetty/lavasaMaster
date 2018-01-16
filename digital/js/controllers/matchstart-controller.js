@@ -34,7 +34,7 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
   }
   $scope.getIndividualPlayers();
   // GET MATCH PLAYERS
-  // addPlayersMatch
+  // ADD MATCH PLAYERS
   $scope.addPlayersMatch = function () {
     $scope.savePlayers.matchId = $scope.matchDetails.matchId;
     $scope.savePlayers.opponentsSingle = [];
@@ -55,7 +55,7 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
       }
     });
   };
-  // addPlayersMatch END
+  // ADD MATCH PLAYERS END
   // START SCORING SINGLE REDIRECT
   $scope.scoringRedirect = function(formData){
     console.log("hello");
@@ -291,11 +291,6 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
     }
   }
   // START SCORING TEAM REDIRECT END
-  // SHOW MATCH NO MATCH MODAL
-  $scope.showNoModal = function(){
-
-  }
-  // SHOW MATCH NO MATCH MODAL END
   // INITIALSE MATCH RESULTS
   $scope.initialiseResults = function (flag, size) {
     // INITIALISE RESULTS
@@ -791,7 +786,6 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
   $scope.getMatchPhoto = function (detail) {
     console.log(detail, 'pic return');
     $scope.showMatchPhoto = true;
-    // $scope.swiperInit();
   };
   // GET MATCH SCORESHEET END
   // REMOVE MATCH SCORESHEET
@@ -1087,7 +1081,6 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
   }
   // SAVE TEAM WINNER END
   // INTEGRATION END
-
   // OPEN MATCH-NO MATCH MODAL
   $scope.showNoMatch = function () {
     $scope.initialiseResults();

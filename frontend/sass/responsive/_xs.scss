@@ -1,5 +1,44 @@
  @media (max-width: $screen-xs-max) {
    // Mobile
+   //  PHOTO VIDEO POPUP
+   .photovideo-modal{
+     top: 0;
+     bottom: 0;
+     @include transform( translateY(0));
+     .modal-dialog{
+       margin: 30px 20px 50px;
+     }
+   }
+   .photovideo-nav{
+     font-size: 24px;
+     padding: 5px;
+   }
+   .photovideo-navleft{
+     left: -20px;
+   }
+   .photovideo-navright{
+     right: -20px;
+   }
+   .photovideo-popup{
+     padding-right: 0;
+   }
+   .photovideo-sidesection{
+     width: 100%;
+     position: relative;
+   }
+   .photovideo-sidescroll{
+     height: auto;
+     margin: 10px 0;
+   }
+   .photovideo-footer{
+     padding: 0;
+     margin: 10px 0;
+     position: relative;
+   }
+   .photovideo-photoholder{
+     min-height: initial;
+   }
+   //  PHOTO VIDEO POPUP END
    //  ATHLETE PROFILE CARD
    .profileathleteimage-holder {
      width: 55px;

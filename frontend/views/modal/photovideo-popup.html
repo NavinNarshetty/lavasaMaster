@@ -1,12 +1,13 @@
 <div class="photovideo-popup">
+  <!-- <div class="closer"> <span class="fa fa-times"></span></div> -->
   <!-- PHOTO VIDEO NAV -->
   <!-- NAV LEFT -->
-  <div class="photovideo-nav photovideo-navleft" ng-click="prevSlides(currentIndex);" ng-if="!firstSlide">
+  <div class="photovideo-nav photovideo-navleft" ng-click="prevSlides(currentIndex, 'c');" ng-if="!firstSlide">
     <div class=""> <span class="fa fa-angle-left"></span></div>
   </div>
   <!-- NAV LEFT END -->
   <!-- NAV RIGHT  -->
-  <div class="photovideo-nav photovideo-navright" ng-click="nextSlides(currentIndex);" ng-if="!lastSlide">
+  <div class="photovideo-nav photovideo-navright" ng-click="nextSlides(currentIndex,'c');" ng-if="!lastSlide">
     <div class=""><span class="fa fa-angle-right"></span></div>
   </div>
   <!-- NAV RIGHT END -->
@@ -21,8 +22,8 @@
     </div>
     <!-- POPUP PHOTO HOLDER END -->
     <!-- POPUP VIDEO HOLDER  -->
-    <div class="photovideo-videoholder" ng-if="currentPic.mediatype == 'video'">
-      <iframe ng-src="{{'https://player.vimeo.com/video/' + currentPic.medialink |trusted }}" frameborder="0" allowfullscreen></iframe>
+    <div class="photovideo-videoholder" ng-if="currentPic.mediatype == 'video'" style="background-image:url('{{currentPic.thumbnail}}')">
+      <iframe class="photovideo-vidframe" ng-src="{{'https://player.vimeo.com/video/' + currentPic.medialink |trusted }}" frameborder="0"></iframe>
     </div>
     <!-- POPUP VIDEO HOLDER END -->
   </div>

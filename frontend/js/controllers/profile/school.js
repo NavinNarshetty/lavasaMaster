@@ -218,6 +218,7 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
     TemplateService.title = "School Profile"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
     var year = new Date();
+    $scope.defaultImg = "img/noimage.png";
     $scope.filter = {};
     $scope.schooldata = {};
     $scope.sportsStudentGender = {};
