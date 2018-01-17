@@ -1289,7 +1289,7 @@ var model = {
                                             stats.ageGroup = singleData.sport.ageGroup.name;
                                             stats.sportslist = singleData.sport.sportslist.name;
                                             stats.gender = singleData.sport.gender;
-                                            stats.match = singleData.matchId;
+                                            stats.matchId = singleData.matchId;
                                             if (singleData.sport.weight) {
                                                 stats.weight = singleData.sport.weight.name;
                                             }
