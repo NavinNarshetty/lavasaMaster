@@ -1,0 +1,104 @@
+<div class="heading-sec">
+  <div class="row">
+    <div class="col-md-4 column">
+      <div class="heading-profile">
+        <h2>{{title}} HighLight Video</h2>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="widget">
+        <div class="form-elements-sec">
+          <form name="highlightform" role="form" class="sec">
+            <div class="highlightvideo text-right">
+              <button type="submit" class="btn btn-dark" ng-click="addHighlight(formData)">ADD ROW</button>
+            </div>
+
+            <!-- <pre>{{formData | json}}</pre> -->
+            <div class="highlightvideoholder">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>
+                      <div class="text-uppercase">
+                        Media Type
+                      </div>
+                    </th>
+                    <th>
+                      <div class="text-uppercase">
+                        Source
+                      </div>
+                    </th>
+                    <th>
+                      <div class="text-uppercase">
+                        Link
+                      </div>
+                    </th>
+                    <th>
+                      <div class="text-uppercase">
+                        Title
+                      </div>
+                    </th>
+                    <th>
+                      <div class="text-uppercase">
+                        Action
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="video in formData.highlightVideo track by $index">
+                    <td>
+                      <div class="">
+                        <input type="text" ng-model="video.mediaType" class="form-control" placeholder="Enter Type" readonly>
+                        <div class="error-msg" ng-if="highlightform.agename.$invalid && highlightform.agename.$touched">Please Enter Valid Name *</div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="">
+                        <select name="videosource" id="videosource" ng-model="video.source" placeholder="Enter Source" class="form-control" ng-required=true>
+                              <option value="youtube">Youtube</option>
+                              <option value="vimeo">Vimeo</option>
+                        </select>
+                        <!-- <div class="label label-danger" ng-if="highlightform.videosource.$invalid && highlightform.videosource.$touched">Please Enter Valid Source *</div> -->
+                      </div>
+                    </td>
+                    <td>
+                      <div class="">
+                        <input type="text" name="videolink" ng-model="video.link" class="form-control" placeholder="Enter Link" ng-required=true>
+                        <!-- <span class="label label-danger" ng-if="highlightform.videolink.$invalid && highlightform.videolink.$touched">Please Enter Valid Link *</span> -->
+                      </div>
+                    </td>
+                    <td>
+                      <div class="">
+                        <input type="text" name="videotitle" ng-model="video.title" class="form-control" placeholder="Enter Link" ng-required=true>
+                        <!-- <span class="label label-danger" ng-if="highlightform.videotitle.$invalid && highlightform.videotitle.$touched">Please Enter Valid Title *</span> -->
+                      </div>
+                    </td>
+                    <td>
+                      <div class="deletehightlight">
+                        <button type="submit" class="btn btn-danger" ng-click="deleteRow(formData,$index)">Delete</button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="text-center mt20 odd-even-button">
+                  <button class="btn btn-default" type="submit" ng-click="saveData(formData)">Save</button>
+                  <button class="btn btn-default" ui-sref='highlight-video'>Cancel</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

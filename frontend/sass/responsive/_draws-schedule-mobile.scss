@@ -116,6 +116,10 @@
   .championsarchive-bgbanner {
     margin-top: 90px;
   } // CHAMPIONS END
+  // CHAMPIONS ARCHIVE END
+  .videoarchive-card {
+    height: 110px;
+  } // CHAMPIONS ARCHIVE END
 }
 
 @media screen and (max-width: 767px) {
@@ -212,6 +216,28 @@
   }
   .championsarchive-rankingtableholder .rankingtable-medal {
     width: 15px;
+  } // CHAMPIONS ARCHIVE HEADER
+  .archive-venuholder {
+    width: auto;
+  }
+  .archive-venutitle {
+    width: 40%;
+  }
+  .archive-scheduledetail {
+    font-size: 10px;
+  }
+  .archive-remainingdataholder {
+    width: 100%;
+    margin-left: 0px;
+  }
+  .archive-datacardvalue {
+    font-size: 24px;
+  }
+  .archive-datacardtext {
+    font-size: 10px;
+  } // CHAMPIONS ARCHIVE HEADER END
+  .videoarchive-card {
+    height: 150px;
   }
 }
 

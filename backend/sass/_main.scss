@@ -169,6 +169,11 @@
      $red);
  }
 
+ .color-danger {
+     color: $red;
+     font-weight: 600
+ }
+
  .btn-green {
      @include button-variant(white,
      $green,
@@ -1482,5 +1487,15 @@
      @include transform(rotate(270deg)); //  @include transform-origin(100%);
  } // ROTATE IMAGE DIRECTIVE  END
  //  TILE WIREFRAME END
+ //  ARCHIVE PAGE
+ .archivechampions-page {
+     .gallery,
+     .archivehightlight,
+     .maincontent,
+     .headerlogosection {
+         padding-top: 30px;
+         border-top: 2px solid #000;
+     }
+ } //  ARCHIVE PAGE END
  @import "fancybox-override";
  @import "other/mobile";
