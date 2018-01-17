@@ -1966,12 +1966,18 @@ var model = {
                                                                         StudentTeam.findOne({
                                                                             teamId: objectid(n.team),
                                                                             studentId: data.athleteId
-                                                                        }).lean().exec(function (err, found) {
+                                                                        }).lean().exec(function (err, foundAthlete) {
                                                                             if (err) {
                                                                                 callback(null, err);
-                                                                            } else if (_.isEmpty(found)) {
+                                                                            } else if (_.isEmpty(foundAthlete)) {
                                                                                 StudentTeam.findOne({
-                                                                                    teamId: objectid(n.team),
+                                                                                    teamId: {
+                                                                                        $ne: objectid(n.team)
+                                                                                    },
+                                                                                    studentId: {
+                                                                                        $ne: data.athleteId
+                                                                                    },
+                                                                                    sport: singleData.sport
                                                                                 }).lean().deepPopulate("studentId.school teamId").exec(function (err, found) {
                                                                                     if (err) {
                                                                                         callback(null, err);
@@ -1998,6 +2004,25 @@ var model = {
                                                                                 });
                                                                             } else {
                                                                                 stats.isAthleteWinner = true;
+                                                                                StudentTeam.findOne({
+                                                                                    teamId: {
+                                                                                        $ne: objectid(n.team)
+                                                                                    },
+                                                                                    studentId: {
+                                                                                        $ne: data.athleteId
+                                                                                    },
+                                                                                    sport: singleData.sport
+                                                                                }).lean().deepPopulate("studentId.school teamId").exec(function (err, found) {
+                                                                                    if (err) {
+                                                                                        callback(null, err);
+                                                                                    } else if (_.isEmpty(found)) {
+                                                                                        callback();
+                                                                                    } else {
+                                                                                        stats.opponentName = found.teamId.name;
+                                                                                        stats.school = found.teamId.schoolName;
+                                                                                        stats.teamId = found.teamId.teamId;
+                                                                                    }
+                                                                                });
                                                                                 if (singleData.resultsRacquet.teams[0].team === singleData.resultsRacquet.winner.player) {
                                                                                     stats.walkover = singleData.resultsRacquet.teams[0].walkover;
                                                                                 } else {
@@ -2014,23 +2039,6 @@ var model = {
                                                                                     console.log("i", result);
                                                                                 }
                                                                                 stats.score = result;
-                                                                                // } else {
-                                                                                //     stats.opponentName = found.teamId.name;
-                                                                                //     stats.school = found.teamId.schoolName;
-                                                                                //     stats.teamId = found.teamId.teamId;
-                                                                                //     stats.isAthleteWinner = false;
-                                                                                //     var length = singleData.resultsRacquet.teams[0].sets.length;
-                                                                                //     while (i < length) {
-                                                                                //         if (i == 0) {
-                                                                                //             result = singleData.resultsRacquet.teams[0].sets[i].point + "-" + singleData.resultsRacquet.teams[1].sets[i].point;
-                                                                                //         } else {
-                                                                                //             result = result + "," + singleData.resultsRacquet.teams[0].sets[i].point + "-" + singleData.resultsRacquet.teams[1].sets[i].point;
-                                                                                //         }
-                                                                                //         i++;
-                                                                                //         console.log("i", result);
-                                                                                //     }
-                                                                                //     stats.score = result;
-                                                                                // }
                                                                                 stats.status = singleData.resultsRacquet.status;
                                                                                 stats.draw = singleData.resultsRacquet.isDraw;
                                                                                 callback();
