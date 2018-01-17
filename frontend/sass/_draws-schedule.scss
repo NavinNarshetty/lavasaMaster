@@ -1889,8 +1889,7 @@ $sport-table-grey:#efeeee !default;
 }
 
 .championsarchive-bgbanner {
-  height: calc( 100vh - 30vh);
-  background-image: url('/img/archivechampions.jpg');
+  height: calc( 100vh - 30vh); // background-image: url('/img/archivechampions.jpg');
   background-position: 50% 30%;
   background-repeat: no-repeat;
   background-size: cover;
@@ -1898,6 +1897,15 @@ $sport-table-grey:#efeeee !default;
   .container {
     height: 100%;
   }
+}
+
+.championsarchive-hideread {
+  max-height: 100px;
+  overflow: hidden;
+}
+
+.championsarchive-showread {
+  max-height: fit-content
 }
 
 .championsarchive-videoholder {
@@ -1908,7 +1916,7 @@ $sport-table-grey:#efeeee !default;
 }
 
 .championsarchive-videoarchiveholder {
-  flex: auto;
+  flex: 1;
   margin: 0px 10px 10px 0px;
 }
 
@@ -1943,6 +1951,14 @@ $sport-table-grey:#efeeee !default;
   table>thead>tr>th {
     vertical-align: middle;
     text-align: center;
+    &:nth-child(2) {
+      text-align: left;
+    }
+  }
+  table>tbody>tr>td {
+    &:nth-child(2) {
+      text-align: left;
+    }
   }
   .rankingtable-medal {
     width: 18px;
@@ -2056,7 +2072,8 @@ $sport-table-grey:#efeeee !default;
   text-align: center;
 }
 
-.archive-readmore {
+.archive-readmore,
+.archive-tableviremore {
   text-decoration: underline;
   cursor: pointer;
 }

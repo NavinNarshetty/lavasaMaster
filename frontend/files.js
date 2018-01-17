@@ -70,6 +70,7 @@ module.exports = [
   'frontend/js/services/resultsportinitializayion.js',
   'frontend/js/services/masonry-edited.js',
   'frontend/js/services/mediapopup.js',
+  'frontend/js/services/sportMerge.js',
 
   //Factories
   'frontend/js/factories/navigation.js',

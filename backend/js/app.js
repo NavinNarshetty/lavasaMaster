@@ -511,6 +511,29 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'DetailAdditionalPaymentCtrl'
         })
+        // ARCHIVE
+        .state('archive', {
+            url: "/archive",
+            templateUrl: "views/template.html",
+            controller: 'ArchiveCtrl'
+        })
+        .state('detailarchive', {
+            url: "/detailarchive/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailArchiveCtrl'
+        })
+        // HIGHLIGHTS VIDEO
+        .state('highlight-video', {
+            url: "/highlight-video",
+            templateUrl: "views/template.html",
+            controller: 'HighlightvideoCtrl'
+        })
+        .state('detailhighlights', {
+            url: "/detailhighlights/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailHighlightCtrl'
+        })
+
         .state('jagz', {
             url: "/jagz",
             templateUrl: "views/jagz.html",

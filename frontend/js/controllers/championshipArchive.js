@@ -1,157 +1,116 @@
-myApp.controller('championArchiveCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $rootScope, $uibModal, $timeout, configService) {
+myApp.controller('championArchiveCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $rootScope, $uibModal, $timeout, configService, sportMergeService) {
   $scope.template = TemplateService.getHTML("content/championshiparchive.html");
   TemplateService.title = "Sponser Partner"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
-
+  $scope.defaultThumbnail = 'img/media-video-thumb.jpg';
   $scope.data = [1, 2, 3]
-  // HIGHLIGHTS
-  $scope.highlights = [{
-    thumbnail: '/img/sa2.jpg',
-    content: 'Sfa 2015 | Mumbai | Football Highlights',
-    vlink: '2Vv-BfVoq4g',
-    vtype: 'youtube'
-  }, {
-    thumbnail: '/img/sa6.jpg',
-    content: 'Sfa 2015 | Mumbai | Tennis Highlights',
-    vlink: '249632916',
-    vtype: 'vimeo'
-  }, {
-    thumbnail: '/img/About_Mobile_Hyd.jpg',
-    content: 'Sfa 2015 | Mumbai | Badminton Highlights',
-    vlink: '2Vv-BfVoq4g',
-    vtype: 'youtube'
-  }, {
-    thumbnail: '/img/sa8.jpg',
-    content: 'Sfa 2015 | Mumbai | Basketball Highlights',
-    vlink: '249632916',
-    vtype: 'vimeo'
-  }, {
-    thumbnail: '/img/sa11.jpg',
-    content: 'Sfa 2015 | Mumbai | Swimming Highlights',
-    vlink: '2Vv-BfVoq4g',
-    vtype: 'youtube'
-  }];
-  // HIGHLIGHTS END
+  $scope.readvariable = false;
+  $scope.showRead = false;
+
+  $scope.setReadMore = function () {
+    $timeout(function () {
+      $scope.readHeight = $(".championsarchive-content").height();
+      console.log($scope.readHeight, 'height');
+      if ($scope.readHeight < 100) {
+        $scope.showRead = false;
+      } else {
+        $scope.showRead = true;
+      }
+    }, 200)
 
 
-  $scope.schoolRankingTable = [{
-    name: "Lady Ratanbai & Sir MathuradasVissanji Academy",
-    goldPoints: '200',
-    silverPoints: '300',
-    bronzePoints: '400',
-    total: '999'
-  }, {
-    name: "Lady Ratanbai & Sir MathuradasVissanji Academy",
-    goldPoints: '200',
-    silverPoints: '300',
-    bronzePoints: '400',
-    total: '999'
-  }, {
-    name: "St.Xavier's High School (Airoli)",
-    goldPoints: '200',
-    silverPoints: '300',
-    bronzePoints: '400',
-    total: '999'
-  }, {
-    name: "Ryan International School, Kharghar",
-    goldPoints: '200',
-    silverPoints: '300',
-    bronzePoints: '400',
-    total: '999'
-  }, {
-    name: "Lady Ratanbai & Sir MathuradasVissanji Academy",
-    goldPoints: '200',
-    silverPoints: '300',
-    bronzePoints: '400',
-    total: '999'
-  }]
+
+  }
 
 
-  // SPORT SPECIFIC
-  $scope.sportSpecific = [{
-    name: 'archery'
-  }, {
-    name: 'athletics'
-  }, {
-    name: 'badminton'
-  }, {
-    name: 'basketball'
-  }, {
-    name: 'boxing'
-  }, {
-    name: 'carrom'
-  }, {
-    name: 'chess'
-  }, {
-    name: 'fencing'
-  }, {
-    name: 'football'
-  }, {
-    name: 'handball'
-  }, {
-    name: 'hockey'
-  }, {
-    name: 'judo'
-  }, {
-    name: 'kabaddi'
-  }, {
-    name: 'karate'
-  }, {
-    name: 'kho kho'
-  }, {
-    name: 'sport mma'
-  }, {
-    name: 'shooting'
-  }, {
-    name: 'squash'
-  }, {
-    name: 'swimming'
-  }, {
-    name: 'table tennis'
-  }, {
-    name: 'taekwondo'
-  }, {
-    name: 'tennis'
-  }, {
-    name: 'throwball'
-  }, {
-    name: 'volleyball'
-  }, {
-    name: 'water polo'
-  }]
+  // ARCHIVE PAGE
+  $scope.archivePage = function () {
+    $scope.url = "Championshiparchive/Search";
+    $scope.constraints = {}
+    $scope.constraints.keyword = "";
+    $scope.constraints.page = 1;
+    $scope.constraints.type = "";
 
-  // SPORT SPECIFIC END
+    NavigationService.apiCallWithData($scope.url, $scope.constraints, function (data) {
+
+      $scope.archiveData = data.data.results[0];
+      $scope.archiveGallery = $scope.archiveData.galleryVideo.concat($scope.archiveData.galleryImage)
+      $scope.archiveGallery = _.shuffle($scope.archiveGallery);
+      console.log($scope.archiveGallery, "final gallery")
+      console.log("data from backend", $scope.archiveData);
+      $scope.setReadMore();
+    });
+  }
+  $scope.archivePage();
+  // ARCHIVE PAGE END
+
+  // SPORTS
+  $scope.archiveSports = function () {
+    NavigationService.getAllSpotsList(function (data) {
+      console.log(data, "before service sports data");
+      $scope.archiveSportsData = _.compact(data.data.data);
+      $scope.archiveSportsData = sportMergeService.sportMerge($scope.archiveSportsData);
+    });
+  }
+  $scope.archiveSports();
+  // SPORTS END
+
+  // RANK
+  $scope.archiveRank = function () {
+    NavigationService.getSchoolByRanks(function (data) {
+      console.log('rankingTable', data);
+      if (data.value == true) {
+        $scope.rankTable = data.data;
+        $scope.rankTable.tableLimit = 20;
+        $scope.rankTable.showTable = true;
+        _.each($scope.rankTable, function (n, nkey) {
+          n.rowDetail = false;
+          n.goldCount = 0;
+          n.silverCount = 0;
+          n.bronzeCount = 0;
+          if (n.medal) {
+            if (n.medal.gold) {
+              n.goldCount = n.medal.gold.count;
+            }
+            if (n.medal.silver) {
+              n.silverCount = n.medal.silver.count;
+            }
+            if (n.medal.bronze) {
+              n.bronzeCount = n.medal.bronze.count;
+            }
+          }
+          if (!n.totalPoints) {
+            n.totalPoints = 0;
+          }
+        });
+      } else {
+        toastr.error('Ranking Table Error', 'Error');
+      }
+    });
+  }
+  $scope.archiveRank();
+  // RANK END
 
 
-  $scope.galleryData = [{
-    galleryType: 'Image',
-    image: 'img/sa2.jpg'
-  }, {
-    galleryType: 'Video',
-    vlink: '2Vv-BfVoq4g',
-    vtype: 'youtube',
-    vimage: 'img/sl1.jpg'
-  }, {
-    galleryType: 'Image',
-    image: 'img/sa4.jpg'
-  }, {
-    galleryType: 'Video',
-    vlink: '249632916',
-    vtype: 'vimeo',
-    vimage: 'img/sl1.jpg'
-  }, {
-    galleryType: 'Image',
-    image: 'img/sa6.jpg'
-  }, {
-    galleryType: 'Video',
-    vlink: '2Vv-BfVoq4g',
-    vtype: 'youtube',
-    vimage: 'img/sl1.jpg'
-  }, {
-    galleryType: 'Image',
-    image: 'img/sa8.jpg'
-  }, {
-    galleryType: 'Image',
-    image: 'img/sa3.jpg'
-  }]
+  $scope.archiveHighlights = function () {
+    $scope.url = 'HighlightVideo/Search';
+    $scope.parameter = {}
+    $scope.parameter.keyword = "";
+    $scope.parameter.page = 1;
+    $scope.parameter.type = "";
+    NavigationService.apiCallWithData($scope.url, $scope.parameter, function (data) {
+      console.log(data, "highlights")
+      $scope.archiveHighlightsData = data.data.results[0].highlightVideo;
+
+
+    });
+  }
+  $scope.archiveHighlights();
+
+  // READ MORE
+  $scope.readMore = function () {
+    $scope.readvariable = !$scope.readvariable;
+  }
+  // READ MORE END
+
 });
