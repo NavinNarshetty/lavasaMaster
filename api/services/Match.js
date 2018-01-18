@@ -1220,7 +1220,7 @@ var model = {
                             }],
                             round: standings.name
                         }
-                        console.log('MatchObj',matchObj);
+                        console.log('MatchObj', matchObj);
                         Match.find(matchObj).lean().deepPopulate("opponentsTeam").sort({
                             createdAt: 1
                         }).exec(function (err, found) {
@@ -1228,11 +1228,11 @@ var model = {
                                 callback(err, null);
                             } else {
                                 if (_.isEmpty(found)) {
-                                    console.log('Without Data',found);
+                                    console.log('Without Data', found);
                                     teamData.matches = found;
                                     callback(null, teamData);
                                 } else {
-                                    console.log('With Data',found);
+                                    console.log('With Data', found);
                                     teamData.matches = found;
                                     callback(null, teamData);
                                 }
@@ -1240,7 +1240,7 @@ var model = {
                         });
                     },
                     function (teamData, callback) {
-                        console.log('teamdata',teamData);
+                        console.log('teamdata', teamData);
                         var scores = {};
                         scores._id = teamData._id;
                         scores.teamid = teamData.teamId;
@@ -1251,7 +1251,7 @@ var model = {
                         scores.loss = 0;
                         scores.matchCount = 0;
                         scores.noShow = 0;
-                        console.log('teamdata matches',teamData.matches);
+                        console.log('teamdata matches', teamData.matches);
                         _.each(teamData.matches, function (match) {
                             scores.matchCount = teamData.matches.length;
                             if (match.resultFootball) {
@@ -12728,12 +12728,12 @@ var model = {
                                                 paramData.opponentsTeam.push(singleData["TEAM NAME 2"]);
                                             }
                                             paramData.sport = singleData.SPORT;
-                                            var storeDate = singleData.DATE;
-                                            var splitDate = storeDate.indexOf('/');
-                                            console.log('++++++++++++++++++++++++++++++', splitDate);
-                                            if (splitDate !== -1) {
-                                                paramData.scheduleDate = singleData.DATE;
-                                            }
+                                            // var storeDate = singleData.DATE;
+                                            // var splitDate = storeDate.indexOf('/');
+                                            // console.log('++++++++++++++++++++++++++++++', splitDate);
+                                            // if (splitDate !== -1) {
+                                            paramData.scheduleDate = singleData.DATE;
+                                            // }
                                             paramData.scheduleTime = singleData.TIME;
                                             paramData.excelType = singleData["STAGE"];
                                             paramData.video = singleData["VIDEO"];
@@ -16489,7 +16489,6 @@ var model = {
                                                                         result.result = player.time;
                                                                     }
                                                                     callback(null, result);
-
                                                                 });
                                                             }, function (err) {
                                                                 callback(null, result);
