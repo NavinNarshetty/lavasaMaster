@@ -21,11 +21,11 @@ var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
     saveVideoHighlight: function (data, callback) {
-        // console.log("data", data);
+        console.log("data", data);
         async.waterfall([
             function (callback) {
                 async.each(data.highlightVideo, function (n, callback) {
-                    // console.log("n", n);
+                    console.log("n", n);
                     if (n.source === 'vimeo') {
                         var urlData = {};
                         urlData.videoId = n.link;
@@ -37,10 +37,12 @@ var model = {
                                     success: vimeoData
                                 });
                             } else {
-                                n.videoThumbnail = pictures.sizes;
+                                n.thumbnails = pictures.sizes;
                                 callback();
                             }
                         });
+                    } else {
+                        callback();
                     }
                 }, function (err) {
                     callback(null, data);

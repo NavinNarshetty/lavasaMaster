@@ -59,6 +59,8 @@ var model = {
                                 callback();
                             }
                         });
+                    } else {
+                        callback();
                     }
                 }, function (err) {
                     callback(null, data);

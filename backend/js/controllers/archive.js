@@ -154,7 +154,7 @@ myApp.controller('DetailArchiveCtrl', function ($scope, TemplateService, Navigat
 
   $scope.saveData = function (data) {
     console.log("data in save", data);
-    $scope.url = "Championshiparchive/save";
+    $scope.url = "Championshiparchive/saveVideoArchive";
     NavigationService.apiCall($scope.url, data, function (data) {
       console.log(data, "save data archive")
       if (data.value) {

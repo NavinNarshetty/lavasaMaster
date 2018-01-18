@@ -34,8 +34,20 @@ myApp.controller('championArchiveCtrl', function ($scope, TemplateService, $stat
     NavigationService.apiCallWithData($scope.url, $scope.constraints, function (data) {
 
       $scope.archiveData = data.data.results[0];
+      _.each($scope.archiveData.galleryVideo, function (key) {
+        // console.log(key, "data in each")
+        key.thumbnail = '../img/media-video-thumb.jpg';
+        if (key.videoSource === 'vimeo' && key.videoThumbnail.length > 0) {
+          key.thumbnail = key.videoThumbnail[3].link;
+        } else if (key.videoSource === 'youtube') {
+          key.videotype = key.videoSource;
+          key.medialink = key.videoLink;
+        }
+      });
+      NavigationService.getVideoThumbnail($scope.archiveData.galleryVideo);
       $scope.archiveGallery = $scope.archiveData.galleryVideo.concat($scope.archiveData.galleryImage)
       $scope.archiveGallery = _.shuffle($scope.archiveGallery);
+
       console.log($scope.archiveGallery, "final gallery")
       console.log("data from backend", $scope.archiveData);
       $scope.setReadMore();
@@ -99,10 +111,20 @@ myApp.controller('championArchiveCtrl', function ($scope, TemplateService, $stat
     $scope.parameter.page = 1;
     $scope.parameter.type = "";
     NavigationService.apiCallWithData($scope.url, $scope.parameter, function (data) {
-      console.log(data, "highlights")
+      // console.log(data, "highlights")
       $scope.archiveHighlightsData = data.data.results[0].highlightVideo;
+      _.each($scope.archiveHighlightsData, function (key) {
+        console.log(key, "data in each")
+        key.thumbnail = '../img/media-video-thumb.jpg';
+        if (key.source === 'vimeo' && key.thumbnails.length > 0) {
+          key.thumbnail = key.thumbnails[3].link;
+        } else if (key.source === 'youtube') {
+          key.videotype = key.source;
+          key.medialink = key.link;
+        }
 
-
+      })
+      NavigationService.getVideoThumbnail($scope.archiveHighlightsData);
     });
   }
   $scope.archiveHighlights();

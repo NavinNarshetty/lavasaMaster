@@ -200,11 +200,6 @@
                               </div>
                             </th>
                             <th>
-                              <div class="archive-videocardholder text-center text-uppercase">
-                                Thumbnail Image
-                              </div>
-                            </th>
-                            <th>
                               <div class="text-center text-uppercase">
                                 Source
                               </div>
@@ -231,22 +226,17 @@
                             </td>
                             <td>
                               <div class="form-group">
-                                <upload-image ng-model="videoData.videoThumbnail" inobj no-view></upload-image>
-                              </div>
-                            </td>
-                            <td>
-                              <div class="form-group">
                                 <select name="galleryVideoSource" ng-model="videoData.videoSource" class="form-control" id="galleryVideoSource" required>
                                       <option value="youtube">Youtube</option>
                                       <option value="vimeo">Vimeo</option>
                                 </select>
-                                <span class="label label-danger" ng-if="archiveForm.galleryVideoSource.$invalid && archiveForm.galleryVideoSource.$touched">Please Enter Valid Source *</span>
+
                               </div>
                             </td>
                             <td>
                               <div class="form-group">
                                 <input type="text" name="galleryVideoLink" ng-model="videoData.videoLink" placeholder="Enter Link" class="form-control" ng-required="true">
-                                <span class="label label-danger" ng-if="archiveForm.galleryVideoLink.$invalid && archiveForm.galleryVideoLink.$touched">Please Enter Valid Link *</span>
+
                               </div>
                             </td>
                             <td>

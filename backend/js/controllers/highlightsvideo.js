@@ -124,7 +124,7 @@ myApp.controller('DetailHighlightCtrl', function ($scope, TemplateService, Navig
   // SAVE
   $scope.saveData = function (data) {
     console.log(data, "formData iin save")
-    $scope.url = 'HighlightVideo/Save';
+    $scope.url = 'HighlightVideo/saveVideoHighlight';
     NavigationService.apiCall($scope.url, data, function (data) {
       console.log(data, 'save data after apicall');
       if (data.value) {

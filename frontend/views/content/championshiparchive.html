@@ -82,7 +82,7 @@
         <div class="championsarchive-videoarchiveholder" ng-repeat="video in archiveHighlightsData track by $index">
           <div class="videoarchive-playcard relate">
             <a class="fancybox.iframe" fancybox href="{{video.link | linkvideo:video.source}}">
-              <div class="videoarchive-card" style="background-image:url('{{video.thumbnail ? (video.thumbnail | serverimage2) :defaultThumbnail }}')">
+              <div class="videoarchive-card" style="background-image:url({{video.thumbnail}})">
 
               </div>
             </a>
@@ -266,8 +266,8 @@
             </div>
             <div class="archive-videocard" ng-if="gallery.mediaType=='video'">
               <a class="fancybox.iframe" fancybox href="{{gallery.videoLink | linkvideo:gallery.videoSource}}">
-                    <img ng-src="{{gallery.videoThumbnail | serverimage2}}" alt="video" class="img-responsive">
-                  </a>
+                    <img ng-src="{{gallery.thumbnail}}" alt="video" class="img-responsive">
+              </a>
             </div>
             <div class="archive-photovideocardplay" ng-if="gallery.mediaType=='video'">
               <i class="fa fa-play archive-photovideoplaye"></i>
