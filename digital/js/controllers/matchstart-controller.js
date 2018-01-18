@@ -587,59 +587,6 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
               }
             }
             break;
-          case "Football":
-            if ($scope.matchDetails.resultFootball == null || $scope.matchDetails.resultFootball == "" || $scope.matchDetails.resultFootball == undefined) {
-              $scope.matchDetails.resultFootball = {};
-              $scope.formData = {
-                "teams": [],
-                "matchPhoto": [],
-                "scoreSheet": [],
-                "status": "",
-                "winner": {},
-                "isNoMatch": false
-              }
-              _.each($scope.matchDetails.teams, function (n, key) {
-                $scope.formData.teams[key] = {
-                  "team": n._id,
-                  "noShow": false,
-                  "walkover": false,
-                  "players": [],
-                  "teamResults": {
-                    halfPoints: "",
-                    finalPoints: "",
-                    penalityPoints: "",
-                    shotsOnGoal: "",
-                    totalShots: "",
-                    corners: "",
-                    penality: "",
-                    saves: "",
-                    fouls: "",
-                    offSide: "",
-                    cleanSheet: ""
-                  }
-                }
-                _.each($scope.matchDetails.teams[key].studentTeam, function (m, mkey) {
-                  $scope.formData.teams[key].players[mkey] = {
-                    "player": m.studentId._id,
-                    "isPlaying": false,
-                    "jerseyNo": "",
-                    "playerPoints": {
-                      "goals": [],
-                      "assist": [],
-                      "redCard": [],
-                      "yellowCard": [],
-                      "penalityPoint": "",
-                      "in": [],
-                      "out": []
-                    }
-                  }
-                })
-              });
-            } else {
-              toastr.success('Wallah habibi');
-            }
-            console.log($scope.formData, 'football result');
-            break;
         }
         break;
       case "Individual Sports":
@@ -821,7 +768,7 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
   // SAVE RESULT END
   // SAVE TEAM RESULT
   $scope.saveTeamResult = function (formData) {
-    $scope.initialiseResults('redirect', team);
+    $scope.initialiseResults('redirect', 'team');
     console.log(bool, formData, 'svae data');
   }
   // SAVE TEAM RESULT END
