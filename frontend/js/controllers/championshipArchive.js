@@ -32,30 +32,34 @@ myApp.controller('championArchiveCtrl', function ($scope, TemplateService, $stat
     $scope.constraints.type = "";
 
     NavigationService.apiCallWithData($scope.url, $scope.constraints, function (data) {
+      if (data.data.results.length != 0) {
+        $scope.archiveData = data.data.results[0];
+        console.log("data should not appear", data);
+        if ($scope.archiveData.galleryVideo.length > 1) {
+          _.each($scope.archiveData.galleryVideo, function (key) {
+            // console.log(key, "data in each")
+            key.thumbnail = '../img/media-video-thumb.jpg';
+            if (key.videoSource === 'vimeo' && key.videoThumbnail.length > 0) {
+              key.thumbnail = key.videoThumbnail[3].link;
+            } else if (key.videoSource === 'youtube') {
+              key.videotype = key.videoSource;
+              key.medialink = key.videoLink;
+            }
+          });
+          NavigationService.getVideoThumbnail($scope.archiveData.galleryVideo);
+        } else {
+          // DO NOTHING
+        }
 
-      $scope.archiveData = data.data.results[0];
-      if ($scope.archiveData.galleryVideo.length > 1) {
-        _.each($scope.archiveData.galleryVideo, function (key) {
-          // console.log(key, "data in each")
-          key.thumbnail = '../img/media-video-thumb.jpg';
-          if (key.videoSource === 'vimeo' && key.videoThumbnail.length > 0) {
-            key.thumbnail = key.videoThumbnail[3].link;
-          } else if (key.videoSource === 'youtube') {
-            key.videotype = key.videoSource;
-            key.medialink = key.videoLink;
-          }
-        });
-        NavigationService.getVideoThumbnail($scope.archiveData.galleryVideo);
-      } else {
-        // DO NOTHING
+        $scope.archiveGallery = $scope.archiveData.galleryVideo.concat($scope.archiveData.galleryImage)
+        $scope.archiveGallery = _.shuffle($scope.archiveGallery);
+
+        console.log($scope.archiveGallery, "final gallery")
+        console.log("data from backend", $scope.archiveData);
+        $scope.setReadMore();
       }
 
-      $scope.archiveGallery = $scope.archiveData.galleryVideo.concat($scope.archiveData.galleryImage)
-      $scope.archiveGallery = _.shuffle($scope.archiveGallery);
 
-      console.log($scope.archiveGallery, "final gallery")
-      console.log("data from backend", $scope.archiveData);
-      $scope.setReadMore();
     });
   }
   $scope.archivePage();
