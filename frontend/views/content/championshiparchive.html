@@ -2,12 +2,12 @@
 <div class="championsarchive-page">
 
   <!-- BANNER HOLDER -->
-  <div class="championsarchive-bgbanner" style="background-image:url('{{archiveData.bannerImg | serverimage2}}')">
+  <div class="championsarchive-bgbanner" ng-if="archiveData.bannerImg" style="background-image:url('{{archiveData.bannerImg | serverimage2}}')">
     <!-- CONTENT HOLDER -->
     <div class="container">
       <div class="archivechampions-cardholder">
         <div class="archivecontent-card">
-          <div class="archive-venuholder">
+          <div class="archive-venuholder" ng-if="archiveData.header">
             <!-- SFA CITY IMAGE -->
             <div class="archive-venutitle">
               <img ng-src="{{archiveData.header.logo | serverimage2}}" alt="SFA LOGO" class="img-responsive">
@@ -24,7 +24,7 @@
             <!-- SCHEDULE END -->
           </div>
           <!-- SFA DATA -->
-          <div class="archive-remainingdataholder">
+          <div class="archive-remainingdataholder" ng-if="archiveData.counts.length>1">
             <div class="archive-datacardholder">
               <div class="archive-datacards" ng-repeat="data in archiveData.counts track by $index">
                 <p class="m-clear archive-datacardvalue">
@@ -47,7 +47,7 @@
   <!-- CONTAINER -->
   <div class="container">
     <!-- CHAMPIONS HEADER  && CONTENT-->
-    <section class="championsarchive-headersection">
+    <section class="championsarchive-headersection" ng-if="archiveData.mainContent">
       <!-- HEADER -->
       <!-- <pre>{{readvariable}}</pre> -->
       <div class="championsarchive-header">
@@ -68,7 +68,7 @@
     <!-- CHAMPIONS HEADER && CONTENT END -->
 
     <!-- CHAMPIONS HIGHLIGHTS VIDEO -->
-    <section class="championsarchive-highlightsholder">
+    <section class="championsarchive-highlightsholder" ng-if="archiveHighlightsData.length > 1">
       <!-- HEADER  -->
       <div class="championsarchive-highlightsheader">
         <h3 class="d-fjalla-one text-uppercase sport-blue-table">
@@ -247,7 +247,7 @@
     <!-- SPECIFIC SPORT END -->
 
     <!-- PHOTOS AND VIDEOS -->
-    <section class="championsarchive-photovideoholder">
+    <section class="championsarchive-photovideoholder" ng-if="archiveGallery.length > 1">
       <!-- HEADER -->
       <div class="championsarchive-photovideoheader">
         <h3 class="text-uppercase d-fjalla-one sport-blue-table">
