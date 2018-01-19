@@ -1,6 +1,6 @@
 myApp.controller('championArchiveCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $rootScope, $uibModal, $timeout, configService, sportMergeService) {
   $scope.template = TemplateService.getHTML("content/championshiparchive.html");
-  TemplateService.title = "Sponser Partner"; //This is the Title of the Website
+  TemplateService.title = "Championship Archive"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
   $scope.defaultThumbnail = 'img/media-video-thumb.jpg';
   $scope.data = [1, 2, 3]

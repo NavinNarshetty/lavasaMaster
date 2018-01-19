@@ -151,11 +151,6 @@ myApp.factory('NavigationService', function ($http) {
             sref: "",
             icon: "phone",
             subnav: [{
-                name: "Media",
-                classis: "activeColor",
-                sref: "#/media",
-                icon: "phone",
-            }, {
                 name: "Calender",
                 classis: "activeColor",
                 sref: "#/calender",
@@ -228,7 +223,16 @@ myApp.factory('NavigationService', function ($http) {
                     sref: "#/certificatedetails",
                     icon: "phone"
                 }]
-            }, {
+            }]
+
+
+        },
+        {
+            name: "Champions Archive",
+            classis: "activeColor",
+            sref: "",
+            icon: "phone",
+            subnav: [{
                 name: "Archive",
                 classis: "activeColor",
                 sref: "#/archive",
@@ -239,20 +243,30 @@ myApp.factory('NavigationService', function ($http) {
                 sref: "#/highlight-video",
                 icon: "phone"
             }]
-
-
         }, {
+            name: "Galleria",
+            classis: "activeColor",
+            sref: "",
+            icon: "phone",
+            subnav: [{
+                name: "Media",
+                classis: "activeColor",
+                sref: "#/media",
+                icon: "phone",
+            }, {
+                name: "Gallery",
+                classis: "activeColor",
+                sref: "#/gallery",
+                icon: "phone",
+            }]
+        },
+        {
             name: "ConfigProperty",
             classis: "activeColor",
             sref: "#/page/viewConfigProperty//",
             icon: "phone",
         },
-        {
-            name: "Gallery",
-            classis: "activeColor",
-            sref: "#/gallery",
-            icon: "phone",
-        },
+
 
         // {
         //     name: "Second Category",
