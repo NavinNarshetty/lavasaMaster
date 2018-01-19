@@ -448,6 +448,17 @@ var controller = {
         }
     },
 
+    updateExcelNew: function (req, res) {
+        if (req.body) {
+            Match.updateExcel(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Match Id not Found",
+                "value": false
+            })
+        }
+    },
+
     generateExcel: function (req, res) {
         async.waterfall([
                 function (callback) {

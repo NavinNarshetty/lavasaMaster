@@ -13,7 +13,7 @@ var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
     getPlayerTemplate: function (sportName, player) {
-        console.log(player, "-----------------------");
+        // console.log(player, "-----------------------");
         var format = {
             player: player.studentId._id,
             sfaId: player.studentId.sfaId,
@@ -88,7 +88,7 @@ var model = {
     },
 
     getTeamTemplate: function (sportName, team) {
-        console.log("getTeamTemplate", team);
+        // console.log("getTeamTemplate", team);
         var format = {
             teamId: team.teamId,
             team: team._id,
@@ -266,8 +266,8 @@ var model = {
 
     getMyResult: function (sportName, match, callback) {
         var template = ResultInitialize.getResultTemplate(sportName, match);
-        console.log("template", template);
-        callback(template);
+        // console.log("template", template);
+        callback(null, template);
     },
 
     getResultVar: function (sportName, sportType) {
@@ -452,7 +452,6 @@ var model = {
                 });
             },
             function (sport, callback) {
-                console.log("sport", sport);
                 var result = ResultInitialize.getResultVar(sport.sportName, sport.sportType);
                 ResultInitialize.getMyResult(sport.sportName, {}, function (err, complete) {
                     callback(null, complete);

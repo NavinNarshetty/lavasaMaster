@@ -1661,7 +1661,6 @@ var model = {
         async.waterfall([
                 function (callback) {
                     async.concatSeries(importData, function (singleData, callback) {
-                            // console.log("singleData", singleData);
                             async.waterfall([
                                     function (callback) {
                                         var date = Math.round((singleData.DATE - 25569) * 86400 * 1000);
@@ -7430,6 +7429,123 @@ var model = {
             });
     },
     //--------------------------------UPDATE RESULT EXCEL--------------------------------------------
+
+    updateExcel: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory";
+                    Match.find({
+                        sport: data.sport,
+                    }).lean().deepPopulate(deepSearch).exec(function (err, match) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(match)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, match);
+                            }
+                        }
+                    });
+                },
+                function (match, callback) {
+                    async.concatSeries(match, function (n, callback) {
+                            Match.getOne(n, function (err, matchData) {
+                                if (err) {
+                                    callback(err, null);
+                                } else {
+                                    if (_.isEmpty(matchData)) {
+                                        callback(null, []);
+                                    } else {
+                                        var final = {};
+                                        var result = ResultInitialize.getResultVar(matchData.sportsName, matchData.sportType);
+                                        if (matchData[result.resultVar]) {
+                                            callback(null, n);
+                                        } else {
+                                            final.resultName = result.resultVar;
+                                            ResultInitialize.getMyResult(matchData.sportsName, matchData, function (err, complete) {
+                                                matchData[result.resultVar] = complete[result.resultVar];
+                                                var placeholder = {};
+                                                placeholder[result.resultVar] = complete[result.resultVar];
+                                                var matchObj = {
+                                                    $set: placeholder
+                                                };
+                                                console.log("matchObj", n.matchId);
+                                                Match.update({
+                                                    matchId: n.matchId
+                                                }, matchObj).exec(
+                                                    function (err, match) {
+                                                        if (err) {
+                                                            callback(err, null);
+                                                        } else {
+                                                            if (_.isEmpty(match)) {
+                                                                callback(null, []);
+                                                            } else {
+                                                                callback(null, match);
+                                                            }
+                                                        }
+                                                    });
+                                            });
+                                        }
+                                    }
+                                }
+                            });
+                        },
+                        function (err, final) {
+                            callback(null, final)
+                        });
+                }
+            ],
+            function (err, excelData) {
+                callback(null, excelData);
+            });
+    },
+
+    excelScoringTeam: function (match, callback) {
+        async.concatSeries(match, function (mainData, callback) {
+                var obj = {};
+                obj["MATCH ID"] = mainData.matchId;
+                obj["ROUND NAME"] = mainData.round;
+                obj.SPORT = mainData.sport.sportslist.sportsListSubCategory.name;
+                if (mainData.sport.gender == "male") {
+                    obj.GENDER = "Male";
+                } else if (mainData.sport.gender == "female") {
+                    obj.GENDER = "Female";
+                } else {
+                    obj.GENDER = "Male & Female"
+                }
+                obj["AGE GROUP"] = mainData.sport.ageGroup.name;
+                obj.EVENT = mainData.sport.sportslist.name;
+                if (mainData.sport.weight) {
+                    obj["WEIGHT CATEGORIES"] = mainData.sport.weight.name;
+                } else {
+                    obj["WEIGHT CATEGORIES"] = "";
+                }
+                if (mainData.opponentsTeam.length > 0) {
+                    obj["TEAM ID 1"] = mainData.opponentsTeam[0].teamId;
+                    obj["SCHOOL 1"] = mainData.opponentsTeam[0].schoolName;
+                } else {
+                    obj["TEAM ID 1"] = "";
+                    obj["SCHOOL 1"] = "";
+                }
+
+                if (mainData.opponentsTeam.length > 1) {
+                    obj["TEAM ID 2"] = mainData.opponentsTeam[1].teamId;
+                    obj["SCHOOL 2"] = mainData.opponentsTeam[1].schoolName;
+                } else {
+                    obj["TEAM ID 2"] = "";
+                    obj["SCHOOL 2"] = "";
+
+                }
+                callback(null, obj);
+
+            },
+            function (err, singleData) {
+                // Config.generateExcel("KnockoutIndividual", singleData, res);
+                callback(null, singleData);
+            });
+
+    },
 
 
     //--------------------------------  UPDATE SCORE RESULT  ------------------------------------------
@@ -13661,168 +13777,6 @@ var model = {
                     }
                 }
             });
-    },
-
-    getResultVar: function (sportName, sportType) {
-        if (sportName == "Shooting Air Pistol Team" || sportName == "Shooting Air Rifle Open Team" || sportName == "Shooting Air Rifle Peep Team") {
-            return null;
-        } else {
-            if (sportType == "Racquet Sports") {
-                var arr = _.split(sportName, " ");
-                var foundDoubles = _.indexOf(arr, 'Doubles');
-                if (foundDoubles == -1) {
-                    return {
-                        resultVar: "resultsRacquet",
-                        opponentsVar: "opponentsSingle"
-                    };
-                } else {
-                    return {
-                        resultVar: "resultsRacquet",
-                        opponentsVar: "opponentsTeam"
-                    };
-                }
-            } else if (sportType == "Combat Sports") {
-                switch (sportName) {
-                    case "Karate Team Kumite":
-                        return {
-                            resultVar: "resultsCombat",
-                            opponentsVar: "opponentsTeam"
-                        };
-                    case "Fencing":
-                        return {
-                            resultVar: "resultFencing",
-                            opponentsVar: "opponentsSingle"
-                        };
-                    default:
-                        return {
-                            resultVar: "resultsCombat",
-                            opponentsVar: "opponentsSingle"
-                        };
-                }
-
-            } else if (sportType == "Individual Sports") {
-                switch (sportName) {
-                    case "Chess":
-                        return {
-                            resultVar: "resultSwiss",
-                            opponentsVar: "opponentsSingle"
-                        };
-
-                    case "Athletics":
-                        return {
-                            resultVar: "resultHeat",
-                            opponentsVar: "opponentsSingle"
-                        };
-                    case "Athletics 4x100m Relay":
-                    case "Athletics 4x50m Relay":
-                    case "Athletics Medley Relay":
-                        return {
-                            resultVar: "resultHeat",
-                            opponentsVar: "opponentsTeam"
-                        };
-
-                    case "Carrom":
-                        return {
-                            resultVar: "resultCombat",
-                            opponentsVar: "opponentsSingle"
-                        };
-                }
-            } else if (sportType == "Target Sports") {
-                switch (sportName) {
-                    case "Shooting":
-                        return {
-                            resultVar: "resultShooting",
-                            opponentsVar: "opponentsSingle"
-                        };
-                    case "Archery":
-                        return {
-                            resultVar1: "resultQualifyingRound",
-                            resultVar2: "resultKnockout",
-                            opponentsVar: "opponentsSingle"
-                        };
-
-                }
-            } else if (sportType == "Aquatics Sports") {
-                switch (sportName) {
-                    case "Swimming":
-                        return {
-                            resultVar: "resultHeat",
-                            opponentsVar: "opponentsSingle"
-                        };
-                    case "Water Polo":
-                        return {
-                            resultVar: "resultWaterPolo",
-                            opponentsVar: "opponentsTeam"
-                        };
-                    case "Swimming 4x50m Freestyle Relay":
-                    case "Swimming 4x50m Medley Relay":
-                        return {
-                            resultVar: "resultHeat",
-                            opponentsVar: "opponentsTeam"
-                        };
-                }
-            } else {
-                switch (sportName) {
-                    case "Basketball":
-                        return {
-                            resultVar: "resultBasketball",
-                            opponentsVar: "opponentsTeam"
-                        };
-                    case "Throwball":
-                        return {
-                            resultVar: "resultThrowball",
-                            opponentsVar: "opponentsTeam"
-                        };
-
-                    case "Football":
-                        return {
-                            resultVar: "resultFootball",
-                            opponentsVar: "opponentsTeam"
-                        };
-
-                    case "Hockey":
-                        return {
-                            resultVar: "resultHockey",
-                            opponentsVar: "opponentsTeam"
-                        };
-
-                    case "Kabaddi":
-                        return {
-                            resultVar: "resultKabaddi",
-                            opponentsVar: "opponentsTeam"
-                        };
-
-                    case "Volleyball":
-                        return {
-                            resultVar: "resultVolleyball",
-                            opponentsVar: "opponentsTeam"
-                        };
-
-                    case "Handball":
-                        return {
-                            resultVar: "resultHandball",
-                            opponentsVar: "opponentsTeam"
-                        };
-
-                    case "Water Polo":
-                        return {
-                            resultVar: "resultWaterPolo",
-                            opponentsVar: "opponentsTeam"
-                        };
-                    case "Throwball":
-                        return {
-                            resultVar: "resultsCombat",
-                            opponentsVar: "opponentsTeam"
-                        };
-                    case "Kho Kho":
-                        return {
-                            resultVar: "resultsCombat",
-                            opponentsVar: "opponentsTeam"
-                        };
-                }
-            }
-        }
-
     },
 
     //--------------------VIDEO EXCEL---------------------------------------------------------

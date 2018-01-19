@@ -163,7 +163,6 @@ var model = {
             count: maxRow
         };
         var Search = Model.find(matchObj)
-
             .order(options)
             // .deepPopulate(deepSearch)
             .keyword(options)
