@@ -30,17 +30,23 @@ myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, toast
   // FUNCTIONS
   // SELECT PHOTO FOLDER
   $scope.viewFolder = function () {
-    $state.go('featuredgallery', {
-      type: $stateParams.type,
-      name: $scope.defaultFolder
-    });
-
+    if ($stateParams.mediaType == 'video') {
+      $state.go('featuredvideogallery', {
+        type: $stateParams.type,
+        name: $scope.defaultFolder
+      });
+    } else if ($stateParams.mediaType == 'photo') {
+      $state.go('featuredgallery', {
+        type: $stateParams.type,
+        name: $scope.defaultFolder
+      });
+    }
     if ($scope.showFolderFilter == false) {
       $scope.showFolderFilter = true;
     } else {
       $scope.showFolderFilter = false;
     }
-  }
+  };
 
   $scope.selectFolder = function (folder) {
     if ($scope.selectFolder == 'all') {
@@ -50,10 +56,12 @@ myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, toast
     }
     $scope.defaultFolder = folder._id;
     $scope.viewFolder();
-  }
+  };
   // END PHOTO FOLDER END
   // SHOW VIDEO FOLDER
-  $scope.viewVideoFolder = function(){
+  console.log(" $scope.mediaType", $scope.mediaType);
+  console.log("$scope.defaultFolder", $scope.defaultFolder);
+  $scope.viewVideoFolder = function () {
     $state.go('featuredvideogallery', {
       mediaType: $scope.mediaType,
       name: $scope.defaultFolder
@@ -193,5 +201,23 @@ myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, toast
     });
   }
   // API CALLS END
+
+
+  //get all videos
+  NavigationService.getAllVideos(function (data) {
+    errorService.errorCode(data, function (allData) {
+      if (!allData.message) {
+        if (allData.value === true) {
+          $scope.allfolderName = allData.data;
+          console.log("$scope.allfolderName", $scope.allfolderName);
+        } else {
+          console.log("im in else");
+        }
+      } else {
+
+        toastr.error(allData.message, 'Error Message');
+      }
+    });
+  });
 
 });
