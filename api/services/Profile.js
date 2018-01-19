@@ -2596,7 +2596,7 @@ var model = {
                                                                                         stats.school = found.teamId.schoolName;
                                                                                         stats.teamId = found.teamId.teamId;
                                                                                         stats.isAthleteWinner = false;
-                                                                                        stats.score = singleData.resultHockey.teams[0].teamResults.finalPoints + "-" + singleData.resultHockey.teams[0].teamResults.finalPoints;
+                                                                                        stats.score = singleData.resultHockey.teams[0].teamResults.finalPoints + "-" + singleData.resultHockey.teams[1].teamResults.finalPoints;
                                                                                         callback();
                                                                                     }
                                                                                 });
@@ -2640,12 +2640,12 @@ var model = {
                                                                 function (err) {
                                                                     callback(null, match);
                                                                 });
-                                                        } else if (singleData.resultHandball.status == "IsCompleted" && singleData.resultHandball.isNoMatch == true) {
-                                                            stats.status = singleData.resultHandball.status;
+                                                        } else if (singleData.resultHockey.status == "IsCompleted" && singleData.resultHockey.isNoMatch == true) {
+                                                            stats.status = singleData.resultHockey.status;
                                                             match.push(stats);
                                                             callback(null, match);
                                                         } else {
-                                                            stats.status = singleData.resultHandball.status;
+                                                            stats.status = singleData.resultHockey.status;
                                                             stats.reason = "";
                                                             match.push(stats);
                                                             callback(null, match);
@@ -2698,7 +2698,7 @@ var model = {
                                                                                         stats.school = found.teamId.schoolName;
                                                                                         stats.teamId = found.teamId.teamId;
                                                                                         stats.isAthleteWinner = false;
-                                                                                        stats.score = singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoints + "-" + singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoints;
+                                                                                        stats.score = singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoints + "-" + singleData.resultWaterPolo.teams[1].teamResults.finalGoalPoints;
                                                                                         callback();
                                                                                     }
                                                                                 });
@@ -2709,7 +2709,7 @@ var model = {
                                                                                 } else {
                                                                                     stats.walkover = singleData.resultWaterPolo.teams[1].walkover;
                                                                                 }
-                                                                                stats.score = singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoints + "-" + singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoints;
+                                                                                stats.score = singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoints + "-" + singleData.resultWaterPolo.teams[1].teamResults.finalGoalPoints;
                                                                                 stats.status = singleData.resultWaterPolo.status;
                                                                                 stats.draw = singleData.resultWaterPolo.isDraw;
                                                                                 callback();
@@ -2802,7 +2802,7 @@ var model = {
                                                                                         stats.school = found.teamId.schoolName;
                                                                                         stats.teamId = found.teamId.teamId;
                                                                                         stats.isAthleteWinner = false;
-                                                                                        stats.score = singleData.resultKabaddi.teams[0].teamResults.finalPoints + "-" + singleData.resultKabaddi.teams[0].teamResults.finalPoints;
+                                                                                        stats.score = singleData.resultKabaddi.teams[0].teamResults.finalPoints + "-" + singleData.resultKabaddi.teams[1].teamResults.finalPoints;
                                                                                         callback();
                                                                                     }
                                                                                 });
@@ -2813,7 +2813,7 @@ var model = {
                                                                                 } else {
                                                                                     stats.walkover = singleData.resultKabaddi.teams[1].walkover;
                                                                                 }
-                                                                                stats.score = singleData.resultKabaddi.teams[0].teamResults.finalPoints + "-" + singleData.resultKabaddi.teams[0].teamResults.finalPoints;
+                                                                                stats.score = singleData.resultKabaddi.teams[0].teamResults.finalPoints + "-" + singleData.resultKabaddi.teams[1].teamResults.finalPoints;
                                                                                 stats.status = singleData.resultKabaddi.status;
                                                                                 stats.draw = singleData.resultKabaddi.isDraw;
                                                                                 callback();
@@ -2902,7 +2902,7 @@ var model = {
                                                                                         stats.school = found.teamId.schoolName;
                                                                                         stats.teamId = found.teamId.teamId;
                                                                                         stats.isAthleteWinner = false;
-                                                                                        stats.score = singleData.resultHandball.teams[0].teamResults.finalPoints + "-" + singleData.resultHandball.teams[0].teamResults.finalPoints;
+                                                                                        stats.score = singleData.resultHandball.teams[0].teamResults.finalPoints + "-" + singleData.resultHandball.teams[1].teamResults.finalPoints;
                                                                                         callback();
                                                                                     }
                                                                                 });
@@ -3762,7 +3762,7 @@ var model = {
                                                             stats.reason = "";
                                                         }
                                                     }
-                                                    stats.score = singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoints + "-" + singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoints;;
+                                                    stats.score = singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoints + "-" + singleData.resultWaterPolo.teams[1].teamResults.finalGoalPoints;;
                                                     if (singleData.resultWaterPolo.winner.player === n.toString()) {
                                                         stats.isAthleteWinner = false;
                                                     } else {
@@ -3837,7 +3837,7 @@ var model = {
                                                             stats.reason = "";
                                                         }
                                                     }
-                                                    stats.score = singleData.resultKabaddi.teams[0].teamResults.finalPoints + "-" + singleData.resultKabaddi.teams[0].teamResults.finalPoints;
+                                                    stats.score = singleData.resultKabaddi.teams[0].teamResults.finalPoints + "-" + singleData.resultKabaddi.teams[1].teamResults.finalPoints;
                                                     if (singleData.resultKabaddi.winner.player === n.toString()) {
                                                         stats.isAthleteWinner = false;
                                                     } else {
@@ -3912,7 +3912,7 @@ var model = {
                                                             stats.reason = "";
                                                         }
                                                     }
-                                                    stats.score = singleData.resultHandball.teams[0].teamResults.finalPoints + "-" + singleData.resultHandball.teams[0].teamResults.finalPoints;;
+                                                    stats.score = singleData.resultHandball.teams[0].teamResults.finalPoints + "-" + singleData.resultHandball.teams[1].teamResults.finalPoints;;
                                                     if (singleData.resultHandball.winner.player === n) {
                                                         stats.isAthleteWinner = false;
                                                     } else {
