@@ -75,6 +75,7 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
                   knockoutService.sortLeagueKnockoutResult(key);
                 });
               }
+              console.log("$scope.knockout", $scope.knockout);
               if (allData.data.qualifying) {
                 $scope.matches = allData.data.qualifying.roundsList;
                 if ($scope.matches.length > 0) {

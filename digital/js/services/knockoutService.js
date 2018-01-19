@@ -148,6 +148,9 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
         } else {
           player.isWinner = false;
         }
+        if (result.globalResultIndividual.winner.reason) {
+          result.reason = result.globalResultIndividual.winner.reason;
+        }
         result.isNoMatch = result.globalResultIndividual.isNoMatch;
         result.isDraw = result.globalResultIndividual.isDraw;
         result.status = result.globalResultIndividual.status;
@@ -211,7 +214,7 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
       if (result.resultFencing) {
         result.globalResultIndividual = result.resultFencing;
       } else {
-        console.log("New Individual Sport found in League-cum-knockout");
+        // console.log("New Individual Sport found in League-cum-knockout");
       }
       this.resutLeagueCumKnockoutIndividual(result);
 
