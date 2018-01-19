@@ -234,8 +234,8 @@
       <!-- IMAGES -->
       <div class="championsarchive-sportspecificimageholder">
         <ul class="list-unstyled">
-          <li class="archive-sportspecificcardholder" ng-repeat="sport in archiveSportsData track by $index">
-            <div class="archive-sportspecificcard">
+          <li class="archive-sportspecificcardholder pointer" ng-repeat="sport in archiveSportsData track by $index">
+            <div class="archive-sportspecificcard" ng-click="gotoResult(sport.name)">
               <img ng-src="{{sport.name| sporticon:'icon'}}" alt="Sports" class="img-responsive">
             </div>
             <p class="text-center text-capitalize">{{sport.name | firstcapitalize }}</p>

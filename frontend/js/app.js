@@ -117,7 +117,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
 
         .state('results', {
-            url: "/results",
+            url: "/results/:name",
             templateUrl: tempateURL,
             controller: 'ResultsCtrl'
         })

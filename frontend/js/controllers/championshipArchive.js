@@ -149,4 +149,13 @@ myApp.controller('championArchiveCtrl', function ($scope, TemplateService, $stat
   }
   // READ MORE END
 
+  // SPORT ICON CLICK
+  $scope.gotoResult = function (data) {
+    console.log(data)
+    $state.go("results", {
+      name: data
+    })
+  }
+  // SPORT ICON CLICK
+
 });

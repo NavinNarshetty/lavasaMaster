@@ -1,4 +1,4 @@
-myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $rootScope, $uibModal, $timeout, knockoutService, configService) {
+myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $rootScope, $uibModal, $timeout, knockoutService, configService, $stateParams) {
   $scope.template = TemplateService.getHTML("content/results.html");
   TemplateService.title = "Results"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
@@ -165,15 +165,24 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
   $scope.showEventFilter = false;
   $scope.defaultEvent = "sfa mumbai 2015-16";
   $scope.showAllMedalWinner = false;
-  $scope.sportFilter = {
-    name: "Archery"
-  };
-  $scope.sportName = "Archery";
+  if ($stateParams.name) {
+    $scope.sportFilter = {
+      name: $stateParams.name
+    };
+    $scope.sportName = "$stateParams.name";
+
+  } else {
+    $scope.sportFilter = {
+      name: "Archery"
+    };
+    $scope.sportName = "Archery";
+  }
+
   // MEDAL FILTER OPTIONS
   $scope.medalFilter = {
     name: $scope.sportFilter.name,
   }
-  $scope.filter={
+  $scope.filter = {
     year: "2017"
   }
   // MEDAL FILTER OPTIONS END
@@ -184,9 +193,9 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
     // console.log($scope.sportFilter, 'filter');
   };
   // SELECT YEAR FILTER
-  $scope.loadResult = function(year){
+  $scope.loadResult = function (year) {
     if (year == '2015' || year == '2016') {
-        window.open("https://mumbai.sfanow.in/school-ranking", '_self');
+      window.open("https://mumbai.sfanow.in/school-ranking", '_self');
     }
   }
   // SELECT YEAR FILTER END
@@ -279,7 +288,7 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
   // SPORT RANKING TABLE END
   // VIEW MORE / LESS FUNCTIONS END
   // CLEAR FILTER
-  $scope.clearMedalFilter = function(){
+  $scope.clearMedalFilter = function () {
     $scope.medalFilter = {
       name: $scope.sportFilter.name
     }
@@ -288,8 +297,8 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
   }
   // CLEAR FILTER END
   // TEAM PROFILE REDIRECT
-  $scope.medalSchoolRedirect = function(player){
-    if(player.schoolId){
+  $scope.medalSchoolRedirect = function (player) {
+    if (player.schoolId) {
       $state.go('team-detail', {
         id: player.team
       })
@@ -301,14 +310,14 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
   // FUNCTIONS END
 
   // APIS
-  $scope.getSchoolByRanks = function(){
+  $scope.getSchoolByRanks = function () {
     NavigationService.getSchoolByRanks(function (data) {
       // console.log('rankingTable', data);
       if (data.value == true) {
         $scope.rankTable = data.data;
         $scope.rankTable.tableLimit = 20;
         $scope.rankTable.showTable = true;
-        _.each($scope.rankTable, function (n,nkey) {
+        _.each($scope.rankTable, function (n, nkey) {
           n.rowDetail = false;
           n.goldCount = 0;
           n.silverCount = 0;
@@ -324,7 +333,7 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
               n.bronzeCount = n.medal.bronze.count;
             }
           }
-          if(!n.totalPoints){
+          if (!n.totalPoints) {
             n.totalPoints = 0;
           }
         });
@@ -337,8 +346,8 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
 
   // GET RANKING TABLE END
   // GET MEDAL FILTER
-  $scope.getMedalFilter = function(){
-    NavigationService.getAgeGroupsAndEvents($scope.sportFilter, function(data){
+  $scope.getMedalFilter = function () {
+    NavigationService.getAgeGroupsAndEvents($scope.sportFilter, function (data) {
       // console.log('getAgeGroupsAndEvents',data);
       if (data.value = true) {
         var data = data.data;
@@ -348,26 +357,26 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
           gender: data.gender
         }
         // console.log('medalFilterList',$scope.medalFilterList);
-      } else{
+      } else {
         // console.log("getAgeGroupsAndEvents Failed", data);
       }
     });
   }
   // GET MEDAL FILTER END
   // GET MEDAL WINNER
-  $scope.getMedalWinners = function(){
+  $scope.getMedalWinners = function () {
     $scope.medalFilter.name = $scope.sportFilter.name;
-    NavigationService.getMedalWinners($scope.medalFilter, function(data){
+    NavigationService.getMedalWinners($scope.medalFilter, function (data) {
       // console.log('getMedalWinners',data);
       if (data.value == true) {
         $scope.medalWinners = data.data;
-        _.each($scope.medalWinners, function(n){
+        _.each($scope.medalWinners, function (n) {
           if (n.male) {
-            _.each(n.male, function(m){
-              _.each(m.medals, function(o){
+            _.each(n.male, function (m) {
+              _.each(m.medals, function (o) {
                 if (o.medal === 'gold') {
                   o.medalOrder = 1;
-                } else if(o.medal === 'silver'){
+                } else if (o.medal === 'silver') {
                   o.medalOrder = 2;
                 } else if (o.medal === 'bronze') {
                   o.medalOrder = 3;
@@ -376,11 +385,11 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
             })
           }
           if (n.female) {
-            _.each(n.female, function(m){
-              _.each(m.medals, function(o){
+            _.each(n.female, function (m) {
+              _.each(m.medals, function (o) {
                 if (o.medal === 'gold') {
                   o.medalOrder = 1;
-                } else if(o.medal === 'silver'){
+                } else if (o.medal === 'silver') {
                   o.medalOrder = 2;
                 } else if (o.medal === 'bronze') {
                   o.medalOrder = 3;
@@ -391,7 +400,7 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
         })
         if (_.isEmpty($scope.medalWinners)) {
           $scope.showMedalList = false;
-        } else{
+        } else {
           $scope.showMedalList = true;
         }
         // console.log('$scope.medalWinners',$scope.medalWinners);
@@ -547,4 +556,13 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
   // JSONS END
 
   //
+
+  console.log($stateParams, "check state params")
+  if ($stateParams.name) {
+    $timeout(function () {
+      console.log("in timeout")
+      $scope.scrollID = 'result-sportwise';
+      TemplateService.scrollTo($scope.scrollID, 'class');
+    }, 1000);
+  }
 })
