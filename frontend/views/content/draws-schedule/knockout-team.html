@@ -65,9 +65,9 @@
             </h3>
           <div class="knockout-cardholder" ng-repeat="card in roundsList[0].match track by $index">
             <div class="knockout-card"  ng-if="card.opponentsTeam.length>0" ng-repeat="player  in card.opponentsTeam track by $index" ng-class="{'knockout-winnercard':player.isWinner===true}">
-              <div class="knockout-cardimage display-inline ver-mid" >
+              <!-- <div class="knockout-cardimage display-inline ver-mid" >
                 <img ng-src="{{player.school.schoolLogo|serverimage2:50:50:'cover'}}" alt="{{player.schoolName}}" class="img-responsive">
-              </div>
+              </div> -->
 
               <div class="display-inline knockout-cardplayername ver-mid">
                 <p class="m-clear knockout-winner-name d-opensans-regular" title="{{player.teamId}}">{{player.teamId}}</p>
@@ -111,8 +111,7 @@
                 <p class="m-clear pointer" ng-if="card.reason!=='Bye' && !card.isNoMatch && (card.sport.sportslist.name == 'Kho Kho' || card.sport.sportslist.name == 'Throwball')">
                   <span><span class="combatscoreresult" ng-repeat="score in card.resultsCombat.teams track by $index">{{score.sets[0].point}} </span></span>
                 </p>
-                <p class="m-clear pointer" ng-if="card.reason!=='Bye' && !card.isNoMatch && card.sport.sportslist.name != 'Kho Kho' && card.sport.sportslist.name != 'Throwball'"
-                  ng-click="matchCenter(card)">
+                <p class="m-clear pointer" ng-if="card.reason!=='Bye' && !card.isNoMatch && card.sport.sportslist.name != 'Kho Kho'" ng-click="matchCenter(card)">
                   <span class="custom-knockout-color">Match Center</span>
                 </p>
               </div>
@@ -131,9 +130,9 @@
           <div class=" knockout-cardholder">
             <div class="knockout-card " ng-if="card.opponentsTeam.length>0" ng-repeat="player in card.opponentsTeam track by $index "
               ng-class="{'knockout-winnercard':player.isWinner===true}">
-              <div class="knockout-cardimage display-inline ver-mid " >
+              <!-- <div class="knockout-cardimage display-inline ver-mid ">
                 <img ng-src="{{player.school.schoolLogo|serverimage2:50:50:'cover'}}" alt="{{player.schoolName}}" class="img-responsive ">
-              </div>
+              </div> -->
               <div class="display-inline knockout-cardplayername ver-mid ">
                 <p class="m-clear knockout-winner-name " title="{{player.teamId}}">{{player.teamId}}</p>
                 <p class="m-clear knockout-winner-school" title="{{player.schoolName}}">{{player.schoolName | truncate:'25'}}</p>
@@ -174,8 +173,7 @@
                   <p class="m-clear pointer" ng-if="card.reason!=='Bye' && !card.isNoMatch && (card.sport.sportslist.name == 'Kho Kho' || card.sport.sportslist.name == 'Throwball')">
                     <span><span class="combatscoreresult" ng-repeat="score in card.resultsCombat.teams track by $index">{{score.sets[0].point}} </span></span>
                   </p>
-                  <p class="m-clear pointer" ng-if="card.reason!=='Bye' && !card.isNoMatch && card.sport.sportslist.name != 'Kho Kho' && card.sport.sportslist.name != 'Throwball'"
-                    ng-click="matchCenter(card)">
+                  <p class="m-clear pointer" ng-if="card.reason!=='Bye' && !card.isNoMatch && card.sport.sportslist.name != 'Kho Kho'" ng-click="matchCenter(card)">
                     <span class="custom-knockout-color">Match Center</span>
                   </p>
                 </div>
@@ -195,9 +193,9 @@
           <div class=" knockout-cardholder">
             <div class="knockout-card " ng-class="{'knockout-winnercard':player.isWinner===true}" ng-repeat="player in card.opponentsTeam track by $index"
               ng-if="card.opponentsTeam.length>0">
-              <div class="knockout-cardimage display-inline ver-mid " >
+              <!-- <div class="knockout-cardimage display-inline ver-mid ">
                 <img ng-src="{{player.school.schoolLogo|serverimage2:50:50:'cover'}}" alt="{{player.schoolName}}" class="img-responsive ">
-              </div>
+              </div> -->
               <div class="display-inline knockout-cardplayername ver-mid ">
                 <p class="m-clear knockout-winner-name " title="{{player.teamId}}">{{player.teamId | truncate:'25'}}</p>
                 <p class="m-clear knockout-winner-school" title="{{player.schoolName}}">{{player.schoolName | truncate:'25'}}</p>
@@ -239,8 +237,7 @@
                   <p class="m-clear pointer" ng-if="card.reason!=='Bye' && !card.isNoMatch && (card.sport.sportslist.name == 'Kho Kho' || card.sport.sportslist.name == 'Throwball')">
                     <span><span class="combatscoreresult" ng-repeat="score in card.resultsCombat.teams track by $index">{{score.sets[0].point}} </span></span>
                   </p>
-                  <p class="m-clear pointer" ng-if="card.reason!=='Bye' && !card.isNoMatch && card.sport.sportslist.name != 'Kho Kho' && card.sport.sportslist.name != 'Throwball'"
-                    ng-click="matchCenter(card)">
+                  <p class="m-clear pointer" ng-if="card.reason!=='Bye' && !card.isNoMatch && card.sport.sportslist.name != 'Kho Kho'" ng-click="matchCenter(card)">
                     <span class="custom-knockout-color">Match Center</span>
                   </p>
                 </div>
@@ -256,9 +253,9 @@
     <div class="col-md-3 col-sm-4 col-xs-12 hidden-xs hidden-sm" ng-if="winnersCard.length>0">
       <div class="knockout-winnercardholder" ng-repeat="winner in winnersCard | orderBy:'rank' track by $index">
         <div class="display-inline knockout-winnercardname">
-          <div class="knockout-winnercardimgage display-inline">
+          <!-- <div class="knockout-winnercardimgage display-inline">
             <img ng-src="{{winner.profile | serverimage2:50:50:'cover'}}" alt="image" class="img-responsive">
-          </div>
+          </div> -->
           <div class="knockout-winnercardplayername display-inline">
             <p class="m-clear d-opensans-regular winner-knockout-player ">{{winner.teamId}}</p>
             <p class="m-clear d-opensans-regular winner-knockout-school ">{{winner.school | truncate:25}}</p>

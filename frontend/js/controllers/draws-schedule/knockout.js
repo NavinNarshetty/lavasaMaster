@@ -12,31 +12,31 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
     // MODAL END
     // SWIPER
     $scope.initSwiper = function () {
-            $timeout(function () {
-                mySwiper = new Swiper('.swiper-container', {
-                    paginationClickable: true,
-                    nextButton: '.swiper-button-next',
-                    prevButton: '.swiper-button-prev',
-                    slidesPerView: 3,
-                    spaceBetween: 5,
-                    grabCursor: true,
-                    breakpoints: {
-                        992: {
-                            slidesPerView: 3
-                        },
-                        768: {
-                            slidesPerView: 2
+        $timeout(function () {
+            mySwiper = new Swiper('.swiper-container', {
+                paginationClickable: true,
+                nextButton: '.swiper-button-next',
+                prevButton: '.swiper-button-prev',
+                slidesPerView: 3,
+                spaceBetween: 5,
+                grabCursor: true,
+                breakpoints: {
+                    992: {
+                        slidesPerView: 3
+                    },
+                    768: {
+                        slidesPerView: 2
 
-                        },
-                        481: {
-                            slidesPerView: 1
-                        },
-                        320: {
-                            slidesPerView: 1
-                        }
+                    },
+                    481: {
+                        slidesPerView: 1
+                    },
+                    320: {
+                        slidesPerView: 1
                     }
-                });
-            }, 600);
+                }
+            });
+        }, 600);
     };
     $scope.initSwiper();
     // $scope.$on('$viewContentLoaded', function (event) {
@@ -138,14 +138,14 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
 
     // MATCH CENTER
     $scope.matchCenter = function (card) {
-      $scope.playerArr = [];
-      _.each(card.opponentsSingle, function(n, nkey){
-        console.log(n.athleteId._id, card.resultsRacquet.players);
-        $scope.playerArr[nkey] = _.find(card.resultsRacquet.players, ['player', _.toString(n.athleteId._id)]);
-      })
-      console.log("palyerarr",$scope.playerArr);
-      console.log("card.pla",card.resultsRacquet.players);
-      card.resultsRacquet.players = $scope.playerArr;
+        $scope.playerArr = [];
+        _.each(card.opponentsSingle, function (n, nkey) {
+            console.log(n.athleteId._id, card.resultsRacquet.players);
+            $scope.playerArr[nkey] = _.find(card.resultsRacquet.players, ['player', _.toString(n.athleteId._id)]);
+        })
+        console.log("palyerarr", $scope.playerArr);
+        console.log("card.pla", card.resultsRacquet.players);
+        card.resultsRacquet.players = $scope.playerArr;
         $scope.currentMatch = card;
         $scope.currentMatch.sportName = $scope.currentMatch.sport.sportslist.sportsListSubCategory.name;
         modal = $uibModal.open({
@@ -172,31 +172,31 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
     $scope.oneAtATime = true;
     // SWIPER
     $scope.initSwiper = function () {
-      $timeout(function () {
-          mySwiper = new Swiper('.swiper-container', {
-              paginationClickable: true,
-              nextButton: '.swiper-button-next',
-              prevButton: '.swiper-button-prev',
-              slidesPerView: 3,
-              spaceBetween: 5,
-              grabCursor: true,
-              breakpoints: {
-                  992: {
-                      slidesPerView: 3
-                  },
-                  768: {
-                      slidesPerView: 2
+        $timeout(function () {
+            mySwiper = new Swiper('.swiper-container', {
+                paginationClickable: true,
+                nextButton: '.swiper-button-next',
+                prevButton: '.swiper-button-prev',
+                slidesPerView: 3,
+                spaceBetween: 5,
+                grabCursor: true,
+                breakpoints: {
+                    992: {
+                        slidesPerView: 3
+                    },
+                    768: {
+                        slidesPerView: 2
 
-                  },
-                  481: {
-                      slidesPerView: 1
-                  },
-                  320: {
-                      slidesPerView: 1
-                  }
-              }
-          });
-      }, 600);
+                    },
+                    481: {
+                        slidesPerView: 1
+                    },
+                    320: {
+                        slidesPerView: 1
+                    }
+                }
+            });
+        }, 600);
     }
     // $scope.$on('$viewContentLoaded', function () {
     //   $scope.initSwiper();
@@ -483,31 +483,31 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
     $scope.oneAtATime = true;
     // SWIPER
     $scope.initSwiper = function () {
-      $timeout(function () {
-          mySwiper1 = new Swiper('.swiper-container', {
-            slidesPerView: 3,
-              paginationClickable: true,
-              nextButton: '.swiper-button-next',
-              prevButton: '.swiper-button-prev',
-              spaceBetween: 5,
-              grabCursor: true,
-              breakpoints: {
-                  992: {
-                      slidesPerView: 3
-                  },
-                  768: {
-                      slidesPerView: 2
+        $timeout(function () {
+            mySwiper1 = new Swiper('.swiper-container', {
+                slidesPerView: 3,
+                paginationClickable: true,
+                nextButton: '.swiper-button-next',
+                prevButton: '.swiper-button-prev',
+                spaceBetween: 5,
+                grabCursor: true,
+                breakpoints: {
+                    992: {
+                        slidesPerView: 3
+                    },
+                    768: {
+                        slidesPerView: 2
 
-                  },
-                  481: {
-                      slidesPerView: 1
-                  },
-                  320: {
-                      slidesPerView: 1
-                  }
-              }
-          });
-      }, 600);
+                    },
+                    481: {
+                        slidesPerView: 1
+                    },
+                    320: {
+                        slidesPerView: 1
+                    }
+                }
+            });
+        }, 600);
     }
     $scope.initSwiper();
     // $scope.$on('$viewContentLoaded', function (event) {
@@ -697,8 +697,12 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
                                     } else if (value && value.resultsCombat && value.resultsCombat.teams) {
                                         value.finalResult = value.resultsCombat;
                                         knockoutService.sortResult($scope.roundsList);
+                                    } else if (value && value.resultThrowball && value.resultThrowball.teams) {
+
+                                        value.finalResult = value.resultThrowball;
+                                        knockoutService.sortResult($scope.roundsList);
                                     } else {
-                                        // console.log("no Sport Result Found");
+                                        console.log("no Sport Result Found");
                                     }
                                 });
                             });
@@ -771,7 +775,7 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
                 break;
             case "Kho Kho":
             case "Throwball":
-                $scope.currentMatch.result = $scope.currentMatch.resultsCombat;
+                $scope.currentMatch.result = $scope.currentMatch.resultThrowball;
                 break;
         }
         modal = $uibModal.open({
