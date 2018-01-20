@@ -78,8 +78,8 @@
                   <span class="knockout-dot-live v-mid" ng-if="data.opponentsTeam[0].isWinner"><i class="fa fa-circle"></i></span>
                   <span title="{{data.opponentsTeam[0].teamId | filterConcate : data.opponentsTeam[0].schoolName }}">{{data.opponentsTeam[0].teamId | filterConcate : data.opponentsTeam[0].schoolName | truncate:'30' }}</span>
                   <span ng-if="data.opponentsTeam[0].teamId === undefined && isTeam">TBD</span>
-                  <span class="m-clear text-capitalize " title="{{data.opponentsSingle[0].fullName}}">{{data.opponentsSingle[0].fullName | truncate:'30'}} </span>
-                  <span class="m-clear text-capitalize " title="{{data.opponentsSingle[0].schoolName}}">{{data.opponentsSingle[0].schoolName | truncate:'30'}} </span>
+                  <p class="m-clear text-capitalize " title="{{data.opponentsSingle[0].fullName}}"> <span class="knockout-dot-live v-mid" ng-if="data.opponentsSingle[0].isWinner === true"><i class="fa fa-circle"></i></span>                    {{data.opponentsSingle[0].fullName | truncate:'30'}} </p>
+                  <p class="m-clear text-capitalize " title="{{data.opponentsSingle[0].schoolName}}">{{data.opponentsSingle[0].schoolName | truncate:'30'}} </p>
                   <span ng-if="(data.opponentsSingle[0].athleteId === undefined || !data.opponentsSingle[0].athleteId) && !isTeam">TBD</span>
                 </div>
               </td>
@@ -89,8 +89,8 @@
                   <span title="{{data.opponentsTeam[1].schoolName}}" title="{{data.opponentsTeam[1].teamId | filterConcate : data.opponentsTeam[1].schoolName}}">{{data.opponentsTeam[1].teamId | filterConcate : data.opponentsTeam[1].schoolName | truncate:'30' }}</p>
                   <span ng-if="data.opponentsTeam[1].teamId === undefined && isTeam && data.opponentsTeam.length<1">TBD</span>
                   <span ng-if="data.opponentsTeam[1].teamId === undefined && isTeam && data.opponentsTeam.length>0">-</span>
-                  <span class="m-clear text-capitalize " title="{{data.opponentsSingle[1].fullName}}">{{data.opponentsSingle[1].fullName | truncate:'30'}} </span>
-                  <span class="m-clear text-capitalize " title="{{data.opponentsSingle[1].schoolName}}">{{data.opponentsSingle[1].schoolName | truncate:'30'}} </span>
+                  <p class="m-clear text-capitalize " title="{{data.opponentsSingle[1].fullName}}"><span class="knockout-dot-live v-mid" ng-if="data.opponentsSingle[1].isWinner === true"><i class="fa fa-circle"></i></span>                    {{data.opponentsSingle[1].fullName | truncate:'30'}} </p>
+                  <p class="m-clear text-capitalize " title="{{data.opponentsSingle[1].schoolName}}">{{data.opponentsSingle[1].schoolName | truncate:'30'}} </p>
                   <span ng-if="(data.opponentsSingle[1].athleteId === undefined || !data.opponentsSingle[1].athleteId) && !isTeam && data.opponentsSingle.length<1">TBD</span>
                   <span ng-if="(data.opponentsSingle[1].athleteId === undefined || !data.opponentsSingle[1].athleteId) && !isTeam && data.opponentsSingle.length>0">-</span>
                 </div>
@@ -109,7 +109,7 @@
                   <span class="display-block" ng-if="data.status === 'IsCompleted' && data.reason == 'Bye'">Bye</span>
                   <a class="display-block" ng-if="data.status === 'IsCompleted' && !data.isNoMatch && !data.walkover && !data.resultFencing && data.reason != 'Bye'"
                     ng-click="matchCenter(data)">Match Center</a>
-                  <p class="m-clear" ng-if="data.status === 'IsCompleted' && !data.isNoMatch && !data.walkover && data.resultFencing">{{data.resultFencing.players[0].finalPoints}} - {{data.resultFencing.players[1].finalPoints}}</p>
+                  <p class="m-clear" ng-if="data.status === 'IsCompleted' && !data.isNoMatch && !data.walkover && data.resultFencing && data.resultFencing.players[0].finalPoints && data.resultFencing.players[1].finalPoints">{{data.resultFencing.players[0].finalPoints}} - {{data.resultFencing.players[1].finalPoints}}</p>
                 </div>
               </td>
               <td>

@@ -782,13 +782,16 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
         if ($scope.drawFormat == "League cum Knockout") {
           $scope.matchResult.resultFencing = $scope.formData;
           $scope.matchResult.resultFencing.status = "IsCompleted";
+          _.each($scope.matchResult.resultFencing.players, function (n) {
+            n.finalPoints = 0;
+          });
         } else {
           $scope.matchResult.resultsCombat = $scope.formData;
           $scope.matchResult.resultsCombat.status = "IsCompleted";
+          _.each($scope.matchResult.resultsCombat.players, function (n) {
+            n.finalPoints = 0;
+          });
         }
-        _.each($scope.matchResult.resultsCombat.players, function (n) {
-          n.finalPoints = 0;
-        });
         break;
       case "Racquet Sports":
         $scope.matchResult.resultsRacquet = $scope.formData;
@@ -812,13 +815,16 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
         if ($scope.drawFormat == "League cum Knockout") {
           $scope.matchResult.resultFencing = $scope.formData;
           $scope.matchResult.resultFencing.status = "IsCompleted";
+          _.each($scope.matchResult.resultFencing.players, function (n) {
+            n.finalPoints = 0;
+          });
         } else {
           $scope.matchResult.resultsCombat = $scope.formData;
           $scope.matchResult.resultsCombat.status = "IsCompleted";
+          _.each($scope.matchResult.resultsCombat.players, function (n) {
+            n.finalPoints = 0;
+          });
         }
-        _.each($scope.matchResult.resultsCombat.players, function (n) {
-          n.finalPoints = 0;
-        });
         break;
 
 

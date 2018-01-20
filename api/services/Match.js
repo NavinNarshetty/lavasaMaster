@@ -14083,7 +14083,7 @@ var model = {
                     });
                 },
                 function (found, callback) {
-                    if (data.isKnockout == false) {
+                    if (data.isKnockout == true) {
                         Match.find({
                             prevMatch: data._id
                         }).lean().exec(function (err, found) {
@@ -14102,7 +14102,7 @@ var model = {
                     }
                 },
                 function (found, callback) {
-                    if (data.isKnockout == false) {
+                    if (data.isKnockout == true) {
                         if (_.isEmpty(found)) {
                             callback(null, data.found);
                         } else {
@@ -14141,13 +14141,13 @@ var model = {
                                         winPlayer.push(playerId);
                                         lostPlayer.push(playerId1);
                                         if (data.found.resultFencing && data.found.resultFencing.status == 'IsCompleted' && data.found.resultFencing.isNoMatch == false) {
-                                            if (data.found.opponentsSingle[0].equals(data.found.resultFencing.winner.player)) {
+                                            if (data.found.opponentsSingle[0].equals(data.found.resultFencing.winner.opponentsSingle)) {
                                                 lostPlayer.push(data.found.opponentsSingle[1]);
-                                                winPlayer.push(data.found.resultFencing.winner.player);
+                                                winPlayer.push(data.found.resultFencing.winner.opponentsSingle);
                                                 console.log("player", winPlayer);
                                             } else {
                                                 lostPlayer.push(data.found.opponentsSingle[0]);
-                                                winPlayer.push(data.found.resultFencing.winner.player);
+                                                winPlayer.push(data.found.resultFencing.winner.opponentsSingle);
                                                 console.log("player", winPlayer);
                                             }
                                             updateObj = {
@@ -14171,7 +14171,7 @@ var model = {
                                 console.log("in found", found, "data", data);
                                 if (data.isTeam == false && _.isEmpty(found[0].opponentsSingle)) {
                                     if (data.found.resultFencing && data.found.resultFencing.status == 'IsCompleted' && data.found.resultFencing.isNoMatch == false) {
-                                        winPlayer.push(data.found.resultFencing.winner.player);
+                                        winPlayer.push(data.found.resultFencing.winner.opponentsSingle);
                                         console.log("player", winPlayer);
                                         updateObj = {
                                             $set: {
@@ -14187,7 +14187,7 @@ var model = {
                                         var playerId = found[0].opponentsSingle[0];
                                         winPlayer.push(playerId);
                                         if (data.found.resultFencing && data.found.resultFencing.status == "IsCompleted" && data.found.resultFencing.isNoMatch == false) {
-                                            winPlayer.push(data.found.resultFencing.winner.player);
+                                            winPlayer.push(data.found.resultFencing.winner.opponentsSingle);
                                             console.log("player", winPlayer);
                                             updateObj = {
                                                 $set: {
@@ -14259,8 +14259,6 @@ var model = {
                                             }
                                         }
                                     });
-                            } else {
-                                callback(null, found);
                             }
                         }
                     } else {
