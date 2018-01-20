@@ -426,7 +426,15 @@ var controller = {
                         });
                     },
                     function (importData, callback) {
-                        if (req.body.resultType == 'heat' && req.body.playerType == 'individual') {
+                        if (req.body.resultType == 'heat' && req.body.video == "yes") {
+                            Match.updateVideo(importData, req.body, function (err, complete) {
+                                if (err || _.isEmpty(complete)) {
+                                    callback(err, null);
+                                } else {
+                                    callback(null, complete);
+                                }
+                            });
+                        } else if (req.body.resultType == 'heat' && req.body.playerType == 'individual') {
                             console.log("req", req.body);
                             var roundTypes = _.groupBy(importData, "ROUND");
                             _.each(roundTypes, function (roundType, key) {
@@ -452,8 +460,24 @@ var controller = {
                                     callback(null, complete);
                                 }
                             });
+                        } else if (req.body.resultType == 'qualifying-round' && req.body.video == "yes") {
+                            Match.updateVideo(importData, req.body, function (err, complete) {
+                                if (err || _.isEmpty(complete)) {
+                                    callback(err, null);
+                                } else {
+                                    callback(null, complete);
+                                }
+                            });
                         } else if (req.body.resultType == "qualifying-round") {
                             Match.updateQualifyingRoundIndividual(importData, req.body, function (err, complete) {
+                                if (err || _.isEmpty(complete)) {
+                                    callback(err, null);
+                                } else {
+                                    callback(null, complete);
+                                }
+                            });
+                        } else if (req.body.resultType == 'qualifying-knockout' && req.body.video == "yes") {
+                            Match.updateVideo(importData, req.body, function (err, complete) {
                                 if (err || _.isEmpty(complete)) {
                                     callback(err, null);
                                 } else {
@@ -534,8 +558,24 @@ var controller = {
                                     callback(null, complete);
                                 }
                             });
+                        } else if (req.body.resultType == 'direct-final' && req.body.video == "yes") {
+                            Match.updateVideo(importData, req.body, function (err, complete) {
+                                if (err || _.isEmpty(complete)) {
+                                    callback(err, null);
+                                } else {
+                                    callback(null, complete);
+                                }
+                            });
                         } else if (req.body.resultType == 'direct-final') {
                             Match.updateDirectFinal(importData, req.body, function (err, complete) {
+                                if (err || _.isEmpty(complete)) {
+                                    callback(err, null);
+                                } else {
+                                    callback(null, complete);
+                                }
+                            });
+                        } else if (req.body.resultType == 'swiss-league' && req.body.video == "yes") {
+                            Match.updateVideo(importData, req.body, function (err, complete) {
                                 if (err || _.isEmpty(complete)) {
                                     callback(err, null);
                                 } else {

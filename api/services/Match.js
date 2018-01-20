@@ -15987,27 +15987,31 @@ var model = {
             });
     },
 
-    updateVideo: function (data, callback) {
+    updateVideo: function (importData, data, callback) {
         var countError = 0;
         async.concatSeries(importData, function (singleData, callback) {
-                var paramData = {};
-                paramData.opponentsTeam = [];
-                paramData.matchId = singleData["MATCH ID"];
-                paramData.video = singleData["VIDEO"];
-                paramData.video = singleData["VIDEO TYPE"];
-                Match.update({
-                    matchId: paramData.matchId
-                }, paramData).exec(
-                    function (err, complete) {
-                        if (err || _.isEmpty(complete)) {
-                            callback(null, {
-                                error: err,
-                                success: singleData
-                            });
-                        } else {
-                            callback(null, singleData);
-                        }
-                    });
+                if (singleData["VIDEO"]) {
+                    var paramData = {};
+                    paramData.opponentsTeam = [];
+                    paramData.matchId = singleData["MATCH ID"];
+                    paramData.video = singleData["VIDEO"];
+                    paramData.videoType = singleData["VIDEO TYPE"];
+                    Match.update({
+                        matchId: paramData.matchId
+                    }, paramData).exec(
+                        function (err, complete) {
+                            if (err || _.isEmpty(complete)) {
+                                callback(null, {
+                                    error: err,
+                                    success: singleData
+                                });
+                            } else {
+                                callback(null, singleData);
+                            }
+                        });
+                } else {
+                    callback(null, singleData);
+                }
             },
             function (err, singleData) {
                 callback(null, singleData);
