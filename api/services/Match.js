@@ -7434,74 +7434,146 @@ var model = {
     updateExcel: function (data, callback) {
         async.waterfall([
                 function (callback) {
-                    // Config.importGS(data.file, function (err, importData) {
-                    //     if (err || _.isEmpty(importData)) {
-                    //         callback(err, null);
-                    //     } else {
-                    //         callback(null, importData);
-                    //     }
-                    // });
-                    var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory";
-                    Match.find({
-                        sport: data.sport,
-                    }).lean().deepPopulate(deepSearch).exec(function (err, match) {
-                        if (err) {
+                    Config.importGS(data.file, function (err, importData) {
+                        if (err || _.isEmpty(importData)) {
                             callback(err, null);
                         } else {
-                            if (_.isEmpty(match)) {
-                                callback(null, []);
-                            } else {
-                                callback(null, match);
-                            }
+                            callback(null, importData);
                         }
                     });
+                    // var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory";
+                    // Match.find({
+                    //     sport: data.sport,
+                    // }).lean().deepPopulate(deepSearch).exec(function (err, match) {
+                    //     if (err) {
+                    //         callback(err, null);
+                    //     } else {
+                    //         if (_.isEmpty(match)) {
+                    //             callback(null, []);
+                    //         } else {
+                    //             callback(null, match);
+                    //         }
+                    //     }
+                    // });
                 },
                 function (importData, callback) {
                     async.concatSeries(importData, function (n, callback) {
-                            console.log("n", n);
-                            Match.getOne(n, function (err, matchData) {
-                                if (err) {
-                                    callback(err, null);
-                                } else {
-                                    if (_.isEmpty(matchData)) {
-                                        callback(null, []);
-                                    } else {
-                                        var final = {};
-                                        var result = ResultInitialize.getResultVar(matchData.sportsName, matchData.sportType);
-                                        if (matchData[result.resultVar]) {
-                                            callback(null, n);
-                                        } else {
-                                            final.resultName = result.resultVar;
-                                            ResultInitialize.getMyResult(matchData.sportsName, matchData, function (err, complete) {
-                                                matchData[result.resultVar] = complete[result.resultVar];
-                                                var placeholder = {};
-                                                placeholder[result.resultVar] = complete[result.resultVar];
+                            async.waterfall([
+                                    function (callback) {
+                                        var param = {};
+                                        param.matchData = n["MATCH ID"];
+                                        Match.getOne(param, function (err, matchData) {
+                                            if (err) {
+                                                callback(err, null);
+                                            } else {
+                                                if (_.isEmpty(matchData)) {
+                                                    callback(null, []);
+                                                } else {
+                                                    var final = {};
+                                                    var result = ResultInitialize.getResultVar(matchData.sportsName, matchData.sportType);
+                                                    if (matchData[result.resultVar]) {
+                                                        callback(null, n);
+                                                    } else {
+                                                        final.resultName = result.resultVar;
+                                                        ResultInitialize.getMyResult(matchData.sportsName, matchData, function (err, complete) {
+                                                            matchData[result.resultVar] = complete[result.resultVar];
+                                                            var placeholder = {};
+                                                            placeholder[result.resultVar] = complete[result.resultVar];
 
-                                                var matchObj = {
-                                                    $set: placeholder
-                                                };
-                                                var result1 = ResultInitialize.nullOrEmptyTo0(matchData.sportsName, complete[result.resultVar].teams[0]);
-                                                console.log("matchObj", n.matchId);
-                                                callback(null, result1);
-                                                // Match.update({
-                                                //     matchId: n.matchId
-                                                // }, matchObj).exec(
-                                                //     function (err, match) {
-                                                //         if (err) {
-                                                //             callback(err, null);
-                                                //         } else {
-                                                //             if (_.isEmpty(match)) {
-                                                //                 callback(null, []);
-                                                //             } else {
-                                                //                 callback(null, match);
-                                                //             }
-                                                //         }
-                                                //     });
-                                            });
+                                                            var matchObj = {
+                                                                $set: placeholder
+                                                            };
+                                                            // var result1 = ResultInitialize.nullOrEmptyTo0(matchData.sportsName, complete[result.resultVar].teams[0]);
+                                                            // console.log("matchObj", n.matchId);
+                                                            // callback(null, result1);
+                                                            Match.update({
+                                                                matchId: n.matchId
+                                                            }, matchObj).exec(
+                                                                function (err, match) {
+                                                                    if (err) {
+                                                                        callback(err, null);
+                                                                    } else {
+                                                                        callback(null, result);
+                                                                    }
+                                                                });
+                                                        });
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    },
+                                    function (result, callback) {
+                                        var team1 = {};
+                                        var team2 = {};
+                                        var main = {};
+
+                                        if (n["TEAM 1 Attendence"] == 'P' || n["TEAM 1 Attendence"] == 'p') {
+                                            team1.noShow = false;
+                                            team2.walkover = false;
+                                        } else {
+                                            team1.noShow = true;
+                                            if (n["TEAM 2 Attendence"] == 'P' || n["TEAM 2 Attendence"] == 'p') {
+                                                team2.walkover = true;
+                                            } else {
+                                                team2.walkover = false;
+                                            }
                                         }
+                                        if (n["TEAM 2 Attendence"] == 'P' || n["TEAM 2 Attendence"] == 'p') {
+                                            team2.noShow = false;
+                                            team1.walkover = false;
+                                        } else {
+                                            team2.noShow = true;
+                                            if (n["TEAM 1 Attendence"] == 'P' || n["TEAM 1 Attendence"] == 'p') {
+                                                team2.walkover = true;
+                                            } else {
+                                                team2.walkover = false;
+                                            }
+                                        }
+
+                                        if (n["NO MATCH"] == 'yes') {
+                                            main.isNoMatch = true;
+                                        } else {
+                                            main.isNoMatch = false;
+                                        }
+
+                                        if (n["DRAW"] == 'yes') {
+                                            main.isDraw = true;
+                                        } else {
+                                            main.isDraw = false;
+                                        }
+
+                                        main.status = "IsCompleted";
+                                        if (!_.isEmpty(n["SCORE 1"])) {
+                                            complete[result.resultVar].teams[0].teamResults.finalPoints = n["SCORE 1"];
+                                        }
+                                        if (!_.isEmpty(n["SCORE 2"])) {
+                                            complete[result.resultVar].teams[1].teamResults.finalPoints = n["SCORE 2"];
+                                        }
+                                        var matchObj = {
+                                            $set: {
+
+                                            }
+                                        };
+                                        Match.update({
+                                            matchId: n.matchId
+                                        }, matchObj).exec(
+                                            function (err, match) {
+                                                if (err) {
+                                                    callback(err, null);
+                                                } else {
+                                                    callback(null, complete);
+                                                }
+                                            });
+
+
+
                                     }
-                                }
-                            });
+
+                                ],
+                                function (err, excelData) {
+
+                                });
+
                         },
                         function (err, final) {
                             callback(null, final)
