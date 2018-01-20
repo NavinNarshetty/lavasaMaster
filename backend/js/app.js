@@ -388,6 +388,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'DetailCertificateDetailsCtrl'
         })
+        .state('oldresultupdate', {
+            url: "/oldresultupdate",
+            templateUrl: "views/template.html",
+            controller: 'OldMatchesCtrl'
+        })
 
         .state('jagz', {
             url: "/jagz",

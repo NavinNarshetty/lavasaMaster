@@ -237,6 +237,12 @@ myApp.factory('NavigationService', function ($http) {
             sref: "#/page/viewConfigProperty//",
             icon: "phone",
         },
+        {
+            name: "Old Result Update",
+            classis: "activeColor",
+            sref: "#/oldresultupdate",
+            icon: "phone",
+        },
 
         // {
         //     name: "Second Category",

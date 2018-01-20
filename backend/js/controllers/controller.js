@@ -4420,6 +4420,75 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 
 
 
+    // OLD SPORT
+    .controller('OldMatchesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
+        //Used to name the .html file
+        $scope.template = TemplateService.changecontent("oldsportresultupdate");
+        $scope.menutitle = NavigationService.makeactive("Old Update");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+        $scope.formData = {};
+        $scope.formData.page = 1;
+        $scope.formData.type = '';
+        $scope.formData.keyword = '';
+        $scope.form = {};
+        $scope.form.page = 1;
+        $scope.form.type = '';
+        $scope.form.keyword = '';
+        $scope.form.graphics = "no";
+
+
+
+        $scope.getAllSportList = function (data) {
+            $scope.url = "SportsList/search";
+            console.log(data);
+            $scope.constraints = {};
+            $scope.constraints.keyword = data;
+            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+                console.log("data.value sportlist", data);
+                $scope.sportitems = data.data.results;
+
+            });
+        }
+
+        $scope.searchSportList = function (data) {
+            $scope.draws = data;
+        }
+
+        $scope.getAllAge = function (data) {
+            $scope.url = "AgeGroup/search";
+            console.log(data);
+            $scope.constraints = {};
+            $scope.constraints.keyword = data;
+            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+                console.log("data.value age", data);
+                $scope.ageitems = data.data.results;
+
+            });
+        }
+        $scope.searchAge = function (data) {
+            $scope.draw = data;
+        }
+
+
+
+        $scope.getAllWeight = function (data) {
+            $scope.url = "Weight/search";
+            console.log(data);
+            $scope.constraints = {};
+            $scope.constraints.keyword = data;
+            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+                console.log("data.value weight", data);
+                $scope.weightitems = data.data.results;
+
+            });
+        }
+        $scope.searchWeight = function (data) {
+            $scope.drawing = data;
+        }
+    })
+
+
     .controller('MedalsCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $uibModal, $state, toastr) {
         //Used to name the .html file
         $scope.template = TemplateService.changecontent("tablemedal");
