@@ -30,7 +30,9 @@
                 <span class="btn btn-success" ng-click="createExcel()">
                     Create-Excel
                  </span>
-
+                <span class="btn btn-success">
+                    Old-Score-Update
+                 </span>
               </div>
               <div class="col-md-4">
                 <form class="search-form mr-form">
@@ -153,6 +155,7 @@
                 <div class="text-center mt20 odd-even-button">
                   <button class="btn btn-info" ng-click="viewMatch(form)"><i class="fa fa-eye"></i> View</button>
                   <button class="btn btn-default" type="submit" ng-click="generateExcel(form)" ng-disabled="detailForm.$invalid">Generate Excel</button>
+                  <button class="btn btn-default" type="submit" ng-click="scoringExcel(form)" ng-disabled="detailForm.$invalid">Generate Scoring Excel</button>
                 </div>
                 <!-- BUTTONS END -->
               </div>

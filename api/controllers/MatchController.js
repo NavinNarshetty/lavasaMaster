@@ -291,6 +291,16 @@ var controller = {
             })
         }
     },
+    excelScoringTeam: function (req, res) {
+        if (req.body) {
+            Match.excelScoringTeam(req.body, res);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            })
+        }
+    },
 
     getSportId: function (req, res) {
         if (req.body) {
