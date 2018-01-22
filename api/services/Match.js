@@ -15992,7 +15992,6 @@ var model = {
         async.concatSeries(importData, function (singleData, callback) {
                 if (singleData["VIDEO"]) {
                     var paramData = {};
-                    paramData.opponentsTeam = [];
                     paramData.matchId = singleData["MATCH ID"];
                     paramData.video = singleData["VIDEO"];
                     paramData.videoType = singleData["VIDEO TYPE"];
