@@ -7544,14 +7544,24 @@ var model = {
 
                                         main.status = "IsCompleted";
                                         if (!_.isEmpty(n["SCORE 1"])) {
+
+                                            var score = n["SCORE 1"];
                                             complete[result.resultVar].teams[0].teamResults.finalPoints = n["SCORE 1"];
                                         }
                                         if (!_.isEmpty(n["SCORE 2"])) {
+                                            var score1 = n["SCORE 2"];
                                             complete[result.resultVar].teams[1].teamResults.finalPoints = n["SCORE 2"];
                                         }
                                         var matchObj = {
                                             $set: {
-
+                                                "complete[result.resultVar].teams[0].teamResults.finalPoints": score,
+                                                "complete[result.resultVar].teams[1].teamResults.finalPoints": score1,
+                                                "complete[result.resultVar].isDraw": main.isDraw,
+                                                "complete[result.resultVar].status": main.status,
+                                                "complete[result.resultVar].teams[0].noShow": team1.noShow,
+                                                "complete[result.resultVar].teams[0].noShow": team1.walkover,
+                                                "complete[result.resultVar].teams[1].noShow": team2.noShow,
+                                                "complete[result.resultVar].teams[1].noShow": team2.walkover
                                             }
                                         };
                                         Match.update({
@@ -7561,17 +7571,14 @@ var model = {
                                                 if (err) {
                                                     callback(err, null);
                                                 } else {
-                                                    callback(null, complete);
+                                                    callback(null, match);
                                                 }
                                             });
-
-
-
                                     }
 
                                 ],
                                 function (err, excelData) {
-
+                                    callback(null, excelData);
                                 });
 
                         },
