@@ -2324,6 +2324,7 @@ var model = {
                                                         callback(null, match);
                                                     } else {
                                                         var count = 1;
+                                                        console.log(singleData.resultFootball.winner);
                                                         if (singleData.resultFootball.status == "IsCompleted" && singleData.resultFootball.isNoMatch == false) {
                                                             async.concatSeries(singleData.resultFootball.teams, function (n, callback) {
                                                                 console.log('N',n);
