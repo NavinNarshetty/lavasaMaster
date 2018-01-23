@@ -2330,7 +2330,6 @@ var model = {
                                                                 console.log('N Team',n.team);
                                                                 var a = false;
                                                                     if (singleData.resultFootball.winner.player === n.team) {
-                                                                        a = true;
                                                                         StudentTeam.findOne({
                                                                             teamId: objectid(n.team),
                                                                             studentId: data.athleteId
@@ -2351,6 +2350,7 @@ var model = {
                                                                                     if (err) {
                                                                                         callback(null, err);
                                                                                     } else if (_.isEmpty(found)) {
+                                                                                        a = true;
                                                                                         callback();
                                                                                     } else {
                                                                                         console.log('Team ID',found);
@@ -2360,6 +2360,7 @@ var model = {
                                                                                         stats.teamId = found.teamId.teamId;
                                                                                         stats.isAthleteWinner = false;
                                                                                         stats.score = singleData.resultFootball.teams[0].teamResults.finalPoints + "-" + singleData.resultFootball.teams[1].teamResults.finalPoints;
+                                                                                        a = true;
                                                                                         callback();
                                                                                     }
                                                                                 });
@@ -2378,7 +2379,6 @@ var model = {
                                                                         });
                                                                     } else {
                                                                         console.log('welcome+++++++++++++++++++');
-                                                                        a = true;
                                                                         StudentTeam.findOne({
                                                                             teamId: {
                                                                                 $ne: objectid(n.team)
@@ -2388,12 +2388,13 @@ var model = {
                                                                             },
                                                                             sport: singleData.sport
                                                                         }).lean().deepPopulate("studentId.school teamId").exec(function (err, founds) {
-                                                                            console.log(founds);
+                                                                            console.log('before if',founds);
                                                                             if (err) {
                                                                                 console.log('ERRORRRRRRRRRRRRRRRRRRRR',err);
                                                                                 callback(null, err);
                                                                             } else if (_.isEmpty(founds)) {
                                                                                 console.log('EMPTYYYYYYYYYYYYYYYYYYYY else',founds);
+                                                                                a = true;
                                                                                 callback();
                                                                             } else {
                                                                                 console.log('Team ID else',founds);
@@ -2402,6 +2403,7 @@ var model = {
                                                                                 stats.school = founds.teamId.schoolName;
                                                                                 stats.teamId = founds.teamId.teamId;
                                                                                 stats.draw = singleData.resultFootball.isDraw;
+                                                                                a = true;
                                                                                 callback();
                                                                             }
                                                                         });
