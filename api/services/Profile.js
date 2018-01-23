@@ -2324,7 +2324,6 @@ var model = {
                                                         callback(null, match);
                                                     } else {
                                                         var count = 1;
-                                                        console.log(singleData.resultFootball.winner);
                                                         if (singleData.resultFootball.status == "IsCompleted" && singleData.resultFootball.isNoMatch == false) {
                                                             async.each(singleData.resultFootball.teams, function (n, callback) {
                                                                 console.log('N',n);
@@ -2388,18 +2387,20 @@ var model = {
                                                                                 $ne: data.athleteId
                                                                             },
                                                                             sport: singleData.sport
-                                                                        }).lean().deepPopulate("studentId.school teamId").exec(function (err, found) {
+                                                                        }).lean().deepPopulate("studentId.school teamId").exec(function (err, founds) {
+                                                                            console.log(founds);
                                                                             if (err) {
+                                                                                console.log('ERRORRRRRRRRRRRRRRRRRRRR',err);
                                                                                 callback(null, err);
-                                                                            } else if (_.isEmpty(found)) {
-                                                                                console.log('EMPTYYYYYYYYYYYYYYYYYYYY');
+                                                                            } else if (_.isEmpty(founds)) {
+                                                                                console.log('EMPTYYYYYYYYYYYYYYYYYYYY',founds);
                                                                                 callback();
                                                                             } else {
-                                                                                console.log('Team ID else',found);
-                                                                                console.log('Team ID else',found.teamId);
-                                                                                stats.opponentName = found.teamId.name;
-                                                                                stats.school = found.teamId.schoolName;
-                                                                                stats.teamId = found.teamId.teamId;
+                                                                                console.log('Team ID else',founds);
+                                                                                console.log('Team ID else',founds.teamId);
+                                                                                stats.opponentName = founds.teamId.name;
+                                                                                stats.school = founds.teamId.schoolName;
+                                                                                stats.teamId = founds.teamId.teamId;
                                                                                 stats.draw = singleData.resultFootball.isDraw;
                                                                                 callback();
                                                                             }
