@@ -2408,6 +2408,7 @@ var model = {
                                                                             }
                                                                         });
                                                                     }
+                                                                    console.log(a);
                                                                     if(a == true){
                                                                         console.log('ENTERRRRRRRRRRRRRRRR');
                                                                         match.push(stats);
