@@ -2328,7 +2328,6 @@ var model = {
                                                             async.eachSeries(singleData.resultFootball.teams, function (n, callback) {
                                                                 console.log('N',n);
                                                                 console.log('N Team',n.team);
-                                                                // var a = false;
                                                                     if (singleData.resultFootball.winner.player === n.team) {
                                                                         StudentTeam.findOne({
                                                                             teamId: objectid(n.team),
@@ -2360,7 +2359,6 @@ var model = {
                                                                                         stats.teamId = found.teamId.teamId;
                                                                                         stats.isAthleteWinner = false;
                                                                                         stats.score = singleData.resultFootball.teams[0].teamResults.finalPoints + "-" + singleData.resultFootball.teams[1].teamResults.finalPoints;
-                                                                                        var a = true;
                                                                                         callback();
                                                                                     }
                                                                                 });
@@ -2394,7 +2392,6 @@ var model = {
                                                                                 callback(null, err);
                                                                             } else if (_.isEmpty(founds)) {
                                                                                 console.log('EMPTYYYYYYYYYYYYYYYYYYYY else',founds);
-                                                                                var a = true;
                                                                                 callback();
                                                                             } else {
                                                                                 console.log('Team ID else',founds);
@@ -2403,13 +2400,12 @@ var model = {
                                                                                 stats.school = founds.teamId.schoolName;
                                                                                 stats.teamId = founds.teamId.teamId;
                                                                                 stats.draw = singleData.resultFootball.isDraw;
-                                                                                var a = true;
                                                                                 callback();
                                                                             }
                                                                         });
                                                                     }
-                                                                    console.log(a);
-                                                                    if(a == true){
+                                                                    // console.log(a);
+                                                                    if(!_.isEmpty(stats)){
                                                                         console.log('ENTERRRRRRRRRRRRRRRR');
                                                                         match.push(stats);
                                                                     }
