@@ -2350,7 +2350,8 @@ var model = {
                                                                                     } else if (_.isEmpty(found)) {
                                                                                         callback();
                                                                                     } else {
-                                                                                        console.log('Team ID',teamId);
+                                                                                        console.log('Team ID',found);
+                                                                                        console.log('Team ID',found.teamId);
                                                                                         stats.opponentName = found.teamId.name;
                                                                                         stats.school = found.teamId.schoolName;
                                                                                         stats.teamId = found.teamId.teamId;
