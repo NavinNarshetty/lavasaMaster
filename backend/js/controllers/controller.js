@@ -4486,6 +4486,16 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.searchWeight = function (data) {
             $scope.drawing = data;
         }
+
+        $scope.generateExcel = function (data) {
+            // console.log("data in test form", data)
+            $scope.url = "";
+            $scope.constraints = {};
+            $scope.constraints.data = data;
+            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+                console.log(data, "data inside api");
+            });
+        }
     })
 
 
