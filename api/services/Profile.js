@@ -2336,6 +2336,7 @@ var model = {
                                                                             if (err) {
                                                                                 callback(null, err);
                                                                             } else if (_.isEmpty(foundAthlete)) {
+                                                                                console.log('EMPTYYYYYYYYYYYYYYYYYYYY');
                                                                                 StudentTeam.findOne({
                                                                                     teamId: {
                                                                                         $ne: objectid(n.team)
@@ -2386,6 +2387,7 @@ var model = {
                                                                             if (err) {
                                                                                 callback(null, err);
                                                                             } else if (_.isEmpty(found)) {
+                                                                                console.log('EMPTYYYYYYYYYYYYYYYYYYYY');
                                                                                 callback();
                                                                             } else {
                                                                                 console.log('Team ID else',found);
