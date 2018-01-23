@@ -2328,7 +2328,7 @@ var model = {
                                                             async.eachSeries(singleData.resultFootball.teams, function (n, callback) {
                                                                 console.log('N',n);
                                                                 console.log('N Team',n.team);
-                                                                var a = false;
+                                                                // var a = false;
                                                                     if (singleData.resultFootball.winner.player === n.team) {
                                                                         StudentTeam.findOne({
                                                                             teamId: objectid(n.team),
@@ -2350,7 +2350,7 @@ var model = {
                                                                                     if (err) {
                                                                                         callback(null, err);
                                                                                     } else if (_.isEmpty(found)) {
-                                                                                        a = true;
+                                                                                        var a = true;
                                                                                         callback();
                                                                                     } else {
                                                                                         console.log('Team ID',found);
@@ -2360,7 +2360,7 @@ var model = {
                                                                                         stats.teamId = found.teamId.teamId;
                                                                                         stats.isAthleteWinner = false;
                                                                                         stats.score = singleData.resultFootball.teams[0].teamResults.finalPoints + "-" + singleData.resultFootball.teams[1].teamResults.finalPoints;
-                                                                                        a = true;
+                                                                                        var a = true;
                                                                                         callback();
                                                                                     }
                                                                                 });
@@ -2394,7 +2394,7 @@ var model = {
                                                                                 callback(null, err);
                                                                             } else if (_.isEmpty(founds)) {
                                                                                 console.log('EMPTYYYYYYYYYYYYYYYYYYYY else',founds);
-                                                                                a = true;
+                                                                                var a = true;
                                                                                 callback();
                                                                             } else {
                                                                                 console.log('Team ID else',founds);
@@ -2403,7 +2403,7 @@ var model = {
                                                                                 stats.school = founds.teamId.schoolName;
                                                                                 stats.teamId = founds.teamId.teamId;
                                                                                 stats.draw = singleData.resultFootball.isDraw;
-                                                                                a = true;
+                                                                                var a = true;
                                                                                 callback();
                                                                             }
                                                                         });
