@@ -83,6 +83,23 @@
                 </div>
                 <!-- DATE TIME END -->
 
+                <!-- VIDEO LINK AND TYPE -->
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Video Link</label>
+                      <input type="text" name="video" ng-model="formData.video" class="form-control" placeholder="Enter Video Link">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Video Type</label>
+                      <input type="text" name="VideoType" ng-model="formData.videoType" class="form-control" placeholder="Enter Video Type">
+                    </div>
+                  </div>
+                </div>
+                <!-- VIDEO LINK AND TYPE END -->
+
                 <!-- OPPONENT SINGLE ONLY FOR DISPLAY -->
                 <div class="row">
                   <div class="col-md-6" ng-repeat="opponent in formData.opponentsSingle track by $index">
