@@ -2325,7 +2325,7 @@ var model = {
                                                     } else {
                                                         var count = 1;
                                                         if (singleData.resultFootball.status == "IsCompleted" && singleData.resultFootball.isNoMatch == false) {
-                                                            async.eachSeries(singleData.resultFootball.teams, function (n, callback) {
+                                                            async.concatSeries(singleData.resultFootball.teams, function (n, callback) {
                                                                 console.log('N',n);
                                                                 console.log('N Team',n.team);
                                                                     if (singleData.resultFootball.winner.player === n.team) {
@@ -2402,7 +2402,7 @@ var model = {
                                                                     }
                                                                     match.push(stats);
                                                                 },
-                                                                function (err) {
+                                                                function (err, match) {
                                                                     callback(null, match);
                                                                 });
                                                         } else if (singleData.resultFootball.status == "IsCompleted" && singleData.resultFootball.isNoMatch == true) {
