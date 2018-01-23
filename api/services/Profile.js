@@ -2325,7 +2325,7 @@ var model = {
                                                     } else {
                                                         var count = 1;
                                                         if (singleData.resultFootball.status == "IsCompleted" && singleData.resultFootball.isNoMatch == false) {
-                                                            async.each(singleData.resultFootball.teams, function (n, callback) {
+                                                            async.eachSeries(singleData.resultFootball.teams, function (n, callback) {
                                                                 console.log('N',n);
                                                                 console.log('N Team',n.team);
                                                                     if (singleData.resultFootball.winner.player === n.team) {
