@@ -2386,7 +2386,6 @@ var model = {
                                                                             },
                                                                             sport: singleData.sport
                                                                         }).lean().deepPopulate("studentId.school teamId").exec(function (err, founds) {
-                                                                            console.log('before if',founds);
                                                                             if (err) {
                                                                                 console.log('ERRORRRRRRRRRRRRRRRRRRRR',err);
                                                                                 callback(null, err);
