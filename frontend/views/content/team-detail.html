@@ -133,7 +133,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr style="background:transparent;" ng-repeat="stat in teamStats">
+                                    <tr style="background:transparent;" ng-repeat="stat in teamStats | orderBy:'matchId'">
                                         <td>
                                             <span>{{stat.year}}</span>
                                         </td>
