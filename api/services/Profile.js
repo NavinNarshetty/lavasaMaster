@@ -2326,10 +2326,12 @@ var model = {
                                                         var count = 1;
                                                         console.log(singleData.resultFootball.winner);
                                                         if (singleData.resultFootball.status == "IsCompleted" && singleData.resultFootball.isNoMatch == false) {
-                                                            async.concatSeries(singleData.resultFootball.teams, function (n, callback) {
+                                                            async.each(singleData.resultFootball.teams, function (n, callback) {
                                                                 console.log('N',n);
                                                                 console.log('N Team',n.team);
+                                                                var a = false;
                                                                     if (singleData.resultFootball.winner.player === n.team) {
+                                                                        a = true;
                                                                         StudentTeam.findOne({
                                                                             teamId: objectid(n.team),
                                                                             studentId: data.athleteId
@@ -2376,6 +2378,8 @@ var model = {
                                                                             }
                                                                         });
                                                                     } else {
+                                                                        console.log('welcome+++++++++++++++++++');
+                                                                        a = true;
                                                                         StudentTeam.findOne({
                                                                             teamId: {
                                                                                 $ne: objectid(n.team)
@@ -2401,9 +2405,11 @@ var model = {
                                                                             }
                                                                         });
                                                                     }
-                                                                    match.push(stats);
+                                                                    if(a == true){
+                                                                        match.push(stats);
+                                                                    }
                                                                 },
-                                                                function (err, match) {
+                                                                function (err) {
                                                                     callback(null, match);
                                                                 });
                                                         } else if (singleData.resultFootball.status == "IsCompleted" && singleData.resultFootball.isNoMatch == true) {
