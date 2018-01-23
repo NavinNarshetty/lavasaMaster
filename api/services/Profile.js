@@ -2348,6 +2348,7 @@ var model = {
                                                                                     } else if (_.isEmpty(found)) {
                                                                                         callback();
                                                                                     } else {
+                                                                                        console.log('Team ID',teamId);
                                                                                         stats.opponentName = found.teamId.name;
                                                                                         stats.school = found.teamId.schoolName;
                                                                                         stats.teamId = found.teamId.teamId;
@@ -2384,6 +2385,7 @@ var model = {
                                                                             } else if (_.isEmpty(found)) {
                                                                                 callback();
                                                                             } else {
+                                                                                console.log('Team ID else',teamId);
                                                                                 stats.opponentName = found.teamId.name;
                                                                                 stats.school = found.teamId.schoolName;
                                                                                 stats.teamId = found.teamId.teamId;
