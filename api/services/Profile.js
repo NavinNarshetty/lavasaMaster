@@ -2326,6 +2326,8 @@ var model = {
                                                         var count = 1;
                                                         if (singleData.resultFootball.status == "IsCompleted" && singleData.resultFootball.isNoMatch == false) {
                                                             async.each(singleData.resultFootball.teams, function (n, callback) {
+                                                                console.log('N',n);
+                                                                console.log('N Team',n.team);
                                                                     if (singleData.resultFootball.winner.player === n.team) {
                                                                         StudentTeam.findOne({
                                                                             teamId: objectid(n.team),
@@ -2385,7 +2387,8 @@ var model = {
                                                                             } else if (_.isEmpty(found)) {
                                                                                 callback();
                                                                             } else {
-                                                                                console.log('Team ID else',teamId);
+                                                                                console.log('Team ID else',found);
+                                                                                console.log('Team ID else',found.teamId);
                                                                                 stats.opponentName = found.teamId.name;
                                                                                 stats.school = found.teamId.schoolName;
                                                                                 stats.teamId = found.teamId.teamId;
