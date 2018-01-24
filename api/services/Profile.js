@@ -1543,7 +1543,22 @@ var model = {
                                                     if (singleData.resultSwiss.isNoMatch == true) {
                                                         stats.reason = "No Match";
                                                     } else {
-                                                        stats.isAthleteWinner = true;
+                                                        stats.draw = singleData.resultSwiss.isDraw;
+                                                        if (singleData.resultSwiss.isDraw == false) {
+                                                            if (singleData.resultSwiss.winner.player.equals(n.id)) {
+                                                                stats.isAthleteWinner = false;
+                                                            } else {
+                                                                stats.isAthleteWinner = true;
+
+                                                                if (singleData.resultSwiss.winner.player.equals(singleData.resultSwiss.players[0].id)) {
+                                                                    stats.walkover = singleData.resultSwiss.players[0].walkover;
+                                                                } else {
+                                                                    stats.walkover = singleData.resultSwiss.players[1].walkover;
+                                                                }
+                                                            }
+                                                        } else {
+                                                            stats.isAthleteWinner = false;
+                                                        }
                                                     }
                                                     match.push(stats);
                                                     callback(null, match);
@@ -1575,9 +1590,13 @@ var model = {
                                                                 if (singleData.resultSwiss.isDraw == false) {
                                                                     if (singleData.resultSwiss.winner.player.equals(n.id)) {
                                                                         stats.isAthleteWinner = false;
+                                                                        if (singleData.resultSwiss.winner.player.equals(singleData.resultSwiss.players[0].id)) {
+                                                                            stats.walkover = singleData.resultSwiss.players[0].walkover;
+                                                                        } else {
+                                                                            stats.walkover = singleData.resultSwiss.players[1].walkover;
+                                                                        }
                                                                     } else {
                                                                         stats.isAthleteWinner = true;
-
                                                                         if (singleData.resultSwiss.winner.player.equals(singleData.resultSwiss.players[0].id)) {
                                                                             stats.walkover = singleData.resultSwiss.players[0].walkover;
                                                                         } else {
