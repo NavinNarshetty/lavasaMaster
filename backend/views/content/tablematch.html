@@ -16,7 +16,7 @@
         <div class="form-elements-sec">
           <div class="button-matched-holder">
             <div class="row match-head-holder">
-              <div class="col-md-8">
+              <div class="col-md-12">
                 <!-- <h3 class="m-clear">List of Matches<span class=" tableTotal ">(Total : {{totalItems}}) </span></h3> -->
                 <a class="btn btn-success" ui-sref="detailmatches">
                     Create
@@ -30,16 +30,16 @@
                 <span class="btn btn-success" ng-click="createExcel()">
                     Create-Excel
                  </span>
-                <span class="btn btn-success">
+                <span class="btn btn-success" ui-sref="excel-upload({controller:'match',funcName:'',view:'oldResultupdate'})">
                     Old-Score-Update
                  </span>
               </div>
-              <div class="col-md-4">
+              <!-- <div class="col-md-4">
                 <form class="search-form mr-form">
                   <input type="text" class="form-control" ng-change="searchInTable(search)" placeholder="Search Here...
                                          " ng-model="search" />
                 </form>
-              </div>
+              </div> -->
             </div>
           </div>
           <form name="detailForm" role="form" class="sec">

@@ -4128,6 +4128,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.view = "views/excelImportView/" + $stateParams.view + ".html";
         // $scope.referenceFile = adminurl + "../importFormat/" + $stateParams.referenceFile + ".xlsx";
         $scope.form = {};
+        $scope.form.resultUpdate = "yes";
         $scope.url = $stateParams.controller + "/" + $stateParams.funcName;
 
         $scope.excelUploaded = function () {
@@ -4152,6 +4153,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.form.type = '';
         $scope.form.keyword = '';
         $scope.form.graphics = "no";
+
 
         $scope.searchInTable = function (data) {
             $scope.form.page = 1;
