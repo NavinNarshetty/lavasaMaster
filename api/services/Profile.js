@@ -2325,9 +2325,7 @@ var model = {
                                                     } else {
                                                         var count = 1;
                                                         if (singleData.resultFootball.status == "IsCompleted" && singleData.resultFootball.isNoMatch == false) {
-                                                            async.eachSeries(singleData.resultFootball.teams, function (n, callback) {
-                                                                console.log('N',n);
-                                                                console.log('N Team',n.team);
+                                                            async.each(singleData.resultFootball.teams, function (n, callback) {
                                                                     if (singleData.resultFootball.winner.player === n.team) {
                                                                         StudentTeam.findOne({
                                                                             teamId: objectid(n.team),
@@ -2336,7 +2334,6 @@ var model = {
                                                                             if (err) {
                                                                                 callback(null, err);
                                                                             } else if (_.isEmpty(foundAthlete)) {
-                                                                                console.log('EMPTYYYYYYYYYYYYYYYYYYYY');
                                                                                 StudentTeam.findOne({
                                                                                     teamId: {
                                                                                         $ne: objectid(n.team)
@@ -2349,11 +2346,8 @@ var model = {
                                                                                     if (err) {
                                                                                         callback(null, err);
                                                                                     } else if (_.isEmpty(found)) {
-                                                                                        var a = true;
                                                                                         callback();
                                                                                     } else {
-                                                                                        console.log('Team ID',found);
-                                                                                        console.log('Team ID',found.teamId);
                                                                                         stats.opponentName = found.teamId.name;
                                                                                         stats.school = found.teamId.schoolName;
                                                                                         stats.teamId = found.teamId.teamId;
@@ -2376,7 +2370,6 @@ var model = {
                                                                             }
                                                                         });
                                                                     } else {
-                                                                        console.log('welcome+++++++++++++++++++');
                                                                         StudentTeam.findOne({
                                                                             teamId: {
                                                                                 $ne: objectid(n.team)
@@ -2387,14 +2380,10 @@ var model = {
                                                                             sport: singleData.sport
                                                                         }).lean().deepPopulate("studentId.school teamId").exec(function (err, founds) {
                                                                             if (err) {
-                                                                                console.log('ERRORRRRRRRRRRRRRRRRRRRR',err);
                                                                                 callback(null, err);
                                                                             } else if (_.isEmpty(founds)) {
-                                                                                console.log('EMPTYYYYYYYYYYYYYYYYYYYY else',founds);
                                                                                 callback();
                                                                             } else {
-                                                                                console.log('Team ID else',founds);
-                                                                                console.log('Team ID else',founds.teamId);
                                                                                 stats.opponentName = founds.teamId.name;
                                                                                 stats.school = founds.teamId.schoolName;
                                                                                 stats.teamId = founds.teamId.teamId;
@@ -2403,11 +2392,7 @@ var model = {
                                                                             }
                                                                         });
                                                                     }
-                                                                    // console.log(a);
-                                                                    if(!_.isEmpty(stats)){
-                                                                        console.log('ENTERRRRRRRRRRRRRRRR');
                                                                         match.push(stats);
-                                                                    }
                                                                 },
                                                                 function (err) {
                                                                     callback(null, match);
