@@ -1215,7 +1215,7 @@ var model = {
                         },
                         function (found, callback) {
                             if (found.isTeam == false) {
-                                console.log("found", found);
+                                // console.log("found", sportName);
                                 var pipeLine = Profile.getAthleteStatAggregatePipeline(data);
                                 var newPipeLine = _.cloneDeep(pipeLine);
                                 newPipeLine.push(
@@ -1278,12 +1278,10 @@ var model = {
                                     }
                                 );
                                 Match.aggregate(newPipeLine, function (err, matchData) {
-                                    // console.log("match", matchData);
                                     if (err) {
                                         callback(err, "error in mongoose");
                                     } else {
-                                        async.each(matchData, function (singleData, callback) {
-                                            console.log("singleData", singleData);
+                                        async.eachSeries(matchData, function (singleData, callback) {
                                             var stats = {};
                                             stats.year = new Date(singleData.createdAt).getFullYear();
                                             stats.ageGroup = singleData.sport.ageGroup.name;
@@ -1294,7 +1292,6 @@ var model = {
                                                 stats.weight = singleData.sport.weight.name;
                                             }
                                             stats.round = singleData.round;
-
                                             stats.video = singleData.video;
                                             stats.videoType = singleData.videoType;
                                             if (singleData.resultsCombat) {
@@ -1546,33 +1543,58 @@ var model = {
                                                     if (singleData.resultSwiss.isNoMatch == true) {
                                                         stats.reason = "No Match";
                                                     } else {
-                                                        stats.isAthleteWinner = true;
-                                                    }
-                                                } else {
-                                                    if (singleData.resultSwiss.isNoMatch == false) {
                                                         stats.draw = singleData.resultSwiss.isDraw;
-                                                        async.each(singleData.resultSwiss.players, function (n, callback) {
-                                                            if (n.player.equals(data.athleteId)) {
-                                                                stats.score = n.score;
-                                                                stats.rank = n.rank;
-                                                                match.push(stats);
-                                                                callback(null, match);
-                                                            } else if (!n.player.equals(data.athleteId)) {
-                                                                Athelete.findOne({
-                                                                    _id: n.player
-                                                                }).lean().deepPopulate("school").exec(function (err, found) {
-                                                                    if (found.middleName) {
-                                                                        stats.opponentName = found.firstName + " " + found.middleName + " " + found.surname;
-                                                                    } else {
-                                                                        stats.opponentName = found.firstName + " " + found.surname;
-                                                                    }
-                                                                    if (found.atheleteSchoolName) {
-                                                                        stats.school = found.atheleteSchoolName;
-                                                                    } else {
-                                                                        stats.school = found.school.name;
-                                                                    }
+                                                        if (singleData.resultSwiss.isDraw == false) {
+                                                            if (singleData.resultSwiss.winner.player.equals(n.id)) {
+                                                                stats.isAthleteWinner = false;
+                                                            } else {
+                                                                stats.isAthleteWinner = true;
+
+                                                                if (singleData.resultSwiss.winner.player.equals(singleData.resultSwiss.players[0].id)) {
+                                                                    stats.walkover = singleData.resultSwiss.players[0].walkover;
+                                                                } else {
+                                                                    stats.walkover = singleData.resultSwiss.players[1].walkover;
+                                                                }
+                                                            }
+                                                        } else {
+                                                            stats.isAthleteWinner = false;
+                                                        }
+                                                    }
+                                                    match.push(stats);
+                                                    callback(null, match);
+                                                } else {
+                                                    async.eachSeries(singleData.resultSwiss.players, function (n, callback) {
+                                                        console.log("players", n);
+                                                        if (n.player.equals(data.athleteId)) {
+                                                            console.log("inside if");
+                                                            stats.score = n.score;
+                                                            stats.rank = n.rank;
+                                                            callback(null, match);
+                                                        } else if (!n.player.equals(data.athleteId)) {
+                                                            console.log("inside else");
+                                                            Athelete.findOne({
+                                                                _id: n.player
+                                                            }).lean().deepPopulate("school").exec(function (err, found) {
+                                                                console.log("found", found);
+                                                                if (found.middleName) {
+                                                                    stats.opponentName = found.firstName + " " + found.middleName + " " + found.surname;
+                                                                } else {
+                                                                    stats.opponentName = found.firstName + " " + found.surname;
+                                                                }
+                                                                if (found.atheleteSchoolName) {
+                                                                    stats.school = found.atheleteSchoolName;
+                                                                } else {
+                                                                    stats.school = found.school.name;
+                                                                }
+                                                                stats.draw = singleData.resultSwiss.isDraw;
+                                                                if (singleData.resultSwiss.isDraw == false) {
                                                                     if (singleData.resultSwiss.winner.player.equals(n.id)) {
                                                                         stats.isAthleteWinner = false;
+                                                                        if (singleData.resultSwiss.winner.player.equals(singleData.resultSwiss.players[0].id)) {
+                                                                            stats.walkover = singleData.resultSwiss.players[0].walkover;
+                                                                        } else {
+                                                                            stats.walkover = singleData.resultSwiss.players[1].walkover;
+                                                                        }
                                                                     } else {
                                                                         stats.isAthleteWinner = true;
                                                                         if (singleData.resultSwiss.winner.player.equals(singleData.resultSwiss.players[0].id)) {
@@ -1581,18 +1603,18 @@ var model = {
                                                                             stats.walkover = singleData.resultSwiss.players[1].walkover;
                                                                         }
                                                                     }
-                                                                    match.push(stats);
-                                                                    callback(null, match);
-                                                                });
-                                                            } else {
+                                                                } else {
+                                                                    stats.isAthleteWinner = false;
+                                                                }
+                                                                console.log("match", stats);
+                                                                match.push(stats);
                                                                 callback(null, match);
-                                                            }
-                                                        }, function (err) {
-                                                            callback(null, match);
-                                                        });
-                                                    } else {
+                                                            });
 
-                                                    }
+                                                        }
+                                                    }, function (err) {
+                                                        callback(null, match);
+                                                    });
                                                 }
 
                                             } else if (singleData.resultKnockout) {
@@ -1867,9 +1889,7 @@ var model = {
                                                                                 callback(null, err);
                                                                             } else if (_.isEmpty(foundAthlete)) {
                                                                                 StudentTeam.findOne({
-                                                                                    teamId: {
-                                                                                        $ne: objectid(n.team)
-                                                                                    },
+                                                                                    teamId: objectid(n.team),
                                                                                     studentId: {
                                                                                         $ne: data.athleteId
                                                                                     },
@@ -1923,9 +1943,7 @@ var model = {
                                                                         });
                                                                     } else {
                                                                         StudentTeam.findOne({
-                                                                            teamId: {
-                                                                                $ne: objectid(n.team)
-                                                                            },
+                                                                            teamId: objectid(n.team),
                                                                             studentId: {
                                                                                 $ne: data.athleteId
                                                                             },
@@ -2000,9 +2018,7 @@ var model = {
                                                                                 callback(null, err);
                                                                             } else if (_.isEmpty(foundAthlete)) {
                                                                                 StudentTeam.findOne({
-                                                                                    teamId: {
-                                                                                        $ne: objectid(n.team)
-                                                                                    },
+                                                                                    teamId: objectid(n.team),
                                                                                     studentId: {
                                                                                         $ne: data.athleteId
                                                                                     },
@@ -2056,9 +2072,7 @@ var model = {
                                                                         });
                                                                     } else {
                                                                         StudentTeam.findOne({
-                                                                            teamId: {
-                                                                                $ne: objectid(n.team)
-                                                                            },
+                                                                            teamId: objectid(n.team),
                                                                             studentId: {
                                                                                 $ne: data.athleteId
                                                                             },
@@ -2137,9 +2151,7 @@ var model = {
                                                                                 callback(null, err);
                                                                             } else if (_.isEmpty(foundAthlete)) {
                                                                                 StudentTeam.findOne({
-                                                                                    teamId: {
-                                                                                        $ne: objectid(n.team)
-                                                                                    },
+                                                                                    teamId: objectid(n.team),
                                                                                     studentId: {
                                                                                         $ne: data.athleteId
                                                                                     },
@@ -2173,9 +2185,7 @@ var model = {
                                                                         });
                                                                     } else {
                                                                         StudentTeam.findOne({
-                                                                            teamId: {
-                                                                                $ne: objectid(n.team)
-                                                                            },
+                                                                            teamId: n.team,
                                                                             studentId: {
                                                                                 $ne: data.athleteId
                                                                             },
@@ -2232,9 +2242,7 @@ var model = {
                                                                                 callback(null, err);
                                                                             } else if (_.isEmpty(foundAthlete)) {
                                                                                 StudentTeam.findOne({
-                                                                                    teamId: {
-                                                                                        $ne: objectid(n.team)
-                                                                                    },
+                                                                                    teamId: objectid(n.team),
                                                                                     studentId: {
                                                                                         $ne: data.athleteId
                                                                                     },
@@ -2268,9 +2276,7 @@ var model = {
                                                                         });
                                                                     } else {
                                                                         StudentTeam.findOne({
-                                                                            teamId: {
-                                                                                $ne: objectid(n.team)
-                                                                            },
+                                                                            teamId: objectid(n.team),
                                                                             studentId: {
                                                                                 $ne: data.athleteId
                                                                             },
@@ -2335,9 +2341,7 @@ var model = {
                                                                                 callback(null, err);
                                                                             } else if (_.isEmpty(foundAthlete)) {
                                                                                 StudentTeam.findOne({
-                                                                                    teamId: {
-                                                                                        $ne: objectid(n.team)
-                                                                                    },
+                                                                                    teamId: objectid(n.team),
                                                                                     studentId: {
                                                                                         $ne: data.athleteId
                                                                                     },
@@ -2371,22 +2375,20 @@ var model = {
                                                                         });
                                                                     } else {
                                                                         StudentTeam.findOne({
-                                                                            teamId: {
-                                                                                $ne: objectid(n.team)
-                                                                            },
+                                                                            teamId: objectid(n.team),
                                                                             studentId: {
                                                                                 $ne: data.athleteId
                                                                             },
                                                                             sport: singleData.sport
-                                                                        }).lean().deepPopulate("studentId.school teamId").exec(function (err, found) {
+                                                                        }).lean().deepPopulate("studentId.school teamId").exec(function (err, founds) {
                                                                             if (err) {
                                                                                 callback(null, err);
-                                                                            } else if (_.isEmpty(found)) {
+                                                                            } else if (_.isEmpty(founds)) {
                                                                                 callback();
                                                                             } else {
-                                                                                stats.opponentName = found.teamId.name;
-                                                                                stats.school = found.teamId.schoolName;
-                                                                                stats.teamId = found.teamId.teamId;
+                                                                                stats.opponentName = founds.teamId.name;
+                                                                                stats.school = founds.teamId.schoolName;
+                                                                                stats.teamId = founds.teamId.teamId;
                                                                                 stats.draw = singleData.resultFootball.isDraw;
                                                                                 callback();
                                                                             }
@@ -2454,9 +2456,7 @@ var model = {
                                                                                 callback(null, err);
                                                                             } else if (_.isEmpty(foundAthlete)) {
                                                                                 StudentTeam.findOne({
-                                                                                    teamId: {
-                                                                                        $ne: objectid(n.team)
-                                                                                    },
+                                                                                    teamId: objectid(n.team),
                                                                                     studentId: {
                                                                                         $ne: data.athleteId
                                                                                     },
@@ -2512,9 +2512,7 @@ var model = {
                                                                         });
                                                                     } else {
                                                                         StudentTeam.findOne({
-                                                                            teamId: {
-                                                                                $ne: objectid(n.team)
-                                                                            },
+                                                                            teamId: objectid(n.team),
                                                                             studentId: {
                                                                                 $ne: data.athleteId
                                                                             },
@@ -2579,9 +2577,8 @@ var model = {
                                                                                 callback(null, err);
                                                                             } else if (_.isEmpty(foundAthlete)) {
                                                                                 StudentTeam.findOne({
-                                                                                    teamId: {
-                                                                                        $ne: objectid(n.team)
-                                                                                    },
+                                                                                    teamId: objectid(n.team),
+
                                                                                     studentId: {
                                                                                         $ne: data.athleteId
                                                                                     },
@@ -2681,9 +2678,7 @@ var model = {
                                                                                 callback(null, err);
                                                                             } else if (_.isEmpty(foundAthlete)) {
                                                                                 StudentTeam.findOne({
-                                                                                    teamId: {
-                                                                                        $ne: objectid(n.team)
-                                                                                    },
+                                                                                    teamId: objectid(n.team),
                                                                                     studentId: {
                                                                                         $ne: data.athleteId
                                                                                     },
@@ -2717,9 +2712,7 @@ var model = {
                                                                         });
                                                                     } else {
                                                                         StudentTeam.findOne({
-                                                                            teamId: {
-                                                                                $ne: objectid(n.team)
-                                                                            },
+                                                                            teamId: objectid(n.team),
                                                                             studentId: {
                                                                                 $ne: data.athleteId
                                                                             },
@@ -2785,9 +2778,8 @@ var model = {
                                                                                 callback(null, err);
                                                                             } else if (_.isEmpty(foundAthlete)) {
                                                                                 StudentTeam.findOne({
-                                                                                    teamId: {
-                                                                                        $ne: objectid(n.team)
-                                                                                    },
+                                                                                    teamId: objectid(n.team),
+
                                                                                     studentId: {
                                                                                         $ne: data.athleteId
                                                                                     },
@@ -2885,9 +2877,7 @@ var model = {
                                                                                 callback(null, err);
                                                                             } else if (_.isEmpty(foundAthlete)) {
                                                                                 StudentTeam.findOne({
-                                                                                    teamId: {
-                                                                                        $ne: objectid(n.team)
-                                                                                    },
+                                                                                    teamId: objectid(n.team),
                                                                                     studentId: {
                                                                                         $ne: data.athleteId
                                                                                     },
@@ -2921,9 +2911,7 @@ var model = {
                                                                         });
                                                                     } else {
                                                                         StudentTeam.findOne({
-                                                                            teamId: {
-                                                                                $ne: objectid(n.team)
-                                                                            },
+                                                                            teamId: objectid(n.team),
                                                                             studentId: {
                                                                                 $ne: data.athleteId
                                                                             },
@@ -3331,7 +3319,7 @@ var model = {
                                                             }
                                                         }
                                                         stats.score = singleData.resultBasketball.teams[0].teamResults.finalGoalPoints + "-" + singleData.resultBasketball.teams[1].teamResults.finalGoalPoints;
-                                                        if (singleData.resultBasketball.winner.player === n) {
+                                                        if (singleData.resultBasketball.winner.player === n.toString()) {
                                                             stats.isAthleteWinner = false;
                                                         } else {
                                                             stats.isAthleteWinner = true;
@@ -3409,7 +3397,7 @@ var model = {
                                                             }
                                                         }
                                                         stats.score = singleData.resultThrowball.teams[0].teamResults.finalPoints + "-" + singleData.resultThrowball.teams[1].teamResults.finalPoints;
-                                                        if (singleData.resultThrowball.winner.player === n) {
+                                                        if (singleData.resultThrowball.winner.player === n.toString()) {
                                                             stats.isAthleteWinner = false;
                                                         } else {
                                                             stats.isAthleteWinner = true;
@@ -3471,7 +3459,7 @@ var model = {
                                                 if (singleData.resultFootball.status == "IsCompleted" && singleData.resultFootball.isNoMatch == false) {
                                                     stats.status = singleData.resultFootball.status;
                                                     stats.draw = singleData.resultFootball.isDraw;
-                                                    if (singleData.resultBasketball.teams[0].team === n.toString()) {
+                                                    if (singleData.resultFootball.teams[0].team === n.toString()) {
                                                         if (singleData.resultFootball.teams[0].noShow == true && singleData.resultFootball.teams[0].walkover == false) {
                                                             stats.reason = "Walkover";
                                                         } else if (singleData.resultFootball.teams[0].noShow == false && singleData.resultFootball.teams[0].walkover == true) {
@@ -3489,7 +3477,7 @@ var model = {
                                                         }
                                                     }
                                                     stats.score = singleData.resultFootball.teams[0].teamResults.finalPoints + "-" + singleData.resultFootball.teams[1].teamResults.finalPoints;
-                                                    if (singleData.resultFootball.winner.player === n) {
+                                                    if (singleData.resultFootball.winner.player === n.toString()) {
                                                         stats.isAthleteWinner = false;
                                                     } else {
                                                         stats.isAthleteWinner = true;
@@ -3612,7 +3600,7 @@ var model = {
                                                 stats.school = found.schoolName;
                                                 stats.teamId = found.teamId;
                                                 if (singleData.resultVolleyball.status == "IsCompleted" && singleData.resultVolleyball.isNoMatch == false) {
-                                                    if (singleData.resultVolleyball.winner.player === n) {
+                                                    if (singleData.resultVolleyball.winner.player === n.toString()) {
                                                         stats.isAthleteWinner = false;
                                                     } else {
                                                         stats.isAthleteWinner = true;
@@ -3913,7 +3901,7 @@ var model = {
                                                         }
                                                     }
                                                     stats.score = singleData.resultHandball.teams[0].teamResults.finalPoints + "-" + singleData.resultHandball.teams[1].teamResults.finalPoints;;
-                                                    if (singleData.resultHandball.winner.player === n) {
+                                                    if (singleData.resultHandball.winner.player === n.toString()) {
                                                         stats.isAthleteWinner = false;
                                                     } else {
                                                         stats.isAthleteWinner = true;

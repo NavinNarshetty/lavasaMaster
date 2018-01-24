@@ -255,13 +255,9 @@ myApp.controller('DetailQualifyingCtrl', function ($scope, TemplateService, Navi
     console.log($scope.formData, "save");
     NavigationService.saveMatch($scope.formData, function (data) {
       if (data.value == true) {
-        console.log("in")
-        console.log($scope.formData, "suksha");
+        // console.log("in")
+        // console.log($scope.formData, "suksha");
         $scope.show = false;
-
-
-        // $scope.draw = $scope.data.sport.sportslist.drawFormat.name
-        // console.log(draw, "in draw")
         toastr.success("Data saved successfully", 'Success');
         $state.go('format-table', {
           type: $scope.formData.sport.sportslist.drawFormat.name

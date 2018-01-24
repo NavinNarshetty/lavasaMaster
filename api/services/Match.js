@@ -14280,7 +14280,9 @@ var model = {
         if (data.resultsCombat) {
             var matchObj = {
                 $set: {
-                    resultsCombat: data.resultsCombat
+                    resultsCombat: data.resultsCombat,
+                    video: data.video,
+                    videoType: data.videoType
                 }
             };
 
@@ -14288,96 +14290,126 @@ var model = {
         } else if (data.resultsRacquet) {
             var matchObj = {
                 $set: {
-                    resultsRacquet: data.resultsRacquet
+                    resultsRacquet: data.resultsRacquet,
+                    video: data.video,
+                    videoType: data.videoType
                 }
             };
 
         } else if (data.resultVolleyball) {
             var matchObj = {
                 $set: {
-                    resultVolleyball: data.resultVolleyball
+                    resultVolleyball: data.resultVolleyball,
+                    video: data.video,
+                    videoType: data.videoType
                 }
             };
 
         } else if (data.resultBasketball) {
             var matchObj = {
                 $set: {
-                    resultBasketball: data.resultBasketball
+                    resultBasketball: data.resultBasketball,
+                    video: data.video,
+                    videoType: data.videoType
                 }
             };
 
         } else if (data.resultThrowball) {
             var matchObj = {
                 $set: {
-                    resultThrowball: data.resultThrowball
+                    resultThrowball: data.resultThrowball,
+                    video: data.video,
+                    videoType: data.videoType
                 }
             };
 
         } else if (data.resultHockey) {
             var matchObj = {
                 $set: {
-                    resultHockey: data.resultHockey
+                    resultHockey: data.resultHockey,
+                    video: data.video,
+                    videoType: data.videoType
                 }
             };
 
         } else if (data.resultHeat) {
             var matchObj = {
                 $set: {
-                    resultHeat: data.resultHeat
+                    resultHeat: data.resultHeat,
+                    video: data.video,
+                    videoType: data.videoType
                 }
             };
         } else if (data.resultQualifyingRound) {
             var matchObj = {
                 $set: {
-                    resultQualifyingRound: data.resultQualifyingRound
+                    resultQualifyingRound: data.resultQualifyingRound,
+                    video: data.video,
+                    videoType: data.videoType
                 }
             };
         } else if (data.resultShooting) {
             var matchObj = {
                 $set: {
-                    resultShooting: data.resultShooting
+                    resultShooting: data.resultShooting,
+                    video: data.video,
+                    videoType: data.videoType
                 }
             };
         } else if (data.resultKnockout) {
             var matchObj = {
                 $set: {
-                    resultKnockout: data.resultKnockout
+                    resultKnockout: data.resultKnockout,
+                    video: data.video,
+                    videoType: data.videoType
                 }
             };
         } else if (data.resultFootball) {
             var matchObj = {
                 $set: {
-                    resultFootball: data.resultFootball
+                    resultFootball: data.resultFootball,
+                    video: data.video,
+                    videoType: data.videoType
                 }
             };
         } else if (data.resultKabaddi) {
             var matchObj = {
                 $set: {
-                    resultKabaddi: data.resultKabaddi
+                    resultKabaddi: data.resultKabaddi,
+                    video: data.video,
+                    videoType: data.videoType
                 }
             };
         } else if (data.resultHandball) {
             var matchObj = {
                 $set: {
-                    resultHandball: data.resultHandball
+                    resultHandball: data.resultHandball,
+                    video: data.video,
+                    videoType: data.videoType
                 }
             };
         } else if (data.resultWaterPolo) {
             var matchObj = {
                 $set: {
-                    resultWaterPolo: data.resultWaterPolo
+                    resultWaterPolo: data.resultWaterPolo,
+                    video: data.video,
+                    videoType: data.videoType
                 }
             };
         } else if (data.resultSwiss) {
             var matchObj = {
                 $set: {
-                    resultSwiss: data.resultSwiss
+                    resultSwiss: data.resultSwiss,
+                    video: data.video,
+                    videoType: data.videoType
                 }
             };
         } else if (data.resultFencing) {
             var matchObj = {
                 $set: {
-                    resultFencing: data.resultFencing
+                    resultFencing: data.resultFencing,
+                    video: data.video,
+                    videoType: data.videoType
                 }
             };
         }
