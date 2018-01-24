@@ -1563,11 +1563,13 @@ var model = {
                                                     match.push(stats);
                                                     callback(null, match);
                                                 } else {
+                                                    var count = 0;
+                                                    var score;
                                                     async.eachSeries(singleData.resultSwiss.players, function (n, callback) {
                                                         console.log("players", n);
                                                         if (n.player.equals(data.athleteId)) {
                                                             console.log("inside if");
-                                                            stats.score = n.score;
+                                                            stats.score = singleData.resultSwiss.players[0].score + "-" + singleData.resultSwiss.players[1].score;
                                                             stats.rank = n.rank;
                                                             callback(null, match);
                                                         } else if (!n.player.equals(data.athleteId)) {
