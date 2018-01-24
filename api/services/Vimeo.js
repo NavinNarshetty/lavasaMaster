@@ -682,10 +682,7 @@ var model = {
                 $exists: true
             },
             mediatype: "video",
-            videotype: "vimeo",
-            thumbnails: {
-                $exists: false
-            }
+            videotype: "vimeo"
         }).exec(function (err, complete) {
             console.log(complete);
             if (err || _.isEmpty(complete)) {

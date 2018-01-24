@@ -72,7 +72,8 @@ var model = {
                     callback(null,[])
                 }else{
                     async.concatSeries(importData, function (singleData, callback) {
-                    singleData.date = new Date(Math.round((singleData.date - 25569) * 86400 * 1000));
+                    // singleData.date = new Date(Math.round((singleData.date - 25569) * 86400 * 1000));
+                    singleData.date=moment(singleData.date, "DD-MM-YYYY").add(1, 'days');
                     singleData.year = year;
                         Media.saveData(singleData, function (err, data) {
                             if (err) {
@@ -130,6 +131,7 @@ var model = {
     },
 
     generateExcel: function (data, res) {
+        console.log("data",data);
         var matchObj = {};
         var name = "";
 
@@ -138,13 +140,14 @@ var model = {
                 async.concatSeries(medias, function (singleMedia, callback) {
                         var obj = {};
                         obj.year = singleMedia.year;
+                        obj.date = moment(singleMedia.date).format('DD-MM-YY');
                         obj.folder = singleMedia.folder;
                         obj.order = singleMedia.order;
                         obj.imageorder = singleMedia.imageorder;
-                        obj.date = moment(singleMedia.date).format('DD-MM-YY');
                         obj.mediatitle = singleMedia.mediatitle;
                         obj.mediatype = singleMedia.mediatype;
                         obj.medialink = singleMedia.medialink;
+                        obj.videotype = singleMedia.videotype;
                         callback(null, obj);
                     },
                     function (err, allMedias) {
@@ -161,15 +164,14 @@ var model = {
                 var obj = {};
                 var name = "";
                 obj.year = "2015";
+                obj.date = moment().format('DD/MM/YY');
+                obj.folder = folder;
                 obj.order = 1;
                 obj.imageorder = 1;
-                obj.date = moment().format('DD/MM/YY');
                 obj.mediatitle = "Tennis day 1";
-                obj.folder = folder;
                 obj.mediatype = mediatype;
                 obj.medialink = medialink;
                 obj.videotype = videotype;
-
                 arrJsonExcel.push(obj);
             }
             if (data.press == 'true') {
