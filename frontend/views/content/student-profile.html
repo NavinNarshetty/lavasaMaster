@@ -233,7 +233,7 @@
                                             == 'Qualifying Round') || (table.layout == 'Knockout') || (table.layout == 'Swiss League')
                                             || (table.layout == 'Heats') || (table.layout == 'League') || (table.layout == 'League cum Knockout')">{{stat.round || '-'}}</td>
                                         <td class="text-up" ng-if="table.layout == 'Qualifying Knockout' || table.layout == 'Knockout' || table.layout == 'League' || table.layout == 'League cum Knockout' || table.layout == 'Swiss League'">
-                                            <img src="img/sf-cup-mini.png" alt="" class="table-img" ng-if="stat.isAthleteWinner == false">{{stat.opponentName
+                                            <img src="img/sf-cup-mini.png" alt="" class="table-img" ng-if="stat.isAthleteWinner == false && stat.draw != true">{{stat.opponentName
                                             || '-' | removeSchoolWithDash:stat.school}}
                                             <p>{{stat.school}}</p>
                                         </td>
