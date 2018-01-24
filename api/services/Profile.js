@@ -1923,9 +1923,7 @@ var model = {
                                                                         });
                                                                     } else {
                                                                         StudentTeam.findOne({
-                                                                            teamId: {
-                                                                                $ne: objectid(n.team)
-                                                                            },
+                                                                            teamId: n.team,
                                                                             studentId: {
                                                                                 $ne: data.athleteId
                                                                             },
@@ -2056,9 +2054,7 @@ var model = {
                                                                         });
                                                                     } else {
                                                                         StudentTeam.findOne({
-                                                                            teamId: {
-                                                                                $ne: objectid(n.team)
-                                                                            },
+                                                                            teamId: n.team,
                                                                             studentId: {
                                                                                 $ne: data.athleteId
                                                                             },
@@ -2173,9 +2169,7 @@ var model = {
                                                                         });
                                                                     } else {
                                                                         StudentTeam.findOne({
-                                                                            teamId: {
-                                                                                $ne: objectid(n.team)
-                                                                            },
+                                                                            teamId: n.team,
                                                                             studentId: {
                                                                                 $ne: data.athleteId
                                                                             },
@@ -2268,9 +2262,7 @@ var model = {
                                                                         });
                                                                     } else {
                                                                         StudentTeam.findOne({
-                                                                            teamId: {
-                                                                                $ne: objectid(n.team)
-                                                                            },
+                                                                            teamId: n.team,
                                                                             studentId: {
                                                                                 $ne: data.athleteId
                                                                             },
@@ -2371,9 +2363,7 @@ var model = {
                                                                         });
                                                                     } else {
                                                                         StudentTeam.findOne({
-                                                                            teamId: {
-                                                                                $ne: objectid(n.team)
-                                                                            },
+                                                                            teamId: n.team,
                                                                             studentId: {
                                                                                 $ne: data.athleteId
                                                                             },
@@ -2392,7 +2382,7 @@ var model = {
                                                                             }
                                                                         });
                                                                     }
-                                                                        match.push(stats);
+                                                                    match.push(stats);
                                                                 },
                                                                 function (err) {
                                                                     callback(null, match);
@@ -2512,9 +2502,7 @@ var model = {
                                                                         });
                                                                     } else {
                                                                         StudentTeam.findOne({
-                                                                            teamId: {
-                                                                                $ne: objectid(n.team)
-                                                                            },
+                                                                            teamId: n.team,
                                                                             studentId: {
                                                                                 $ne: data.athleteId
                                                                             },
@@ -2616,7 +2604,7 @@ var model = {
                                                                         });
                                                                     } else {
                                                                         StudentTeam.findOne({
-                                                                            teamId: objectid(n.team),
+                                                                            teamId: n.team,
                                                                             studentId: {
                                                                                 $ne: data.athleteId
                                                                             },
@@ -2717,9 +2705,7 @@ var model = {
                                                                         });
                                                                     } else {
                                                                         StudentTeam.findOne({
-                                                                            teamId: {
-                                                                                $ne: objectid(n.team)
-                                                                            },
+                                                                            teamId: n.team,
                                                                             studentId: {
                                                                                 $ne: data.athleteId
                                                                             },
@@ -2821,7 +2807,7 @@ var model = {
                                                                         });
                                                                     } else {
                                                                         StudentTeam.findOne({
-                                                                            teamId: objectid(n.team),
+                                                                            teamId: n.team,
                                                                             studentId: {
                                                                                 $ne: data.athleteId
                                                                             },
@@ -2921,9 +2907,7 @@ var model = {
                                                                         });
                                                                     } else {
                                                                         StudentTeam.findOne({
-                                                                            teamId: {
-                                                                                $ne: objectid(n.team)
-                                                                            },
+                                                                            teamId: n.team,
                                                                             studentId: {
                                                                                 $ne: data.athleteId
                                                                             },
