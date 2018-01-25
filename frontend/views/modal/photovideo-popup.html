@@ -63,7 +63,7 @@
           <!-- LOG IN FOOTER END -->
         </div>
         <div class="photovideo-footershare">
-          <p class="text-uppercase">Share this <span>Picture</span> <span>Video</span></p>
+          <p class="text-uppercase">Share this <span ng-if="currentPic.mediatype == 'photo'">Picture</span> <span ng-if="currentPic.mediatype == 'video'">Video</span></p>
           <div class="photovideo-shareholder">
             <div class="photovideo-sharebox">
               <div class="photovideo-socialbutton">

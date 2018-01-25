@@ -510,6 +510,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             url: "/champions-archive",
             templateUrl: tempateURL,
             controller: 'championArchiveCtrl'
+        })
+        .state('gallerypost', {
+            url: "/gallery/post",
+            templateUrl: tempateURL,
+            controller: 'GalleryPostCtrl'
         });
     // if (window.location.origin != "http://testmumbaischool.sfanow.in") {
     if (window.location.origin == "http://mumbaischool.sfanow.in") {
