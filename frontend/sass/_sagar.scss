@@ -170,6 +170,9 @@ $grey: #e1e1e1;
 }
 // VIDEO HOLDER END
 // PHOTO VIDEO POPUP END
+.m0-auto{
+  margin: 0 auto;
+}
 .full-height {
     height: 100%;
 }
@@ -1242,15 +1245,18 @@ $grey: #e1e1e1;
     }
     .col-md-6,
     .col-sm-6 {
-        padding-left: 2px;
-        padding-right: 2px;
+        padding-left: 5px;
+        padding-right: 5px;
     }
 }
 
 .event-card {
-    margin: 2px 0;
+    margin: 5px 0;
+    @include transition(600ms linear ease);
     &:hover {
         box-shadow: 0 0 10px #000;
+        @include transform(scale(1.02));
+        @include transition(600ms linear ease);
     }
      ::-webkit-scrollbar {
         width: 5px;
@@ -2313,3 +2319,40 @@ $tickerDuration: 60s;
   }
 }
 // REPORT CARD PAGE END
+// GALLERY POST PAGE
+.gallerypost-page{
+  min-height: 100vh;
+  padding: 60px 0 50px;
+}
+// GALLERY POST MEDIA SECTION
+.gallerypost-media{
+  
+}
+// GALLERY POST MEDIA SECTION END
+// GALLERY POST CONTENT SECTION
+.gallerypost-content{
+  padding: 10px;
+}
+.gallerypost-title {
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.gallerypost-tagsholder{
+  max-height: 330px;
+  margin-bottom: 15px;
+  overflow: auto;
+}
+.gallerypost-taglist{
+  &:last-child{
+    .gallerrypost-tagcard{
+      border-bottom: none;
+    }
+  }
+}
+.gallerrypost-tagcard {
+  padding: 5px 10px;
+  border-bottom: 1px solid #ccc;
+}
+// GALLERY POST CONTENT SECTION END
+// GALLERY POST PAGE END

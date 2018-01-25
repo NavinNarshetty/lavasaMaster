@@ -35,6 +35,13 @@ body {
     }
 }
 
+body > [uib-modal-window]:not([modal-render]) {
+    display: none;
+}
+body> .modal-backdrop{
+  z-index: 1040 !important;
+}
+
 img.loading {
     text-align: center;
     opacity: 1;

@@ -318,6 +318,7 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
         $scope.rankTable.tableLimit = 20;
         $scope.rankTable.showTable = true;
         _.each($scope.rankTable, function (n, nkey) {
+          n.sportData = _.sortBy(n.sportData, 'name');
           n.rowDetail = false;
           n.goldCount = 0;
           n.silverCount = 0;
