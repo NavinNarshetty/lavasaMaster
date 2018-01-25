@@ -7,8 +7,7 @@
     "urlFields": [
         "_id"
     ],
-    "fields": [
-        {
+    "fields": [{
             "name": "Year",
             "type": "text",
             "tableRef": "year",
@@ -287,6 +286,19 @@
             "tableRef": "bronzeMedal",
             "placeholder": "Enter Gold Medal",
             "id": "bronzeMedal",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "url": ""
+        },
+        {
+            "name": "Minimum Matches",
+            "type": "number",
+            "tableRef": "minMatch",
+            "placeholder": "Enter Mimimum Match",
+            "id": "minMatch",
             "validation": [
                 "",
                 "trim",
@@ -841,8 +853,7 @@
             "url": ""
         }
     ],
-    "action": [
-        {
+    "action": [{
             "name": "submit",
             "action": "submitConfigProperty",
             "stateName": {
