@@ -2070,6 +2070,10 @@ $sport-table-grey:#efeeee !default;
 
 .championsarchive-sportspecificimageholder {
   text-align: center;
+  img.loading {
+    width: 100%;
+    height: auto;
+  }
 }
 
 .archive-readmore,
@@ -2084,6 +2088,35 @@ $sport-table-grey:#efeeee !default;
 .championsarchive-headersection,
 .championsarchive-photovideoholder {
   margin: 40px 0px;
+}
+
+.archivecard-sponsortitle {
+  font-size: 24px;
+}
+
+.archivecard-sponsorholder {
+  margin-bottom: 40px;
+}
+
+.archivecard-sponsortitle {
+  margin-bottom: 15px;
+}
+
+.archivecard-image {}
+
+.archivecard-imageholder {
+  width: 150px;
+  padding: 0px 15px;
+  border-right: 1px solid $sport-grey;
+  display: inline-block;
+  &:nth-last-child(1) {
+    border-right: none;
+  }
+}
+
+.archivecard-imageheader {
+  margin-top: 8px;
+  font-size: 12px;
 }
 
 // CHAMPIONS ARCHIVE PAGE END

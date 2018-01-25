@@ -283,6 +283,45 @@
       <!-- VIEW MORE END -->
     </section>
     <!-- PHOTOS AND VIDEOS END -->
+
+    <!-- SPONSOR AND PARTNER -->
+    <section class="championsarchive-sponsorpartner">
+      <!-- HEADER -->
+      <div class="championarchive-sponsorheader text-center hide">
+        <h3 class="d-fjalla-one text-uppercase sport-color-primary">Thank you Sponsors & partners</h3>
+      </div>
+      <!-- HEADER END -->
+
+      <!-- IMAGE HOLDER WITH TITLE -->
+      <div class="championarchive-sponsorholder" ng-repeat="sponsorcard in archiveSponserdata track by $index">
+        <!-- CARD HOLDER -->
+        <div class="archivecard-sponsorholder text-center">
+          <!-- TITLE -->
+          <div class="archivecard-sponsortitle d-fjalla-one text-uppercase sport-color-primary">
+            <span ng-if="sponsorcard._id==='Sponsor & Partner'">Thank you</span> {{sponsorcard._id}}
+          </div>
+          <!-- TITLE END -->
+          <!-- IMAGES HOLDER -->
+          <!-- IMAGES HOLDER END -->
+
+          <ul class="list-unstyledarchivecard-sponsorimages pad-clear">
+            <li class="archivecard-imageholder text-center" ng-repeat="sponsorcontent in sponsorcard.info track by $index">
+              <div class="archivecard-image">
+                <img ng-src="{{sponsorcontent.headerImage | serverimage2 }}" alt="" srcset="" class="img-responsive">
+              </div>
+              <div class="archivecard-imageheader text-capitalize">
+                {{sponsorcontent.name}}
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- CARD HOLDER END -->
+
+      </div>
+      <!-- IMAGE HOLDER WITH TITLE -->
+    </section>
+    <!-- SPONSOR AND PARTNER END -->
   </div>
   <!-- CONTAINER END -->
 </div>

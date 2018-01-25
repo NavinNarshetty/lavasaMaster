@@ -158,4 +158,14 @@ myApp.controller('championArchiveCtrl', function ($scope, TemplateService, $stat
   }
   // SPORT ICON CLICK
 
+  // SPONSOR 
+  $scope.archiveSponsor = function () {
+    NavigationService.getSponsor(function (data) {
+      console.log(data, "sponsor data");
+      $scope.archiveSponserdata = data.data.data;
+    });
+  }
+  $scope.archiveSponsor();
+  // SPONSOR 
+
 });
