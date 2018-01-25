@@ -1544,6 +1544,8 @@ var model = {
                                                         stats.reason = "No Match";
                                                     } else {
                                                         stats.draw = singleData.resultSwiss.isDraw;
+                                                        stats.score = singleData.resultSwiss.players[0].score;
+                                                        stats.rank = singleData.resultSwiss.players[0].rank;
                                                         if (singleData.resultSwiss.isDraw == false) {
                                                             if (singleData.resultSwiss.winner.player.equals(n.id)) {
                                                                 stats.isAthleteWinner = false;
