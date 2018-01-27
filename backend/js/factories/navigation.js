@@ -123,14 +123,7 @@ myApp.factory('NavigationService', function ($http) {
             }]
 
 
-        },
-        {
-            name: "Matches",
-            classis: "activeColor",
-            sref: "#/matches",
-            icon: "phone"
-        },
-        {
+        }, {
             name: "Individual Sport",
             classis: "activeColor",
             sref: "#/individual-sport",
@@ -141,10 +134,20 @@ myApp.factory('NavigationService', function ($http) {
             sref: "#/teamsport",
             icon: "phone"
         }, {
+            name: "Matches",
+            classis: "activeColor",
+            sref: "#/matches",
+            icon: "phone"
+        }, {
             name: "Medals",
             classis: "activeColor",
             sref: "#/medals",
             icon: "phone"
+        },   {
+            name: "Report Card",
+            classis: "activeColor",
+            sref: "#/page/viewReportCard//",
+            icon: "phone",
         }, {
             name: "Other",
             classis: "activeColor",
@@ -266,8 +269,8 @@ myApp.factory('NavigationService', function ($http) {
             sref: "#/page/viewConfigProperty//",
             icon: "phone",
         },
-
-
+      
+        
         // {
         //     name: "Second Category",
         //     classis: "activeColor",
