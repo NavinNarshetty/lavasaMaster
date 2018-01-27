@@ -1318,30 +1318,30 @@ var model = {
                     // },
 
                 ], function (err, waterfallResult) {
-                    callback(null, waterfallResult);
-                    // Reportcard.findOne({
-                    //     "schoolName": saveObj.schoolName
-                    // }).exec(function (err, found) {
-                    //     function save() {
-                    //         Reportcard.saveData(saveObj, function (err, data) {
-                    //             var obj = {};
-                    //             if (err) {
-                    //                 obj.messege = err;
-                    //             } else {
-                    //                 obj.messege = "Successfully Saved";
-                    //             }
-                    //             callback(null, obj);
-                    //         });
-                    //     }
-                    //     if (err) {
-                    //         callback(err, null);
-                    //     } else if (!_.isEmpty(found)) {
-                    //         saveObj._id = found
-                    //         save();
-                    //     } else {
-                    //         save();
-                    //     }
-                    // });
+                    // callback(null, waterfallResult);
+                    Reportcard.findOne({
+                        "schoolName": saveObj.schoolName
+                    }).exec(function (err, found) {
+                        function save() {
+                            Reportcard.saveData(saveObj, function (err, data) {
+                                var obj = {};
+                                if (err) {
+                                    obj.messege = err;
+                                } else {
+                                    obj.messege = "Successfully Saved";
+                                }
+                                callback(null, obj);
+                            });
+                        }
+                        if (err) {
+                            callback(err, null);
+                        } else if (!_.isEmpty(found)) {
+                            saveObj._id = found
+                            save();
+                        } else {
+                            save();
+                        }
+                    });
 
                 });
             }, function (err, result) {
