@@ -6367,7 +6367,7 @@ var model = {
                                                                                     stats.isAthleteWinner = false;
                                                                                 } else {
                                                                                     stats.isAthleteWinner = true;
-                                                                                    stats.walkover = player.walkover;
+                                                                                    stats.walkover = n.walkover;
                                                                                 }
                                                                                 console.log("team", found.teamId);
                                                                                 stats.opponentName = found.teamId.name;
