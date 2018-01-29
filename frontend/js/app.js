@@ -224,11 +224,6 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'featuredGalleryCtrl'
         })
-        .state('featuredvideo', {
-            url: "/featuredvideo",
-            templateUrl: tempateURL,
-            controller: 'MatchVideoCtrl'
-        })
 
         // Media
 
