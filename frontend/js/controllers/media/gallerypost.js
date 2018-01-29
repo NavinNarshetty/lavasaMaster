@@ -15,7 +15,19 @@ myApp.controller('GalleryPostCtrl', function ($scope, TemplateService, $http, Na
   // CONFIG SET END
   // START OF CONTROLLER
   // DUMMY JSONS
-  $scope.tagList = ['1', '2'];
+  $scope.pic = {
+    medialink: '',
+    mediatype: 'photo',
+    title: 'Hello',
+    tags: ['1', '2']
+  }
+  $scope.pic = {
+    medialink: '252660722',
+    mediatype: 'video',
+    thumbnail: '',
+    mediatitle: 'Hello',
+    tags: ['1', '2']
+  }
   // DUMMY JSONS END
   // END OF CONTROLLER
 });

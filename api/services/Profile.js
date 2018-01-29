@@ -6085,7 +6085,7 @@ var model = {
                                                                                             stats.isAthleteWinner = false;
                                                                                         } else {
                                                                                             stats.isAthleteWinner = true;
-                                                                                            stats.walkover = player.walkover;
+                                                                                            stats.walkover = n.walkover;
                                                                                         }
                                                                                         stats.status = singleData.resultsCombat.status;
                                                                                         stats.draw = singleData.resultsCombat.isDraw;
@@ -6188,7 +6188,7 @@ var model = {
                                                                                                 stats.isAthleteWinner = false;
                                                                                             } else {
                                                                                                 stats.isAthleteWinner = true;
-                                                                                                stats.walkover = player.walkover;
+                                                                                                stats.walkover = n.walkover;
                                                                                             }
                                                                                             stats.status = singleData.resultsRacquet.status;
                                                                                         } else if (singleData.resultsRacquet.status == "IsCompleted" && singleData.resultsRacquet.isNoMatch == true) {
@@ -6367,7 +6367,7 @@ var model = {
                                                                                     stats.isAthleteWinner = false;
                                                                                 } else {
                                                                                     stats.isAthleteWinner = true;
-                                                                                    stats.walkover = player.walkover;
+                                                                                    stats.walkover = n.walkover;
                                                                                 }
                                                                                 console.log("team", found.teamId);
                                                                                 stats.opponentName = found.teamId.name;
@@ -6476,7 +6476,7 @@ var model = {
                                                                                     stats.isAthleteWinner = false;
                                                                                 } else {
                                                                                     stats.isAthleteWinner = true;
-                                                                                    stats.walkover = player.walkover;
+                                                                                    stats.walkover = n.walkover;
                                                                                 }
                                                                                 stats.opponentName = found.teamId.name;
                                                                                 if (found.teamId.schoolName) {
@@ -6592,7 +6592,7 @@ var model = {
                                                                                     stats.isAthleteWinner = false;
                                                                                 } else {
                                                                                     stats.isAthleteWinner = true;
-                                                                                    stats.walkover = player.walkover;
+                                                                                    stats.walkover = n.walkover;
                                                                                 }
                                                                                 stats.opponentName = found.teamId.name;
                                                                                 if (found.teamId.schoolName) {
@@ -6706,7 +6706,7 @@ var model = {
                                                                                     stats.isAthleteWinner = false;
                                                                                 } else {
                                                                                     stats.isAthleteWinner = true;
-                                                                                    stats.walkover = player.walkover;
+                                                                                    stats.walkover = n.walkover;
                                                                                 }
                                                                                 stats.opponentName = found.teamId.name;
                                                                                 if (found.teamId.schoolName) {
@@ -6811,7 +6811,7 @@ var model = {
                                                                                     stats.isAthleteWinner = false;
                                                                                 } else {
                                                                                     stats.isAthleteWinner = true;
-                                                                                    stats.walkover = player.walkover;
+                                                                                    stats.walkover = n.walkover;
                                                                                 }
                                                                                 console.log("team", found.teamId);
                                                                                 stats.opponentName = found.teamId.name;
@@ -6917,7 +6917,7 @@ var model = {
                                                                                     stats.isAthleteWinner = false;
                                                                                 } else {
                                                                                     stats.isAthleteWinner = true;
-                                                                                    stats.walkover = player.walkover;
+                                                                                    stats.walkover = n.walkover;
                                                                                 }
                                                                                 console.log("team", found.teamId);
                                                                                 stats.opponentName = found.teamId.name;
@@ -7023,7 +7023,7 @@ var model = {
                                                                                     stats.isAthleteWinner = false;
                                                                                 } else {
                                                                                     stats.isAthleteWinner = true;
-                                                                                    stats.walkover = player.walkover;
+                                                                                    stats.walkover = n.walkover;
                                                                                 }
                                                                                 console.log("team", found.teamId);
                                                                                 stats.opponentName = found.teamId.name;
@@ -7129,7 +7129,7 @@ var model = {
                                                                                     stats.isAthleteWinner = false;
                                                                                 } else {
                                                                                     stats.isAthleteWinner = true;
-                                                                                    stats.walkover = player.walkover;
+                                                                                    stats.walkover = n.walkover;
                                                                                 }
                                                                                 console.log("team", found.teamId);
                                                                                 stats.opponentName = found.teamId.name;

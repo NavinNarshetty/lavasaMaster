@@ -1,0 +1,43 @@
+{
+    "title": "Report Card",
+    "description": "Update Report Card Table",
+    "pageType": "view",
+    "sendIdWithCreate": true,
+    "urlFields": ["_id"],
+    "fields": [{
+            "name": "SFA-ID",
+            "isSort": "",
+            "tableRef": "sfaId"
+        }, {
+        "name": "School Name",
+        "isSort": "",
+        "tableRef": "schoolName"
+    }],  
+    "action": [{
+        "name": "delete",
+        "icon": "fa-trash",
+        "buttonClass": "btn-danger",
+        "type": "apiCallConfirm",
+        "title": "Delete Report Card",
+        "content": "Are you sure you want to delete Report Card?",
+        "api": "Reportcard/delete",
+        "fieldsToSend": {
+            "name": "_id",
+            "value": "_id"
+        }
+    }],
+    "button": [{
+        "name": "Report Card Table Update",
+        "icon": "print",
+        "class": "btn-success",
+        "type": "redirect",
+        "text": "export",
+        "linkType": "admin",
+        "action": "Reportcard/generateReportCard"
+        }],
+        "apiCall": {
+            "url": "Reportcard/search",
+            "params": "_id"
+        }
+        
+}
