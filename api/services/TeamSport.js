@@ -1199,6 +1199,7 @@ var model = {
                         excelData.push(obj);
                     });
                     callback(null, excelData);
+                    console.log(excelData.length);
                     Config.generateExcelOld("TeamSport", excelData, res);
                 },
             ],
