@@ -2321,12 +2321,13 @@ $tickerDuration: 60s;
 // REPORT CARD PAGE END
 // GALLERY POST PAGE
 .gallerypost-page{
-  min-height: 100vh;
+  // min-height: 100vh;
+  min-height: calc( 100vh - 60px);
   padding: 60px 0 50px;
 }
 // GALLERY POST MEDIA SECTION
 .gallerypost-media{
-  
+
 }
 // GALLERY POST MEDIA SECTION END
 // GALLERY POST CONTENT SECTION

@@ -5,13 +5,13 @@
       <div class="col-md-8 col-sm-8 col-xs-12">
         <div class="gallerypost-media">
           <!-- PHOTO HOLDER -->
-          <div class="gallerypost-photoholder">
-            <img src="img/featuredthumbnail.jpg" alt="{{}} | SFA Photos" title="{{}} | SFA Photos" class="img-responsive m0-auto">
+          <div class="gallerypost-photoholder " ng-if="pic.mediatype == 'photo'">
+            <img src="img/featuredthumbnail.jpg" alt="{{pic.title}} | SFA Photos" title="{{pic.title}} | SFA Photos" class="img-responsive m0-auto">
           </div>
           <!-- PHOTO HOLDER END -->
           <!-- VIDEO HOLDER -->
-          <div class="gallerypost-videooholder hide">
-            <img src="img/featuredthumbnail.jpg" alt="{{}} | SFA Videos" title="{{}} | SFA Videos" class="img-responsive m0-auto">
+          <div class="gallerypost-videooholder " ng-if="pic.mediatype == 'video'" style="background-image:url('{{pic.thumbnail}}')">
+            <iframe class="photovideo-vidframe" ng-src="{{'https://player.vimeo.com/video/' + pic.medialink |trusted }}" frameborder="0" title="{{pic.mediatitle}} | SFA Videos"></iframe>
           </div>
           <!-- VIDEO HOLDER END -->
         </div>
@@ -21,17 +21,18 @@
         <div class="gallerypost-content">
           <!-- GALLERY POST TITLE -->
           <div class="gallerypost-title">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis excepturi inventore debitis odio necessitatibus nisi
+            <span ng-if="pic.mediatype == 'photo'">{{pic.title}}</span>
+            <span ng-if="pic.mediatype == 'video'">{{pic.mediatitle}}</span>
           </div>
           <!-- GALLERY POST TITLE END -->
           <!-- TAGS HOLDER -->
-          <div class="gallerypost-tagsholder">
+          <div class="gallerypost-tagsholder" ng-if="pic.tags.length > 0">
             <ul class="list-unstyled">
-              <li class="gallerypost-taglist" ng-repeat="tag in tagList track by $index">
-                <div class="gallerrypost-tagcard">
-                  <p class="m-clear">Name Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                  <p class="m-clear">School Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                  <p class="m-clear">SFA ID</p>
+              <li class="gallerypost-taglist" ng-repeat="tag in pic.tags track by $index">
+                <div class="gallerrypost-tagcard text-capitalize">
+                  <p class="m-clear">Ram Singh  Tomar </p>
+                  <p class="m-clear">Silver oaks High Shool .</p>
+                  <p class="m-clear">SFA ID: 1234565</p>
                 </div>
               </li>
             </ul>
