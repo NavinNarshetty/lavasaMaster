@@ -7436,155 +7436,177 @@ var model = {
                 function (callback) {
                     Config.importGS(data.file, function (err, importData) {
                         if (err || _.isEmpty(importData)) {
-                            callback(err, null);
+                            var err = "NO data to import";
+                            callback(null, {
+                                error: err,
+                                data: data
+                            });
                         } else {
                             callback(null, importData);
                         }
                     });
-                    // var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory";
-                    // Match.find({
-                    //     sport: data.sport,
-                    // }).lean().deepPopulate(deepSearch).exec(function (err, match) {
-                    //     if (err) {
-                    //         callback(err, null);
-                    //     } else {
-                    //         if (_.isEmpty(match)) {
-                    //             callback(null, []);
-                    //         } else {
-                    //             callback(null, match);
-                    //         }
-                    //     }
-                    // });
                 },
                 function (importData, callback) {
-                    async.concatSeries(importData, function (n, callback) {
-                            async.waterfall([
-                                    function (callback) {
-                                        var param = {};
-                                        param.matchData = n["MATCH ID"];
-                                        Match.getOne(param, function (err, matchData) {
-                                            if (err) {
-                                                callback(err, null);
-                                            } else {
-                                                if (_.isEmpty(matchData)) {
-                                                    callback(null, []);
-                                                } else {
-                                                    var final = {};
-                                                    var result = ResultInitialize.getResultVar(matchData.sportsName, matchData.sportType);
-                                                    if (matchData[result.resultVar]) {
-                                                        callback(null, n);
-                                                    } else {
-                                                        final.resultName = result.resultVar;
-                                                        ResultInitialize.getMyResult(matchData.sportsName, matchData, function (err, complete) {
-                                                            matchData[result.resultVar] = complete[result.resultVar];
-                                                            var placeholder = {};
-                                                            placeholder[result.resultVar] = complete[result.resultVar];
-
-                                                            var matchObj = {
-                                                                $set: placeholder
-                                                            };
-                                                            // var result1 = ResultInitialize.nullOrEmptyTo0(matchData.sportsName, complete[result.resultVar].teams[0]);
-                                                            // console.log("matchObj", n.matchId);
-                                                            // callback(null, result1);
-                                                            Match.update({
-                                                                matchId: n.matchId
-                                                            }, matchObj).exec(
-                                                                function (err, match) {
-                                                                    if (err) {
-                                                                        callback(err, null);
-                                                                    } else {
-                                                                        callback(null, result);
-                                                                    }
-                                                                });
-                                                        });
-                                                    }
-                                                }
-                                            }
-                                        });
-                                    },
-                                    function (result, callback) {
-                                        var team1 = {};
-                                        var team2 = {};
-                                        var main = {};
-
-                                        if (n["TEAM 1 Attendence"] == 'P' || n["TEAM 1 Attendence"] == 'p') {
-                                            team1.noShow = false;
-                                            team2.walkover = false;
-                                        } else {
-                                            team1.noShow = true;
-                                            if (n["TEAM 2 Attendence"] == 'P' || n["TEAM 2 Attendence"] == 'p') {
-                                                team2.walkover = true;
-                                            } else {
-                                                team2.walkover = false;
-                                            }
-                                        }
-                                        if (n["TEAM 2 Attendence"] == 'P' || n["TEAM 2 Attendence"] == 'p') {
-                                            team2.noShow = false;
-                                            team1.walkover = false;
-                                        } else {
-                                            team2.noShow = true;
-                                            if (n["TEAM 1 Attendence"] == 'P' || n["TEAM 1 Attendence"] == 'p') {
-                                                team2.walkover = true;
-                                            } else {
-                                                team2.walkover = false;
-                                            }
-                                        }
-
-                                        if (n["NO MATCH"] == 'yes') {
-                                            main.isNoMatch = true;
-                                        } else {
-                                            main.isNoMatch = false;
-                                        }
-
-                                        if (n["DRAW"] == 'yes') {
-                                            main.isDraw = true;
-                                        } else {
-                                            main.isDraw = false;
-                                        }
-
-                                        main.status = "IsCompleted";
-                                        if (!_.isEmpty(n["SCORE 1"])) {
-
-                                            var score = n["SCORE 1"];
-                                            complete[result.resultVar].teams[0].teamResults.finalPoints = n["SCORE 1"];
-                                        }
-                                        if (!_.isEmpty(n["SCORE 2"])) {
-                                            var score1 = n["SCORE 2"];
-                                            complete[result.resultVar].teams[1].teamResults.finalPoints = n["SCORE 2"];
-                                        }
-                                        var matchObj = {
-                                            $set: {
-                                                "complete[result.resultVar].teams[0].teamResults.finalPoints": score,
-                                                "complete[result.resultVar].teams[1].teamResults.finalPoints": score1,
-                                                "complete[result.resultVar].isDraw": main.isDraw,
-                                                "complete[result.resultVar].status": main.status,
-                                                "complete[result.resultVar].teams[0].noShow": team1.noShow,
-                                                "complete[result.resultVar].teams[0].noShow": team1.walkover,
-                                                "complete[result.resultVar].teams[1].noShow": team2.noShow,
-                                                "complete[result.resultVar].teams[1].noShow": team2.walkover
-                                            }
-                                        };
-                                        Match.update({
-                                            matchId: n.matchId
-                                        }, matchObj).exec(
-                                            function (err, match) {
+                    if (importData.error) {
+                        callback(null, importData);
+                    } else {
+                        async.concatSeries(importData, function (n, callback) {
+                                async.waterfall([
+                                        function (callback) {
+                                            var param = {};
+                                            param.matchId = n["MATCH ID"];
+                                            Match.getOne(param, function (err, matchData) {
                                                 if (err) {
                                                     callback(err, null);
                                                 } else {
-                                                    callback(null, match);
+                                                    if (_.isEmpty(matchData)) {
+                                                        callback(null, []);
+                                                    } else {
+                                                        console.log("matchData", matchData);
+                                                        var final = {};
+                                                        var result = ResultInitialize.getResultVar(matchData.sportsName, matchData.sportType);
+                                                        if (!matchData[result.resultVar] == '') {
+                                                            final.result = result;
+                                                            final.score = matchData[result.resultVar];
+                                                            callback(null, final);
+                                                        } else {
+                                                            final.resultName = result.resultVar;
+                                                            ResultInitialize.getMyResult(matchData.sportsName, matchData, function (err, complete) {
+                                                                matchData[result.resultVar] = complete[result.resultVar];
+                                                                var placeholder = {};
+                                                                placeholder[result.resultVar] = complete[result.resultVar];
+                                                                var matchObj = {
+                                                                    $set: placeholder
+                                                                };
+                                                                Match.update({
+                                                                    matchId: n["MATCH ID"]
+                                                                }, matchObj).exec(
+                                                                    function (err, match) {
+                                                                        if (err) {
+                                                                            callback(err, null);
+                                                                        } else {
+                                                                            final.result = result;
+                                                                            final.score = matchData[result.resultVar];
+                                                                            callback(null, final);
+                                                                        }
+                                                                    });
+                                                            });
+                                                        }
+                                                    }
                                                 }
                                             });
-                                    }
+                                        },
+                                        function (result, callback) {
+                                            var team1 = {};
+                                            var team2 = {};
+                                            var main = {};
+                                            var complete = {};
+                                            var resultData = result.score;
+                                            if (n['TEAM 1 Attendence'] == 'P' || n['TEAM 1 Attendence'] == 'p') {
+                                                team1.noShow = false;
+                                                team2.walkover = false;
+                                            } else {
+                                                team1.noShow = true;
+                                                if (n['TEAM 2 Attendence'] == 'P' || n['TEAM 2 Attendence'] == 'p') {
+                                                    team2.walkover = true;
+                                                } else {
+                                                    team2.walkover = false;
+                                                }
+                                            }
+                                            if (n['TEAM 2 Attendence'] == 'P' || n['TEAM 2 Attendence'] == 'p') {
+                                                team2.noShow = false;
+                                                team1.walkover = false;
+                                            } else {
+                                                team2.noShow = true;
+                                                if (n['TEAM 1 Attendence'] == 'P' || n['TEAM 1 Attendence'] == 'p') {
+                                                    team2.walkover = true;
+                                                } else {
+                                                    team2.walkover = false;
+                                                }
+                                            }
 
-                                ],
-                                function (err, excelData) {
-                                    callback(null, excelData);
-                                });
+                                            if (n['NO MATCH'] == 'yes') {
+                                                main.isNoMatch = true;
+                                            } else {
+                                                main.isNoMatch = false;
+                                            }
 
-                        },
-                        function (err, final) {
-                            callback(null, final)
-                        });
+                                            if (n['DRAW'] == 'yes') {
+                                                main.isDraw = true;
+                                            } else {
+                                                main.isDraw = false;
+                                            }
+
+                                            main.status = "IsCompleted";
+                                            if (n['SCORE 1']) {
+                                                if (result.result.resultVar == "resultBasketball") {
+                                                    resultData.teams[0].teamResults.finalGoalPoints = n['SCORE 1'];
+                                                    resultData.teams[0].teamResults.quarterPoints[0].basket = 0;
+                                                    resultData.teams[0].teamResults.quarterPoints[1].basket = 0;
+                                                    resultData.teams[0].teamResults.quarterPoints[2].basket = 0;
+                                                    resultData.teams[0].teamResults.quarterPoints[3].basket = 0;
+                                                } else if (result.result.resultVar == "resultsCombat") {
+                                                    resultData.teams[0].teamResults.sets[0] = n['SCORE 1'];
+                                                } else {
+                                                    resultData.teams[0].teamResults.finalPoints = n['SCORE 1'];
+                                                }
+                                            }
+                                            if (!_.isEmpty(n['SCORE 2'])) {
+                                                if (result.result.resultVar == "resultBasketball") {
+                                                    resultData.teams[1].teamResults.finalGoalPoints = n['SCORE 2'];
+                                                    resultData.teams[1].teamResults.quarterPoints[0].basket = 0;
+                                                    resultData.teams[1].teamResults.quarterPoints[1].basket = 0;
+                                                    resultData.teams[1].teamResults.quarterPoints[2].basket = 0;
+                                                    resultData.teams[1].teamResults.quarterPoints[3].basket = 0;
+                                                } else if (result.result.resultVar == "resultsCombat") {
+                                                    resultData.teams[1].teamResults.sets[0].points = n['SCORE 2'];
+                                                } else {
+                                                    resultData.teams[1].teamResults.finalPoints = n['SCORE 2'];
+                                                }
+                                            }
+                                            if (resultData.teams.length == 2) {
+                                                resultData.isDraw = main.isDraw;
+                                                resultData.status = main.status;
+                                                resultData.isNoMatch = main.isNoMatch;
+                                                resultData.teams[0].noShow = team1.noShow;
+                                                resultData.teams[0].walkover = team1.walkover;
+                                                resultData.teams[1].noShow = team2.noShow;
+                                                resultData.teams[1].walkover = team2.walkover;
+                                                // console.log("main", main);
+                                            } else {
+                                                // console.log("main", main);
+                                                resultData.isDraw = main.isDraw;
+                                                resultData.status = main.status;
+                                                resultData.isNoMatch = main.isNoMatch;
+                                                resultData.teams[0].noShow = team1.noShow;
+                                                resultData.teams[0].walkover = team1.walkover;
+                                            }
+                                            var placeholder = {};
+                                            placeholder[result.result.resultVar] = resultData;
+                                            var matchObj = {
+                                                $set: placeholder
+                                            };
+                                            Match.update({
+                                                matchId: n["MATCH ID"]
+                                            }, matchObj).exec(
+                                                function (err, match) {
+                                                    if (err) {
+                                                        callback(err, null);
+                                                    } else {
+                                                        callback(null, match);
+                                                    }
+                                                });
+                                        }
+                                    ],
+                                    function (err, excelData) {
+                                        callback(null, excelData);
+                                    });
+
+                            },
+                            function (err, final) {
+                                callback(null, final)
+                            });
+                    }
                 }
             ],
             function (err, excelData) {

@@ -458,7 +458,7 @@ var controller = {
         }
     },
 
-    updateExcelNew: function (req, res) {
+    updateExcel: function (req, res) {
         if (req.body) {
             Match.updateExcel(req.body, res.callback);
         } else {
