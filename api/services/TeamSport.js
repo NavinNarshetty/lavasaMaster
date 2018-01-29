@@ -1203,18 +1203,8 @@ var model = {
                     Config.generateExcelOld("TeamSport", excelData, res);
                 },
             ],
-            function (err, excelData) {
-                if (err) {
-                    console.log(err);
-                    callback(null, []);
-                } else if (excelData) {
-                    if (_.isEmpty(excelData)) {
-                        callback(null, []);
-                    } else {
-                        callback(null, excelData);
-                    }
-                }
-            });
+
+            function () {});
     },
 
     getTeamPipeLine: function () {
