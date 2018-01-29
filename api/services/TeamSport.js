@@ -1108,7 +1108,7 @@ var model = {
     generateExcel: function (res) {
         async.waterfall([
                 function (callback) {
-                    var deepSearch = "sport.sportslist sport.ageGroup studentTeam studentTeam.studentId"
+                    var deepSearch = "sport.sportslist sport.ageGroup studentTeam studentTeam.studentId";
                     TeamSport.find().lean().deepPopulate(deepSearch).exec(function (err, complete) {
                         if (err) {
                             callback(err, null);
@@ -1120,7 +1120,9 @@ var model = {
                     });
                 },
                 function (complete, callback) {
-                    async.concatSeries(complete, function (mainData, callback) {
+
+                    var excelData = [];
+                    _.each(complete, function (mainData) {
                         var obj = {};
                         obj.year = new Date().getFullYear();
                         obj.Teamid = mainData.teamId;
@@ -1194,10 +1196,10 @@ var model = {
                             }
                         });
                         obj["Total Athlete Count"] = mainData.studentTeam.length;
-                        callback(null, obj);
-                    }, function (err, excelData) {
-                        Config.generateExcelOld("TeamSport", excelData, res);
+                        excelData.push(obj);
                     });
+                    callback(null, excelData);
+                    Config.generateExcelOld("TeamSport", excelData, res);
                 },
             ],
             function (err, excelData) {
