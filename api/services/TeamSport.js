@@ -1124,7 +1124,7 @@ var model = {
                 var excelData = [];
                 _.each(complete, function (mainData) {
                     var obj = {};
-                    obj.year = new Date().getFullYear();
+                    obj.year = new Date(mainData.createdAt).getFullYear();
                     obj.Teamid = mainData.teamId;
                     obj.SchoolName = mainData.schoolName;
                     obj.TeamName = mainData.name;

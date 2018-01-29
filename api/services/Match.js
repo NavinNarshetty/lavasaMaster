@@ -3920,11 +3920,11 @@ var model = {
                 var dateTime = moment(mainData.scheduleDate).format('DD-MM-YYYY');
                 obj.DATE = dateTime;
                 obj.TIME = mainData.scheduleTime;
-                console.log('mainData', mainData);
-                console.log('mainData opponents', mainData.opponentsSingle);
-                console.log('mainData opponents length', mainData.opponentsSingle.length);
+                // console.log('mainData', mainData);
+                // console.log('mainData opponents', mainData.opponentsSingle);
+                // console.log('mainData opponents length', mainData.opponentsSingle.length);
                 if (mainData.opponentsSingle.length > 0) {
-                    console.log('mainData opponents 0', mainData.opponentsSingle[0]);
+                    // console.log('mainData opponents 0', mainData.opponentsSingle[0]);
                     obj["SFAID 1"] = mainData.opponentsSingle[0].athleteId.sfaId;
                     if (mainData.opponentsSingle[0].athleteId.middleName) {
                         obj["PARTICIPANT 1"] = mainData.opponentsSingle[0].athleteId.firstName + " " + mainData.opponentsSingle[0].athleteId.middleName + " " + mainData.opponentsSingle[0].athleteId.surname;
@@ -4035,7 +4035,7 @@ var model = {
                 }
 
                 if (mainData.opponentsSingle.length > 1) {
-                    console.log('mainData opponents 1', mainData.opponentsSingle[1]);
+                    // console.log('mainData opponents 1', mainData.opponentsSingle[1]);
                     obj["SFAID 2"] = mainData.opponentsSingle[1].athleteId.sfaId;
 
                     if (mainData.opponentsSingle[1].athleteId.middleName) {
@@ -4049,10 +4049,10 @@ var model = {
                         obj["SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.school.name;
                     }
                     if (mainData.resultsCombat) {
-                        console.log('mainData resultsCombat', mainData.resultsCombat.players);
-                        console.log('mainData resultsCombat length', mainData.resultsCombat.players.length);
-                        console.log('mainData resultsCombat 0', mainData.resultsCombat.players[0]);
-                        console.log('mainData resultsCombat 1', mainData.resultsCombat.players[1]);
+                        // console.log('mainData resultsCombat', mainData.resultsCombat.players);
+                        // console.log('mainData resultsCombat length', mainData.resultsCombat.players.length);
+                        // console.log('mainData resultsCombat 0', mainData.resultsCombat.players[0]);
+                        // console.log('mainData resultsCombat 1', mainData.resultsCombat.players[1]);
 
                         // if (mainData.opponentsSingle[1].athleteId._id === mainData.resultsCombat.winner.player) {
                         if (mainData.opponentsSingle[1].athleteId._id.equals(mainData.resultsCombat.winner.player)) {
