@@ -5599,13 +5599,13 @@ var model = {
                                     obj["VIDEO"] = "";
                                 }
                             }
-                            if (mainData.videoType) {
-                                obj["VIDEO TYPE"] = mainData.videoType;
+                            if (matchData.videoType) {
+                                obj["VIDEO TYPE"] = matchData.videoType;
                             } else {
                                 obj["VIDEO TYPE"] = "";
                             }
-                            if (mainData.video) {
-                                obj["VIDEO"] = mainData.video;
+                            if (matchData.video) {
+                                obj["VIDEO"] = matchData.video;
                             } else {
                                 obj["VIDEO"] = "";
                             }
@@ -5715,13 +5715,13 @@ var model = {
 
                                 }
                             }
-                            if (mainData.videoType) {
-                                obj["VIDEO TYPE"] = mainData.videoType;
+                            if (matchData.videoType) {
+                                obj["VIDEO TYPE"] = matchData.videoType;
                             } else {
                                 obj["VIDEO TYPE"] = "";
                             }
-                            if (mainData.video) {
-                                obj["VIDEO"] = mainData.video;
+                            if (matchData.video) {
+                                obj["VIDEO"] = matchData.video;
                             } else {
                                 obj["VIDEO"] = "";
                             }
