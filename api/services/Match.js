@@ -8211,7 +8211,7 @@ var model = {
 
     generateGraphicsKnockoutIndividual: function (match, callback) {
         async.concatSeries(match, function (mainData, callback) {
-                // console.log('mainData',mainData);
+                // console.log('mainData', mainData);
                 var obj = {};
                 var dateTime = moment(mainData.scheduleDate).format('DD-MM-YYYY');
                 obj.DATE = dateTime;
@@ -8273,26 +8273,36 @@ var model = {
                                     obj["A1 Total Service Errors"] = mainData.resultsRacquet.players[0].sets[i].serviceError;
                                     obj["A1 Total Unforced Errors"] = mainData.resultsRacquet.players[0].sets[i].unforcedError;
                                     obj["A1 Total Winners"] = mainData.resultsRacquet.players[0].sets[i].winner;
+                                    obj["A1 Total Ace"] = mainData.resultsRacquet.players[0].sets[i].ace;
+                                    obj["A1 Total Double Faults"] = mainData.resultsRacquet.players[0].sets[i].doubleFaults;
                                 } else {
                                     obj["A1 Total Service Errors"] = obj["A1 Total Service Errors"] + mainData.resultsRacquet.players[0].sets[i].serviceError;
                                     obj["A1 Total Unforced Errors"] = obj["A1 Total Unforced Errors"] + mainData.resultsRacquet.players[0].sets[i].unforcedError;
                                     obj["A1 Total Winners"] = obj["A1 Total Winners"] + mainData.resultsRacquet.players[0].sets[i].winner;
+                                    obj["A1 Total Ace"] = obj["A1 Total Ace"] + mainData.resultsRacquet.players[0].sets[i].ace;
+                                    obj["A1 Total Double Faults"] = obj["A1 Total Double Faults"] + mainData.resultsRacquet.players[0].sets[i].doubleFaults;
                                 }
                             }
                             if (mainData.resultsRacquet.players[0].sets.length == 0) {
                                 obj["A1 Total Service Errors"] = "";
                                 obj["A1 Total Unforced Errors"] = "";
                                 obj["A1 Total Winners"] = "";
+                                obj["A1 Total Ace"] = "";
+                                obj["A1 Total Double Faults"] = "";
                             }
                         } else {
                             obj["A1 Total Service Errors"] = "";
                             obj["A1 Total Unforced Errors"] = "";
                             obj["A1 Total Winners"] = "";
+                            obj["A1 Total Ace"] = "";
+                            obj["A1 Total Double Faults"] = "";
                         }
                     } else {
                         obj["A1 Total Service Errors"] = "";
                         obj["A1 Total Unforced Errors"] = "";
                         obj["A1 Total Winners"] = "";
+                        obj["A1 Total Ace"] = "";
+                        obj["A1 Total Double Faults"] = "";
                     }
                 } else {
                     obj["SFAID 1"] = "";
@@ -8301,6 +8311,8 @@ var model = {
                     obj["A1 Total Service Errors"] = "";
                     obj["A1 Total Unforced Errors"] = "";
                     obj["A1 Total Winners"] = "";
+                    obj["A1 Total Ace"] = "";
+                    obj["A1 Total Double Faults"] = "";
                 }
                 if (mainData.opponentsSingle.length > 1) {
                     obj["SFAID 2"] = mainData.opponentsSingle[1].athleteId.sfaId;
@@ -8357,10 +8369,14 @@ var model = {
                                 obj["A2 Total Service Errors"] = mainData.resultsRacquet.players[1].sets[i].serviceError;
                                 obj["A2 Total Unforced Errors"] = mainData.resultsRacquet.players[1].sets[i].unforcedError;
                                 obj["A2 Total Winners"] = mainData.resultsRacquet.players[1].sets[i].winner;
+                                obj["A1 Total Ace"] = mainData.resultsRacquet.players[1].sets[i].ace;
+                                obj["A1 Total Double Faults"] = mainData.resultsRacquet.players[1].sets[i].doubleFaults;
                             } else {
                                 obj["A2 Total Service Errors"] = obj["A2 Total Service Errors"] + mainData.resultsRacquet.players[1].sets[i].serviceError;
                                 obj["A2 Total Unforced Errors"] = obj["A2 Total Unforced Errors"] + mainData.resultsRacquet.players[1].sets[i].unforcedError;
                                 obj["A2 Total Winners"] = obj["A2 Total Winners"] + mainData.resultsRacquet.players[1].sets[i].winner;
+                                obj["A1 Total Ace"] = obj["A1 Total Ace"]+mainData.resultsRacquet.players[1].sets[i].ace;
+                                obj["A1 Total Double Faults"] = obj["A1 Total Double Faults"]+mainData.resultsRacquet.players[1].sets[i].doubleFaults;
                             }
                             var sNo = 1;
                             var code = ++i;
@@ -8520,6 +8536,8 @@ var model = {
                         obj["A2 Total Service Errors"] = "";
                         obj["A2 Total Unforced Errors"] = "";
                         obj["A2 Total Winners"] = "";
+                        obj["A1 Total Ace"] = "";
+                        obj["A1 Total Double Faults"] = "";
                     }
                     if (mainData.resultsRacquet.players.length == 1) {
                         var sNo = 1;
