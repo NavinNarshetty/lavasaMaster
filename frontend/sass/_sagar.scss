@@ -166,7 +166,7 @@ $grey: #e1e1e1;
 }
 .photovideo-vidframe{
   width: 100%;
-  min-height: 350px;
+  // min-height: 350px;
 }
 // VIDEO HOLDER END
 // PHOTO VIDEO POPUP END
@@ -2322,12 +2322,18 @@ $tickerDuration: 60s;
 // GALLERY POST PAGE
 .gallerypost-page{
   // min-height: 100vh;
-  min-height: calc( 100vh - 60px);
+  // min-height: calc( 100vh - 100px);
   padding: 60px 0 50px;
 }
 // GALLERY POST MEDIA SECTION
 .gallerypost-media{
 
+}
+.gallerypost-videoholder{
+  background: rgba(0,0,0,0.7);
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 // GALLERY POST MEDIA SECTION END
 // GALLERY POST CONTENT SECTION
@@ -2352,8 +2358,13 @@ $tickerDuration: 60s;
   }
 }
 .gallerrypost-tagcard {
-  padding: 5px 10px;
+  padding: 5px;
   border-bottom: 1px solid #ccc;
+}
+.gallerypost-shareholder{
+  p{
+    font-weight: 700;
+  }
 }
 // GALLERY POST CONTENT SECTION END
 // GALLERY POST PAGE END

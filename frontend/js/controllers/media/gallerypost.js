@@ -22,9 +22,12 @@ myApp.controller('GalleryPostCtrl', function ($scope, TemplateService, $http, Na
     tags: ['1', '2']
   }
   $scope.pic = {
-    medialink: '252660722',
+    // medialink: '252660722', //VIMEO
+    medialink: 'iGh1aO1skNc', //YOUTUBE
     mediatype: 'video',
     thumbnail: '',
+    // source: 'vimeo',
+    source: 'youtube',
     mediatitle: 'Hello',
     tags: ['1', '2']
   }
