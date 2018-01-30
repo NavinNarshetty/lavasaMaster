@@ -105,7 +105,21 @@ var controller = {
 
     getAthleteStats: function (req, res) {
         if (req.body) {
-            Profile.getAthleteStats(req.body, res.callback);
+            ConfigProperty.find().lean().exec(function (err, property) {
+                if (err) {
+                    res.callback(err, null);
+                } else {
+                    if (_.isEmpty(property)) {
+                        res.callback(null, {
+                            "data": "ConfigProperty Empty",
+                            "value": false
+                        });
+                    } else {
+                        req.body.year = property[0].year;
+                        Profile.getAthleteStats(req.body, res.callback);
+                    }
+                }
+            });
         } else {
             res.json({
                 "data": "Body not Found",
@@ -116,7 +130,22 @@ var controller = {
 
     getTeamStats: function (req, res) {
         if (req.body) {
-            Profile.getTeamStats(req.body, res.callback);
+            ConfigProperty.find().lean().exec(function (err, property) {
+                if (err) {
+                    res.callback(err, null);
+                } else {
+                    if (_.isEmpty(property)) {
+                        res.callback(null, {
+                            "data": "ConfigProperty Empty",
+                            "value": false
+                        });
+                    } else {
+                        req.body.year = property[0].year;
+                        Profile.getTeamStats(req.body, res.callback);
+                    }
+                }
+            });
+
         } else {
             res.json({
                 "data": "Body not Found",
@@ -127,7 +156,21 @@ var controller = {
 
     getSchoolStats: function (req, res) {
         if (req.body) {
-            Profile.getSchoolStats(req.body, res.callback);
+            ConfigProperty.find().lean().exec(function (err, property) {
+                if (err) {
+                    res.callback(err, null);
+                } else {
+                    if (_.isEmpty(property)) {
+                        res.callback(null, {
+                            "data": "ConfigProperty Empty",
+                            "value": false
+                        });
+                    } else {
+                        req.body.year = property[0].year;
+                        Profile.getSchoolStats(req.body, res.callback);
+                    }
+                }
+            });
         } else {
             res.json({
                 "data": "Body not Found",
@@ -195,7 +238,5 @@ var controller = {
             });
         }
     },
-
-
 };
 module.exports = _.assign(module.exports, controller);

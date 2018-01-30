@@ -1283,7 +1283,7 @@ var model = {
                                     } else {
                                         async.eachSeries(matchData, function (singleData, callback) {
                                             var stats = {};
-                                            stats.year = new Date(singleData.createdAt).getFullYear();
+                                            stats.year = data.year;
                                             stats.ageGroup = singleData.sport.ageGroup.name;
                                             stats.sportslist = singleData.sport.sportslist.name;
                                             stats.gender = singleData.sport.gender;
@@ -3030,8 +3030,9 @@ var model = {
                 var match = [];
                 async.each(matchData, function (singleData, callback) {
                         var stats = {};
-                        stats.year = new Date(singleData.createdAt).getFullYear();
+                        stats.year = data.year;
                         stats.ageGroup = singleData.sport.ageGroup.name;
+                        stats.matchId = singleData.matchId;
                         stats.sportslist = singleData.sport.sportslist.name;
                         stats.gender = singleData.sport.gender;
                         if (singleData.sport.weight) {
@@ -3114,7 +3115,7 @@ var model = {
                                                             i++;
                                                         }
                                                         stats.score = result;
-                                                        if (singleData.resultsCombat.winner.player === n) {
+                                                        if (singleData.resultsCombat.winner.player === n.toString()) {
                                                             stats.isAthleteWinner = false;
                                                         } else {
                                                             stats.isAthleteWinner = true;
@@ -3210,7 +3211,7 @@ var model = {
                                                             console.log("i", result);
                                                         }
                                                         stats.score = result;
-                                                        if (singleData.resultsRacquet.winner.player === n) {
+                                                        if (singleData.resultsRacquet.winner.player === n.toString()) {
                                                             stats.isAthleteWinner = false;
                                                         } else {
                                                             stats.isAthleteWinner = true;
@@ -4858,7 +4859,7 @@ var model = {
                                     } else {
                                         async.eachSeries(matchData, function (singleData, callback) {
                                                 var stats = {};
-                                                stats.year = new Date(singleData.createdAt).getFullYear();
+                                                stats.year = data.year;
                                                 stats.ageGroup = singleData.sport.ageGroup.name;
                                                 stats.sportslist = singleData.sport.sportslist.name;
                                                 stats.gender = singleData.sport.gender;
