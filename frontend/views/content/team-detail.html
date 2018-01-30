@@ -199,6 +199,7 @@
                                                 <div class="sf-play">
                                                     <span ng-if="stat.draw === true">Draw</span>
                                                 </div>
+                                                <span ng-if="stat.result">{{stat.result}}</span>
                                                 <!-- <div class="sf-play">
                                                     <span>{{teamDetails.sport.drawFormat == 'Knockout'&& stat.self.result || (teamDetails.sport.drawFormat
                                                         == 'Heats' && ((stat.self.standing || ordinal) ?(stat.self.result?(stat.self.standing
