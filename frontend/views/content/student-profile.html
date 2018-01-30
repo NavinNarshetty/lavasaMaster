@@ -266,7 +266,7 @@
 
                                                 <div class="sf-play" ng-if="!stat.result && table.layout == 'Knockout' || table.layout == 'League' || table.layout == 'League cum Knockout'">
                                                     <span ng-if="stat.isAthleteWinner == true && !stat.reason && stat.opponentName && stat.walkover == false">Won</span>
-                                                    <span ng-if="stat.isAthleteWinner == false && stat.draw != true">Loss</span>
+                                                    <span ng-if="stat.isAthleteWinner == false && stat.draw != true">Lost</span>
 
                                                     <span ng-if="stat.isAthleteWinner != false && stat.isAthleteWinner != true && !stat.reason && stat.walkover != false && stat.walkover != true">-</span>
                                                     <span ng-if="stat.isAthleteWinner != false && stat.isAthleteWinner != true && stat.reason">{{stat.reason}}</span>
@@ -276,7 +276,7 @@
                                                 </div>
                                                 <div class="sf-play" ng-if=" !stat.result && table.layout  !== 'Knockout' && table.layout  !== 'League' && table.layout !== 'League cum Knockout'">
                                                     <span ng-if="stat.isAthleteWinner == true">Won</span>
-                                                    <span ng-if="stat.isAthleteWinner == false && stat.draw != true">Loss</span>
+                                                    <span ng-if="stat.isAthleteWinner == false && stat.draw != true">Lost</span>
                                                     <span ng-if="stat.isAthleteWinner != false && stat.isAthleteWinner != true">-</span>
                                                 </div>
                                                 <div class="sf-play" ng-if="stat.result">
