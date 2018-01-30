@@ -360,64 +360,78 @@ var model = {
         var profile = {};
         profile.results = [];
         async.waterfall([
-            function (callback) {
-                Registration.find(data.term)
-                    .sort({
-                        createdAt: -1
-                    })
-                    .order(options)
-                    .keyword(options)
-                    .deepPopulate()
-                    .page(options, function (err, found) {
-                        if (err) {
-                            callback(err, null);
-                        } else if (_.isEmpty(found)) {
-                            callback(null, "Data is empty");
-                        } else {
-                            callback(null, found);
-                        }
-                    });
-            },
-            function (found, callback) {
-                async.concatSeries(found.results, function (mainData, callback) {
-                        console.log("mainData", mainData);
-                        var player = {};
-                        player._id = mainData._id;
-                        if (mainData.sfaID) {
-                            player.sfaId = mainData.sfaID;
-                        } else {
-                            player.sfaId = '';
-                        }
-                        player.schoolName = mainData.schoolName;
-                        if (mainData.schoolLogo) {
-                            player.schoolLogo = mainData.schoolLogo;
-                        } else {
-                            player.schoolLogo = '';
-                        }
-                        callback(null, player);
-                    },
-                    function (err, playerData) {
-                        if (err) {
-                            callback(err, null);
-                        } else {
-                            profile.results = playerData;
-                            profile.options = found.options;
-                            profile.total = found.total;
-                            callback(null, profile);
-                        }
-                    });
-            }
-        ], function (err, data2) {
-            if (err) {
-                callback(null, []);
-            } else if (data2) {
-                if (_.isEmpty(data2)) {
-                    callback(null, data2);
-                } else {
-                    callback(null, data2);
+                function (callback) {
+                    Registration.find({
+                            $or: [{
+                                schoolName: {
+                                    $regex: data.keyword,
+                                    $options: "i"
+                                }
+                            }, {
+                                sfaID: {
+                                    $regex: data.keyword,
+                                    $options: "i"
+                                }
+                            }],
+                            status: "Verified"
+                        })
+                        .sort({
+                            createdAt: -1
+                        })
+                        .order(options)
+                        .keyword(options)
+                        .deepPopulate()
+                        .page(options, function (err, found) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (_.isEmpty(found)) {
+                                callback(null, "Data is empty");
+                            } else {
+                                callback(null, found);
+                            }
+                        });
+                },
+                function (found, callback) {
+                    async.concatSeries(found.results, function (mainData, callback) {
+                            console.log("mainData", mainData);
+                            var player = {};
+                            player._id = mainData._id;
+                            if (mainData.sfaID) {
+                                player.sfaId = mainData.sfaID;
+                            } else {
+                                player.sfaId = '';
+                            }
+                            player.schoolName = mainData.schoolName;
+                            if (mainData.schoolLogo) {
+                                player.schoolLogo = mainData.schoolLogo;
+                            } else {
+                                player.schoolLogo = '';
+                            }
+                            callback(null, player);
+                        },
+                        function (err, playerData) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                profile.results = playerData;
+                                profile.options = found.options;
+                                profile.total = found.total;
+                                callback(null, profile);
+                            }
+                        });
                 }
-            }
-        });
+            ],
+            function (err, data2) {
+                if (err) {
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, data2);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
     },
 
     searchTeam: function (data, callback) {
@@ -3048,7 +3062,7 @@ var model = {
                             if (singleData.opponentsTeam.length == 1) {
                                 if (singleData.resultsCombat.status == "IsCompleted" && singleData.resultsCombat.isNoMatch == false) {
                                     var result;
-                                    async.each(singleData.resultsCombat.teams[0].teamResults.sets, function (n, callback) {
+                                    async.each(singleData.resultsCombat.teams[0].sets, function (n, callback) {
                                         console.log("n", n, "i", i);
                                         if (i == 0) {
                                             result = n.points;
@@ -3060,6 +3074,7 @@ var model = {
                                         callback(null, result);
                                     });
                                     stats.score = result;
+                                    stats.walkover = singleData.resultsCombat.teams[0].walkover;
                                     stats.status = singleData.resultsCombat.status;
 
                                     stats.isAthleteWinner = true;
@@ -3075,6 +3090,11 @@ var model = {
                             } else {
                                 async.each(singleData.opponentsTeam, function (n, callback) {
                                         if (n.equals(data.teamId)) {
+                                            if (singleData.resultsCombat.teams[0].team === n.toString()) {
+                                                stats.walkover = singleData.resultsCombat.teams[0].walkover;
+                                            } else {
+                                                stats.walkover = singleData.resultsCombat.teams[1].walkover;
+                                            }
                                             callback();
                                         } else {
                                             TeamSport.findOne({
@@ -3089,23 +3109,6 @@ var model = {
                                                     stats.school = found.schoolName;
                                                     stats.teamId = found.teamId;
                                                     if (singleData.resultsCombat.status == 'IsCompleted' && singleData.resultsCombat.isNoMatch == false) {
-                                                        if (singleData.resultsCombat.teams[0].team === n.toString()) {
-                                                            if (singleData.resultsCombat.teams[0].noShow == true && singleData.resultsCombat.teams[0].walkover == false) {
-                                                                stats.reason = "Walkover";
-                                                            } else if (singleData.resultsCombat.teams[0].noShow == false && singleData.resultsCombat.teams[0].walkover == true) {
-                                                                stats.reason = "No Show";
-                                                            } else {
-                                                                stats.reason = "";
-                                                            }
-                                                        } else {
-                                                            if (singleData.resultsCombat.teams[1].noShow == true && singleData.resultsCombat.teams[1].walkover == false) {
-                                                                stats.reason = "No Show";
-                                                            } else if (singleData.resultsCombat.teams[1].noShow == false && singleData.resultsCombat.teams[1].walkover == true) {
-                                                                stats.reason = "Walkover";
-                                                            } else {
-                                                                stats.reason = "";
-                                                            }
-                                                        }
                                                         while (i < singleData.resultsCombat.teams[0].sets.length) {
                                                             if (i == 0) {
                                                                 result = singleData.resultsCombat.teams[0].sets[i].point + "-" + singleData.resultsCombat.teams[1].sets[i].point;
@@ -3155,6 +3158,7 @@ var model = {
                                     console.log("i", result);
                                     stats.score = result;
                                     stats.status = singleData.resultsRacquet.status;
+                                    stats.walkover = singleData.resultsRacquet.teams[0].walkover;
                                     stats.isAthleteWinner = true;
                                 } else if (singleData.resultsRacquet.status == "IsCompleted" && singleData.resultsRacquet.isNoMatch == false) {
                                     stats.status = singleData.resultsRacquet.status;
@@ -3167,7 +3171,12 @@ var model = {
                                 callback(null, match);
                             } else {
                                 async.each(singleData.opponentsTeam, function (n, callback) {
-                                        if (n.equals(n.teamId)) {
+                                        if (n.equals(data.teamId)) {
+                                            if (singleData.resultsRacquet.teams[0].team === n.toString()) {
+                                                stats.walkover = singleData.resultsRacquet.teams[0].walkover;
+                                            } else {
+                                                stats.walkover = singleData.resultsRacquet.teams[1].walkover;
+                                            }
                                             callback();
                                         } else {
                                             TeamSport.findOne({
@@ -3182,33 +3191,13 @@ var model = {
                                                     stats.school = found.schoolName;
                                                     stats.teamId = found.teamId;
                                                     if (singleData.resultsRacquet.status == "IsCompleted" && singleData.resultsRacquet.isNoMatch == false) {
-                                                        if (singleData.resultsRacquet.teams[0].team === n.toString()) {
-                                                            console.log("nn", singleData.resultsRacquet.teams[0].noShow);
-                                                            if (singleData.resultsRacquet.teams[0].noShow == true && singleData.resultsRacquet.teams[0].walkover == false) {
-                                                                stats.reason = "Walkover";
-                                                            } else if (singleData.resultsRacquet.teams[0].noShow == false && singleData.resultsRacquet.teams[0].walkover == true) {
-                                                                stats.reason = "No Show";
-                                                            } else {
-                                                                stats.reason = "";
-                                                            }
-                                                        } else {
-                                                            if (singleData.resultsRacquet.teams[1].noShow == true && singleData.resultsRacquet.teams[1].walkover == false) {
-                                                                stats.reason = "Walkover";
-                                                            } else if (singleData.resultsRacquet.teams[1].noShow == false && singleData.resultsRacquet.teams[1].walkover == true) {
-                                                                stats.reason = "No Show";
-                                                            } else {
-                                                                stats.reason = "";
-                                                            }
-                                                        }
                                                         while (i < singleData.resultsRacquet.teams[0].sets.length) {
-
                                                             if (i == 0) {
                                                                 result = singleData.resultsRacquet.teams[0].sets[i].point + "-" + singleData.resultsRacquet.teams[1].sets[i].point;
                                                             } else {
                                                                 result = result + "," + singleData.resultsRacquet.teams[0].sets[i].point + "-" + singleData.resultsRacquet.teams[1].sets[i].point;
                                                             }
                                                             i++;
-                                                            console.log("i", result);
                                                         }
                                                         stats.score = result;
                                                         if (singleData.resultsRacquet.winner.player === n.toString()) {
@@ -3278,6 +3267,7 @@ var model = {
                                 if (singleData.resultBasketball.status == "IsCompleted" && singleData.resultBasketball.isNoMatch == false) {
                                     stats.score = singleData.resultBasketball.teams[0].teamResults.finalGoalPoints;
                                     stats.isAthleteWinner = true;
+                                    stats.walkover = singleData.resultBasketball.teams[0].walkover;
                                     stats.status = singleData.resultBasketball.status;
                                     match.push(stats);
                                 } else if (singleData.resultBasketball.status == "IsCompleted" && singleData.resultBasketball.isNoMatch == false) {
@@ -3292,6 +3282,11 @@ var model = {
                                 async.each(singleData.opponentsTeam, function (n, callback) {
                                         console.log("n", n, "data.teamId", data.teamId);
                                         if (n.equals(data.teamId)) {
+                                            if (singleData.resultBasketball.teams[0].team === n.toString()) {
+                                                stats.walkover = singleData.resultBasketball.teams[0].walkover;
+                                            } else {
+                                                stats.walkover = singleData.resultBasketball.teams[1].walkover;
+                                            }
                                             callback();
                                         } else {
                                             TeamSport.findOne({
@@ -3306,23 +3301,6 @@ var model = {
                                                     stats.school = found.schoolName;
                                                     stats.teamId = found.teamId;
                                                     if (singleData.resultBasketball.status == "IsCompleted" && singleData.resultBasketball.isNoMatch == false) {
-                                                        if (singleData.resultBasketball.teams[0].team === n.toString()) {
-                                                            if (singleData.resultBasketball.teams[0].noShow == true && singleData.resultBasketball.teams[0].walkover == false) {
-                                                                stats.reason = "Walkover";
-                                                            } else if (singleData.resultBasketball.teams[0].noShow == false && singleData.resultBasketball.teams[0].walkover == true) {
-                                                                stats.reason = "No Show";
-                                                            } else {
-                                                                stats.reason = "";
-                                                            }
-                                                        } else {
-                                                            if (singleData.resultBasketball.teams[1].noShow == true && singleData.resultBasketball.teams[1].walkover == false) {
-                                                                stats.reason = "Walkover";
-                                                            } else if (singleData.resultBasketball.teams[1].noShow == false && singleData.resultBasketball.teams[1].walkover == true) {
-                                                                stats.reason = "No Show";
-                                                            } else {
-                                                                stats.reason = "";
-                                                            }
-                                                        }
                                                         stats.score = singleData.resultBasketball.teams[0].teamResults.finalGoalPoints + "-" + singleData.resultBasketball.teams[1].teamResults.finalGoalPoints;
                                                         if (singleData.resultBasketball.winner.player === n.toString()) {
                                                             stats.isAthleteWinner = false;
@@ -3356,6 +3334,7 @@ var model = {
                                 if (singleData.resultThrowball.status == "IsCompleted" && singleData.resultThrowball.isNoMatch == false) {
                                     stats.score = singleData.resultThrowball.teams[0].teamResults.finalPoints;
                                     stats.isAthleteWinner = true;
+                                    stats.walkover = singleData.resultThrowball.teams[0].walkover;
                                     stats.status = singleData.resultThrowball.status;
                                     match.push(stats);
                                 } else if (singleData.resultThrowball.status == "IsCompleted" && singleData.resultThrowball.isNoMatch == false) {
@@ -3370,6 +3349,11 @@ var model = {
                                 async.each(singleData.opponentsTeam, function (n, callback) {
                                         console.log("n", n, "data.teamId", data.teamId);
                                         if (n.equals(data.teamId)) {
+                                            if (singleData.resultThrowball.teams[0].team === n.toString()) {
+                                                stats.walkover = singleData.resultThrowball.teams[0].walkover;
+                                            } else {
+                                                stats.walkover = singleData.resultThrowball.teams[1].walkover;
+                                            }
                                             callback();
                                         } else {
                                             TeamSport.findOne({
@@ -3384,23 +3368,6 @@ var model = {
                                                     stats.school = found.schoolName;
                                                     stats.teamId = found.teamId;
                                                     if (singleData.resultThrowball.status == "IsCompleted" && singleData.resultThrowball.isNoMatch == false) {
-                                                        if (singleData.resultThrowball.teams[0].team === n.toString()) {
-                                                            if (singleData.resultThrowball.teams[0].noShow == true && singleData.resultThrowball.teams[0].walkover == false) {
-                                                                stats.reason = "Walkover";
-                                                            } else if (singleData.resultThrowball.teams[0].noShow == false && singleData.resultThrowball.teams[0].walkover == true) {
-                                                                stats.reason = "No Show";
-                                                            } else {
-                                                                stats.reason = "";
-                                                            }
-                                                        } else {
-                                                            if (singleData.resultThrowball.teams[1].noShow == true && singleData.resultThrowball.teams[1].walkover == false) {
-                                                                stats.reason = "Walkover";
-                                                            } else if (singleData.resultThrowball.teams[1].noShow == false && singleData.resultThrowball.teams[1].walkover == true) {
-                                                                stats.reason = "No Show";
-                                                            } else {
-                                                                stats.reason = "";
-                                                            }
-                                                        }
                                                         stats.score = singleData.resultThrowball.teams[0].teamResults.finalPoints + "-" + singleData.resultThrowball.teams[1].teamResults.finalPoints;
                                                         if (singleData.resultThrowball.winner.player === n.toString()) {
                                                             stats.isAthleteWinner = false;
@@ -3435,6 +3402,7 @@ var model = {
                                 if (singleData.resultFootball.status == "IsCompleted" && singleData.resultFootball.isNoMatch == false) {
                                     stats.score = singleData.resultFootball.teams[0].teamResults.finalPoints;
                                     stats.isAthleteWinner = true;
+                                    stats.walkover = singleData.resultFootball.teams[0].walkover;
                                     stats.status = singleData.resultFootball.status;
                                 } else if (singleData.resultFootball.status == "IsCompleted" && singleData.resultFootball.isNoMatch == false) {
                                     stats.status = singleData.resultFootball.status;
@@ -3448,6 +3416,11 @@ var model = {
                             } else {
                                 async.each(singleData.opponentsTeam, function (n, callback) {
                                     if (n.equals(data.teamId)) {
+                                        if (singleData.resultFootball.teams[0].team === n.toString()) {
+                                            stats.walkover = singleData.resultFootball.teams[0].walkover;
+                                        } else {
+                                            stats.walkover = singleData.resultFootball.teams[1].walkover;
+                                        }
                                         callback();
                                     } else {
                                         TeamSport.findOne({
@@ -3464,23 +3437,6 @@ var model = {
                                                 if (singleData.resultFootball.status == "IsCompleted" && singleData.resultFootball.isNoMatch == false) {
                                                     stats.status = singleData.resultFootball.status;
                                                     stats.draw = singleData.resultFootball.isDraw;
-                                                    if (singleData.resultFootball.teams[0].team === n.toString()) {
-                                                        if (singleData.resultFootball.teams[0].noShow == true && singleData.resultFootball.teams[0].walkover == false) {
-                                                            stats.reason = "Walkover";
-                                                        } else if (singleData.resultFootball.teams[0].noShow == false && singleData.resultFootball.teams[0].walkover == true) {
-                                                            stats.reason = "No Show";
-                                                        } else {
-                                                            stats.reason = "";
-                                                        }
-                                                    } else {
-                                                        if (singleData.resultFootball.teams[1].noShow == true && singleData.resultFootball.teams[1].walkover == false) {
-                                                            stats.reason = "Walkover";
-                                                        } else if (singleData.resultFootball.teams[1].noShow == false && singleData.resultFootball.teams[1].walkover == true) {
-                                                            stats.reason = "No Show";
-                                                        } else {
-                                                            stats.reason = "";
-                                                        }
-                                                    }
                                                     stats.score = singleData.resultFootball.teams[0].teamResults.finalPoints + "-" + singleData.resultFootball.teams[1].teamResults.finalPoints;
                                                     if (singleData.resultFootball.winner.player === n.toString()) {
                                                         stats.isAthleteWinner = false;
@@ -3513,9 +3469,9 @@ var model = {
                                     async.each(singleData.resultVolleyball.teams[0].teamResults.sets, function (n, callback) {
                                         console.log("n", n, "i", i);
                                         if (i == 0) {
-                                            result = n.points + "-" + singleData.resultVolleyball.teams[0].teamResults.sets[i].points;
+                                            result = n.points;
                                         } else {
-                                            result = result + "," + n.points + "-" + singleData.resultVolleyball.teams[0].teamResults.sets[i].points;
+                                            result = result + "," + n.points;
                                         }
                                         i++;
                                     }, function (err) {
@@ -3523,6 +3479,7 @@ var model = {
                                     });
                                     stats.score = result;
                                     stats.isAthleteWinner = true;
+                                    stats.walkover = singleData.resultVolleyball.teams[0].walkover;
                                     stats.status = singleData.resultVolleyball.status;
                                 } else if (singleData.resultVolleyball.status == "IsCompleted" && singleData.resultVolleyball.isNoMatch == "true") {
                                     stats.status = singleData.resultVolleyball.status;
@@ -3541,47 +3498,22 @@ var model = {
                                         if (singleData.resultVolleyball.status == "IsCompleted" && singleData.resultVolleyball.isNoMatch == false) {
                                             stats.status = singleData.resultVolleyball.status;
                                             stats.draw = singleData.resultVolleyball.isDraw;
+                                            async.each(singleData.resultVolleyball.teams[0].teamResults.sets, function (n, callback) {
+                                                if (i == 0) {
+                                                    result = n.points + "-" + singleData.resultVolleyball.teams[1].teamResults.sets[i].points;
+                                                } else {
+                                                    result = result + "," + n.points + "-" + singleData.resultVolleyball.teams[1].teamResults.sets[i].points;
+                                                }
+                                                i++;
+                                            }, function (err) {
+                                                callback(null, result);
+                                            });
                                             if (singleData.resultVolleyball.teams[0].team === n.toString()) {
-                                                var i = 0;
-                                                var result;
-                                                if (singleData.resultVolleyball.teams[0].noShow == true && singleData.resultVolleyball.teams[0].walkover == false) {
-                                                    stats.reason = "No Show";
-                                                } else if (singleData.resultVolleyball.teams[0].noShow == false && singleData.resultVolleyball.teams[0].walkover == true) {
-                                                    stats.reason = "Walkover";
-                                                } else {
-                                                    stats.reason = "";
-                                                }
-                                                async.each(singleData.resultVolleyball.teams[0].teamResults.sets, function (n, callback) {
-                                                    if (i == 0) {
-                                                        result = n.points + "-" + singleData.resultVolleyball.teams[0].teamResults.sets[i].points;
-                                                    } else {
-                                                        result = result + "," + n.points + "-" + singleData.resultVolleyball.teams[0].teamResults.sets[i].points;
-                                                    }
-                                                    i++;
-                                                }, function (err) {
-                                                    callback(null, result);
-                                                });
-                                            } else if (singleData.resultVolleyball.teams[1].team === n.toString()) {
-                                                var i = 0;
-                                                var result;
-                                                if (singleData.resultVolleyball.teams[1].noShow == true && singleData.resultVolleyball.teams[1].walkover == false) {
-                                                    stats.reason = "NO Show";
-                                                } else if (singleData.resultVolleyball.teams[1].noShow == false && singleData.resultVolleyball.teams[1].walkover == true) {
-                                                    stats.reason = "Walkover";
-                                                } else {
-                                                    stats.reason = "";
-                                                }
-                                                async.each(singleData.resultVolleyball.teams[1].teamResults.sets, function (n, callback) {
-                                                    if (i == 0) {
-                                                        result = n.points;
-                                                    } else {
-                                                        result = result + "," + n.points;
-                                                    }
-                                                    i++;
-                                                }, function (err) {
-                                                    callback(null, result);
-                                                });
+                                                stats.walkover = singleData.resultVolleyball.teams[0].walkover;
+                                            } else {
+                                                stats.walkover = singleData.resultVolleyball.teams[1].walkover;
                                             }
+
                                         } else if (singleData.resultVolleyball.status == "IsCompleted" && singleData.resultVolleyball.isNoMatch == true) {
                                             stats.status = singleData.resultVolleyball.status;
                                             stats.reason = "No Match";
@@ -3635,6 +3567,7 @@ var model = {
                                 if (singleData.resultHockey.status == "IsCompleted" && singleData.resultHockey.isNoMatch == false) {
                                     stats.score = singleData.resultHockey.teams[0].teamResults.finalPoints;
                                     stats.isAthleteWinner = true;
+                                    stats.walkover = singleData.resultHockey.teams[0].walkover;
                                     stats.status = singleData.resultHockey.status;
                                 } else if (singleData.resultHockey.status == "IsCompleted" && singleData.resultHockey.isNoMatch == true) {
                                     stats.status = singleData.resultHockey.status;
@@ -3648,6 +3581,11 @@ var model = {
                             } else {
                                 async.each(singleData.opponentsTeam, function (n, callback) {
                                     if (n.equals(data.teamId)) {
+                                        if (singleData.resultHockey.teams[0].team === n.toString()) {
+                                            stats.walkover = singleData.resultHockey.teams[0].walkover;
+                                        } else {
+                                            stats.walkover = singleData.resultHockey.teams[1].walkover;
+                                        }
                                         callback();
                                     } else {
                                         TeamSport.findOne({
@@ -3662,23 +3600,6 @@ var model = {
                                                 stats.school = found.schoolName;
                                                 stats.teamId = found.teamId;
                                                 if (singleData.resultHockey.status == "IsCompleted" && singleData.resultHockey.isNoMatch == false) {
-                                                    if (singleData.resultHockey.teams[0].team === n.toString()) {
-                                                        if (singleData.resultHockey.teams[0].noShow == true && singleData.resultHockey.teams[0].walkover == false) {
-                                                            stats.reason = "Walkover";
-                                                        } else if (singleData.resultHockey.teams[0].noShow == false && singleData.resultHockey.teams[0].walkover == true) {
-                                                            stats.reason = "No Show";
-                                                        } else {
-                                                            stats.reason = "";
-                                                        }
-                                                    } else {
-                                                        if (singleData.resultHockey.teams[1].noShow == true && singleData.resultHockey.teams[1].walkover == false) {
-                                                            stats.reason = "Walkover";
-                                                        } else if (singleData.resultHockey.teams[1].noShow == false && singleData.resultHockey.teams[1].walkover == true) {
-                                                            stats.reason = "No Show";
-                                                        } else {
-                                                            stats.reason = "";
-                                                        }
-                                                    }
                                                     stats.score = singleData.resultHockey.teams[0].teamResults.finalPoints + "-" + singleData.resultHockey.teams[1].teamResults.finalPoints;
                                                     if (singleData.resultHockey.winner.player === n.toString()) {
                                                         stats.isAthleteWinner = false;
@@ -3711,6 +3632,7 @@ var model = {
                                 if (singleData.resultWaterPolo.status == "IsCompleted" && singleData.resultWaterPolo.isNoMatch == false) {
                                     stats.score = singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoint;
                                     stats.isAthleteWinner = true;
+                                    stats.walkover = singleData.resultWaterPolo.teams[0].walkover;
                                     stats.status = singleData.resultWaterPolo.status;
                                 } else if (singleData.resultWaterPolo.status == "IsCompleted" && singleData.resultWaterPolo.isNoMatch == false) {
                                     stats.status = singleData.resultWaterPolo.status;
@@ -3724,6 +3646,11 @@ var model = {
                             } else {
                                 async.each(singleData.opponentsTeam, function (n, callback) {
                                     if (n.equals(data.teamId)) {
+                                        if (singleData.resultWaterPolo.teams[0].team === n.toString()) {
+                                            stats.walkover = singleData.resultWaterPolo.teams[0].walkover;
+                                        } else {
+                                            stats.walkover = singleData.resultWaterPolo.teams[1].walkover;
+                                        }
                                         callback();
                                     } else {
                                         TeamSport.findOne({
@@ -3738,23 +3665,6 @@ var model = {
                                                 stats.school = found.schoolName;
                                                 stats.teamId = found.teamId;
                                                 if (singleData.resultWaterPolo.status = "IsCompleted" && singleData.resultWaterPolo.isNoMatch == false) {
-                                                    if (singleData.resultWaterPolo.teams[0].team === n.toString()) {
-                                                        if (singleData.resultWaterPolo.teams[0].noShow == true && singleData.resultWaterPolo.teams[0].walkover == false) {
-                                                            stats.reason = "Walkover";
-                                                        } else if (singleData.resultWaterPolo.teams[0].noShow == false && singleData.resultWaterPolo.teams[0].walkover == true) {
-                                                            stats.reason = "No Show";
-                                                        } else {
-                                                            stats.reason = "";
-                                                        }
-                                                    } else {
-                                                        if (singleData.resultWaterPolo.teams[1].noShow == true && singleData.resultWaterPolo.teams[1].walkover == false) {
-                                                            stats.reason = "Walkover";
-                                                        } else if (singleData.resultWaterPolo.teams[1].noShow == false && singleData.resultWaterPolo.teams[1].walkover == true) {
-                                                            stats.reason = "No Show";
-                                                        } else {
-                                                            stats.reason = "";
-                                                        }
-                                                    }
                                                     stats.score = singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoints + "-" + singleData.resultWaterPolo.teams[1].teamResults.finalGoalPoints;;
                                                     if (singleData.resultWaterPolo.winner.player === n.toString()) {
                                                         stats.isAthleteWinner = false;
@@ -3785,6 +3695,7 @@ var model = {
                             if (singleData.opponentsTeam.length == 1) {
                                 if (singleData.resultKabaddi.status == "IsCompleted" && singleData.resultKabaddi.isNoMatch == false) {
                                     stats.score = singleData.resultKabaddi.teams[0].teamResults.finalPoints;
+                                    stats.walkover = singleData.resultKabaddi.teams[0].walkover;
                                     stats.isAthleteWinner = true;
                                     stats.status = singleData.resultKabaddi.status;
                                 } else if (singleData.resultKabaddi.status == "IsCompleted" && singleData.resultKabaddi.isNoMatch == false) {
@@ -3799,6 +3710,11 @@ var model = {
                             } else {
                                 async.each(singleData.opponentsTeam, function (n, callback) {
                                     if (n.equals(data.teamId)) {
+                                        if (singleData.resultKabaddi.teams[0].team === n.toString()) {
+                                            stats.walkover = singleData.resultKabaddi.teams[0].walkover;
+                                        } else {
+                                            stats.walkover = singleData.resultKabaddi.teams[1].walkover;
+                                        }
                                         callback();
                                     } else {
                                         TeamSport.findOne({
@@ -3813,23 +3729,6 @@ var model = {
                                                 stats.school = found.schoolName;
                                                 stats.teamId = found.teamId;
                                                 if (singleData.resultKabaddi.status == 'IsCompleted' && singleData.resultKabaddi.isNoMatch == false) {
-                                                    if (singleData.resultKabaddi.teams[0].team === n.toString()) {
-                                                        if (singleData.resultKabaddi.teams[0].noShow == true && singleData.resultKabaddi.teams[0].walkover == false) {
-                                                            stats.reason = "Walkover";
-                                                        } else if (singleData.resultKabaddi.teams[0].noShow == false && singleData.resultKabaddi.teams[0].walkover == true) {
-                                                            stats.reason = "No Show";
-                                                        } else {
-                                                            stats.reason = "";
-                                                        }
-                                                    } else {
-                                                        if (singleData.resultKabaddi.teams[1].noShow == true && singleData.resultKabaddi.teams[1].walkover == false) {
-                                                            stats.reason = "Walkover";
-                                                        } else if (singleData.resultKabaddi.teams[1].noShow == false && singleData.resultKabaddi.teams[1].walkover == true) {
-                                                            stats.reason = "No Show";
-                                                        } else {
-                                                            stats.reason = "";
-                                                        }
-                                                    }
                                                     stats.score = singleData.resultKabaddi.teams[0].teamResults.finalPoints + "-" + singleData.resultKabaddi.teams[1].teamResults.finalPoints;
                                                     if (singleData.resultKabaddi.winner.player === n.toString()) {
                                                         stats.isAthleteWinner = false;
@@ -3860,6 +3759,7 @@ var model = {
                             if (singleData.opponentsTeam.length == 1) {
                                 if (singleData.resultHandball.status == "IsCompleted" && singleData.resultHandball.isNoMatch == false) {
                                     stats.score = singleData.resultHandball.teams[0].teamResults.finalPoints;
+                                    stats.walkover = singleData.resultHandball.teams[0].walkover;
                                     stats.isAthleteWinner = true;
                                     stats.status = singleData.resultHandball.status;
                                 } else if (singleData.resultHandball.status == "IsCompleted" && singleData.resultHandball.isNoMatch == true) {
@@ -3874,6 +3774,11 @@ var model = {
                             } else {
                                 async.each(singleData.opponentsTeam, function (n, callback) {
                                     if (n.equals(data.teamId)) {
+                                        if (singleData.resultHandball.teams[0].team === n.toString()) {
+                                            stats.walkover = singleData.resultHandball.teams[0].walkover;
+                                        } else {
+                                            stats.walkover = singleData.resultHandball.teams[1].walkover;
+                                        }
                                         callback();
                                     } else {
                                         TeamSport.findOne({
@@ -3888,23 +3793,6 @@ var model = {
                                                 stats.school = found.schoolName;
                                                 stats.teamId = found.teamId;
                                                 if (singleData.resultHandball.status == 'IsCompleted' && singleData.resultHandball.isNoMatch == false) {
-                                                    if (singleData.resultHandball.teams[0].team === n.toString()) {
-                                                        if (singleData.resultHandball.teams[0].noShow == true && singleData.resultHandball.teams[0].walkover == false) {
-                                                            stats.reason = "Walkover";
-                                                        } else if (singleData.resultHandball.teams[0].noShow == false && singleData.resultHandball.teams[0].walkover == true) {
-                                                            stats.reason = "No Show";
-                                                        } else {
-                                                            stats.reason = "";
-                                                        }
-                                                    } else {
-                                                        if (singleData.resultHandball.teams[1].noShow == true && singleData.resultHandball.teams[1].walkover == false) {
-                                                            stats.reason = "Walkover";
-                                                        } else if (singleData.resultHandball.teams[1].noShow == false && singleData.resultHandball.teams[1].walkover == true) {
-                                                            stats.reason = "No Show";
-                                                        } else {
-                                                            stats.reason = "";
-                                                        }
-                                                    }
                                                     stats.score = singleData.resultHandball.teams[0].teamResults.finalPoints + "-" + singleData.resultHandball.teams[1].teamResults.finalPoints;;
                                                     if (singleData.resultHandball.winner.player === n.toString()) {
                                                         stats.isAthleteWinner = false;
@@ -3936,7 +3824,8 @@ var model = {
                         }
                     },
                     function (err) {
-                        callback(null, match);
+                        var final = _.unionBy(match, "matchId");
+                        callback(null, final);
                     });
             }
         });
