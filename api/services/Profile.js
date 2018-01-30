@@ -4750,6 +4750,7 @@ var model = {
                                         async.eachSeries(matchData, function (singleData, callback) {
                                                 var stats = {};
                                                 stats.year = data.year;
+                                                stats.matchId = singleData.matchId;
                                                 stats.ageGroup = singleData.sport.ageGroup.name;
                                                 stats.sportslist = singleData.sport.sportslist.name;
                                                 stats.gender = singleData.sport.gender;
