@@ -185,7 +185,7 @@
                                                     <span ng-if="stat.isAthleteWinner == true && !stat.reason && stat.opponentName && stat.walkover === false && stat.draw !== true">Won</span>
                                                     <span ng-if="stat.isAthleteWinner == false">Lost</span>
 
-                                                    <span ng-if="stat.isAthleteWinner != false && stat.isAthleteWinner != true && !stat.reason && stat.walkover != false && stat.walkover != true">-</span>
+                                                    <span ng-if="stat.isAthleteWinner != false && stat.isAthleteWinner != true && !stat.reason && stat.walkover != false && stat.walkover != true && !stat.result">-</span>
                                                     <span ng-if="stat.isAthleteWinner != false && stat.isAthleteWinner != true && stat.reason">{{stat.reason}}</span>
                                                     <span ng-if="stat.isAthleteWinner == true && stat.reason">{{stat.reason}}</span>
                                                     <span ng-if="stat.isAthleteWinner == true && stat.walkover == true">Walkover</span>
