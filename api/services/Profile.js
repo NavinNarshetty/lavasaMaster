@@ -688,6 +688,7 @@ var model = {
                             if (_.isEmpty(found)) {
                                 callback(null, []);
                             } else {
+                                console.log("found", found);
                                 profile.teamName = found.name;
                                 profile.teamId = found.teamId;
                                 profile.school = found.schoolName;

@@ -52,7 +52,7 @@ schema.plugin(deepPopulate, {
             select: '_id sportslist gender ageGroup maxTeamPlayers minTeamPlayers weight eventPdf'
         },
         "sport.sportslist": {
-            select: '_id name sportsListSubCategory'
+            select: '_id name sportsListSubCategory drawFormat'
         },
         "sport.sportslist.sportsListSubCategory": {
             select: '_id name'
