@@ -4512,9 +4512,9 @@ var model = {
                                 sNo++;
                             } else {
                                 if (mainData.resultThrowball.teams[0].teamResults.sets[i].point != undefined) {
-                                obj["Set 1"] = obj["Set 1"] + "," + "Set" + sNo + "-" + mainData.resultThrowball.teams[0].teamResults.sets[i].point;
-                                }else {
-                                    obj["Set 1"] = obj["Set 1"] + "," +"Set" + sNo + "-" + "0";
+                                    obj["Set 1"] = obj["Set 1"] + "," + "Set" + sNo + "-" + mainData.resultThrowball.teams[0].teamResults.sets[i].point;
+                                } else {
+                                    obj["Set 1"] = obj["Set 1"] + "," + "Set" + sNo + "-" + "0";
                                 }
                                 sNo++;
                             }
@@ -5656,6 +5656,7 @@ var model = {
             });
     },
 
+
     generateExcelHeatTeam: function (match, callback) {
         var count = 0;
         var prevRound = undefined;
@@ -6553,6 +6554,7 @@ var model = {
                                 obj["SCHOOL 1"] = "";
                                 obj["COACH NAME 1"] = "";
                                 obj["TEAM SPECIFIC DATA POINTS 1"] = "";
+                                obj["RESULT 1"] = "";
                             }
 
                             if (mainData.opponentsTeam.length > 1) {
@@ -6915,8 +6917,9 @@ var model = {
                                 obj["TEAM 2"] = "";
                                 obj["TEAM NAME 2"] = "";
                                 obj["SCHOOL 2"] = "";
-                                obj["COACH NAME 1"] = "";
-                                obj["TEAM SPECIFIC DATA POINTS 1"] = "";
+                                obj["COACH NAME 2"] = "";
+                                obj["TEAM SPECIFIC DATA POINTS 2"] = "";
+                                obj["RESULT 2"] = "";
                                 obj["FINAL SCORE"] = "";
                                 obj["WINNER NAME"] = "";
                                 obj["WINNER TEAM ID"] = "";
