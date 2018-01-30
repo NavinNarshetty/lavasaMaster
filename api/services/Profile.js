@@ -1856,7 +1856,7 @@ var model = {
                                         async.each(matchData, function (singleData, callback) {
                                                 // console.log("hockey", singleData);
                                                 var stats = {};
-                                                stats.year = new Date(singleData.createdAt).getFullYear();
+                                                stats.year = data.year;
                                                 stats.matchId = singleData.matchId;
                                                 stats.ageGroup = singleData.sport.ageGroup.name;
                                                 stats.sportslist = singleData.sport.sportslist.name;
@@ -1927,9 +1927,9 @@ var model = {
                                                                                         var length = singleData.resultsCombat.teams[0].sets.length;
                                                                                         while (i < length) {
                                                                                             if (i == 0) {
-                                                                                                result = singleData.resultsCombat.teams[0].sets[i].point;
+                                                                                                result = singleData.resultsCombat.teams[0].sets[i].point + "-" + singleData.resultsCombat.teams[1].sets[i].point;
                                                                                             } else {
-                                                                                                result = result + "," + singleData.resultsCombat.teams[0].sets[i].point;
+                                                                                                result = result + "," + singleData.resultsCombat.teams[0].sets[i].point + "-" + singleData.resultsCombat.teams[1].sets[i].point;
                                                                                             }
                                                                                             i++;
                                                                                         }
@@ -1948,9 +1948,9 @@ var model = {
                                                                                 var length = singleData.resultsCombat.teams[0].sets.length;
                                                                                 while (i < length) {
                                                                                     if (i == 0) {
-                                                                                        result = singleData.resultsCombat.teams[0].sets[i].point;
+                                                                                        result = singleData.resultsCombat.teams[0].sets[i].point + "-" + singleData.resultsCombat.teams[1].sets[i].point;
                                                                                     } else {
-                                                                                        result = result + "," + singleData.resultsCombat.teams[0].sets[i].point;
+                                                                                        result = result + "," + singleData.resultsCombat.teams[0].sets[i].point + "-" + singleData.resultsCombat.teams[1].sets[i].point;
                                                                                     }
                                                                                     i++;
                                                                                 }
