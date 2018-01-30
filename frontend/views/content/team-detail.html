@@ -191,7 +191,6 @@
                                                     <span ng-if="stat.isAthleteWinner == true && stat.walkover == true">Walkover</span>
                                                     <span ng-if="stat.isAthleteWinner == true && !stat.reason && !stat.opponentName">Bye</span>
                                                 </div>
-                                                --{{teamDetails.drawFormat.name}}--
                                                 <div class="sf-play" ng-if="teamDetails.drawFormat.name !== 'Knockout' && teamDetails.drawFormat.name !== 'League' && teamDetails.drawFormat.name !== 'League cum Knockout'">
                                                     <span ng-if="stat.isAthleteWinner == true && stat.draw !== true">Won</span>
                                                     <span ng-if="stat.isAthleteWinner == false">Lost</span>
