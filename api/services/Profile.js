@@ -1297,6 +1297,7 @@ var model = {
                                         callback(err, "error in mongoose");
                                     } else {
                                         async.eachSeries(matchData, function (singleData, callback) {
+                                            console.log("singleData", singleData);
                                             var stats = {};
                                             stats.year = data.year;
                                             stats.ageGroup = singleData.sport.ageGroup.name;
@@ -1638,11 +1639,10 @@ var model = {
 
                                             } else if (singleData.resultKnockout) {
                                                 var result;
-                                                async.each(singleData.resultKnockout.players, function (n, callback) {
-                                                    if (n.athleteId === data.athleteId) {
-                                                        stats.score = n.score;
-                                                        stats.rank = n.rank;
-
+                                                async.each(singleData.opponentsSingle, function (n, callback) {
+                                                    if (n.athleteId.equals(data.athleteId)) {
+                                                        stats.score = singleData.resultKnockout.finalScore;
+                                                        // stats.rank = singleData.resultKnockout.rank;
                                                         match.push(stats);
                                                         callback(null, match);
                                                     } else if (!n.athleteId.equals(data.athleteId)) {
