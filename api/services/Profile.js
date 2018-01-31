@@ -5159,9 +5159,9 @@ var model = {
                                                                     callback(null, profile.match);
                                                                 } else if (!n.id.equals(singleData.opponentsSingle._id)) {
                                                                     if (singleData.resultSwiss.winner.player === n.athleteId) {
-                                                                        stats.isAthleteWinner = false;
-                                                                    } else {
                                                                         stats.isAthleteWinner = true;
+                                                                    } else {
+                                                                        stats.isAthleteWinner = false;
                                                                         stats.walkover = player.walkover;
                                                                     }
                                                                     profile.match.push(stats);
