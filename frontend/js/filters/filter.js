@@ -384,7 +384,7 @@ myApp.filter('myFilter', function () {
         return function (input, type) {
             var videourl;
             if (type == 'youtube') {
-                videourl = "https://www.youtube.com/embed/" + input + "?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1";
+                videourl = "https://www.youtube.com/embed/" + input + "?autoplay=0&modestbranding=0&showinfo=0&rel=0&loop=1";
             } else {
                 videourl = "https://player.vimeo.com/video/" + input + "?autoplay=1&loop=1&autopause=0";
             }
