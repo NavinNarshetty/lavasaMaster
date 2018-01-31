@@ -4996,6 +4996,7 @@ var model = {
                                                                         if (singleData.resultsRacquet.status == "IsCompleted" && singleData.resultsRacquet.isNoMatch == false) {
                                                                             if (singleData.resultsRacquet.winner.player === player.player) {
                                                                                 stats.isAthleteWinner = false;
+                                                                                stats.walkover = player.walkover;
                                                                             } else {
                                                                                 stats.isAthleteWinner = true;
                                                                                 stats.walkover = player.walkover;
@@ -5424,6 +5425,7 @@ var model = {
                                                                             if (singleData.resultFencing.status == "IsCompleted" && singleData.resultFencing.isNoMatch == false) {
                                                                                 if (singleData.resultFencing.winner.player === found.player.player) {
                                                                                     stats.isAthleteWinner = false;
+                                                                                    stats.walkover = found.player.walkover;
                                                                                 } else {
                                                                                     stats.isAthleteWinner = true;
                                                                                     stats.walkover = found.player.walkover;
