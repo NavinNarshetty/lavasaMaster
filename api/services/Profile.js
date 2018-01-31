@@ -1699,6 +1699,8 @@ var model = {
                                                     stats.score = singleData.resultFencing.players[0].finalPoints;
                                                     stats.status = singleData.resultFencing.status;
                                                     stats.isAthleteWinner = true;
+                                                    match.push(stats);
+                                                    callback(null, match);
                                                 } else {
                                                     async.each(singleData.resultFencing.players, function (n, callback) {
                                                         if (n.player !== data.athleteId.toString()) {
@@ -1746,17 +1748,6 @@ var model = {
                                                             });
                                                         } else {
                                                             if (singleData.resultFencing.status == "IsCompleted" && singleData.resultFencing.isNoMatch == false) {
-                                                                var i = 0;
-                                                                var length = singleData.resultFencing.players[0].sets.length;
-                                                                while (i < length) {
-                                                                    if (i == 0) {
-                                                                        result = singleData.resultFencing.players[0].sets[i].point + "-" + singleData.resultFencing.players[1].sets[i].point;
-                                                                    } else {
-                                                                        result = result + "," + singleData.resultFencing.players[0].sets[i].point + "-" + singleData.resultFencing.players[1].sets[i].point;
-                                                                    }
-                                                                    i++;
-                                                                }
-                                                                stats.score = result;
                                                                 stats.status = singleData.resultFencing.status;
                                                                 stats.isAthleteWinner = true;
                                                             } else if (singleData.resultFencing.status == "IsCompleted" && singleData.resultFencing.isNoMatch == true) {
