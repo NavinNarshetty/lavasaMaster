@@ -17,14 +17,13 @@
   <div class="photovideo-mediaholder">
     <!-- POPUP PHOTO HOLDER -->
     <div class="photovideo-photoholder" ng-if="currentPic.mediatype == 'photo'">
-      <img ng-src="{{currentPic.mediaLink|mediapathtwo}}" alt="{{currentPic.title}} | Sports For All" title="{{currentPic.title}} | Sports For All"
-        class="img-responsive m-auto" title="| Sports For All">
+      <img ng-src="{{currentPic.mediaLink|mediapathtwo}}" alt="{{currentPic.title}} | Sports For All" title="{{currentPic.title}} | Sports For All" class="img-responsive m-auto">
     </div>
     <!-- POPUP PHOTO HOLDER END -->
     <!-- POPUP VIDEO HOLDER  -->
     <div class="photovideo-videoholder" ng-if="currentPic.mediatype == 'video'" style="background-image:url('{{currentPic.thumbnail}}')">
       <!-- <iframe class="photovideo-vidframe" ng-src="{{'https://player.vimeo.com/video/' + currentPic.medialink |trusted }}" frameborder="0" title="{{currentPic.mediatitle}} | SFA Videos" title="{{currentPic.mediatitle}} | SFA Videos"  alt="{{currentPic.mediatitle}} | SFA Videos"></iframe> -->
-      <iframe class="photovideo-vidframe" ng-src="{{currentPic.medialink | linkvideo:currentPic.videoType |trusted}}" frameborder="0" title="{{currentPic.mediatitle}} | SFA Videos" title="{{currentPic.mediatitle}} | SFA Videos"  alt="{{currentPic.mediatitle}} | SFA Videos"></iframe>
+      <iframe class="photovideo-vidframe" ng-src="{{currentPic.medialink | linkvideo:currentPic.videoType |trusted}}" frameborder="0" title="{{currentPic.mediatitle}} | SFA Videos" title="{{currentPic.mediatitle}} | SFA Videos"  alt="{{currentPic.mediatitle}} | SFA Videos" set-height="0.56"></iframe>
     </div>
     <!-- POPUP VIDEO HOLDER END -->
   </div>
