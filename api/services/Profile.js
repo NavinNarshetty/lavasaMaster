@@ -4906,6 +4906,7 @@ var model = {
                                                                         if (singleData.resultsCombat.status == "IsCompleted" && singleData.resultsCombat.isNoMatch == false) {
                                                                             if (singleData.resultsCombat.winner.player === player.player) {
                                                                                 stats.isAthleteWinner = true;
+                                                                                stats.walkover = player.walkover;
                                                                             } else {
                                                                                 stats.isAthleteWinner = false;
                                                                                 stats.walkover = player.walkover;
