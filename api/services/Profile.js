@@ -537,7 +537,7 @@ var model = {
                     });
                 },
                 function (individualData, callback) {
-                    data.sport = _.uniqBy(profile.sport, "sportslist.name");
+                    // data.sport = _.uniqBy(profile.sport, "sportslist.sportsListSubCategory.name");
                     Profile.getMedalsInProfile(profile, function (err, medalData) {
                         console.log("medalData", medalData);
                         if (err) {
@@ -596,6 +596,7 @@ var model = {
     getMedalsInProfile: function (data, callback) {
         var medals = [];
         async.concatSeries(data.sport, function (mainData, callback) {
+                console.log("sport**", mainData._id);
                 async.waterfall([
                         function (callback) {
                             Medal.find({
@@ -607,7 +608,7 @@ var model = {
                                     if (_.isEmpty(found)) {
                                         callback(null, found);
                                     } else {
-                                        // console.log("found", found);
+                                        console.log("found", found);
                                         callback(null, found);
                                     }
                                 }
@@ -621,7 +622,7 @@ var model = {
                                         if (!_.isEmpty(singleData.player)) {
                                             async.eachSeries(singleData.player, function (player, callback) {
                                                     if (player.equals(data.athlete._id)) {
-                                                        console.log("match", player, "data", data.athleteId);
+
                                                         medals.push(singleData);
                                                     }
                                                     callback(null, singleData);
@@ -650,7 +651,6 @@ var model = {
                                         }
                                     },
                                     function (err) {
-                                        // console.log("medals", medals)
                                         callback(null, medals);
                                     });
                             }
