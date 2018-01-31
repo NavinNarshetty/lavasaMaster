@@ -4748,7 +4748,7 @@ var model = {
                                 }
                                 Match.aggregate(newPipeLine, function (err, matchData) {
                                     // console.log("matchData", matchData);
-                                    profile.matchData = matchData;
+                                    // profile.matchData = matchData;
                                     // callback(null, profile);
                                     if (err) {
                                         callback(err, "error in mongoose");
@@ -5246,60 +5246,87 @@ var model = {
                                                         });
                                                     } else {
                                                         async.eachSeries(singleData.resultFencing.players, function (player, callback) {
-                                                                var name;
-                                                                var school;
-                                                                Athelete.findOne({
-                                                                    _id: objectid(player.player)
-                                                                }).lean().deepPopulate("school").exec(function (err, found) {
-                                                                    if (!_.isEmpty(found)) {
-                                                                        if (found.middleName) {
-                                                                            var name = found.firstName + " " + found.middleName + " " + found.surname;
-                                                                        } else {
-                                                                            var name = found.firstName + " " + found.surname;
-                                                                        }
-                                                                        if (found.atheleteSchoolName) {
-                                                                            var school = found.atheleteSchoolName;
-                                                                        } else {
-                                                                            var school = found.school.name;
-                                                                        }
-                                                                    }
-                                                                });
-                                                                if (!player.player === singleData.opponentsSingle.athleteId._id.toString()) {
-                                                                    stats.opponentName = name;
-                                                                    stats.school = school;
-                                                                    if (singleData.resultFencing.status == "IsCompleted" && singleData.resultFencing.isNoMatch == false) {
-                                                                        if (singleData.resultFencing.winner.player === player.player) {
-                                                                            stats.isAthleteWinner = false;
-                                                                        } else {
-                                                                            stats.isAthleteWinner = true;
-                                                                            stats.walkover = player.walkover;
-                                                                        }
-                                                                    } else if (singleData.resultFencing.status == "IsCompleted" && singleData.resultFencing.isNoMatch == true) {
-                                                                        stats.reason = "NO Match";
-                                                                    } else {
-                                                                        stats.status = singleData.resultFencing.status;
-                                                                    }
-                                                                    var player = {};
-                                                                    player.name = name;
-                                                                    player.school = school;
-                                                                    player.sfaId = found.sfaId;
-                                                                    player.athleteId = found._id;
-                                                                    player.profilePic = found.photograph;
-                                                                    profile.players.push(player);
+                                                                async.waterfall([
+                                                                    function (callback) {
+                                                                        var temp = {};
+                                                                        temp.player = player;
+                                                                        Athelete.findOne({
+                                                                            _id: objectid(player.player)
+                                                                        }).lean().deepPopulate("school").exec(function (err, found) {
+                                                                            temp.athlete = found;
+                                                                            callback(null, temp);
+                                                                        });
+                                                                    },
+                                                                    function (found, callback) {
+                                                                        var name;
+                                                                        var school;
+                                                                        console.log("player", found.player.player, "athlete", singleData.opponentsSingle.athleteId._id);
+                                                                        if (found.player.player !== singleData.opponentsSingle.athleteId._id.toString()) {
+                                                                            if (!_.isEmpty(found.athlete)) {
+                                                                                console.log("inside name", found.athlete);
+                                                                                if (found.athlete.middleName) {
+                                                                                    name = found.athlete.firstName + " " + found.athlete.middleName + " " + found.athlete.surname;
+                                                                                } else {
+                                                                                    name = found.athlete.firstName + " " + found.athlete.surname;
+                                                                                }
+                                                                                if (found.athlete.atheleteSchoolName) {
+                                                                                    school = found.athlete.atheleteSchoolName;
+                                                                                } else {
+                                                                                    school = found.athlete.school.name;
+                                                                                }
+                                                                            }
 
-                                                                } else {
-                                                                    var player = {};
-                                                                    player.name = name;
-                                                                    player.school = school;
-                                                                    player.sfaId = found.sfaId;
-                                                                    player.athleteId = found._id;
-                                                                    player.profilePic = found.photograph;
-                                                                    profile.players.push(player);
-                                                                    stats.score = singleData.resultFencing.players[0].finalPoints + "-" + singleData.resultFencing.players[1].finalPoints;
-                                                                }
-                                                                // }
-                                                                profile.match.push(stats);
-                                                                callback(null, profile);
+                                                                            stats.opponentName = name;
+                                                                            stats.school = school;
+                                                                            if (singleData.resultFencing.status == "IsCompleted" && singleData.resultFencing.isNoMatch == false) {
+                                                                                if (singleData.resultFencing.winner.player === found.player.player) {
+                                                                                    stats.isAthleteWinner = false;
+                                                                                } else {
+                                                                                    stats.isAthleteWinner = true;
+                                                                                    stats.walkover = found.player.walkover;
+                                                                                }
+                                                                            } else if (singleData.resultFencing.status == "IsCompleted" && singleData.resultFencing.isNoMatch == true) {
+                                                                                stats.reason = "NO Match";
+                                                                            } else {
+                                                                                stats.status = singleData.resultFencing.status;
+                                                                            }
+                                                                            var player = {};
+                                                                            player.name = name;
+                                                                            player.school = school;
+                                                                            player.sfaId = found.athlete.sfaId;
+                                                                            player.athleteId = found.athlete._id;
+                                                                            player.profilePic = found.athlete.photograph;
+                                                                            profile.players.push(player);
+
+                                                                        } else {
+                                                                            if (!_.isEmpty(found.athlete)) {
+                                                                                if (found.athlete.middleName) {
+                                                                                    name = found.athlete.firstName + " " + found.athlete.middleName + " " + found.athlete.surname;
+                                                                                } else {
+                                                                                    name = found.athlete.firstName + " " + found.athlete.surname;
+                                                                                }
+                                                                                if (found.athlete.atheleteSchoolName) {
+                                                                                    school = found.athlete.atheleteSchoolName;
+                                                                                } else {
+                                                                                    school = found.athlete.school.name;
+                                                                                }
+                                                                            }
+                                                                            var player = {};
+                                                                            player.name = name;
+                                                                            player.school = school;
+                                                                            player.sfaId = found.athlete.sfaId;
+                                                                            player.athleteId = found.athlete._id;
+                                                                            player.profilePic = found.athlete.photograph;
+                                                                            profile.players.push(player);
+                                                                            stats.score = singleData.resultFencing.players[0].finalPoints + "-" + singleData.resultFencing.players[1].finalPoints;
+                                                                        }
+                                                                        // }
+                                                                        profile.match.push(stats);
+                                                                        callback(null, profile);
+                                                                    }
+                                                                ], function (err, final) {
+                                                                    callback(null, final);
+                                                                });
                                                                 // } else {
                                                                 //     callback();
                                                                 // }
