@@ -34,7 +34,9 @@ global["database"] = "test-sfa";
 // global["database"] = "sfa";
 // global["database"] = "liveHy";
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/' + database, function (err) {
+mongoose.connect('mongodb://localhost:27017/' + database, {
+    useMongoClient: true
+}, function (err) {
     if (err) {
         console.log(err);
     }

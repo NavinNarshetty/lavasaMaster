@@ -1,4 +1,4 @@
-<div class="gallerypost-page">
+<div class="gallerypost-page d-opensans-regular">
   <div class="container">
     <div class="row">
       <!-- MEDIA HOLDER -->
@@ -10,8 +10,9 @@
           </div>
           <!-- PHOTO HOLDER END -->
           <!-- VIDEO HOLDER -->
-          <div class="gallerypost-videooholder " ng-if="pic.mediatype == 'video'" style="background-image:url('{{pic.thumbnail}}')">
-            <iframe class="photovideo-vidframe" ng-src="{{'https://player.vimeo.com/video/' + pic.medialink |trusted }}" frameborder="0" title="{{pic.mediatitle}} | SFA Videos"></iframe>
+          <div class="gallerypost-videoholder " ng-if="pic.mediatype == 'video'" style="background-image:url('{{pic.thumbnail}}')">
+            <!-- <iframe class="photovideo-vidframe" ng-src="{{'https://player.vimeo.com/video/' + pic.medialink |trusted }}" frameborder="0" title="{{pic.mediatitle}} | SFA Videos" set-height="0.56"></iframe> -->
+            <iframe class="photovideo-vidframe" ng-src="{{pic.medialink |linkvideo:pic.source |trusted }}" frameborder="0" title="{{pic.mediatitle}} | SFA Videos" set-height="0.56"></iframe>
           </div>
           <!-- VIDEO HOLDER END -->
         </div>
