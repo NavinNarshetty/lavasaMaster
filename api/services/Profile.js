@@ -620,7 +620,7 @@ var model = {
                                 async.eachSeries(found, function (singleData, callback) {
                                         if (!_.isEmpty(singleData.player)) {
                                             async.eachSeries(singleData.player, function (player, callback) {
-                                                    if (player.equals(data.athleteId)) {
+                                                    if (player.equals(data.athlete._id)) {
                                                         console.log("match", player, "data", data.athleteId);
                                                         medals.push(singleData);
                                                     }
@@ -631,14 +631,14 @@ var model = {
                                                 });
                                         } else {
                                             async.eachSeries(singleData.team, function (teamData, callback) {
-                                                    // console.log("teamData", teamData, "sport", mainData._id, "athelete", data.athlete._id);
+                                                    console.log("teamData", teamData, "sport", mainData._id, "athelete", data.athlete._id);
                                                     StudentTeam.find({
                                                         sport: mainData._id,
                                                         teamId: teamData,
                                                         studentId: data.athlete._id
                                                     }).lean().exec(function (err, foundData) {
                                                         if (!_.isEmpty(foundData)) {
-                                                            // console.log("found", singleData);
+                                                            console.log("found", singleData);
                                                             medals.push(singleData);
                                                         }
                                                         callback(null, found);
