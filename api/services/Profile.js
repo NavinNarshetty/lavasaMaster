@@ -538,6 +538,8 @@ var model = {
                 },
                 function (individualData, callback) {
                     // data.sport = _.uniqBy(profile.sport, "sportslist.sportsListSubCategory.name");
+                    console.log("individualData------", individualData);
+                    console.log("profile*******", profile);
                     Profile.getMedalsInProfile(profile, function (err, medalData) {
                         console.log("medalData", medalData);
                         if (err) {
