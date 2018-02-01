@@ -7468,6 +7468,9 @@ var model = {
                                                         if (!matchData[result.resultVar] == '') {
                                                             final.result = result;
                                                             final.score = matchData[result.resultVar];
+                                                            if (matchData.opponentsSingle.length > 0) {
+                                                                final.opponentsSingle = matchData.opponentsSingle;
+                                                            }
                                                             callback(null, final);
                                                         } else {
                                                             final.resultName = result.resultVar;
@@ -7487,6 +7490,9 @@ var model = {
                                                                         } else {
                                                                             final.result = result;
                                                                             final.score = matchData[result.resultVar];
+                                                                            if (matchData.opponentsSingle.length > 0) {
+                                                                                final.opponentsSingle = matchData.opponentsSingle;
+                                                                            }
                                                                             callback(null, final);
                                                                         }
                                                                     });
@@ -7502,6 +7508,7 @@ var model = {
                                             var main = {};
                                             var complete = {};
                                             var resultData = result.score;
+
                                             if (n['TEAM 1 Attendence'] == 'P' || n['TEAM 1 Attendence'] == 'p') {
                                                 team1.noShow = false;
                                                 team2.walkover = false;
@@ -7530,13 +7537,11 @@ var model = {
                                             } else {
                                                 main.isNoMatch = false;
                                             }
-
                                             if (n['DRAW'] == 'yes') {
                                                 main.isDraw = true;
                                             } else {
                                                 main.isDraw = false;
                                             }
-
                                             main.status = "IsCompleted";
                                             if (n['SCORE 1']) {
                                                 if (result.result.resultVar == "resultBasketball") {
@@ -7564,22 +7569,58 @@ var model = {
                                                     resultData.teams[1].teamResults.finalPoints = n['SCORE 2'];
                                                 }
                                             }
-                                            if (resultData.teams.length == 2) {
-                                                resultData.isDraw = main.isDraw;
-                                                resultData.status = main.status;
-                                                resultData.isNoMatch = main.isNoMatch;
-                                                resultData.teams[0].noShow = team1.noShow;
-                                                resultData.teams[0].walkover = team1.walkover;
-                                                resultData.teams[1].noShow = team2.noShow;
-                                                resultData.teams[1].walkover = team2.walkover;
-                                                // console.log("main", main);
+                                            if (resultData.teams) {
+                                                if (resultData.teams.length == 2) {
+                                                    resultData.isDraw = main.isDraw;
+                                                    resultData.status = main.status;
+                                                    resultData.isNoMatch = main.isNoMatch;
+                                                    resultData.teams[0].noShow = team1.noShow;
+                                                    resultData.teams[0].walkover = team1.walkover;
+                                                    resultData.teams[1].noShow = team2.noShow;
+                                                    resultData.teams[1].walkover = team2.walkover;
+                                                    if (n["WINNER ID"] == resultData.teams[0].teamId) {
+                                                        resultData.winner.player = resultData.teams[0].team;
+                                                    } else if (n["WINNER ID"] == resultData.teams[1].teamId) {
+                                                        resultData.winner.player = resultData.teams[1].team;
+                                                    }
+                                                } else {
+                                                    // console.log("main", main);
+                                                    resultData.isDraw = main.isDraw;
+                                                    resultData.status = main.status;
+                                                    resultData.isNoMatch = main.isNoMatch;
+                                                    resultData.teams[0].noShow = team1.noShow;
+                                                    resultData.teams[0].walkover = team1.walkover;
+                                                    if (n["WINNER ID"] == resultData.teams[0].teamId) {
+                                                        resultData.winner.player = resultData.teams[0].team;
+                                                    }
+                                                }
                                             } else {
-                                                // console.log("main", main);
-                                                resultData.isDraw = main.isDraw;
-                                                resultData.status = main.status;
-                                                resultData.isNoMatch = main.isNoMatch;
-                                                resultData.teams[0].noShow = team1.noShow;
-                                                resultData.teams[0].walkover = team1.walkover;
+                                                if (resultData.players.length == 2) {
+                                                    resultData.isDraw = main.isDraw;
+                                                    resultData.status = main.status;
+                                                    resultData.isNoMatch = main.isNoMatch;
+                                                    resultData.players[0].noShow = team1.noShow;
+                                                    resultData.players[0].walkover = team1.walkover;
+                                                    resultData.players[1].noShow = team2.noShow;
+                                                    resultData.players[1].walkover = team2.walkover;
+                                                    if (n["WINNER ID"] == resultData.players[0].sfaId) {
+                                                        resultData.winner.player = resultData.players[0].player;
+                                                        resultData.winner.opponentsSingle = result.opponentsSingle[0];
+                                                    } else if (n["WINNER ID"] == resultData.players[1].sdaId) {
+                                                        resultData.winner.player = resultData.players[1].player;
+                                                        resultData.winner.opponentsSingle = result.opponentsSingle[1];
+                                                    }
+                                                } else {
+                                                    resultData.isDraw = main.isDraw;
+                                                    resultData.status = main.status;
+                                                    resultData.isNoMatch = main.isNoMatch;
+                                                    resultData.players[0].noShow = team1.noShow;
+                                                    resultData.players[0].walkover = team1.walkover;
+                                                    if (n["WINNER ID"] == resultData.players[0].sfaId) {
+                                                        resultData.winner.player = resultData.players[0].player;
+                                                        resultData.winner.opponentsSingle = result.opponentsSingle[0];
+                                                    }
+                                                }
                                             }
                                             var placeholder = {};
                                             placeholder[result.result.resultVar] = resultData;
@@ -7692,8 +7733,7 @@ var model = {
                             obj["SCORE 2"] = "";
                             obj["NO MATCH"] = "";
                             obj["DRAW"] = "";
-                            obj["WINNER SFAID"] = "";
-                            obj["WINNER NAME"] = "";
+                            obj["WINNER ID"] = "";
                             callback(null, obj);
 
                         },
