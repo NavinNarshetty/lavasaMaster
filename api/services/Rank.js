@@ -1130,7 +1130,8 @@ var model = {
             function (callback) {
                 var sendObj = {
                     "ageGroups": [],
-                    "events": []
+                    "events": [],
+                    "weight": []
                 };
                 var pipeline = [{
                     $lookup: {
@@ -1176,10 +1177,24 @@ var model = {
                         preserveNullAndEmptyArrays: false // optional
                     }
                 }, {
+                    $lookup: {
+                        "from": "weights",
+                        "localField": "weight",
+                        "foreignField": "_id",
+                        "as": "weight"
+                    }
+                }, {
+                    $unwind: {
+                        path: "$weight",
+                        includeArrayIndex: "arrayIndex", // optional
+                        preserveNullAndEmptyArrays: true // optional
+                    }
+                }, {
                     $project: {
                         // specifications
                         "ageGroup": 1,
                         "sportslist": 1,
+                        "weight": 1,
                         "gender": 1
                     }
                 }];
