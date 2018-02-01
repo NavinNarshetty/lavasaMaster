@@ -1968,7 +1968,7 @@ var model = {
         async.waterfall([
             function (callback) {
                 var deepSearch = "sportslist ageGroup weight";
-                Sport.find(data.keyword)
+                Sport.find()
                     .order(options)
                     .deepPopulate(deepSearch)
                     .keyword(options)
