@@ -248,7 +248,7 @@ var model = {
         } else {
             var deepSearch = "player team sport sport.sportslist sport.ageGroup sport.weight sport.sportslist.sportsListSubCategory";
 
-            Medal.find(data.keyword)
+            Medal.find()
                 .sort({
                     createdAt: -1
                 })

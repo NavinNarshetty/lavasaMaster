@@ -2091,7 +2091,7 @@ console.log(data);
         };
         if (data.keyword == "") {
             var deepSearch = "athleteId athleteId.school sportsListSubCategory";
-            var Search = Model.find(data.keyword)
+            var Search = Model.find()
 
                 .order(options)
                 .deepPopulate(deepSearch)
