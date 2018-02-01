@@ -294,11 +294,24 @@
             "url": ""
         },
         {
-            "name": "Minimum Matches",
+            "name": "Minimum Won Matches",
             "type": "number",
-            "tableRef": "minMatch",
-            "placeholder": "Enter Mimimum Match",
-            "id": "minMatch",
+            "tableRef": "minWonMatch",
+            "placeholder": "Enter Mimimum Match won",
+            "id": "minWonMatch",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "url": ""
+        },
+        {
+            "name": "Minimum No Show",
+            "type": "number",
+            "tableRef": "minNoShow",
+            "placeholder": "Enter Mimimum No Show",
+            "id": "minNoShow",
             "validation": [
                 "",
                 "trim",
