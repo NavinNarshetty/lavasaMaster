@@ -75,7 +75,8 @@ var schema = new Schema({
     goldMedal: Number,
     silverMedal: Number,
     bronzeMedal: Number,
-    minMatch: Number,
+    minWonMatch: Number,
+    minNoShow: Number,
     bucketName: String,
     cloudUrlPrefix: String
 
