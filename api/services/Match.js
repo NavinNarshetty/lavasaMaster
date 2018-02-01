@@ -7639,7 +7639,7 @@ var model = {
                     Match.find({
                         sport: sportData.sportId,
                     }).lean().deepPopulate(deepSearch).sort({
-                        incrementalId: 1
+                        oldId: 1
                     }).exec(function (err, match) {
                         if (err) {
                             callback(err, null);
@@ -7679,7 +7679,8 @@ var model = {
                                 obj["TEAM ID 1"] = "";
                                 obj["SCHOOL 1"] = "";
                             }
-
+                            obj["TEAM 1 Attendence"] = "";
+                            obj["SCORE 1"] = "";
                             if (mainData.opponentsTeam.length > 1) {
                                 obj["TEAM ID 2"] = mainData.opponentsTeam[1].teamId;
                                 obj["SCHOOL 2"] = mainData.opponentsTeam[1].schoolName;
@@ -7687,12 +7688,12 @@ var model = {
                                 obj["TEAM ID 2"] = "";
                                 obj["SCHOOL 2"] = "";
                             }
-                            obj["TEAM 1 Attendence"] = "";
-                            obj["SCORE 1"] = "";
                             obj["TEAM 2 Attendence"] = "";
                             obj["SCORE 2"] = "";
                             obj["NO MATCH"] = "";
                             obj["DRAW"] = "";
+                            obj["WINNER SFAID"] = "";
+                            obj["WINNER NAME"] = "";
                             callback(null, obj);
 
                         },
