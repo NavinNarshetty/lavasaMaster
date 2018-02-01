@@ -1133,7 +1133,6 @@ var model = {
     },
 
     saveVerify: function (data, found, callback) {
-        delete data.createdAt;
         Athelete.saveData(data, function (err, athleteData) { //saves data to database collection
             console.log("athleteData", athleteData);
             if (err) {
