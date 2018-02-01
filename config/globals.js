@@ -66,13 +66,13 @@ module.exports.globals = {
 global["mongoose"] = require('mongoose');
 global["deepPopulate"] = require('mongoose-deep-populate')(mongoose);
 global["uniqueValidator"] = require('mongoose-unique-validator');
-global["timestamps"] = require('mongoose-timestamp');
+global["timestamps"] = require('mongoose-timestamp-plugin');
 global["validators"] = require('mongoose-validators');
 global["monguurl"] = require('monguurl');
 require('mongoose-middleware').initialize(mongoose);
 global["Schema"] = mongoose.Schema;
 global["Grid"] = require('gridfs-stream');
-global["gfs"] = Grid(mongoose.connection, mongoose);
+global["gfs"] = Grid(mongoose.connection[0].db, mongoose);
 global["http"] = require('http');
 gfs.mongo = mongoose.mongo;
 
