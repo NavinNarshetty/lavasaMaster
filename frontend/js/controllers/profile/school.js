@@ -604,6 +604,8 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
                 $scope.filterStatistics.gender = '';
                 $scope.filterStatistics.event = '';
                 $scope.tabchange('player', 1);
+                $scope.getDrawFormats();
+                $scope.getSportAgeGroup();
             } else {
                 $scope.filterStatistics = {};
                 $scope.sportContingent = {};
