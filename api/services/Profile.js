@@ -7691,7 +7691,7 @@ var model = {
                                                                 result = result + "," + singleData.resultsRacquet.teams[0].sets[i].point;
                                                             }
                                                             i++;
-                                                            console.log("i", result);
+                                                            // console.log("i", result);
                                                         }
                                                         stats.score = result;
                                                         if (singleData.resultsRacquet.status == "IsCompleted" && singleData.resultsRacquet.isNoMatch == false) {
@@ -7708,20 +7708,23 @@ var model = {
                                                         profile.match.push(stats);
                                                         callback(null, profile);
                                                     } else {
-                                                        async.each(singleData.resultsRacquet.teams, function (n, callback) {
+                                                        async.eachSeries(singleData.resultsRacquet.teams, function (n, callback) {
                                                                 async.waterfall([
                                                                         function (callback) {
                                                                             if (n.team !== singleData.opponentsTeam._id.toString()) {
+                                                                                console.log("n", n);
                                                                                 TeamSport.findOne({
-                                                                                    teamId: new objectid(n.team)
+                                                                                    _id: new objectid(n.team)
                                                                                 }).lean().exec(function (err, found) {
                                                                                     if (err) {
                                                                                         callback(null, err);
                                                                                     } else if (_.isEmpty(found)) {
                                                                                         callback(null, profile.match);
                                                                                     } else {
-                                                                                        opponentName = found.teamId;
-                                                                                        opponentSchool = found.schoolName;
+                                                                                        console.log("found", found);
+                                                                                        stats.opponentName = found.name;
+                                                                                        stats.teamid = found.teamId;
+                                                                                        stats.opponentSchool = found.schoolName;
                                                                                         if (singleData.resultsRacquet.status == "IsCompleted" && singleData.resultsRacquet.isNoMatch == false) {
                                                                                             if (singleData.resultsRacquet.winner.player === n.team) {
                                                                                                 stats.isAthleteWinner = false;
@@ -7751,7 +7754,7 @@ var model = {
                                                                                         result = result + "," + singleData.resultsRacquet.teams[0].sets[i].point + "-" + singleData.resultsRacquet.teams[1].sets[i].point;
                                                                                     }
                                                                                     i++;
-                                                                                    console.log("i", result);
+                                                                                    // console.log("i", result);
                                                                                 }
                                                                                 if (singleData.resultsRacquet.winner.player !== n.team) {
                                                                                     // stats.isAthleteWinner = false;
@@ -7766,7 +7769,7 @@ var model = {
                                                                         },
                                                                         function (profile, callback) {
                                                                             if (n.team !== singleData.opponentsTeam._id.toString()) {
-                                                                                console.log("n", n);
+                                                                                // console.log("n", n);
                                                                                 async.each(n.players, function (p, callback) {
                                                                                     Athelete.findOne({
                                                                                         _id: new objectid(p.player)
@@ -7787,7 +7790,7 @@ var model = {
                                                                                         player.sfaId = found.sfaId;
                                                                                         player.athleteId = found._id;
                                                                                         player.profilePic = found.photograph;
-                                                                                        console.log("player", player);
+                                                                                        // console.log("player", player);
                                                                                         if (_.isEmpty(player)) {
                                                                                             profile.players.push(player);
                                                                                         }
