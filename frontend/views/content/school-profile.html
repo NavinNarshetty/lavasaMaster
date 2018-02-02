@@ -458,14 +458,15 @@
                                                 <!-- DO NOT DELETE -->
                                                 <!-- <tr  ng-repeat="stat in schoolStats"> -->
                                                 <!-- DO NOT DELETE -->
-                                                <tr class="other-bg" ng-repeat="stat in schoolStats.match | orderBy:'match'">
+                                                <tr class="other-bg" ng-repeat="stat in schoolStats.match | orderBy:'matchId'">
                                                     <td>
                                                         <span>{{stat.year}}</span>
                                                     </td>
                                                     <td>
                                                         <span class="text-up">{{stat.ageGroup}}
                                                             <br> {{stat.gender}}
-                                                            <br> {{stat.sportslist}}</span>
+                                                            <br> {{stat.sportslist}}
+                                                            <br> {{stat.weight || ''}}</span>
                                                     </td>
                                                     <!--<td><span class="text-up" ng-if="table.layout == 'Knockout'">{{stat.knockout.round}}</span></td>-->
                                                     <td class="text-up" ng-if="(table.layout=='Qualifying Knockout') || (table.layout=='Qualifying Round') || (table.layout=='Knockout') || (table.layout=='Swiss League') || (table.layout=='Heats') || (table.layout=='Leagues') || (table.layout=='League cum Knockout')">
