@@ -5976,7 +5976,7 @@ var model = {
                                                                             i++;
                                                                         }
                                                                         stats.score = result;
-                                                                        if (singleData.resultsRacquet.winner.player !== player.player) {
+                                                                        if (singleData.resultsRacquet.winner.player === player.player) {
                                                                             // stats.isAthleteWinner = false;
                                                                             stats.walkover = player.walkover;
                                                                             stats.noShow = player.noShow;
