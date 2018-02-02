@@ -7267,6 +7267,7 @@ var model = {
                 function (match, callback) {
                     async.concatSeries(match, function (mainData, callback) {
                             var obj = {};
+                            console.log("match", mainData.matchId);
                             obj["MATCH ID"] = mainData.matchId;
                             obj["ROUND NAME"] = mainData.round;
                             obj.SPORT = mainData.sport.sportslist.sportsListSubCategory.name;
@@ -8952,16 +8953,16 @@ var model = {
                                             obj["T1 Total Unforced Errors"] = mainData.resultsRacquet.teams[0].sets[i].unforcedError;
                                             obj["T1 Total Winners"] = mainData.resultsRacquet.teams[0].sets[i].winner;
                                             if (mainData.resultsRacquet.teams[0].sets[i].ace) {
-                                              obj["T1 Total Ace"] = mainData.resultsRacquet.teams[0].sets[i].ace;
+                                                obj["T1 Total Ace"] = mainData.resultsRacquet.teams[0].sets[i].ace;
                                             } else {
-                                              obj["T1 Total Ace"] = "";
+                                                obj["T1 Total Ace"] = "";
                                             }
                                             if (mainData.resultsRacquet.teams[0].sets[i].doubleFaults) {
-                                              obj["T1 Total Double Faults"] = mainData.resultsRacquet.teams[0].sets[i].doubleFaults;
+                                                obj["T1 Total Double Faults"] = mainData.resultsRacquet.teams[0].sets[i].doubleFaults;
                                             } else {
-                                             obj["T1 Total Double Faults"] = "";
+                                                obj["T1 Total Double Faults"] = "";
                                             }
-                                        }                     
+                                        }
                                     } else {
                                         if (mainData.sport.sportslist.name === "Badminton Doubles" || mainData.sport.sportslist.name === "Table Tennis Doubles" || squash.includes("Squash")) {
                                             obj["T1 Total Service Errors"] = obj["T1 Total Service Errors"] + mainData.resultsRacquet.teams[0].sets[i].serviceError;
@@ -8971,68 +8972,68 @@ var model = {
                                             obj["T1 Total Unforced Errors"] = obj["T1 Total Unforced Errors"] + mainData.resultsRacquet.teams[0].sets[i].unforcedError;
                                             obj["T1 Total Winners"] = obj["T1 Total Winners"] + mainData.resultsRacquet.teams[0].sets[i].winner;
                                             if (mainData.resultsRacquet.teams[0].sets[i].ace) {
-                                               obj["T1 Total Ace"] = obj["T1 Total Ace"] + mainData.resultsRacquet.teams[0].sets[i].ace;
+                                                obj["T1 Total Ace"] = obj["T1 Total Ace"] + mainData.resultsRacquet.teams[0].sets[i].ace;
                                             } else {
-                                               obj["T1 Total Ace"] = "";
+                                                obj["T1 Total Ace"] = "";
                                             }
                                             if (mainData.resultsRacquet.teams[0].sets[i].doubleFaults) {
-                                               obj["T1 Total Double Faults"] = obj["T1 Total Double Faults"] + mainData.resultsRacquet.teams[0].sets[i].doubleFaults;
+                                                obj["T1 Total Double Faults"] = obj["T1 Total Double Faults"] + mainData.resultsRacquet.teams[0].sets[i].doubleFaults;
                                             } else {
-                                               obj["T1 Total Double Faults"] = "";
+                                                obj["T1 Total Double Faults"] = "";
                                             }
                                         } else {
                                             obj["T1 Total Service Errors"] = obj["T1 Total Service Errors"] + mainData.resultsRacquet.teams[0].sets[i].serviceError;
                                             obj["T1 Total Unforced Errors"] = obj["T1 Total Unforced Errors"] + mainData.resultsRacquet.teams[0].sets[i].unforcedError;
                                             obj["T1 Total Winners"] = obj["T1 Total Winners"] + mainData.resultsRacquet.teams[0].sets[i].winner;
                                             if (mainData.resultsRacquet.teams[0].sets[i].ace) {
-                                               obj["T1 Total Ace"] = obj["T1 Total Ace"] + mainData.resultsRacquet.teams[0].sets[i].ace;
+                                                obj["T1 Total Ace"] = obj["T1 Total Ace"] + mainData.resultsRacquet.teams[0].sets[i].ace;
                                             } else {
-                                               obj["T1 Total Ace"] = "";
+                                                obj["T1 Total Ace"] = "";
                                             }
                                             if (mainData.resultsRacquet.teams[0].sets[i].doubleFaults) {
-                                               obj["T1 Total Double Faults"] = obj["T1 Total Double Faults"] + mainData.resultsRacquet.teams[0].sets[i].doubleFaults;
+                                                obj["T1 Total Double Faults"] = obj["T1 Total Double Faults"] + mainData.resultsRacquet.teams[0].sets[i].doubleFaults;
                                             } else {
-                                               obj["T1 Total Double Faults"] = "";
+                                                obj["T1 Total Double Faults"] = "";
                                             }
-                                        } 
+                                        }
                                     }
                                 }
                             } else {
-                                       if (mainData.sport.sportslist.name === "Badminton Doubles" || mainData.sport.sportslist.name === "Table Tennis Doubles" || squash.includes("Squash")) {
-                                            obj["T1 Total Service Errors"] = "";
-                                            obj["T1 Total Unforced Errors"] = "";
-                                            obj["T1 Total Winners"] = "";
-                                        } else if (mainData.sport.sportslist.name === "Tennis Doubles") {                 
-                                            obj["T1 Total Unforced Errors"] = "";
-                                            obj["T1 Total Winners"] = "";
-                                            obj["T1 Total Ace"] = "";
-                                            obj["T1 Total Double Faults"] = "";
-                                        } else {
-                                            obj["T1 Total Service Errors"] = "";
-                                            obj["T1 Total Unforced Errors"] = "";
-                                            obj["T1 Total Winners"] = "";
-                                            obj["T1 Total Ace"] = "";
-                                            obj["T1 Total Double Faults"] = "";
-                                        } 
-                          
+                                if (mainData.sport.sportslist.name === "Badminton Doubles" || mainData.sport.sportslist.name === "Table Tennis Doubles" || squash.includes("Squash")) {
+                                    obj["T1 Total Service Errors"] = "";
+                                    obj["T1 Total Unforced Errors"] = "";
+                                    obj["T1 Total Winners"] = "";
+                                } else if (mainData.sport.sportslist.name === "Tennis Doubles") {
+                                    obj["T1 Total Unforced Errors"] = "";
+                                    obj["T1 Total Winners"] = "";
+                                    obj["T1 Total Ace"] = "";
+                                    obj["T1 Total Double Faults"] = "";
+                                } else {
+                                    obj["T1 Total Service Errors"] = "";
+                                    obj["T1 Total Unforced Errors"] = "";
+                                    obj["T1 Total Winners"] = "";
+                                    obj["T1 Total Ace"] = "";
+                                    obj["T1 Total Double Faults"] = "";
+                                }
+
                             }
                         } else {
                             if (mainData.sport.sportslist.name === "Badminton Doubles" || mainData.sport.sportslist.name === "Table Tennis Doubles" || squash.includes("Squash")) {
-                                            obj["T1 Total Service Errors"] = "";
-                                            obj["T1 Total Unforced Errors"] = "";
-                                            obj["T1 Total Winners"] = "";
-                                        } else if (mainData.sport.sportslist.name === "Tennis Doubles") {                 
-                                            obj["T1 Total Unforced Errors"] = "";
-                                            obj["T1 Total Winners"] = "";
-                                            obj["T1 Total Ace"] = "";
-                                            obj["T1 Total Double Faults"] = "";
-                                        } else {
-                                            obj["T1 Total Service Errors"] = "";
-                                            obj["T1 Total Unforced Errors"] = "";
-                                            obj["T1 Total Winners"] = "";
-                                            obj["T1 Total Ace"] = "";
-                                            obj["T1 Total Double Faults"] = "";
-                                        } 
+                                obj["T1 Total Service Errors"] = "";
+                                obj["T1 Total Unforced Errors"] = "";
+                                obj["T1 Total Winners"] = "";
+                            } else if (mainData.sport.sportslist.name === "Tennis Doubles") {
+                                obj["T1 Total Unforced Errors"] = "";
+                                obj["T1 Total Winners"] = "";
+                                obj["T1 Total Ace"] = "";
+                                obj["T1 Total Double Faults"] = "";
+                            } else {
+                                obj["T1 Total Service Errors"] = "";
+                                obj["T1 Total Unforced Errors"] = "";
+                                obj["T1 Total Winners"] = "";
+                                obj["T1 Total Ace"] = "";
+                                obj["T1 Total Double Faults"] = "";
+                            }
                         }
                     } else if (mainData.resultBasketball) {
                         obj["COACH NAME 1"] = mainData.resultBasketball.teams[0].coach;
@@ -11877,8 +11878,8 @@ var model = {
                                                 paramData.heatNo = n.success["HEAT NUMBER"];
                                                 paramData.scheduleDate = n.success.DATE;
                                                 paramData.scheduleTime = n.success.TIME;
-                                                paramData.video = n.success["VIDEO TYPE"];
-                                                paramData.videoType = n.success["VIDEO"];
+                                                // paramData.video = n.success["VIDEO TYPE"];
+                                                // paramData.videoType = n.success["VIDEO"];
                                                 if (!_.isEmpty(result)) {
                                                     paramData.resultHeat = result;
                                                 }
@@ -12042,8 +12043,8 @@ var model = {
                                         paramData.sport = singleData.SPORT;
                                         paramData.scheduleDate = singleData.DATE;
                                         paramData.scheduleTime = singleData.TIME;
-                                        paramData.video = singleData["VIDEO"];
-                                        paramData.video = singleData["VIDEO TYPE"];
+                                        // paramData.video = singleData["VIDEO"];
+                                        // paramData.video = singleData["VIDEO TYPE"];
                                         Match.updateQualifyingRound(paramData, function (err, complete) {
                                             if (err) {
                                                 callback(err, null);
@@ -12332,8 +12333,8 @@ var model = {
                                                 paramData.sport = n.success.SPORT;
                                                 paramData.scheduleDate = n.success.DATE;
                                                 paramData.scheduleTime = n.success.TIME;
-                                                paramData.video = singleData["VIDEO"];
-                                                paramData.video = singleData["VIDEO TYPE"];
+                                                // paramData.video = singleData["VIDEO"];
+                                                // paramData.video = singleData["VIDEO TYPE"];
                                                 if (!_.isEmpty(result)) {
                                                     paramData.resultHeat = result;
                                                 }
@@ -12496,8 +12497,8 @@ var model = {
                                         paramData.sport = singleData.SPORT;
                                         paramData.scheduleDate = singleData.DATE;
                                         paramData.scheduleTime = singleData.TIME;
-                                        paramData.video = singleData["VIDEO"];
-                                        paramData.video = singleData["VIDEO TYPE"];
+                                        // paramData.video = singleData["VIDEO"];
+                                        // paramData.video = singleData["VIDEO TYPE"];
                                         Match.update({
                                             matchId: paramData.matchId
                                         }, paramData).exec(
@@ -12721,8 +12722,8 @@ var model = {
                             paramData.sport = singleData.SPORT;
                             paramData.scheduleDate = singleData.DATE;
                             paramData.scheduleTime = singleData.TIME;
-                            paramData.video = singleData["VIDEO"];
-                            paramData.video = singleData["VIDEO TYPE"];
+                            // paramData.video = singleData["VIDEO"];
+                            // paramData.video = singleData["VIDEO TYPE"];
                             paramData.resultKnockout = result;
                             Match.update({
                                 matchId: paramData.matchId
@@ -12854,8 +12855,8 @@ var model = {
                                         paramData.sport = singleData.SPORT;
                                         paramData.scheduleDate = singleData.DATE;
                                         paramData.scheduleTime = singleData.TIME;
-                                        paramData.video = singleData["VIDEO"];
-                                        paramData.video = singleData["VIDEO TYPE"];
+                                        // paramData.video = singleData["VIDEO"];
+                                        // paramData.video = singleData["VIDEO TYPE"];
                                         Match.update({
                                             matchId: paramData.matchId
                                         }, paramData).exec(
@@ -13034,8 +13035,8 @@ var model = {
                                             // }
                                             paramData.scheduleTime = singleData.TIME;
                                             paramData.excelType = singleData["STAGE"];
-                                            paramData.video = singleData["VIDEO"];
-                                            paramData.video = singleData["VIDEO TYPE"];
+                                            // paramData.video = singleData["VIDEO"];
+                                            // paramData.video = singleData["VIDEO TYPE"];
                                             if (!_.isEmpty(paramData.opponentsTeam)) {
                                                 Match.update({
                                                     matchId: paramData.matchId
@@ -13246,8 +13247,8 @@ var model = {
                                             paramData.scheduleDate = singleData.DATE;
                                             paramData.scheduleTime = singleData.TIME;
                                             paramData.excelType = singleData["STAGE"];
-                                            paramData.video = singleData["VIDEO"];
-                                            paramData.video = singleData["VIDEO TYPE"];
+                                            // paramData.video = singleData["VIDEO"];
+                                            // paramData.video = singleData["VIDEO TYPE"];
                                             Match.update({
                                                 matchId: paramData.matchId
                                             }, paramData).exec(
@@ -16234,8 +16235,8 @@ var model = {
                                             paramData.sport = singleData.SPORT;
                                             paramData.scheduleDate = singleData.DATE;
                                             paramData.scheduleTime = singleData.TIME;
-                                            paramData.video = singleData["VIDEO"];
-                                            paramData.video = singleData["VIDEO TYPE"];
+                                            // paramData.video = singleData["VIDEO"];
+                                            // paramData.video = singleData["VIDEO TYPE"];
                                             Match.update({
                                                 matchId: paramData.matchId
                                             }, paramData).exec(
@@ -16625,8 +16626,8 @@ var model = {
                                             if (data.resultType == 'qualifying-knockout' && data.excelType == 'knockout') {
                                                 paramData.excelType = data.excelType;
                                             }
-                                            paramData.video = singleData["VIDEO TYPE"];
-                                            paramData.videoType = singleData["VIDEO"];
+                                            // paramData.video = singleData["VIDEO TYPE"];
+                                            // paramData.videoType = singleData["VIDEO"];
                                             Match.update({
                                                 matchId: paramData.matchId
                                             }, paramData).exec(function (err, match) {
