@@ -184,8 +184,8 @@
                                                     <span ng-if="stat.isAthleteWinner == true && stat.reason">{{stat.reason}}</span>
                                                     <span ng-if="stat.isAthleteWinner == true && !stat.reason && !stat.opponentName">Bye</span> -->
                                                     <span ng-if="stat.isAthleteWinner == true && !stat.reason && stat.opponentName && stat.walkover === false && stat.draw !== true">Won</span>
-                                                    <span ng-if="stat.isAthleteWinner == false && stat.noShow == false && stat.draw != true">Lost</span>
-                                                    <span ng-if="stat.isAthleteWinner == false && stat.noShow == true">No Show</span>
+                                                    <span ng-if="stat.isAthleteWinner == false && stat.noShow == false && stat.walkover == false && stat.draw != true">Lost</span>
+                                                    <span ng-if="stat.isAthleteWinner == false && stat.noShow == true && stat.walkover == false">No Show</span>
 
                                                     <span ng-if="stat.isAthleteWinner != false && stat.isAthleteWinner != true && !stat.reason && stat.walkover != false && stat.walkover != true && !stat.result  && stat.noShow != true  && stat.noShow != false">-</span>
                                                     <span ng-if="stat.isAthleteWinner != false && stat.isAthleteWinner != true && stat.reason">{{stat.reason}}</span>
@@ -195,8 +195,8 @@
                                                 </div>
                                                 <div class="sf-play" ng-if="teamDetails.drawFormat.name !== 'Knockout' && teamDetails.drawFormat.name !== 'League' && teamDetails.drawFormat.name !== 'League cum Knockout'">
                                                     <span ng-if="stat.isAthleteWinner == true && stat.draw !== true">Won</span>
-                                                    <span ng-if="stat.isAthleteWinner == false && stat.noShow == false && stat.draw != true">Lost</span>
-                                                    <span ng-if="stat.isAthleteWinner == false && stat.noShow == true">No Show</span>
+                                                    <span ng-if="stat.isAthleteWinner == false && stat.noShow == false && stat.walkover == false && stat.draw != true">Lost</span>
+                                                    <span ng-if="stat.isAthleteWinner == false && stat.noShow == true && stat.walkover == false">No Show</span>
                                                     <span ng-if="stat.isAthleteWinner != false && stat.isAthleteWinner != true">-</span>
                                                 </div>
                                                 <div class="sf-play">
