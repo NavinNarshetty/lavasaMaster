@@ -1244,7 +1244,7 @@ var model = {
                 Sport.aggregate(weightPipeline, function (err, data) {
                     if (err) {
                         callback(err, null);
-                    } else if (_.isEmpty(data) || data[0] == null || data[0] == undefined) {
+                    } else if (_.isEmpty(data) || data[0] === null || data[0] === undefined) {
                         callback(null, sendObj, pipeline);
                     } else {
                         var temp1 = [];
