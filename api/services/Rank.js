@@ -1245,7 +1245,7 @@ var model = {
                     console.log(data);
                     if (err) {
                         callback(err, null);
-                    } else if (_.isEmpty(data) || data[0] === null || data[0] === undefined) {
+                    } else if (_.isEmpty(data) || data[0]._id === null || data[0]._id === undefined) {
                         callback(null, sendObj, pipeline);
                     } else {
                         var temp1 = [];
