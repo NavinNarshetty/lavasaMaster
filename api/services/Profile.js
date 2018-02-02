@@ -5980,7 +5980,11 @@ var model = {
                                                                             // stats.isAthleteWinner = false;
                                                                             stats.walkover = player.walkover;
                                                                             stats.noShow = player.noShow;
-                                                                        }
+                                                                        } else {
+                                                                            // stats.isAthleteWinner = false;
+                                                                            stats.walkover = player.walkover;
+                                                                            stats.noShow = player.noShow;
+                                                                        } 
                                                                     }
                                                                     profile.match.push(stats);
                                                                     callback(null, profile);
