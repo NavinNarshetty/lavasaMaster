@@ -1242,6 +1242,7 @@ var model = {
                     }
                 });
                 Sport.aggregate(weightPipeline, function (err, data) {
+                    console.log(data);
                     if (err) {
                         callback(err, null);
                     } else if (_.isEmpty(data) || data[0] === null || data[0] === undefined) {
