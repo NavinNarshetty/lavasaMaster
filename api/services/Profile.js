@@ -7610,7 +7610,7 @@ var model = {
                                                                                     } else {
                                                                                         console.log("found", found);
                                                                                         stats.opponentName = found.name;
-                                                                                        stats.opponentSchool = found.schoolName;
+                                                                                        stats.school = found.schoolName;
                                                                                         stats.teamId = found.teamId;
                                                                                         if (singleData.resultsCombat.winner.player === n.team) {
                                                                                             stats.isAthleteWinner = false;
@@ -7724,7 +7724,7 @@ var model = {
                                                                                         console.log("found", found);
                                                                                         stats.opponentName = found.name;
                                                                                         stats.teamid = found.teamId;
-                                                                                        stats.opponentSchool = found.schoolName;
+                                                                                        stats.school = found.schoolName;
                                                                                         if (singleData.resultsRacquet.status == "IsCompleted" && singleData.resultsRacquet.isNoMatch == false) {
                                                                                             if (singleData.resultsRacquet.winner.player === n.team) {
                                                                                                 stats.isAthleteWinner = false;
