@@ -5656,7 +5656,6 @@ var model = {
             });
     },
 
-
     generateExcelHeatTeam: function (match, callback) {
         var count = 0;
         var prevRound = undefined;
@@ -8280,43 +8279,122 @@ var model = {
                     } else if (mainData.resultsRacquet) {
                         if (mainData.resultsRacquet.winner) {
                             for (var i = 0; i < mainData.resultsRacquet.players[0].sets.length; i++) {
+                                var squash = mainData.sport.sportslist.name;
                                 if (i == 0) {
-                                    obj["A1 Total Service Errors"] = mainData.resultsRacquet.players[0].sets[i].serviceError;
-                                    obj["A1 Total Unforced Errors"] = mainData.resultsRacquet.players[0].sets[i].unforcedError;
-                                    obj["A1 Total Winners"] = mainData.resultsRacquet.players[0].sets[i].winner;
-                                    if (mainData.resultsRacquet.players[0].sets[i].ace) {
-                                        obj["A1 Total Ace"] = mainData.resultsRacquet.players[0].sets[i].ace;
+                                    if (mainData.sport.sportslist.name === "Badminton Singles" || mainData.sport.sportslist.name === "Table Tennis Singles" || squash.includes("Squash")) {
+                                        obj["A1 Total Service Errors"] = mainData.resultsRacquet.players[0].sets[i].serviceError;
+                                        obj["A1 Total Unforced Errors"] = mainData.resultsRacquet.players[0].sets[i].unforcedError;
+                                        obj["A1 Total Winners"] = mainData.resultsRacquet.players[0].sets[i].winner;
+                                    } else if (mainData.sport.sportslist.name === "Tennis Singles") {
+                                        obj["A1 Total Unforced Errors"] = mainData.resultsRacquet.players[0].sets[i].unforcedError;
+                                        obj["A1 Total Winners"] = mainData.resultsRacquet.players[0].sets[i].winner;
+                                        if (mainData.resultsRacquet.players[0].sets[i].ace) {
+                                            obj["A1 Total Ace"] = mainData.resultsRacquet.players[0].sets[i].ace;
+                                        } else {
+                                            obj["A1 Total Ace"] = "";
+                                        }
+                                        if (mainData.resultsRacquet.players[0].sets[i].doubleFaults) {
+                                            obj["A1 Total Double Faults"] = mainData.resultsRacquet.players[0].sets[i].doubleFaults;
+                                        } else {
+                                            obj["A1 Total Double Faults"] = "";
+                                        }
                                     } else {
-                                        obj["A1 Total Ace"] = "";
-                                    }
-                                    if (mainData.resultsRacquet.players[0].sets[i].doubleFaults) {
-                                        obj["A1 Total Double Faults"] = mainData.resultsRacquet.players[0].sets[i].doubleFaults;
-                                    } else {
-                                        obj["A1 Total Double Faults"] = "";
+                                        obj["A1 Total Service Errors"] = mainData.resultsRacquet.players[0].sets[i].serviceError;
+                                        obj["A1 Total Unforced Errors"] = mainData.resultsRacquet.players[0].sets[i].unforcedError;
+                                        obj["A1 Total Winners"] = mainData.resultsRacquet.players[0].sets[i].winner;
+
+                                        if (mainData.resultsRacquet.players[0].sets[i].ace) {
+                                            obj["A1 Total Ace"] = mainData.resultsRacquet.players[0].sets[i].ace;
+                                        } else {
+                                            obj["A1 Total Ace"] = "";
+                                        }
+                                        if (mainData.resultsRacquet.players[0].sets[i].doubleFaults) {
+                                            obj["A1 Total Double Faults"] = mainData.resultsRacquet.players[0].sets[i].doubleFaults;
+                                        } else {
+                                            obj["A1 Total Double Faults"] = "";
+                                        }
                                     }
                                 } else {
-                                    obj["A1 Total Service Errors"] = obj["A1 Total Service Errors"] + mainData.resultsRacquet.players[0].sets[i].serviceError;
-                                    obj["A1 Total Unforced Errors"] = obj["A1 Total Unforced Errors"] + mainData.resultsRacquet.players[0].sets[i].unforcedError;
-                                    obj["A1 Total Winners"] = obj["A1 Total Winners"] + mainData.resultsRacquet.players[0].sets[i].winner;
-                                    if (mainData.resultsRacquet.players[0].sets[i].ace) {
-                                        obj["A1 Total Ace"] = obj["A1 Total Ace"] + mainData.resultsRacquet.players[0].sets[i].ace;
+                                    if (mainData.sport.sportslist.name === "Badminton Singles" || mainData.sport.sportslist.name === "Table Tennis Singles" || squash.includes("Squash")) {
+                                        obj["A1 Total Service Errors"] = obj["A1 Total Service Errors"] + mainData.resultsRacquet.players[0].sets[i].serviceError;
+                                        obj["A1 Total Unforced Errors"] = obj["A1 Total Unforced Errors"] + mainData.resultsRacquet.players[0].sets[i].unforcedError;
+                                        obj["A1 Total Winners"] = obj["A1 Total Winners"] + mainData.resultsRacquet.players[0].sets[i].winner;
+                                    } else if (mainData.sport.sportslist.name === "Tennis Singles") {
+                                        obj["A1 Total Unforced Errors"] = obj["A1 Total Unforced Errors"] + mainData.resultsRacquet.players[0].sets[i].unforcedError;
+                                        obj["A1 Total Winners"] = obj["A1 Total Winners"] + mainData.resultsRacquet.players[0].sets[i].winner;
+                                        if (mainData.resultsRacquet.players[0].sets[i].ace) {
+                                            obj["A1 Total Ace"] = obj["A1 Total Ace"] + mainData.resultsRacquet.players[0].sets[i].ace;
+                                        } else {
+                                            obj["A1 Total Ace"] = "";
+                                        }
+                                        if (mainData.resultsRacquet.players[0].sets[i].doubleFaults) {
+                                            obj["A1 Total Double Faults"] = obj["A1 Total Double Faults"] + mainData.resultsRacquet.players[0].sets[i].doubleFaults;
+                                        } else {
+                                            obj["A1 Total Double Faults"] = "";
+                                        }
                                     } else {
-                                        obj["A1 Total Ace"] = "";
-                                    }
-                                    if (mainData.resultsRacquet.players[0].sets[i].doubleFaults) {
-                                        obj["A1 Total Double Faults"] = obj["A1 Total Double Faults"] + mainData.resultsRacquet.players[0].sets[i].doubleFaults;
-                                    } else {
-                                        obj["A1 Total Double Faults"] = "";
+                                        obj["A1 Total Service Errors"] = obj["A1 Total Service Errors"] + mainData.resultsRacquet.players[0].sets[i].serviceError;
+                                        obj["A1 Total Unforced Errors"] = obj["A1 Total Unforced Errors"] + mainData.resultsRacquet.players[0].sets[i].unforcedError;
+                                        obj["A1 Total Winners"] = obj["A1 Total Winners"] + mainData.resultsRacquet.players[0].sets[i].winner;
+                                        if (mainData.resultsRacquet.players[0].sets[i].ace) {
+                                            obj["A1 Total Ace"] = obj["A1 Total Ace"] + mainData.resultsRacquet.players[0].sets[i].ace;
+                                        } else {
+                                            obj["A1 Total Ace"] = "";
+                                        }
+                                        if (mainData.resultsRacquet.players[0].sets[i].doubleFaults) {
+                                            obj["A1 Total Double Faults"] = obj["A1 Total Double Faults"] + mainData.resultsRacquet.players[0].sets[i].doubleFaults;
+                                        } else {
+                                            obj["A1 Total Double Faults"] = "";
+                                        }
                                     }
                                 }
                             }
                             if (mainData.resultsRacquet.players[0].sets.length == 0) {
+                                if (mainData.sport.sportslist.name === "Badminton Singles" || mainData.sport.sportslist.name === "Table Tennis Singles" || squash.includes("Squash")) {
+                                    obj["A1 Total Service Errors"] = "";
+                                    obj["A1 Total Unforced Errors"] = "";
+                                    obj["A1 Total Winners"] = "";
+                                } else if (mainData.sport.sportslist.name === "Tennis Singles") {
+                                    obj["A1 Total Unforced Errors"] = "";
+                                    obj["A1 Total Winners"] = "";
+                                    obj["A1 Total Ace"] = "";
+                                    obj["A1 Total Double Faults"] = "";
+                                } else {
+                                    obj["A1 Total Service Errors"] = "";
+                                    obj["A1 Total Unforced Errors"] = "";
+                                    obj["A1 Total Winners"] = "";
+                                    obj["A1 Total Ace"] = "";
+                                    obj["A1 Total Double Faults"] = "";
+                                }
+                            }
+                        } else {
+                            if (mainData.sport.sportslist.name === "Badminton Singles" || mainData.sport.sportslist.name === "Table Tennis Singles" || squash.includes("Squash")) {
+                                obj["A1 Total Service Errors"] = "";
+                                obj["A1 Total Unforced Errors"] = "";
+                                obj["A1 Total Winners"] = "";
+                            } else if (mainData.sport.sportslist.name === "Tennis Singles") {
+                                obj["A1 Total Unforced Errors"] = "";
+                                obj["A1 Total Winners"] = "";
+                                obj["A1 Total Ace"] = "";
+                                obj["A1 Total Double Faults"] = "";
+                            } else {
                                 obj["A1 Total Service Errors"] = "";
                                 obj["A1 Total Unforced Errors"] = "";
                                 obj["A1 Total Winners"] = "";
                                 obj["A1 Total Ace"] = "";
                                 obj["A1 Total Double Faults"] = "";
                             }
+                        }
+                    } else {
+                        if (mainData.sport.sportslist.name === "Badminton Singles" || mainData.sport.sportslist.name === "Table Tennis Singles" || squash.includes("Squash")) {
+                            obj["A1 Total Service Errors"] = "";
+                            obj["A1 Total Unforced Errors"] = "";
+                            obj["A1 Total Winners"] = "";
+                        } else if (mainData.sport.sportslist.name === "Tennis Singles") {
+                            obj["A1 Total Unforced Errors"] = "";
+                            obj["A1 Total Winners"] = "";
+                            obj["A1 Total Ace"] = "";
+                            obj["A1 Total Double Faults"] = "";
                         } else {
                             obj["A1 Total Service Errors"] = "";
                             obj["A1 Total Unforced Errors"] = "";
@@ -8324,6 +8402,20 @@ var model = {
                             obj["A1 Total Ace"] = "";
                             obj["A1 Total Double Faults"] = "";
                         }
+                    }
+                } else {
+                    obj["SFAID 1"] = "";
+                    obj["SCREEN NAME ATHLETE 1"] = "";
+                    obj["SCREEN NAME SCHOOL 1"] = "";
+                    if (mainData.sport.sportslist.name === "Badminton Singles" || mainData.sport.sportslist.name === "Table Tennis Singles" || squash.includes("Squash")) {
+                        obj["A1 Total Service Errors"] = "";
+                        obj["A1 Total Unforced Errors"] = "";
+                        obj["A1 Total Winners"] = "";
+                    } else if (mainData.sport.sportslist.name === "Tennis Singles") {
+                        obj["A1 Total Unforced Errors"] = "";
+                        obj["A1 Total Winners"] = "";
+                        obj["A1 Total Ace"] = "";
+                        obj["A1 Total Double Faults"] = "";
                     } else {
                         obj["A1 Total Service Errors"] = "";
                         obj["A1 Total Unforced Errors"] = "";
@@ -8331,15 +8423,6 @@ var model = {
                         obj["A1 Total Ace"] = "";
                         obj["A1 Total Double Faults"] = "";
                     }
-                } else {
-                    obj["SFAID 1"] = "";
-                    obj["SCREEN NAME ATHLETE 1"] = "";
-                    obj["SCREEN NAME SCHOOL 1"] = "";
-                    obj["A1 Total Service Errors"] = "";
-                    obj["A1 Total Unforced Errors"] = "";
-                    obj["A1 Total Winners"] = "";
-                    obj["A1 Total Ace"] = "";
-                    obj["A1 Total Double Faults"] = "";
                 }
                 if (mainData.opponentsSingle.length > 1) {
                     obj["SFAID 2"] = mainData.opponentsSingle[1].athleteId.sfaId;
@@ -8393,32 +8476,71 @@ var model = {
                         console.log('2', mainData.resultsRacquet.players[1].sets);
                         for (var i = 0; i < mainData.resultsRacquet.players[1].sets.length; i++) {
                             if (i == 0) {
-                                obj["A2 Total Service Errors"] = mainData.resultsRacquet.players[1].sets[i].serviceError;
-                                obj["A2 Total Unforced Errors"] = mainData.resultsRacquet.players[1].sets[i].unforcedError;
-                                obj["A2 Total Winners"] = mainData.resultsRacquet.players[1].sets[i].winner;
-                                if (mainData.resultsRacquet.players[1].sets[i].ace) {
-                                    obj["A2 Total Ace"] = mainData.resultsRacquet.players[1].sets[i].ace;
+                                if (mainData.sport.sportslist.name === "Badminton Singles" || mainData.sport.sportslist.name === "Table Tennis Singles" || squash.includes("Squash")) {
+                                    obj["A2 Total Service Errors"] = mainData.resultsRacquet.players[1].sets[i].serviceError;
+                                    obj["A2 Total Unforced Errors"] = mainData.resultsRacquet.players[1].sets[i].unforcedError;
+                                    obj["A2 Total Winners"] = mainData.resultsRacquet.players[1].sets[i].winner;
+                                } else if (mainData.sport.sportslist.name === "Tennis Singles") {
+                                    obj["A2 Total Unforced Errors"] = mainData.resultsRacquet.players[1].sets[i].unforcedError;
+                                    obj["A2 Total Winners"] = mainData.resultsRacquet.players[1].sets[i].winner;
+                                    if (mainData.resultsRacquet.players[1].sets[i].ace) {
+                                        obj["A2 Total Ace"] = mainData.resultsRacquet.players[1].sets[i].ace;
+                                    } else {
+                                        obj["A2 Total Ace"] = "";
+                                    }
+                                    if (mainData.resultsRacquet.players[1].sets[i].doubleFaults) {
+                                        obj["A2 Total Double Faults"] = mainData.resultsRacquet.players[1].sets[i].doubleFaults;
+                                    } else {
+                                        obj["A1 Total Double Faults"] = "";
+                                    }
                                 } else {
-                                    obj["A2 Total Ace"] = "";
-                                }
-                                if (mainData.resultsRacquet.players[1].sets[i].doubleFaults) {
-                                    obj["A2 Total Double Faults"] = mainData.resultsRacquet.players[1].sets[i].doubleFaults;
-                                } else {
-                                    obj["A1 Total Double Faults"] = "";
+                                    obj["A2 Total Service Errors"] = mainData.resultsRacquet.players[1].sets[i].serviceError;
+                                    obj["A2 Total Unforced Errors"] = mainData.resultsRacquet.players[1].sets[i].unforcedError;
+                                    obj["A2 Total Winners"] = mainData.resultsRacquet.players[1].sets[i].winner;
+                                    if (mainData.resultsRacquet.players[1].sets[i].ace) {
+                                        obj["A2 Total Ace"] = mainData.resultsRacquet.players[1].sets[i].ace;
+                                    } else {
+                                        obj["A2 Total Ace"] = "";
+                                    }
+                                    if (mainData.resultsRacquet.players[1].sets[i].doubleFaults) {
+                                        obj["A2 Total Double Faults"] = mainData.resultsRacquet.players[1].sets[i].doubleFaults;
+                                    } else {
+                                        obj["A1 Total Double Faults"] = "";
+                                    }
                                 }
                             } else {
-                                obj["A2 Total Service Errors"] = obj["A2 Total Service Errors"] + mainData.resultsRacquet.players[1].sets[i].serviceError;
-                                obj["A2 Total Unforced Errors"] = obj["A2 Total Unforced Errors"] + mainData.resultsRacquet.players[1].sets[i].unforcedError;
-                                obj["A2 Total Winners"] = obj["A2 Total Winners"] + mainData.resultsRacquet.players[1].sets[i].winner;
-                                if (mainData.resultsRacquet.players[1].sets[i].ace) {
-                                    obj["A2 Total Ace"] = obj["A2 Total Ace"] + mainData.resultsRacquet.players[1].sets[i].ace;
+                                if (mainData.sport.sportslist.name === "Badminton Singles" || mainData.sport.sportslist.name === "Table Tennis Singles" || squash.includes("Squash")) {
+                                    obj["A2 Total Service Errors"] = obj["A2 Total Service Errors"] + mainData.resultsRacquet.players[1].sets[i].serviceError;
+                                    obj["A2 Total Unforced Errors"] = obj["A2 Total Unforced Errors"] + mainData.resultsRacquet.players[1].sets[i].unforcedError;
+                                    obj["A2 Total Winners"] = obj["A2 Total Winners"] + mainData.resultsRacquet.players[1].sets[i].winner;
+                                } else if (mainData.sport.sportslist.name === "Tennis Singles") {
+                                    obj["A2 Total Unforced Errors"] = obj["A2 Total Unforced Errors"] + mainData.resultsRacquet.players[1].sets[i].unforcedError;
+                                    obj["A2 Total Winners"] = obj["A2 Total Winners"] + mainData.resultsRacquet.players[1].sets[i].winner;
+                                    if (mainData.resultsRacquet.players[1].sets[i].ace) {
+                                        obj["A2 Total Ace"] = obj["A2 Total Ace"] + mainData.resultsRacquet.players[1].sets[i].ace;
+                                    } else {
+                                        obj["A2 Total Ace"] = "";
+                                    }
+                                    if (mainData.resultsRacquet.players[1].sets[i].doubleFaults) {
+                                        obj["A2 Total Double Faults"] = obj["A2 Total Double Faults"] + mainData.resultsRacquet.players[1].sets[i].doubleFaults;
+                                    } else {
+                                        obj["A1 Total Double Faults"] = "";
+                                    }
                                 } else {
-                                    obj["A2 Total Ace"] = "";
-                                }
-                                if (mainData.resultsRacquet.players[1].sets[i].doubleFaults) {
-                                    obj["A2 Total Double Faults"] = obj["A2 Total Double Faults"] + mainData.resultsRacquet.players[1].sets[i].doubleFaults;
-                                } else {
-                                    obj["A1 Total Double Faults"] = "";
+                                    obj["A2 Total Service Errors"] = obj["A2 Total Service Errors"] + mainData.resultsRacquet.players[1].sets[i].serviceError;
+                                    obj["A2 Total Unforced Errors"] = obj["A2 Total Unforced Errors"] + mainData.resultsRacquet.players[1].sets[i].unforcedError;
+                                    obj["A2 Total Winners"] = obj["A2 Total Winners"] + mainData.resultsRacquet.players[1].sets[i].winner;
+
+                                    if (mainData.resultsRacquet.players[1].sets[i].ace) {
+                                        obj["A2 Total Ace"] = obj["A2 Total Ace"] + mainData.resultsRacquet.players[1].sets[i].ace;
+                                    } else {
+                                        obj["A2 Total Ace"] = "";
+                                    }
+                                    if (mainData.resultsRacquet.players[1].sets[i].doubleFaults) {
+                                        obj["A2 Total Double Faults"] = obj["A2 Total Double Faults"] + mainData.resultsRacquet.players[1].sets[i].doubleFaults;
+                                    } else {
+                                        obj["A1 Total Double Faults"] = "";
+                                    }
                                 }
                             }
                             var sNo = 1;
@@ -8577,11 +8699,22 @@ var model = {
                             }
                         }
                     } else {
-                        obj["A2 Total Service Errors"] = "";
-                        obj["A2 Total Unforced Errors"] = "";
-                        obj["A2 Total Winners"] = "";
-                        obj["A2 Total Ace"] = "";
-                        obj["A2 Total Double Faults"] = "";
+                        if (mainData.sport.sportslist.name === "Badminton Singles" || mainData.sport.sportslist.name === "Table Tennis Singles" || squash.includes("Squash")) {
+                            obj["A1 Total Service Errors"] = "";
+                            obj["A1 Total Unforced Errors"] = "";
+                            obj["A1 Total Winners"] = "";
+                        } else if (mainData.sport.sportslist.name === "Tennis Singles") {
+                            obj["A1 Total Unforced Errors"] = "";
+                            obj["A1 Total Winners"] = "";
+                            obj["A1 Total Ace"] = "";
+                            obj["A1 Total Double Faults"] = "";
+                        } else {
+                            obj["A1 Total Service Errors"] = "";
+                            obj["A1 Total Unforced Errors"] = "";
+                            obj["A1 Total Winners"] = "";
+                            obj["A1 Total Ace"] = "";
+                            obj["A1 Total Double Faults"] = "";
+                        }
                     }
                     if (mainData.resultsRacquet.players.length == 1) {
                         var sNo = 1;
@@ -8797,48 +8930,109 @@ var model = {
                             if (mainData.resultsRacquet.teams[0].sets.length > 0) {
                                 for (var i = 0; i < mainData.resultsRacquet.teams[0].sets.length; i++) {
                                     if (i == 0) {
-                                        obj["T1 Total Service Errors"] = mainData.resultsRacquet.teams[0].sets[i].serviceError;
-                                        obj["T1 Total Unforced Errors"] = mainData.resultsRacquet.teams[0].sets[i].unforcedError;
-                                        obj["T1 Total Winners"] = mainData.resultsRacquet.teams[0].sets[i].winner;
-                                        if (mainData.resultsRacquet.teams[0].sets[i].ace) {
-                                            obj["T1 Total Ace"] = mainData.resultsRacquet.teams[0].sets[i].ace;
+                                        if (mainData.sport.sportslist.name === "Badminton Doubles" || mainData.sport.sportslist.name === "Table Tennis Doubles" || squash.includes("Squash")) {
+                                            obj["T1 Total Service Errors"] = mainData.resultsRacquet.teams[0].sets[i].serviceError;
+                                            obj["T1 Total Unforced Errors"] = mainData.resultsRacquet.teams[0].sets[i].unforcedError;
+                                            obj["T1 Total Winners"] = mainData.resultsRacquet.teams[0].sets[i].winner;
+                                        } else if (mainData.sport.sportslist.name === "Tennis Doubles") {
+                                            obj["T1 Total Unforced Errors"] = mainData.resultsRacquet.teams[0].sets[i].unforcedError;
+                                            obj["T1 Total Winners"] = mainData.resultsRacquet.teams[0].sets[i].winner;
+                                            if (mainData.resultsRacquet.teams[0].sets[i].ace) {
+                                                obj["T1 Total Ace"] = mainData.resultsRacquet.teams[0].sets[i].ace;
+                                            } else {
+                                                obj["T1 Total Ace"] = "";
+                                            }
+                                            if (mainData.resultsRacquet.teams[0].sets[i].doubleFaults) {
+                                                obj["T1 Total Double Faults"] = mainData.resultsRacquet.teams[0].sets[i].doubleFaults;
+                                            } else {
+                                                obj["T1 Total Double Faults"] = "";
+                                            }
                                         } else {
-                                            obj["T1 Total Ace"] = "";
-                                        }
-                                        if (mainData.resultsRacquet.teams[0].sets[i].doubleFaults) {
-                                            obj["T1 Total Double Faults"] = mainData.resultsRacquet.teams[0].sets[i].doubleFaults;
-                                        } else {
-                                            obj["T1 Total Double Faults"] = "";
-                                        }
+                                            obj["T1 Total Service Errors"] = mainData.resultsRacquet.teams[0].sets[i].serviceError;
+                                            obj["T1 Total Unforced Errors"] = mainData.resultsRacquet.teams[0].sets[i].unforcedError;
+                                            obj["T1 Total Winners"] = mainData.resultsRacquet.teams[0].sets[i].winner;
+                                            if (mainData.resultsRacquet.teams[0].sets[i].ace) {
+                                              obj["T1 Total Ace"] = mainData.resultsRacquet.teams[0].sets[i].ace;
+                                            } else {
+                                              obj["T1 Total Ace"] = "";
+                                            }
+                                            if (mainData.resultsRacquet.teams[0].sets[i].doubleFaults) {
+                                              obj["T1 Total Double Faults"] = mainData.resultsRacquet.teams[0].sets[i].doubleFaults;
+                                            } else {
+                                             obj["T1 Total Double Faults"] = "";
+                                            }
+                                        }                     
                                     } else {
-                                        obj["T1 Total Service Errors"] = obj["T1 Total Service Errors"] + mainData.resultsRacquet.teams[0].sets[i].serviceError;
-                                        obj["T1 Total Unforced Errors"] = obj["T1 Total Unforced Errors"] + mainData.resultsRacquet.teams[0].sets[i].unforcedError;
-                                        obj["T1 Total Winners"] = obj["T1 Total Winners"] + mainData.resultsRacquet.teams[0].sets[i].winner;
-                                        if (mainData.resultsRacquet.teams[0].sets[i].ace) {
-                                            obj["T1 Total Ace"] = obj["T1 Total Ace"] + mainData.resultsRacquet.teams[0].sets[i].ace;
+                                        if (mainData.sport.sportslist.name === "Badminton Doubles" || mainData.sport.sportslist.name === "Table Tennis Doubles" || squash.includes("Squash")) {
+                                            obj["T1 Total Service Errors"] = obj["T1 Total Service Errors"] + mainData.resultsRacquet.teams[0].sets[i].serviceError;
+                                            obj["T1 Total Unforced Errors"] = obj["T1 Total Unforced Errors"] + mainData.resultsRacquet.teams[0].sets[i].unforcedError;
+                                            obj["T1 Total Winners"] = obj["T1 Total Winners"] + mainData.resultsRacquet.teams[0].sets[i].winner;
+                                        } else if (mainData.sport.sportslist.name === "Tennis Doubles") {
+                                            obj["T1 Total Unforced Errors"] = obj["T1 Total Unforced Errors"] + mainData.resultsRacquet.teams[0].sets[i].unforcedError;
+                                            obj["T1 Total Winners"] = obj["T1 Total Winners"] + mainData.resultsRacquet.teams[0].sets[i].winner;
+                                            if (mainData.resultsRacquet.teams[0].sets[i].ace) {
+                                               obj["T1 Total Ace"] = obj["T1 Total Ace"] + mainData.resultsRacquet.teams[0].sets[i].ace;
+                                            } else {
+                                               obj["T1 Total Ace"] = "";
+                                            }
+                                            if (mainData.resultsRacquet.teams[0].sets[i].doubleFaults) {
+                                               obj["T1 Total Double Faults"] = obj["T1 Total Double Faults"] + mainData.resultsRacquet.teams[0].sets[i].doubleFaults;
+                                            } else {
+                                               obj["T1 Total Double Faults"] = "";
+                                            }
                                         } else {
-                                            obj["T1 Total Ace"] = "";
-                                        }
-                                        if (mainData.resultsRacquet.teams[0].sets[i].doubleFaults) {
-                                            obj["T1 Total Double Faults"] = obj["T1 Total Double Faults"] + mainData.resultsRacquet.teams[0].sets[i].doubleFaults;
-                                        } else {
-                                            obj["T1 Total Double Faults"] = "";
-                                        }
+                                            obj["T1 Total Service Errors"] = obj["T1 Total Service Errors"] + mainData.resultsRacquet.teams[0].sets[i].serviceError;
+                                            obj["T1 Total Unforced Errors"] = obj["T1 Total Unforced Errors"] + mainData.resultsRacquet.teams[0].sets[i].unforcedError;
+                                            obj["T1 Total Winners"] = obj["T1 Total Winners"] + mainData.resultsRacquet.teams[0].sets[i].winner;
+                                            if (mainData.resultsRacquet.teams[0].sets[i].ace) {
+                                               obj["T1 Total Ace"] = obj["T1 Total Ace"] + mainData.resultsRacquet.teams[0].sets[i].ace;
+                                            } else {
+                                               obj["T1 Total Ace"] = "";
+                                            }
+                                            if (mainData.resultsRacquet.teams[0].sets[i].doubleFaults) {
+                                               obj["T1 Total Double Faults"] = obj["T1 Total Double Faults"] + mainData.resultsRacquet.teams[0].sets[i].doubleFaults;
+                                            } else {
+                                               obj["T1 Total Double Faults"] = "";
+                                            }
+                                        } 
                                     }
                                 }
                             } else {
-                                obj["T1 Total Service Errors"] = "";
-                                obj["T1 Total Unforced Errors"] = "";
-                                obj["T1 Total Winners"] = "";
-                                obj["T1 Total Ace"] = "";
-                                obj["T1 Total Double Faults"] = "";
+                                       if (mainData.sport.sportslist.name === "Badminton Doubles" || mainData.sport.sportslist.name === "Table Tennis Doubles" || squash.includes("Squash")) {
+                                            obj["T1 Total Service Errors"] = "";
+                                            obj["T1 Total Unforced Errors"] = "";
+                                            obj["T1 Total Winners"] = "";
+                                        } else if (mainData.sport.sportslist.name === "Tennis Doubles") {                 
+                                            obj["T1 Total Unforced Errors"] = "";
+                                            obj["T1 Total Winners"] = "";
+                                            obj["T1 Total Ace"] = "";
+                                            obj["T1 Total Double Faults"] = "";
+                                        } else {
+                                            obj["T1 Total Service Errors"] = "";
+                                            obj["T1 Total Unforced Errors"] = "";
+                                            obj["T1 Total Winners"] = "";
+                                            obj["T1 Total Ace"] = "";
+                                            obj["T1 Total Double Faults"] = "";
+                                        } 
+                          
                             }
                         } else {
-                            obj["T1 Total Service Errors"] = "";
-                            obj["T1 Total Unforced Errors"] = "";
-                            obj["T1 Total Winners"] = "";
-                            obj["T1 Total Ace"] = "";
-                            obj["T1 Total Double Faults"] = "";
+                            if (mainData.sport.sportslist.name === "Badminton Doubles" || mainData.sport.sportslist.name === "Table Tennis Doubles" || squash.includes("Squash")) {
+                                            obj["T1 Total Service Errors"] = "";
+                                            obj["T1 Total Unforced Errors"] = "";
+                                            obj["T1 Total Winners"] = "";
+                                        } else if (mainData.sport.sportslist.name === "Tennis Doubles") {                 
+                                            obj["T1 Total Unforced Errors"] = "";
+                                            obj["T1 Total Winners"] = "";
+                                            obj["T1 Total Ace"] = "";
+                                            obj["T1 Total Double Faults"] = "";
+                                        } else {
+                                            obj["T1 Total Service Errors"] = "";
+                                            obj["T1 Total Unforced Errors"] = "";
+                                            obj["T1 Total Winners"] = "";
+                                            obj["T1 Total Ace"] = "";
+                                            obj["T1 Total Double Faults"] = "";
+                                        } 
                         }
                     } else if (mainData.resultBasketball) {
                         obj["COACH NAME 1"] = mainData.resultBasketball.teams[0].coach;
