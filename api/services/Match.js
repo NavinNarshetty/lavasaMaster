@@ -8422,7 +8422,8 @@ var model = {
                                 }
                             }
                             var sNo = 1;
-                            var code = ++i;
+                            var code = i;
+                            ++code;
                             console.log("sets", mainData.resultsRacquet.players[0].sets);
                             console.log("i", code);
                             if (mainData.resultsRacquet.players[1].sets.length == 0 && mainData.resultsRacquet.players[0].sets.length == 0) {
