@@ -8043,6 +8043,9 @@ var model = {
                                                                                     // stats.isAthleteWinner = false;
                                                                                     stats.walkover = n.walkover;
                                                                                     stats.noShow = n.noShow;
+                                                                                }else{
+                                                                                    stats.walkover = n.walkover;
+                                                                                    stats.noShow = n.noShow;
                                                                                 }
                                                                                 // stats.score = singleData.resultFootball.teams[0].teamResults.finalPoints + "-" + singleData.resultFootball.teams[1].teamResults.finalPoints;
                                                                             } else {
