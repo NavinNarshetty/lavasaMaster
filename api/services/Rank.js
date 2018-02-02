@@ -1233,6 +1233,41 @@ var model = {
                 })
             },
             function (sendObj, pipeline, callback) {
+                console.log("pipeline", pipeline);
+                var weightPipeline = _.cloneDeep(pipeline);
+                console.log("pipeline", pipeline);
+                weightPipeline.push({
+                    $group: {
+                        "_id": "$weight.name"
+                    }
+                });
+                Sport.aggregate(weightPipeline, function (err, data) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        var temp1 = [];
+                        var temp2 = [];
+                        sendObj.weight = _.map(data, '_id');
+                        _.each(sendObj.weight, function (n, k1) {
+                            console.log("weight", n, "k1", k1);
+                            temp1.push(n);
+                            if (k1 == sendObj.ageGroups.length - 1) {
+                                temp1.sort(function (a, b) {
+                                    return a - b
+                                });
+                                _.each(temp1, function (n, k2) {
+                                    temp2.push(n);
+                                    if (k2 == temp1.length - 1) {
+                                        sendObj.weight = temp2;
+                                        callback(null, sendObj, pipeline);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                })
+            },
+            function (sendObj, pipeline, callback) {
                 var eventPipeline = _.cloneDeep(pipeline);
                 eventPipeline.push({
                     $group: {
