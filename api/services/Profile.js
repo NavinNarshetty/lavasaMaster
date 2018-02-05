@@ -1540,7 +1540,8 @@ var model = {
                                                 var i = 0;
                                                 var result;
                                                 async.each(singleData.resultHeat.players, function (n, callback) {
-                                                    if (n.id.equals(playerId._id)) {
+                                                    // if (n.id.equals(playerId._id)) {
+                                                    if (n.id === playerId._id.toString()) {
                                                         console.log("inside true");
                                                         stats.score = n.time;
                                                         stats.result = n.result;
@@ -2909,6 +2910,13 @@ var model = {
                                                                                         stats.school = found.teamId.schoolName;
                                                                                         stats.teamId = found.teamId.teamId;
                                                                                         stats.isAthleteWinner = false;
+                                                                                        if (singleData.resultKabaddi.winner.player === singleData.resultKabaddi.teams[0].team) {
+                                                                                            stats.walkover = singleData.resultKabaddi.teams[0].walkover;
+                                                                                            stats.noShow = singleData.resultKabaddi.teams[0].noShow;
+                                                                                        } else {
+                                                                                            stats.walkover = singleData.resultKabaddi.teams[1].walkover;
+                                                                                            stats.noShow = singleData.resultKabaddi.teams[1].noShow;
+                                                                                        }
                                                                                         stats.score = singleData.resultKabaddi.teams[0].teamResults.finalPoints + "-" + singleData.resultKabaddi.teams[1].teamResults.finalPoints;
                                                                                         callback();
                                                                                     }

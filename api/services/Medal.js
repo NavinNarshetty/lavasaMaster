@@ -689,7 +689,7 @@ var model = {
                                 function (pdfObj, sport, callback) {
                                     console.log('data***************', pdfObj, sport);
                                     if (!pdfObj.sportObj.notFound) {
-                                        pdfObj.newFilename = pdfObj.athlete.sfaId + "-" + pdfObj.sportObj.sportslist.name + pdfObj.sportObj.sportslist.sportsListSubCategory.name + "-" + pdfObj.filename + ".pdf";
+                                        pdfObj.newFilename = pdfObj.athlete.sfaId + "-" + pdfObj.sportObj.sportslist.name + "-" +  pdfObj.sportObj.ageGroup.name + "-" + pdfObj.sportObj.gender + "-" + pdfObj.sportObj.sportslist.sportsListSubCategory.name + "-" + pdfObj.filename + ".pdf";
                                         // pdfObj.newFilename = pdfObj.sportObj.sportslist.sportsListSubCategory.name + "-" + pdfObj.sportObj.ageGroup.name + "-" + pdfObj.sportObj.gender + "-" + pdfObj.sportObj.sportslist.name + "-" + pdfObj.filename + ".pdf";
                                         Config.generatePdf(pdfObj, function (err, pdfRespo) {
                                             if (err) {
