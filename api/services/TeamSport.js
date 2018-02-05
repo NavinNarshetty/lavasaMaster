@@ -285,8 +285,6 @@ var model = {
     },
 
     saveInTeam: function (data, mainData, callback) {
-        // console.log("mainData", mainData);
-        // console.log("DATA", data);
         async.waterfall([
                 function (callback) {
                     TeamSport.findOne().sort({
@@ -297,16 +295,16 @@ var model = {
                         } else if (_.isEmpty(team)) {
                             if (mainData.property.sfaCity == 'Mumbai') {
                                 var year = mainData.property.year.substr(2, 2);
-                                var teamid = "M" + "T" + year + 1;
+                                var teamid = "M" + "T" + year + data.teamId;
                                 callback(null, teamid);
                             } else if (mainData.property.sfaCity == "Hyderabad") {
                                 var year = mainData.property.year.substr(2, 2);
-                                var teamid = "H" + "T" + year + 1;
+                                var teamid = "H" + "T" + year + data.teamId;
                                 callback(null, teamid);
                             } else {
                                 var city = mainData.property.sfaCity.substr(0, 1);
                                 var year = mainData.property.year.substr(2, 2);
-                                var teamid = city + "T" + year + 1;
+                                var teamid = city + "T" + year + data.teamId;
                                 callback(null, teamid);
                             }
                         } else {
@@ -314,20 +312,20 @@ var model = {
                                 // console.log("autoID", team.autoID);
                                 var year = mainData.property.year.substr(2, 2);
                                 // var year = new Date().getFullYear().toString().substr(2, 2);
-                                var teamid = "M" + "T" + year + ++team.autoID;
+                                var teamid = "M" + "T" + year + data.teamId;
                                 // console.log("teamid", teamid);
                                 callback(null, teamid);
                             } else if (mainData.property.sfaCity == "Hyderabad") {
                                 // console.log("autoID", team.autoID);
                                 var year = mainData.property.year.substr(2, 2);
-                                var teamid = "H" + "T" + year + ++team.autoID;
+                                var teamid = "H" + "T" + year + data.teamId;
                                 // console.log("teamid", teamid);
                                 callback(null, teamid);
                             } else {
                                 // console.log("autoID", team.autoID);
                                 var city = mainData.property.sfaCity.substr(0, 1);
                                 var year = mainData.property.year.substr(2, 2);
-                                var teamid = city + "T" + year + ++team.autoID;
+                                var teamid = city + "T" + year + data.teamId;
                                 // console.log("teamid", teamid);
                                 callback(null, teamid);
                             }

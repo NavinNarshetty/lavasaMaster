@@ -70,13 +70,13 @@ var model = {
                                                         callback(err, null);
                                                     } else {
                                                         if (_.isEmpty(sport)) {
-                                                            console.log("sport", sport, "captain", sportData.captain);
+                                                            // console.log("sport", sport, "captain", sportData.captain);
                                                             callback(null, []);
                                                         } else {
                                                             team.id = sportData._id;
                                                             var studentTeam = {};
                                                             studentTeam.studentId = sport._id;
-                                                            console.log("sport", sport, "captain", sportData.captain);
+                                                            // console.log("sport", sport, "captain", sportData.captain);
                                                             if (sport._id.equals(sportData.captain)) {
                                                                 studentTeam.isCaptain = true;
                                                             } else {
@@ -88,8 +88,9 @@ var model = {
                                                             team.schoolName = sport.schoolName;
                                                             team.createdBy = "School";
 
-                                                            team.teamId = sportData.sfaid;
+                                                            team.sfaid = sportData.sfaid;
                                                             team.oldId = sportData._id;
+                                                            console.log("sportData".sportData);
                                                             callback(null, team);
                                                         }
                                                     }
@@ -103,6 +104,7 @@ var model = {
                                             });
                                     },
                                     function (team, callback) {
+                                        // console.log("team-----------", team);
                                         OldTeam.teamConfirm(team, function (err, sport) {
                                             if (err) {
                                                 callback(err, null);
