@@ -8043,9 +8043,6 @@ var model = {
                                                                                     // stats.isAthleteWinner = false;
                                                                                     stats.walkover = n.walkover;
                                                                                     stats.noShow = n.noShow;
-                                                                                }else{
-                                                                                    stats.walkover = n.walkover;
-                                                                                    stats.noShow = n.noShow;
                                                                                 }
                                                                                 // stats.score = singleData.resultFootball.teams[0].teamResults.finalPoints + "-" + singleData.resultFootball.teams[1].teamResults.finalPoints;
                                                                             } else {
@@ -8179,16 +8176,11 @@ var model = {
                                                                                     // stats.isAthleteWinner = false;
                                                                                     stats.walkover = n.walkover;
                                                                                     stats.noShow = n.noShow;
-                                                                                }else{
-                                                                                    stats.walkover = n.walkover;
-                                                                                    stats.noShow = n.noShow;
                                                                                 }
                                                                                 stats.score = result;
                                                                             } else {
                                                                                 if (singleData.resultVolleyball.winner.player === n.team) {
                                                                                     stats.isAthleteWinner = false;
-                                                                                    stats.walkover = n.walkover;
-                                                                                    stats.noShow = n.noShow;
                                                                                 } else {
                                                                                     stats.isAthleteWinner = true;
                                                                                     stats.walkover = n.walkover;
@@ -8312,16 +8304,11 @@ var model = {
                                                                                 if (singleData.resultThrowball.winner.player !== n.team) {
                                                                                     stats.walkover = n.walkover;
                                                                                     stats.noShow = n.noShow;
-                                                                                }else{
-                                                                                    stats.walkover = n.walkover;
-                                                                                    stats.noShow = n.noShow;
                                                                                 }
                                                                                 stats.score = result;
                                                                             } else {
                                                                                 if (singleData.resultThrowball.winner.player === n.team) {
                                                                                     stats.isAthleteWinner = false;
-                                                                                    stats.walkover = n.walkover;
-                                                                                    stats.noShow = n.noShow;
                                                                                 } else {
                                                                                     stats.isAthleteWinner = true;
                                                                                     stats.walkover = n.walkover;
@@ -8433,9 +8420,6 @@ var model = {
                                                                                 }
                                                                                 if (singleData.resultHockey.winner.player !== n.team) {
                                                                                     // stats.isAthleteWinner = true;
-                                                                                    stats.walkover = n.walkover;
-                                                                                    stats.noShow = n.noShow;
-                                                                                }else{
                                                                                     stats.walkover = n.walkover;
                                                                                     stats.noShow = n.noShow;
                                                                                 }
@@ -8554,9 +8538,6 @@ var model = {
                                                                                 if (singleData.resultWaterPolo.winner.player !== n.team) {
                                                                                     stats.walkover = n.walkover;
                                                                                     stats.noShow = n.noShow;
-                                                                                }else{
-                                                                                    stats.walkover = n.walkover;
-                                                                                    stats.noShow = n.noShow;
                                                                                 }
                                                                                 // stats.score = singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoints + "-" + singleData.resultWaterPolo.teams[1].teamResults.finalGoalPoints;
                                                                             } else {
@@ -8668,16 +8649,11 @@ var model = {
                                                                                 if (singleData.resultKabaddi.winner.player !== n.team) {
                                                                                     stats.walkover = n.walkover;
                                                                                     stats.noShow = n.noShow;
-                                                                                }else{
-                                                                                    stats.walkover = n.walkover;
-                                                                                    stats.noShow = n.noShow;
                                                                                 }
                                                                                 stats.score = singleData.resultKabaddi.teams[0].teamResults.finalPoints + "-" + singleData.resultKabaddi.teams[1].teamResults.finalPoints;
                                                                             } else {
                                                                                 if (singleData.resultKabaddi.winner.player === n.team) {
                                                                                     stats.isAthleteWinner = false;
-                                                                                    stats.walkover = n.walkover;
-                                                                                    stats.noShow = n.noShow;
                                                                                 } else {
                                                                                     stats.isAthleteWinner = true;
                                                                                     stats.walkover = n.walkover;
@@ -8790,16 +8766,11 @@ var model = {
                                                                                     // stats.isAthleteWinner = false;
                                                                                     stats.walkover = n.walkover;
                                                                                     stats.noShow = n.noShow;
-                                                                                }else{
-                                                                                    stats.walkover = n.walkover;
-                                                                                    stats.noShow = n.noShow;
                                                                                 }
                                                                                 // stats.score = singleData.resultHandball.teams[0].teamResults.finalPoints + "-" + singleData.resultHandball.teams[1].teamResults.finalPoints;
                                                                             } else {
                                                                                 if (singleData.resultHandball.winner.player === n.team) {
                                                                                     stats.isAthleteWinner = false;
-                                                                                    stats.walkover = n.walkover;
-                                                                                    stats.noShow = n.noShow;
                                                                                 } else {
                                                                                     stats.isAthleteWinner = true;
                                                                                     stats.walkover = n.walkover;
