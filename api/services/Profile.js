@@ -2213,6 +2213,13 @@ var model = {
                                                                                         stats.school = found.teamId.schoolName;
                                                                                         stats.teamId = found.teamId.teamId;
                                                                                         stats.isAthleteWinner = false;
+                                                                                        if (singleData.resultBasketball.winner.player === singleData.resultBasketball.teams[0].team) {
+                                                                                            stats.walkover = singleData.resultBasketball.teams[0].walkover;
+                                                                                            stats.noShow = singleData.resultBasketball.teams[0].noShow;
+                                                                                        } else {
+                                                                                            stats.walkover = singleData.resultBasketball.teams[1].walkover;
+                                                                                            stats.noShow = singleData.resultBasketball.teams[1].noShow;
+                                                                                        }
                                                                                         stats.score = singleData.resultBasketball.teams[0].teamResults.finalGoalPoints + "-" + singleData.resultBasketball.teams[1].teamResults.finalGoalPoints;
                                                                                         callback();
                                                                                     }
@@ -2315,6 +2322,13 @@ var model = {
                                                                                         stats.school = found.teamId.schoolName;
                                                                                         stats.teamId = found.teamId.teamId;
                                                                                         stats.isAthleteWinner = false;
+                                                                                        if (singleData.resultThrowball.winner.player === singleData.resultThrowball.teams[0].team) {
+                                                                                            stats.walkover = singleData.resultThrowball.teams[0].walkover;
+                                                                                            stats.noShow = singleData.resultThrowball.teams[0].noShow;
+                                                                                        } else {
+                                                                                            stats.walkover = singleData.resultThrowball.teams[1].walkover;
+                                                                                            stats.noShow = singleData.resultThrowball.teams[1].noShow;
+                                                                                        }
                                                                                         var length = singleData.resultThrowball.teams[0].teamResults.sets.length;
                                                                                         while (i < length) {
                                                                                             if (i == 0) {
@@ -2434,6 +2448,13 @@ var model = {
                                                                                         stats.school = found.teamId.schoolName;
                                                                                         stats.teamId = found.teamId.teamId;
                                                                                         stats.isAthleteWinner = false;
+                                                                                        if (singleData.resultFootball.winner.player === singleData.resultFootball.teams[0].team) {
+                                                                                            stats.walkover = singleData.resultFootball.teams[0].walkover;
+                                                                                            stats.noShow = singleData.resultFootball.teams[0].noShow;
+                                                                                        } else {
+                                                                                            stats.walkover = singleData.resultFootball.teams[1].walkover;
+                                                                                            stats.noShow = singleData.resultFootball.teams[1].noShow;
+                                                                                        }
                                                                                         if (singleData.resultFootball.teams[0].teamResults.penaltyPoints && singleData.resultFootball.teams[1].teamResults.penaltyPoints) {
                                                                                             stats.score = singleData.resultFootball.teams[0].teamResults.penaltyPoints + "-" + singleData.resultFootball.teams[1].teamResults.penaltyPoints;
                                                                                         } else {
@@ -2562,6 +2583,13 @@ var model = {
                                                                                         stats.school = found.teamId.schoolName;
                                                                                         stats.teamId = found.teamId.teamId;
                                                                                         stats.isAthleteWinner = false;
+                                                                                        if (singleData.resultVolleyball.winner.player === singleData.resultVolleyball.teams[0].team) {
+                                                                                            stats.walkover = singleData.resultVolleyball.teams[0].walkover;
+                                                                                            stats.noShow = singleData.resultVolleyball.teams[0].noShow;
+                                                                                        } else {
+                                                                                            stats.walkover = singleData.resultVolleyball.teams[1].walkover;
+                                                                                            stats.noShow = singleData.resultVolleyball.teams[1].noShow;
+                                                                                        }
                                                                                         var i = 0;
                                                                                         var length = singleData.resultVolleyball.teams[0].teamResults.sets.length;
                                                                                         while (i < length) {
@@ -2686,6 +2714,13 @@ var model = {
                                                                                         stats.school = found.teamId.schoolName;
                                                                                         stats.teamId = found.teamId.teamId;
                                                                                         stats.isAthleteWinner = false;
+                                                                                        if (singleData.resultHockey.winner.player === singleData.resultHockey.teams[0].team) {
+                                                                                            stats.walkover = singleData.resultHockey.teams[0].walkover;
+                                                                                            stats.noShow = singleData.resultHockey.teams[0].noShow;
+                                                                                        } else {
+                                                                                            stats.walkover = singleData.resultHockey.teams[1].walkover;
+                                                                                            stats.noShow = singleData.resultHockey.teams[1].noShow;
+                                                                                        }
                                                                                         if (singleData.resultHockey.teams[0].teamResults.penaltyPoints && singleData.resultHockey.teams[1].teamResults.penaltyPoints) {
                                                                                             stats.score = singleData.resultHockey.teams[0].teamResults.penaltyPoints + "-" + singleData.resultHockey.teams[1].teamResults.penaltyPoints;
                                                                                         } else {
@@ -2798,6 +2833,13 @@ var model = {
                                                                                         stats.school = found.teamId.schoolName;
                                                                                         stats.teamId = found.teamId.teamId;
                                                                                         stats.isAthleteWinner = false;
+                                                                                        if (singleData.resultWaterPolo.winner.player === singleData.resultWaterPolo.teams[0].team) {
+                                                                                            stats.walkover = singleData.resultWaterPolo.teams[0].walkover;
+                                                                                            stats.noShow = singleData.resultWaterPolo.teams[0].noShow;
+                                                                                        } else {
+                                                                                            stats.walkover = singleData.resultWaterPolo.teams[1].walkover;
+                                                                                            stats.noShow = singleData.resultWaterPolo.teams[1].noShow;
+                                                                                        }
                                                                                         if (singleData.resultWaterPolo.teams[0].teamResults.penaltyPoints && singleData.resultWaterPolo.teams[1].teamResults.penaltyPoints) {
                                                                                             stats.score = singleData.resultWaterPolo.teams[0].teamResults.penaltyPoints + "-" + singleData.resultWaterPolo.teams[1].teamResults.penaltyPoints;
                                                                                         } else {
@@ -3017,6 +3059,13 @@ var model = {
                                                                                         stats.school = found.teamId.schoolName;
                                                                                         stats.teamId = found.teamId.teamId;
                                                                                         stats.isAthleteWinner = false;
+                                                                                        if (singleData.resultHandball.winner.player === singleData.resultHandball.teams[0].team) {
+                                                                                            stats.walkover = singleData.resultHandball.teams[0].walkover;
+                                                                                            stats.noShow = singleData.resultHandball.teams[0].noShow;
+                                                                                        } else {
+                                                                                            stats.walkover = singleData.resultHandball.teams[1].walkover;
+                                                                                            stats.noShow = singleData.resultHandball.teams[1].noShow;
+                                                                                        }
                                                                                         if (singleData.resultHandball.teams[0].teamResults.penaltyPoints && singleData.resultHandball.teams[1].teamResults.penaltyPoints) {
                                                                                             stats.score = singleData.resultHandball.teams[0].teamResults.penaltyPoints + "-" + singleData.resultHandball.teams[1].teamResults.penaltyPoints;
                                                                                         } else {
