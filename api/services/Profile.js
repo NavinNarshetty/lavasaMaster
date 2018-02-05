@@ -7922,9 +7922,6 @@ var model = {
                                                                                 if (singleData.resultBasketball.winner.player !== n.team) {
                                                                                     stats.walkover = n.walkover;
                                                                                     stats.noShow = n.noShow;
-                                                                                } else {
-                                                                                    stats.walkover = n.walkover;
-                                                                                    stats.noShow = n.noShow;
                                                                                 }
                                                                                 stats.score = singleData.resultBasketball.teams[0].teamResults.finalGoalPoints + "-" + singleData.resultBasketball.teams[1].teamResults.finalGoalPoints;
                                                                             } else {
