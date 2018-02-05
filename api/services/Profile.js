@@ -1366,13 +1366,13 @@ var model = {
                                                                             stats.noshow = singleData.resultsCombat.players[1].noShow;
                                                                         }
                                                                     } else {
-                                                                        if (singleData.resultsCombat.winner.player === singleData.resultsCombat.players[0].player) {
-                                                                            stats.walkover = singleData.resultsCombat.players[0].walkover;
-                                                                            stats.noshow = singleData.resultsCombat.players[0].noShow;
-                                                                        } 
-                                                                        if (singleData.resultsCombat.winner.player === singleData.resultsCombat.players[1].player) {
+                                                                        if (singleData.resultsCombat.winner.player !== singleData.resultsCombat.players[0].player) {
                                                                             stats.walkover = singleData.resultsCombat.players[1].walkover;
                                                                             stats.noshow = singleData.resultsCombat.players[1].noShow;
+                                                                        } 
+                                                                        if (singleData.resultsCombat.winner.player !== singleData.resultsCombat.players[1].player) {
+                                                                            stats.walkover = singleData.resultsCombat.players[0].walkover;
+                                                                            stats.noshow = singleData.resultsCombat.players[0].noShow;
                                                                         }
                                                                         // if (singleData.resultsCombat.winner.player === singleData.resultsCombat.players[0].player) {
                                                                         //     stats.walkover = singleData.resultsCombat.players[0].walkover;
