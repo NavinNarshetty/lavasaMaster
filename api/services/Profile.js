@@ -1947,6 +1947,13 @@ var model = {
                                                                                         stats.school = found.teamId.schoolName;
                                                                                         stats.teamId = found.teamId.teamId;
                                                                                         stats.isAthleteWinner = false;
+                                                                                        if (singleData.resultsCombat.teams[0].team === singleData.resultsCombat.winner.player) {
+                                                                                            stats.walkover = singleData.resultsCombat.teams[0].walkover;
+                                                                                            stats.noshow = singleData.resultsCombat.teams[0].noShow;
+                                                                                        } else {
+                                                                                            stats.walkover = singleData.resultsCombat.teams[1].walkover;
+                                                                                            stats.noshow = singleData.resultsCombat.teams[1].noShow;
+                                                                                        }
                                                                                         var i = 0;
                                                                                         var length = singleData.resultsCombat.teams[0].sets.length;
                                                                                         while (i < length) {
@@ -2078,6 +2085,13 @@ var model = {
                                                                                         stats.school = found.teamId.schoolName;
                                                                                         stats.teamId = found.teamId.teamId;
                                                                                         stats.isAthleteWinner = false;
+                                                                                        if (singleData.resultsRacquet.teams[0].team === singleData.resultsRacquet.winner.player) {
+                                                                                            stats.walkover = singleData.resultsRacquet.teams[0].walkover;
+                                                                                            stats.noshow = singleData.resultsRacquet.teams[0].noShow;
+                                                                                        } else {
+                                                                                            stats.walkover = singleData.resultsRacquet.teams[1].walkover;
+                                                                                            stats.noshow = singleData.resultsRacquet.teams[0].noShow;
+                                                                                        }
                                                                                         var length = singleData.resultsRacquet.teams[0].sets.length;
                                                                                         while (i < length) {
                                                                                             if (i == 0) {
