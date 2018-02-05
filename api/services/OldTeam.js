@@ -88,7 +88,7 @@ var model = {
                                                             team.schoolName = sport.schoolName;
                                                             team.createdBy = "School";
 
-                                                            team.sfaid = sportData.sfaid;
+                                                            team.teamId = sportData.sfaid;
                                                             team.oldId = sportData._id;
                                                             callback(null, team);
                                                         }
@@ -330,7 +330,7 @@ var model = {
                     callback(null, team);
                 },
                 function (team, callback) {
-                    team.sfaid = data.sfaid;
+                    team.teamId = data.sfaid;
                     TeamSport.saveInTeam(team, data, function (err, complete) {
                         if (err) {
                             callback(err, null);

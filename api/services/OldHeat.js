@@ -658,7 +658,6 @@ var model = {
                                 callback(null, []);
                             } else {
                                 // console.log("inside push", individualData);
-
                                 var player = {};
                                 player.id = individualData[0]._id;
                                 players.push(player);

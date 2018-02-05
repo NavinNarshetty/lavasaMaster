@@ -1,23 +1,23 @@
 var schema = new Schema({
-    medalType:{
+    medalType: {
         type: String,
         enum: ["gold", "silver", "bronze"]
     },
-    sport:[{
-        type:Schema.Types.ObjectId,
-        ref:'Sport'
+    sport: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Sport'
     }],
-    school:[{
-        type:Schema.Types.ObjectId,
-        ref:'School'
+    school: [{
+        type: Schema.Types.ObjectId,
+        ref: 'School'
     }],
-    team:[{
-        type:Schema.Types.ObjectId,
-        ref:'TeamSport'
+    team: [{
+        type: Schema.Types.ObjectId,
+        ref: 'TeamSport'
     }],
-    player:[{
-        type:Schema.Types.ObjectId,
-        ref:'Athelete'
+    player: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Athelete'
     }]
 });
 
@@ -29,10 +29,10 @@ schema.plugin(deepPopulate, {
         "school": {
             select: '_id name '
         },
-         "team": {
+        "team": {
             select: '_id name '
         },
-         "player": {
+        "player": {
             select: '_id name '
         },
     }
@@ -42,5 +42,7 @@ schema.plugin(timestamps);
 module.exports = mongoose.model('Medal', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
-var model = {};
+var model = {
+
+};
 module.exports = _.assign(module.exports, exports, model);
