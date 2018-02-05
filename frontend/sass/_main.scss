@@ -75,7 +75,6 @@ sans-serif !default;
     font-weight: 500;
 }
 
-
 /* mixing*/
 
 @mixin placeholder {
@@ -111,15 +110,15 @@ body {
     font-family: $font-family-sans-serif;
     overflow-x: hidden;
     ::-webkit-scrollbar {
-     width: 10px;
-     height: 10px;
-   }
+        width: 10px;
+        height: 10px;
+    }
     ::-webkit-scrollbar-track {
-     background-color: transparent;
-   }
+        background-color: transparent;
+    }
     ::-webkit-scrollbar-thumb {
-     background-color: #e1e1e1;
-   }
+        background-color: #e1e1e1;
+    }
 }
 
 .placingBlock {
@@ -1005,6 +1004,10 @@ hr {
     border-top: 1px solid #000000 !important;
 }
 
+.override-margin-left {
+    margin-left: 0px !important;
+}
+
 .sfa-select {
     position: relative;
     z-index: 9;
@@ -1013,8 +1016,8 @@ hr {
         @include appearance(none);
         border: none;
         text-transform: uppercase;
-        font-size: 15px;
-        padding: 3px 60px 0 20px;
+        font-size: 12px;
+        padding: 5px 46px 0 10px;
         width: 100%;
         background-color: transparent;
         outline: 0;
@@ -3877,7 +3880,6 @@ ul.dropdown-menu.sf-absulate.blue-menus li a {
     -webkit-animation: colorchanges 3s infinite;
 }
 
-
 /* Chrome, Safari, Opera */
 
 @-webkit-keyframes colorchanges {
@@ -3888,7 +3890,6 @@ ul.dropdown-menu.sf-absulate.blue-menus li a {
         color: green;
     } // transition: all 0.3s ease;
 }
-
 
 /* Standard syntax */
 
@@ -3901,7 +3902,6 @@ ul.dropdown-menu.sf-absulate.blue-menus li a {
     } // transition: all 0.3s ease;
 }
 
-
 /* Chrome, Safari, Opera */
 
 @-webkit-keyframes colorchange {
@@ -3912,7 +3912,6 @@ ul.dropdown-menu.sf-absulate.blue-menus li a {
         background: green;
     } // transition: all 0.3s ease;
 }
-
 
 /* Standard syntax */
 
@@ -4588,7 +4587,6 @@ iframe#twitter-widget-0 {
     cursor: pointer;
 }
 
-
 /* checkbox aspect */
 
 [type="checkbox"]:not(:checked)+label:before,
@@ -4624,7 +4622,6 @@ iframe#twitter-widget-0 {
     transform: scale(1);
 }
 
-
 /* disabled checkbox */
 
 [type="checkbox"]:disabled:not(:checked)+label:before,
@@ -4642,11 +4639,10 @@ iframe#twitter-widget-0 {
     color: #aaa;
 }
 
-
 /* hover style just for information */
 
 label:hover:before {
-    border: 1px solid #ccc!important;
+    border: 1px solid #ccc !important;
 }
 
 .sel-spo {
@@ -4868,7 +4864,7 @@ label:hover:before {
     }
     /* hover style just for information */
     label:hover:before {
-        border: 1px solid #ccc!important;
+        border: 1px solid #ccc !important;
     }
 }
 
@@ -7280,14 +7276,14 @@ h1.forgot-space {
 
 //table-scroll for all confirm-table
 .athswm-table {
-     ::-webkit-scrollbar {
+    ::-webkit-scrollbar {
         // height: 4px;
         // width: 6px;
     }
-     ::-webkit-scrollbar-track {
+    ::-webkit-scrollbar-track {
         background-color: transparent;
     }
-     ::-webkit-scrollbar-thumb {
+    ::-webkit-scrollbar-thumb {
         background-color: #555 !important;
     }
 }
@@ -7320,14 +7316,14 @@ h1.forgot-space {
         border: none;
     }
     .custom-uiselect {
-         ::-webkit-scrollbar {
+        ::-webkit-scrollbar {
             height: 4px;
             width: 6px;
         }
-         ::-webkit-scrollbar-track {
+        ::-webkit-scrollbar-track {
             background-color: transparent;
         }
-         ::-webkit-scrollbar-thumb {
+        ::-webkit-scrollbar-thumb {
             background-color: #555;
         }
         .ui-select-multiple>div {

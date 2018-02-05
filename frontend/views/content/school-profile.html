@@ -316,11 +316,12 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="box-content bx-mob">
+                        <!-- PLAYER  -->
                         <div class="player" ng-show="tab=='player'">
                             <div class="row">
                                 <div class="col-md-offset-2 col-md-3 col-sm-4 col-xs-12 text-c-m hide">
-                                    <h4 class="text-up color-blue display-inline">Year</h4>
-                                    <div class="display-inline">
+                                    <h5 class="text-up color-blue">Year</h5>
+                                    <div class="">
                                         <div class="sfa-select">
                                             <!-- <select class="select" ng-change="callReload();" ng-model="callObject.year" ng-options="item for item in allYears">
                                             </select> -->
@@ -331,9 +332,9 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-sm-4 col-xs-12 text-c-m">
-                                    <h4 class="text-up color-blue display-inline">gender</h4>
-                                    <div class="display-inline">
-                                        <div class="sfa-select">
+                                    <h5 class="text-up color-blue ">gender</h5>
+                                    <div class="">
+                                        <div class="sfa-select override-margin-left">
                                             <select class="select" ng-change="callReload(genderValue,'gender');" ng-model="genderValue" ng-options="item for item in gender | orderBy">
                                             </select>
                                             <span class="only-border"></span>
@@ -341,9 +342,9 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-sm-4 col-xs-12 text-c-m">
-                                    <h4 class="text-up color-blue display-inline">age group</h4>
-                                    <div class="display-inline">
-                                        <div class="sfa-select">
+                                    <h5 class="text-up color-blue ">age group</h5>
+                                    <div class="">
+                                        <div class="sfa-select override-margin-left">
                                             <select class="select" ng-change="callReload(ageValue,'age');" ng-model="ageValue" ng-options="item for item in agegroup">
                                                 <option value=""></option>
                                             </select>
@@ -377,6 +378,8 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- PLAYER END -->
+                        <!-- STATISTICS -->
                         <div class="statistics " ng-show="tab=='statistics'">
                             <div class="row">
                                 <div class="col-md-3 col-sm-4 col-xs-12 text-c-m hide">
@@ -393,20 +396,23 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!-- GENDER -->
                                 <div class="col-md-3 col-sm-4 col-xs-12 text-c-m">
-                                    <h4 class="text-up color-blue display-inline">gender</h4>
-                                    <div class="display-inline">
-                                        <div class="sfa-select">
+                                    <h5 class="text-up color-blue">gender</h5>
+                                    <div class="">
+                                        <div class="sfa-select override-margin-left">
                                             <select class="select" ng-change="callReloadStat(genderStat,'gender');" ng-model="genderStat" ng-options="item for item in gender | orderBy">
                                             </select>
                                             <span class="only-border"></span>
                                         </div>
                                     </div>
                                 </div>
+                                <!-- GENDER END -->
+                                <!-- AGE GROUP -->
                                 <div class="col-md-3 col-sm-4 col-xs-12 text-c-m">
-                                    <h4 class="text-up color-blue display-inline">age group</h4>
-                                    <div class="display-inline">
-                                        <div class="sfa-select">
+                                    <h5 class="text-up color-blue">age group</h5>
+                                    <div class="">
+                                        <div class="sfa-select override-margin-left">
                                             <select class="select" ng-change="callReloadStat(ageStat,'age');" ng-model="ageStat" ng-options="item for item in agegroup">
                                                 <option value=""></option>
                                             </select>
@@ -414,10 +420,13 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!-- AGE GROUP END -->
+
+                                <!-- WEIGHT -->
                                 <div class="col-md-3 col-sm-4 col-xs-12 text-c-m" ng-if="weights.length>0">
-                                    <h4 class="text-up color-blue display-inline">weight</h4>
-                                    <div class="display-inline">
-                                        <div class="sfa-select">
+                                    <h5 class="text-up color-blue ">weight</h5>
+                                    <div class="">
+                                        <div class="sfa-select override-margin-left">
                                             <select class="select" ng-change="callReloadStat(ageStat,'weight');" ng-model="ageStat" ng-options="item for item in weights">
                                                 <option value=""></option>
                                             </select>
@@ -425,17 +434,21 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-sm-4 col-xs-12 text-c-m">
-                                    <h4 class="text-up color-blue display-inline">category</h4>
-                                    <div class="display-inline">
-                                        <div class="sfa-select">
-                                            <select class="select" ng-change="callReloadStat(eventStat,'event');" ng-model="eventStat" ng-options="item for item in eventCategory | orderBy">
+                                <!-- WEIGHT END -->
+
+                                <!-- CATEGORY -->
+                                <div class="col-md-3 col-sm-4 col-xs-12 text-c-m">
+                                    <h5 class="text-up color-blue">category</h5>
+                                    <div class="">
+                                        <div class="sfa-select override-margin-left">
+                                            <select class="select" ng-change="callReloadStat(eventStat,'event');" title="{{eventStat}}" ng-model="eventStat" ng-options="item for item in eventCategory | orderBy">
                                                 <option value=""></option>
                                             </select>
                                             <span class="only-border"></span>
                                         </div>
                                     </div>
                                 </div>
+                                <!-- CATEGORY END -->
                             </div>
                             <div class="row mt25 main-over" ng-if="statsDetail">
                                 <div class="col-md-12 mt25">
@@ -594,6 +607,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- STATISTICS END -->
                     </div>
                 </div>
             </div>
