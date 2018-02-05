@@ -1254,7 +1254,7 @@ var model = {
                         _.each(sendObj.weight, function (n, k1) {
                             console.log("weight", n, "k1", k1);
                             temp1.push(n);
-                            if (k1 == sendObj.ageGroups.length - 1) {
+                            if (k1 == sendObj.weight.length - 1) {
                                 temp1.sort(function (a, b) {
                                     return a - b
                                 });
