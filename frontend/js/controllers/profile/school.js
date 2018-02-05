@@ -493,6 +493,11 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
                 $scope.gender.unshift('All');
                 $scope.eventCategory = response.data.events;
                 $scope.eventCategory.unshift('All');
+                $scope.weights = response.data.weight;
+                if ($scope.weights.length > 0) {
+                    $scope.weights.unshift('All');
+                }
+
             } else {
                 $scope.agegroup = [];
                 $scope.gender = [];
@@ -682,6 +687,13 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
                 $scope.filterStatistics.event = '';
             } else {
                 $scope.filterStatistics.event = data;
+            }
+        }
+        if (option == 'weight') {
+            if (data == 'All') {
+                $scope.filterStatistics.weight = null;
+            } else {
+                $scope.filterStatistics.weight = data;
             }
         }
         if ($scope.filterStatistics.gender !== '' && $scope.filterStatistics.age !== '' && $scope.filterStatistics.event !== '') {

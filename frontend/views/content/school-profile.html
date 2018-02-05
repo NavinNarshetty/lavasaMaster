@@ -414,6 +414,17 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-3 col-sm-4 col-xs-12 text-c-m" ng-if="weights.length>0">
+                                    <h4 class="text-up color-blue display-inline">weight</h4>
+                                    <div class="display-inline">
+                                        <div class="sfa-select">
+                                            <select class="select" ng-change="callReloadStat(ageStat,'weight');" ng-model="ageStat" ng-options="item for item in weights">
+                                                <option value=""></option>
+                                            </select>
+                                            <span class="only-border"></span>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-md-6 col-sm-4 col-xs-12 text-c-m">
                                     <h4 class="text-up color-blue display-inline">category</h4>
                                     <div class="display-inline">
