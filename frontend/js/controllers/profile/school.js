@@ -691,7 +691,7 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
         }
         if (option == 'weight') {
             if (data == 'All') {
-                $scope.filterStatistics.weight = null;
+                $scope.filterStatistics.weight = '';
             } else {
                 $scope.filterStatistics.weight = data;
             }
