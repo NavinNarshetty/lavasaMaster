@@ -7927,6 +7927,8 @@ var model = {
                                                                             } else {
                                                                                 if (singleData.resultBasketball.winner.player === n.team) {
                                                                                     stats.isAthleteWinner = false;
+                                                                                    stats.walkover = n.walkover;
+                                                                                    stats.noShow = n.noShow;
                                                                                 } else {
                                                                                     stats.isAthleteWinner = true;
                                                                                     stats.walkover = n.walkover;
