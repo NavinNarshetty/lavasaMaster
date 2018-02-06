@@ -6337,7 +6337,7 @@ var model = {
                                                                     if (n.player === singleData.opponentsSingle._id) {
                                                                         // stats.score = n.finalPoints;
                                                                         // stats.rank = n.rank;
-                                                                        if (!singleData.resultKnockout.winner.opponentsSingle.equals(n.player)) {
+                                                                        if (singleData.resultKnockout.winner.opponentsSingle !== n.player) {
                                                                             // stats.isAthleteWinner = true;
                                                                             stats.walkover = n.walkover;
                                                                             stats.noShow = n.noShow;
@@ -6348,7 +6348,7 @@ var model = {
                                                                         if (singleData.resultKnockout.status == "IsCompleted") {
                                                                             console.log('Equals======================',singleData.resultKnockout.winner.opponentsSingle.equals(n.player));
                                                                             console.log('Equal to====================',singleData.resultKnockout.winner.opponentsSingle === n.player);
-                                                                            if (singleData.resultKnockout.winner.opponentsSingle.equals(n.player)) {
+                                                                            if (singleData.resultKnockout.winner.opponentsSingle === n.player) {
                                                                                 stats.isAthleteWinner = false;
                                                                                 // stats.walkover = n.walkover;
                                                                                 // stats.noShow = n.noShow;
