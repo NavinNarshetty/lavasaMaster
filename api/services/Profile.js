@@ -6344,7 +6344,8 @@ var model = {
                                                                         }
                                                                         callback(null, profile.match);
                                                                     } else {
-                                                                        if (singleData.resultKnockout.status == "IsCompleted" && singleData.resultKnockout.isNoMatch == false) {
+                                                                        // if (singleData.resultKnockout.status == "IsCompleted" && singleData.resultKnockout.isNoMatch == false) {
+                                                                        if (singleData.resultKnockout.status == "IsCompleted") {
                                                                             if (singleData.resultKnockout.winner.opponentsSingle === n.player) {
                                                                                 stats.isAthleteWinner = true;
                                                                                 stats.walkover = n.walkover;
