@@ -89,6 +89,15 @@
                 </div>
                 <!-- VIDEO LINK END -->
 
+                <!-- WINNER -->
+                <div class="form-group">
+                  <label>Winner </label>
+                  <select name="sponsortype" class="form-control" ng-model="formData.result.winner.player" placeholder="Enter Winner" ng-disabled="true">
+                    <option value="{{player.athleteId._id}}" ng-repeat="player in formData.opponentsSingle">{{player.fullname}}</option>
+                  </select>
+                </div>
+                <!-- WINNER END -->
+
                 <div class="form-group">
                   <label>Match<span ng-show="type.required">*</span></label>
                   <upload-image ng-model="formData.resultQualifyingRound.resultImage.matchPhoto" multiple inobj></upload-image>
