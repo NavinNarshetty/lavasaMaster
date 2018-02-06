@@ -6337,7 +6337,7 @@ var model = {
                                                                     if (n.player === singleData.opponentsSingle.athleteId._id.toString()) {
                                                                         // stats.score = n.finalPoints;
                                                                         // stats.rank = n.rank;
-                                                                        if (singleData.resultKnockout.winner.player !== n.player) {
+                                                                        if (singleData.resultKnockout.winner.opponentsSingle !== n.player) {
                                                                             // stats.isAthleteWinner = true;
                                                                             stats.walkover = n.walkover;
                                                                             stats.noShow = n.noShow;
@@ -6345,7 +6345,7 @@ var model = {
                                                                         callback(null, profile.match);
                                                                     } else {
                                                                         if (singleData.resultKnockout.status == "IsCompleted" && singleData.resultKnockout.isNoMatch == false) {
-                                                                            if (singleData.resultKnockout.winner.player === n.player) {
+                                                                            if (singleData.resultKnockout.winner.opponentsSingle === n.player) {
                                                                                 stats.isAthleteWinner = true;
                                                                                 stats.walkover = n.walkover;
                                                                                 stats.noShow = n.noShow;
