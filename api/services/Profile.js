@@ -6285,7 +6285,8 @@ var model = {
                                                                 profile.players.push(player);
                                                             }
                                                             result = singleData.resultKnockout.finalScore;
-                                                            if (singleData.resultKnockout.status == "IsCompleted" && singleData.resultKnockout.isNoMatch == false) {
+                                                            if (singleData.resultKnockout.status == "IsCompleted") {
+                                                            // if (singleData.resultKnockout.status == "IsCompleted" && singleData.resultKnockout.isNoMatch == false) {
                                                                 stats.isAthleteWinner = true;
                                                                 stats.status = singleData.resultKnockout.status;
                                                                 stats.draw = singleData.resultKnockout.isDraw;
@@ -6337,7 +6338,7 @@ var model = {
                                                                     if (n.player === singleData.opponentsSingle._id) {
                                                                         // stats.score = n.finalPoints;
                                                                         // stats.rank = n.rank;
-                                                                        if (singleData.resultKnockout.winner.opponentsSingle !== n.player) {
+                                                                        if (!singleData.resultKnockout.winner.opponentsSingle.equals(n.player)) {
                                                                             // stats.isAthleteWinner = true;
                                                                             stats.walkover = n.walkover;
                                                                             stats.noShow = n.noShow;
@@ -6346,10 +6347,10 @@ var model = {
                                                                     } else {
                                                                         // if (singleData.resultKnockout.status == "IsCompleted" && singleData.resultKnockout.isNoMatch == false) {
                                                                         if (singleData.resultKnockout.status == "IsCompleted") {
-                                                                            if (singleData.resultKnockout.winner.opponentsSingle === n.player) {
+                                                                            if (singleData.resultKnockout.winner.opponentsSingle.equals(n.player)) {
                                                                                 stats.isAthleteWinner = false;
-                                                                                stats.walkover = n.walkover;
-                                                                                stats.noShow = n.noShow;
+                                                                                // stats.walkover = n.walkover;
+                                                                                // stats.noShow = n.noShow;
                                                                             } else {
                                                                                 stats.isAthleteWinner = true;
                                                                                 stats.walkover = n.walkover;
