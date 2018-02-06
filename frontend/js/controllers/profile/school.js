@@ -502,6 +502,7 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
                 $scope.agegroup = [];
                 $scope.gender = [];
                 $scope.eventCategory = [];
+                $scope.weights = [];
             }
         });
     };
@@ -591,6 +592,7 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
             $scope.filterStatistics.age = '';
             $scope.filterStatistics.gender = '';
             $scope.filterStatistics.event = '';
+            $scope.filterStatistics.weight = '';
             $scope.tabchange('player', 1);
             $scope.getDrawFormats();
             $scope.getSportAgeGroup();
@@ -608,6 +610,7 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
                 $scope.filterStatistics.age = '';
                 $scope.filterStatistics.gender = '';
                 $scope.filterStatistics.event = '';
+                $scope.filterStatistics.weight = '';
                 $scope.tabchange('player', 1);
                 $scope.getDrawFormats();
                 $scope.getSportAgeGroup();
@@ -696,13 +699,15 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
                 $scope.filterStatistics.weight = data;
             }
         }
-        if ($scope.filterStatistics.gender !== '' && $scope.filterStatistics.age !== '' && $scope.filterStatistics.event !== '') {
+        if ($scope.filterStatistics.gender !== '' && $scope.filterStatistics.age !== '' && $scope.filterStatistics.event !== '' && $scope.filterStatistics.weight !== '') {
             $scope.getSchoolStats();
-        } else if ($scope.filterStatistics.gender !== '' && $scope.filterStatistics.age === '' && $scope.filterStatistics.event === '') {
+        } else if ($scope.filterStatistics.gender !== '' && $scope.filterStatistics.age === '' && $scope.filterStatistics.event === '' && $scope.filterStatistics.weight === '') {
             $scope.getSchoolStats();
-        } else if ($scope.filterStatistics.gender === '' && $scope.filterStatistics.age !== '' && $scope.filterStatistics.event === '') {
+        } else if ($scope.filterStatistics.gender === '' && $scope.filterStatistics.age !== '' && $scope.filterStatistics.event === '' && $scope.filterStatistics.weight === '') {
             $scope.getSchoolStats();
-        } else if ($scope.filterStatistics.gender === '' && $scope.filterStatistics.age === '' && $scope.filterStatistics.event !== '') {
+        } else if ($scope.filterStatistics.gender === '' && $scope.filterStatistics.age === '' && $scope.filterStatistics.event !== '' && $scope.filterStatistics.weight === '') {
+            $scope.getSchoolStats();
+        } else if ($scope.filterStatistics.gender === '' && $scope.filterStatistics.age === '' && $scope.filterStatistics.event === '' && $scope.filterStatistics.weight !== '') {
             $scope.getSchoolStats();
         } else {
             $scope.getSchoolStats();
