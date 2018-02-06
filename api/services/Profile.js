@@ -6347,11 +6347,11 @@ var model = {
                                                                         // if (singleData.resultKnockout.status == "IsCompleted" && singleData.resultKnockout.isNoMatch == false) {
                                                                         if (singleData.resultKnockout.status == "IsCompleted") {
                                                                             if (singleData.resultKnockout.winner.opponentsSingle === n.player) {
-                                                                                stats.isAthleteWinner = true;
+                                                                                stats.isAthleteWinner = false;
                                                                                 stats.walkover = n.walkover;
                                                                                 stats.noShow = n.noShow;
                                                                             } else {
-                                                                                stats.isAthleteWinner = false;
+                                                                                stats.isAthleteWinner = true;
                                                                                 stats.walkover = n.walkover;
                                                                                 stats.noShow = n.noShow;
                                                                             }
