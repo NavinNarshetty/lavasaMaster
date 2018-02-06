@@ -90,9 +90,9 @@
                 <!-- VIDEO LINK END -->
 
                 <!-- WINNER -->
-                <div class="form-group">
+                <div class="form-group" ng-if="sportName==='Archery' && formData.excelType==='knockout'">
                   <label>Winner </label>
-                  <select name="sponsortype" class="form-control" ng-model="formData.result.winner.player" placeholder="Enter Winner" ng-disabled="true">
+                  <select name="sponsortype" class="form-control" ng-model="formData.result.winner.player" placeholder="Enter Winner" ng-change="changeOpponentSingles(formData.result.winner.player)">
                     <option value="{{player.athleteId._id}}" ng-repeat="player in formData.opponentsSingle">{{player.fullname}}</option>
                   </select>
                 </div>
