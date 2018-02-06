@@ -6332,7 +6332,6 @@ var model = {
                                                                 stats.score = singleData.resultKnockout.finalScore;
                                                                 console.log('+++++++++++++++++++++',singleData);
                                                                 console.log('+++++++++++++++++++++',singleData.resultKnockout);
-                                                                console.log('+++++++++++++++++++++',singleData.resultKnockout.players);
                                                                 async.each(singleData.resultKnockout.players, function (n, callback) {
                                                                     console.log('===================',n);
                                                                     if (n.player === singleData.opponentsSingle._id) {
@@ -6347,6 +6346,8 @@ var model = {
                                                                     } else {
                                                                         // if (singleData.resultKnockout.status == "IsCompleted" && singleData.resultKnockout.isNoMatch == false) {
                                                                         if (singleData.resultKnockout.status == "IsCompleted") {
+                                                                            console.log('Equals======================',singleData.resultKnockout.winner.opponentsSingle.equals(n.player));
+                                                                            console.log('Equal to====================',singleData.resultKnockout.winner.opponentsSingle === n.player);
                                                                             if (singleData.resultKnockout.winner.opponentsSingle.equals(n.player)) {
                                                                                 stats.isAthleteWinner = false;
                                                                                 // stats.walkover = n.walkover;
