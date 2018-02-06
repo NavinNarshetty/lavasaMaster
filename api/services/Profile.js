@@ -6344,8 +6344,7 @@ var model = {
                                                                         }
                                                                         callback(null, profile.match);
                                                                     } else {
-                                                                        // if (singleData.resultKnockout.status == "IsCompleted" && singleData.resultKnockout.isNoMatch == false) {
-                                                                        if (singleData.resultKnockout.status == "IsCompleted") {
+                                                                        if (singleData.resultKnockout.status == "IsCompleted" && singleData.resultKnockout.isNoMatch == false) {
                                                                             console.log('Equals======================',singleData.resultKnockout.winner.opponentsSingle.equals(n.player));
                                                                             console.log('Equal to====================',singleData.resultKnockout.winner.opponentsSingle === n.player);
                                                                             if (singleData.resultKnockout.winner.opponentsSingle.equals(n.player)) {
