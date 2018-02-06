@@ -6334,7 +6334,7 @@ var model = {
                                                                 console.log('+++++++++++++++++++++',singleData.resultKnockout.players);
                                                                 async.each(singleData.resultKnockout.players, function (n, callback) {
                                                                     console.log('===================',n);
-                                                                    if (n.player === singleData.opponentsSingle.athleteId._id.toString()) {
+                                                                    if (n.player === singleData.opponentsSingle._id) {
                                                                         // stats.score = n.finalPoints;
                                                                         // stats.rank = n.rank;
                                                                         if (singleData.resultKnockout.winner.opponentsSingle !== n.player) {
