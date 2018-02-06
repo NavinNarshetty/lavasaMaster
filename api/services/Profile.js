@@ -6329,7 +6329,11 @@ var model = {
                                                             },
                                                             function (found, callback) {
                                                                 stats.score = singleData.resultKnockout.finalScore;
+                                                                console.log('+++++++++++++++++++++',singleData);
+                                                                console.log('+++++++++++++++++++++',singleData.resultKnockout);
+                                                                console.log('+++++++++++++++++++++',singleData.resultKnockout.players);
                                                                 async.each(singleData.resultKnockout.players, function (n, callback) {
+                                                                    console.log('===================',n);
                                                                     if (n.player === singleData.opponentsSingle.athleteId._id.toString()) {
                                                                         // stats.score = n.finalPoints;
                                                                         // stats.rank = n.rank;
