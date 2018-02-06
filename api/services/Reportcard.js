@@ -189,7 +189,7 @@ var model = {
                             $ne: 0
                         },
                         'totalMatches': {
-                            $gte :50
+                            $gte :property.minNoShow
                         }
                     }).sort({
                         "noShowPercent": 1
@@ -214,7 +214,7 @@ var model = {
                 function (property, callback) {
                     Reportcard.findOne({
                         'totalMatches': {
-                            $gte :50
+                            $gte :property.minWonMatch
                         }
                     }).sort({
                         'winPercent': -1,
