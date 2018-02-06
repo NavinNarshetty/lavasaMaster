@@ -188,7 +188,7 @@ myApp.controller('DetailQualifyingCtrl', function ($scope, TemplateService, Navi
             if (key.athleteId.middleName == undefined || key.athleteId.middleName == '') {
               key.fullname = key.athleteId.firstName + ' ' + key.athleteId.surname;
             } else {
-              key.fullname = key.athleteId.firstName + ' ' + key.middleName + ' ' + key.athleteId.surname;
+              key.fullname = key.athleteId.firstName + ' ' + key.athleteId.middleName + ' ' + key.athleteId.surname;
             }
           })
           if ($scope.formData.excelType === 'knockout') {
