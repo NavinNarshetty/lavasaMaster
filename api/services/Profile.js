@@ -6284,7 +6284,7 @@ var model = {
                                                             if (school == data.schoolName) {
                                                                 profile.players.push(player);
                                                             }
-                                                            result = singleData.resultKnockout.players[0].finalPoints;
+                                                            result = singleData.resultKnockout.finalScore;
                                                             if (singleData.resultKnockout.status == "IsCompleted" && singleData.resultKnockout.isNoMatch == false) {
                                                                 stats.isAthleteWinner = true;
                                                                 stats.status = singleData.resultKnockout.status;
@@ -6328,10 +6328,11 @@ var model = {
                                                                 });
                                                             },
                                                             function (found, callback) {
+                                                                stats.score = singleData.resultKnockout.finalScore;
                                                                 async.each(singleData.resultKnockout.players, function (n, callback) {
                                                                     if (n.player === singleData.opponentsSingle.athleteId._id.toString()) {
-                                                                        stats.score = n.score;
-                                                                        stats.rank = n.rank;
+                                                                        // stats.score = n.finalPoints;
+                                                                        // stats.rank = n.rank;
                                                                         if (singleData.resultKnockout.winner.player !== n.player) {
                                                                             // stats.isAthleteWinner = true;
                                                                             stats.walkover = n.walkover;
