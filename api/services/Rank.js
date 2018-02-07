@@ -63,7 +63,7 @@ module.exports = mongoose.model('Rank', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
-    sortingOrder: {
+    sortingPriority: {
         "totalPoints": -1,
         "medal.gold.points": -1,
         "medal.silver.points": -1,
@@ -72,7 +72,7 @@ var model = {
     },
 
     getSchoolByRanks: function (callback) {
-        Rank.find().sort(Rank.sortingOrder).lean().exec(function (err, data) {
+        Rank.find().sort(Rank.sortingPriority).lean().exec(function (err, data) {
             var sportsToMerge = ['Tennis', 'Badminton', 'Table Tennis', 'Athletics', 'Swimming']
             var sportsFound = [];
             var arr = [];

@@ -17176,7 +17176,7 @@ var model = {
 
                     case "Carrom":
                         return {
-                            resultVar: "resultCombat",
+                            resultVar: "resultsCombat",
                             opponentsVar: "opponentsSingle"
                         };
                 }
