@@ -40,7 +40,7 @@
               <tr>
                 <th>
                   <div>
-                    <h4 class="m-clear ">lane no</h4>
+                    <h4 class="m-clear">lane no</h4>
                   </div>
                 </th>
                 <th ng-if="eventName!=='Athletics 4x100m Relay' && eventName !=='Athletics Medley Relay' && eventName !=='Athletics 4x50m Relay'">
@@ -119,9 +119,7 @@
                 <td>
 
                   <div class="text-capitalize ">
-                    <!-- <a class="fancybox.iframe" fancybox href="{{gallery.vlink | linkvideo:gallery.vtype}}">
-                          <img ng-src="{{gallery.vimage | serverimage2 }}" alt="video" class="img-responsive">
-                          </a> {{final.video}} -->
+
                   </div>
                 </td>
               </tr>
@@ -247,7 +245,7 @@
                           </th>
                           <th>
                             <div class="text-capitalize">
-                              <a class="fancybox.iframe" fancybox href="{{roundsList[1].match[0].video | linkvideo:roundsList[1].match[0].videoType}}">
+                              <a ng-if="semi.video" class="fancybox.iframe" fancybox href="{{semi.video | linkvideo:semi.videoType}}">
                                     <img src="img/sf-play.png " alt="video">
                               </a>
                             </div>
@@ -411,7 +409,7 @@
                           </th>
                           <th>
                             <div class="text-capitalize">
-                              <a class="fancybox.iframe" fancybox href="{{roundsList[2].match[0].video | linkvideo:roundsList[2].match[0].videoType}}">
+                              <a ng-if="semi.video" class="fancybox.iframe" fancybox href="{{semi.video | linkvideo:semi.videoType}}">
                                 <img src="img/sf-play.png " alt="video">
                                 </a>
                             </div>
