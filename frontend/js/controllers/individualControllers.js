@@ -208,7 +208,7 @@ myApp.controller('ConfirmFencingCtrl', function ($scope, TemplateService, Naviga
                 // $scope.config.event1Expression = "epee.data[0].sport as epee._id | formatEvent:'Epee' for epee in athelete.eventEpee | orderBy:'_id' track by epee._id";
                 // $scope.config.event2Expression = "sabre.data[0].sport as sabre._id | formatEvent:'Sabre' for sabre in athelete.eventSabre | orderBy:'_id' track by sabre._id";
                 // $scope.config.event3Expression = "foil.data[0].sport as foil._id | formatEvent:'Foil' for foil in athelete.eventFoil | orderBy:'_id' track by foil._id";
-                $scope.config.event3Expression = "event.data[0].sport as event._id for event in athelete.events"
+                $scope.config.event3Expression = "event.data[0].sport as event._id group by event.data[0].eventName  for event in athelete.events"
             } else {
                 // $scope.config.weightsReq = false;
                 $scope.config.event1Expression = "event1 as event1._id | formatEvent:event1.eventName for event1 in athelete.allEvents";
@@ -233,6 +233,9 @@ myApp.controller('ConfirmFencingCtrl', function ($scope, TemplateService, Naviga
     $scope.tp = function (event) {
         // console.log(event);
     };
+    $timeout(function () {
+        $('.selectpicker').selectpicker()
+    }, 200);
 });
 
 //Confirm-Individual
