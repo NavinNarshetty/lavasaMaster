@@ -59,6 +59,11 @@
                   <h4 class="m-clear">Start Scoring</h4>
                 </div>
               </th>
+              <th>
+                <div class="">
+                  <h4 class="m-clear">Video</h4>
+                </div>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -118,6 +123,13 @@
                   <a class="text-uppercase" ng-click="startScoring(data);">
                         <span>score</span>
                       </a>
+                </div>
+              </td>
+              <td>
+                <div class="">
+                  <a ng-if="data.video" class="fancybox.iframe" fancybox href="{{data.video | linkvideo:data.videoType}}">
+                    <img src="img/sf-play.png " alt=" ">
+                  </a>
                 </div>
               </td>
             </tr>
@@ -331,6 +343,11 @@
                             <h4 class="m-clear">Start Scoring</h4>
                           </div>
                         </th>
+                        <th>
+                          <div class="">
+                            <h4 class="m-clear">Video</h4>
+                          </div>
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -396,6 +413,13 @@
                             <a class="text-uppercase" ng-click="startScoring(content);">
                                   <span>score</span>
                                 </a>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="">
+                            <a ng-if="content.video" class="fancybox.iframe" fancybox href="{{content.video | linkvideo:content.videoType}}">
+                        <img src="img/sf-play.png " alt=" ">
+                      </a>
                           </div>
                         </td>
                       </tr>

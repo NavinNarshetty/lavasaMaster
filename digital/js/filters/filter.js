@@ -119,6 +119,19 @@ myApp.filter('englishNumeralDateOne', function () {
         }
     };
 });
+// VIDEO LINK FILTER
+myApp.filter('linkvideo', function () {
+    return function (input, type) {
+        var videourl;
+        if (type == 'youtube') {
+            videourl = "https://www.youtube.com/embed/" + input + "?autoplay=0&modestbranding=0&showinfo=0&rel=0&loop=1";
+        } else {
+            videourl = "https://player.vimeo.com/video/" + input + "?autoplay=1&loop=1&autopause=0";
+        }
+        return videourl;
+    };
+})
+// VIDEO LINK FILTER END
 // FILTER FOR SPORT ICON AND HEADER IMG
 myApp.filter('sporticon', function(){
   return function(input, type){

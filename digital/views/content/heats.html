@@ -69,11 +69,11 @@
                     <h4 class="m-clear">time</h4>
                   </div>
                 </th>
-                <th hidden>
+                <th >
                   <div>
-                    <a href=" ">
-                          <img src="img/sf-play.png " alt=" ">
-                        </a>
+                    <a ng-if="roundsList[0].match[0].video" class="fancybox.iframe" fancybox href="{{roundsList[0].match[0].video | linkvideo:roundsList[0].match[0].videoType}}">
+                        <img src="img/sf-play.png " alt="video">
+                      </a>
                   </div>
                 </th>
               </tr>
@@ -111,8 +111,8 @@
                   </div>
 
                 </td>
-                <td hidden>
-                  <div class="text-capitalize ">{{final.video}}</div>
+                <td >
+                  <div class="text-capitalize "></div>
                 </td>
               </tr>
 
@@ -140,6 +140,9 @@
                     <span>{{final.time}}</span>
                     <span ng-if="!final.time">-</span>
                   </div>
+                </td>
+                <td>
+                  <div class=""></div>
                 </td>
               </tr>
             </tbody>
@@ -184,7 +187,7 @@
                 <uib-accordion-heading class="clearfix">
                   <!--<a href="" class="text-right"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a>-->
                   <a href="">
-                    <h4 class="d-fjalla-one text-uppercase sport-color-primary m-clear">Heat {{$index+1}}</h4>
+                    <h4 class="d-fjalla-one text-uppercase sport-color-primary m-clear">Heat {{$index+1}} | {{semi.matchId}}</h4>
                   </a>
 
                   <!--<a href=""> <i class="fa " ng-class="{'fa-chevron-up': s.open, 'fa-chevron-down': !s.open}"></i></a>-->
@@ -225,6 +228,13 @@
                               <h4 class="m-clear">time</h4>
                             </div>
                           </th>
+                          <th>
+                            <div class="text-capitalize">
+                              <a ng-if="semi.video" class="fancybox.iframe" fancybox href="{{semi.video | linkvideo:semi.videoType}}">
+                                    <img src="img/sf-play.png " alt="video">
+                              </a>
+                            </div>
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
@@ -258,6 +268,9 @@
                               <span ng-if="!semifinal.time">-</span>
                             </div>
                           </td>
+                          <td>
+                            <div class=""></div>
+                          </td>
                         </tr>
                         <tr ng-repeat="semifinal in semi.opponentsTeam track by $index">
                           <td>
@@ -282,6 +295,9 @@
                               <span>{{semifinal.time}}</span>
                               <span ng-if="!semifinal.time">-</span>
                             </div>
+                          </td>
+                          <td>
+                            <div class=""></div>
                           </td>
                         </tr>
                       </tbody>
@@ -373,6 +389,13 @@
                               <h4 class="m-clear">time</h4>
                             </div>
                           </th>
+                          <th>
+                            <div class="text-capitalize">
+                              <a ng-if="semi.video" class="fancybox.iframe" fancybox href="{{semi.video | linkvideo:semi.videoType}}">
+                                <img src="img/sf-play.png " alt="video">
+                                </a>
+                            </div>
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
@@ -406,6 +429,9 @@
                               <span ng-if="!semifinal.time">-</span>
                             </div>
                           </td>
+                          <td>
+                            <div class=""></div>
+                          </td>
                         </tr>
                         <tr ng-repeat="semifinal in semi.opponentsTeam track by $index">
                           <td>
@@ -430,6 +456,9 @@
                               <span> {{semifinal.time}}</span>
                               <span ng-if="!semifinal.time">-</span>
                             </div>
+                          </td>
+                          <td>
+                            <div class=""></div>
                           </td>
                         </tr>
                       </tbody>
