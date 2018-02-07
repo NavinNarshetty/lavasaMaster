@@ -115,7 +115,7 @@
               </p>
               <div ng-if="card.status==='IsCompleted'">
                 <div class="knockout-videoholder" ng-if="card.video">
-                  <a href="">
+                  <a ng-if="card.video" class="fancybox.iframe" fancybox href="{{card.video | linkvideo:card.videoType}}">
                  <img src="img/sf-play.png" alt="play" class="img-responsive">
                  </a>
                 </div>
@@ -171,7 +171,7 @@
                   </p>
                   <div ng-if="card.status==='IsCompleted'">
                     <div class="knockout-videoholder" ng-if="card.video">
-                      <a href="">
+                      <a ng-if="card.video" class="fancybox.iframe" fancybox href="{{card.video | linkvideo:card.videoType}}">
                     <img src="img/sf-play.png" alt="play" class="img-responsive">
                     </a>
                     </div>
@@ -229,7 +229,7 @@
                   </p>
                   <div ng-if="card.status==='IsCompleted'">
                     <div class="knockout-videoholder" ng-if="card.video">
-                      <a href="">
+                      <a ng-if="card.video" class="fancybox.iframe" fancybox href="{{card.video | linkvideo:card.videoType}}">
                     <img src="img/sf-play.png" alt="play" class="img-responsive">
                     </a>
                     </div>
