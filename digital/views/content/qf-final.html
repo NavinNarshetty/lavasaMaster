@@ -51,7 +51,7 @@
                     <h4 class="m-clear">Position</h4>
                   </div>
                 </th>
-                <th hidden>
+                <th>
                   <div>
                     <h4 class="m-clear">Video</h4>
                   </div>
@@ -80,11 +80,11 @@
                     {{win.position}}
                   </div>
                 </td>
-                <td hidden>
+                <td >
                   <div>
-                    <a href="">
-                    <img src="img/sf-play.png" alt="">
-                   </a>
+                    <a ng-if="final.video" class="fancybox.iframe" fancybox href="{{final.video | linkvideo:final.videoType}}">
+                      <img src="img/sf-play.png" alt="">
+                    </a>
                   </div>
                 </td>
               </tr>
@@ -190,9 +190,9 @@
                       </h4>
                     </div>
                   </th>
-                  <th hidden>
+                  <th >
                     <div>
-                      <h4 class="m-clear">Score</h4>
+                      <h4 class="m-clear">Video</h4>
                     </div>
                   </th>
                 </tr>
@@ -274,9 +274,11 @@
                       -
                     </div>
                   </td>
-                  <td hidden>
+                  <td >
                     <div>
-                      <a class="text-uppercase" ng-click="startScoring(final);">Score</a>
+                      <a ng-if="final.video" class="fancybox.iframe" fancybox href="{{final.video | linkvideo:final.videoType}}">
+                        <img src="img/sf-play.png" alt="">
+                      </a>
                     </div>
                   </td>
                 </tr>

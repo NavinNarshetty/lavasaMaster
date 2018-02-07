@@ -64,7 +64,7 @@
                <h3 class="sport-success d-fjalla-one text-center text-uppercase">{{roundsList[0].name}}
               </h3>
             <div class="knockout-cardholder" ng-repeat="card in roundsList[0].match track by $index">
-              
+
 
 
           <div class="knockout-card" ng-if="card.opponentsSingle.length>0" ng-repeat="player in card.opponentsSingle track by $index"
@@ -114,9 +114,9 @@
               </p>
               <div ng-if="card.status==='IsCompleted'">
                 <div class="knockout-videoholder" ng-if="card.video">
-                  <a href="">
+                  <a class="fancybox.iframe" fancybox href="{{card.video | linkvideo:card.videoType}}">
                    <img src="img/sf-play.png" alt="play" class="img-responsive">
-                   </a>
+                 </a>
                 </div>
                 <p class="m-clear pointer" ng-if="!card.resultsCombat && card.reason!=='Bye' && !card.isNoMatch" ng-click="matchCenter(card) ">
                   <span class="custom-knockout-color" ng-click="">Match Center</span>
@@ -187,9 +187,9 @@
                 </p>
                 <div ng-if="card.status==='IsCompleted'">
                   <div class="knockout-videoholder" ng-if="card.video">
-                    <a href="">
+                    <a class="fancybox.iframe" fancybox href="{{card.video | linkvideo:card.videoType}}">
                      <img src="img/sf-play.png" alt="play" class="img-responsive">
-                     </a>
+                   </a>
                   </div>
                   <p class="m-clear pointer" ng-if="!card.resultsCombat && card.reason!=='Bye' && !card.isNoMatch  && roundsList[0].match[0].sport.sportslist.name!=='Kata'"
                     ng-click="matchCenter(card) ">
@@ -264,9 +264,9 @@
                 </p>
                 <div ng-if="card.status==='IsCompleted'">
                   <div class="knockout-videoholder" ng-if="card.video">
-                    <a href="">
+                    <a class="fancybox.iframe" fancybox href="{{card.video | linkvideo:card.videoType}}">
                       <img src="img/sf-play.png" alt="play" class="img-responsive">
-                      </a>
+                   </a>
                   </div>
                   <p class="m-clear pointer" ng-if="!card.resultsCombat && card.reason!=='Bye' && !card.isNoMatch  && roundsList[0].match[0].sport.sportslist.name!=='Kata'"
                     ng-click="matchCenter(card) ">

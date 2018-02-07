@@ -110,7 +110,7 @@
             <uib-accordion-heading class="clearfix">
               <!--<a href="" class="text-right"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a>-->
               <a href="">
-                <h4 class="d-fjalla-one text-uppercase sport-color-primary m-clear">Team Trail {{$index+1}}</h4>
+                <h4 class="d-fjalla-one text-uppercase sport-color-primary m-clear">Team Trail {{$index+1}} | {{s.matchId}}</h4>
               </a>
 
               <!--<a href=""> <i class="fa " ng-class="{'fa-chevron-up': s.open, 'fa-chevron-down': !s.open}"></i></a>-->
@@ -149,6 +149,13 @@
                       <th>
                         <div class="">
                           <h4 class="m-clear">time</h4>
+                        </div>
+                      </th>
+                      <th>
+                        <div>
+                          <a ng-if="s.video" class="fancybox.iframe" fancybox href="{{s.video | linkvideo:s.videoType}}">
+                                <img src="img/sf-play.png " alt="video">
+                              </a>
                         </div>
                       </th>
                     </tr>
@@ -206,6 +213,9 @@
                           <span>{{qualify.time}}</span>
                           <span ng-if="!qualify.time">-</span>
                         </div>
+                      </td>
+                      <td>
+                        <div class=""></div>
                       </td>
                     </tr>
                   </tbody>

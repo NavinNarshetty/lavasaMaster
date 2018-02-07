@@ -101,11 +101,11 @@
                                 </span>
                             </p>
                             <div ng-if="card.status==='IsCompleted'">
-                                <div class="knockout-videoholder" ng-if="card.video">
-                                    <a href="">
-                                        <img src="img/sf-play.png" alt="play" class="img-responsive">
-                                    </a>
-                                </div>
+                              <div class="knockout-videoholder" ng-if="card.video">
+                                <a ng-if="card.video" class="fancybox.iframe" fancybox href="{{card.video | linkvideo:card.videoType}}">
+                               <img src="img/sf-play.png" alt="play" class="img-responsive">
+                               </a>
+                              </div>
                                 <p class="m-clear pointer" ng-if="card.resultsRacquet && card.reason!=='Bye' && !card.isNoMatch" ng-click="matchCenter(card)">
                                     <span class="custom-knockout-color">Match Center</span>
                                 </p>
@@ -181,11 +181,11 @@
                                         </span>
                                     </p>
                                     <div ng-if="card.status==='IsCompleted'">
-                                        <div class="knockout-videoholder" ng-if="card.video">
-                                            <a href="">
-                                                        <img src="img/sf-play.png" alt="play" class="img-responsive">
-                                                    </a>
-                                        </div>
+                                      <div class="knockout-videoholder" ng-if="card.video">
+                                        <a ng-if="card.video" class="fancybox.iframe" fancybox href="{{card.video | linkvideo:card.videoType}}">
+                                       <img src="img/sf-play.png" alt="play" class="img-responsive">
+                                       </a>
+                                      </div>
                                         <p class="m-clear pointer" ng-if="card.resultsRacquet && card.reason!=='Bye' && !card.isNoMatch" ng-click="matchCenter(card)">
                                             <span class="custom-knockout-color">Match Center</span>
                                         </p>
@@ -244,11 +244,11 @@
                                         </span>
                                     </p>
                                     <div ng-if="card.status==='IsCompleted'">
-                                        <div class="knockout-videoholder" ng-if="card.video">
-                                            <a href="">
-                                                        <img src="img/sf-play.png" alt="play" class="img-responsive">
-                                                    </a>
-                                        </div>
+                                      <div class="knockout-videoholder" ng-if="card.video">
+                                        <a ng-if="card.video" class="fancybox.iframe" fancybox href="{{card.video | linkvideo:card.videoType}}">
+                                       <img src="img/sf-play.png" alt="play" class="img-responsive">
+                                       </a>
+                                      </div>
                                         <p class="m-clear pointer" ng-if="card.resultsRacquet && card.reason!=='Bye' && !card.isNoMatch" ng-click="matchCenter(card)">
                                             <span class="custom-knockout-color">Match Center</span>
                                         </p>
