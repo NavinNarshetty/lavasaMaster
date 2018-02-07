@@ -69,7 +69,7 @@
                   <div class="form-group">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                       <div class="fencing-table">
-                        <div class="selectedTeamTable table-responsive scrollbar style-1">
+                        <div class="selectedTeamTable table-responsive scrollbar avoidscroll style-1">
 
                           <table class="table table-bordered" ng-init="st=selectService.sportName;">
                             <thead>
@@ -104,27 +104,40 @@
                                 <td ng-if="!athelete.middleName">{{athelete.sfaId+' - '+athelete.firstName+' '+athelete.surname}}</td>
                                 <td>{{athelete.gender | firstcapitalize}}</td>
                                 <td>
-                                  <div>
+                                  <!-- <div>
                                     <select class="form-control" ng-init="selectService.isValidSelection(athelete)" ng-model="athelete.sport[0]" ng-required=""
                                       ng-options="{{config.event1Expression}}" ng-change="selectService.isValidSelection(athelete)">
                                   </select>
-                                  </div>
+                                  </div> -->
                                 </td>
                                 <td>
-                                  <div>
+                                  <!-- <div>
                                     <select class="form-control" ng-init="selectService.isValidSelection(athelete)" ng-model="athelete.sport[1]" ng-required=""
                                       ng-options="{{config.event2Expression}}" ng-change="selectService.isValidSelection(athelete)"
                                       ng-disabled="athelete.disableEvent2">
                                   </select>
-                                  </div>
+                                  </div> -->
 
 
                                 </td>
                                 <!--hidden-->
                                 <td ng-if="st=='Fencing'">
-                                  <select class="form-control" ng-init="selectService.isValidSelection(athelete)" ng-model="athelete.sport[2]" ng-required=""
-                                    ng-options="{{config.event3Expression}}" ng-change="selectService.isValidSelection(athelete)"
-                                    </select>
+                                  <div class="override-fencingselect">
+                                    <!-- <pre>{{foil.data[0].sport | json}}</pre> -->
+                                    <pre>{{athelete.sport}}</pre>
+                                    <select class="selectpicker form-control" multiple ng-init="selectService.isValidSelection(athelete)" ng-model="athelete.sport"
+                                      ng-required="" ng-options="{{config.event3Expression}}" title="Select Event" ng-change="selectService.isValidSelection(athelete)"
+                                      data-selected-text-format="count > 1" data-size="3">
+                                      </select>
+
+                                  </div>
+                                  <!-- ng-options="{{config.event3Expression}}" -->
+                                  <!-- <select class="selectpicker" multiple title="Choose one of the following...">
+                                        <option>Mustard</option>
+                                        <option>Ketchup</option>
+                                        <option>Relish</option>
+                                  </select> -->
+
                                 </td>
                             </tbody>
                           </table>

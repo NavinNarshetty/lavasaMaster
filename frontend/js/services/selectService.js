@@ -254,6 +254,57 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
         }
 
         // for fencing
+        // function filterFencing(events) {
+        //     var epee = _.cloneDeep(events);
+        //     var sabre = _.cloneDeep(events);
+        //     var foil = _.cloneDeep(events);
+
+        //     //epee
+        //     _.each(epee, function (n, i) {
+        //         n.data = _.filter(n.data, ['eventName', 'Epee']);
+        //     });
+        //     athelete.eventEpee = getAgeGroups(epee);
+        //     athelete.eventEpee.unshift({
+        //         '_id': 'None',
+        //         'data': [{
+        //             'sport': null
+        //         }]
+        //     });
+        //     console.log("athelete.eventEpee",athelete.eventEpee);
+
+        //     // sabre
+        //     _.each(sabre, function (n, i) {
+        //         n.data = _.filter(n.data, ['eventName', 'Sabre']);
+        //     });
+        //     athelete.eventSabre = getAgeGroups(sabre);
+        //     athelete.eventSabre.unshift({
+        //         '_id': 'None',
+        //         'data': [{
+        //             'sport': null
+        //         }]
+        //     });
+        //     console.log("athelete.eventSabre",athelete.eventSabre);
+            
+
+        //     // foil
+        //     _.each(foil, function (n, i) {
+        //         n.data = _.filter(n.data, ['eventName', 'Foil']);
+        //     });
+        //     athelete.eventFoil = getAgeGroups(foil);
+        //     athelete.eventFoil.unshift({
+        //         '_id': 'None',
+        //         'data': [{
+        //             'sport': null
+        //         }]
+        //     });
+        //     console.log("athelete.eventFoil",athelete.eventFoil);
+            
+
+        //     // console.log(athelete.eventFoil, "foil");
+        //     athelete.sport = [];
+        //     return athelete;
+        // }
+
         function filterFencing(events) {
             var epee = _.cloneDeep(events);
             var sabre = _.cloneDeep(events);
@@ -264,36 +315,55 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                 n.data = _.filter(n.data, ['eventName', 'Epee']);
             });
             athelete.eventEpee = getAgeGroups(epee);
+            athelete.eventEpee = _.map(athelete.eventEpee,function(n){
+                n._id = n._id+"-Epee"
+                return n;
+            });
             athelete.eventEpee.unshift({
                 '_id': 'None',
                 'data': [{
                     'sport': null
                 }]
             });
+            console.log("athelete.eventEpee",athelete.eventEpee);
 
             // sabre
             _.each(sabre, function (n, i) {
                 n.data = _.filter(n.data, ['eventName', 'Sabre']);
             });
             athelete.eventSabre = getAgeGroups(sabre);
-            athelete.eventSabre.unshift({
-                '_id': 'None',
-                'data': [{
-                    'sport': null
-                }]
+            athelete.eventSabre = _.map(athelete.eventSabre,function(n){
+                n._id = n._id+"-Sabre"
+                return n;
             });
+            // athelete.eventSabre.unshift({
+            //     '_id': 'None',
+            //     'data': [{
+            //         'sport': null
+            //     }]
+            // });
+            console.log("athelete.eventSabre",athelete.eventSabre);
+            
 
             // foil
             _.each(foil, function (n, i) {
                 n.data = _.filter(n.data, ['eventName', 'Foil']);
             });
             athelete.eventFoil = getAgeGroups(foil);
-            athelete.eventFoil.unshift({
-                '_id': 'None',
-                'data': [{
-                    'sport': null
-                }]
+            athelete.eventFoil = _.map(athelete.eventFoil,function(n){
+                n._id = n._id+"-Foil"
+                return n;
             });
+            // athelete.eventFoil.unshift({
+            //     '_id': 'None',
+            //     'data': [{
+            //         'sport': null
+            //     }]
+            // });
+            console.log("athelete.eventFoil",athelete.eventFoil);
+            athelete.events = _.concat(athelete.eventEpee, athelete.eventSabre, athelete.eventFoil);
+            console.log("athelete.events",athelete.events);
+            
 
             // console.log(athelete.eventFoil, "foil");
             athelete.sport = [];
