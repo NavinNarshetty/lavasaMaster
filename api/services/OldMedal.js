@@ -35,6 +35,7 @@ var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
     saveMedalsPlayer: function (data, callback) {
+        var medal = {};
         async.waterfall([
             function (callback) {
                 OldMedal.find({
@@ -46,70 +47,88 @@ var model = {
                     } else if (_.isEmpty(medalData)) {
                         callback(null, []);
                     } else {
-                        callback(null, medalData);
+                        var mainData = _.groupBy(medalData, "medal");
+
+                        _.each(mainData, function (mainData, key) {
+                            mainData[key] = _.groupBy(mainData, 'sport');
+                        });
+                        callback(null, mainData);
+                        console.log("medal", mainData);
                     }
                 });
             },
-            function (medalData, callback) {
-                async.concatSeries(medalData, function (n, callback) {
-                    async.waterfall([
-                        function (callback) {
-                            Sport.findOne({
-                                oldId: n.sport
-                            }).lean().exec(function (err, sportData) {
-                                if (err) {
-                                    callback(err, null);
-                                } else if (_.isEmpty(sportData)) {
-                                    callback(null, []);
-                                } else {
-                                    callback(null, sportData);
-                                }
-                            });
-                        },
-                        function (sportData, callback) {
-                            Athelete.findOne({
-                                oldId: n.player
-                            }).lean().exec(function (err, athleteData) {
-                                if (err) {
-                                    callback(err, null);
-                                } else if (_.isEmpty(athleteData)) {
-                                    callback(null, []);
-                                } else {
-                                    callback(null, athleteData);
-                                }
-                            });
-                        },
-                        function (sportData, callback) {
-                            TeamSport.findOne({
-                                oldId: n.team
-                            }).lean().exec(function (err, athleteData) {
-                                if (err) {
-                                    callback(err, null);
-                                } else if (_.isEmpty(athleteData)) {
-                                    callback(null, []);
-                                } else {
-                                    callback(null, athleteData);
-                                }
-                            });
-                        },
+            // function (mainData, callback) {
+            //     async.concatSeries(mainData, function (singleData, callback) {
+            //         // var final = {};
+            //         // final.sport = [];
+            //         // final.athlete = [];
+            //         // final.school = [];
+            //         // final.medal = [];
+            //         async.eachSeries(singleData, function (n, callback) {
+            //             var final = {};
+            //             final.athlete = [];
+            //             final.school = [];
+            //             final.medal = [];
+            //             final.medal.push(n.medal);
+            //             async.waterfall([
+            //                 function (callback) {
+            //                     Sport.findOne({
+            //                         oldId: n.sport
+            //                     }).lean().exec(function (err, sportData) {
+            //                         if (err) {
+            //                             callback(err, null);
+            //                         } else if (_.isEmpty(sportData)) {
+            //                             callback(null, []);
+            //                         } else {
 
-
-                    ], function (err, complete) {
-                        if (err) {
-                            callback(err, null);
-                        } else {
-                            callback(null, complete);
-                        }
-                    })
-
-                }, function (err, final) {
-                    if (err) {
-                        callback(err, null);
-                    } else {
-                        callback(null, final);
-                    }
-                })
-            }
+            //                             final.athlete = [];
+            //                             final.school = [];
+            //                             final.medal = [];
+            //                             final.sport = sportData._id;
+            //                             callback(null, sportData);
+            //                         }
+            //                     });
+            //                 },
+            //                 function (sportData, callback) {
+            //                     Athelete.find({
+            //                         oldId: n.player
+            //                     }).lean().deepPopulate("school").exec(function (err, athleteData) {
+            //                         if (err) {
+            //                             callback(err, null);
+            //                         } else if (_.isEmpty(athleteData)) {
+            //                             callback(null, []);
+            //                         } else {
+            //                             // console.log("athleteData", athleteData);
+            //                             _.each(athleteData, function (athlete) {
+            //                                 final.athlete.push(athlete._id);
+            //                                 final.school.push(athlete.school._id);
+            //                             });
+            //                             callback();
+            //                         }
+            //                     });
+            //                 }
+            //             ], function (err, complete) {
+            //                 if (err) {
+            //                     callback(err, null);
+            //                 } else {
+            //                     callback(null, complete);
+            //                 }
+            //             });
+            //         }, function (err) {
+            //             if (err) {
+            //                 callback(err, null);
+            //             } else {
+            //                 callback(null, final);
+            //             }
+            //         });
+            //     }, function (err, final) {
+            //         if (err) {
+            //             callback(err, null);
+            //         } else {
+            //             callback(null, final);
+            //         }
+            //     });
+            // }
         ], function (err, complete) {
             if (err) {
                 callback(err, null);
@@ -117,7 +136,7 @@ var model = {
                 callback(null, complete);
             }
         })
-    }
+    },
 
 };
 module.exports = _.assign(module.exports, exports, model);

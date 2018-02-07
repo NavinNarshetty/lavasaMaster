@@ -363,12 +363,14 @@ var model = {
                         if (!_.isEmpty(found.opponentsSingle)) {
                             finalData.players = [];
                             finalData.opponentsSingle = [];
+                            finalData.teams = [];
                             _.each(found.opponentsSingle, function (n) {
                                 finalData.players.push(n.athleteId);
                                 finalData.opponentsSingle.push(n._id);
                             });
                         } else {
                             finalData.teams = [];
+                            finalData.opponentsSingle = [];
                             _.each(found.opponentsTeam, function (n) {
                                 finalData.teams.push(n);
                             });
@@ -7462,7 +7464,7 @@ var model = {
                                                     if (_.isEmpty(matchData)) {
                                                         callback(null, []);
                                                     } else {
-                                                        console.log("matchData", matchData);
+                                                        console.log("matchData***************", matchData);
                                                         var final = {};
                                                         var result = ResultInitialize.getResultVar(matchData.sportsName, matchData.sportType);
                                                         if (!matchData[result.resultVar] == '') {
@@ -7543,30 +7545,59 @@ var model = {
                                                 main.isDraw = false;
                                             }
                                             main.status = "IsCompleted";
-                                            if (n['SCORE 1']) {
-                                                if (result.result.resultVar == "resultBasketball") {
-                                                    resultData.teams[0].teamResults.finalGoalPoints = n['SCORE 1'];
-                                                    resultData.teams[0].teamResults.quarterPoints[0].basket = 0;
-                                                    resultData.teams[0].teamResults.quarterPoints[1].basket = 0;
-                                                    resultData.teams[0].teamResults.quarterPoints[2].basket = 0;
-                                                    resultData.teams[0].teamResults.quarterPoints[3].basket = 0;
-                                                } else if (result.result.resultVar == "resultsCombat") {
-                                                    resultData.teams[0].teamResults.sets[0] = n['SCORE 1'];
-                                                } else {
-                                                    resultData.teams[0].teamResults.finalPoints = n['SCORE 1'];
+                                            if (resultData.teams) {
+                                                if (n['SCORE 1']) {
+                                                    if (result.result.resultVar == "resultBasketball") {
+                                                        resultData.teams[0].teamResults.finalGoalPoints = n['SCORE 1'];
+                                                        resultData.teams[0].teamResults.quarterPoints[0].basket = n['TEAM 1 BASKET 1'];
+                                                        resultData.teams[0].teamResults.quarterPoints[1].basket = n['TEAM 1 BASKET 2'];
+                                                        resultData.teams[0].teamResults.quarterPoints[2].basket = n['TEAM 1 BASKET 3'];
+                                                        resultData.teams[0].teamResults.quarterPoints[3].basket = n['TEAM 1 BASKET 4'];
+                                                        resultData.teams[0].teamResults.quarterPoints[4].basket = n['TEAM 1 BASKET 5'];
+                                                        resultData.teams[0].teamResults.quarterPoints[5].basket = n['TEAM 1 BASKET 6'];
+                                                        resultData.teams[0].teamResults.quarterPoints[6].basket = n['TEAM 1 BASKET 7'];
+                                                    } else if (result.result.resultVar == "resultsCombat") {
+                                                        resultData.teams[0].teamResults.sets[0] = n['TEAM 1 SET 1'];
+                                                        resultData.teams[0].teamResults.sets[1] = n['TEAM 1 SET 2'];
+                                                        resultData.teams[0].teamResults.sets[2] = n['TEAM 1 SET 3'];
+                                                        resultData.teams[0].teamResults.sets[3] = n['TEAM 1 SET 4'];
+                                                        resultData.teams[0].teamResults.sets[4] = n['TEAM 1 SET 5'];
+                                                        resultData.teams[0].teamResults.sets[5] = n['TEAM 1 SET 6'];
+                                                        resultData.teams[0].teamResults.sets[0] = n['TEAM 1 SET 7'];
+                                                        resultData.teams[0].teamResults.finalPoints = n['SCORE 1'];
+                                                    } else {
+                                                        resultData.teams[0].teamResults.finalPoints = n['SCORE 1'];
+                                                    }
                                                 }
-                                            }
-                                            if (!_.isEmpty(n['SCORE 2'])) {
-                                                if (result.result.resultVar == "resultBasketball") {
-                                                    resultData.teams[1].teamResults.finalGoalPoints = n['SCORE 2'];
-                                                    resultData.teams[1].teamResults.quarterPoints[0].basket = 0;
-                                                    resultData.teams[1].teamResults.quarterPoints[1].basket = 0;
-                                                    resultData.teams[1].teamResults.quarterPoints[2].basket = 0;
-                                                    resultData.teams[1].teamResults.quarterPoints[3].basket = 0;
-                                                } else if (result.result.resultVar == "resultsCombat") {
-                                                    resultData.teams[1].teamResults.sets[0].points = n['SCORE 2'];
-                                                } else {
-                                                    resultData.teams[1].teamResults.finalPoints = n['SCORE 2'];
+                                                if (!_.isEmpty(n['SCORE 2'])) {
+                                                    if (result.result.resultVar == "resultBasketball") {
+                                                        resultData.teams[1].teamResults.finalGoalPoints = n['SCORE 2'];
+                                                        resultData.teams[1].teamResults.quarterPoints[0].basket = n['TEAM 2 BASKET 1'];
+                                                        resultData.teams[1].teamResults.quarterPoints[1].basket = n['TEAM 2 BASKET 2'];
+                                                        resultData.teams[1].teamResults.quarterPoints[2].basket = n['TEAM 2 BASKET 3'];
+                                                        resultData.teams[1].teamResults.quarterPoints[3].basket = n['TEAM 2 BASKET 4'];
+                                                        resultData.teams[1].teamResults.quarterPoints[4].basket = n['TEAM 2 BASKET 5'];
+                                                        resultData.teams[1].teamResults.quarterPoints[5].basket = n['TEAM 2 BASKET 6'];
+                                                        resultData.teams[1].teamResults.quarterPoints[6].basket = n['TEAM 2 BASKET 7'];
+                                                    } else if (result.result.resultVar == "resultsCombat") {
+                                                        resultData.teams[0].teamResults.sets[0] = n['TEAM 2 SET 1'];
+                                                        resultData.teams[0].teamResults.sets[1] = n['TEAM 2 SET 2'];
+                                                        resultData.teams[0].teamResults.sets[2] = n['TEAM 2 SET 3'];
+                                                        resultData.teams[0].teamResults.sets[3] = n['TEAM 2 SET 4'];
+                                                        resultData.teams[0].teamResults.sets[4] = n['TEAM 2 SET 5'];
+                                                        resultData.teams[0].teamResults.sets[5] = n['TEAM 2 SET 6'];
+                                                        resultData.teams[0].teamResults.sets[0] = n['TEAM 2 SET 7'];
+                                                        resultData.teams[0].teamResults.finalPoints = n['SCORE 2'];
+                                                    } else {
+                                                        resultData.teams[1].teamResults.finalPoints = n['SCORE 2'];
+                                                    }
+                                                }
+                                            } else {
+                                                if (n['SCORE 1']) {
+                                                    resultData.players[0].finalPoints = n['SCORE 1'];
+                                                }
+                                                if (n['SCORE 2']) {
+                                                    resultData.players[0].finalPoints = n['SCORE 2'];
                                                 }
                                             }
                                             if (resultData.teams) {
@@ -7694,53 +7725,198 @@ var model = {
                     });
                 },
                 function (match, callback) {
-                    async.concatSeries(match, function (mainData, callback) {
-                            var obj = {};
-                            obj["MATCH ID"] = mainData.matchId;
-                            obj["ROUND NAME"] = mainData.round;
-                            obj.SPORT = mainData.sport.sportslist.sportsListSubCategory.name;
-                            if (mainData.sport.gender == "male") {
-                                obj.GENDER = "Male";
-                            } else if (mainData.sport.gender == "female") {
-                                obj.GENDER = "Female";
-                            } else {
-                                obj.GENDER = "Male & Female"
-                            }
-                            obj["AGE GROUP"] = mainData.sport.ageGroup.name;
-                            obj.EVENT = mainData.sport.sportslist.name;
-                            if (mainData.sport.weight) {
-                                obj["WEIGHT CATEGORIES"] = mainData.sport.weight.name;
-                            } else {
-                                obj["WEIGHT CATEGORIES"] = "";
-                            }
-                            if (mainData.opponentsTeam.length > 0) {
-                                obj["TEAM ID 1"] = mainData.opponentsTeam[0].teamId;
-                                obj["SCHOOL 1"] = mainData.opponentsTeam[0].schoolName;
-                            } else {
-                                obj["TEAM ID 1"] = "";
-                                obj["SCHOOL 1"] = "";
-                            }
-                            obj["TEAM 1 Attendence"] = "";
-                            obj["SCORE 1"] = "";
-                            if (mainData.opponentsTeam.length > 1) {
-                                obj["TEAM ID 2"] = mainData.opponentsTeam[1].teamId;
-                                obj["SCHOOL 2"] = mainData.opponentsTeam[1].schoolName;
-                            } else {
-                                obj["TEAM ID 2"] = "";
-                                obj["SCHOOL 2"] = "";
-                            }
-                            obj["TEAM 2 Attendence"] = "";
-                            obj["SCORE 2"] = "";
-                            obj["NO MATCH"] = "";
-                            obj["DRAW"] = "";
-                            obj["WINNER ID"] = "";
-                            callback(null, obj);
+                    console.log("match", match);
+                    if (match[0].opponentsTeam.length > 0) {
+                        async.concatSeries(match, function (mainData, callback) {
+                                var obj = {};
+                                obj["MATCH ID"] = mainData.matchId;
+                                obj["ROUND NAME"] = mainData.round;
+                                obj.SPORT = mainData.sport.sportslist.sportsListSubCategory.name;
+                                if (mainData.sport.gender == "male") {
+                                    obj.GENDER = "Male";
+                                } else if (mainData.sport.gender == "female") {
+                                    obj.GENDER = "Female";
+                                } else {
+                                    obj.GENDER = "Male & Female"
+                                }
+                                obj["AGE GROUP"] = mainData.sport.ageGroup.name;
+                                obj.EVENT = mainData.sport.sportslist.name;
+                                if (mainData.sport.weight) {
+                                    obj["WEIGHT CATEGORIES"] = mainData.sport.weight.name;
+                                } else {
+                                    obj["WEIGHT CATEGORIES"] = "";
+                                }
+                                if (mainData.opponentsTeam.length > 0) {
+                                    obj["TEAM ID 1"] = mainData.opponentsTeam[0].teamId;
+                                    obj["SCHOOL 1"] = mainData.opponentsTeam[0].schoolName;
+                                } else {
+                                    obj["TEAM ID 1"] = "";
+                                    obj["SCHOOL 1"] = "";
+                                }
+                                obj["TEAM 1 Attendence"] = "";
+                                var sportName = mainData.sport.sportslist.name.toLowerCase();
+                                if (sportName == "basketball") {
+                                    obj["TEAM 1 BASKET 1"] = "";
+                                    obj["TEAM 1 BASKET 2"] = "";
+                                    obj["TEAM 1 BASKET 3"] = "";
+                                    obj["TEAM 1 BASKET 4"] = "";
+                                    obj["TEAM 1 BASKET 5"] = "";
+                                    obj["TEAM 1 BASKET 6"] = "";
+                                    obj["TEAM 1 BASKET 7"] = "";
+                                    obj["SCORE 1"] = "";
+                                } else if (sportName.includes() == "badminton" || sportName.includes() == "tennis" || sportName.includes() == "squash") {
+                                    obj["TEAM 1 SET 1"] = "";
+                                    obj["TEAM 1 SET 2"] = "";
+                                    obj["TEAM 1 SET 3"] = "";
+                                    obj["TEAM 1 SET 4"] = "";
+                                    obj["TEAM 1 SET 5"] = "";
+                                    obj["TEAM 1 SET 6"] = "";
+                                    obj["TEAM 1 SET 7"] = "";
+                                    obj["SCORE 1"] = "";
+                                } else {
+                                    obj["SCORE 1"] = "";
+                                }
+                                if (mainData.opponentsTeam.length > 1) {
+                                    obj["TEAM ID 2"] = mainData.opponentsTeam[1].teamId;
+                                    obj["SCHOOL 2"] = mainData.opponentsTeam[1].schoolName;
+                                } else {
+                                    obj["TEAM ID 2"] = "";
+                                    obj["SCHOOL 2"] = "";
+                                }
+                                obj["TEAM 2 Attendence"] = "";
+                                var sportName = mainData.sport.sportslist.name.toLowerCase();
+                                if (sportName == "basketball") {
+                                    obj["TEAM 2 BASKET 1"] = "";
+                                    obj["TEAM 2 BASKET 2"] = "";
+                                    obj["TEAM 2 BASKET 3"] = "";
+                                    obj["TEAM 2 BASKET 4"] = "";
+                                    obj["TEAM 2 BASKET 5"] = "";
+                                    obj["TEAM 2 BASKET 6"] = "";
+                                    obj["TEAM 2 BASKET 7"] = "";
+                                    obj["SCORE 2"] = "";
+                                } else if (sportName.includes() == "badminton" || sportName.includes() == "tennis" || sportName.includes() == "squash") {
+                                    obj["TEAM 2 SET 1"] = "";
+                                    obj["TEAM 2 SET 2"] = "";
+                                    obj["TEAM 2 SET 3"] = "";
+                                    obj["TEAM 2 SET 4"] = "";
+                                    obj["TEAM 2 SET 5"] = "";
+                                    obj["TEAM 2 SET 6"] = "";
+                                    obj["TEAM 2 SET 7"] = "";
+                                    obj["SCORE 2"] = "";
+                                } else {
+                                    obj["SCORE 2"] = "";
+                                }
+                                // obj["SCORE 2"] = "";
+                                obj["NO MATCH"] = "";
+                                obj["DRAW"] = "";
+                                obj["WINNER ID"] = "";
+                                callback(null, obj);
 
-                        },
-                        function (err, singleData) {
-                            callback(null, singleData);
+                            },
+                            function (err, singleData) {
+                                callback(null, singleData);
 
-                        });
+                            });
+                    } else {
+                        async.concatSeries(match, function (mainData, callback) {
+                                var obj = {};
+                                obj["MATCH ID"] = mainData.matchId;
+                                obj["ROUND NAME"] = mainData.round;
+                                obj.SPORT = mainData.sport.sportslist.sportsListSubCategory.name;
+                                if (mainData.sport.gender == "male") {
+                                    obj.GENDER = "Male";
+                                } else if (mainData.sport.gender == "female") {
+                                    obj.GENDER = "Female";
+                                } else {
+                                    obj.GENDER = "Male & Female"
+                                }
+                                obj["AGE GROUP"] = mainData.sport.ageGroup.name;
+                                obj.EVENT = mainData.sport.sportslist.name;
+                                if (mainData.sport.weight) {
+                                    obj["WEIGHT CATEGORIES"] = mainData.sport.weight.name;
+                                } else {
+                                    obj["WEIGHT CATEGORIES"] = "";
+                                }
+                                if (mainData.opponentsSingle.length > 0) {
+                                    obj["SFAID 1"] = mainData.opponentsSingle[0].athleteId.sfaId;
+                                    if (mainData.opponentsSingle[0].athleteId.atheleteSchoolName) {
+                                        obj["SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.atheleteSchoolName;
+                                    } else {
+                                        obj["SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.school.schoolName;
+                                    }
+                                } else {
+                                    obj["SFAID 1"] = "";
+                                    obj["SCHOOL 1"] = "";
+                                }
+                                obj["PLAYER 1 Attendence"] = "";
+
+                                var sportName = mainData.sport.sportslist.name.toLowerCase();
+                                if (sportName == "basketball") {
+                                    obj["PLAYER 1 BASKET 1"] = "";
+                                    obj["PLAYER 1 BASKET 2"] = "";
+                                    obj["PLAYER 1 BASKET 3"] = "";
+                                    obj["PLAYER 1 BASKET 4"] = "";
+                                    obj["PLAYER 1 BASKET 5"] = "";
+                                    obj["PLAYER 1 BASKET 6"] = "";
+                                    obj["PLAYER 1 BASKET 7"] = "";
+                                    obj["SCORE 1"] = "";
+                                } else if (sportName.includes() == "badminton" || sportName.includes() == "tennis" || sportName.includes() == "squash") {
+                                    obj["PLAYER 1 SET 1"] = "";
+                                    obj["PLAYER 1 SET 2"] = "";
+                                    obj["PLAYER 1 SET 3"] = "";
+                                    obj["PLAYER 1 SET 4"] = "";
+                                    obj["PLAYER 1 SET 5"] = "";
+                                    obj["PLAYER 1 SET 6"] = "";
+                                    obj["PLAYER 1 SET 7"] = "";
+                                    obj["SCORE 1"] = "";
+                                } else {
+                                    obj["SCORE 1"] = "";
+                                }
+                                if (mainData.opponentsSingle.length > 1) {
+                                    obj["SFAID 2"] = mainData.opponentsSingle[1].athleteId.sfaId;
+                                    if (mainData.opponentsSingle[1].athleteId.atheleteSchoolName) {
+                                        obj["SCHOOL 1"] = mainData.opponentsSingle[1].athleteId.atheleteSchoolName;
+                                    } else {
+                                        obj["SCHOOL 1"] = mainData.opponentsSingle[1].athleteId.school.schoolName;
+                                    }
+                                } else {
+                                    obj["SFAID 2"] = "";
+                                    obj["SCHOOL 2"] = "";
+                                }
+                                obj["PLAYER 2 Attendence"] = "";
+                                var sportName = mainData.sport.sportslist.name.toLowerCase();
+                                if (sportName == "basketball") {
+                                    obj["PLAYER 2 BASKET 1"] = "";
+                                    obj["PLAYER 2 BASKET 2"] = "";
+                                    obj["PLAYER 2 BASKET 3"] = "";
+                                    obj["PLAYER 2 BASKET 4"] = "";
+                                    obj["PLAYER 2 BASKET 5"] = "";
+                                    obj["PLAYER 2 BASKET 6"] = "";
+                                    obj["PLAYER 2 BASKET 7"] = "";
+                                    obj["SCORE 2"] = "";
+                                } else if (sportName.includes() == "badminton" || sportName.includes() == "tennis" || sportName.includes() == "squash") {
+                                    obj["PLAYER 2 SET 1"] = "";
+                                    obj["PLAYER 2 SET 2"] = "";
+                                    obj["PLAYER 2 SET 3"] = "";
+                                    obj["PLAYER 2 SET 4"] = "";
+                                    obj["PLAYER 2 SET 5"] = "";
+                                    obj["PLAYER 2 SET 6"] = "";
+                                    obj["PLAYER 2 SET 7"] = "";
+                                    obj["SCORE 2"] = "";
+                                } else {
+                                    obj["SCORE 2"] = "";
+                                }
+                                obj["NO MATCH"] = "";
+                                obj["DRAW"] = "";
+                                obj["WINNER ID"] = "";
+                                callback(null, obj);
+
+                            },
+                            function (err, singleData) {
+                                callback(null, singleData);
+
+                            });
+                    }
                 }
             ],
             function (err, singleData) {
