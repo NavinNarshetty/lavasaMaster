@@ -3,6 +3,7 @@
     <!--SPORT NAME-->
     <div class="league-knockout-sportname text-center">
       <h3 class="text-uppercase d-fjalla-one sport-type-head">
+        <span ng-if="oneSportDetail.sportslist.sportsListSubCategory.name!= oneSportDetail.sportslist.name" ng-bind-html="oneSportDetail.sportslist.sportsListSubCategory.name"> </span>        <span ng-if="oneSportDetail.sportslist.sportsListSubCategory.name!= oneSportDetail.sportslist.name">|</span>
         <span ng-bind-html="oneSportDetail.sportslist.name"></span> |
         <span ng-bind-html="oneSportDetail.gender"></span> |
         <span ng-bind-html="oneSportDetail.ageGroup.name"> </span>
@@ -314,7 +315,7 @@
                             <h4 class="m-clear">Result</h4>
                           </div>
                         </th>
-                        <th hidden>
+                        <th>
                           <div class="">
                             <h4 class="m-clear">Video</h4>
                           </div>
@@ -368,7 +369,7 @@
                             <span class="display-block" ng-if="content.status === 'IsCompleted' && content.walkover">Won by walkover</span>
                             <span class="display-block" ng-if="content.status === 'IsCompleted' && content.isNoMatch">No Match</span>
                             <span class="display-block" ng-if="content.isDraw">Draw</span>
-                            <a class="display-block" ng-if="content.status === 'IsCompleted' && !content.isNoMatch && !content.walkover && !content.resultFencing"
+                            <a class="display-block" ng-if="content.status === 'IsCompleted' && !content.isNoMatch && !content.walkover && !content.isDraw  && !content.resultFencing"
                               ng-click="matchCenter(content)">Match Center</a>
                             <p class="m-clear" ng-if="content.status === 'IsCompleted' && !content.isNoMatch && !content.walkover && content.resultFencing">{{content.resultFencing.players[0].finalPoints}} - {{content.resultFencing.players[1].finalPoints}}</p>
 

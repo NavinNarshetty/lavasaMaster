@@ -113,7 +113,7 @@
               <p class="m-clear knockout-live-text pull-right" ng-if="card.status==='IsLive'">
                 <span class="knockout-dot-live"><i class="fa fa-circle"></i></span> <span>Live</span>
               </p>
-              <div ng-if="card.status==='IsCompleted'">
+              <div ng-if="card.status =='IsCompleted'">
                 <div class="knockout-videoholder" ng-if="card.video">
                   <a ng-if="card.video" class="fancybox.iframe" fancybox href="{{card.video | linkvideo:card.videoType}}">
                  <img src="img/sf-play.png" alt="play" class="img-responsive">

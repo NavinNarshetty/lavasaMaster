@@ -102,6 +102,7 @@
               <p class="m-clear knockout-live-text pull-right" ng-if="card.status==='IsLive'">
                 <span class="knockout-dot-live"><i class="fa fa-circle"></i></span> <span>Live</span>
               </p>
+              <pre>{{card}}</pre>
               <div ng-if="card.status==='IsCompleted'">
                 <div class="knockout-videoholder" ng-if="card.video">
                   <a class="fancybox.iframe" fancybox href="{{card.video | linkvideo:card.videoType}}">
@@ -114,7 +115,7 @@
                 <p class="m-clear" ng-if="card.resultsCombat && card.opponentsSingle.length>1">
                   <span class="pull-right combatreasonresult" ng-if="card.reason && card.reason!=='undefined' && roundsList[0].match[0].sport.sportslist.name === 'Boxing'">Reason:{{card.reason}}</span>
                   <span ng-if="!card.isNoMatch && roundsList[0].match[0].sport.sportslist.name!=='Kata'"><span class="combatscoreresult" ng-repeat="score in card.resultsCombat.players track by $index">{{score.sets[0].point}} </span></span>
-                  <span ng-if="!card.isNoMatch && roundsList[0].match[0].sport.sportslist.name=='Kata'"><span class="combatscoreresultforkata">3/4</span></span>
+                  <span ng-if="!card.isNoMatch && roundsList[0].match[0].sport.sportslist.name=='Kata'"><span class="combatscoreresultforkata"  ng-repeat="score in card.resultsCombat.players track by $index">{{score.sets[0].point}}</span></span>
                 </p>
               </div>
             </div>
