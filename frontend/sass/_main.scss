@@ -6702,6 +6702,10 @@ h1.forgot-space {
 }
 
 //custom-scroll-bar
+.avoidscroll {
+    padding-bottom: 90px;
+}
+
 .scrollbar {
     margin-left: 5px; // float: left;
     // height: 500px; // width: 65px;
@@ -8018,4 +8022,18 @@ h1.forgot-space {
 // VIEDO
 .gallery-video-min {
     min-height: 60px;
+}
+
+// Override
+.override-fencingselect {
+    .btn {
+        margin: 0px;
+        border: none;
+    }
+    .dropdown-menu {
+        left: 0px;
+    }
+    .inner::-webkit-scrollbar-thumb {
+        background-color: #555 !important;
+    }
 }
