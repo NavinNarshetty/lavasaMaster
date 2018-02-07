@@ -68,10 +68,10 @@
                     <h4 class="m-clear">time</h4>
                   </div>
                 </th>
-                <th hidden>
+                <th>
                   <div>
-                    <a href=" ">
-                        <img src="img/sf-play.png " alt=" ">
+                    <a ng-if="roundsList[0].match[0].video" class="fancybox.iframe" fancybox href="{{roundsList[0].match[0].video | linkvideo:roundsList[0].match[0].videoType}}">
+                        <img src="img/sf-play.png " alt="video">
                       </a>
                   </div>
                 </th>
@@ -116,8 +116,13 @@
                   </div>
 
                 </td>
-                <td hidden>
-                  <div class="text-capitalize ">{{final.video}}</div>
+                <td>
+
+                  <div class="text-capitalize ">
+                    <!-- <a class="fancybox.iframe" fancybox href="{{gallery.vlink | linkvideo:gallery.vtype}}">
+                          <img ng-src="{{gallery.vimage | serverimage2 }}" alt="video" class="img-responsive">
+                          </a> {{final.video}} -->
+                  </div>
                 </td>
               </tr>
 
@@ -151,6 +156,10 @@
                   <div class="text-capitalize">
                     <span>{{final.time}}</span>
                     <span ng-if="!final.time">-</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="text-capitalize ">
                   </div>
                 </td>
               </tr>
@@ -236,6 +245,13 @@
                               <h4 class="m-clear">time</h4>
                             </div>
                           </th>
+                          <th>
+                            <div class="text-capitalize">
+                              <a class="fancybox.iframe" fancybox href="{{roundsList[1].match[0].video | linkvideo:roundsList[1].match[0].videoType}}">
+                                    <img src="img/sf-play.png " alt="video">
+                              </a>
+                            </div>
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
@@ -269,6 +285,11 @@
                               <span ng-if="!semifinal.time">-</span>
                             </div>
                           </td>
+                          <td>
+                            <div class="text-cpitalize">
+
+                            </div>
+                          </td>
                         </tr>
                         <tr ng-repeat="semifinal in semi.opponentsTeam track by $index">
                           <td>
@@ -292,6 +313,11 @@
                             <div class="text-capitalize">
                               <span>{{semifinal.time}}</span>
                               <span ng-if="!semifinal.time">-</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="text-cpitalize">
+
                             </div>
                           </td>
                         </tr>
@@ -383,6 +409,13 @@
                               <h4 class="m-clear">time</h4>
                             </div>
                           </th>
+                          <th>
+                            <div class="text-capitalize">
+                              <a class="fancybox.iframe" fancybox href="{{roundsList[2].match[0].video | linkvideo:roundsList[2].match[0].videoType}}">
+                                <img src="img/sf-play.png " alt="video">
+                                </a>
+                            </div>
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
@@ -416,6 +449,11 @@
                               <span ng-if="!semifinal.time">-</span>
                             </div>
                           </td>
+                          <td>
+                            <div class="text-cpitalize">
+
+                            </div>
+                          </td>
                         </tr>
                         <tr ng-repeat="semifinal in semi.opponentsTeam track by $index">
                           <td>
@@ -440,6 +478,9 @@
                               <span> {{semifinal.time}}</span>
                               <span ng-if="!semifinal.time">-</span>
                             </div>
+                          </td>
+                          <td>
+                            <div class="text-cpitalize"></div>
                           </td>
                         </tr>
                       </tbody>

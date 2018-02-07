@@ -48,7 +48,7 @@
                   <h4 class="m-clear">Result</h4>
                 </div>
               </th>
-              <th hidden>
+              <th>
                 <div>
                   <h4 class="m-clear">video</h4>
                 </div>
@@ -106,9 +106,9 @@
                   <p class="m-clear" ng-if="data.status === 'IsCompleted' && !data.isNoMatch && !data.walkover && data.resultFencing && data.resultFencing.players[0].finalPoints && data.resultFencing.players[1].finalPoints">{{data.resultFencing.players[0].finalPoints}} - {{data.resultFencing.players[1].finalPoints}}</p>
                 </div>
               </td>
-              <td hidden>
+              <td>
                 <div class="text-capitalize">
-                  <a href="">
+                  <a ng-if="data.video" class="fancybox.iframe" fancybox href="{{data.video | linkvideo:data.videoType}}">
                         <img src="img/sf-play.png" alt="">
                   </a>
                 </div>
@@ -374,9 +374,9 @@
 
                           </div>
                         </td>
-                        <td hidden>
+                        <td>
                           <div class="text-capitalize ">
-                            <a href=" ">
+                            <a ng-if="content.video" class="fancybox.iframe" fancybox href="{{content.video | linkvideo:content.videoType}}">
                         <img src="img/sf-play.png " alt=" ">
                       </a>
                           </div>

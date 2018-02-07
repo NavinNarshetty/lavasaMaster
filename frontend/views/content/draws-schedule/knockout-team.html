@@ -104,9 +104,9 @@
               </p>
               <div ng-if="card.status==='IsCompleted'">
                 <div class="knockout-videoholder" ng-if="card.video">
-                  <a href="">
-                 <img src="img/sf-play.png" alt="play" class="img-responsive">
-                 </a>
+                  <a class="fancybox.iframe" fancybox href="{{card.video | linkvideo:card.videoType}}">
+                        <img src="img/sf-play.png" alt="play" class="img-responsive">
+                        </a>
                 </div>
                 <p class="m-clear pointer" ng-if="card.reason!=='Bye' && !card.isNoMatch && (card.sport.sportslist.name == 'Kho Kho' || card.sport.sportslist.name == 'Throwball')">
                   <span><span class="combatscoreresult" ng-repeat="score in card.resultsCombat.teams track by $index">{{score.sets[0].point}} </span></span>
@@ -166,8 +166,8 @@
                 </p>
                 <div ng-if="card.status==='IsCompleted'">
                   <div class="knockout-videoholder" ng-if="card.video">
-                    <a href="">
-                   <img src="img/sf-play.png" alt="play" class="img-responsive">
+                    <a class="fancybox.iframe" fancybox href="{{card.video | linkvideo:card.videoType}}">
+                     <img src="img/sf-play.png" alt="play" class="img-responsive">
                    </a>
                   </div>
                   <p class="m-clear pointer" ng-if="card.reason!=='Bye' && !card.isNoMatch && (card.sport.sportslist.name == 'Kho Kho' || card.sport.sportslist.name == 'Throwball')">
@@ -230,7 +230,7 @@
                 </p>
                 <div ng-if="card.status==='IsCompleted'">
                   <div class="knockout-videoholder" ng-if="card.video">
-                    <a href="">
+                    <a class="fancybox.iframe" fancybox href="{{card.video | linkvideo:card.videoType}}">
                     <img src="img/sf-play.png" alt="play" class="img-responsive">
                     </a>
                   </div>

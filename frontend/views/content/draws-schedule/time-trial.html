@@ -156,6 +156,13 @@
                           <h4 class="m-clear">time</h4>
                         </div>
                       </th>
+                      <th>
+                        <div>
+                          <a ng-if="s.video" class="fancybox.iframe" fancybox href="{{s.video | linkvideo:s.videoType}}">
+                                <img src="img/sf-play.png " alt="video">
+                              </a>
+                        </div>
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -180,6 +187,11 @@
                         <div class="text-capitalize">
                           <span>{{qualify.time}}</span>
                           <span ng-if="!qualify.time">-</span>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="text-capitalize">
+
                         </div>
                       </td>
                     </tr>
@@ -210,6 +222,10 @@
                         <div class="text-capitalize">
                           <span>{{qualify.time}}</span>
                           <span ng-if="!qualify.time">-</span>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="text-capitalize">
                         </div>
                       </td>
                     </tr>
