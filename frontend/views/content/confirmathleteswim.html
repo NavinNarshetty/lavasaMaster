@@ -111,8 +111,9 @@
                                                                     </div>
                                                                 </td>
                                                                 <td ng-init="validate=(selectService.sportName=='Athletics')?true:false" ng-if="selectService.sportName!='Shooting'">
+                                                                    <pre>{{athelete.metresSwim.data | json}}</pre>
                                                                     <div class="custom-uiselect">
-                                                                        <ui-select name="selectfilter" title="Select Event or Events" multiple="" id="selectfilter" theme="bootstrap" ng-model="athelete.sport"
+                                                                        <!-- <ui-select name="selectfilter" title="Select Event or Events" multiple="" id="selectfilter" theme="bootstrap" ng-model="athelete.sport"
                                                                             ng-change="selectService.isValidSelection(athelete)"
                                                                             ng-init="selectService.isValidSelection(athelete)">
                                                                             <ui-select-match placeholder="Select Events">
@@ -121,7 +122,13 @@
                                                                             <ui-select-choices repeat="metre.sport as metre in athelete.metresSwim.data | filter:{eventName:$select.search}" ui-disable-choice="validate && athelete.sport.length>=2">
                                                                                 <span ng-bind-html="metre.eventName"></span>
                                                                             </ui-select-choices>
-                                                                        </ui-select>
+                                                                        </ui-select> -->
+                                                                        <!-- <pre>{{metre | json}}</pre> -->
+                                                                        <select class="selectpicker form-control" multiple ng-init="selectService.isValidSelection(athelete)" ng-model="athelete.sport"
+                                                                            ng-required="" ng-options="metre.sport as metre.eventName for metre  in athelete.metresSwim.data"
+                                                                            title="Select Event" ng-change="selectService.isValidSelection(athelete)"
+                                                                            data-selected-text-format="count > 2" data-size="3">
+                                                                        </select>
                                                                     </div>
                                                                 </td>
                                                                 <td ng-init="validate=(selectService.sportName=='Athletics')?true:false" ng-if="selectService.sportName==='Shooting'">

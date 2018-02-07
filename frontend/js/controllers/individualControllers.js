@@ -423,6 +423,9 @@ myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, Navigat
         }
 
     };
+    $timeout(function () {
+        $('.selectpicker').selectpicker()
+    }, 200);
 });
 
 
