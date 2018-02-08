@@ -133,7 +133,7 @@
                                                                             ng-options="metre.sport as metre.eventName for metre in athelete.metresSwim.data"
                                                                             title="Select Event" ng-change="selectService.isValidSelection(athelete)"
                                                                             data-selected-text-format="count > 2" data-size="3"
-                                                                            data-live-search="true">
+                                                                            data-live-search="true" data-max-options="{{selectLimit}}">
                                                                         </select>
                                                                     </div>
                                                                 </td>

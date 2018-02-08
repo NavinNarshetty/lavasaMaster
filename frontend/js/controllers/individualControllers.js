@@ -377,6 +377,12 @@ myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, Navigat
         $scope.type = data.type;
     });
     $scope.selectService = selectService;
+
+    if($stateParams.name == "Athletics"){
+        $scope.selectLimit = 2;
+    }else{
+        $scope.selectLimit = 0;
+    }
     $scope.formData = {};
     loginService.loginGet(function (data) {
         $scope.detail = data;
