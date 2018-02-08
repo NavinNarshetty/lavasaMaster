@@ -16,7 +16,7 @@
         <div class="form-elements-sec">
           <div class="button-matched-holder">
             <div class="row match-head-holder">
-              <div class="col-md-8">
+              <div class="col-md-12">
                 <!-- <h3 class="m-clear">List of Matches<span class=" tableTotal ">(Total : {{totalItems}}) </span></h3> -->
                 <a class="btn btn-success" ui-sref="detailmatches">
                     Create
@@ -30,10 +30,12 @@
                 <span class="btn btn-success" ng-click="createExcel()">
                     Create-Excel
                  </span>
-                <span class="btn btn-success" ui-sref="excel-upload({controller:'match',funcName:'weightUpload',view:'editWeight'})">
-                    Edit Weight
+                 <span class="btn btn-success" ui-sref="excel-upload({controller:'match',funcName:'weightUpload',view:'editWeight'})">
+                  Edit Weight
+               </span>
+                <span class="btn btn-success" ui-sref="excel-upload({controller:'match',funcName:'updateExcel',view:'oldResultupdate'})">
+                    Old-Score-Update
                  </span>
-
               </div>
               <!-- <div class="col-md-4">
                 <form class="search-form mr-form">
@@ -157,10 +159,12 @@
                 </div>
 
                 <!-- PLAYER SPECIFIC EXPORT END -->
+                <!-- {{showMatch}} -->
                 <!-- BUTTONS -->
                 <div class="text-center mt20 odd-even-button">
                   <button class="btn btn-info" ng-click="viewMatch(form)"><i class="fa fa-eye"></i> View</button>
                   <button class="btn btn-default" type="submit" ng-click="generateExcel(form)" ng-disabled="detailForm.$invalid">Generate Excel</button>
+                  <button class="btn btn-default" type="submit" ng-click="scoringExcel(form)" ng-disabled="detailForm.$invalid">Generate Scoring Excel</button>
                 </div>
                 <!-- BUTTONS END -->
               </div>

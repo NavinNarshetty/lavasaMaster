@@ -4290,6 +4290,17 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             });
         }
 
+        $scope.scoringExcel = function (data) {
+            $scope.blank = data;
+            console.log("data..................", data);
+            $scope.url = "match/excelScoringTeam";
+
+            NavigationService.generateExcelWithData($scope.url, $scope.blank, function (data) {
+                $state.reload();
+            });
+
+        }
+
         $scope.weightUpload = function (data) {
             $scope.url = "Match/weightUpload";
             $scope.constraints = {};
