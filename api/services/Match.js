@@ -7481,8 +7481,8 @@ var model = {
                                                                 matchData[result.resultVar] = complete[result.resultVar];
                                                                 var placeholder = {};
                                                                 placeholder[result.resultVar] = complete[result.resultVar];
-                                                                placeholder[video] = n["VIDEO"];
-                                                                placeholder[videoType] = n["VIDEO TYPE"];
+                                                                // placeholder[video] = n["VIDEO"];
+                                                                // placeholder[videoType] = n["VIDEO TYPE"];
                                                                 var matchObj = {
                                                                     $set: placeholder
                                                                 };
@@ -7493,12 +7493,31 @@ var model = {
                                                                         if (err) {
                                                                             callback(err, null);
                                                                         } else {
-                                                                            final.result = result;
-                                                                            final.score = matchData[result.resultVar];
-                                                                            if (matchData.opponentsSingle.length > 0) {
-                                                                                final.opponentsSingle = matchData.opponentsSingle;
+                                                                            var updateObj = {
+                                                                                video: n["VIDEO"],
+                                                                                videoType: n["VIDEO TYPE"]
                                                                             }
-                                                                            callback(null, final);
+                                                                            Match.update({
+                                                                                matchId: n["MATCH ID"]
+                                                                            }, updateObj).exec(
+                                                                                function (err, match) {
+                                                                                    if (err) {
+                                                                                        callback(err, null);
+                                                                                    } else {
+                                                                                        final.result = result;
+                                                                                        final.score = matchData[result.resultVar];
+                                                                                        if (matchData.opponentsSingle.length > 0) {
+                                                                                            final.opponentsSingle = matchData.opponentsSingle;
+                                                                                        }
+                                                                                        callback(null, final);
+                                                                                    }
+                                                                                });
+                                                                            // final.result = result;
+                                                                            // final.score = matchData[result.resultVar];
+                                                                            // if (matchData.opponentsSingle.length > 0) {
+                                                                            //     final.opponentsSingle = matchData.opponentsSingle;
+                                                                            // }
+                                                                            // callback(null, final);
                                                                         }
                                                                     });
                                                             });
@@ -7676,7 +7695,6 @@ var model = {
                                     function (err, excelData) {
                                         callback(null, excelData);
                                     });
-
                             },
                             function (err, final) {
                                 callback(null, final)
