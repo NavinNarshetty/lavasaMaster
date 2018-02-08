@@ -63,7 +63,6 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
               }
               value.status = value.finalResult.status;
               value.isNoMatch = value.finalResult.isNoMatch;
-              value.video = value.finalResult.video;
               if (value.finalResult.winner) {
                 value.reason = value.finalResult.winner.reason;
                 if (obj && obj.athleteId && (obj.athleteId._id === value.finalResult.winner.player)) {

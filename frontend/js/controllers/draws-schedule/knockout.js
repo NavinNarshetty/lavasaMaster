@@ -92,7 +92,6 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
                                     });
 
                                 });
-
                             }
                         }
                     } else {
