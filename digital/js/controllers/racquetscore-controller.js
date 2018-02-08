@@ -17,6 +17,7 @@ myApp.controller('RacquetScoreCtrl', function($scope, TemplateService, Navigatio
     $scope.setLength  = [];
     $scope.matchError = "";
     $scope.stateParam = $stateParams;
+    $scope.btnDisable = false;
     // VARIABLE INITIALISE END
 
     // API CALLN INTEGRATION
@@ -120,13 +121,38 @@ myApp.controller('RacquetScoreCtrl', function($scope, TemplateService, Navigatio
     };
     $scope.matchComplete = function(){
       if($scope.match.resultsRacquet){
+      _.each($scope.match.resultsRacquet.players, function(n){
+        _.each(n.sets, function(m){
+          if (m.point == "") {
+            m.point = 0;
+          }
+          if (m.ace == "") {
+            m.ace = 0;
+          }
+          if (m.unforcedError == "") {
+            m.unforcedError = 0;
+          }
+          if (m.serviceError == "") {
+            m.serviceError = 0;
+          }
+          if (m.doubleFaults == "") {
+            m.doubleFaults = 0;
+          }
+          if (m.winner == "") {
+            m.winner = 0;
+          }
+        })
+      });
+      $scope.btnDisable = true;
       $scope.match.resultsRacquet.status = "IsCompleted";
       $scope.matchResult = {
         resultsRacquet : $scope.match.resultsRacquet,
         matchId: $scope.matchData.matchId
       }
+      $interval.cancel(promise);
       NavigationService.saveMatch($scope.matchResult, function(data){
         if(data.value == true){
+          $scope.btnDisable = false;
           if ($stateParams.drawFormat === 'Knockout') {
               $state.go('knockout', {
                 drawFormat: $stateParams.drawFormat,
@@ -158,19 +184,39 @@ myApp.controller('RacquetScoreCtrl', function($scope, TemplateService, Navigatio
       $scope.set = set;
       switch (model) {
         case 'ace':
-          $scope.set.ace = $scope.set.ace + 1;
+          if ($scope.set.ace == "") {
+            $scope.set.point = 1;
+          } else {
+            $scope.set.ace = $scope.set.ace + 1;
+          }
         break;
         case 'winner':
-          $scope.set.winner = $scope.set.winner + 1;
+          if ($scope.set.winner == "") {
+            $scope.set.winner = 1;
+          } else {
+            $scope.set.winner = $scope.set.winner + 1;
+          }
         break;
         case 'unforcedError':
-          $scope.set.unforcedError = $scope.set.unforcedError + 1;
+          if ($scope.set.unforcedError == "") {
+            $scope.set.unforcedError = 1;
+          } else{
+            $scope.set.unforcedError = $scope.set.unforcedError + 1;
+          }
         break;
         case 'serviceError':
-          $scope.set.serviceError = $scope.set.serviceError + 1;
+          if ($scope.set.serviceError == "") {
+            $scope.set.serviceError = 1;
+          } else {
+            $scope.set.serviceError = $scope.set.serviceError + 1;
+          }
         break;
         case 'doubleFaults':
-          $scope.set.doubleFaults = $scope.set.doubleFaults + 1;
+          if ($scope.set.doubleFaults == "") {
+            $scope.set.doubleFaults = 1;
+          } else {
+            $scope.set.doubleFaults = $scope.set.doubleFaults + 1;
+          }
         break;
       }
       console.log("increment");
@@ -226,7 +272,7 @@ myApp.controller('RacquetScoreCtrl', function($scope, TemplateService, Navigatio
           setShow : true
         }
       })
-      $scope.setDisplay = $scope.match.resultsRacquet.players[0].sets.length - 1;
+      $scope.setDisplay.value = $scope.match.resultsRacquet.players[0].sets.length - 1;
     }
     // ADD SET END
     // REMOVE SET

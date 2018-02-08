@@ -1,0 +1,15 @@
+<div class="modal-header">
+  <h4 class="text-uppercase">Edit Weight</h4>
+</div>
+<div class="modal-body">
+  <div class="modal-container">
+    <div class="">
+      <upload-image no-view type="excel" ng-model="form.file" ng-callback="excelUploaded();"></upload-image>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <!-- <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button> -->
+  <button class="btn btn-warning" type="button" ng-click="$dismiss()">Cancel</button>
+</div>

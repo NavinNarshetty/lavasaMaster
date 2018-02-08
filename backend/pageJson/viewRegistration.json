@@ -48,17 +48,6 @@
         }
     }],
 
-    "button": [{
-        "name": "Excel Export",
-        "icon": "print",
-        "class": "btn-success",
-        "type": "redirect",
-        "text": "export",
-        "linkType": "admin",
-        "action": "Registration/generateExcelOld"
-    }],
-
-
     "apiCall": {
         "url": "Registration/search",
         "params": "_id"

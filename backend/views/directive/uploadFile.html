@@ -6,12 +6,15 @@
     </a>
     <!--<iframe src="{{model|uploadpath}}" style="width:400px; height:400px;" frameborder="0" ng-if="type=='pdf'"></iframe>-->
     <a href="{{model|uploadpath}}" target="_new">
-      <img ng-src="../../img/pdf.png" class="img-responsive uploadingImage" ng-if="type=='pdf'" />
+      <img ng-src="../../img/pdf.png" class="img-responsive uploadingImage" ng-if="type=='pdf' && uploadStatus === 'uploaded'" />
     </a>
+    <a href="{{model|uploadpath}}" target="_new">
+        <img ng-src="../../img/pdf.png" class="img-responsive uploadingImage" ng-if="type=='pdf' && uploadStatus !== 'uploaded'" />
+      </a>
   </div>
   <div class="clearfix" ng-if="model && isMultiple" ng-hide="noShow">
-    <pre>{{model}}</pre>
-    <pre>{{sImage}}</pre>
+    <!-- <pre>{{model}}</pre>
+    <pre>{{sImage}}</pre> -->
     <div class="img-box" style="float:left;" ng-repeat="sImage in model track by $index">
       <a href="{{sImage.image|uploadpath}}" fancybox-box>
         <img alt="" ng-src="{{sImage.image|uploadpath}}" class="img-responsive uploadingImage img-thumbnail" />
@@ -38,4 +41,5 @@
   <span class="label label-success" ng-if="uploadStatus == 'uploaded'" ng-show="isMultiple">Document Uploaded - {{image.length}}</span>
   <span class="label label-warning" ng-if="uploadStatus == 'uploading'" ng-show="!isMultiple">Uploading Document {{image.file.name}}</span>
   <span class="label label-warning" ng-if="uploadStatus == 'uploading'" ng-show="isMultiple">Uploading Document {{image.length}}</span>
+  <span class="label label-danger" ng-if="incorrectFile && !isMultiple">Please upload only Pdf file</span>
 </div>

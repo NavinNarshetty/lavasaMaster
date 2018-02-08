@@ -1,0 +1,272 @@
+<div class="heading-sec">
+  <div class="row">
+    <div class="col-md-4 column">
+      <div class="heading-profile">
+        <h2>{{title}} Archive</h2>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="widget">
+        <div class="form-elements-sec archivechampions-page">
+          <form name="archiveForm" role="form" class="sec">
+
+            <!-- BANNER IMAGE -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="BannerImage">BannerImage <span class="color-danger">Note:Image should be .jpg and size should be 1920 x 1280</span> </label>
+                  <upload-image ng-model="formData.bannerImg" inobj></upload-image>
+                </div>
+              </div>
+            </div>
+            <!-- BANNER IMAGE END -->
+
+            <!-- MOBILE BANNER IMAGE -->
+            <div class="row hide">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="BannerImage">Mobile BannerImage</label>
+                  <upload-image ng-model="formData.mobilebannerImg" inobj></upload-image>
+                </div>
+              </div>
+            </div>
+            <!-- MOBILE BANNER IMAGE END -->
+
+
+            <section class="headerlogosection">
+              <div class="text-center">
+                <strong>
+                  Header Logo Section
+                </strong>
+              </div>
+              <!-- HEADER -->
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="HeaderImage">Header Logo <span class="color-danger">Note:Image should be .png and size should be 640 x 400</span></label>
+                    <upload-image ng-model="formData.header.logo" inobj></upload-image>
+                  </div>
+                </div>
+              </div>
+              <!-- CONTENT -->
+              <div class="row">
+                <!-- DATE -->
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="scheduleDate">Schedule Date</label>
+                    <input type="text" name="archiveDate" ng-model="formData.header.scheduleDate" class="form-control" ng-required="true">
+                    <span class="label label-danger" ng-if="archiveForm.archiveDate.$invalid && archiveForm.archiveDate.$touched">Please Enter Valid Date *</span>
+                  </div>
+                </div>
+                <!-- DATE END -->
+
+                <!-- VENU -->
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <text-angular ng-model="formData.header.scheduleVenu" name="scheduleVenu" required></text-angular>
+                    <span class="error-msg" ng-if="archiveForm.scheduleVenu.$invalid && sponsorForm.scheduleVenu.$touched">Please Enter Valid Content *</span>
+                  </div>
+                </div>
+                <!-- VENU END -->
+
+                <!-- COUNT TABLE -->
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <div class="addcountbutton text-right">
+                      <button type="submit" class="btn btn-dark" ng-click="addCount(formData)">ADD</button>
+                    </div>
+                    <div class="count-holder table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>
+                              <div class="text-uppercase text-center">
+                                Count
+                              </div>
+                            </th>
+                            <th>
+                              <div class="text-uppercase text-center">
+                                Name
+                              </div>
+                            </th>
+                            <th>
+                              <div class="text-uppercase">
+                                Action
+                              </div>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="counthead in formData.counts track by $index">
+                            <td>
+                              <div class="count-holder">
+                                <input type="number" name="countNumber" class="form-control" ng-model="counthead.countNumber" id="countNumber" placeholder="Enter Number"
+                                  ng-required="true">
+                                <span class="label label-danger" ng-if="archiveForm.countNumber.$invalid && archiveForm.countNumber.$touched">Please Enter Valid Number *</span>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="count-holder">
+                                <input type="text" name="countname" class="form-control" ng-model="counthead.countHeader" id="countname" placeholder="Enter Name"
+                                  ng-required="true">
+                                <span class="label label-danger" ng-if="archiveForm.countname.$invalid && archiveForm.countname.$touched">Please Enter Valid Text *</span>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="action-holder">
+                                <button type="submit" class="btn btn-danger" ng-click="deleteCount(formData,$index)">Delete</button>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <!-- COUNT TABLE END -->
+              </div>
+              <!-- CONTENT END -->
+            </section>
+            <!-- HEADER LOGO -->
+
+
+
+            <!-- MAIN CONTENT -->
+            <section class="maincontent">
+              <div class="text-center">
+                <strong>
+                  Main Content
+                </strong>
+              </div>
+              <div class="row">
+                <!-- TITLE -->
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="contentheader">Title</label>
+                    <input type="text" name="contenttitle" class="form-control" id="contenttitle" ng-model="formData.mainContent.title" placeholder="Enter Title"
+                      ng-required="true">
+                    <span class="label label-danger" ng-if="archiveForm.contenttitle.$invalid && archiveForm.contenttitle.$touched">Please Enter Valid Number *</span>
+                  </div>
+                </div>
+                <!-- TITLE END -->
+
+                <!-- CONTENT -->
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="maincontent">Content</label>
+                    <text-angular ng-model="formData.mainContent.content" name="maincontent" required></text-angular>
+                  </div>
+                </div>
+                <!-- CONTENT END -->
+              </div>
+            </section>
+            <!-- MAIN CONTENT END -->
+
+
+
+            <!-- GALLERY -->
+            <section class="gallery">
+              <div class="text-center">
+                <strong>
+                  Gallery
+                </strong>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="galleryImages">Gallery Images <span class="color-danger">Note: No particular Size required</span> </label>
+                    <upload-image ng-model="formData.galleryImage" multiple inobj></upload-image>
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="galleryVideos">Gallery Videos</label>
+                    <div class="gallery-videoholder table-responsive">
+                      <div class="addgalleryvideo text-right">
+                        <button type="submit" class="btn btn-dark" ng-click="addVideoGallery()">ADD</button>
+                      </div>
+                      <table class="table ">
+                        <thead>
+                          <tr>
+                            <th>
+                              <div class="text-center text-uppercase">
+                                Media Type
+                              </div>
+                            </th>
+                            <th>
+                              <div class="text-center text-uppercase">
+                                Source
+                              </div>
+                            </th>
+                            <th>
+                              <div class="text-center text-uppercase">
+                                Link
+                              </div>
+                            </th>
+                            <th>
+                              <div class="text-center text-uppercase">
+                                Action
+                              </div>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="videoData in formData.galleryVideo track by $index">
+                            <td>
+                              <div class="form-group">
+                                <input type="text" name="galleryVideomediatype" id="galleryVideomediatype" ng-model="videoData.mediaType" class="form-control"
+                                  placeholder="Enter Type" readonly>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="form-group">
+                                <select name="galleryVideoSource" ng-model="videoData.videoSource" class="form-control" id="galleryVideoSource" required>
+                                      <option value="youtube">Youtube</option>
+                                      <option value="vimeo">Vimeo</option>
+                                </select>
+
+                              </div>
+                            </td>
+                            <td>
+                              <div class="form-group">
+                                <input type="text" name="galleryVideoLink" ng-model="videoData.videoLink" placeholder="Enter Link" class="form-control" ng-required="true">
+
+                              </div>
+                            </td>
+                            <td>
+                              <div class="form-group">
+                                <button type="submit" class="btn btn-danger" ng-click="deleteRow(formData,$index)">Delete</button>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- GALLERY END -->
+            <!-- BUTTON -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="text-center mt20 odd-even-button">
+                  <button class="btn btn-default" type="submit" ng-click="saveData(formData)">Save</button>
+                  <button class="btn btn-default" ui-sref='archive'>Cancel</button>
+                </div>
+              </div>
+            </div>
+            <!-- BUTTON END -->
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

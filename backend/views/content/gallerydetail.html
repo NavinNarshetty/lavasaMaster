@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-4 column">
             <div class="heading-profile">
-                <h2>{{title}} Rounds</h2>
+                <h2>{{title}} Gallery</h2>
             </div>
         </div>
     </div>
@@ -17,13 +17,31 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Name*</label>
-                                    <input type="text" ng-model="formData.name" class="form-control" placeholder="Enter Name" required>
-                                    <div class="error-msg" ng-if="detailForm.agename.$invalid && detailForm.agename.$touched">Please Enter Valid Name *</div>
+                                    <label>Type</label>
+                                    <select name="selectgender" class="form-control" ng-model="formData.folderType
+                                    " placeholder="Enter Type" ng-change="getFolderNames(formData,true);" required>
+ <option style="display:none" >Enter Type</option>
+                                                   <option value="Sport">Sport</option>
+                                                   <option value="Category">Category</option>
+                                                  </select>
+                                    <div class="error-msg" ng-if="detailForm.selectgender.$invalid && detailForm.selectgender.$touched">Please Enter Gender*</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Folder Name </label>
+                                    <ui-select name="selectSchoolName" id="selectSchoolName" theme="bootstrap" ng-model="formData.folderName" required>
+                                        <pre>{{$select.selected}}</pre>
+                                        <ui-select-match placeholder="Enter Folder Name" allow-clear="true">
+                                            {{$select.selected.fileName}}
+                                        </ui-select-match>
+                                        <ui-select-choices refresh.delay="0" repeat="item.fileName as item in folderNames | filter:$select.search" refresh=" ">
+                                            <span ng-bind-html="item.fileName"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <div class="error-msg" ng-if="detailForm.selectSchoolName.$invalid && detailForm.selectSchoolName.$touched">Please Enter Folder Name *</div>
                                 </div>
                                 <div class="text-center mt20 odd-even-button">
-                                    <button class="btn btn-default" type="submit" ng-click="saveData(formData)">Save</button>
-                                    <button class="btn btn-default" ng-click="onCancel('agegroup')">Cancel</button>
+                                    <button class="btn btn-default" type="submit" ng-click="saveData(formData)" ng-disabled="detailForm.$invalid">Save</button>
+                                    <button class="btn btn-default" ng-click="onCancel('gallery')">Cancel</button>
                                 </div>
                             </div>
                         </div>

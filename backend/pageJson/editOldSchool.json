@@ -27,6 +27,12 @@
         "id": "institutionType",
         "validation": ["required", "trim", "unique"],
         "url": ""
+    }, {
+        "name": "Screen Name",
+        "type": "text",
+        "tableRef": "screenName",
+        "placeholder": "Enter School Screen Name",
+        "id": "name"
     }],
     "action": [{
         "name": "submit",

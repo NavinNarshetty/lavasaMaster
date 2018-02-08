@@ -239,7 +239,115 @@ myApp.directive('img', function ($compile, $parse) {
                 });
             }
         };
-    });
+    })
+
+    // ROTATE IMAGE
+    .directive('rotateImage', function($http, $filter, $timeout){
+      return{
+        templateUrl: 'views/directive/rotateImage.html',
+        restrict: 'E',
+        scope: {
+          model: '=ngModel',
+        },
+        link: function($scope, element, attrs){
+          var img = null;
+          var  canvas = null;
+          var imgId = 'rotateInput.'+ $scope.model;
+          var canvasId = 'rotateCanvas.'+ $scope.model;
+          $scope.resultImage = "";
+          // UPLOAD IMAGE
+          // $scope.rotateUpload = function(){
+          //   console.log('UPLOAD');
+          // }
+          $scope.uploadNow = function (image) {
+              $scope.uploadStatus = "uploading";
+
+              var Template = this;
+              image.hide = true;
+              var formData = new FormData();
+              formData.append('file', image.file, image.name);
+              $http.post(uploadurl, formData, {
+                  headers: {
+                      'Content-Type': undefined
+                  },
+                  transformRequest: angular.identity
+              }).then(function (data) {
+                  data = data.data;
+                  console.log(data);
+                  $scope.uploadStatus = "uploaded";
+                  $scope.model = data.data[0];
+                  console.log($scope.model, 'model means blob')
+                  $timeout(function () {
+                      $scope.callback({
+                          'data': data.data[0]
+                      });
+                  }, 100);
+              });
+          };
+          // UPLOAD IMAGE END
+          // ROTATE FUNCTION
+          $scope.rotateImage = function(degree) {
+              if (document.getElementById(canvasId)) {
+                  var cContext = canvas.getContext('2d');
+                  // TAKE WIDTH AND HEIGHT YOU WANT TO SET FOR IMAGE
+                  var imgWidth, imgHeight;
+                  var cw = $(img).width(),
+                      ch = $(img).height(),
+                      cx = 0,
+                      cy = 0;
+
+                  //   Calculate new canvas size and x/y coorditates for image
+                    switch (degree) {
+                      case 90:
+                          cw = $(img).height();
+                          ch = $(img).width();
+                          cy = $(img).height() * (-1);
+                          console.log('90', cw, ch, cx, cy, img);
+                          break;
+                      case 180:
+                          cx = $(img).width() * (-1);
+                          cy = $(img).height() * (-1);
+                          console.log('180', cw, ch, cx, cy, img);
+                          break;
+                      case 270:
+                          cw = $(img).height();
+                          ch = $(img).width();
+                          cx = $(img).width() * (-1);
+                          console.log('270', cw, ch, cx, cy, img);
+                          break;
+                  }
+
+                  //  Rotate image
+                  canvas.setAttribute('width', cw);
+                  canvas.setAttribute('height', ch);
+                  cContext.rotate(degree * Math.PI / 180);
+                  cContext.drawImage(img, cx, cy);
+                  var result = canvas.toDataURL("image/png");
+                  $scope.resultImage = result;
+              }
+          }
+          // ROTATE FUNCTION END
+          // $scope.$on('$viewContentLoaded', function () {
+            $timeout(function () {
+              //  Initialize image and canvas
+
+              console.log("img", imgId, 'canvaa', canvasId);
+              img = document.getElementById(imgId);
+              canvas = document.getElementById(canvasId);
+
+              if (!canvas || !canvas.getContext) {
+                  canvas.parentNode.removeChild(canvas);
+              } else {
+                  img.style.position = 'absolute';
+                  img.style.visibility = 'hidden';
+              }
+              $scope.rotateImage(0);
+            }, 100);
+          // })
+        }
+      }
+    })
+    // ROTATE IMAGE END
 
 
 ;

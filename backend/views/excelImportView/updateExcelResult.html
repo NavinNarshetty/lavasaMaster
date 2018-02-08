@@ -23,24 +23,10 @@
           <option  value="swiss-league">Swiss League</option>
         </select>
     </div>
-    <div class="col-md-12 drop-1" ng-if="form.resultType=='knockout'||form.resultType=='league-cum-knockout'">
-        <label>Result Formats*</label>
-        <select class="form-control" ng-model="form.resultFormat">
-          <option  value="combat">Combat</option>
-          <option  value="racquet">Racquet</option>
-          <option  value="basketball">Basketball</option>
-          <option  value="volleyball">Volleyball</option>
-          <option  value="handball">Handball</option>
-          <option  value="waterpolo">WaterPolo</option>
-          <option  value="fencing">Fencing</option>
-          <option  value="football">Football</option>
-          <option  value="hockey">Hockey</option>
-          <option  value="kabaddi">Kabaddi</option>
-        </select>
-    </div>
     <div class="col-md-12 drop-2" ng-if="form.resultType=='knockout'">
         <label>Knockout Range</label>
         <select class="form-control" ng-model="form.range">
+          <option value=0>0</option>
           <option  value=2>2</option>
           <option  value=4>4</option>
           <option  value=8>8</option>
@@ -60,6 +46,13 @@
                         <!--<option  value="league">League</option>-->
                     </select>
     </div>
+    <div class="col-md-12 drop-2">
+        <label>Video Upload</label>
+        <select class="form-control" ng-model="form.video">
+                        <option  value="yes">YES</option>
+                        <option  value="no">NO</option>
+                    </select>
+    </div>
 
     <!--<form name="detailForm" role="form" class="sec" ng-if="form.resultType=='knockout'">
       <div class="">
@@ -72,7 +65,7 @@
         </div>
       </div>
     </form>-->
-    <div class="col-md-12 drop-2" ng-if="form.resultType!='qualifying-knockout'&&form.resultType!='qualifying-round'&&form.resultType!='league-cum-knockout'&&form.resultType!='swiss-league'">
+    <div class="col-md-12 drop-2" ng-if="form.video!='yes'&&form.resultType!='qualifying-knockout'&&form.resultType!='qualifying-round'&&form.resultType!='swiss-league'">
         <label>Sport Type*</label>
         <select class="form-control " ng-model="form.playerType ">
           <option  value="team">Team</option>

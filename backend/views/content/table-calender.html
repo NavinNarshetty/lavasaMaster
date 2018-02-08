@@ -1,0 +1,79 @@
+<div class="heading-sec">
+  <div class="row">
+    <div class="col-md-4 column">
+      <div class="heading-profile">
+        <h2>Table Calender</h2>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Table-->
+<div class=" panel-content ">
+  <div class="row ">
+    <div class="col-md-12 ">
+      <div class="widget ">
+        <div class="table-area ">
+          <div class="widget-title ">
+            <div class="pull-right">
+              <!--<div class="pull-right">-->
+              <!-- <form class="search-form mr-form ">
+                <input type="text " ng-change="searchInTable(search) " placeholder="Search Here...
+                               " ng-model="search" />
+              </form> -->
+              <a class="btn btn-success" ui-sref="detail-calender">
+                   Create
+                </a>
+            </div>
+            <h3>List of Calender<span class="tableTotal ">(Total : {{totalItems}}) </span></h3>
+          </div>
+          <div class="table-responsive ">
+            <!--<div class="table-responsive " ng-show="totalItems>0 ">-->
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>
+                    Date/Month
+                  </th>
+                  <th>
+                    Card-Format
+                  </th>
+                  <th>Color</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!--<tr ng-repeat="item in items">-->
+                <tr ng-repeat="item in items track by $index">
+                  <!--<tr>-->
+                  <td>{{($index + 1)+((formData.page-1)*maxRow)}}</td>
+                  <!--<td>{{($index + 1)}}</td>-->
+                  <td>{{item.eventDate | date}}</td>
+                  <td>{{item.format}}</td>
+                  <td>{{item.color}}</td>
+                  <td>
+                    <a class="btn btn-primary" target="_blank" ui-sref="detail-calender({id:item._id})">
+                        <i class="fa fa-pencil"></i> Edit
+                      </a>
+                    <a class="btn btn-danger" ng-click="confDel(item._id)">
+                        <i class="fa fa-trash"></i> Delete
+                      </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tableData " ng-show="totalItems===0 ">
+            <h5>No data found</h5>
+          </div>
+          <div class="tableData " ng-show="totalItems===undefined ">
+            <h5>Loading Data</h5>
+          </div>
+          <ul ng-if="totalItems" ng-change="viewTable()" uib-pagination total-items="totalItems" items-per-page="maxRow" ng-model="formData.page"
+            max-size="template.pageMax" class="pagination-sm" boundary-links="true " force-ellipses="true "></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

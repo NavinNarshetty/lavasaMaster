@@ -19,7 +19,7 @@
                 <input type="text " ng-change="searchInTable(search) " placeholder="Search Here...
                              " ng-model="search" />
               </form>
-              <a class="btn btn-success" ng-click="generateExcel()">Excel Export</a>
+              <a class="btn btn-success" ng-click="loginPopup('','excel')">Excel Export</a>
               <!--<a class="btn btn-success" ui-sref="detailfirstcategory">
                  Create
               </a>-->
@@ -35,6 +35,9 @@
                   <th>SFA Id</th>
                   <th>
                     Athlete Name
+                  </th>
+                  <th>
+                    School
                   </th>
                   <th>
                     Sports Name
@@ -54,6 +57,8 @@
 
                   <td>{{item.athleteId.sfaId}}</td>
                   <td>{{item.athleteId.firstName}} {{item.athleteId.middleName}} {{item.athleteId.surname}} </td>
+                  <td ng-if="!item.athleteId.atheleteSchoolName">{{item.athleteId.school.name}}</td>
+                  <td ng-if="item.athleteId.atheleteSchoolName">{{item.athleteId.atheleteSchoolName}}</td>
                   <td>{{item.sportsListSubCategory.name}} </td>
 
                   <td>{{item.createdBy}}</td>

@@ -7,6 +7,7 @@ module.exports = [
   'bower_components/smart-app-banner/smart-app-banner.js',
   "bower_components/moment/min/moment.min.js",
   "bower_components/swiper/dist/js/swiper.jquery.js",
+  "bower_components/bootstrap-select/dist/js/bootstrap-select.min.js",
 
 
   //Angular Libs
@@ -28,6 +29,7 @@ module.exports = [
   "bower_components/angular-promise-buttons/dist/angular-promise-buttons.js",
   "bower_components/angular-ui-select/dist/select.min.js",
   "bower_components/cleave.js/dist/cleave-angular.min.js",
+  'bower_components/jStorage/jstorage.min.js',
 
   //App.js
   'digital/js/app.js',
@@ -63,6 +65,7 @@ module.exports = [
   'digital/js/controllers/scorefootball-controller.js',
   'digital/js/controllers/scorevolleyball-controller.js',
   'digital/js/controllers/digitalhome.js',
+  'digital/js/controllers/digitalattendance.js',
   'digital/js/controllers/knockout.js',
   'digital/js/controllers/scorehockey-controller.js',
   'digital/js/controllers/scorekabaddi-controller.js',
@@ -71,4 +74,17 @@ module.exports = [
   "digital/js/services/resultsportinitialization.js",
   'digital/js/controllers/league-knockoutController.js',
   'digital/js/controllers/scoreteamcombat-controller.js',
+  'digital/js/controllers/swissleague.js',
+  'digital/js/controllers/time-trialController.js',
+  'digital/js/controllers/qf-finalController.js',
+  'digital/js/controllers/qf-knockoutController.js',
+  'digital/js/controllers/heats-Controller.js',
+  'digital/js/controllers/scoringimages-controller.js',
+  'digital/js/controllers/scorequalifying-controller.js',
+  'digital/js/controllers/scoreleague-controller.js',
+  'digital/js/controllers/attendancesheet-controller.js',
+  'digital/js/controllers/attendancesheet-team-controller.js',
+  'digital/js/controllers/creatematchheats-controller.js',
+  'digital/js/controllers/creatematchweight-controller.js',
+  'digital/js/controllers/addweight-controller.js',
 ];

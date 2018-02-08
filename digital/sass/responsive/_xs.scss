@@ -1,5 +1,110 @@
  @media (max-width: $screen-xs-max) {
      // Mobile
+     // MATCH CENTER
+    .matchcenter-modal{
+      .racquet-setscore .scoring-set{
+        &:last-child{
+          .setpointlabel{
+            display: block;
+          }
+        }
+      }
+      .setpoint-element{
+        margin: 5px 0;
+      }
+      .matchplayer-image{
+        width: 40px;
+        height: 40px;
+      }
+      .score-number{
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+      }
+      .scoringset-school{
+        width: auto;
+        display: block;
+        padding: 0 10px;
+      }
+      .matchwinner{
+        position: static;
+        font-size: 14px;
+        padding: 0 10px;
+        p{
+          margin: 0;
+        }
+      }
+      .matchstart-header{
+        padding-left: 15px;
+      }
+      .matchcenter-sporticon{
+        width: 50px;
+        display: inline-block;
+        position: static;
+        vertical-align: middle;
+      }
+      .matchcenter-heading{
+        width: calc(100% - 55px);
+        display: inline-block;
+        font-size: 14px;
+        vertical-align: middle;
+      }
+      .matchwinner-title{
+        font-size: 14px;
+      }
+    }
+    // MATCH CENTER END
+    // TEAM MATCH CENTER
+    .teammatchcenter-modal{
+      .modal-container{
+        padding: 0;
+      }
+       .matchstart-header{
+         padding-left: 15px;
+       }
+       .matchwinner{
+         position: static;
+         font-size: 14px;
+         p{
+           margin: 0;
+         }
+       }
+       .matchcenter-teamschool{
+         width: auto;
+         display: block;
+       }
+       .matchcenter-sporticon{
+         width: 50px;
+         display: inline-block;
+         position: static;
+         vertical-align: middle;
+       }
+       .matchcenter-heading{
+         width: calc(100% - 55px);
+         display: inline-block;
+         font-size: 14px;
+         vertical-align: middle;
+       }
+       .matchwinner-title{
+         font-size: 14px;
+       }
+       .matchcenter-teamcol{
+         &:nth-child(even){
+           .team-formationholder{
+              padding-left: 25px;
+              padding-right: 0px;
+              text-align: left;
+           }
+           .team-formationicon{
+             left: 0;
+             right: auto;
+           }
+         }
+       }
+    }
+    // TEAM MATCH CENTER END
+
+    // TABLE FLIP
 	.table-flip table { width: 100%; border-collapse: collapse; border-spacing: 0; }
 
 	.table-flip th,
@@ -22,4 +127,7 @@
 	.table-flip tbody tr { border-left: 1px solid #babcbf; }
 	.table-flip th:last-child,
 	.table-flip td:last-child { border-bottom: 1px solid #babcbf; }
+  // TABLE FLIP END
+  
+  //Mobile
  }

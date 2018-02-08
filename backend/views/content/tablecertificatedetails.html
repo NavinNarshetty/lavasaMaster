@@ -38,6 +38,9 @@
                                         Institution Type
                                     </th>
                                     <th>
+                                        Sport Name
+                                    </th>
+                                    <th>
                                         Banner
                                     </th>
                                     <th>Actions</th>
@@ -50,6 +53,7 @@
                                     <td>{{($index + 1)+((formData.page-1)*maxRow)}}</td>
                                     <td>{{item.city}}</td>
                                     <td>{{item.institutionType}}</td>
+                                    <td>{{item.sportsListSubCategory.name}}</td>
                                     <td>
                                         <div class="" style="width:400px;height:auto">
                                             <img src="{{item.banner | uploadpath}}" alt="" class="img-responsive">

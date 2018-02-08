@@ -282,6 +282,17 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'MatchesCtrl'
         })
+        //Event pdf
+        .state('tablepdf', {
+            url: "/tablepdf",
+            templateUrl: "views/template.html",
+            controller: 'TablePdfCtrl'
+        })
+        .state('detailpdf', {
+            url: "/detailpdf/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailPdfCtrl'
+        })
         //detailmatches
         .state('detailmatches', {
             url: "/detailmatches",
@@ -334,9 +345,14 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'MedalsCtrl'
         })
+        .state('media', {
+            url: "/media",
+            templateUrl: "views/template.html",
+            controller: 'MediaCtrl'
+        })
         //detailmedal
         .state('detailmedal', {
-            url: "/detailmedal",
+            url: "/detailmedal/:id",
             templateUrl: "views/template.html",
             controller: 'DetailMedalCtrl'
         })
@@ -348,7 +364,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
         //galleryDetail
         .state('galleryDetail', {
-            url: "/gallerydetail",
+            url: "/gallerydetail/:id",
             templateUrl: "views/template.html",
             controller: 'DetailGalleryCtrl'
         })
@@ -388,10 +404,134 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'DetailCertificateDetailsCtrl'
         })
-        .state('oldresultupdate', {
-            url: "/oldresultupdate",
+        // table calender
+        .state('calender', {
+            url: "/calender",
             templateUrl: "views/template.html",
-            controller: 'OldMatchesCtrl'
+            controller: 'TableCalenderCtrl'
+        })
+        // detail calender
+        .state('detail-calender', {
+            url: "/detail-calender/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailCalenderCtrl'
+        })
+        // table sponsor
+        .state('sponsor', {
+            url: "/sponsor",
+            templateUrl: "views/template.html",
+            controller: 'SponsorCtrl'
+        })
+        // detail sponsor
+        .state('detail-sponsor', {
+            url: "/detail-sponsor/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailSponsorCtrl'
+        })
+        // sponsor card
+        .state('sponsorcard', {
+            url: "/sponsorcard",
+            templateUrl: "views/template.html",
+            controller: 'SponsorCardCtrl'
+        })
+        // detail sponsor card
+        .state('detail-sponsorcard', {
+            url: "/detail-sponsorcard/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailSponsorCardCtrl'
+        })
+        // special award banner
+        .state('specialaward-banner', {
+            url: "/specialaward-banner",
+            templateUrl: "views/template.html",
+            controller: 'SpecialAwardBannerCtrl'
+        })
+        // detail special award banner
+        .state('detailspecialaward-banner', {
+            url: "/detailspecialaward-banner/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailSpecialAwardBannerCtrl'
+        })
+        // special award
+        .state('specialaward', {
+            url: "/specialaward",
+            templateUrl: "views/template.html",
+            controller: 'SpecialAwardCtrl'
+        })
+        // detail special award
+        .state('detailspecialaward', {
+            url: "/detailspecialaward/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailSpecialAwardCtrl'
+        })
+        // special award detail
+        .state('specialaward-detail', {
+            url: "/specialaward-detail",
+            templateUrl: "views/template.html",
+            controller: 'SpecialAwardDetailCtrl'
+        })
+        // DETAIL special award detil
+        .state('detailawardspecial', {
+            url: "/detailawardspecial/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailAwardSpecialCtrl'
+        })
+        // Rising award
+        .state('risingstar', {
+            url: "/risingstar",
+            templateUrl: "views/template.html",
+            controller: 'RisingCtrl'
+        })
+        // Detail Rising
+        .state('detail-rising', {
+            url: "/detail-rising/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailRisingCtrl'
+        })
+        // Detail schedule
+        .state('detail-championschedule', {
+            url: "/detail-championschedule/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailScheduleCtrl'
+        })
+        .state('championschedule', {
+            url: "/championschedule",
+            templateUrl: "views/template.html",
+            controller: 'ChampionScheduleCtrl'
+        })
+        //additional payment
+        .state('additional-payment', {
+            url: "/additional-payment",
+            templateUrl: "views/template.html",
+            controller: 'AdditionalPaymentCtrl'
+        })
+        //detail additional payment
+        .state('detailadditionalpayment', {
+            url: "/detailadditionalpayment/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailAdditionalPaymentCtrl'
+        })
+        // ARCHIVE
+        .state('archive', {
+            url: "/archive",
+            templateUrl: "views/template.html",
+            controller: 'ArchiveCtrl'
+        })
+        .state('detailarchive', {
+            url: "/detailarchive/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailArchiveCtrl'
+        })
+        // HIGHLIGHTS VIDEO
+        .state('highlight-video', {
+            url: "/highlight-video",
+            templateUrl: "views/template.html",
+            controller: 'HighlightvideoCtrl'
+        })
+        .state('detailhighlights', {
+            url: "/detailhighlights/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailHighlightCtrl'
         })
 
         .state('jagz', {

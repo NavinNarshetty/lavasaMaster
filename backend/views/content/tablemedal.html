@@ -14,35 +14,77 @@
             <div class="widget ">
                 <div class="table-area ">
                     <div class="widget-title ">
-                        <div class="pull-right">
-                            <!--<div class="pull-right">-->
-                            <form class="search-form mr-form ">
-                                <input type="text " ng-change="searchInTable(search) " placeholder="Search Here...
-                             " ng-model="search" />
-                            </form>
-                            <a class="btn btn-success" ui-sref="detailmedal">
-                 Create
-              </a>
-                        </div>
                         <h3>List of Medals<span class="tableTotal ">(Total : {{totalItems}}) </span></h3>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <div class="mtp5">
+                                        <div class="dropdown">
+                                            <button class="btn default btn-md dropdown-toggle" type="button" data-toggle="dropdown">Filter
+                                                    <span class="caret"></span></button>
+                                            <ul class="dropdown-menu cur">
+                                                <li><input type="radio" id="radio8" ng-model="formData.type" ng-change="changeAll()"
+                                                        value="">
+                                                    <label for="radio8">All</label>
+                                                </li>
+                                                <li><input type="radio" id="radio2" ng-model="formData.type" value="Sport" ng-change="changeInput()">
+                                                    <label for="radio2">Sport</label>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="row" ng-if="formData.type != ''">
+                                            <div class="col-md-6 mtp5">
+                                                <input type="text" ng-model="formData.input" class="form-control" placeholder="Enter {{formData.type}}">
+                                            </div>
+                                            <div class="col-md-4 mtp5">
+                                                <button class="btn btn-sm school" type="button" ng-click="viewTable(formData)">Go</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="pull-right">
+                                    <!--<div class="pull-right">-->
+                                    <form class="search-form mr-form ">
+                                        <input type="text " ng-change="searchInTable(search) " placeholder="Search Here...
+                                                 " ng-model="search" />
+                                    </form>
+                                    <a class="btn btn-success" ui-sref="detailmedal">
+                                     Create
+                                  </a>
+                                    <a class="btn btn-success" ng-click="generateExcel()">Export</a>
+                                    <a class="btn btn-success" ng-click="updateTable()">Update Rank</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="table-responsive ">
                         <!--<div class="table-responsive " ng-show="totalItems>0 ">-->
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>
+                                    <!-- <th>#</th> -->
+                                    <!-- <th>
                                         Name
-                                    </th>
+                                    </th> -->
                                     <th>
                                         Medal Type
                                     </th>
-                                    <th>
+                                    <!-- <th>
                                         School
-                                    </th>
+                                    </th> -->
                                     <th>
                                         Sport
+                                    </th>
+                                    <th>
+                                        Player
+                                    </th>
+                                    <th>
+                                        Team
+                                    </th>
+                                    <th>
+                                        School
                                     </th>
                                     <th>Actions</th>
                                 </tr>
@@ -51,17 +93,50 @@
                                 <!--<tr ng-repeat="item in items">-->
                                 <tr ng-repeat="item in items">
                                     <!--<tr>-->
-                                    <td>{{($index + 1)+((formData.page-1)*maxRow)}}</td>
+                                    <!-- <td>{{($index + 1)+((formData.page-1)*maxRow)}}</td> -->
                                     <!--<td>{{($index + 1)}}</td>-->
-                                    <td>{{item.name}}</td>
+                                    <!-- <td>{{item.name}}</td> -->
                                     <td>
-                                        {{item.medalType}}
+                                        {{item.medalType|firstcapitalize}}
                                     </td>
+                                    <!-- <td>
+                                        {{item.school.schoolName}}
+                                    </td> -->
                                     <td>
-                                        {{item.school}}
+                                        {{item.name}}
                                     </td>
-                                    <td>
-                                        {{item.sport}}
+                                    <td ng-if="item.player.length > 0">
+                                        <div ng-if="item.player.length == 1" ng-repeat="player in item.player">
+                                            {{player.sfaId}} - {{player.firstName}} {{player.middleName}} {{player.surname}}
+                                        </div>
+                                        <div ng-if="item.player.length > 1" ng-repeat="player in item.player">
+                                            {{player.sfaId}} - {{player.firstName}} {{player.middleName}} {{player.surname}}<br>
+                                        </div>
+                                    </td>
+                                    <td ng-if="item.player.length <= 0">
+                                        -
+                                    </td>
+                                    <td ng-if="item.team.length > 0">
+                                        <div ng-if="item.team.length == 1" ng-repeat="team in item.team">
+                                            {{team.teamId}} - {{team.schoolName}}
+                                        </div>
+                                        <div ng-if="item.team.length > 1" ng-repeat="team in item.team">
+                                            {{team.teamId}} - {{team.schoolName}}<br>
+                                        </div>
+                                    </td>
+                                    <td ng-if="item.team.length <= 0">
+                                        -
+                                    </td>
+                                    <td ng-if="item.school.length > 0">
+                                        <div ng-if="item.school.length == 1" ng-repeat="school in item.school">
+                                            {{school.schoolName}}
+                                        </div>
+                                        <div ng-if="item.school.length > 1" ng-repeat="school in item.school">
+                                            {{school.schoolName}}<br>
+                                        </div>
+                                    </td>
+                                    <td ng-if="item.school.length <= 0">
+                                        -
                                     </td>
                                     <td>
                                         <a class="btn btn-primary" target="_blank" ui-sref="detailmedal({id:item._id})">
