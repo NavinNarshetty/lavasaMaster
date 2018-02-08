@@ -11,6 +11,7 @@ var controller = {
         }
 
     },
+
     saveMedalsTeam: function (req, res) {
         if (req.body) {
             OldMedal.saveMedalsTeam(req.body, res.callback);
