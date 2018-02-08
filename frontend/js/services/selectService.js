@@ -1,4 +1,4 @@
-myApp.service('selectService', function ($http, TemplateService, $state, toastr, NavigationService, loginService, errorService) {
+myApp.service('selectService', function ($http, TemplateService, $state, toastr, NavigationService, loginService, errorService, $timeout) {
     this.team = [];
     this.detail = null;
     this.sportsId = null; // Req in api For sending data at backend eg:5864..69
@@ -129,9 +129,9 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
     };
 
     this.getAgeGroupByAthelete = function (athelete, confirmPageKey, events) {
-        console.log("confirmPageKey",confirmPageKey);
-        console.log("events",events);
-        
+        console.log("confirmPageKey", confirmPageKey);
+        console.log("events", events);
+
         var birthdate = moment(athelete.dob);
         var st = this.sportName;
 
@@ -151,11 +151,11 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                     }
                 });
             });
-           console.log("event",event);
+            console.log("event", event);
             event = _.reject(event, function (n) {
                 return n.data.length == 0;
             });
-            console.log("event",event);
+            console.log("event", event);
             return event;
         }
 
@@ -228,14 +228,14 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                 n.data = _.filter(n.data, ['eventName', 'Kata']);
             });
             athelete.eventKata = getAgeGroups(kata);
-            console.log("eventKata",athelete.eventKata);
+            console.log("eventKata", athelete.eventKata);
             // kumite
             _.each(kumite, function (n, i) {
                 n.data = _.filter(n.data, ['eventName', 'Kumite']);
             });
             athelete.eventKumite = getAgeGroups(kumite);
-            console.log("eventKumite",athelete.eventKumite);
-            
+            console.log("eventKumite", athelete.eventKumite);
+
             athelete.sport = [];
             athelete.eventKata.unshift({
                 '_id': 'None',
@@ -284,7 +284,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
         //         }]
         //     });
         //     console.log("athelete.eventSabre",athelete.eventSabre);
-            
+
 
         //     // foil
         //     _.each(foil, function (n, i) {
@@ -298,7 +298,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
         //         }]
         //     });
         //     console.log("athelete.eventFoil",athelete.eventFoil);
-            
+
 
         //     // console.log(athelete.eventFoil, "foil");
         //     athelete.sport = [];
@@ -315,8 +315,8 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                 n.data = _.filter(n.data, ['eventName', 'Epee']);
             });
             athelete.eventEpee = getAgeGroups(epee);
-            athelete.eventEpee = _.map(athelete.eventEpee,function(n){
-                n._id = n._id+"-Epee"
+            athelete.eventEpee = _.map(athelete.eventEpee, function (n) {
+                n._id = n._id + "-Epee"
                 return n;
             });
             athelete.eventEpee.unshift({
@@ -325,15 +325,15 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                     'sport': null
                 }]
             });
-            console.log("athelete.eventEpee",athelete.eventEpee);
+            console.log("athelete.eventEpee", athelete.eventEpee);
 
             // sabre
             _.each(sabre, function (n, i) {
                 n.data = _.filter(n.data, ['eventName', 'Sabre']);
             });
             athelete.eventSabre = getAgeGroups(sabre);
-            athelete.eventSabre = _.map(athelete.eventSabre,function(n){
-                n._id = n._id+"-Sabre"
+            athelete.eventSabre = _.map(athelete.eventSabre, function (n) {
+                n._id = n._id + "-Sabre"
                 return n;
             });
             // athelete.eventSabre.unshift({
@@ -342,16 +342,16 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
             //         'sport': null
             //     }]
             // });
-            console.log("athelete.eventSabre",athelete.eventSabre);
-            
+            console.log("athelete.eventSabre", athelete.eventSabre);
+
 
             // foil
             _.each(foil, function (n, i) {
                 n.data = _.filter(n.data, ['eventName', 'Foil']);
             });
             athelete.eventFoil = getAgeGroups(foil);
-            athelete.eventFoil = _.map(athelete.eventFoil,function(n){
-                n._id = n._id+"-Foil"
+            athelete.eventFoil = _.map(athelete.eventFoil, function (n) {
+                n._id = n._id + "-Foil"
                 return n;
             });
             // athelete.eventFoil.unshift({
@@ -360,10 +360,10 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
             //         'sport': null
             //     }]
             // });
-            console.log("athelete.eventFoil",athelete.eventFoil);
+            console.log("athelete.eventFoil", athelete.eventFoil);
             athelete.events = _.concat(athelete.eventEpee, athelete.eventSabre, athelete.eventFoil);
-            console.log("athelete.events",athelete.events);
-            
+            console.log("athelete.events", athelete.events);
+
 
             // console.log(athelete.eventFoil, "foil");
             athelete.sport = [];
@@ -482,10 +482,10 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
 
     this.confirmSelection = function (data) {
         console.log("save");
-        console.log("data",data);
-        console.log("this.team",this.team);
-        var formData =_.cloneDeep(this.team);
-        console.log("formData",formData);
+        console.log("data", data);
+        console.log("this.team", this.team);
+        var formData = _.cloneDeep(this.team);
+        console.log("formData", formData);
         switch (this.sportType) {
             case "K":
                 this.findOverAllFormValidation();
@@ -523,13 +523,13 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                 var st = this.sportName
                 if (st == 'Judo' || st == 'Boxing' || st == 'Taekwondo' || st == 'Sport MMA' || st == 'Wrestling') {
                     this.findOverAllFormValidation();
-                    console.log("this.team[0].sport[0].data",this.team[0].sport[0].data);
+                    console.log("this.team[0].sport[0].data", this.team[0].sport[0].data);
                     _.each(formData, function (n, i) {
                         arr = _.filter(n.sport[0].data, function (o, i) {
-                            return !_.has(o,'weight')
+                            return !_.has(o, 'weight')
                         });
-                        console.log("arr",arr);
-                        n.sport = _.map(arr,'sport');
+                        console.log("arr", arr);
+                        n.sport = _.map(arr, 'sport');
                     });
                 } else {
                     this.findOverAllFormValidation();
@@ -546,7 +546,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                 n.athleteId = n._id
                 formData[i] = _.pick(n, ['sport', 'sportsListSubCategory', 'athleteId']);
             });
-            console.log("finalData",formData);
+            console.log("finalData", formData);
             this.saveData(formData, data);
         } else {
             // console.log("Some Fields are Missing");
@@ -623,15 +623,15 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                 }
                 console.log("arr", arr);
                 // athelete.isValidSelection = (arr.length == 0 || ((arr[0] && arr[0].data && arr[0].data[0].sport == null) && ((arr[1] && !arr[1].sport) || (arr[1] && arr[1].sport == null)))) ? false : ((arr.length >= 1 && arr[0] && arr[0].data && arr[0].data[0] && arr[0].data[0].sport != null) || ((arr.length >= 1 && arr[0] && arr[0].data[0].sport == null) && (arr.length >= 1 && arr[1] && arr[1].sport != null)) || ((arr.length >= 1 && arr[0] && arr[0].data[0] && arr[0].data[0].sport != null) && (arr.length >= 1 && arr[1] && arr[1].sport != null))) ? true : false;
-                  
-                console.log("(arr.length >= 1 && arr[0] && arr[0].data && arr[0].data[0] && arr[0].data[0].sport != null)",(arr.length >= 1 && arr[0] && arr[0].data && arr[0].data[0] && arr[0].data[0].sport != null));
-                console.log("((arr.length >= 1 && (!arr[0] || arr[0] && arr[0].data[0].sport == null)) && (arr.length >= 1 && arr[1] && arr[1].sport != null))",((arr.length >= 1 && (!arr[0] || arr[0] && arr[0].data[0].sport == null)) && (arr.length >= 1 && arr[1] && arr[1].sport != null)));
-                console.log("((arr.length >= 1 && arr[0] && arr[0].data[0] && arr[0].data[0].sport != null) && (arr.length >= 1 && arr[1] && arr[1].sport != null)",((arr.length >= 1 && arr[0] && arr[0].data[0] && arr[0].data[0].sport != null) && (arr.length >= 1 && arr[1] && arr[1].sport != null)));
-                
-                
+
+                console.log("(arr.length >= 1 && arr[0] && arr[0].data && arr[0].data[0] && arr[0].data[0].sport != null)", (arr.length >= 1 && arr[0] && arr[0].data && arr[0].data[0] && arr[0].data[0].sport != null));
+                console.log("((arr.length >= 1 && (!arr[0] || arr[0] && arr[0].data[0].sport == null)) && (arr.length >= 1 && arr[1] && arr[1].sport != null))", ((arr.length >= 1 && (!arr[0] || arr[0] && arr[0].data[0].sport == null)) && (arr.length >= 1 && arr[1] && arr[1].sport != null)));
+                console.log("((arr.length >= 1 && arr[0] && arr[0].data[0] && arr[0].data[0].sport != null) && (arr.length >= 1 && arr[1] && arr[1].sport != null)", ((arr.length >= 1 && arr[0] && arr[0].data[0] && arr[0].data[0].sport != null) && (arr.length >= 1 && arr[1] && arr[1].sport != null)));
+
+
                 athelete.isValidSelection = (arr.length == 0 || ((!arr[0] || arr[0] && arr[0].data && arr[0].data[0].sport == null) && ((arr[1] && !arr[1].sport) || (arr[1] && arr[1].sport == null)))) ? false : ((arr.length >= 1 && arr[0] && arr[0].data && arr[0].data[0] && arr[0].data[0].sport != null) || ((arr.length >= 1 && (!arr[0] || arr[0] && arr[0].data[0].sport == null)) && (arr.length >= 1 && arr[1] && arr[1].sport != null)) || ((arr.length >= 1 && arr[0] && arr[0].data[0] && arr[0].data[0].sport != null) && (arr.length >= 1 && arr[1] && arr[1].sport != null))) ? true : false;
-                console.log("athelete.isValidSelection",athelete.isValidSelection);
-                   break;
+                console.log("athelete.isValidSelection", athelete.isValidSelection);
+                break;
             case "FA":
                 if (this.sportName == 'Fencing') {
                     var arr = _.compact(athelete.sport);
@@ -673,6 +673,15 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                 } else {
                     var arr = _.compact(athelete.sport);
                     athelete.isValidSelection = (arr.length >= 1);
+
+                    // scope.$on('$viewContentLoaded', function (event) {
+                    //     $timeout(function () {
+                    //         console.log("hua kya");
+                    //         $('.selectpicker').selectpicker()
+                    //     }, 200);
+                    // })
+
+
                 }
                 break;
             case "I":

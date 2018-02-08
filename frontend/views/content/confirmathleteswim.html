@@ -4,7 +4,9 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="Heading">
                     <h1 class="text-center school">Sports Registration Form</h1>
-                    <h1 class="text-center text-uppercase checkTeam"><span>Check & Confirm</span></h1>
+                    <h1 class="text-center text-uppercase checkTeam">
+                        <span>Check & Confirm</span>
+                    </h1>
                 </div>
             </div>
         </div>
@@ -24,7 +26,9 @@
                         </div>
                     </div>
                     <ul class="list-inline">
-                        <li ng-click="logoutCandidate();" ng-if="detail.isLoggedIn"><a>Logout</a></li>
+                        <li ng-click="logoutCandidate();" ng-if="detail.isLoggedIn">
+                            <a>Logout</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -43,8 +47,8 @@
                                                 <div class="col-md-7 col-sm-8 col-xs-12">
                                                     <!-- <input type="text" class="form-control" ng-model="formData.schoolName" id="inputEmail3" readonly> -->
                                                     <select class="form-control changeBorder" id="inputEmail3">
-                                               <option value="">{{formData.schoolName}}</option>
-                                            </select>
+                                                        <option value="">{{formData.schoolName}}</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -54,7 +58,9 @@
                                     </div>
                                     <div class="col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-10 col-xs-12">
                                         <div class="col-md-1 col-sm-1 col-xs-12">
-                                            <p class="note note-size"><strong>Note:</strong></p>
+                                            <p class="note note-size">
+                                                <strong>Note:</strong>
+                                            </p>
                                         </div>
                                         <div class="col-md-11 col-sm-11 col-xs-12">
                                             <p class="note" ng-if="selectService.sportName == 'Athletics' || selectService.sportName == 'athletics'">1. An athlete can select a maximum of 2 events.</p>
@@ -106,12 +112,12 @@
                                                                 <td ng-if="selectService.sportName!=='Shooting'">
                                                                     <div>
                                                                         <select class="form-control" ng-init="selectService.isValidSelection(athelete)" ng-model="athelete.metresSwim" ng-options="age._id for age in athelete.ageGroups |orderBy:'_id' track by age._id"
-                                                                            ng-change="selectService.isValidSelection(athelete);athelete.sport=[]">
+                                                                            ng-change="call(athelete);athelete.sport=[]">
                                                                         </select>
                                                                     </div>
                                                                 </td>
                                                                 <td ng-init="validate=(selectService.sportName=='Athletics')?true:false" ng-if="selectService.sportName!='Shooting'">
-                                                                    <pre>{{athelete.metresSwim.data | json}}</pre>
+                                                                    <!-- <pre>{{athelete.metresSwim.data | json}}</pre> -->
                                                                     <div class="custom-uiselect">
                                                                         <!-- <ui-select name="selectfilter" title="Select Event or Events" multiple="" id="selectfilter" theme="bootstrap" ng-model="athelete.sport"
                                                                             ng-change="selectService.isValidSelection(athelete)"
@@ -123,12 +129,12 @@
                                                                                 <span ng-bind-html="metre.eventName"></span>
                                                                             </ui-select-choices>
                                                                         </ui-select> -->
-                                                                        <!-- <pre>{{metre | json}}</pre> -->
-                                                                        <select class="selectpicker form-control" multiple ng-init="selectService.isValidSelection(athelete)" ng-model="athelete.sport"
-                                                                            ng-required="" ng-options="metre.sport as metre.eventName for metre  in athelete.metresSwim.data"
-                                                                            title="Select Event" ng-change="selectService.isValidSelection(athelete)"
-                                                                            data-selected-text-format="count > 2" data-size="3">
-                                                                        </select>
+                                                                        <pre>{{obj.qwerty | json}}</pre>
+                                                                            <select class="selectpicker form-control" multiple ng-init="selectService.isValidSelection(athelete)" ng-model="athelete.sport"
+                                                                                ng-options="metre.sport as metre.eventName for metre in athelete.metresSwim.data"
+                                                                                title="Select Event" ng-change="selectService.isValidSelection(athelete)"
+                                                                                data-selected-text-format="count > 2" data-size="3">
+                                                                            </select>
                                                                     </div>
                                                                 </td>
                                                                 <td ng-init="validate=(selectService.sportName=='Athletics')?true:false" ng-if="selectService.sportName==='Shooting'">
@@ -250,7 +256,9 @@
                                     </div>
                                     <div class="col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-10 col-xs-12">
                                         <div class="col-md-1 col-sm-1 col-xs-12">
-                                            <p class="note note-size"><strong>Note:</strong></p>
+                                            <p class="note note-size">
+                                                <strong>Note:</strong>
+                                            </p>
                                         </div>
                                         <div class="col-md-11 col-sm-11 col-xs-12" ng-if="detail.userType === 'school'">
                                             <p class="note">Click ‘Confirm’ to register your athlete entry/entries. If you wish to make a

@@ -426,6 +426,21 @@ myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, Navigat
     $timeout(function () {
         $('.selectpicker').selectpicker()
     }, 200);
+    $scope.obj={
+        "qwerty":true
+    }
+    $scope.call=function(ath){
+        selectService.isValidSelection(ath);
+        $timeout(function () {
+            $('.selectpicker').selectpicker("refresh")
+        }, 200);
+       
+        // $scope.obj.qwerty = false;
+        // $timeout(function () {
+        // $scope.obj.qwerty = true;
+        // }, 2000);
+
+    }
 });
 
 
