@@ -7457,6 +7457,7 @@ var model = {
                                         function (callback) {
                                             var param = {};
                                             param.matchId = n["MATCH ID"];
+
                                             Match.getOne(param, function (err, matchData) {
                                                 if (err) {
                                                     callback(err, null);
@@ -7480,6 +7481,8 @@ var model = {
                                                                 matchData[result.resultVar] = complete[result.resultVar];
                                                                 var placeholder = {};
                                                                 placeholder[result.resultVar] = complete[result.resultVar];
+                                                                placeholder[video] = n["VIDEO"];
+                                                                placeholder[videoType] = n["VIDEO TYPE"];
                                                                 var matchObj = {
                                                                     $set: placeholder
                                                                 };
@@ -7755,6 +7758,7 @@ var model = {
                                 }
                                 obj["TEAM 1 Attendence"] = "";
                                 var sportName = mainData.sport.sportslist.name.toLowerCase();
+                                console.log("sportname", sportName.includes() == "volleyball");
                                 if (sportName == "basketball") {
                                     obj["TEAM 1 BASKET 1"] = "";
                                     obj["TEAM 1 BASKET 2"] = "";
@@ -7764,7 +7768,7 @@ var model = {
                                     obj["TEAM 1 BASKET 6"] = "";
                                     obj["TEAM 1 BASKET 7"] = "";
                                     obj["SCORE 1"] = "";
-                                } else if (sportName.includes() == "badminton" || sportName.includes() == "tennis" || sportName.includes() == "squash") {
+                                } else if (sportName.includes() == "badminton" || sportName.includes() == "tennis" || sportName.includes() == "squash" || sportName == "volleyball") {
                                     obj["TEAM 1 SET 1"] = "";
                                     obj["TEAM 1 SET 2"] = "";
                                     obj["TEAM 1 SET 3"] = "";
@@ -7794,7 +7798,7 @@ var model = {
                                     obj["TEAM 2 BASKET 6"] = "";
                                     obj["TEAM 2 BASKET 7"] = "";
                                     obj["SCORE 2"] = "";
-                                } else if (sportName.includes() == "badminton" || sportName.includes() == "tennis" || sportName.includes() == "squash") {
+                                } else if (sportName.includes() == "badminton" || sportName.includes() == "tennis" || sportName.includes() == "squash" || sportName == "volleyball") {
                                     obj["TEAM 2 SET 1"] = "";
                                     obj["TEAM 2 SET 2"] = "";
                                     obj["TEAM 2 SET 3"] = "";
@@ -7810,8 +7814,9 @@ var model = {
                                 obj["NO MATCH"] = "";
                                 obj["DRAW"] = "";
                                 obj["WINNER ID"] = "";
+                                obj["VIDEO"] = "";
+                                obj["VIDEO TYPE"] = "";
                                 callback(null, obj);
-
                             },
                             function (err, singleData) {
                                 callback(null, singleData);
@@ -7839,10 +7844,11 @@ var model = {
                                 }
                                 if (mainData.opponentsSingle.length > 0) {
                                     obj["SFAID 1"] = mainData.opponentsSingle[0].athleteId.sfaId;
+                                    console.log("opponentsSingle", mainData.opponentsSingle[0]);
                                     if (mainData.opponentsSingle[0].athleteId.atheleteSchoolName) {
                                         obj["SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.atheleteSchoolName;
                                     } else {
-                                        obj["SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.school.schoolName;
+                                        obj["SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.school.name;
                                     }
                                 } else {
                                     obj["SFAID 1"] = "";
@@ -7875,9 +7881,9 @@ var model = {
                                 if (mainData.opponentsSingle.length > 1) {
                                     obj["SFAID 2"] = mainData.opponentsSingle[1].athleteId.sfaId;
                                     if (mainData.opponentsSingle[1].athleteId.atheleteSchoolName) {
-                                        obj["SCHOOL 1"] = mainData.opponentsSingle[1].athleteId.atheleteSchoolName;
+                                        obj["SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.atheleteSchoolName;
                                     } else {
-                                        obj["SCHOOL 1"] = mainData.opponentsSingle[1].athleteId.school.schoolName;
+                                        obj["SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.school.name;
                                     }
                                 } else {
                                     obj["SFAID 2"] = "";
@@ -7909,8 +7915,9 @@ var model = {
                                 obj["NO MATCH"] = "";
                                 obj["DRAW"] = "";
                                 obj["WINNER ID"] = "";
+                                obj["VIDEO"] = "";
+                                obj["VIDEO TYPE"] = "";
                                 callback(null, obj);
-
                             },
                             function (err, singleData) {
                                 callback(null, singleData);
