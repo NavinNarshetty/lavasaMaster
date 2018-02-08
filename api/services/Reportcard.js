@@ -322,6 +322,8 @@ var model = {
 
                             ConfigProperty.findOne().exec(function (err, data) {
 
+                            sendObj.medalsTally.totalMedals = data.goldMedal + data.silverMedal + data.bronzeMedal;
+
                                 if (sendObj.medalsTally && sendObj.medalsTally.medal && sendObj.medalsTally.medal['gold'] && sendObj.medalsTally.medal['gold'].count) {
                                     sendObj.medalsTally.medal['gold'].totalGold = data['goldMedal'];
                                 } else {
@@ -434,168 +436,168 @@ var model = {
             }
         };
 
-        function calSportDetails(obj, callback) {
+        // function calSportDetails(obj, callback) {
 
-            async.waterfall([
+        //     async.waterfall([
 
-                function (callback) {
-                    obj.sport = _(obj.arr)
-                        .groupBy('sportsListSubCategory.name')
-                        .map(function (values, key1) {
-                            var returnObj = {};
-                            returnObj.sportName = key1;
-                            returnObj.subCategoryId = values[0].sportsListSubCategory._id;
-                            returnObj.totalStrength = values.length;
-                            var noShow = _.remove(values, function (n) {
-                                return n.noShow == true;
-                            });
+        //         function (callback) {
+        //             obj.sport = _(obj.arr)
+        //                 .groupBy('sportsListSubCategory.name')
+        //                 .map(function (values, key1) {
+        //                     var returnObj = {};
+        //                     returnObj.sportName = key1;
+        //                     returnObj.subCategoryId = values[0].sportsListSubCategory._id;
+        //                     returnObj.totalStrength = values.length;
+        //                     var noShow = _.remove(values, function (n) {
+        //                         return n.noShow == true;
+        //                     });
 
-                            returnObj.noShowCount = noShow.length;
+        //                     returnObj.noShowCount = noShow.length;
 
-                            var sport = _(values)
-                                .groupBy('athleteId.gender').value();
+        //                     var sport = _(values)
+        //                         .groupBy('athleteId.gender').value();
 
-                            if (sport['male'] && sport['female']) {
-                                returnObj.maleCount = sport['male'].length;
-                                returnObj.femaleCount = sport['female'].length;
-                            } else if (sport['male']) {
-                                returnObj.maleCount = sport['male'].length;
-                                returnObj.femaleCount = 0;
-                            } else if (sport['female']) {
-                                returnObj.maleCount = 0;
-                                returnObj.femaleCount = sport['female'].length;
-                            } else {
-                                returnObj.maleCount = 0;
-                                returnObj.femaleCount = 0;
-                            }
+        //                     if (sport['male'] && sport['female']) {
+        //                         returnObj.maleCount = sport['male'].length;
+        //                         returnObj.femaleCount = sport['female'].length;
+        //                     } else if (sport['male']) {
+        //                         returnObj.maleCount = sport['male'].length;
+        //                         returnObj.femaleCount = 0;
+        //                     } else if (sport['female']) {
+        //                         returnObj.maleCount = 0;
+        //                         returnObj.femaleCount = sport['female'].length;
+        //                     } else {
+        //                         returnObj.maleCount = 0;
+        //                         returnObj.femaleCount = 0;
+        //                     }
 
-                            returnObj.malePercent = _.round(returnObj.maleCount / (returnObj.maleCount + returnObj.femaleCount) * 100);
-                            returnObj.femalePercent = _.round(returnObj.femaleCount / (returnObj.maleCount + returnObj.femaleCount) * 100);
+        //                     returnObj.malePercent = _.round(returnObj.maleCount / (returnObj.maleCount + returnObj.femaleCount) * 100);
+        //                     returnObj.femalePercent = _.round(returnObj.femaleCount / (returnObj.maleCount + returnObj.femaleCount) * 100);
 
-                            if (_.isNaN(returnObj.malePercent)) {
-                                returnObj.malePercent = 0;
-                            }
-                            if (_.isNaN(returnObj.femalePercent)) {
-                                returnObj.femalePercent = 0;
-                            }
+        //                     if (_.isNaN(returnObj.malePercent)) {
+        //                         returnObj.malePercent = 0;
+        //                     }
+        //                     if (_.isNaN(returnObj.femalePercent)) {
+        //                         returnObj.femalePercent = 0;
+        //                     }
 
-                            return returnObj;
-                        }).value();
+        //                     return returnObj;
+        //                 }).value();
 
-                    callback();
-                },
+        //             callback();
+        //         },
 
-                function (callback) {
-                    var sportsToMerge = ['Tennis', 'Badminton', 'Table Tennis', 'Athletics', 'Swimming'];
+        //         function (callback) {
+        //             var sportsToMerge = ['Tennis', 'Badminton', 'Table Tennis', 'Athletics', 'Swimming'];
 
-                    _.each(sportsToMerge, function (sportName, k) {
-                        var matchedObjs = _.filter(obj.sport, function (sport) {
-                            if (sport.sportName.indexOf(sportName) != -1 && !sport.sportName.indexOf(sportName) > 0) {
-                                return sport;
-                            }
-                        })
+        //             _.each(sportsToMerge, function (sportName, k) {
+        //                 var matchedObjs = _.filter(obj.sport, function (sport) {
+        //                     if (sport.sportName.indexOf(sportName) != -1 && !sport.sportName.indexOf(sportName) > 0) {
+        //                         return sport;
+        //                     }
+        //                 })
 
-                        if (!_.isEmpty(matchedObjs) && matchedObjs.length > 1) {
-                            var addObj = {
-                                "sportName": sportName,
-                                "totalStrength": 0,
-                                "maleCount": 0,
-                                "femaleCount": 0,
-                                "noShowCount": 0
-                            };
+        //                 if (!_.isEmpty(matchedObjs) && matchedObjs.length > 1) {
+        //                     var addObj = {
+        //                         "sportName": sportName,
+        //                         "totalStrength": 0,
+        //                         "maleCount": 0,
+        //                         "femaleCount": 0,
+        //                         "noShowCount": 0
+        //                     };
 
-                            _.each(matchedObjs, function (n) {
-                                addObj.subCategoryId = n.subCategoryId;
-                                addObj.totalStrength += n.totalStrength;
-                                addObj.maleCount += n.maleCount;
-                                addObj.femaleCount += n.femaleCount;
-                                addObj.noShowCount += n.noShowCount;
-                                n.removeThis = true;
-                            });
+        //                     _.each(matchedObjs, function (n) {
+        //                         addObj.subCategoryId = n.subCategoryId;
+        //                         addObj.totalStrength += n.totalStrength;
+        //                         addObj.maleCount += n.maleCount;
+        //                         addObj.femaleCount += n.femaleCount;
+        //                         addObj.noShowCount += n.noShowCount;
+        //                         n.removeThis = true;
+        //                     });
 
-                            addObj.malePercent = _.round(addObj.maleCount / (addObj.maleCount + addObj.femaleCount) * 100);
-                            addObj.femalePercent = _.round(addObj.femaleCount / (addObj.maleCount + addObj.femaleCount) * 100);
-                            if (_.isNaN(addObj.malePercent)) {
-                                addObj.malePercent = 0;
-                            }
-                            if (_.isNaN(addObj.femalePercent)) {
-                                addObj.femalePercent = 0;
-                            }
+        //                     addObj.malePercent = _.round(addObj.maleCount / (addObj.maleCount + addObj.femaleCount) * 100);
+        //                     addObj.femalePercent = _.round(addObj.femaleCount / (addObj.maleCount + addObj.femaleCount) * 100);
+        //                     if (_.isNaN(addObj.malePercent)) {
+        //                         addObj.malePercent = 0;
+        //                     }
+        //                     if (_.isNaN(addObj.femalePercent)) {
+        //                         addObj.femalePercent = 0;
+        //                     }
 
-                            obj.sport.push(addObj);
+        //                     obj.sport.push(addObj);
 
-                        }
+        //                 }
 
-                        if (sportsToMerge.length - 1 == k) {
-                            obj.sport = _.filter(obj.sport, function (n) {
-                                return !n.removeThis;
-                            });
-                            callback();
-                        }
-                    })
+        //                 if (sportsToMerge.length - 1 == k) {
+        //                     obj.sport = _.filter(obj.sport, function (n) {
+        //                         return !n.removeThis;
+        //                     });
+        //                     callback();
+        //                 }
+        //             })
 
-                },
+        //         },
 
-                function (callback) {
-                    // calculate participated sport
-                    obj.participatedSport = [];
-                    if (!_.isEmpty(obj.sport)) {
-                        _.each(obj.sport, function (n, k) {
-                            obj.participatedSport.push(n.sportName);
-                            if (obj.sport.length - 1 == k) {
-                                callback();
-                            }
-                        });
-                    } else {
-                        callback();
-                    }
-                },
+        //         function (callback) {
+        //             // calculate participated sport
+        //             obj.participatedSport = [];
+        //             if (!_.isEmpty(obj.sport)) {
+        //                 _.each(obj.sport, function (n, k) {
+        //                     obj.participatedSport.push(n.sportName);
+        //                     if (obj.sport.length - 1 == k) {
+        //                         callback();
+        //                     }
+        //                 });
+        //             } else {
+        //                 callback();
+        //             }
+        //         },
 
-                function (callback) {
-                    // calculate noShow %
-                    var totalStrengthSum = _.sumBy(obj.sport, 'totalStrength');
-                    var totalNoShowSum = _.sumBy(obj.sport, 'noShowCount');
-                    obj.noShowPercent = _.round((totalNoShowSum / totalStrengthSum) * 100);
-                    if (_.isNaN(obj.noShowPercent)) {
-                        obj.noShowPercent = 0;
-                    }
-                    callback();
-                }
+        //         function (callback) {
+        //             // calculate noShow %
+        //             var totalStrengthSum = _.sumBy(obj.sport, 'totalStrength');
+        //             var totalNoShowSum = _.sumBy(obj.sport, 'noShowCount');
+        //             obj.noShowPercent = _.round((totalNoShowSum / totalStrengthSum) * 100);
+        //             if (_.isNaN(obj.noShowPercent)) {
+        //                 obj.noShowPercent = 0;
+        //             }
+        //             callback();
+        //         }
 
-            ], function (err, result) {
-                var high = obj.highestParticipation = _.orderBy(obj.sport, ['totalStrength'], ['desc']);
-                var low = obj.lowestParticipation = _.orderBy(obj.sport, 'totalStrength', ['asc']);
-                var highIndex = 0;
-                var lowIndex = 0;
-                for (var i = 0; i < high.length; i++) {
-                    if (high[i] && high[i + 1]) {
-                        if ((high[i].totalStrength != high[i + 1].totalStrength)) {
-                            highIndex = i;
-                            break
-                        }
-                    } else {
-                        highIndex = i;
-                    }
-                }
+        //     ], function (err, result) {
+        //         var high = obj.highestParticipation = _.orderBy(obj.sport, ['totalStrength'], ['desc']);
+        //         var low = obj.lowestParticipation = _.orderBy(obj.sport, 'totalStrength', ['asc']);
+        //         var highIndex = 0;
+        //         var lowIndex = 0;
+        //         for (var i = 0; i < high.length; i++) {
+        //             if (high[i] && high[i + 1]) {
+        //                 if ((high[i].totalStrength != high[i + 1].totalStrength)) {
+        //                     highIndex = i;
+        //                     break
+        //                 }
+        //             } else {
+        //                 highIndex = i;
+        //             }
+        //         }
 
-                for (var i = 0; i < low.length; i++) {
-                    if (low[i] && low[i + 1]) {
-                        if ((low[i].totalStrength != low[i + 1].totalStrength)) {
-                            lowIndex = i;
-                            break
-                        }
-                    } else {
-                        lowIndex = i;
-                    }
-                }
+        //         for (var i = 0; i < low.length; i++) {
+        //             if (low[i] && low[i + 1]) {
+        //                 if ((low[i].totalStrength != low[i + 1].totalStrength)) {
+        //                     lowIndex = i;
+        //                     break
+        //                 }
+        //             } else {
+        //                 lowIndex = i;
+        //             }
+        //         }
 
-                obj.highestParticipation = obj.highestParticipation.splice(0, highIndex + 1);
-                obj.lowestParticipation = obj.lowestParticipation.splice(0, lowIndex + 1);
+        //         obj.highestParticipation = obj.highestParticipation.splice(0, highIndex + 1);
+        //         obj.lowestParticipation = obj.lowestParticipation.splice(0, lowIndex + 1);
 
-                callback(obj);
-            })
+        //         callback(obj);
+        //     })
 
-        };
+        // };
 
         function calPerformance(obj, callback) {
             async.waterfall([
@@ -621,7 +623,7 @@ var model = {
                             returnObj.sportName = key1;
 
                             returnObj.subCategoryId = values[0].sportsListSubCategory._id;
-                            returnObj.totalStrength = values.length;
+                           
                             if(key1 == "Table Tennis" && values[0].school.name1=="Silver Oaks International School"){
                                 console.log("returnObj.totalStrength",returnObj.totalStrength);
                                 console.log("values",values);
@@ -633,6 +635,8 @@ var model = {
                             var matchesNotPlayed = _.remove(values, function (n) {
                                 return (n.noShow == undefined || n.noShow == null);
                             });
+
+                            returnObj.totalStrength = values.length;
 
                             returnObj.noShowCount = noShow.length;
 
