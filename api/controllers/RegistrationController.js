@@ -119,24 +119,24 @@ var controller = {
 
     cronSchoolWithPaymentDue: function (req, res) {
         async.waterfall([
-                function (callback) {
-                    ConfigProperty.find().lean().exec(function (err, property) {
-                        if (err) {
-                            callback(err, null);
+            function (callback) {
+                ConfigProperty.find().lean().exec(function (err, property) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(property)) {
+                            callback(null, []);
                         } else {
-                            if (_.isEmpty(property)) {
-                                callback(null, []);
-                            } else {
-                                callback(null, property);
-                            }
+                            callback(null, property);
                         }
-                    });
-                },
-                function (property, callback) {
-                    req.body.property = property[0];
-                    Registration.cronSchoolWithPaymentDue(req.body, res.callback);
-                }
-            ],
+                    }
+                });
+            },
+            function (property, callback) {
+                req.body.property = property[0];
+                Registration.cronSchoolWithPaymentDue(req.body, res.callback);
+            }
+        ],
             function (err, data2) {
                 if (err) {
                     console.log(err);
@@ -148,6 +148,18 @@ var controller = {
             });
 
     },
+
+    updateSchoolContactDetails: function (req, res) {
+        if (req.body) {
+            Registration.updateSchoolContactDetails(req.body, res.callback);
+        } else {
+            res.json({
+                data: "No data found",
+                value: false
+            });
+        }
+
+    }
 
 
 };
