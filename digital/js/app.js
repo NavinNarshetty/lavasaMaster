@@ -48,6 +48,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'CombatScoreCtrl'
         })
+        .state('scoreleague', {
+            url: "/league/:drawFormat/:id/:sport",
+            templateUrl: tempateURL,
+            controller: 'LeagueScoreCtrl'
+        })
         .state('scoreracquet', {
             url: "/scoreracquet/:drawFormat/:id/:sport",
             templateUrl: tempateURL,
@@ -59,9 +64,9 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'RacquetDoublesScoreCtrl'
         })
         .state('scorefootball', {
-            url: "/football/:drawFormat/:id/:sport",
+            url: "/scoreteam/:drawFormat/:id/:sport",
             templateUrl: tempateURL,
-            controller: 'FootballScoreCtrl'
+            controller: 'ScoringCtrl'
         })
         .state('scorehockey', {
             url: "/scorehockey",
@@ -69,7 +74,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'ScoringCtrl'
         })
         .state('scorebasketball', {
-            url: "/scorebasketball/:drawFormat/:id/:sport",
+            url: "/scoreteam/:drawFormat/:id/:sport",
             templateUrl: tempateURL,
             controller: 'ScoringCtrl'
         })
@@ -98,6 +103,16 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'ScoringCtrl'
         })
+        .state('scorequalifying', {
+            url: "/qualifying/:flag/:sportName/:drawFormat/:sport/:roundName/:sportId",
+            templateUrl: tempateURL,
+            controller: 'QualifyingScoreCtrl'
+        })
+        .state('scorethrowball', {
+            url: "/scorethrowball/",
+            templateUrl: tempateURL,
+            controller: 'ScoringCtrl'
+        })
         .state('knockout-doubles', {
             url: "/doubles/:drawFormat/:id",
             templateUrl: tempateURL,
@@ -113,12 +128,88 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'KnockoutCtrl'
         })
-        .state('league-knockout', {
-            url: "/league-knockout/:drawFormat/:id",
+        .state('league-knockoutTeam', {
+            url: "/league-knockoutTeam/:drawFormat/:id",
             templateUrl: tempateURL,
-            controller: 'LeagueKnockoutCtrl'
-        })
+            controller: 'LeagueKnockoutCtrl',
+            params: {
+                isTeam: true
+            }
 
+        })
+        .state('league-knockoutIndividual', {
+            url: "/league-knockoutIndividual/:drawFormat/:id",
+            templateUrl: tempateURL,
+            controller: 'LeagueKnockoutCtrl',
+            params: {
+                isTeam: false
+            }
+
+        })
+        .state('heats', {
+            url: "/heats/:drawFormat/:id/:sportName",
+            templateUrl: tempateURL,
+            controller: 'HeatsCtrl'
+        })
+        .state('time-trial', {
+            url: "/time-trial/:drawFormat/:id/:name",
+            templateUrl: tempateURL,
+            controller: 'TimeTrialCtrl'
+        })
+        .state('qf-final', {
+            url: "/qf-final/:drawFormat/:id/:name",
+            templateUrl: tempateURL,
+            controller: 'qfFinalCtrl'
+        })
+        .state('swiss-league', {
+            url: "/swiss-league/:drawFormat/:id",
+            templateUrl: tempateURL,
+            controller: 'swissLeagueCtrl'
+        })
+        .state('qf-knockout', {
+            url: "/qf-knockout/:drawFormat/:id",
+            templateUrl: tempateURL,
+            controller: 'QfKnockoutCtrl'
+        })
+        .state('scoringimages', {
+            url: "/scoringimages/:drawFormat/:id/:sport/:sportName",
+            templateUrl: tempateURL,
+            controller: 'ScoringImagestCtrl'
+        })
+        // ATTENDANCE PAGES
+        .state('digital-attendance', {
+            url: "/digital-attendance",
+            templateUrl: tempateURL,
+            controller: 'DigitalAttendanceCtrl'
+        })
+        .state('attendancesheet', {
+            url: "/attendancesheet/:sport",
+            templateUrl: tempateURL,
+            controller: 'AttendanceSheetCtrl'
+        })
+        .state('attendancesheet-team', {
+            url: "/team-attendancesheet/:sport",
+            templateUrl: tempateURL,
+            controller: 'AttendanceSheetTeamCtrl'
+        })
+        .state('addweight', {
+            url: "/addweight/:sport",
+            templateUrl: tempateURL,
+            controller: 'AddWeightCtrl'
+        })
+        // ATTENDANCE PAGES
+        // CREATE MATCHES
+        .state('creatematch-heats', {
+            url: "/creatematch/athletics/:sport",
+            templateUrl: tempateURL,
+            controller: 'CreateMatchHeatsCtrl'
+        })
+        .state('creatematch-weight', {
+            url: "/creatematch/weight/:sport",
+            templateUrl: tempateURL,
+            controller: 'CreateMatchWeightCtrl'
+        })
+        // CREATE MATCHES END
         .state('form', {
             url: "/form",
             templateUrl: tempateURL,

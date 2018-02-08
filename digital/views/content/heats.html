@@ -1,0 +1,486 @@
+<div class="heat-rounds">
+  <div class="container">
+    <!--SPORT NAME-->
+    <div class="heat-sportname text-center">
+      <h3 class="d-fjalla-one text-uppercase sport-type-head">
+        <span>{{roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name}}</span> |
+        <span>{{roundsList[0].match[0].sport.gender}}</span> |
+        <span> {{roundsList[0].match[0].sport.ageGroup.name}}</span>
+      </h3>
+      <div class="draws-downloadpdf draws-a">
+        <a href="#">Download the schedule in pdf format</a>
+      </div>
+    </div>
+    <!--END SPORT NAME-->
+
+    <!--EVENT NAME-->
+    <div class="heat-eventname text-center">
+      <h3 class="d-fjalla-one sport-color-primary">{{roundsList[0].match[0].sport.sportslist.name}}</h3>
+    </div>
+    <!--END EVENT NAME-->
+
+    <!--OUTER HOLDER DIV-->
+    <div class="heats-finalrounds-holder">
+      <div class="">
+        <!--FINAL HEAD-->
+        <div class="heats-finalhead">
+          <a class="text-uppercase pull-right" ng-click="startScoring(roundsList[0].match[0]);">Score</a>
+          <h3 class="d-fjalla-one sport-color-primary m-clear text-uppercase">{{roundsList[0].name}}</h3>
+          <div ng-if="roundsList[0].match[0].scheduleDate || roundsList[0].match[0].scheduleTime">
+            <p class="sport-color-primary"><span>{{roundsList[0].match[0].scheduleDate |englishNumeralDate}}</span>
+              <span>|</span>
+              <span>{{roundsList[0].match[0].scheduleTime }}</span></p>
+          </div>
+
+        </div>
+        <!--END FINAL HEAD-->
+        <!--FINAL TABLE-->
+        <div class="heats-final-table table-responsive q-orange-table table-responsive" ng-if="roundsList[0].match[0].opponentsSingle.length>0 || roundsList[0].match[0].opponentsTeam.length>0">
+          <table class=" table-draws-schedule table-six">
+            <thead>
+              <tr>
+                <th>
+                  <div>
+                    <h4 class="m-clear ">lane no</h4>
+                  </div>
+                </th>
+                <th ng-if="eventName!=='Athletics 4x100m Relay' && eventName !=='Athletics Medley Relay' && eventName !=='Athletics 4x50m Relay'">
+                  <div>
+                    <h4 class="m-clear">name</h4>
+                  </div>
+                </th>
+                <th ng-if="eventName!=='Athletics 4x100m Relay' && eventName !=='Athletics Medley Relay' && eventName !=='Athletics 4x50m Relay'">
+                  <div>
+                    <h4 class="m-clear">school</h4>
+                  </div>
+                </th>
+                <th ng-if="eventName ==='Athletics 4x100m Relay' || eventName ==='Athletics Medley Relay' || eventName === 'Athletics 4x50m Relay'">
+                  <div>
+                    <h4 class="m-clear">school</h4>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <h4 class="m-clear">standings</h4>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <h4 class="m-clear">time</h4>
+                  </div>
+                </th>
+                <th >
+                  <div>
+                    <a ng-if="roundsList[0].match[0].video" class="fancybox.iframe" fancybox href="{{roundsList[0].match[0].video | linkvideo:roundsList[0].match[0].videoType}}">
+                        <img src="img/sf-play.png " alt="video">
+                      </a>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="final in roundsList[0].match[0].opponentsSingle|orderBy: 'result'| limitTo:finalLimit">
+                <td>
+                  <div class="text-capitalize ">
+                    {{final.laneNo}}
+                  </div>
+                </td>
+                <td>
+                  <div class="text-capitalize ">
+                    <span ng-if="final.athleteId" title="{{final.athleteId.fullName}}">{{final.athleteId.fullName}}</span>
+                    <span ng-if="!final.athleteId">-</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="text-capitalize ">
+                    <span ng-if="final.athleteId" title="{{final.athleteId.school.name}}">{{final.athleteId.school.name}}</span>
+                    <span ng-if="!final.athleteId">-</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="text-capitalize ">
+                    <span> {{final.result}}</span>
+                    <span ng-if="!final.result">-</span>
+                  </div>
+
+                </td>
+                <td>
+                  <div class="text-capitalize ">
+                    <span>{{final.time}}</span>
+                    <span ng-if="!final.time">-</span>
+                  </div>
+
+                </td>
+                <td >
+                  <div class="text-capitalize "></div>
+                </td>
+              </tr>
+
+              <tr ng-repeat="final in roundsList[0].match[0].opponentsTeam|orderBy: 'result'| limitTo:finalLimit " ng-if="roundsList[0].match[0].opponentsTeam.length>0">
+                <td>
+                  <div class="text-capitalize ">
+                    {{final.laneNo}}
+                  </div>
+                </td>
+                <td>
+                  <div class="text-capitalize " title="{{final.schoolNameWithTeamId}}">
+                    <span>{{final.schoolNameWithTeamId | truncate:'35'}}</span>
+                    <span ng-if="!final.schoolNameWithTeamId">-</span>
+                  </div>
+                </td>
+
+                <td>
+                  <div class="text-capitalize">
+                    <span>{{final.result}}</span>
+                    <span ng-if="!final.result">-</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="text-capitalize">
+                    <span>{{final.time}}</span>
+                    <span ng-if="!final.time">-</span>
+                  </div>
+                </td>
+                <td>
+                  <div class=""></div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="heats-viewmore text-right " ng-click="showMoreData(true, 'final'); " ng-if="showFinal && roundsList[0].match[0].opponentsSingle.length>8">
+            <button class="btn sport-btn-blue-outline text-uppercase">View More</button>
+          </div>
+          <div class="heats-viewmore text-right " ng-click="showMoreData(true, 'final'); " ng-if="showFinal && roundsList[0].match[0].opponentsTeam.length>8">
+            <button class="btn sport-btn-blue-outline text-uppercase">View More</button>
+          </div>
+          <div class="heats-viewmore text-right" ng-click="showMoreData(false,'final');" ng-if="!showFinal">
+            <button class="btn sport-btn-blue-outline text-uppercase" ng-click="showMoreData(false);">View Less</button>
+          </div>
+        </div>
+        <!--END FINAL TABLE-->
+      </div>
+      <!-- SEMI-FINAL START -->
+      <!-- HEAD-->
+
+
+
+      <div class="heats-semifinalhead">
+        <h3 class="d-fjalla-one text-uppercase  sport-color-primary m-clear">{{roundsList[1].name}}</h3>
+        <div ng-if="roundsList[1].match[0].scheduleDate || roundsList[1].match[0].scheduleTime">
+          <p class="sport-color-primary"><span>{{roundsList[1].match[0].scheduleDate |englishNumeralDate}}</span>
+            <span>|</span>
+            <span>{{roundsList[1].match[0].scheduleTime}}</span></p>
+        </div>
+
+      </div>
+      <!--END HEAD-->
+      <div ng-if="roundsList[1].match[0].opponentsSingle.length>0 || roundsList[1].match[0].opponentsTeam.length>0">
+        <div class="heats-semiqualifying-holder">
+
+
+          <!-- ACCORDIAN-->
+          <div class="time-trial-accordian heat-trial-accordian" ng-class="{'bluecolor-accordian':roundsList[1].name==='Heat'}">
+            <uib-accordion close-others="oneAtATime">
+              <div uib-accordion-group class="panel-default" is-open="s.open" ng-repeat="semi in roundsList[1].match|limitTo:limitValue track by $index"
+                ng-if="roundsList[1].match.length>0 && semi">
+                <!-- <div uib-accordion-group class="panel-default" is-open="s.open" ng-repeat="saccordian in semi.tablecontent  track by $index"> -->
+                <uib-accordion-heading class="clearfix">
+                  <!--<a href="" class="text-right"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a>-->
+                  <a href="">
+                    <h4 class="d-fjalla-one text-uppercase sport-color-primary m-clear">Heat {{$index+1}} | {{semi.matchId}}</h4>
+                  </a>
+
+                  <!--<a href=""> <i class="fa " ng-class="{'fa-chevron-up': s.open, 'fa-chevron-down': !s.open}"></i></a>-->
+                </uib-accordion-heading>
+                <a class="btn-scoreheat text-uppercase" ng-click="startScoring(semi);">Score</a>
+                <div class="time-trial-accordioncontent heat-trial-accordiancontent ">
+                  <div class="accordian-timetrial-table q-blue-table table-responsive">
+                    <table class="table-draws-schedule table-five">
+                      <thead>
+                        <tr>
+                          <th>
+                            <div class="">
+                              <h4 class="m-clear">lane no</h4>
+                            </div>
+                          </th>
+                          <th ng-if="eventName!=='Athletics 4x100m Relay' && eventName !=='Athletics Medley Relay' && eventName !=='Athletics 4x50m Relay'">
+                            <div>
+                              <h4 class="m-clear">name</h4>
+                            </div>
+                          </th>
+                          <th ng-if="eventName!=='Athletics 4x100m Relay' && eventName !=='Athletics Medley Relay' && eventName !=='Athletics 4x50m Relay'">
+                            <div>
+                              <h4 class="m-clear">school</h4>
+                            </div>
+                          </th>
+                          <th ng-if="eventName ==='Athletics 4x100m Relay' || eventName ==='Athletics Medley Relay' || eventName === 'Athletics 4x50m Relay'">
+                            <div>
+                              <h4 class="m-clear">school</h4>
+                            </div>
+                          </th>
+                          <th>
+                            <div class="">
+                              <h4 class="m-clear">result</h4>
+                            </div>
+                          </th>
+                          <th>
+                            <div class="">
+                              <h4 class="m-clear">time</h4>
+                            </div>
+                          </th>
+                          <th>
+                            <div class="text-capitalize">
+                              <a ng-if="semi.video" class="fancybox.iframe" fancybox href="{{semi.video | linkvideo:semi.videoType}}">
+                                    <img src="img/sf-play.png " alt="video">
+                              </a>
+                            </div>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="semifinal in semi.opponentsSingle track by $index">
+                          <td>
+                            <div class="text-capitalize">
+                              {{semifinal.laneNo}}
+                            </div>
+                          </td>
+                          <td>
+                            <div class="text-capitalize" title="{{semifinal.athleteId.fullName}}">
+                              <span>{{semifinal.athleteId.fullName}}</span>
+                              <span ng-if="!semifinal.athleteId">-</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="text-capitalize" title="{{semifinal.athleteId.school.name}}">
+                              <span>{{semifinal.athleteId.school.name}}</span>
+                              <span ng-if="!semifinal.athleteId">-</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="text-capitalize">
+                              <span>{{semifinal.result}}</span>
+                              <span ng-if="!semifinal.result">-</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="text-capitalize">
+                              <span>{{semifinal.time}}</span>
+                              <span ng-if="!semifinal.time">-</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div class=""></div>
+                          </td>
+                        </tr>
+                        <tr ng-repeat="semifinal in semi.opponentsTeam track by $index">
+                          <td>
+                            <div class="text-capitalize">
+                              {{semifinal.laneNo}}
+                            </div>
+                          </td>
+                          <td>
+                            <div class="text-capitalize " title="{{final.schoolNameWithTeamId}}">
+                              <span>{{semifinal.schoolNameWithTeamId | truncate:'35'}}</span>
+                              <span ng-if="!semifinal.schoolNameWithTeamId">-</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="text-capitalize">
+                              <span>{{semifinal.result}}</span>
+                              <span ng-if="!semifinal.result">-</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="text-capitalize">
+                              <span>{{semifinal.time}}</span>
+                              <span ng-if="!semifinal.time">-</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div class=""></div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </uib-accordion>
+          </div>
+          <!--END  ACCORDIAN-->
+
+
+
+          <!-- <div class="heats-viewmore text-right " ng-if="semi.round==='Qualifying'"> -->
+
+
+        </div>
+        <div class="heats-viewmore text-right" ng-click="showMoreData(true,'semi-final')" ng-if="showMore && roundsList[1].match.length>8">
+          <button class="btn sport-btn-blue-outline text-uppercase">View More</button>
+        </div>
+        <div class="heats-viewmore text-right" ng-click="showMoreData(false,'semi-final')" ng-if="!showMore">
+          <button class="btn sport-btn-blue-outline text-uppercase">View Less</button>
+        </div>
+      </div>
+      <!-- SEMI-FINAL END -->
+
+      <!-- HEAT START -->
+      <!-- HEAD-->
+
+      <div class="heats-semifinalhead">
+        <h3 class="d-fjalla-one text-uppercase  sport-color-primary m-clear">{{roundsList[2].name}}</h3>
+        <div ng-if=" roundsList[2].match[0].scheduleDate || roundsList[2].match[0].scheduleTime">
+          <p class="sport-color-primary"><span>{{roundsList[2].match[0].scheduleDate |englishNumeralDate}}</span>
+            <span>|</span>
+            <span>{{roundsList[2].match[0].scheduleTime }}</span></p>
+        </div>
+
+      </div>
+      <!--END HEAD-->
+      <div ng-if="roundsList[2].match">
+        <div class="heats-semiqualifying-holder">
+
+
+          <!-- ACCORDIAN-->
+          <div class="time-trial-accordian heat-trial-accordian" ng-class="{'bluecolor-accordian':roundsList[2].name==='Heat'}">
+            <uib-accordion close-others="oneAtATime">
+              <div uib-accordion-group class="panel-default" is-open="s.open" ng-repeat="semi in roundsList[2].match | limitTo:heatLImit track by $index ">
+                <uib-accordion-heading class="clearfix">
+                  <!--<a href="" class="text-right"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a>-->
+                  <a href="">
+                    <h4 class="d-fjalla-one text-uppercase sport-color-primary m-clear">Heat {{$index+1}}</h4>
+                  </a>
+
+                  <!--<a href=""> <i class="fa " ng-class="{'fa-chevron-up': s.open, 'fa-chevron-down': !s.open}"></i></a>-->
+                </uib-accordion-heading>
+                <a class="btn-scoreheat text-uppercase" ng-click = "startScoring(semi);">Score</a>
+                <div class="time-trial-accordioncontent heat-trial-accordiancontent ">
+                  <div class="accordian-timetrial-table q-blue-table table-responsive">
+                    <table class="table-draws-schedule table-five">
+                      <thead>
+                        <tr>
+                          <th>
+                            <div class="">
+                              <h4 class="m-clear">lane no</h4>
+                            </div>
+                          </th>
+                          <th ng-if="eventName!=='Athletics 4x100m Relay' && eventName !=='Athletics Medley Relay' && eventName !=='Athletics 4x50m Relay'">
+                            <div>
+                              <h4 class="m-clear">name</h4>
+                            </div>
+                          </th>
+                          <th ng-if="eventName!=='Athletics 4x100m Relay' && eventName !=='Athletics Medley Relay' && eventName !=='Athletics 4x50m Relay'">
+                            <div>
+                              <h4 class="m-clear">school</h4>
+                            </div>
+                          </th>
+                          <th ng-if="eventName ==='Athletics 4x100m Relay' || eventName ==='Athletics Medley Relay' || eventName === 'Athletics 4x50m Relay'">
+                            <div>
+                              <h4 class="m-clear">school</h4>
+                            </div>
+                          </th>
+                          <th>
+                            <div class="">
+                              <h4 class="m-clear">result</h4>
+                            </div>
+                          </th>
+                          <th>
+                            <div class="">
+                              <h4 class="m-clear">time</h4>
+                            </div>
+                          </th>
+                          <th>
+                            <div class="text-capitalize">
+                              <a ng-if="semi.video" class="fancybox.iframe" fancybox href="{{semi.video | linkvideo:semi.videoType}}">
+                                <img src="img/sf-play.png " alt="video">
+                                </a>
+                            </div>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="semifinal in semi.opponentsSingle track by $index" ng-if="semi.opponentsSingle.length>0">
+                          <td>
+                            <div class="text-capitalize">
+                              {{semifinal.laneNo}}
+                            </div>
+                          </td>
+                          <td>
+                            <div class="text-capitalize" title="{{semifinal.athleteId.fullName}}">
+                              <span>{{semifinal.athleteId.fullName}}</span>
+                              <span ng-if="!semifinal.athleteId">-</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="text-capitalize" title="{{semifinal.athleteId.school.name}}">
+                              <span> {{semifinal.athleteId.school.name}}</span>
+                              <span ng-if="!semifinal.athleteId">-</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="text-capitalize">
+                              <span>{{semifinal.result}}</span>
+                              <span ng-if="!semifinal.result">-</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="text-capitalize">
+                              <span> {{semifinal.time}}</span>
+                              <span ng-if="!semifinal.time">-</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div class=""></div>
+                          </td>
+                        </tr>
+                        <tr ng-repeat="semifinal in semi.opponentsTeam track by $index">
+                          <td>
+                            <div class="text-capitalize">
+                              {{semifinal.laneNo}}
+                            </div>
+                          </td>
+                          <td>
+                            <div class="text-capitalize " title="{{final.schoolNameWithTeamId}}">
+                              <span>{{semifinal.schoolNameWithTeamId | truncate:'35'}}</span>
+                              <span ng-if="!semifinal.schoolNameWithTeamId">-</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="text-capitalize">
+                              <span> {{semifinal.result}}</span>
+                              <span ng-if="!semifinal.result">-</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="text-capitalize">
+                              <span> {{semifinal.time}}</span>
+                              <span ng-if="!semifinal.time">-</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div class=""></div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </uib-accordion>
+          </div>
+          <!--END  ACCORDIAN-->
+        </div>
+        <div class="heats-viewmore text-right" ng-click="showMoreData(true,'heat')" ng-if="showHeat && roundsList[2].match.length>8">
+          <button class="btn sport-btn-blue-outline text-uppercase">View More</button>
+        </div>
+        <div class="heats-viewmore text-right" ng-click="showMoreData(false,'heat')" ng-if="!showHeat">
+          <button class="btn sport-btn-blue-outline text-uppercase">View Less</button>
+        </div>
+      </div>
+
+      <!-- HEAT END -->
+
+    </div>
+    <!--OUTER HOLDER DIV END-->
+  </div>
+</div>

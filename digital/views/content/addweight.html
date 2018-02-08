@@ -1,0 +1,107 @@
+<div class="attendancepage">
+  <div class="container">
+    <!-- ATTENDANCE HEADER -->
+    <div class="attendancesheet-header">
+      <div class="attendancesheet-title">WEIGHT SHEET</div>
+      <div class="attendance-sportheading">
+        <span>{{sportdata.sportslist.sportsListSubCategory.name}}</span> | <span>{{sportdata.sportslist.name}}</span> | <span>{{sportdata.gender}}</span> | <span>{{sportdata.ageGroup.name}}</span> <span ng-if="sportdata.weight"> | </span> <span ng-if="sportdata.weight">{{sportdata.weight.name}}</span>
+      </div>
+    </div>
+    <!-- ATTENDANCE HEADER END -->
+    <!-- ATTENDANCE STICKY SEARCH -->
+    <div class="attendancesheet-stickyhead">
+      <div class="container">
+        <div class="row">
+          <form>
+            <div class="col-md-offset-2 col-md-4 col-sm-8 col-xs-12">
+              <div class="form-group">
+                <input type="text" class="form-control" id="attendanceId" placeholder="Enter SFA ID" ng-model="search.sfaId">
+              </div>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6">
+              <div class="">
+                <button type="button" class="btn btn-green-outline btn-scoring" ng-click="searchAthlete();">Search</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- ATTENDANCE STICKY SEARCH END -->
+    <!-- ATTENDANCE SECTION -->
+    <div class="attendance-section attendance-table">
+      <table class="table">
+        <thead>
+          <tr >
+            <th>
+              <div class="">
+                Sr.No
+              </div>
+            </th>
+            <th>
+              <div class="">
+                SFA ID
+              </div>
+            </th>
+            <th>
+              <div class="">
+                Athlete Name
+              </div>
+            </th>
+            <th>
+              <div class="">
+                School Name
+              </div>
+            </th>
+            <th>
+              <div class="">
+                Weight
+              </div>
+            </th>
+            <th>
+              <div class="">
+                Save
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody >
+          <tr ng-repeat="player in attendanceList.athletes track by $index" id="{{player.sfaId}}" ng-class="{'player-highlight': player.sfaId==search.sfaId}">
+            <td>
+              <div class="">
+                {{$index + 1}}
+              </div>
+            </td>
+            <td>
+              <div class="">
+                {{player.athleteId.sfaId}}
+              </div>
+            </td>
+            <td>
+              <div class="">
+                {{player.athleteId.firstName}} {{player.athleteId.surname}}
+              </div>
+            </td>
+            <td>
+              <div class="">
+                {{player.athleteId.school.name}}
+              </div>
+            </td>
+            <td>
+              <div class="">
+                <!-- <input type="text" class="form-control" ng-model="player.weight"> -->
+                <select class="select form-control" id="player.weight" ng-model="player.weight" ng-options="weight.weight._id as weight.weight.name for weight in weightList"></select>
+              </div>
+            </td>
+            <td>
+              <div class="">
+                <button type="button" name="button" class="btn btn-green-outline" ng-click="saveAthletePopup(player);">Save</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- ATTENDANCE SECTION END -->
+  </div>
+</div>

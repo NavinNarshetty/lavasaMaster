@@ -10,6 +10,7 @@ myApp.controller('CombatScoreCtrl', function($scope, TemplateService, Navigation
     $scope.matchData = {};
     var promise;
     $scope.stateParam = $stateParams;
+    $scope.btnDisable = false;
     // $scope.matchData = {};
     // VARIABLE INITIALISE END
 
@@ -90,13 +91,16 @@ myApp.controller('CombatScoreCtrl', function($scope, TemplateService, Navigation
     };
     $scope.matchComplete = function(){
       if ($scope.match.resultsCombat) {
+        $scope.btnDisable = true;
         $scope.match.resultsCombat.status = "IsCompleted";
           $scope.matchResult = {
             resultsCombat : $scope.match.resultsCombat,
             matchId: $scope.matchData.matchId
           }
+          $interval.cancel(promise);
           NavigationService.saveMatch($scope.matchResult, function(data){
             if(data.value == true){
+              $scope.btnDisable = false;
               if ($stateParams.drawFormat === 'Knockout') {
                   $state.go('knockout', {
                     drawFormat: $stateParams.drawFormat,
@@ -129,8 +133,12 @@ myApp.controller('CombatScoreCtrl', function($scope, TemplateService, Navigation
         $scope.set = set;
         switch (model) {
             case 'point':
+              if ($scope.set.point == "") {
+                $scope.set.point = 1;
+              } else {
                 $scope.set.point = $scope.set.point + 1;
-                break;
+              }
+            break;
         }
         console.log("increment");
     };

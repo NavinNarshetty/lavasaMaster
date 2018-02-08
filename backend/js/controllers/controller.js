@@ -1605,6 +1605,7 @@ myApp.controller('SportsCtrl', function ($scope, TemplateService, NavigationServ
             $scope.items = data.data.results;
             $scope.totalItems = data.data.total;
             $scope.maxRow = data.data.options.count;
+
         });
 
     }
@@ -1693,6 +1694,9 @@ myApp.controller('DetailSportsCtrl', function ($scope, TemplateService, Navigati
         $scope.saveData = function (data) {
             console.log(data);
             if (data) {
+                if (_.isEmpty(data.weight) && !data.weight) {
+                    data.weight = null;
+                }
                 if (data.maxTeamPlayers >= data.minTeamPlayers) {
                     if (data.fromDate && data.toDate) {
                         $scope.url = "Sport/saveSport";
@@ -1732,6 +1736,9 @@ myApp.controller('DetailSportsCtrl', function ($scope, TemplateService, Navigati
         $scope.saveData = function (data, formvalid) {
             console.log(data);
             if (data) {
+                if (_.isEmpty(data.weight) && !data.weight) {
+                    data.weight = null;
+                }
                 if (data.maxTeamPlayers >= data.minTeamPlayers) {
 
                     if (formvalid.$valid) {
@@ -2354,7 +2361,7 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
 
     $scope.generateExcel = function (formData) {
         console.log("formdata", formData);
-        NavigationService.generateSchoolExcelWithData(formData, function (data) {});
+        NavigationService.generateSchoolExcelWithData(formData, function (data) { });
     }
 
     $scope.transferToWebsite = function (id) {
@@ -2490,40 +2497,40 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
 
 
             console.log($scope.zConstraint);
-            // var zip = new xlsx();  
+            // var zip = new xlsx();  
             var files = [];
 
             files.push($scope.excelData);
             // console.log("inside files", files);
-            // var img = zip.folder(Athlete);  
+            // var img = zip.folder(Athlete);  
 
             async.each(files, function (values, callback) {
                 callback();
                 // if (values.Image) {
                 //     var value = values.Image;
                 //     var extension = value.split(".").pop();
-                //     extension = extension.toLowerCase();   
-                //     if (extension == "jpeg") {    
-                //         extension = "jpg";   
-                //     }   
-                //     var i = value.indexOf(".");   
-                //     i--;   
+                //     extension = extension.toLowerCase();   
+                //     if (extension == "jpeg") {    
+                //         extension = "jpg";   
+                //     }   
+                //     var i = value.indexOf(".");   
+                //     i--;   
                 //     var name = values.Name;
 
                 //     getBase64FromImageUrl(adminURL + "upload/readFile?file=" + value, function (imageData) {
                 //         img.file(name + "." + extension, imageData, {
                 //             createFolders: false,
                 //             base64: true
-                //         });  
+                //         });  
                 //         callback();
-                //     }); 
+                //     }); 
                 // } else {
                 //     callback();
                 // }
             }, function (err, data) {
                 zip.generateAsync({
                     type: "blob",
-                }).then(function (content) { // see FileSaver.js
+                }).then(function (content) {     // see FileSaver.js
                     saveAs(content, Athlete + ".zip");
                 });
             });
@@ -2536,15 +2543,15 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
         var param = {};
         param.file = "targetAthlete"
         var url = "Athelete/getTargetAthlete"
-        NavigationService.generateExcelWithoutData(url, param, function (data) {});
+        NavigationService.generateExcelWithoutData(url, param, function (data) { });
     }
     $scope.generateExcel = function (formdata) {
         if (_.isEmpty(formdata.type)) {
             console.log("else");
-            NavigationService.generateAthleteExcelWithData(formdata, function (data) {});
+            NavigationService.generateAthleteExcelWithData(formdata, function (data) { });
         } else {
             console.log(formdata);
-            NavigationService.generateAthleteExcelWithData(formdata, function (data) {});
+            NavigationService.generateAthleteExcelWithData(formdata, function (data) { });
         }
     }
     // OLD FUNCTIONS
@@ -2653,9 +2660,9 @@ myApp.controller('OldSchoolCtrl', function ($scope, TemplateService, NavigationS
         //     $scope.currentPage = 1;
         // }
         NavigationService.search('School/search', {
-                page: $scope.formData.page,
-                keyword: $scope.formData.keyword
-            }, ++i,
+            page: $scope.formData.page,
+            keyword: $scope.formData.keyword
+        }, ++i,
             function (data, ini) {
                 if (ini == i) {
                     $scope.items = data.data.results;
@@ -2720,22 +2727,22 @@ myApp.controller('ViewSchoolCtrl', function ($scope, TemplateService, Navigation
 });
 
 myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams) {
-        //old school filter view
-        //Used to name the .html file
-        $scope.template = TemplateService.changecontent("viewoldschool");
-        $scope.menutitle = NavigationService.makeactive("View Old School");
-        TemplateService.title = $scope.menutitle;
-        $scope.navigation = NavigationService.getnav();
-        $scope.getOneOldSchoolById = function () {
-            $scope.url = 'School/getOne';
-            $scope.constraints = {};
-            $scope.constraints._id = $stateParams.id;
-            NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
-                $scope.oldschool = data.data;
-            });
-        };
-        $scope.getOneOldSchoolById();
-    })
+    //old school filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("viewoldschool");
+    $scope.menutitle = NavigationService.makeactive("View Old School");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+    $scope.getOneOldSchoolById = function () {
+        $scope.url = 'School/getOne';
+        $scope.constraints = {};
+        $scope.constraints._id = $stateParams.id;
+        NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+            $scope.oldschool = data.data;
+        });
+    };
+    $scope.getOneOldSchoolById();
+})
 
 
 
@@ -2965,7 +2972,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.navigation = NavigationService.getnav();
 
 
-        JsonService.getJson($stateParams.id, function () {});
+        JsonService.getJson($stateParams.id, function () { });
 
         globalfunction.confDel = function (callback) {
             var modalInstance = $uibModal.open({
@@ -3083,9 +3090,9 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             //     $scope.currentPage = 1;
             // }
             NavigationService.search('School/search', {
-                    page: $scope.formData.page,
-                    keyword: $scope.formData.keyword
-                }, ++i,
+                page: $scope.formData.page,
+                keyword: $scope.formData.keyword
+            }, ++i,
                 function (data, ini) {
                     if (ini == i) {
                         $scope.items = data.data.results;
@@ -3142,10 +3149,10 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
                 $scope.currentPage = 1;
             }
             NavigationService.search($scope.json.json.apiCall.url, {
-                    page: $scope.currentPage,
-                    keyword: $scope.search.keyword,
-                    input: ''
-                }, ++i,
+                page: $scope.currentPage,
+                keyword: $scope.search.keyword,
+                input: ''
+            }, ++i,
                 function (data, ini) {
                     if (ini == i) {
                         $scope.items = data.data.results;
@@ -4128,7 +4135,6 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.view = "views/excelImportView/" + $stateParams.view + ".html";
         // $scope.referenceFile = adminurl + "../importFormat/" + $stateParams.referenceFile + ".xlsx";
         $scope.form = {};
-        $scope.form.resultUpdate = "yes";
         $scope.url = $stateParams.controller + "/" + $stateParams.funcName;
 
         $scope.excelUploaded = function () {
@@ -4153,7 +4159,6 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.form.type = '';
         $scope.form.keyword = '';
         $scope.form.graphics = "no";
-
 
         $scope.searchInTable = function (data) {
             $scope.form.page = 1;
@@ -4283,18 +4288,6 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             NavigationService.generateBlankExcelWithData($scope.url, $scope.blank, function (data) {
                 $state.reload();
             });
-
-        }
-
-        $scope.scoringExcel = function (data) {
-            $scope.blank = data;
-            console.log("data..................", data);
-            $scope.url = "match/excelScoringTeam";
-
-            NavigationService.generateExcelWithData($scope.url, $scope.blank, function (data) {
-                $state.reload();
-            });
-
         }
 
         $scope.weightUpload = function (data) {
@@ -4420,85 +4413,6 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 
     })
 
-
-
-    // OLD SPORT
-    .controller('OldMatchesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
-        //Used to name the .html file
-        $scope.template = TemplateService.changecontent("oldsportresultupdate");
-        $scope.menutitle = NavigationService.makeactive("Old Update");
-        TemplateService.title = $scope.menutitle;
-        $scope.navigation = NavigationService.getnav();
-        $scope.formData = {};
-        $scope.formData.page = 1;
-        $scope.formData.type = '';
-        $scope.formData.keyword = '';
-        $scope.form = {};
-        $scope.form.page = 1;
-        $scope.form.type = '';
-        $scope.form.keyword = '';
-        $scope.form.graphics = "no";
-
-
-
-        $scope.getAllSportList = function (data) {
-            $scope.url = "SportsList/search";
-            console.log(data);
-            $scope.constraints = {};
-            $scope.constraints.keyword = data;
-            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
-                console.log("data.value sportlist", data);
-                $scope.sportitems = data.data.results;
-
-            });
-        }
-
-        $scope.searchSportList = function (data) {
-            $scope.draws = data;
-        }
-
-        $scope.getAllAge = function (data) {
-            $scope.url = "AgeGroup/search";
-            console.log(data);
-            $scope.constraints = {};
-            $scope.constraints.keyword = data;
-            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
-                console.log("data.value age", data);
-                $scope.ageitems = data.data.results;
-
-            });
-        }
-        $scope.searchAge = function (data) {
-            $scope.draw = data;
-        }
-
-
-
-        $scope.getAllWeight = function (data) {
-            $scope.url = "Weight/search";
-            console.log(data);
-            $scope.constraints = {};
-            $scope.constraints.keyword = data;
-            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
-                console.log("data.value weight", data);
-                $scope.weightitems = data.data.results;
-
-            });
-        }
-        $scope.searchWeight = function (data) {
-            $scope.drawing = data;
-        }
-
-        $scope.generateExcel = function (data) {
-            // console.log("data in test form", data)
-            $scope.url = "";
-            $scope.constraints = {};
-            $scope.constraints.data = data;
-            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
-                console.log(data, "data inside api");
-            });
-        }
-    })
 
 
     .controller('MedalsCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $uibModal, $state, toastr) {
@@ -5121,12 +5035,118 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         }
     })
 
-    .controller('GalleryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+    .controller('GalleryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, $uibModal, toastr) {
         //Used to name the .html file
         $scope.template = TemplateService.changecontent("tablegallery");
         $scope.menutitle = NavigationService.makeactive("Gallery");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
+        $scope.changeInput = function () {
+            if ($scope.formData.input != '') {
+                $scope.formData.input = '';
+            } else {
+                $scope.formData.input = $scope.formData.input;
+            }
+        };
+        $scope.changeAll = function () {
+            $scope.formData = {};
+            $scope.formData.page = 1;
+            $scope.formData.type = '';
+            $scope.formData.keyword = '';
+            $scope.viewTable();
+        };
+        $scope.formData = {};
+        $scope.formData.page = 1;
+        $scope.formData.type = '';
+        $scope.formData.keyword = '';
+        // $scope.selectedStatus = 'All';
+        $scope.searchInTable = function (data) {
+            $scope.formData.page = 1;
+            if (data.length >= 2) {
+                $scope.formData.keyword = data;
+                $scope.viewTable();
+            } else if (data.length == '') {
+                $scope.formData.keyword = data;
+                $scope.viewTable();
+            }
+        }
+        $scope.viewTable = function () {
+            $scope.url = "gallery/search";
+            $scope.formData.page = $scope.formData.page++;
+            NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+                console.log("data.value", data);
+                if (data.value) {
+                    $scope.items = data.data.results;
+                    console.log(" $scope.items", $scope.items);
+                }
+
+                $scope.totalItems = data.data.total;
+                $scope.maxRow = data.data.options.count;
+            });
+        }
+        $scope.viewTable();
+
+        $scope.confDel = function (data) {
+            $scope.id = data;
+            $scope.modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: 'views/modal/delete.html',
+                backdrop: 'static',
+                keyboard: false,
+                size: 'sm',
+                scope: $scope
+
+            });
+        };
+
+        $scope.noDelete = function () {
+            $scope.modalInstance.close();
+        }
+        $scope.delete = function (data) {
+            console.log(data);
+            $scope.url = "gallery/delete";
+            $scope.constraints = {};
+            $scope.constraints._id = data;
+            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+                console.log("data.value", data);
+                if (data.value) {
+                    toastr.success('Successfully Deleted', 'Gallery Meaasge');
+                    $scope.modalInstance.close();
+                    $scope.viewTable();
+                } else {
+                    toastr.error('Something went wrong while Deleting', 'Gallery Meaasge');
+                }
+
+            });
+        },
+            $scope.filterAthlete = function (formData) {
+                console.log("formData", formData);
+                $scope.url = "gallery/search";
+                $scope.formData.filter = {};
+                $scope.formData.page = $scope.formData.page++;
+                if (formData.type == 'title') {
+                    $scope.formData.filter.title = {};
+                    $scope.formData.filter.title.$regex = formData.input;
+                    $scope.formData.filter.title.$options = "i";
+                } else if (formData.type == 'Folder Name') {
+                    $scope.formData.filter.folderName = {}
+                    $scope.formData.filter.folderName.$regex = formData.input;
+                    $scope.formData.filter.folderName.$options = "i";
+                } else if (formData.type == 'Folder Type') {
+                    $scope.formData.filter.folderType = {};
+                    $scope.formData.filter.folderType.$regex = formData.input;
+                    $scope.formData.filter.folderType.$options = "i";
+                }
+                NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+                    $scope.items = data.data.results;
+                    $scope.totalItems = data.data.total;
+                    $scope.maxRow = data.data.options.count;
+                });
+
+            };
+
+
+
     })
 
     .controller('DetailGalleryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
@@ -5135,6 +5155,44 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.menutitle = NavigationService.makeactive("Gallery Detail");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
+        $scope.formData = {};
+        $scope.getFolderNames = function (formData, flag) {
+            if (flag) {
+                $scope.formData.folderName = '';
+            }
+            NavigationService.getAllFolderNameCloud(formData, function (data) {
+                if (data.data.value) {
+                    console.log("data.data", data.data);
+                    $scope.folderNames = data.data.data;
+                }
+            })
+        };
+
+
+
+        $scope.title = "Create";
+        $scope.saveData = function (data) {
+            if (data) {
+                $scope.url = "vimeo/getFilesPerFolder";
+                console.log(data);
+                NavigationService.apiCall($scope.url, data, function (data) {
+                    console.log("data.value", data);
+                    if (data.value === true && data.data[0].errors) {
+                        toastr.error("Folder Name Already Exists");
+                    } else if (data.value === true && data.data === 'Saved Successfully') {
+                        toastr.success("Saved Successfully", 'Success Message');
+                        $state.go('gallery');
+                    }
+                });
+            } else {
+                toastr.error("Invalid Data", "Gallery Details Message");
+            }
+        };
+
+
+        $scope.onCancel = function (sendTo) {
+            $state.go(sendTo);
+        }
     })
 
 //Certificate Banner
@@ -5574,12 +5632,12 @@ myApp.controller('DetailAdditionalPaymentCtrl', function ($scope, TemplateServic
 });
 
 myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
-        //Used to name the .html file
-        $scope.template = TemplateService.changecontent("dashboard");
-        $scope.menutitle = NavigationService.makeactive("Dashboard");
-        TemplateService.title = $scope.menutitle;
-        $scope.navigation = NavigationService.getnav();
-    })
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("dashboard");
+    $scope.menutitle = NavigationService.makeactive("Dashboard");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+})
 
     .controller('headerctrl', function ($scope, TemplateService, $uibModal) {
         $scope.template = TemplateService;

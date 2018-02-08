@@ -1,0 +1,99 @@
+<div class="heading-sec">
+  <div class="row">
+    <div class="col-md-4 column">
+      <div class="heading-profile">
+        <h2>Media</h2>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="widget">
+        <div class="table-area">
+          <div class="widget-title">
+            <div class="pull-left">
+              <span class="btn btn-primary" ng-click="generateExcel(false,true)"><i class="fa fa-download"></i>&nbsp;Sample Excel</span>
+              <span class="btn btn-primary" ng-click="generateExcel(true,true)"><i class="fa fa-download"></i>&nbsp;Sample Press Excel</span>
+              <span class="btn btn-primary" ng-click="generateExcel(false,false)"><i class="fa fa-download"></i>&nbsp;Gallery Excel</span>
+              <span class="btn btn-primary" ng-click="generateExcel(true,false)"><i class="fa fa-download"></i>&nbsp;Press Excel</span>
+            </div>
+            <div class="upload-button-media pull-right">
+              <upload-image no-view type="excel" ng-model="form.file" ng-callback="excelUploaded();" class="">CHOOSE</upload-image>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Order</th>
+                  <th>Folder</th>
+                  <th>Media Type</th>
+                  <th>Media</th>
+                  <th class="text-center" colspan="2">Operations</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="value in items | filter:search">
+                  <td>{{($index + 1)+((formData.page-1)*maxRow)}}</td>
+                  <td>{{value.order}}</td>
+                  <td>{{value.folder}}</td>
+                  <td>{{value.mediatype}}</td>
+                  <td>{{value.medialink}}</td>
+                  <td class="text-center">
+                    <a ng-click="confDel(value._id)" class="btn btn-primary">
+                                          <i class="fa fa-trash"></i>
+                                      </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="tableData" ng-if="totalItems===0 || items.length === 0">
+              <h5>No data found</h5>
+            </div>
+            <div class="tableData" ng-if="totalItems===undefined ">
+              <h5>Loading Data</h5>
+            </div>
+          </div>
+          <div class="">
+            <ul ng-if="totalItems" ng-change="viewTable();" uib-pagination total-items="totalItems" items-per-page="maxRow" ng-model="formData.page"
+              max-size="template.pageMax" class="pagination-sm" boundary-links="true " force-ellipses="true "></ul>
+            <!-- <uib-pagination ng-show="medias.length > 0" ng-change="reload();" total-items="media.total" ng-model="pagination.pagenumber"
+                items-per-page="20"></uib-pagination> -->
+          </div>
+          <div ng-if="data">
+            <h5>Upload Status:</h5>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th width="100">Row #</th>
+                  <th>Status</th>
+                  <th width="200">Total Entries: {{data.length}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="d in data">
+                  <td>
+                    <span class="success" ng-if="!d.error"><i class="fa fa-check-circle"></i> Row {{$index+2}}</span>
+                    <span class="danger" ng-if="d.error"><i class="fa fa-times-circle"></i> Row {{$index+2}}</span>
+                  </td>
+                  <td colspan="2">
+                    <span ng-if="!d.error">Entry successful!</span>
+                    <span ng-if="d.error">
+                                <span>Entry failed!</span>
+                    <pre class="danger-pre"><code>{{d | json:4}}</code></pre>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

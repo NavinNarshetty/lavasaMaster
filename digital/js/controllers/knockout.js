@@ -1,24 +1,8 @@
-myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, $rootScope, $uibModal) {
+myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, knockoutService, $rootScope, $uibModal) {
     $scope.template = TemplateService.getHTML("content/knockout.html");
     TemplateService.title = "Time Trial"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
 
-    // MODAL
-    $scope.data = [1, 2, 3, 4, 5, 6, 7, 8];
-    // MODAL
-    var modal;
-    $scope.matchCenter = function () {
-        modal = $uibModal.open({
-            animation: true,
-            scope: $scope,
-            // backdrop: 'static',
-            keyboard: false,
-            templateUrl: 'views/modal/matchcenter.html',
-            size: 'lg',
-            windowClass: 'matchcenter-modal'
-        })
-    }
-    // MODAL END
     $scope.oneAtATime = true;
     $scope.status = {
         isCustomHeaderOpen: false,
@@ -27,40 +11,43 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
     };
     // MODAL END
     // SWIPER
-    $scope.$on('$viewContentLoaded', function (event) {
+    $scope.initSwiper = function(){
+      $timeout(function () {
+          mySwiper = new Swiper('.swiper-container', {
+              paginationClickable: true,
+              nextButton: '.swiper-button-next',
+              prevButton: '.swiper-button-prev',
+              slidesPerView: 3,
+              spaceBetween: 5,
+              grabCursor: true,
+              breakpoints: {
+                  992: {
+                      slidesPerView: 3
+                  },
+                  768: {
+                      slidesPerView: 2
 
-        $timeout(function () {
-            mySwiper = new Swiper('.swiper-container', {
-                paginationClickable: true,
-                nextButton: '.swiper-button-next',
-                prevButton: '.swiper-button-prev',
-                slidesPerView: 3,
-                spaceBetween: 5,
-                grabCursor: true,
-                breakpoints: {
-                    992: {
-                        slidesPerView: 3
-                    },
-                    768: {
-                        slidesPerView: 2
-
-                    },
-                    481: {
-                        slidesPerView: 1
-                    },
-                    320: {
-                        slidesPerView: 1
-                    }
-                }
-            });
-        }, 300)
-    });
+                  },
+                  481: {
+                      slidesPerView: 1
+                  },
+                  320: {
+                      slidesPerView: 1
+                  }
+              }
+          });
+      }, 600)
+    };
+    // $scope.$on('$viewContentLoaded', function (event) {
+    //   $scope.initSwiper();
+    // });
+    $scope.initSwiper();
     // END SWIPER
 
     // START SCORING FUNCTION
     $scope.startScoring = function (card) {
         console.log(card, 'startScoring');
-        if (_.isEmpty(card.opponentsSingle[0]) && _.isEmpty(card.opponentsSingle[1])) {
+        if (!(_.isEmpty(card.prevMatch)) && _.isEmpty(card.opponentsSingle[0]) && _.isEmpty(card.opponentsSingle[1])) {
             toastr.error('No players found for match.', 'No match');
         } else {
             if (card.status == 'IsCompleted') {
@@ -185,70 +172,30 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
                             $scope.roundsList = allData.data.roundsList;
                             if ($scope.roundsListName.length === 0 || $scope.roundsList.length === 0) {
                                 toastr.error("No Data Found", 'Error Message');
-                                $state.go('digital-home');
+                                $state.go('championshipschedule');
                             }
-                            _.each($scope.roundsList, function (key) {
-                                _.each(key.match, function (value) {
-                                    _.each(value.opponentsSingle, function (obj, index) {
-                                        if (obj && obj.athleteId) {
-                                            obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
-
-
-                                            if (value.resultsCombat) {
-                                                console.log("resultsCombat", value.resultsCombat);
-                                                console.log(" im in resultsCombat");
-                                                if (value.resultsCombat.players[index]) {
-                                                    obj.noShow = NavigationService.Boolean(value.resultsCombat.players[index].noShow);
-                                                    obj.walkover = NavigationService.Boolean(value.resultsCombat.players[index].walkover);
-                                                }
-                                                value.status = value.resultsCombat.status;
-                                                value.isNoMatch = value.resultsCombat.isNoMatch;
-                                                value.video = value.resultsCombat.video;
-                                                if (obj.walkover) {
-                                                    value.walkover = obj.walkover;
-                                                }
-                                                if (value.resultsCombat.winner) {
-                                                    value.reason = value.resultsCombat.winner.reason;
-                                                    if (obj.athleteId._id === value.resultsCombat.winner.player) {
-                                                        obj.isWinner = true;
-                                                        value.isWinner = obj.isWinner;
-                                                    } else {
-                                                        obj.isWinner = false;
-                                                    }
-                                                }
-
-                                            } else if (value && value.resultsRacquet && value.resultsRacquet.players[index]) {
-                                                console.log("im in resultsRacquet");
-                                                console.log(value.resultsRacquet.players[index]);
-                                                obj.noShow = NavigationService.Boolean(value.resultsRacquet.players[index].noShow);
-                                                obj.walkover = NavigationService.Boolean(value.resultsRacquet.players[index].walkover);
-                                                value.status = value.resultsRacquet.status;
-                                                value.isNoMatch = value.resultsRacquet.isNoMatch;
-                                                value.video = value.resultsRacquet.video;
-
-                                                if (obj.walkover) {
-                                                    value.walkover = obj.walkover;
-                                                }
-                                                if (value.resultsRacquet.winner) {
-                                                    value.reason = value.resultsRacquet.winner.reason;
-                                                    if (obj && obj.athleteId && (obj.athleteId._id === value.resultsRacquet.winner.player)) {
-                                                        obj.isWinner = true;
-                                                        value.isWinner = obj.isWinner;
-                                                    } else {
-                                                        obj.isWinner = false;
-                                                    }
-                                                }
-
-
+                            if ($scope.roundsList) {
+                                _.each($scope.roundsList, function (key) {
+                                    _.each(key.match, function (value) {
+                                        _.each(value.opponentsSingle, function (obj, index) {
+                                            if (obj && obj.athleteId) {
+                                                obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
                                             }
-                                        }
+                                            if (value && value.resultsRacquet) {
+                                                value.finalResult = value.resultsRacquet;
+                                                knockoutService.sortKnockoutResult($scope.roundsList);
+
+                                            } else if (value && value.resultsCombat) {
+                                                value.finalResult = value.resultsCombat;
+                                                knockoutService.sortKnockoutResult($scope.roundsList);
+                                            }
+                                        });
 
                                     });
 
                                 });
-                            });
-                            console.log($scope.roundsListName, " $scope.roundsListName ");
-                            console.log($scope.roundsList, " $scope.roundsList ");
+
+                            }
                         }
                     } else {
                         toastr.error(allData.message, 'Error Message');
@@ -259,6 +206,31 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
     };
     $scope.getSportSpecificRounds();
 
+    // MATCH CENTER
+    $scope.matchCenter = function (card) {
+      $scope.currentMatch = card;
+      $scope.playerArr = [];
+      _.each(card.opponentsSingle, function(n, nkey){
+        console.log(n.athleteId._id, card.resultsRacquet.players);
+        $scope.playerArr[nkey] = _.find(card.resultsRacquet.players, ['player', _.toString(n.athleteId._id)]);
+      })
+      console.log("palyerarr",$scope.playerArr);
+      console.log("card.pla",card.resultsRacquet.players);
+      card.resultsRacquet.players = $scope.playerArr;
+      $scope.currentMatch.sportName = $scope.currentMatch.sport.sportslist.sportsListSubCategory.name;
+        modal = $uibModal.open({
+            animation: true,
+            scope: $scope,
+            // backdrop: 'static',
+            keyboard: false,
+            templateUrl: 'views/modal/matchcenter.html',
+            size: 'lg',
+            windowClass: 'matchcenter-modal'
+        })
+        console.log($scope.currentMatch, 'current');
+    }
+    // MATCH CENTER END
+
 
 });
 
@@ -266,35 +238,40 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
     $scope.template = TemplateService.getHTML("content/knockout-doubles.html");
     TemplateService.title = "Time Trial"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
+
+    $scope.oneAtATime = true;
     // SWIPER
-    $scope.$on('$viewContentLoaded', function (event) {
+    $scope.initSwiper = function(){
+      $timeout(function () {
+          mySwiper = new Swiper('.swiper-container', {
+              paginationClickable: true,
+              nextButton: '.swiper-button-next',
+              prevButton: '.swiper-button-prev',
+              slidesPerView: 3,
+              spaceBetween: 5,
+              grabCursor: true,
+              breakpoints: {
+                  992: {
+                      slidesPerView: 3
+                  },
+                  768: {
+                      slidesPerView: 2
 
-        $timeout(function () {
-            mySwiper = new Swiper('.swiper-container', {
-                paginationClickable: true,
-                nextButton: '.swiper-button-next',
-                prevButton: '.swiper-button-prev',
-                slidesPerView: 3,
-                spaceBetween: 5,
-                grabCursor: true,
-                breakpoints: {
-                    992: {
-                        slidesPerView: 3
-                    },
-                    768: {
-                        slidesPerView: 2
-
-                    },
-                    481: {
-                        slidesPerView: 1
-                    },
-                    320: {
-                        slidesPerView: 1
-                    }
-                }
-            });
-        }, 300)
-    });
+                  },
+                  481: {
+                      slidesPerView: 1
+                  },
+                  320: {
+                      slidesPerView: 1
+                  }
+              }
+          });
+      }, 600);
+    }
+    // $scope.$on('$viewContentLoaded', function (event) {
+    //   $scope.initSwiper();
+    // });
+    $scope.initSwiper();
     // END SWIPER
 
     // DOUBLES JSON
@@ -452,6 +429,7 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
                             }
                             _.each($scope.roundsList, function (key) {
                                 _.each(key.match, function (value) {
+                                    console.log(value.opponentsTeam);
                                     _.each(value.opponentsTeam, function (obj) {
                                         console.log(obj, "obj");
                                         if (obj) {
@@ -471,6 +449,7 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
                                             if (obj._id === value.resultsRacquet.winner.player) {
                                                 obj.isWinner = true;
                                                 value.isWinner = obj.isWinner;
+                                                value.winnerName = obj.schoolName;
 
                                             } else {
                                                 obj.isWinner = false;
@@ -479,8 +458,8 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
 
                                         if (value.resultsRacquet !== undefined && value.resultsRacquet.teams) {
                                             _.each(value.resultsRacquet.teams, function (n) {
-                                                n.walkover = NavigationService.NavigationService.Boolean(n.walkover);
-                                                n.noShow = NavigationService.NavigationService.Boolean(n.noShow);
+                                                n.walkover = NavigationService.Boolean(n.walkover);
+                                                n.noShow = NavigationService.Boolean(n.noShow);
                                             });
                                             $scope.tempWakover = _.find(value.resultsRacquet.teams, ['walkover', true]);
                                             $scope.tempNoshow = _.find(value.resultsRacquet.teams, ['noShow', true]);
@@ -525,4 +504,20 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
         }
     };
     // START SCORING FUNCTION END
+
+    // MATCH CENTER
+    $scope.matchCenter = function (card) {
+      $scope.currentMatch = card;
+      $scope.currentMatch.sportName = $scope.currentMatch.sport.sportslist.sportsListSubCategory.name;
+        modal = $uibModal.open({
+            animation: true,
+            scope: $scope,
+            keyboard: false,
+            templateUrl: 'views/modal/matchcenter-doubles.html',
+            size: 'lg',
+            windowClass: 'matchcenter-modal'
+        })
+        console.log($scope.currentMatch, 'current');
+    }
+    // MATCH CENTER END
 });

@@ -9,6 +9,7 @@ myApp.controller('CombatTeamCtrl', function($scope, TemplateService, NavigationS
     $scope.stateParam = $stateParams;
     $scope.matchId=$stateParams.id;
     $scope.matchData = {};
+    var promise;
     // INITIALISE VARIABLES END
 
     // CLEAVE FUNCTION OPTIONS
@@ -83,8 +84,6 @@ myApp.controller('CombatTeamCtrl', function($scope, TemplateService, NavigationS
         var tKey = nKey + 1;
         if(n.coach == ""){
           toastr.error("Please enter coach of Team " + tKey, "Enter Details");
-        } else if (n.formation == "") {
-          toastr.error("Please enter formation of Team " + tKey, "Enter Details");
         } else{
           _.each(n.players, function(m, mkey){
             if(m.isPlaying == true){
@@ -106,7 +105,7 @@ myApp.controller('CombatTeamCtrl', function($scope, TemplateService, NavigationS
         }
 
         console.log($scope.matchResult, "matchResult");
-        NavigationService.saveFootball($scope.matchResult, function(data){
+        NavigationService.saveMatch($scope.matchResult, function(data){
           if(data.value == true){
             console.log('save success');
             $rootScope.modalInstance.close('a');
@@ -122,8 +121,12 @@ myApp.controller('CombatTeamCtrl', function($scope, TemplateService, NavigationS
         $scope.set = set;
         switch (model) {
             case 'point':
-                $scope.set.point = $scope.set.point + 1;
-                break;
+            if($scope.set.point == ""){
+              $scope.set.point = 1;
+            } else{
+              $scope.set.point = $scope.set.point + 1;
+            }
+            break;
         }
         console.log("increment");
     };
@@ -172,7 +175,9 @@ myApp.controller('CombatTeamCtrl', function($scope, TemplateService, NavigationS
               }
                 $scope.match = data.data;
                 $scope.match.matchId = $scope.matchData.matchId;
-                if($scope.match.resultsCombat.teams[0] == "" || $scope.match.resultsCombat.teams[0].formation == "" ||$scope.match.resultsCombat.teams[1].coach == "" || $scope.match.resultsCombat.teams[1] == ''){
+                console.log('in to');
+                if($scope.match.resultsCombat.teams[0].coach == "" || $scope.match.resultsCombat.teams[1].coach == ""){
+                  console.log('emp');
                   $scope.selectTeam($scope.match.resultsCombat);
                 }
             } else {
@@ -206,7 +211,7 @@ myApp.controller('CombatTeamCtrl', function($scope, TemplateService, NavigationS
         }, 10000);
       })
     }
-    // $scope.autoSave();
+    $scope.autoSave();
     // AUTO SAVE FUNCTION END
     // DESTROY AUTO SAVE
     // $scope.destroyAutoSave = function(){
@@ -263,9 +268,8 @@ myApp.controller('CombatTeamCtrl', function($scope, TemplateService, NavigationS
     // MATCH COMPLETE END
     // API CALLS END
 
-
     // JSON
-    $scope.match = {
+    $scope.smatch = {
       matchId: '123456',
       sportsName: 'Football',
       age: 'u-11',

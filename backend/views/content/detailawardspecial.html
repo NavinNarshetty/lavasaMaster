@@ -1,0 +1,263 @@
+<div class="heading-sec">
+  <div class="row">
+    <div class="col-md-4 column">
+      <div class="heading-profile">
+        <h2>{{title}} Special Award Details</h2>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class=" panel-content ">
+  <div class="row ">
+    <div class="col-md-12 ">
+      <div class="widget ">
+        <div class="table-area ">
+          <div class="widget-title">
+            <form name="specialawardform" role='form'>
+              <!-- TYPE AND GENDER -->
+              <div class="row">
+                <div class="col-md-6">
+                  <!-- TYPE -->
+                  <div class="special-award-type">
+                    <div class="form-group">
+                      <label> Type</label>
+                      <select name="selecttype" class="form-control" ng-model="formData.type" placeholder="Enter Type" ng-disabled="flag" ng-change="getList(formData)"
+                        required>
+                        <option value="athlete">Athlete</option>
+                        <option value="school" ng-if="institute==='school'">School</option>
+                        <option value="college" ng-if="institute==='college'">College</option>
+                      </select>
+                      <div class="error-msg" ng-if="specialawardform.selecttype.$invalid && specialawardform.selecttype.$touched">Please Enter Type*</div>
+                    </div>
+                  </div>
+                  <!-- TYPE END -->
+                </div>
+                <div class="col-md-6">
+                  <!-- GENDER -->
+                  <div class="special-award-gender" ng-if="formData.type=='athlete'">
+                    <div class="special-award-type">
+                      <div class="form-group">
+                        <label> Gender</label>
+                        <select name="selectgender" class="form-control" ng-model="formData.gender" ng-disabled="flag" placeholder="Enter Type" ng-change="getList(formData)"
+                          required>
+                          <option value="male">Male</option>
+                          <option value="female">Female</option>
+                        </select>
+                        <div class="error-msg" ng-if="specialawardform.selectgender.$invalid && specialawardform.selectgender.$touched">Please Enter Type*</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- GENDER END -->
+                </div>
+              </div>
+              <!-- TYPE AND GENDER -->
+
+              <!-- CERTIFICATE && FOOTER IMAGE -->
+              <div class="certificate-footerimage-holder" ng-if="formData.type">
+                <!-- CERTIFICATE NAME -->
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Certificate Name</label>
+                      <ui-select name="certificatename" ng-model="formData.award" theme="bootstrap" ng-disabled="flag" required>
+                        <ui-select-match placeholder="Select Certificate Name" allow-clear="true"> {{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="certificate in certificateType |  filter: $select.search track by $index">
+                          <div>
+                            <span class="text-capitalize" ng-bind-html="certificate.name"></span>
+                          </div>
+                        </ui-select-choices>
+                      </ui-select>
+                      <div class="error-msg" ng-if="specialawardform.certificatename.$invalid && specialawardform.certificatename.$touched">Please Enter Valid Name *</div>
+                    </div>
+                  </div>
+                </div>
+                <!-- CERTIFICATE NAME END -->
+
+
+              </div>
+              <!-- CERTIFICATE && FOOTER IMAGE -->
+
+              <!-- ATHLETE HOLDER -->
+              <div class="athlete-holder" ng-if="formData.award.awardType==='max' && formData.type==='athlete'">
+                <div class="text-center">
+                  <label for="">Athlete Holder</label>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label> Player</label>
+                      <ui-select name="playername" ng-model="formData.athlete" theme="bootstrap" on-select="selectSchool($item)" ng-change="awardPlayerchange($select.selected.fullName)"
+                        required>
+                        <ui-select-match placeholder="Select Certificate Name"> {{$select.selected.fullName}}</ui-select-match>
+                        <ui-select-choices refresh-delay='0' repeat="player._id as player in playerData | filter: $select.search" refresh="refreshChange($select.search,formData.gender)">
+                          <div>
+                            <span class="text-capitalize" ng-bind-html="player.fullName"></span>
+                          </div>
+                        </ui-select-choices>
+                      </ui-select>
+                      <div class="error-msg" ng-if="specialawardform.playername.$invalid && specialawardform.playername.$touched">Please Enter Valid Name *</div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">School Name</label>
+                      <input type="text" name="schoolname" ng-model="foundSchool.school.name" class="form-control" placeholder="" readonly>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- ATHLETE HOLDER END -->
+
+              <!-- SCHOOL HOLDER -->
+              <div class="school-award-holder">
+                <!-- <div class="text-center">
+                  <label for="">School Holder</label>
+                </div> -->
+                <div class="row" ng-if="formData.type==='school'">
+                  <!-- SELECT SCHOOL -->
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label> School</label>
+                      <ui-select name="schoolname" ng-model="formData.school" theme="bootstrap" ng-change="removeSport($select.selected.schoolsfaId)"
+                        required>
+                        <ui-select-match placeholder="Select School" allow-clear="true"> {{$select.selected.schoolsfaId}}</ui-select-match>
+                        <ui-select-choices repeat="school in schoolData | filter: $select.search" refresh="schoolAward($select.search)">
+                          <div>
+                            <span class="text-capitalize" ng-bind-html="school.schoolsfaId"></span>
+                          </div>
+                        </ui-select-choices>
+                      </ui-select>
+                      <div class="error-msg" ng-if="specialawardform.schoolname.$invalid && specialawardform.schoolname.$touched">Please Enter Valid Name *</div>
+                    </div>
+                  </div>
+                </div>
+                <!-- SELECT SCHOOL END -->
+                <div class="row" hidden>
+                  <!-- TOTAL SPORT -->
+                  <!-- <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="">Total Sport</label>
+                      <input type="number" name="totals" ng-model="formData.totalSports" class="form-control" placeholder="Enter Total Sport" required>
+                      <div class="error-msg" ng-if="specialawardform.totals.$invalid && specialawardform.totals.$touched">Please Enter Valid Number *</div>
+                    </div>
+                  </div> -->
+                  <!-- TOTAL SPORT END -->
+                </div>
+              </div>
+
+              <!-- SCHOOL HOLDER END -->
+
+              <!-- SPORT SELECTION -->
+              <!-- SPORT LIST -->
+              <div class="row" ng-if="formData.award.awardType==='max'">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Sports </label>
+                    <ui-select name="selectsportslist" id="selectsportslist" theme="bootstrap" ng-model="formData.sports" multiple ng-change="searchSportList($select.selected._id)"
+                      required>
+                      <ui-select-match placeholder="Enter Sports List" allow-clear="true">
+                        {{$item.name}}
+                      </ui-select-match>
+                      <ui-select-choices refresh.delay="0" repeat="item in sportitems | filter:$select.search" refresh="getAllSportList($select.search)">
+                        <span ng-bind-html="item.name"></span>
+                      </ui-select-choices>
+                    </ui-select>
+                    <div class="error-msg" ng-if="detailForm.selectsportslist.$invalid && detailForm.selectsportslist.$touched">Please Enter Sport List *</div>
+                  </div>
+                </div>
+              </div>
+              <!-- SPORT LIST END -->
+              <!-- SPORT SELECTION END -->
+
+              <!-- COACH HOLDER -->
+              <div class="coach-holder" ng-if="formData.award.awardType==='coach'">
+                <!-- <div class="text-center">
+                  <label for="">Coach Name</label>
+                </div> -->
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="">Coach Name</label>
+                      <input type="text" name="coachname" ng-model="formData.coachName" class="form-control" placeholder="Enter Coach Name" required>
+                      <div class="error-msg" ng-if="specialawardform.coachname.$invalid && specialawardform.coachname.$touched">Please Enter Name*</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- COACH HOLDER END -->
+
+              <!-- BOOST HOLDER -->
+              <div class="boost-holder" ng-if="formData.award.awardType==='boost'">
+                <div class="text-center">
+                </div>
+                <div class="row">
+                  <div class="form-group">
+                    <div class="boost-holder-container">
+                      <div class="boost-holder-button text-right" ng-click="addRow(formData);">
+                        <button class="btn btn-default" type="submit">Add Row</button>
+                      </div>
+                      <div class="boost-holder table-responsive">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th>School Rank</th>
+                              <th>Total School</th>
+                              <th>Year</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr ng-repeat="content in formData.boostDetail">
+                              <td>
+                                <div class="form-group">
+                                  <input type="text" placeholder="Enter Rank" class="form-control" ng-model="content.schoolRank">
+                                </div>
+                              </td>
+                              <td>
+                                <div class="form-group">
+                                  <input type="text" placeholder="Enter total schools" class="form-control" ng-model="content.total">
+                                </div>
+                              </td>
+                              <td>
+                                <div class="form-group">
+                                  <input type="text" placeholder="Enter year" class="form-control" ng-model="content.year">
+                                </div>
+                              </td>
+                              <td ng-click="deleteRow(formData,$index);">
+                                <button class="btn btn-default" type="submit">Delete</button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- BOOST HOLDER END -->
+              <!-- FOOTER IMAGE -->
+              <div class="row" ng-if="formData.type">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Footer Image
+                      <span style="color:#ea5249;">(Note:image size should be 600x220 only in PNG*)</span>
+                      <span ng-show="type.required">*</span>
+                    </label>
+                    <upload-image ng-model="formData.footerImage" inobj></upload-image>
+                  </div>
+                </div>
+              </div>
+              <!-- FOOTER IMAGE END -->
+              <div class="text-center mt20 odd-even-button">
+                <button class="btn btn-default" type="submit" ng-click="saveAwardDetail(formData)">Save</button>
+                <button class="btn btn-default" ui-sref='specialaward-detail'>Cancel</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

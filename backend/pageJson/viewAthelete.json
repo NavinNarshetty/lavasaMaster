@@ -56,23 +56,6 @@
         }
     }],
 
-    "button": [{
-        "name": "Excel Export",
-        "icon": "print",
-        "class": "btn-success",
-        "type": "redirect",
-        "text": "export",
-        "linkType": "admin",
-        "action": "Athelete/generateExcelOld"
-    }, {
-        "name": "Upload For ABC Excel",
-        "icon": "delete",
-        "class": "btn-warning",
-        "type": "redirect",
-        "action": "excel-upload/User",
-        "linkType": "internal"
-    }],
-
 
     "apiCall": {
         "url": "Athelete/search",

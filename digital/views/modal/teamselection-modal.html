@@ -24,18 +24,18 @@
                             <div class="select-teamcoach" hidden>
                                 <label for="{{team.teamId}}.captain">Select Captain</label>
                                 <ui-select id="{{team.teamId}}.captain" ng-model="team.captain" theme="bootstrap">
-                                    <ui-select-match placeholder="Select Captain"> {{$select.selected.firstName}} {{$select.selected.surname}}</ui-select-match>
+                                    <ui-select-match placeholder="Select Captain"> {{$select.selected.firstName|firstcapitalize:true}} {{$select.selected.surname|firstcapitalize:true}}</ui-select-match>
                                     <ui-select-choices repeat="player._id as player in match.teams[$index].players | filter: $select.search">
-                                        <p class="opponentsingle-selector">{{player.firstName}} {{player.surname}}</p>
+                                        <p class="opponentsingle-selector">{{player.firstName|firstcapitalize:true}} {{player.surname|firstcapitalize:true}}</p>
                                     </ui-select-choices>
                                 </ui-select>
                             </div>
                             <div class="select-teamcoach" hidden>
                                 <label for="{{team.teamId}}.goalKeeper">Select Goalkeeper</label>
                                 <ui-select id="{{team.teamId}}.goalKeeper" ng-model="team.goalKeeper" theme="bootstrap">
-                                    <ui-select-match placeholder="Select Goalkeeper"> {{$select.selected.firstName}} {{$select.selected.surname}}</ui-select-match>
+                                    <ui-select-match placeholder="Select Goalkeeper"> {{$select.selected.firstName|firstcapitalize:true}} {{$select.selected.surname|firstcapitalize:true}}</ui-select-match>
                                     <ui-select-choices repeat="player._id as player in match.teams[$index].players | filter: $select.search">
-                                        <p class="opponentsingle-selector">{{player.firstName}} {{player.surname}}</p>
+                                        <p class="opponentsingle-selector">{{player.firstName|firstcapitalize:true}} {{player.surname|firstcapitalize:true}}</p>
                                     </ui-select-choices>
                                 </ui-select>
                             </div>
@@ -59,12 +59,15 @@
                                     <tr ng-repeat="player in team.players track by $index">
                                         <td colspan="8">
                                             <div class="teamselect-name">
-                                                <p class="clearfix m-clear">{{match.teams[teamIndex].studentTeam[$index].studentId.firstName}} {{match.teams[teamIndex].studentTeam[$index].studentId.surname}}</p>
+                                                <p class="clearfix m-clear">{{match.teams[teamIndex].studentTeam[$index].studentId.sfaId}} - {{match.teams[teamIndex].studentTeam[$index].studentId.firstName|firstcapitalize:true}}
+                                                    {{match.teams[teamIndex].studentTeam[$index].studentId.surname|firstcapitalize:true}}
+                                                </p>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="relate teamselect-jersey">
-                                                <input type="number" placeholder="0" ng-model="player.jerseyNo" min="0" placeholder="0" max="99" class="score-number teamscore-number display-inline form-control">
+                                                <input type="number" placeholder="0" ng-model="player.jerseyNo" min="0" placeholder="0" max="999" class="score-number teamscore-number display-inline form-control"
+                                                    limit-to-max>
                                             </div>
                                         </td>
                                         <td>

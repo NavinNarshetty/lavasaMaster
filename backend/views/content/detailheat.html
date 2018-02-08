@@ -18,7 +18,7 @@
               <div class="col-md-12">
                 <!-- MATCH AND SPORT -->
                 <div class="row">
-                  <pre>{{formData | json}}</pre>
+                  <!-- <pre>{{formData | json}}</pre> -->
                   <!-- MATCH ID -->
                   <div class="col-md-6">
                     <div class="form-group">
@@ -67,11 +67,21 @@
 
                 <!-- VIDEO LINK -->
                 <div class="row">
-                  <div class="form-group">
-                    <label>Video Link</label>
-                    <input type="text" name="video" ng-model="formData.videolink" class="form-control" placeholder="Enter video link">
-                    <div class="error-msg" ng-if="detailForm.video.$invalid && detailForm.video.$touched">Please Enter Video Link*</div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Video Link</label>
+                      <input type="text" name="video" ng-model="formData.video" class="form-control" placeholder="Enter video link">
+                      <div class="error-msg" ng-if="detailForm.video.$invalid && detailForm.video.$touched">Please Enter Video Link*</div>
+                    </div>
                   </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Video Type</label>
+                      <input type="text" name="videotype" ng-model="formData.videoType" class="form-control" placeholder="Enter video Type">
+                      <div class="error-msg" ng-if="detailForm.videotype.$invalid && detailForm.videotype.$touched">Please Enter Video Type*</div>
+                    </div>
+                  </div>
+
                 </div>
                 <!-- VIDEO LINK END -->
 
@@ -124,7 +134,7 @@
                 </div>
                 <!-- ROUND AND HEAT END -->
                 <!-- TABLE OF HEAT PLAYERS -->
-                <div class="table-heat-players text-center" ng-if="formData.resultHeat">
+                <div class="table-heat-players text-center table-responsive" ng-if="formData.resultHeat">
                   <table class="table">
                     <thead>
                       <th>

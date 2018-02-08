@@ -35,6 +35,13 @@ body {
     }
 }
 
+body > [uib-modal-window]:not([modal-render]) {
+    display: none;
+}
+body> .modal-backdrop{
+  z-index: 1040 !important;
+}
+
 img.loading {
     text-align: center;
     opacity: 1;
@@ -282,6 +289,23 @@ header {
     border: none !important;
 }
 
+.bg-team-male{
+  background-image: url('../img/medal-icon/male-team.png');
+}
+.bg-team-female{
+  background-image: url('../img/medal-icon/female-team.png');
+}
+.bg-athlete-male{
+  background-image: url('../img/medal-icon/male-athlete.png');
+}
+.bg-athlete-female{
+  background-image: url('../img/medal-icon/male-athlete.png');
+}
+.bg-school-icon{
+  background-image: url('../img/medal-icon/school-icon.png');
+}
+
+
 // SWIPER
 .digital-swiper {
     margin: 15px 0;
@@ -423,6 +447,13 @@ header {
     text-transform: uppercase;
 }
 
+.matchstart-section{
+  width: 100%;
+}
+
+.matchstart-playerheader{
+  border-bottom: 2px solid #eee;
+}
 .matchplayer-card {
     padding: 10px;
     margin: 20px auto;
@@ -448,12 +479,20 @@ header {
 .matchplayer-image {
     width: 100px;
     height: 100px;
-    border: 1px solid red;
+    // border: 1px solid red;
     border-radius: 100%;
     margin: 0 10px;
     display: inline-block;
     overflow: hidden;
     vertical-align: middle;
+}
+
+.scorematch-teamschool{
+  width: 180px;
+  display: inline-block;
+  font-weight: 700;
+  text-align: left;
+  vertical-align: middle;
 }
 
 .matchplayer-details {
@@ -503,6 +542,7 @@ header {
     cursor: pointer;
     font-size: 16px;
     line-height: 20px;
+    z-index: 3;
 }
 
 .matchstart-score {
@@ -911,16 +951,18 @@ header {
   font-weight: 700;
 }
 .confirmationmodal-button{
-  padding: 5px;
+  display: flex;
+  flex-wrap: nowrap;
 }
 
 .btn-modalconfirm{
-  width: 49%;
-  margin: 0;
+  // width: 49%;
+  margin: 0 5px;
   border: 1px solid #ccc;
-  display: inline-block;
+  // display: inline-block;
   background-color: transparent;
   color: #27b465;
+  flex: auto;
   font-weight: 700;
 
   &:active, &:hover, &:focus {
@@ -930,15 +972,545 @@ header {
   }
 }
 // CONFIRM COMPLETE MODAL END
+// TEAM MATCH CENTER
+.teammatchcenter-modal{
+  .modal-content{
+    border-radius: 0;
+  }
+  .modal-header {
+    padding: 0px;
+  }
+  .modal-container{
+    padding: 15px 0;
+  }
+  .matchstart-header {
+    padding: 10px 15px;
+    padding-left: 90px;
+    background-color: #337ab7;
+    color: #fff;
+    font-size: 16px;
+    text-transform: uppercase;
+  }
+  .matchcenter-sporticon {
+    position: absolute;
+    top: 5px;
+    left: 20px;
+    width: 65px;
+  }
+  .matchcenter-heading{
+    font-weight: 700;
+  }
+  .matchwinner{
+    position: absolute;
+    top: 0;
+    left: 90px;
+  }
+  .matchwinner-title{
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .matchplayer-card {
+    padding: 10px;
+    margin: 20px auto 0;
+    box-shadow: 0 0 10px #a0a0a0;
+    position: relative;
+  }
+  .matchplayer-playerid {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px;
+    font-size: 12px;
+    color: #757575;
+  }
+  .matchplayer-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    margin: 0 10px;
+    display: inline-block;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    overflow: hidden;
+    vertical-align: middle;
+  }
+  .matchplayer-details{
+    width: calc(100% - 125px);
+    margin-top: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    .matchplayer-school{
+      margin: 0;
+      color: #0a1a72;
+      font-size: 16px;
+      font-weight: 700;
+    }
+  }
+  .playerangle-accordion{
+    font-size: 21px;
+  }
+  .teamplayer-accordion{
+    .panel{
+      border: none;
+      border-radius: 0px;
+      box-shadow: none;
+    }
+    .panel-default > .panel-heading{
+      padding: 5px 10px;
+      border: 0;
+      border-bottom: 1px solid #ddd;
+      background-color: transparent;
+    }
+    .panel-default{
+      &:last-child{
+        > .panel-heading{
+          border-bottom: 0px;
+        }
+      }
+    }
+    .panel-body{
+      border: none;
+    }
+    .panel-open{
+      .panel-heading{
+        border-radius: 0;
+        background-color: #e1e1e1;
+      }
+      .panel-body{
+        border: 1px solid #e1e1e1;
+      }
+    }
+    .panel-title{
+      font-size: 14px;
+    }
+  }
+  .playerheader-accordion{
+    padding: 5px;
+    margin-bottom: 5px;
+    background: #ffb026;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  .team-formationholder {
+    padding-left: 25px;
+    margin-top: 15px;
+    position: relative;
+  }
+  .team-formationicon {
+    width: 30px;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    @include transform(translateY(-50%));
+  }
+  .formaton-input{
+    width: 80px;
+    border: none;
+    background-color: #5aeca5;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  .matchcenter-teamcol{
+    &:nth-child(even){
+      .team-formationholder{
+        padding-left: 0;
+        padding-right: 25px;
+        text-align: right;
+      }
+      .team-formationicon{
+        left: auto;
+        right: 0;
+      }
+    }
+  }
+  .team-player-accordian-holder {
+    margin: 20px 0;
+  }
+  .teamdetail-pointholder{
+    padding: 10px;
+    border: 1px solid #e1e1e1;
+  }
+  .setpoint-label {
+    font-weight: 600;
+    font-size: 10px;
+  }
+  .matchcenter-playerpoint {
+    border: none;
+    background-color: #e1e1e1;
+    font-size: 21px;
+    font-weight: 700;
+  }
+  .matchcenter-teamschool {
+    width: 180px;
+    display: inline-block;
+    font-weight: 700;
+    text-align: left;
+    vertical-align: middle;
+  }
+  .sportwise-finalpointholder{
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .matchcenter-teampoints{
+    margin: 20px auto;
+    text-align: center;
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+    .setpoint-element {
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .setpointlabel{
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .score-number {
+      width: 60px;
+      height: 60px;
+      padding: 5px 10px;
+      border: none;
+      margin: 0 10px;
+      background-color: #e1e1e1;
+      font-size: 24px;
+      font-weight: 700;
+      text-align: center;
+    }
+  }
+}
+// TEAM MATCH CENTER END
 
-.hello{
+// COMBAT TEAM
+.matchteam-combatname {
+  width: 220px;
+  display: inline-block;
+  font-weight: 600;
+  vertical-align: middle;
+}
+// COMBAT TEAM END
+// SCORING IMAGES
+.scoringimages-section{
+  min-height: calc(100vh - 140px);
+  position: relative;
+}
+.scoreimage-btns{
   width: 100%;
-  height: 50px;
-  border: 1px solid #fff;
-  background-color: #ccc;
+  padding: 15px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
 }
+// SCORING IMAGES END
+// QUALIFYING SCORING
+.qualifying-tableholder{
+  margin: 30px 0;
+}
+.btn-qualifyingscore{
+  padding: 5px;
+  font-size: 12px;
+}
+.digitalscore-table{
+  thead{
+    tr{
+      th{
+        text-transform: capitalize;
+        vertical-align: top;
+      }
+    }
+  }
+  tbody{
+    tr{
+      td{
+        font-size: 12px;
+      }
+    }
+  }
+}
+.qualifying-swiper{
+  .digital-swiper{
+    max-width: 120px;
+  }
+}
+// QUALIFYING SCORING END
+// LOGIN POPUP MODAL
+.login-formholder{
+  padding: 20px;
+  // border: 1px solid #ccc;
+  box-shadow: 0 0 5px #a0a0a0;
+}
+.formholder-title{
+  margin-bottom: 15px;
+  font-size: 24px;
+  text-transform: uppercase;
+}
+.loginpopup{
+  .modal-header{
+    background-color: $brand-primary;
+    color: #fff;
+  }
+  .modal-body{
+    padding: 30px 15px 50px;
+  }
+}
+.login-error{
+  margin: 15px 0;
+  color: #da495b;
+  font-weight: 600;
+  font-size: 10px;
+  text-align: center;
+  text-transform: uppercase;
+}
+// LOGIN POPUP MODAL END
+// ROTATE IMAGE DIRECTIVE
+.imagerotate-btnholder{
+  margin: 10px 0;
+}
+.btn-rotateimage{
+  margin-bottom: 5px;
+}
+// ROTATE IMAGE DIRECTIVE  END
 
-.hello2{
-  // height: 100px;
-  background-color: red;
+.selection-modalcontent{
+  .modal-body{
+      height: calc(100vh - 200px);
+      overflow-y: auto;
+  }
 }
+// ATTENDANCE SELECT PAGE
+.attendanceselect-page{
+  .sport-type-head{
+    color: $brand-primary;
+  }
+  .championshipdraw-card-btn{
+    background-color: $brand-primary;
+  }
+}
+// ATTENDANCE SELECT PAGE END
+
+// ATTENDANCE SHEET PAGE
+.attendancepage{
+  min-height: 100vh;
+  padding: 50px 0;
+  position: relative;
+}
+.attendancesheet-title{
+  color: $brand-primary;
+  font-size: 30px;
+  text-align: center;
+  text-transform: uppercase;
+  @extend .d-fjalla-one;
+}
+.attendance-sportheading{
+  color: $brand-success;
+  font-size: 24px;
+  text-align: center;
+  text-transform: uppercase;
+  @extend .d-fjalla-one;
+}
+.attendancesheet-stickyhead{
+  width: 100%;
+  padding: 10px 0;
+  box-shadow: 0 2px 5px #ccc;
+  position: fixed;
+  top: 50px;
+  left: 0;
+  background-color: #fff;
+
+  .form-group{
+    margin: 0;
+  }
+}
+.player-highlight{
+  background-color: $brand-warning;
+  // color: #fff;
+}
+.attendance-table{
+  margin: 30px 0;
+
+  .table{
+    >tbody{
+      >tr{
+        td{
+          vertical-align: middle;
+        }
+      }
+    }
+    // display: block;
+    // >thead{
+    //   display: block;
+    //   position: sticky;
+    //   top: 0;
+    //   background-color: #ccc;
+    // }
+    // tbody, thead tr{
+    //   width: 100%;
+    //   display: table;
+    //   table-layout: fixed;
+    // }
+  }
+}
+// ATTENDANCE SHEET PAGE END
+// ATTENDANCE SHEET TEAM
+.attendaceteam-table{
+  .table{
+    > tbody {
+      > tr{
+        td {
+          // border: none;
+          vertical-align: top;
+        }
+      }
+    }
+  }
+}
+.attendanceteam-accordion{
+  .panel-group{
+    margin: 0;
+  }
+  .panel{
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+  }
+  .panel-heading{
+    padding: 0px 10px;
+    background-color: transparent;
+    a{
+      color: #333;
+    }
+  }
+  .panel-body{
+    padding: 0 10px;
+  }
+}
+.attendanceteam-tablehead{
+  .accordion-arrow{
+    font-size: 21px;
+  }
+  .table{
+    margin-bottom: 0;
+    background-color: transparent;
+    >tbody{
+      td{
+        padding: 5px 0;
+        border: none;
+      }
+    }
+  }
+  .attendancehead-teamid{
+    width: 150px;
+  }
+}
+.attendance-teamplayer-table{
+  .table{
+    margin-bottom: 0;
+    background-color: transparent;
+    font-size: 12px;
+  }
+}
+// ATTENDANCE SHEET TEAM END
+// CREATE MATCH HEATS
+.creatematch-page{
+  min-height: calc(100vh - 60px);
+  padding: 20px 0;
+}
+.creatematch-title{
+  font-size: 30px;
+  color: $brand-primary;
+  text-align: center;
+  text-transform: uppercase;
+  @extend .d-fjalla-one;
+}
+.creatematch-header {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  margin: 20px 0;
+}
+.creatematch-displaysection {
+  padding: 10px 0;
+  margin: 20px 0;
+}
+.creatematch-roundholder{
+  position: relative;
+  margin-bottom: 20px;
+}
+.creatematch-roundhead {
+  padding: 10px 0;
+  background-color: $brand-warning;
+  color: $brand-primary;
+  font-size: 24px;
+  text-align: center;
+  text-transform: uppercase;
+  @extend .d-fjalla-one;
+}
+.creatematch-roundbtnholder{
+  padding: 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: right;
+}
+.creatematch-roundtable{
+  padding: 0 15px;
+}
+.creatematch-selectplayers-modal{
+  .modal-header{
+    padding: 0;
+  }
+  .modal-content{
+    padding: 10px 30px;
+    border: none;
+    box-shadow: none;
+  }
+  .modal-footer{
+    border: none;
+    border-top: 1px solid #ccc;
+    box-shadow: none;
+  }
+  .matchstart-header{
+    padding: 10px;
+  }
+  .creatematch-playertitle{
+    margin: 10px 0;
+    color: $brand-primary;
+    font-size: 21px;
+    @extend .d-fjalla-one;
+  }
+  .creatematch-note{
+    color: $brand-danger;
+    font-size: 16px;
+  }
+}
+.creatematch-laneholder{
+  width: 90px;
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+  }
+}
+.creatematch-selectholder{
+  width: 90px;
+}
+// CREATE MATCH HEATS END
+// CREATE MATCH WEIGHTS
+.creatematch-formholder{
+  margin: 30px 0;
+}
+.creatematch-formcard{
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+// CREATE MATCH WEIGHTS END

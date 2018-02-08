@@ -4,7 +4,7 @@
     <div class="knockout-sportname text-center">
       <h3 class="d-fjalla-one text-uppercase sport-type-head"><span>{{roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name}}</span> |
         <span>{{roundsList[0].match[0].sport.gender}}</span> |
-        <span>{{roundsList[0].match[0].sport.ageGroup.name}}</span></h3>
+        <span>{{roundsList[0].match[0].sport.ageGroup.name}}</span> <span ng-if="roundsList[0].match[0].sport.weight">| {{roundsList[0].match[0].sport.weight.name}}</span></h3>
       <div class="draws-downloadpdf draws-a">
         <a href="#">Download the schedule in pdf format</a>
       </div>
@@ -26,95 +26,75 @@
         <div class="knockout-swiper-holder">
           <div class="swiper-container">
             <div class="swiper-wrapper">
-              <div class="swiper-slide" ng-repeat="roundName in roundsListName">
+              <div class="swiper-slide" ng-repeat="roundName in roundsListName track by $index">
                 <div class="knockout-viewmore" ng-click="getSportSpecificRounds(roundName)">
                   <button class="btn sport-btn-blue-outline">{{roundName}}</button>
                 </div>
               </div>
-              <!-- <div class="swiper-slide">
-                <div class="knockout-viewmore">
-                  <button class="btn sport-btn-blue-outline">Round 2</button>
-                </div>
-              </div>
-              <div class="swiper-slide">
-                <div class="knockout-viewmore">
-                  <button class="btn sport-btn-blue-outline">Round 3</button>
-                </div>
-              </div>
-              <div class="swiper-slide">
-                <div class="knockout-viewmore">
-                  <button class="btn sport-btn-blue-outline">Quater-Final</button>
-                </div>
-              </div>
-              <div class="swiper-slide">
-                <div class="knockout-viewmore">
-                  <button class="btn sport-btn-blue-outline">Semi-Final</button>
-                </div>
-              </div>
-              <div class="swiper-slide">
-                <div class="knockout-viewmore">
-                  <button class="btn sport-btn-blue-outline">Final</button>
-                </div>
-              </div> -->
             </div>
             <!-- Add Arrows -->
           </div>
           <div class="swiper-button-next"><span class="fa fa-chevron-right"></div>
-          <div class="swiper-button-prev"><span class="fa fa-chevron-left"></div>
-        </div>
-      </div>
-    </div>
-
-    <!--SWIPER-->
-    <!--SWIPER BUTTON DIV END-->
-
-
-    <!--OUTER DIV -->
-    <div class="knockout-schedulecardsholder">
-      <!--ROUNDS HEAD-->
-      <!-- <div class="row">
-        <div class="col-md-3 col-sm-4 col-xs-12" ng-repeat="round in roundsListName |limitTo:3 track by $index">
-          <div class="text-center text-uppercase">
-            <h3 class="sport-success d-fjalla-one">{{round}}
-            </h3>
+            <div class="swiper-button-prev"><span class="fa fa-chevron-left"></div>
           </div>
         </div>
-      </div> -->
-      <!--ROUNDS HEAD END-->
-      <div class="row">
-        <!--ROUND 1-->
-        <div class="col-md-3 col-sm-6 col-xs-12">
+      </div>
 
-              <div>
-             <h3 class="sport-success d-fjalla-one text-center text-uppercase">{{roundsList[0].name}}
-            </h3>
-          <div class="knockout-cardholder" ng-repeat="card in roundsList[0].match track by $index">
-            <div class="knockout-card"  ng-if="card.opponentsSingle.length>0" ng-repeat="player  in card.opponentsSingle track by $index" ng-class="{'knockout-winnercard':player.isWinner===true}">
-              <div class="knockout-cardimage inline-block ver-mid">
-                <img ng-src="{{player.athleteId.photograph|serverimage:50:50:'cover'}}" alt="" class="img-responsive">
-              </div>
+      <!--SWIPER-->
+      <!--SWIPER BUTTON DIV END-->
 
-              <div class="inline-block knockout-cardplayername ver-mid">
-                <p class="m-clear knockout-winner-name d-opensans-regular" title="{{player.athleteId.fullName}}">{{player.athleteId.fullName | truncate:'25'}}</p>
-                <p class="m-clear knockout-winner-school" title="{{player.athleteId.school.name}}">{{player.athleteId.school.name | truncate:'25'}}</p>
-              </div>
+
+      <!--OUTER DIV -->
+      <div class="knockout-schedulecardsholder">
+        <!--ROUNDS HEAD-->
+        <!-- <div class="row">
+          <div class="col-md-3 col-sm-4 col-xs-12" ng-repeat="round in roundsListName |limitTo:3 track by $index">
+            <div class="text-center text-uppercase">
+              <h3 class="sport-success d-fjalla-one">{{round}}
+              </h3>
+            </div>
+          </div>
+        </div> -->
+        <!--ROUNDS HEAD END-->
+        <div class="row">
+          <!--ROUND 1-->
+          <div class="col-md-3 col-sm-6 col-xs-12">
+
+                <div>
+               <h3 class="sport-success d-fjalla-one text-center text-uppercase">{{roundsList[0].name}}
+              </h3>
+            <div class="knockout-cardholder" ng-repeat="card in roundsList[0].match track by $index">
+
+
+
+          <div class="knockout-card" ng-if="card.opponentsSingle.length>0" ng-repeat="player in card.opponentsSingle track by $index"
+            ng-class="{'knockout-winnercard':player.isWinner===true}">
+            <div class="knockout-cardimage inline-block ver-mid" ng-if="player.athleteId.photograph">
+              <img ng-src="{{player.athleteId.photograph|serverimage:50:50:'cover'}}" alt="{{player.athleteId.fullName}}" class="img-responsive">
             </div>
 
-            <div ng-if="card.opponentsSingle.length===0">
-              <div class="knockout-card" style="height:63px">
-               </div>
-              <div class=""  style="height:63px">
-
-               </div>
+            <div class="inline-block knockout-cardplayername ver-mid">
+              <p class="m-clear knockout-winner-name d-opensans-regular" title="{{player.athleteId.fullName}}">{{player.athleteId.fullName | truncate:'25'}}</p>
+              <p class="m-clear knockout-winner-school" title="{{player.athleteId.school.name}}">{{player.athleteId.school.name | truncate:'25'}}</p>
             </div>
+          </div>
 
-            <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true , 'knockout-live-foot': card.status === 'IsLive'}">
+          <div ng-if="card.opponentsSingle.length===0">
+            <div class="knockout-card" style="height:63px">
+            </div>
+            <div class="" style="height:63px">
 
-              <p class="m-clear " ng-if="!card.status || card.status===''">
-                <a class="pull-right link-white text-uppercase" ng-click="startScoring(card);">
-                    <span>score</span>
-                  </a>
-               <span class="knockout-date"><span>{{card.scheduleDate|englishNumeralDate}}</span> | <span>{{card.scheduleTime}} </span></span>
+            </div>
+          </div>
+
+          <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true || card.isNoMatch === true , 'knockout-live-foot': card.status === 'IsLive'}">
+
+            <p class="m-clear " ng-if="!card.status || card.status==='' || card.status==='IsPending'">
+
+              <a class="pull-right link-white text-uppercase" ng-click="startScoring(card);">
+                        <span>score</span>
+            </a>
+            <span class="knockout-date"><span>{{card.scheduleDate|englishNumeralDate}}</span> | <span>{{card.scheduleTime}} </span></span>
             </p>
             <p class="m-clear " ng-if="card.reason ==='Bye'">
               <span class="custom-knockout-color">Bye</span>
@@ -129,24 +109,28 @@
               <p class="m-clear knockout-live-text" ng-if="card.status==='IsLive'">
                 <span class="pull-right"><span class="knockout-dot-live"><i class="fa fa-circle"></i></span> <span>Live</span></span>
                 <a class=" link-white text-uppercase" ng-click="startScoring(card);">
-                    <span>score</span>
-                  </a>
+                        <span>score</span>
+                      </a>
               </p>
               <div ng-if="card.status==='IsCompleted'">
                 <div class="knockout-videoholder" ng-if="card.video">
-                  <a href="">
-                 <img src="img/sf-play.png" alt="play" class="img-responsive">
+                  <a class="fancybox.iframe" fancybox href="{{card.video | linkvideo:card.videoType}}">
+                   <img src="img/sf-play.png" alt="play" class="img-responsive">
                  </a>
                 </div>
-                <p class="m-clear pointer" ng-if="!card.resultsCombat && card.reason!=='Bye' && !card.isNoMatch" ng-click="matchCenter()">
-                  <span class="custom-knockout-color">Match Center</span>
+                <p class="m-clear pointer" ng-if="!card.resultsCombat && card.reason!=='Bye' && !card.isNoMatch" ng-click="matchCenter(card) ">
+                  <span class="custom-knockout-color" ng-click="">Match Center</span>
                 </p>
                 <p class="m-clear" ng-if="card.resultsCombat && card.opponentsSingle.length>1">
                   <span class="pull-right combatreasonresult" ng-if="card.reason && card.reason!=='undefined' && roundsList[0].match[0].sport.sportslist.name === 'Boxing'">Reason:{{card.reason}}</span>
-                  <span ng-if="!card.isNoMatch"><span class="combatscoreresult" ng-repeat="score in card.resultsCombat.players track by $index">{{score.sets[0].point}} </span></span>
+                  <span ng-if="!card.isNoMatch && roundsList[0].match[0].sport.sportslist.name!=='Kata'"><span class="combatscoreresult" ng-repeat="score in card.resultsCombat.players track by $index">{{score.sets[0].point}} </span></span>
+                  <span ng-if="!card.isNoMatch && roundsList[0].match[0].sport.sportslist.name=='Kata'"><span class="combatscoreresultforkata">3/4</span></span>
                 </p>
               </div>
             </div>
+          </div>
+          <div class="knockout-cardholder-matchid">
+            <span>{{card.matchId}}</span>
           </div>
         </div>
       </div>
@@ -161,8 +145,8 @@
           <div class=" knockout-cardholder">
             <div class="knockout-card " ng-if="card.opponentsSingle.length>0" ng-repeat="player in card.opponentsSingle track by $index "
               ng-class="{'knockout-winnercard':player.isWinner===true}">
-              <div class="knockout-cardimage inline-block ver-mid ">
-                <img ng-src="{{player.athleteId.photograph|serverimage:50:50:'cover'}}" alt=" " class="img-responsive ">
+              <div class="knockout-cardimage inline-block ver-mid " ng-if="player.athleteId.photograph">
+                <img ng-src="{{player.athleteId.photograph|serverimage:50:50:'cover'}}" alt="{{player.athleteId.fullName}} " class="img-responsive ">
               </div>
               <div class="inline-block knockout-cardplayername ver-mid ">
                 <p class="m-clear knockout-winner-name " title="{{player.athleteId.fullName}}">{{player.athleteId.fullName | truncate:'25'}}</p>
@@ -178,11 +162,11 @@
 
               </div>
             </div>
-            <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true,'knockout-live-foot': card.status === 'IsLive'}">
-              <p class="m-clear " ng-if="!card.status || card.status===''">
+            <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true || card.isNoMatch === true ,'knockout-live-foot': card.status === 'IsLive'}">
+              <p class="m-clear " ng-if="!card.status || card.status===''|| card.status==='IsPending'">
                 <a class="pull-right link-white text-uppercase" ng-click="startScoring(card);">
-                    <span>score</span>
-                  </a>
+                        <span>score</span>
+                      </a>
                 <span class="knockout-date"><span>{{card.scheduleDate|englishNumeralDate}}</span> | <span>{{card.scheduleTime}} </span></span>
               </p>
               <p class="m-clear" ng-if="card.reason ==='Bye'">
@@ -198,24 +182,29 @@
                 <p class="m-clear knockout-live-text " ng-if="card.status==='IsLive'">
                   <span class="pull-right"><span class="knockout-dot-live"><i class="fa fa-circle"></i></span> <span>Live</span></span>
                   <a class=" link-white text-uppercase" ng-click="startScoring(card);">
-                      <span>score</span>
-                    </a>
+                          <span>score</span>
+                        </a>
                 </p>
                 <div ng-if="card.status==='IsCompleted'">
                   <div class="knockout-videoholder" ng-if="card.video">
-                    <a href="">
-                   <img src="img/sf-play.png" alt="play" class="img-responsive">
+                    <a class="fancybox.iframe" fancybox href="{{card.video | linkvideo:card.videoType}}">
+                     <img src="img/sf-play.png" alt="play" class="img-responsive">
                    </a>
                   </div>
-                  <p class="m-clear pointer" ng-if="!card.resultsCombat && card.reason!=='Bye' && !card.isNoMatch" ng-click="matchCenter()">
-                    <span class="custom-knockout-color">Match Center</span>
+                  <p class="m-clear pointer" ng-if="!card.resultsCombat && card.reason!=='Bye' && !card.isNoMatch  && roundsList[0].match[0].sport.sportslist.name!=='Kata'"
+                    ng-click="matchCenter(card) ">
+                    <span class="custom-knockout-color ">Match Center</span>
                   </p>
-                  <p class="m-clear" ng-if="card.resultsCombat && card.opponentsSingle.length>1">
+                  <p class="m-clear " ng-if="card.resultsCombat && card.opponentsSingle.length>1">
                     <span class="pull-right combatreasonresult" ng-if="card.reason && card.reason!=='undefined' && roundsList[0].match[0].sport.sportslist.name === 'Boxing' && card.reason!=='Bye'">Reason:{{card.reason}}</span>
-                    <span ng-if="!card.isNoMatch && card.reason!=='Bye'"><span class="combatscoreresult" ng-repeat="score in card.resultsCombat.players track by $index">{{score.sets[0].point}} </span></span>
+                    <span ng-if="!card.isNoMatch && card.reason!=='Bye'  && roundsList[0].match[0].sport.sportslist.name!=='Kata'"><span class="combatscoreresult" ng-repeat="score in card.resultsCombat.players track by $index">{{score.sets[0].point}} </span></span>
+                    <span ng-if="!card.isNoMatch && roundsList[0].match[0].sport.sportslist.name=='Kata'"><span class="combatscoreresultforkata">3/4</span></span>
                   </p>
                 </div>
               </div>
+            </div>
+            <div class="knockout-cardholder-matchid">
+              <span>{{card.matchId}}</span>
             </div>
           </div>
         </div>
@@ -229,10 +218,11 @@
       <div class="knockout-cardholder-round3 relate" ng-repeat="card in roundsList[2].match track by $index">
         <div class="get-center knockout-round-width">
           <div class=" knockout-cardholder">
+
             <div class="knockout-card " ng-class="{'knockout-winnercard':player.isWinner===true}" ng-repeat="player in card.opponentsSingle track by $index"
               ng-if="card.opponentsSingle.length>0">
-              <div class="knockout-cardimage inline-block ver-mid ">
-                <img ng-src="{{player.athleteId.photograph|serverimage:50:50:'cover'}}" alt=" " class="img-responsive ">
+              <div class="knockout-cardimage inline-block ver-mid " ng-if="player.athleteId.photograph">
+                <img ng-src="{{player.athleteId.photograph|serverimage:50:50:'cover'}}" alt="{{player.athleteId.fullName}}" class="img-responsive ">
               </div>
               <div class="inline-block knockout-cardplayername ver-mid ">
                 <p class="m-clear knockout-winner-name " title="{{player.athleteId.fullName}}">{{player.athleteId.fullName | truncate:'25'}}</p>
@@ -250,10 +240,10 @@
             </div>
             <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true ,'knockout-live-foot': card.status === 'IsLive'}">
 
-              <p class="m-clear " ng-if="!card.status || card.status===''">
+              <p class="m-clear " ng-if="!card.status || card.status===''|| card.status==='IsPending'">
                 <a class="pull-right link-white text-uppercase" ng-click="startScoring(card);">
-                    <span>score</span>
-                  </a>
+                        <span>score</span>
+                      </a>
                 <span class="knockout-date"><span>{{card.scheduleDate|englishNumeralDate}}</span> | <span>{{card.scheduleTime}} </span></span>
               </p>
               <p class="m-clear" ng-if="card.reason === 'Bye'">
@@ -269,24 +259,29 @@
                 <p class="m-clear knockout-live-text " ng-if="card.status==='IsLive'">
                   <span class="pull-right"><span class="knockout-dot-live"><i class="fa fa-circle"></i></span> <span>Live</span></span>
                   <a class=" link-white text-uppercase" ng-click="startScoring(card);">
-                      <span>score</span>
-                    </a>
+                          <span>score</span>
+                        </a>
                 </p>
                 <div ng-if="card.status==='IsCompleted'">
                   <div class="knockout-videoholder" ng-if="card.video">
-                    <a href="">
-                    <img src="img/sf-play.png" alt="play" class="img-responsive">
-                    </a>
+                    <a class="fancybox.iframe" fancybox href="{{card.video | linkvideo:card.videoType}}">
+                      <img src="img/sf-play.png" alt="play" class="img-responsive">
+                   </a>
                   </div>
-                  <p class="m-clear pointer" ng-if="!card.resultsCombat && card.reason!=='Bye' && !card.isNoMatch" ng-click="matchCenter()">
+                  <p class="m-clear pointer" ng-if="!card.resultsCombat && card.reason!=='Bye' && !card.isNoMatch  && roundsList[0].match[0].sport.sportslist.name!=='Kata'"
+                    ng-click="matchCenter(card) ">
                     <span class="custom-knockout-color">Match Center</span>
                   </p>
                   <p class="m-clear" ng-if="card.resultsCombat && card.opponentsSingle.length>1">
                     <span class="pull-right combatreasonresult" ng-if="card.reason && card.reason!=='undefined' && roundsList[0].match[0].sport.sportslist.name === 'Boxing' && card.reason!=='Bye' ">Reason:{{card.reason}}</span>
-                    <span ng-if="!card.isNoMatch"><span class="combatscoreresult" ng-repeat="score in card.resultsCombat.players track by $index">{{score.sets[0].point}} </span></span>
+                    <span ng-if="!card.isNoMatch && card.reason!=='Bye'  && roundsList[0].match[0].sport.sportslist.name!=='Kata'"><span class="combatscoreresult" ng-repeat="score in card.resultsCombat.players track by $index">{{score.sets[0].point}} </span></span>
+                    <span ng-if="!card.isNoMatch && roundsList[0].match[0].sport.sportslist.name=='Kata'"><span class="combatscoreresultforkata">3/4</span></span>
                   </p>
                 </div>
               </div>
+            </div>
+            <div class="knockout-cardholder-matchid">
+              <span>{{card.matchId}}</span>
             </div>
           </div>
         </div>

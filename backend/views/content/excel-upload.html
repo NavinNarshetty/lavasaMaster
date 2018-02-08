@@ -20,12 +20,15 @@
                         </div>
                     </div>
                     <div ng-include="view" ng-init="qwerty=form"></div>
-                    <div class="col-md-12" ng-if="qwerty.resultType || qwerty.resultUpdate==='yes'">
+                    <div class="col-md-12">
                         <h4>Upload Excel File:</h4>
                         <upload-image no-view type="excel" ng-model="form.file" ng-callback="excelUploaded();"></upload-image>
                     </div>
 
                 </div>
+
+
+
                 <div ng-if="data">
                     <h5>Upload Status:</h5>
                     <table class="table table-bordered">

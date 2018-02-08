@@ -1,4 +1,4 @@
-<header hide-on-scrol>
+<header ng-controller="headerCtrl" hide-on-scrol>
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -12,6 +12,7 @@
             </div>
             <div class="collapse navbar-collapse" id="nav-collapse">
                 <div ng-include="template.menu" class="template menu"></div>
+                <a class="navbar-brand navbar-logout pull-right" title="Log Out" ng-click="logoutDigital();" ng-show="logoutShow"><span class="fa fa-power-off" ></span></a>
             </div>
         </div>
     </nav>

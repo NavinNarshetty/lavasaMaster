@@ -23,7 +23,7 @@
                             <img ng-src="{{player.photograph|serverimage}}" alt="" class="img-responsive">
                         </div>
                         <div class="matchplayer-details">
-                            <p class="matchplayer-name">{{player.firstName}} {{player.surname}}</p>
+                            <p class="matchplayer-name">{{player.firstName|firstcapitalize:true}} {{player.surname|firstcapitalize:true}}</p>
                             <p class="matchplayer-school">{{player.school.name| truncate:'30'}}</p>
                         </div>
                     </div>
@@ -55,9 +55,9 @@
                 <div class="col-md-3 col-sm-3">
                     <div class="match-selectwinner ">
                         <ui-select ng-model="formData.winner.player" theme="bootstrap" ng-disabled="disableWinner">
-                            <ui-select-match placeholder="Select Winner"> {{$select.selected.firstName}} {{$select.selected.surname}}</ui-select-match>
+                            <ui-select-match placeholder="Select Winner"> {{$select.selected.firstName|firstcapitalize:true}} {{$select.selected.surname|firstcapitalize:true}}</ui-select-match>
                             <ui-select-choices repeat="player._id as player in matchDetails.players  | filter: $select.search">
-                                  <p class="opponentsingle-selector" ng-click="formData.winner.opponentsSingle=matchDetails.opponentsSingle[$index]">{{player.firstName}} {{player.surname}}</p>
+                                  <p class="opponentsingle-selector" ng-click="formData.winner.opponentsSingle=matchDetails.opponentsSingle[$index]">{{player.firstName|firstcapitalize:true}} {{player.surname|firstcapitalize:true}}</p>
                             </ui-select-choices>
                         </ui-select>
                     </div>

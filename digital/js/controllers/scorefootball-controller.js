@@ -9,6 +9,7 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
     $scope.stateParam = $stateParams;
     $scope.matchId=$stateParams.id;
     $scope.matchData = {};
+    $scope.btnDisable = false;
     // INITIALISE VARIABLES END
 
     // CLEAVE FUNCTION OPTIONS
@@ -111,7 +112,7 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
             console.log('save success');
             $rootScope.modalInstance.close('a');
           } else{
-            alert('fail save');
+            console.log('fail save');
           }
         });
       }
@@ -122,28 +123,53 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
       $scope.team = team;
       switch (point) {
         case 'totalShots':
-          $scope.team.teamResults.totalShots = $scope.team.teamResults.totalShots + 1;
+          if ($scope.team.teamResults.totalShots == "") {
+            $scope.team.teamResults.totalShots = 1;
+          } else {
+            $scope.team.teamResults.totalShots = $scope.team.teamResults.totalShots + 1;
+          }
         break;
         case 'shotsOnGoal':
-          $scope.team.teamResults.shotsOnGoal = $scope.team.teamResults.shotsOnGoal + 1;
+          if ($scope.team.teamResults.shotsOnGoal == "") {
+            $scope.team.teamResults.shotsOnGoal = 1;
+          } else {
+            $scope.team.teamResults.shotsOnGoal = $scope.team.teamResults.shotsOnGoal + 1;
+          }
         break;
         case 'corners':
-          $scope.team.teamResults.corners = $scope.team.teamResults.corners + 1;
+          if ($scope.team.teamResults.corners == "") {
+            $scope.team.teamResults.corners = 1;
+          } else {
+            $scope.team.teamResults.corners = $scope.team.teamResults.corners + 1;
+          }
         break;
         case 'penalty':
-          $scope.team.teamResults.penalty = $scope.team.teamResults.penalty + 1;
+          if ($scope.team.teamResults.penalty == "") {
+            $scope.team.teamResults.penalty = 1;
+          } else {
+            $scope.team.teamResults.penalty = $scope.team.teamResults.penalty + 1;
+          }
         break;
         case 'saves':
-          $scope.team.teamResults.saves = $scope.team.teamResults.saves + 1;
+          if ($scope.team.teamResults.saves == "") {
+            $scope.team.teamResults.saves = 1;
+          } else {
+            $scope.team.teamResults.saves = $scope.team.teamResults.saves + 1;
+          }
         break;
         case 'fouls':
-          $scope.team.teamResults.fouls = $scope.team.teamResults.fouls + 1;
+          if ($scope.team.teamResults.fouls =="") {
+            $scope.team.teamResults.fouls = 1;
+          } else {
+            $scope.team.teamResults.fouls = $scope.team.teamResults.fouls + 1;
+          }
         break;
         case 'offSide':
-          $scope.team.teamResults.offSide = $scope.team.teamResults.offSide + 1;
-        break;
-        case 'cleanSheet':
-          $scope.team.teamResults.cleanSheet = $scope.team.teamResults.cleanSheet + 1;
+          if ($scope.team.teamResults.offSide == "") {
+            $scope.team.teamResults.offSide = 1;
+          } else {
+            $scope.team.teamResults.offSide = $scope.team.teamResults.offSide + 1;
+          }
         break;
       }
       console.log(point,'inTP');
@@ -204,38 +230,42 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
       switch (point) {
         case 'goals':
           $scope.player.playerPoints.goals.push({
-            time: 0
+            time: ""
           });
         break;
         case 'assist':
           $scope.player.playerPoints.assist.push({
-            time: 0
+            time: ""
           });
         break;
         case 'redCard':
           $scope.player.playerPoints.redCard.push({
-            time: 0
+            time: ""
           });
         break;
         case 'yellowCard':
           $scope.player.playerPoints.yellowCard.push({
-            time: 0
+            time: ""
           });
         break;
         case 'in':
           $scope.player.playerPoints.in.push({
-            time: 0
+            time: ""
           });
           $scope.player.isPlaying = true;
         break;
         case 'out':
           $scope.player.playerPoints.out.push({
-            time: 0
+            time: ""
           });
           $scope.player.isPlaying = false;
         break;
         case 'penaltyPoint':
-          $scope.player.playerPoints.penaltyPoint =  $scope.player.playerPoints.penaltyPoint + 1;
+          if ($scope.player.playerPoints.penaltyPoint == "") {
+            $scope.player.playerPoints.penaltyPoint = 1;
+          } else {
+            $scope.player.playerPoints.penaltyPoint =  $scope.player.playerPoints.penaltyPoint + 1;
+          }
         break;
       }
       console.log('inPP');
@@ -425,6 +455,10 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
                 $scope.matchError = data.data.error;
                 console.log($scope.matchError,'error');
                 toastr.error('Invalid MatchID. Please check the MatchID entered.', 'Error');
+                $state.go('league-knockout', {
+                  drawFormat: $stateParams.drawFormat,
+                  id: $stateParams.sport
+                });
               }
                 $scope.match = data.data;
                 $scope.match.matchId = $scope.matchData.matchId;
@@ -536,20 +570,56 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
     // FOR LEAGUE END
     $scope.matchComplete = function(){
       if ($scope.match.resultFootball) {
+        $scope.btnDisable = true;
+        _.each($scope.match.resultFootball.teams, function(n, nkey){
+          if(n.teamResults.totalShots == ""){
+            n.teamResults.totalShots = 0;
+          }
+          if(n.teamResults.shotsOnGoal == ""){
+            n.teamResults.shotsOnGoal = 0;
+          }
+          if(n.teamResults.corners == ""){
+            n.teamResults.corners = 0;
+          }
+          if(n.teamResults.penalty == ""){
+            n.teamResults.penalty = 0;
+          }
+          if(n.teamResults.saves == ""){
+            n.teamResults.saves = 0;
+          }
+          if(n.teamResults.fouls == ""){
+            n.teamResults.fouls = 0;
+          }
+          if(n.teamResults.offSide == ""){
+            n.teamResults.offSide = 0;
+          }
+          if(n.teamResults.halfPoints == ""){
+            n.teamResults.halfPoints = 0;
+          }
+          if(n.teamResults.finalPoints == ""){
+            n.teamResults.finalPoints = 0;
+          }
+          if(n.teamResults.penaltyPoints == ""){
+            n.teamResults.penaltyPoints = 0;
+          }
+        });
         $scope.match.resultFootball.status = "IsCompleted";
           $scope.matchResult = {
             resultFootball : $scope.match.resultFootball,
             matchId: $scope.matchData.matchId
           }
+          $interval.cancel(promise);
           NavigationService.saveFootball($scope.matchResult, function(data){
             if(data.value == true){
-              $state.go('league-knockout', {
+              $scope.btnDisable = false;
+              $state.go('league-knockoutTeam', {
                 drawFormat: $stateParams.drawFormat,
                 id: $stateParams.sport
               });
               console.log('save success');
             } else{
               // alert('fail save');
+              $scope.btnDisable = false;
               toastr.error('Data save failed. Please try again or check your internet connection.', 'Save Error');
             }
           });

@@ -78,21 +78,20 @@
         </label>
           </div>
           <div class="input-group">
-            <input type="number" class="form-control" ng-model="inOutTime.time"
-              placeholder="Time" ng-disabled="selectedPlayer.out.length <= 0">
+            <input type="number" class="form-control" ng-model="inOutTime.time" placeholder="Time" ng-disabled="selectedPlayer.isPlaying===true">
             <span class="input-group-addon">Min</span>
           </div>
         </div>
       </div>
       <!-- OUT -->
-       <div class="col-md-3 col-sm-3" ng-if="!selectedPlayer.isPlaying">
+      <div class="col-md-3 col-sm-3" ng-if="!selectedPlayer.isPlaying">
         <div class="teamscore-pointholder">
           <div class="match-selectwinner">
-            <label for="">Select substitute {{substitutePlayer.player}}</label>
+            <label for="">Select substitute </label>
             <ui-select id="matchWinnerPlayer" ng-model="substitutePlayer.player" theme="bootstrap">
-              <ui-select-match placeholder="Select Winner">{{$select.selected.firstName}} {{$select.selected.surname}}</ui-select-match>
+              <ui-select-match placeholder="Select Substitute">{{$select.selected.firstName|firstcapitalize:true}} {{$select.selected.surname|firstcapitalize:true}}</ui-select-match>
               <ui-select-choices repeat="player as player in match[matchData.resultVar].teams[selectedTeamIndex].players | filter: $select.search">
-                <p class="opponentsingle-selector" ng-if="player.isPlaying == false "> {{player.firstName}} {{player.surname}} </p>
+                <p class="opponentsingle-selector" ng-if="player.isPlaying == false "> <span class="pull-right">{{player.jerseyNo}}</span> {{player.firstName|firstcapitalize:true}} {{player.surname|firstcapitalize:true}} </p>
               </ui-select-choices>
             </ui-select>
           </div>
@@ -101,9 +100,9 @@
     </div>
     <!-- OUT END-->
   </div>
-  <div class="row">
+  <!--<div class="row">
     <pre>{{selectedPlayer|json}}</pre>
-  </div>
+  </div>-->
 </div>
 <div class="modal-footer">
   <div class="scoreplayer-save">

@@ -1,0 +1,309 @@
+<div class="heading-sec">
+  <div class="row">
+    <div class="col-md-4 column">
+      <div class="heading-profile">
+        <h2>Calender</h2>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class=" panel-content ">
+  <div class="row ">
+    <div class="col-md-12 ">
+      <div class="widget ">
+        <div class="table-area ">
+          <div class="widget-title">
+            <form name="calenderform" role='form'>
+              <div class="row">
+                <!-- CARD SELECTOR -->
+                <div class="col-md-6">
+                  <!-- FORMAT DROPDOWN-->
+                  <div class="form-group">
+                    <div class="dropdown">
+                      <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">FORMAT
+                          <span class="caret"></span></button>
+                      <ul class="dropdown-menu cur">
+                        <li><input class="pull-left" type="radio" id="format.card2" ng-model="formData.format" value="card2"
+                            required>
+                          <label for="format.card2">2 Card-Layout</label>
+                        </li>
+                        <li><input class="pull-left" type="radio" id="format.card3" ng-model="formData.format" value="card3"
+                            required>
+                          <label for="format.card3">3 Card-Layout</label>
+                        </li>
+                        <li><input class="pull-left" type="radio" id="format.card4" ng-model="formData.format" value="card4"
+                            required>
+                          <label for="format.card4">4 Card-Layout</label>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <!-- FORMAT DROPDOWN END -->
+
+                  <!-- DATE -->
+                  <div class="date-holder">
+                    <div class="form-group">
+                      <label>Event Date</label>
+                      <input name="schDate" ui-date="dateOptions" ng-model="formData.eventDate" class="form-control" ng-required="true" placeholder="Enter Event Date"
+                        required ng-change="fetchDay(formData.eventDate)">
+                      <div class="error-msg" ng-if="calenderform.schDate.$invalid && calenderform.schDate.$touched">Please Enter Event Date *</div>
+                    </div>
+                  </div>
+                  <!-- DATE END -->
+
+                  <!-- DAY -->
+                  <div class="date-holder">
+                    <div class="form-group">
+                      <label>Day</label>
+                      <input name="schDay" ng-model="formData.day" class="form-control" readonly>
+                    </div>
+                  </div>
+                  <!-- DAY END -->
+
+                  <!-- Week -->
+                  <div class="date-holder">
+                    <div class="form-group">
+                      <label>Day Of Week</label>
+                      <input name="schWeek" ng-model="formData.dayOfWeek" class="form-control" readonly>
+                    </div>
+                  </div>
+                  <!-- Week END -->
+
+                  <!-- COLOR -->
+                  <div class="color-holder">
+                    <div class="form-group">
+                      <label> Card Color</label>
+                      <select name="selectcolor" class="form-control" ng-model="formData.color" placeholder="Enter Color" required>
+                            <option value="yellow">Yellow</option>
+                            <option value="blue">Blue</option>
+                            <option value="green">Green</option>
+                          </select>
+                      <div class="error-msg" ng-if="calenderform.selectcolor.$invalid && calenderform.selectcolor.$touched">Please Enter Color*</div>
+                    </div>
+                  </div>
+                  <!-- COLOR END -->
+                </div>
+                <!-- CARD SELECTOR END -->
+
+                <!-- WIRE-FRAME  -->
+                <div class="col-md-6">
+                  <div class="text-center">
+                    <div class="card-2-holder" ng-if="formData.format=='card2'">
+                      <p>2 Card-Layout</p>
+                      <div class="tileholder clearfix">
+                        <div class="tile tiledate">
+                          <span class="get-center">DATE</span>
+                        </div>
+                        <div class="tile">
+                          <span class="get-center">Section 1</span>
+                        </div>
+                      </div>
+                      <!-- TILE 2 END -->
+                    </div>
+
+                    <div class="card-3-holder" ng-if="formData.format=='card3'">
+                      <!-- TILE 3 -->
+                      <p>3 Card-Layout</p>
+                      <div class="tileholder clearfix">
+                        <div class="tile tile2">
+                          <span class="get-center">Section 1</span>
+                        </div>
+                        <div class="tile">
+                          <span class="get-center">Section 2</span>
+                        </div>
+                        <div class="tile tiledate">
+                          <span class="get-center">DATE</span>
+                        </div>
+                      </div>
+                      <!-- TILE 3 END -->
+                    </div>
+
+                    <div class="card-4-holder" ng-if="formData.format=='card4'">
+                      <!-- TILE 4 -->
+                      <p>4 Card-Layout</p>
+                      <div class="tileholder clearfix">
+                        <div class="tile">
+                          <span class="get-center">Section 1</span>
+                        </div>
+                        <div class="tile">
+                          <span class="get-center">Section 2</span>
+                        </div>
+                        <div class="tile tiledate">
+                          <span class="get-center">DATE</span>
+                        </div>
+                        <div class="tile">
+                          <span class="get-center">Section 3</span>
+                        </div>
+                      </div>
+                      <!-- TILE 4 END -->
+                    </div>
+                  </div>
+                </div>
+                <!-- WIRE-FRAME END -->
+              </div>
+              <div class="row">
+                <!-- SECTION 1 CARD-->
+                <div class="section1">
+                  <h4>Section 1</h4>
+
+                  <!-- FORMAT DROPDOWN-->
+                  <div class="form-group">
+                    <div class="dropdown">
+                      <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">SELECT TYPE
+                                              <span class="caret"></span></button>
+                      <ul class="dropdown-menu cur">
+                        <li><input class="pull-left" type="radio" id="section1.type.text" ng-model="formData.section1.type" value="text">
+                          <label for="section1.type.text">Text</label>
+                        </li>
+                        <li><input class="pull-left" type="radio" id="section1.type.image" ng-model="formData.section1.type"
+                            value="image">
+                          <label for="section1.type.image">Image</label>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <!-- FORMAT DROPDOWN END -->
+                  <!--TEXT ANGULAR  -->
+                  <div class="section1-textholder" ng-if="formData.section1.type=='text'">
+                    <label for="">Section:1</label>
+                    <div class="form-group">
+                      <label for="">Header</label>
+                      <input type="text" ng-model="formData.section1.text.header" placeholder="Title" class="form-control" ng-required="formData.section1.type=='text'">
+                    </div>
+                    <div class="textholder tinymce form-group">
+                      <text-angular ng-model="formData.section1.text.content" name="section1text" ng-required="formData.section1.type=='text'"></text-angular>
+                    </div>
+                  </div>
+                  <!--TEXT ANGULAR END  -->
+                  <!-- IMAGE HOLDER -->
+                  <div class="section1-imageholder" ng-if="formData.section1.type=='image'">
+                    <div class="form-group">
+                      <label for="">Header</label>
+                      <input type="text" placeholder="Title" ng-model="formData.section1.image.header" class="form-control">
+                    </div>
+                    <!-- IMAGE HOLDER -->
+                    <div class="form-group" fields>
+                      <label>IMAGE<span ng-show="type.required">*</span></label> <span ng-if="formData.format !='card3'">Image-size:300px X 300px </span>                      <span ng-if="formData.format=='card3'">Image-size:300px X 600px </span>
+                      <upload-image ng-model="formData.section1.image.name"></upload-image>
+                    </div>
+                    <!-- IMAGE HOLDER END -->
+                  </div>
+                  <!-- IMAGE HOLDER END -->
+
+                </div>
+                <!-- SECTION 1 END -->
+
+                <!-- SECTION 2 CARD-->
+                <div class="section2" ng-if="formData.format=='card3' || formData.format=='card4'">
+                  <h4>Section 2</h4>
+
+                  <!-- FORMAT DROPDOWN-->
+                  <div class="form-group">
+                    <div class="dropdown">
+                      <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">SELECT TYPE
+                                                              <span class="caret"></span></button>
+                      <ul class="dropdown-menu cur">
+                        <li><input class="pull-left" type="radio" id="section2.type.text" ng-model="formData.section2.type" value="text">
+                          <label for="section2.type.text">Text</label>
+                        </li>
+                        <li><input class="pull-left" type="radio" id="section2.type.image" ng-model="formData.section2.type"
+                            value="image">
+                          <label for="section2.type.image">Image</label>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <!-- FORMAT DROPDOWN END -->
+                  <!--TEXT ANGULAR  -->
+                  <div class="section2-textholder" ng-if="formData.section2.type=='text'">
+                    <label for="">Section:2</label>
+                    <div class="form-group">
+                      <label for="">Header</label>
+                      <input type="text" ng-model="formData.section2.text.header" placeholder="Title" class="form-control" ng-required="formData.section2.type=='text'">
+                    </div>
+                    <div class="textholder tinymce form-group">
+                      <text-angular ng-model="formData.section2.text.content" name="section2text" ng-required="formData.section2.type=='text'"></text-angular>
+                    </div>
+                  </div>
+                  <!--TEXT ANGULAR END  -->
+                  <!-- IMAGE HOLDER -->
+                  <div class="section2-imageholder" ng-if="formData.section2.type=='image'">
+                    <div class="form-group">
+                      <label for="">Header</label>
+                      <input type="text" placeholder="Title" ng-model="formData.section2.image.header" class="form-control">
+                    </div>
+                    <!-- IMAGE HOLDER -->
+                    <div class="form-group" fields>
+                      <label>IMAGE<span ng-show="type.required">*</span></label> <span>Image-size:300px X 300px</span>
+                      <upload-image ng-model="formData.section2.image.name"></upload-image>
+                    </div>
+                    <!-- IMAGE HOLDER END -->
+                  </div>
+                  <!-- IMAGE HOLDER END -->
+
+                </div>
+                <!-- SECTION 2 CARD END -->
+
+                <!-- SECTION 3 CARD-->
+                <div class="section3" ng-if="formData.format=='card4'">
+                  <h4>Section 3</h4>
+
+                  <!-- FORMAT DROPDOWN-->
+                  <div class="form-group">
+                    <div class="dropdown">
+                      <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">SELECT TYPE
+                                                                              <span class="caret"></span></button>
+                      <ul class="dropdown-menu cur">
+                        <li><input class="pull-left" type="radio" id="section3.type.text" ng-model="formData.section3.type" value="text">
+                          <label for="section3.type.text">Text</label>
+                        </li>
+                        <li><input class="pull-left" type="radio" id="section3.type.image" ng-model="formData.section3.type"
+                            value="image">
+                          <label for="section3.type.image">Image</label>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <!-- FORMAT DROPDOWN END -->
+                  <!--TEXT ANGULAR  -->
+                  <div class="section3-textholder" ng-if="formData.section3.type=='text'">
+                    <label for="">Section:3</label>
+                    <div class="form-group">
+                      <label for="">Header</label>
+                      <input type="text" ng-model="formData.section3.text.header" placeholder="Title" class="form-control" ng-required="formData.section3.type=='text'">
+                    </div>
+                    <div class="textholder tinymce form-group">
+                      <text-angular ng-model="formData.section3.text.content" name="section3text" ng-required="formData.section3.type=='text'"></text-angular>
+                    </div>
+                  </div>
+                  <!--TEXT ANGULAR END  -->
+                  <!-- IMAGE HOLDER -->
+                  <div class="section3-imageholder" ng-if="formData.section3.type=='image'">
+                    <div class="form-group">
+                      <label for="">Header</label>
+                      <input type="text" placeholder="Title" ng-model="formData.section3.image.header" class="form-control">
+                    </div>
+                    <!-- IMAGE HOLDER -->
+                    <div class="form-group" fields>
+                      <label>IMAGE<span ng-show="type.required">*</span></label> <span>Image-size:300px X 300px</span>
+                      <upload-image ng-model="formData.section3.image.name"></upload-image>
+                    </div>
+                    <!-- IMAGE HOLDER END -->
+                  </div>
+                  <!-- IMAGE HOLDER END -->
+
+                </div>
+                <!-- SECTION 3 CARD END -->
+              </div>
+              <div class="text-center mt20 odd-even-button">
+                <button class="btn btn-default" type="submit" ng-click="savecalender(formData)" ng-disabled="calenderform.$invalid">Save</button>
+                <button class="btn btn-default" ui-sref='calender'>Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

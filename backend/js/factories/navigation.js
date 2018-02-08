@@ -123,14 +123,7 @@ myApp.factory('NavigationService', function ($http) {
             }]
 
 
-        },
-        {
-            name: "Matches",
-            classis: "activeColor",
-            sref: "#/matches",
-            icon: "phone"
-        },
-        {
+        }, {
             name: "Individual Sport",
             classis: "activeColor",
             sref: "#/individual-sport",
@@ -141,21 +134,26 @@ myApp.factory('NavigationService', function ($http) {
             sref: "#/teamsport",
             icon: "phone"
         }, {
+            name: "Matches",
+            classis: "activeColor",
+            sref: "#/matches",
+            icon: "phone"
+        }, {
             name: "Medals",
             classis: "activeColor",
             sref: "#/medals",
             icon: "phone"
+        },   {
+            name: "Report Card",
+            classis: "activeColor",
+            sref: "#/page/viewReportCard//",
+            icon: "phone",
         }, {
             name: "Other",
             classis: "activeColor",
             sref: "",
             icon: "phone",
             subnav: [{
-                name: "Media",
-                classis: "activeColor",
-                sref: "#/media",
-                icon: "phone",
-            }, {
                 name: "Calender",
                 classis: "activeColor",
                 sref: "#/calender",
@@ -231,19 +229,48 @@ myApp.factory('NavigationService', function ($http) {
             }]
 
 
+        },
+        {
+            name: "Champions Archive",
+            classis: "activeColor",
+            sref: "",
+            icon: "phone",
+            subnav: [{
+                name: "Archive",
+                classis: "activeColor",
+                sref: "#/archive",
+                icon: "phone"
+            }, {
+                name: "Highlight Video",
+                classis: "activeColor",
+                sref: "#/highlight-video",
+                icon: "phone"
+            }]
         }, {
+            name: "Galleria",
+            classis: "activeColor",
+            sref: "",
+            icon: "phone",
+            subnav: [{
+                name: "Media",
+                classis: "activeColor",
+                sref: "#/media",
+                icon: "phone",
+            }, {
+                name: "Gallery",
+                classis: "activeColor",
+                sref: "#/gallery",
+                icon: "phone",
+            }]
+        },
+        {
             name: "ConfigProperty",
             classis: "activeColor",
             sref: "#/page/viewConfigProperty//",
             icon: "phone",
         },
-        // {
-        //     name: "Old Result Update",
-        //     classis: "activeColor",
-        //     sref: "#/oldresultupdate",
-        //     icon: "phone",
-        // },
-
+      
+        
         // {
         //     name: "Second Category",
         //     classis: "activeColor",
@@ -317,18 +344,17 @@ myApp.factory('NavigationService', function ($http) {
         },
 
         apiCall: function (url, formData, callback) {
-            console.log(formData);
-            console.log(url);
             $http.post(adminurl + url, formData).then(function (data) {
-                console.log(data);
                 data = data.data;
                 callback(data);
+
             });
         },
         saveRising: function (url, formData, callback) {
             $http.post(adminurl + url, formData).then(function (data) {
                 data = data.data;
                 callback(data);
+
             });
         },
         searchCall: function (url, formData, i, callback) {
@@ -728,6 +754,22 @@ myApp.factory('NavigationService', function ($http) {
             $.jStorage.flush(data);
             // callback();
         },
+        getAllFolderNameCloud: function (type, callback) {
+            $http({
+                url: adminurl + 'vimeo/getAllFolderNameCloud',
+                data: type,
+                method: 'POST'
+
+            }).then(callback);
+        },
+        // getFilesPerFolder: function (req, callback) {
+        //     $http({
+        //         url: adminurl + 'vimeo/getFilesPerFolder',
+        //         data: req,
+        //         method: 'POST'
+
+        //     }).then(callback);
+        // },
 
     };
 });

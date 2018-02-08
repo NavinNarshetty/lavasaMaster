@@ -1,12 +1,47 @@
 <div class="digital-homepage">
-    <div class="container">
+  <div class="container">
 
-        <h2>DIGITAL SCORING</h2>
+    <h2>DIGITAL SCORING</h2>
 
-        <a class="btn btn-default" ng-click="buttonClick()" ui-sref="digital-home">SPORT SELECTION</a>
+    <a class="btn btn-default" ng-click="buttonClick()" ui-sref="digital-home">SPORT SELECTION</a>
+    <a class="btn btn-default" ng-click="buttonClick()" ui-sref="digital-attendance">SPORT ATTENDANCE</a>
 
-        <div class="row">
-          <a class="btn btn-default mtb-10" ng-click="tableOption()" >Results Ranking</a>
-        </div>
+    <div class="row">
+      <!-- <a class="btn btn-default mtb-10" ng-click="tableOption()" >Results Ranking</a> -->
+      <!--<a class="btn btn-default mtb-10" ng-click="loginPopup()" >login</a>-->
     </div>
+
+    <!-- <div class="row" >
+
+          <div class="col-md-6">
+            <div class="" style="max-width: 400px; display-inlineblock; width: auto;" >
+              <rotate-image ng-model="image"></rotate-image>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="" style="max-width: 400px; display-inlineblock; width: auto;" >
+              <rotate-image ng-model="image2"></rotate-image>
+            </div>
+          </div>
+
+        </div> -->
+    <!-- {{sportselect}} -->
+    <div style="padding-top:50px;">
+      <select class="selectpicker show-tick" ng-options="sport._id as sport.name for sport in test" title="Select Sports" ng-model="sportselect"
+        multiple data-live-search="true" data-selected-text-format="count > 3" data-size="5">
+         
+    </select>
+    </div>
+
+    {{athtest}}
+    <div style="padding-top:50px;">
+      <select class="selectpicker show-tick" ng-options="abc.sport as abc.eventName for abc in athtest" title="Select Sports" ng-model="athdata"
+        multiple data-live-search="true" data-selected-text-format="count > 3" data-size="5">
+           
+      </select>
+    </div>
+
+
+  </div>
 </div>

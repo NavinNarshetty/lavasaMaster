@@ -16,7 +16,43 @@
     </div>
   </div>
   <div class="matchstart-section get-center">
-  <div class="container">
+    <!-- PLAYER SELECTION SECTION -->
+    <div class="matchstart-playerheader" ng-if="matchDetails.prevMatch && (matchDetails.opponentsSingle.length < 2 || !matchDetails.opponentsSingle) && !matchDetails.isTeam">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-5 col-sm-5" ng-repeat="single in savePlayerList track by $index">
+            <div class="matchstart-playerselect form-group">
+              <label for="">Select Player {{$index + 1}}</label>
+              <ui-select id="selectedPlayer{{$index}}" ng-model="single._id" theme="bootstrap">
+                  <ui-select-match placeholder="Select Player"> {{$select.selected.sfaId}}  {{$select.selected.name}}</ui-select-match>
+                  <ui-select-choices repeat="player._id as player in playerLists.match | filter: $select.search">
+                        <p class="opponentsingle-selector">{{player.sfaId}} - {{player.name}}</p>
+                  </ui-select-choices>
+              </ui-select>
+            </div>
+          </div>
+          <!-- <div class="col-md-5 col-sm-5">
+            <div class="matchstart-playerselect form-group">
+              <label for="">Select Player {{$index + 1}}</label>
+              <ui-select id="matchWinnerPlayer" ng-model="match.resultsCombat.winner.player" theme="bootstrap">
+                  <ui-select-match placeholder="Select Winner"> {{$select.selected.sfaId}} {{$select.selected.name}}</ui-select-match>
+                  <ui-select-choices repeat="player._id as player in playerLists.match | filter: $select.search">
+                        <p class="opponentsingle-selector" ng-click="match.resultsCombat.winner.opponentsSingle=match.opponentsSingle[$index]">{{player.sfaId}} - {{player.name}}</p>
+                  </ui-select-choices>
+              </ui-select>
+            </div>
+          </div> -->
+          <div class="col-md-2 col-sm-2">
+            <div class="form-group">
+              <label for=""></label>
+              <button type="button" name="button" class="btn btn-green-outline btn-scoring" ng-click="addPlayersMatch();">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- PLAYER SELECTION SECTION END -->
+    <div class="container">
     <div class="row">
       <div class="col-md-offset-1 col-md-6 col-sm-6">
         <!-- FOR INDIVIDUALS CARD -->
@@ -30,8 +66,8 @@
               <img ng-src="{{player.photograph|serverimage}}" alt="{{player.firstName}} {{player.surname}}" class="img-responsive">
             </div>
             <div class="matchplayer-details">
-              <p class="matchplayer-name">{{player.firstName}} {{player.surname}}</p>
-              <p class="matchplayer-school">{{player.school.name}}</p>
+              <p class="matchplayer-name" title="{{player.firstName}} {{player.surname}}">{{player.firstName}} {{player.surname}}</p>
+              <p class="matchplayer-school" title="{{player.school.name}}">{{player.school.name}}</p>
             </div>
           </div>
         </div>
@@ -47,7 +83,7 @@
               <img ng-src="{{team.photograph|serverimage}}" alt="{{team.schoolName}}" class="img-responsive">
             </div>
             <div class="matchplayer-details">
-              <p class="matchplayer-name">{{team.schoolName}}</p>
+              <p class="matchplayer-name" title="{{team.schoolName}}">{{team.schoolName}}</p>
             </div>
           </div>
         </div>
@@ -59,10 +95,10 @@
         </div>
       </div>
       <div class="col-md-2 col-sm-3">
-        <div class="matchstart-uploadholder text-uppercase ">
+        <!-- <div class="matchstart-uploadholder text-uppercase ">
           <button class="btn btn-green-outline btn-scoring">Upload Picture</button>
           <upload-image ng-model="formData.matchPhoto" ng-callback="getMatchPhoto(data)" allow-type="image/*" no-view class="pointer upload-scorecard" multiple inobj></upload-image>
-        </div>
+        </div> -->
         <div class="digital-swiper scorescard-swiper" ng-if="formData.matchPhoto.length>0">
           <div class="matchstart-uploadpic text-uppercase" ng-repeat= "pic in formData.matchPhoto track by $index">
             <span class="remove-pic" ng-click="removeMatchScore(pic)"><i class="fa fa-times"></i></span>

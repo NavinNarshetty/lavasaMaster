@@ -25,7 +25,19 @@
                                     <input type="text" name="institutionType" ng-model="formData.institutionType" class="form-control" placeholder="Enter institutionType ie. school or college">
                                 </div>
                                 <div class="form-group">
-                                    <label>Banner*</label>
+                                    <label>Sport Name*</label>
+                                    <ui-select name="selectsporttype" id="selectsporttype" theme="bootstrap" ng-model="formData.sportsListSubCategory" ng-change="searchSportListSubCategory($select.selected._id)"
+                                        required>
+                                        <ui-select-match placeholder="Enter Sports List Sub Category" allow-clear="true">
+                                            {{$select.selected.name}}
+                                        </ui-select-match>
+                                        <ui-select-choices refresh.delay="0" repeat="item in sportstypeitems | filter:$select.search" refresh="getAllSportListSubCategory($select.search)">
+                                            <span ng-bind-html="item.name"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Banner* (600 x 220 in PNG)</label>
                                     <upload-image ng-model="formData.banner"></upload-image>
                                 </div>
                                 <div class="text-center mt20 odd-even-button">
