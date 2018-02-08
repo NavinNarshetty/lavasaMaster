@@ -7457,7 +7457,6 @@ var model = {
                                         function (callback) {
                                             var param = {};
                                             param.matchId = n["MATCH ID"];
-
                                             Match.getOne(param, function (err, matchData) {
                                                 if (err) {
                                                     callback(err, null);
@@ -7465,7 +7464,6 @@ var model = {
                                                     if (_.isEmpty(matchData)) {
                                                         callback(null, []);
                                                     } else {
-                                                        console.log("matchData***************", matchData);
                                                         var final = {};
                                                         var result = ResultInitialize.getResultVar(matchData.sportsName, matchData.sportType);
                                                         if (!matchData[result.resultVar] == '') {
@@ -7481,8 +7479,6 @@ var model = {
                                                                 matchData[result.resultVar] = complete[result.resultVar];
                                                                 var placeholder = {};
                                                                 placeholder[result.resultVar] = complete[result.resultVar];
-                                                                // placeholder[video] = n["VIDEO"];
-                                                                // placeholder[videoType] = n["VIDEO TYPE"];
                                                                 var matchObj = {
                                                                     $set: placeholder
                                                                 };
@@ -7512,12 +7508,6 @@ var model = {
                                                                                         callback(null, final);
                                                                                     }
                                                                                 });
-                                                                            // final.result = result;
-                                                                            // final.score = matchData[result.resultVar];
-                                                                            // if (matchData.opponentsSingle.length > 0) {
-                                                                            //     final.opponentsSingle = matchData.opponentsSingle;
-                                                                            // }
-                                                                            // callback(null, final);
                                                                         }
                                                                     });
                                                             });
@@ -7578,20 +7568,20 @@ var model = {
                                                         resultData.teams[0].teamResults.quarterPoints[4].basket = n['TEAM 1 BASKET 5'];
                                                         resultData.teams[0].teamResults.quarterPoints[5].basket = n['TEAM 1 BASKET 6'];
                                                         resultData.teams[0].teamResults.quarterPoints[6].basket = n['TEAM 1 BASKET 7'];
-                                                    } else if (result.result.resultVar == "resultsCombat") {
+                                                    } else if (result.result.resultVar == "resultsCombat" || result.result.resultVar == "resultVolleyball" || result.result.resultVar == "resultsRacquet" || result.result.resultVar == "resultThrowball") {
                                                         resultData.teams[0].teamResults.sets[0] = n['TEAM 1 SET 1'];
                                                         resultData.teams[0].teamResults.sets[1] = n['TEAM 1 SET 2'];
                                                         resultData.teams[0].teamResults.sets[2] = n['TEAM 1 SET 3'];
                                                         resultData.teams[0].teamResults.sets[3] = n['TEAM 1 SET 4'];
                                                         resultData.teams[0].teamResults.sets[4] = n['TEAM 1 SET 5'];
                                                         resultData.teams[0].teamResults.sets[5] = n['TEAM 1 SET 6'];
-                                                        resultData.teams[0].teamResults.sets[0] = n['TEAM 1 SET 7'];
+                                                        resultData.teams[0].teamResults.sets[6] = n['TEAM 1 SET 7'];
                                                         resultData.teams[0].teamResults.finalPoints = n['SCORE 1'];
                                                     } else {
                                                         resultData.teams[0].teamResults.finalPoints = n['SCORE 1'];
                                                     }
                                                 }
-                                                if (!_.isEmpty(n['SCORE 2'])) {
+                                                if (n['SCORE 2']) {
                                                     if (result.result.resultVar == "resultBasketball") {
                                                         resultData.teams[1].teamResults.finalGoalPoints = n['SCORE 2'];
                                                         resultData.teams[1].teamResults.quarterPoints[0].basket = n['TEAM 2 BASKET 1'];
@@ -7601,15 +7591,15 @@ var model = {
                                                         resultData.teams[1].teamResults.quarterPoints[4].basket = n['TEAM 2 BASKET 5'];
                                                         resultData.teams[1].teamResults.quarterPoints[5].basket = n['TEAM 2 BASKET 6'];
                                                         resultData.teams[1].teamResults.quarterPoints[6].basket = n['TEAM 2 BASKET 7'];
-                                                    } else if (result.result.resultVar == "resultsCombat") {
-                                                        resultData.teams[0].teamResults.sets[0] = n['TEAM 2 SET 1'];
-                                                        resultData.teams[0].teamResults.sets[1] = n['TEAM 2 SET 2'];
-                                                        resultData.teams[0].teamResults.sets[2] = n['TEAM 2 SET 3'];
-                                                        resultData.teams[0].teamResults.sets[3] = n['TEAM 2 SET 4'];
-                                                        resultData.teams[0].teamResults.sets[4] = n['TEAM 2 SET 5'];
-                                                        resultData.teams[0].teamResults.sets[5] = n['TEAM 2 SET 6'];
-                                                        resultData.teams[0].teamResults.sets[0] = n['TEAM 2 SET 7'];
-                                                        resultData.teams[0].teamResults.finalPoints = n['SCORE 2'];
+                                                    } else if (result.result.resultVar == "resultsCombat" || result.result.resultVar == "resultVolleyball" || result.result.resultVar == "resultsRacquet" || result.result.resultVar == "resultThrowball") {
+                                                        resultData.teams[1].teamResults.sets[0] = n['TEAM 2 SET 1'];
+                                                        resultData.teams[1].teamResults.sets[1] = n['TEAM 2 SET 2'];
+                                                        resultData.teams[1].teamResults.sets[2] = n['TEAM 2 SET 3'];
+                                                        resultData.teams[1].teamResults.sets[3] = n['TEAM 2 SET 4'];
+                                                        resultData.teams[1].teamResults.sets[4] = n['TEAM 2 SET 5'];
+                                                        resultData.teams[1].teamResults.sets[5] = n['TEAM 2 SET 6'];
+                                                        resultData.teams[1].teamResults.sets[6] = n['TEAM 2 SET 7'];
+                                                        resultData.teams[1].teamResults.finalPoints = n['SCORE 2'];
                                                     } else {
                                                         resultData.teams[1].teamResults.finalPoints = n['SCORE 2'];
                                                     }
@@ -7722,7 +7712,6 @@ var model = {
                                 success: sportData
                             });
                         } else {
-                            console.log("sportData", sportData);
                             callback(null, sportData);
                         }
                     });
@@ -7776,7 +7765,7 @@ var model = {
                                 }
                                 obj["TEAM 1 Attendence"] = "";
                                 var sportName = mainData.sport.sportslist.name.toLowerCase();
-                                console.log("sportname", sportName.includes() == "volleyball");
+                                console.log("sportname", sportName == "volleyball");
                                 if (sportName == "basketball") {
                                     obj["TEAM 1 BASKET 1"] = "";
                                     obj["TEAM 1 BASKET 2"] = "";
@@ -7786,7 +7775,7 @@ var model = {
                                     obj["TEAM 1 BASKET 6"] = "";
                                     obj["TEAM 1 BASKET 7"] = "";
                                     obj["SCORE 1"] = "";
-                                } else if (sportName.includes() == "badminton" || sportName.includes() == "tennis" || sportName.includes() == "squash" || sportName == "volleyball") {
+                                } else if (sportName == "badminton doubles" || sportName == "tennis doubles" || sportName == "table tennis doubles" || sportName == "squash doubles" || sportName == "volleyball") {
                                     obj["TEAM 1 SET 1"] = "";
                                     obj["TEAM 1 SET 2"] = "";
                                     obj["TEAM 1 SET 3"] = "";
@@ -7816,7 +7805,7 @@ var model = {
                                     obj["TEAM 2 BASKET 6"] = "";
                                     obj["TEAM 2 BASKET 7"] = "";
                                     obj["SCORE 2"] = "";
-                                } else if (sportName.includes() == "badminton" || sportName.includes() == "tennis" || sportName.includes() == "squash" || sportName == "volleyball") {
+                                } else if (sportName == "badminton doubles" || sportName == "tennis doubles " || sportName == "table tennis doubles " || sportName == "squash doubles" || sportName == "volleyball") {
                                     obj["TEAM 2 SET 1"] = "";
                                     obj["TEAM 2 SET 2"] = "";
                                     obj["TEAM 2 SET 3"] = "";
@@ -7884,7 +7873,7 @@ var model = {
                                     obj["PLAYER 1 BASKET 6"] = "";
                                     obj["PLAYER 1 BASKET 7"] = "";
                                     obj["SCORE 1"] = "";
-                                } else if (sportName.includes() == "badminton" || sportName.includes() == "tennis" || sportName.includes() == "squash") {
+                                } else if (sportName == "badminton singles" || sportName == "tennis singles" || sportName == "squash singles") {
                                     obj["PLAYER 1 SET 1"] = "";
                                     obj["PLAYER 1 SET 2"] = "";
                                     obj["PLAYER 1 SET 3"] = "";
@@ -7918,7 +7907,7 @@ var model = {
                                     obj["PLAYER 2 BASKET 6"] = "";
                                     obj["PLAYER 2 BASKET 7"] = "";
                                     obj["SCORE 2"] = "";
-                                } else if (sportName.includes() == "badminton" || sportName.includes() == "tennis" || sportName.includes() == "squash") {
+                                } else if (sportName == "badminton singles" || sportName == "tennis singles" || sportName == "squash singles") {
                                     obj["PLAYER 2 SET 1"] = "";
                                     obj["PLAYER 2 SET 2"] = "";
                                     obj["PLAYER 2 SET 3"] = "";
@@ -8976,8 +8965,8 @@ var model = {
                                                 paramData.heatNo = n.success["HEAT NUMBER"];
                                                 paramData.scheduleDate = n.success.DATE;
                                                 paramData.scheduleTime = n.success.TIME;
-                                                paramData.video = n.success["VIDEO TYPE"];
-                                                paramData.videoType = n.success["VIDEO"];
+                                                paramData.videoType = n.success["VIDEO TYPE"];
+                                                paramData.video = n.success["VIDEO"];
                                                 if (!_.isEmpty(result)) {
                                                     paramData.resultHeat = result;
                                                 }
@@ -9432,7 +9421,7 @@ var model = {
                                                 paramData.scheduleDate = n.success.DATE;
                                                 paramData.scheduleTime = n.success.TIME;
                                                 paramData.video = singleData["VIDEO"];
-                                                paramData.video = singleData["VIDEO TYPE"];
+                                                paramData.videoType = singleData["VIDEO TYPE"];
                                                 if (!_.isEmpty(result)) {
                                                     paramData.resultHeat = result;
                                                 }

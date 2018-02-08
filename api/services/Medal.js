@@ -3,10 +3,10 @@ var schema = new Schema({
         type: String,
         enum: ["gold", "silver", "bronze"]
     },
-    sport: [{
+    sport: {
         type: Schema.Types.ObjectId,
         ref: 'Sport'
-    }],
+    },
     school: [{
         type: Schema.Types.ObjectId,
         ref: 'School'
