@@ -118,7 +118,7 @@
                                                                 </td>
                                                                 <td ng-init="validate=(selectService.sportName=='Athletics')?true:false" ng-if="selectService.sportName!='Shooting'">
                                                                     <!-- <pre>{{athelete.metresSwim.data | json}}</pre> -->
-                                                                    <div class="custom-uiselect override-fencingselect">
+                                                                    <div class="custom-uiselect override-fencingselect sfa-btsselect">
                                                                         <!-- <ui-select name="selectfilter" title="Select Event or Events" multiple="" id="selectfilter" theme="bootstrap" ng-model="athelete.sport"
                                                                             ng-change="selectService.isValidSelection(athelete)"
                                                                             ng-init="selectService.isValidSelection(athelete)">
@@ -139,7 +139,7 @@
                                                                 </td>
                                                                 <td ng-init="validate=(selectService.sportName=='Athletics')?true:false" ng-if="selectService.sportName==='Shooting'">
                                                                     <fieldset ng-disabled="athelete.disableopen">
-                                                                        <div class="custom-uiselect override-fencingselect">
+                                                                        <div class="custom-uiselect override-fencingselect sfa-btsselect">
                                                                             <!-- <ui-select name="selectfilter" title="Select Event or Events" multiple="" id="selectfilter" theme="bootstrap" ng-model="athelete.open"
                                                                                 ng-change="selectService.isValidSelection(athelete);disableFunction('Open',athelete.open,$index)"
                                                                                 ng-init="selectService.isValidSelection(athelete)">
@@ -154,14 +154,15 @@
                                                                             <select class="selectpicker form-control" multiple ng-init="selectService.isValidSelection(athelete)" ng-model="athelete.open"
                                                                                 ng-options="age.sport as age.ageId |formatEvent:age.eventName  for age in athelete.airRifleOpen"
                                                                                 title="Select Air Rifle" ng-change="selectService.isValidSelection(athelete);disableFunction('Open',athelete.open,$index)"
-                                                                                data-selected-text-format="count > 1" data-size="3">
+                                                                                data-selected-text-format="count > 1" data-size="3"
+                                                                                data-live-search="true">
                                                                             </select>
                                                                         </div>
                                                                     </fieldset>
                                                                 </td>
                                                                 <td ng-init="validate=(selectService.sportName=='Athletics')?true:false" ng-if="selectService.sportName==='Shooting'">
                                                                     <fieldset ng-disabled="athelete.disablepeep">
-                                                                        <div class="custom-uiselect override-fencingselect">
+                                                                        <div class="custom-uiselect override-fencingselect sfa-btsselect">
                                                                             <!-- <ui-select name="selectfilter" title="Select Event or Events" multiple="" id="selectfilter" theme="bootstrap" ng-model="athelete.peep"
                                                                                 ng-change="selectService.isValidSelection(athelete);disableFunction('Peep',athelete.peep,$index)"
                                                                                 ng-init="selectService.isValidSelection(athelete)">
@@ -176,14 +177,15 @@
                                                                             <select class="selectpicker form-control" multiple ng-init="selectService.isValidSelection(athelete)" ng-model="athelete.peep"
                                                                                 ng-options="age.sport as age.ageId |formatEvent:athelete.airRiflePeep[0].eventName  for age in athelete.airRiflePeep"
                                                                                 title="Select Air Peep" ng-change="selectService.isValidSelection(athelete);disableFunction('Peep',athelete.peep,$index)"
-                                                                                data-selected-text-format="count > 1" data-size="3">
+                                                                                data-selected-text-format="count > 1" data-size="3"
+                                                                                data-live-search="true">
                                                                             </select>
                                                                         </div>
                                                                     </fieldset>
                                                                 </td>
                                                                 <td ng-init="validate=(selectService.sportName=='Athletics')?true:false" ng-if="selectService.sportName==='Shooting'">
                                                                     <fieldset ng-disabled="athelete.disablepistol">
-                                                                        <div class="custom-uiselect override-fencingselect">
+                                                                        <div class="custom-uiselect override-fencingselect sfa-btsselect">
                                                                             <!-- <ui-select name="selectfilter" title="Select Event or Events" multiple="" id="selectfilter" theme="bootstrap" ng-model="athelete.pistol"
                                                                                 ng-change="selectService.isValidSelection(athelete);disableFunction('Pistol',athelete.pistol,$index)"
                                                                                 ng-init="selectService.isValidSelection(athelete)">
@@ -198,7 +200,8 @@
                                                                             <select class="selectpicker form-control" multiple ng-init="selectService.isValidSelection(athelete)" ng-model="athelete.pistol"
                                                                                 ng-options="age.sport as age.ageId |formatEvent:athelete.airRiflePistol[0].eventName  for age in athelete.airRiflePistol"
                                                                                 title="Select Air Pistol" ng-change="selectService.isValidSelection(athelete);disableFunction('Pistol',athelete.pistol,$index)"
-                                                                                data-selected-text-format="count> 1" data-size="3">
+                                                                                data-selected-text-format="count> 1" data-size="3"
+                                                                                data-live-search="true">
                                                                             </select>
                                                                         </div>
                                                                     </fieldset>

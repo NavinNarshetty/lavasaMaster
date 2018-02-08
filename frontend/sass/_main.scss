@@ -8025,6 +8025,35 @@ h1.forgot-space {
 }
 
 // Override
+.sfa-btsselect {
+    .bootstrap-select.btn-group .dropdown-menu li a span.check-mark {
+        position: absolute;
+        display: inline-block;
+        right: 15px;
+        margin-top: 5px;
+    }
+    .glyphicon-ok {
+        border: 1px solid #a0a0a0;
+        border-radius: 2px;
+        &:before {
+            content: "\f00c";
+            font: normal normal normal 14px/1 FontAwesome;
+            font-size: inherit;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            opacity: 0;
+        }
+    }
+    .selected {
+        .glyphicon-ok {
+            &:before {
+                opacity: 1;
+            }
+        }
+    }
+}
+
 .override-fencingselect {
     .btn {
         margin: 0px;

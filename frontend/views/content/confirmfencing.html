@@ -122,13 +122,13 @@
                                 </td>
                                 <!--hidden-->
                                 <td ng-if="st=='Fencing'">
-                                  <div class="override-fencingselect">
+                                  <div class="override-fencingselect sfa-btsselect">
                                     <!-- <pre>{{athelete.sport}}</pre> -->
                                     <!-- <pre>{{athelete.events | json}}</pre> -->
                                     <!-- <pre>{{config.event3Expression}}</pre> -->
                                     <select class="selectpicker form-control" multiple ng-init="selectService.isValidSelection(athelete)" ng-model="athelete.sport"
                                       ng-required="" ng-options="{{config.event3Expression}}" title="Select Event" ng-change="selectService.isValidSelection(athelete)"
-                                      data-selected-text-format="count > 3" data-size="3">
+                                      data-selected-text-format="count > 3" data-size="3" data-live-search="true">
                                       </select>
 
                                   </div>

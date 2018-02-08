@@ -235,6 +235,7 @@ myApp.controller('ConfirmFencingCtrl', function ($scope, TemplateService, Naviga
     };
     $timeout(function () {
         $('.selectpicker').selectpicker()
+        $('.bs-searchbox input[type="text"]').attr('placeholder', 'Search Event');
     }, 200);
 });
 
@@ -378,9 +379,9 @@ myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, Navigat
     });
     $scope.selectService = selectService;
 
-    if($stateParams.name == "Athletics"){
+    if ($stateParams.name == "Athletics") {
         $scope.selectLimit = 2;
-    }else{
+    } else {
         $scope.selectLimit = 0;
     }
     $scope.formData = {};
@@ -431,21 +432,17 @@ myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, Navigat
     };
     $timeout(function () {
         $('.selectpicker').selectpicker()
+        $('.bs-searchbox input[type="text"]').attr('placeholder', 'Search Event');
     }, 200);
-    $scope.obj={
-        "qwerty":true
+    $scope.obj = {
+        "qwerty": true
     }
-    $scope.call=function(ath){
+    $scope.call = function (ath) {
         selectService.isValidSelection(ath);
         $timeout(function () {
             $('.selectpicker').selectpicker("refresh")
+            $('.bs-searchbox input[type="text"]').attr('placeholder', 'Search Event');
         }, 200);
-       
-        // $scope.obj.qwerty = false;
-        // $timeout(function () {
-        // $scope.obj.qwerty = true;
-        // }, 2000);
-
     }
 });
 
