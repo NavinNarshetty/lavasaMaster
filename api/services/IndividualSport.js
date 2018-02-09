@@ -1427,7 +1427,9 @@ var model = {
                                         athelete.mobile = n.mobile;
                                         athelete.age = n.age;
                                         athelete.gender = n.gender;
-                                        athelete.eventName.push(n.eventName);
+                                        athelete.data = n.ageGroup +' - '+ n.eventName;
+                                        athelete.eventName.push(athelete.data);
+                                        // athelete.eventName.push(n.eventName);
                                         athelete.ageGroup = n.ageGroup;
                                         athelete.sportName = n.sportName;
                                     });
@@ -1887,6 +1889,7 @@ var model = {
                     var results = _.groupBy(results1, "sfaid");
                     var arrayAth = [];
                     _.each(results, function (atheletes) {
+                        console.log(atheletes);
                         var athelete = {};
                         athelete.eventName = [];
                         _.each(atheletes, function (n) {
@@ -1897,7 +1900,10 @@ var model = {
                             athelete.email = n.email;
                             athelete.age = n.age;
                             athelete.gender = n.gender;
-                            athelete.eventName.push(n.eventName);
+                            athelete.data = n.ageGroup +' - '+ n.eventName;
+                                        athelete.eventName.push(athelete.data);
+                                        athelete.ageGroup = n.ageGroup;
+                            // athelete.eventName.push(n.eventName);
                             athelete.ageGroup = n.ageGroup;
                             athelete.sportName = n.sportName;
                         });
@@ -1944,7 +1950,7 @@ var model = {
     },
 
     getSearchPipeLine: function (data) {
-console.log(data);
+      console.log(data);
         var pipeline = [
             // Stage 1
             {
