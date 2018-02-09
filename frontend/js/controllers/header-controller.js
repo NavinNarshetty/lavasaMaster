@@ -567,29 +567,34 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
         name: 'school championship',
         // mainLink: 'http://mumbaischool.sfanow.in',
         champDetail: [{
-            name: 'about championship',
-            link: 'championship'
-        }, {
-            name: 'live updates',
-            link: 'liveupdates',
-            live: 'true'
-        }, {
-            name: 'live scores',
-            link: 'livescore',
-            score: 'live'
-        }, {
-            name: 'register',
-            link: 'register'
-        }, {
-            name: 'championship schedule',
-            link: 'championship-schedule'
-        }, {
-            name: 'draws schedule',
-            link: 'draws-schedule'
-        }, {
-            name: 'faqs',
-            link: 'faq'
-        }]
+                name: 'about championship',
+                link: 'championship'
+            },
+            //  {
+            //     name: 'live updates',
+            //     link: 'liveupdates',
+            //     live: 'true'
+            // }, {
+            //     name: 'live scores',
+            //     link: 'livescore',
+            //     score: 'live'
+            // }, 
+            // {
+            //     name: 'register',
+            //     link: 'register'
+            // },
+            // {
+            //     name: 'championship schedule',
+            //     link: 'championship-schedule'
+            // }, {
+            //     name: 'draws schedule',
+            //     link: 'draws-schedule'
+            // }, 
+            {
+                name: 'faqs',
+                link: 'faq'
+            }
+        ]
     }, {
         name: 'college championship',
         // mainLink: 'http://mumbaicollege.sfanow.in',
