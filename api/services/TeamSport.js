@@ -56,7 +56,7 @@ schema.plugin(deepPopulate, {
             select: '_id sportslist gender ageGroup maxTeamPlayers minTeamPlayers weight eventPdf'
         },
         "sport.sportslist": {
-            select: '_id name sportsListSubCategory'
+            select: '_id name sportsListSubCategory drawFormat'
         },
         "sport.sportslist.sportsListSubCategory": {
             select: '_id name'
@@ -109,7 +109,6 @@ var model = {
                     });
                 },
                 function (property, callback) {
-
                     var team = {};
                     team.name = data.name;
                     team.sport = data.sport;
@@ -133,7 +132,7 @@ var model = {
                         team.isVideoAnalysis = data.isVideoAnalysis;
                     }
                     data.property = property[0];
-                    // console.log("data", data);
+                    console.log("data", data);
                     callback(null, team);
                 },
                 function (team, callback) {
@@ -285,6 +284,7 @@ var model = {
     },
 
     saveInTeam: function (data, mainData, callback) {
+        console.log("mainData", mainData);
         async.waterfall([
                 function (callback) {
                     TeamSport.findOne().sort({
@@ -296,19 +296,26 @@ var model = {
                             if (mainData.property.sfaCity == 'Mumbai') {
                                 var year = mainData.property.year.substr(2, 2);
                                 var teamid = "M" + "T" + year + data.teamId;
+                                // var teamid = "M" + "T" + year + 1;
                                 callback(null, teamid);
                             } else if (mainData.property.sfaCity == "Hyderabad") {
                                 var year = mainData.property.year.substr(2, 2);
                                 var teamid = "H" + "T" + year + data.teamId;
+                                // var teamid = "H" + "T" + year + 1;
                                 callback(null, teamid);
                             } else {
                                 var city = mainData.property.sfaCity.substr(0, 1);
                                 var year = mainData.property.year.substr(2, 2);
                                 var teamid = city + "T" + year + data.teamId;
+                                // var teamid = city + "T" + year + 1;
                                 callback(null, teamid);
                             }
                         } else {
                             if (mainData.property.sfaCity == 'Mumbai') {
+                                // console.log("autoID", team.autoID);
+                                // var year = new Date().getFullYear().toString().substr(2, 2);
+                                // var teamid = "M" + "T" + year + ++team.autoID;
+                                // console.log("teamid", teamid);
                                 // console.log("autoID", team.autoID);
                                 var year = mainData.property.year.substr(2, 2);
                                 // var year = new Date().getFullYear().toString().substr(2, 2);
@@ -317,15 +324,24 @@ var model = {
                                 callback(null, teamid);
                             } else if (mainData.property.sfaCity == "Hyderabad") {
                                 // console.log("autoID", team.autoID);
-                                var year = mainData.property.year.substr(2, 2);
-                                var teamid = "H" + "T" + year + data.teamId;
+                                // var year = new Date().getFullYear().toString().substr(2, 2);
+                                // var teamid = "H" + "T" + year + ++team.autoID;
                                 // console.log("teamid", teamid);
+                                 // console.log("autoID", team.autoID);
+                                 var year = mainData.property.year.substr(2, 2);
+                                 var teamid = "H" + "T" + year + data.teamId;
+                                 // console.log("teamid", teamid);
                                 callback(null, teamid);
                             } else {
                                 // console.log("autoID", team.autoID);
                                 var city = mainData.property.sfaCity.substr(0, 1);
                                 var year = mainData.property.year.substr(2, 2);
                                 var teamid = city + "T" + year + data.teamId;
+                                // console.log("teamid", teamid);
+                                // console.log("autoID", team.autoID);
+                                // var city = mainData.property.sfaCity.substr(0, 1);
+                                // var year = new Date().getFullYear().toString().substr(2, 2);
+                                // var teamid = city + "T" + year + ++team.autoID;
                                 // console.log("teamid", teamid);
                                 callback(null, teamid);
                             }
@@ -363,11 +379,10 @@ var model = {
     },
 
     createStudentTeam: function (team, data, callback) {
-        // console.log('TEAM', team);
-        // console.log('DATA', data);
         var atheleteName = [];
         var i = 0;
         async.concatSeries(data.athleteTeam, function (n, callback) {
+        // async.eachSeries(data.athleteTeam, function (n, callback) {
             async.waterfall([
                     function (callback) {
                         var teamStudent = {};
@@ -377,7 +392,7 @@ var model = {
                         teamStudent.isCaptain = n.isCaptain;
                         teamStudent.isGoalKeeper = n.isGoalKeeper;
                         teamStudent.perSportUniqueId = team._id + data.sport;
-                        // console.log('TEAM STUDENT', teamStudent);
+// console.log('TEAM STUDENT', teamStudent);
                         StudentTeam.saveInTeam(teamStudent, function (err, saveData) {
                             if (err) {
                                 callback(err, null);
@@ -432,10 +447,10 @@ var model = {
                 });
         }, function (err) {
             if (err) {
-                // console.log(err);
+                console.log(err);
                 callback(err, null);
             } else {
-                // console.log("array", atheleteName);
+                console.log("array", atheleteName);
                 callback(null, atheleteName);
             }
         });
@@ -1115,7 +1130,7 @@ var model = {
     generateExcel: function (res) {
         async.waterfall([
                 function (callback) {
-                    var deepSearch = "sport.sportslist sport.ageGroup studentTeam studentTeam.studentId"
+                    var deepSearch = "sport.sportslist sport.ageGroup studentTeam studentTeam.studentId";
                     TeamSport.find().lean().deepPopulate(deepSearch).exec(function (err, complete) {
                         if (err) {
                             callback(err, null);
@@ -1125,99 +1140,88 @@ var model = {
                             callback(null, complete);
                         }
                     });
-                },
-                function (complete, callback) {
-                    async.concatSeries(complete, function (mainData, callback) {
-                        var obj = {};
-                        obj.year = new Date().getFullYear();
-                        obj.Teamid = mainData.teamId;
-                        obj.SchoolName = mainData.schoolName;
-                        obj.TeamName = mainData.name;
-                        if (mainData.sport) {
-                            obj.Sport = mainData.sport.sportslist.name;
-                            obj.Gender = mainData.sport.gender;
-                            obj.AgeGroup = mainData.sport.ageGroup.name;
-                        } else {
-                            obj.Sport = "";
-                            obj.Gender = "";
-                            obj.AgeGroup = "";
-                        }
-
-                        var StudentTeam;
-                        var count = 0;
-                        var Captain;
-                        var GoalKeeper;
-                        _.each(mainData.studentTeam, function (n) {
-                            var name;
-                            if (n.studentId) {
-                                if (n.studentId.middleName) {
-                                    name = n.studentId.firstName + " " + n.studentId.middleName + " " + n.studentId.surname;
-                                } else {
-                                    name = n.studentId.firstName + " " + n.studentId.surname;
-                                }
-                                name = n.studentId.sfaId + " - " + name + " - " + n.studentId.mobile;
-                                if (n.isCaptain == true) {
-                                    Captain = name;
-                                }
-
-                                if (n.isGoalKeeper == true) {
-                                    GoalKeeper = name;
-                                }
-                                if (count == 0) {
-                                    StudentTeam = name;
-                                } else {
-                                    StudentTeam = StudentTeam + " , " + name;
-                                }
-                                count++;
-                                obj.All_Players = StudentTeam;
-                                obj.Captain = Captain;
-                                obj.GoalKeeper = GoalKeeper;
-                            } else {
-                                obj.All_Players = "";
-                                obj.Captain = "";
-                                obj.GoalKeeper = "";
-                            }
-                            obj.createdBy = mainData.createdBy;
-
-                            if (mainData.nominatedSchoolName) {
-                                obj.nominatedSchoolName = mainData.nominatedSchoolName;
-                            } else {
-                                obj.nominatedSchoolName = "";
-                            }
-                            if (mainData.nominatedContactDetails) {
-                                obj.nominatedContactDetails = mainData.nominatedContactDetails;
-                            } else {
-                                obj.nominatedContactDetails = "";
-                            }
-                            if (mainData.nominatedEmailId) {
-                                obj.nominatedEmailId = mainData.nominatedEmailId;
-                            } else {
-                                obj.nominatedEmailId = "";
-                            }
-                            if (mainData.isVideoAnalysis) {
-                                obj.isVideoAnalysis = mainData.isVideoAnalysis;
-                            } else {
-                                obj.isVideoAnalysis = "";
-                            }
-                        });
-                        obj["Total Athlete Count"] = mainData.studentTeam.length;
-                        callback(null, obj);
-                    }, function (err, excelData) {
-                        Config.generateExcelOld("TeamSport", excelData, res);
-                    });
-                },
-            ],
-            function (err, excelData) {
-                if (err) {
-                    console.log(err);
-                    callback(null, []);
-                } else if (excelData) {
-                    if (_.isEmpty(excelData)) {
-                        callback(null, []);
-                    } else {
-                        callback(null, excelData);
-                    }
                 }
+            ],
+            function (err, complete) {
+                var excelData = [];
+                _.each(complete, function (mainData) {
+                    var obj = {};
+                    obj.year = new Date(mainData.createdAt).getFullYear();
+                    obj.Teamid = mainData.teamId;
+                    obj.SchoolName = mainData.schoolName;
+                    obj.TeamName = mainData.name;
+                    if (mainData.sport) {
+                        obj.Sport = mainData.sport.sportslist.name;
+                        obj.Gender = mainData.sport.gender;
+                        obj.AgeGroup = mainData.sport.ageGroup.name;
+                    } else {
+                        obj.Sport = "";
+                        obj.Gender = "";
+                        obj.AgeGroup = "";
+                    }
+
+                    var StudentTeam;
+                    var count = 0;
+                    var Captain;
+                    var GoalKeeper;
+                    _.each(mainData.studentTeam, function (n) {
+                        var name;
+                        if (n.studentId) {
+                            if (n.studentId.middleName) {
+                                name = n.studentId.firstName + " " + n.studentId.middleName + " " + n.studentId.surname;
+                            } else {
+                                name = n.studentId.firstName + " " + n.studentId.surname;
+                            }
+                            name = n.studentId.sfaId + " - " + name + " - " + n.studentId.mobile;
+                            if (n.isCaptain == true) {
+                                Captain = name;
+                            }
+
+                            if (n.isGoalKeeper == true) {
+                                GoalKeeper = name;
+                            }
+                            if (count == 0) {
+                                StudentTeam = name;
+                            } else {
+                                StudentTeam = StudentTeam + " , " + name;
+                            }
+                            count++;
+                            obj.All_Players = StudentTeam;
+                            obj.Captain = Captain;
+                            obj.GoalKeeper = GoalKeeper;
+                        } else {
+                            obj.All_Players = "";
+                            obj.Captain = "";
+                            obj.GoalKeeper = "";
+                        }
+                        obj.createdBy = mainData.createdBy;
+
+                        if (mainData.nominatedSchoolName) {
+                            obj.nominatedSchoolName = mainData.nominatedSchoolName;
+                        } else {
+                            obj.nominatedSchoolName = "";
+                        }
+                        if (mainData.nominatedContactDetails) {
+                            obj.nominatedContactDetails = mainData.nominatedContactDetails;
+                        } else {
+                            obj.nominatedContactDetails = "";
+                        }
+                        if (mainData.nominatedEmailId) {
+                            obj.nominatedEmailId = mainData.nominatedEmailId;
+                        } else {
+                            obj.nominatedEmailId = "";
+                        }
+                        if (mainData.isVideoAnalysis) {
+                            obj.isVideoAnalysis = mainData.isVideoAnalysis;
+                        } else {
+                            obj.isVideoAnalysis = "";
+                        }
+                    });
+                    obj["Total Athlete Count"] = mainData.studentTeam.length;
+                    excelData.push(obj);
+                });
+                console.log(excelData.length);
+                Config.generateExcelOld("TeamSport", excelData, res);
             });
     },
 

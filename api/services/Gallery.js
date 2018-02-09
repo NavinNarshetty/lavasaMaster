@@ -1,13 +1,21 @@
 var schema = new Schema({
-    name: {
+    title: {
         type: String,
-        required: true,
-        unique: true,
-        uniqueCaseInsensitive: true
-        // excel: {
-        //     name: Name
-        // }
-    }
+        unique: true
+    },
+    folderName: String,
+    gender: [{
+        type: String
+    }],
+    tags: [{
+        type: String
+    }],
+    shareUrl: String,
+    mediatype: String,
+    mediaLink: String,
+    year: String,
+    folderType: String,
+    eventName: String
 });
 
 schema.plugin(deepPopulate, {});
@@ -16,5 +24,62 @@ schema.plugin(timestamps);
 module.exports = mongoose.model('Gallery', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
-var model = {};
+var model = {
+
+    getAllPhotosByType: function (data, callback) {
+        Gallery.aggregate(
+            [{
+                $match: {
+                    "mediatype": "photo",
+                    "folderType": data.folderType
+                }
+            }, {
+                $group: {
+                    "_id": "$folderName",
+                    "folderName":{
+                        "$first":"$folderName"
+                    },
+                    "totalCount": {
+                        "$sum": 1
+                    },
+                    "mediaLink": {
+                        "$first": "$mediaLink"
+                    },
+                    "mediatype": {
+                        "$first": "$mediatype"
+                    }
+                }
+            }],
+            function (err, photos) {
+                if (err) {
+                    callback(err, null);
+                } else if (!_.isEmpty(photos)) {
+                    callback(null, photos);
+                } else {
+                    callback(null, []);
+                }
+            }
+        );
+    },
+
+    getAllPhotosByFolder:function(data,callback){
+       
+            Gallery.find({
+                "mediatype":"photo",
+                "folderType":data.folderType,
+                "folderName":data.folderName
+            },"mediaLink title tags shareUrl mediatype").lean().exec(function(err,photos){
+                if(err){
+                    callback(err,null);
+                }else if(!_.isEmpty(photos)){
+                    callback(null,photos);
+                }else{
+                    callback(null,[]);
+                }
+            });
+      
+    },
+
+
+};
 module.exports = _.assign(module.exports, exports, model);

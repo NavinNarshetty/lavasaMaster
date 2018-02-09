@@ -19,6 +19,7 @@ var schema = new Schema({
     district: [{
         type: String,
     }],
+    totalSport: Number,
     totalAmountType: Number,
     totalAmountInWordsType: String,
     taxTotalAmountInWords: String,
@@ -26,14 +27,12 @@ var schema = new Schema({
     amoutWithoutTaxType: Number,
     amoutWithoutTaxTypeInWords: String,
     cgstAmout: Number,
-
     cgstPercent: Number,
     sgstAmout: Number,
-
     sgstPercent: Number,
     igstAmout: Number,
-
     igstPercent: Number,
+
     totalAmountAthlete: Number,
     totalAmountInWordsAthlete: String,
     amoutWithoutTaxAthlete: Number,
@@ -41,14 +40,24 @@ var schema = new Schema({
     taxTotalAmountAthleteInWords: String,
     taxTotalAmountAthlete: Number,
     cgstAmoutAthlete: Number,
-
     cgstPercentAthlete: Number,
     sgstAmoutAthlete: Number,
-
     sgstPercentAthlete: Number,
     igstAmoutAthlete: Number,
-
     igstPercentAthlete: Number,
+
+    additionalFee: Number,
+    additionalFeeInWords: String,
+    amoutWithoutTaxAdditional: Number,
+    amoutWithoutTaxAdditionalInWords: String,
+    taxTotalAmountAdditionalInWords: String,
+    taxTotalAmountAdditional: Number,
+    cgstAmoutAdditional: Number,
+    cgstPercentAdditional: Number,
+    sgstAmoutAdditional: Number,
+    sgstPercentAdditional: Number,
+    igstAmoutAdditional: Number,
+    igstPercentAdditional: Number,
     reqUrl: String,
     domainUrl: String,
     paymentUrl: String,
@@ -59,6 +68,18 @@ var schema = new Schema({
     }],
     termsAndCondition: String,
     // university: String
+    sports: [{
+        type: String,
+
+    }],
+    goldMedal: Number,
+    silverMedal: Number,
+    bronzeMedal: Number,
+    minWonMatch: Number,
+    minNoShow: Number,
+    bucketName: String,
+    cloudUrlPrefix: String
+
 });
 
 schema.plugin(deepPopulate, {});
@@ -95,6 +116,11 @@ var model = {
                     finalData.infoNo = property[0].infoNo;
                     finalData.infoId = property[0].infoId;
                     finalData.ddFavour = property[0].ddFavour;
+                    finalData.additionalFee = property[0].additionalFee;
+                    finalData.sports = property[0].sports;
+                    finalData.goldMedal = property[0].goldMedal;
+                    finalData.silverMedal = property[0].silverMedal;
+                    finalData.bronzeMedal = property[0].bronzeMedal;
                     callback(null, finalData);
                 }
             }

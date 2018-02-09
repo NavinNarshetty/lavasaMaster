@@ -33,12 +33,14 @@ schema.plugin(deepPopulate, {
         'athleteId': {
             select: '_id firstName middleName surname school atheleteSchoolName sfaId gender age dob city'
         },
-        'sportsListSubCategory': {
+        'athleteId.school': {
             select: '_id name'
+        },
+        'sportsListSubCategory': {
+            select: '_id name inactiveimage image'
         }
     }
 });
-
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('IndividualSport', schema);
@@ -1131,6 +1133,7 @@ var model = {
     },
 
     saveInIndividual: function (data, callback) {
+        console.log('saveInIndividual', data);
         var sportData = {};
         async.waterfall([
                 function (callback) {
@@ -1195,7 +1198,7 @@ var model = {
 
                 },
                 function (atheleteName, callback) {
-                    // console.log(arrayAth);
+                    console.log('athleteName', data);
                     IndividualSport.mailers(atheleteName, data, function (err, mailData) {
                         if (err) {
                             callback(err, null);
@@ -1238,7 +1241,6 @@ var model = {
                             callback(null, found);
                         }
                     });
-
                 },
                 function (found, callback) {
                     if (found.atheleteSchoolName) {
@@ -1248,24 +1250,30 @@ var model = {
                         data.mobile = found.mobile;
                         callback(null, data);
                     } else {
-                        School.findOne({
-                            _id: found.school
-                        }).exec(function (err, schoolData) {
+                        IndividualSport.getschoolSfa(found, function (err, schoolsfa) {
                             if (err) {
                                 callback(err, null);
-                            } else if (_.isEmpty(schoolData)) {
-                                callback("Incorrect Login Details", null);
                             } else {
-                                data.school = schoolData.name;
-                                data.sfaid = found.sfaID;
-                                data.email = found.email;
-                                data.mobile = found.mobile;
-                                callback(null, data);
+                                if (_.isEmpty(schoolsfa)) {
+                                    callback(null, []);
+                                } else {
+                                    data.school = schoolsfa.school;
+                                    if (schoolsfa.sfaid == undefined) {
+                                        data.sfaid = '-';
+                                    } else {
+                                        data.sfaid = schoolsfa.sfaid;
+                                    }
+                                    data.email = found.email;
+                                    data.mobile = found.mobile;
+                                    console.log('schoolDetail', data);
+                                    callback(null, data);
+                                }
                             }
                         });
                     }
                 },
                 function (data, callback) {
+                    console.log('saveInAthlete', data);
                     var atheleteName = [];
                     var results = [];
                     async.each(data.individual, function (n, callback) {
@@ -1331,6 +1339,7 @@ var model = {
                 },
                 function (atheleteName, callback) {
                     console.log("atheleteName", atheleteName);
+                    console.log('atheleteName-----data', data);
                     IndividualSport.mailersAthleteIndividual(atheleteName, data, function (err, mailData) {
                         if (err) {
                             callback(err, null);
@@ -1358,7 +1367,50 @@ var model = {
             });
     },
 
+    getschoolSfa: function (data, callback) {
+        var finalData = {};
+        async.waterfall([
+            function (callback) {
+                School.findOne({
+                    _id: data.school
+                }).exec(function (err, schoolData) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(schoolData)) {
+                        callback("Incorrect Login Details", null);
+                    } else {
+                        callback(null, schoolData);
+                    }
+                });
+            },
+            function (schoolData, callback) {
+                Registration.findOne({
+                    schoolName: schoolData.name
+                }).exec(function (err, registerSchool) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(registerSchool)) {
+                        finalData.school = schoolData.name;
+                        finalData.sfaid = schoolData.sfaid;
+                        callback(null, finalData);
+                    } else {
+                        finalData.school = registerSchool.schoolName;
+                        finalData.sfaid = registerSchool.sfaID;
+                        callback(null, finalData);
+                    }
+                });
+            }
+        ], function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, found);
+            }
+        });
+    },
+
     mailers: function (atheleteName, data, callback) {
+        console.log('mailers', data);
         async.parallel([
                 //athlete email and sms
                 function (callback) {
@@ -1450,6 +1502,7 @@ var model = {
     },
 
     smsMailsAthlete: function (data, n, callback) {
+        console.log("smsMailsAthlete", data);
         async.waterfall([
                 function (callback) {
                     ConfigProperty.find().lean().exec(function (err, property) {
@@ -1469,6 +1522,7 @@ var model = {
                             //email
                             function (callback) {
                                 console.log("event", n);
+                                console.log("event", data);
                                 var emailData = {};
                                 emailData.schoolSFA = data.sfaid;
                                 emailData.schoolName = data.school;
@@ -1830,6 +1884,7 @@ var model = {
     },
 
     mailersAthleteIndividual: function (atheleteName, data, callback) {
+        console.log('mailersAthleteI', data);
         async.waterfall([
                 function (callback) {
                     var atheleteUniq = atheleteName;
@@ -1894,7 +1949,7 @@ var model = {
     },
 
     getSearchPipeLine: function (data) {
-
+console.log(data);
         var pipeline = [
             // Stage 1
             {
@@ -1908,6 +1963,19 @@ var model = {
             {
                 $unwind: {
                     path: "$athleteId",
+                }
+            },
+            {
+                $lookup: {
+                    "from": "schools",
+                    "localField": "athleteId.school",
+                    "foreignField": "_id",
+                    "as": "athleteId.school"
+                }
+            },
+            {
+                $unwind: {
+                    path: "$athleteId.school",
                 }
             },
             {
@@ -1970,19 +2038,27 @@ var model = {
                                 $options: "i"
                             }
                         }, {
+                            "athleteId.atheleteSchoolName": {
+                                $regex: data.keyword,
+                                $options: "i"
+                            }
+                        }, {
+                            "athleteId.school.name": {
+                                $regex: data.keyword,
+                                $options: "i"
+                            }
+                        }, {
                             "athleteId.firstName": {
                                 $regex: data.keyword,
                                 $options: "i"
                             }
-                        },
-                        {
+                        }, {
                             "athleteId.sfaId": {
                                 $regex: data.keyword,
                                 $options: "i"
                             }
                         }
                     ],
-
                 }
             },
             {
@@ -2019,7 +2095,7 @@ var model = {
             count: maxRow
         };
         if (data.keyword == "") {
-            var deepSearch = "athleteId sportsListSubCategory";
+            var deepSearch = "athleteId athleteId.school sportsListSubCategory";
             var Search = Model.find()
 
                 .order(options)
@@ -2045,7 +2121,6 @@ var model = {
                                 }
                             }
                         });
-
                     },
                     function (dataFinal, callback) {
                         var pipeLine = IndividualSport.getSearchPipeLine(data);
@@ -2056,7 +2131,8 @@ var model = {
                                 '$skip': parseInt(options.start)
                             }, {
                                 '$limit': maxRow
-                            });
+                            }
+                        );
                         IndividualSport.aggregate(newPipeLine, function (err, totals) {
                             if (err) {
                                 console.log(err);
@@ -2073,7 +2149,6 @@ var model = {
                             }
                         });
                     }
-
                 ],
                 function (err, data2) {
                     if (err) {
@@ -2315,6 +2390,7 @@ var model = {
                             athleteSchoolName: "$athleteId.atheleteSchoolName",
                             sfaid: "$athleteId.sfaId",
                             createdby: "$createdBy",
+                            createdAt: "$createdAt",
                             nominatedSchoolName: "$nominatedSchoolName",
                             nominatedContactDetails: "$nominatedContactDetails",
                             nominatedEmailId: "$nominatedEmailId",
@@ -2325,6 +2401,8 @@ var model = {
                             agegroup: "$sport.ageGroup.name",
                             weight: "$sport.weight.name",
                             gender: "$sport.gender",
+                            mobile: "$athleteId.mobile",
+                            email: "$athleteId.email"
                         }
                     }
                 }
@@ -2353,116 +2431,169 @@ var model = {
                 function (found, callback) {
                     console.log(found);
                     var excelData = [];
-                    async.eachSeries(found, function (mainData, callback) {
-                            var obj = {};
-                            obj.year = new Date().getFullYear();
-                            var basicInfo = {};
-                            var event;
-                            var age;
-                            basicInfo.sport = [];
-                            var count = 0;
-                            async.each(mainData.info, function (n, callback) {
-                                console.log("info", n);
-                                console.log("count", count);
-                                if (n.middlename) {
-                                    basicInfo.name = n.firstname + " " + n.middlename + " " + n.surname;
-                                } else {
-                                    basicInfo.name = n.firstname + " " + n.surname;
-                                }
-                                if (n.athleteSchoolName) {
-                                    basicInfo.school = n.athleteSchoolName;
-                                } else {
-                                    basicInfo.school = n.school;
-                                }
-                                basicInfo.sfaid = n.sfaid;
-                                basicInfo.sportName = n.sportName;
-                                basicInfo.createdBy = n.createdby;
-                                if (n.nominatedSchoolName) {
-                                    basicInfo.nominatedSchoolName = n.nominatedSchoolName;
-                                } else {
-                                    basicInfo.nominatedSchoolName = "";
-                                }
-                                if (n.nominatedContactDetails) {
-                                    basicInfo.nominatedContactDetails = n.nominatedContactDetails;
-                                } else {
-                                    basicInfo.nominatedContactDetails = "";
-                                }
-                                if (n.nominatedEmailId) {
-                                    basicInfo.nominatedEmailId = n.nominatedEmailId;
-                                } else {
-                                    basicInfo.nominatedEmailId = "";
-                                }
-                                if (n.nominatedName) {
-                                    basicInfo.nominatedName = n.nominatedName;
-                                } else {
-                                    basicInfo.nominatedName = "";
-                                }
-                                if (n.isVideoAnalysis) {
-                                    basicInfo.isVideoAnalysis = n.isVideoAnalysis;
-                                } else {
-                                    basicInfo.isVideoAnalysis = "";
-                                }
-                                basicInfo.gender = n.gender;
-                                if (count == 0) {
-                                    age = n.agegroup;
-                                    event = age + " - " + n.eventname;
-                                    if (n.weight) {
-                                        basicInfo.weight = n.weight;
-                                    }
-                                    count++;
-                                } else {
-                                    age = n.agegroup;
-                                    event = event + " , " + age + " - " + n.eventname;
-                                    if (n.weight) {
-                                        basicInfo.weight = n.weight;
-                                    }
-                                }
-                                basicInfo.event = event;
-
-                                callback(null, basicInfo);
-                            });
-                            // console.log("basicInfo", basicInfo);
-                            obj.SFAID = basicInfo.sfaid;
-                            obj.Athlete_Full_Name = basicInfo.name;
-                            obj.SchoolName = basicInfo.school;
-                            obj.Sport = basicInfo.sportName;
-                            obj.Gender = basicInfo.gender;
-                            obj.Event_Category = basicInfo.event;
-                            obj.Weight_Category = basicInfo.weight;
-                            if (basicInfo.createdBy) {
-                                obj.CreatedBy = basicInfo.createdBy;
+                    _.each(found, function (mainData) {
+                        var obj = {};
+                        obj.year = new Date().getFullYear();
+                        var basicInfo = {};
+                        var event;
+                        var age;
+                        var weightData;
+                        basicInfo.sport = [];
+                        var count = 0;
+                        _.each(mainData.info, function (n) {
+                            console.log("info", n);
+                            console.log("count", count);
+                            obj.Date = moment(n.createdAt).format('DD/MM/YYYY');
+                            obj.SFAID = n.sfaid;
+                            if (n.middlename) {
+                                obj.Athlete_Full_Name = n.firstname + " " + n.middlename + " " + n.surname;
                             } else {
-                                obj.Createdby = " ";
+                                obj.Athlete_Full_Name = n.firstname + " " + n.surname;
                             }
+                            if (n.athleteSchoolName) {
+                                obj.SchoolName = n.athleteSchoolName;
+                            } else {
+                                obj.SchoolName = n.school;
+                            }
+                            obj.Mobile = n.mobile;
+                            obj.Email = n.email;
+                            obj.Gender = n.gender;
+                            obj.Sport = n.sportName;
+                            if (count == 0) {
+                                age = n.agegroup;
+                                event = age + " - " + n.eventname;
 
-                            obj.nominatedSchoolName = basicInfo.nominatedSchoolName;
-                            obj.nominatedContactDetails = basicInfo.nominatedContactDetails;
-                            obj.nominatedEmailId = basicInfo.nominatedEmailId;
-                            obj.nominatedName = basicInfo.nominatedName;
-                            obj.isVideoAnalysis = basicInfo.isVideoAnalysis;
-                            excelData.push(obj);
-                            console.log("obj", obj);
-                            callback(null, excelData);
-                        },
-                        function (err) {
-                            Config.generateExcelOld("IndividualSport", excelData, res);
+                                if (n.weight) {
+                                    weightData = n.weight;
+                                }
+                                count++;
+                            } else {
+                                age = n.agegroup;
+                                event = event + " , " + age + " - " + n.eventname;
+                                if (n.weight && _.isEmpty(weightData)) {
+                                    weightData = n.weight;
+                                } else if (n.weight && !_.isEmpty(weightData)) {
+                                    weightData = weightData + "-" + n.weight;
+                                }
+                            }
+                            obj.Weight_Category = weightData;
+                            obj.Event_Category = event;
+                            if (n.createdby) {
+                                obj.CreatedBy = n.createdby;
+                            } else {
+                                obj.CreatedBy = "";
+                            }
+                            if (n.nominatedSchoolName) {
+                                obj.nominatedSchoolName = n.nominatedSchoolName;
+                            } else {
+                                obj.nominatedSchoolName = "";
+                            }
+                            if (n.nominatedContactDetails) {
+                                obj.nominatedContactDetails = n.nominatedContactDetails;
+                            } else {
+                                obj.nominatedContactDetails = "";
+                            }
+                            if (n.nominatedEmailId) {
+                                obj.nominatedEmailId = n.nominatedEmailId;
+                            } else {
+                                obj.nominatedEmailId = "";
+                            }
+                            if (n.nominatedName) {
+                                obj.nominatedName = n.nominatedName;
+                            } else {
+                                obj.nominatedName = "";
+                            }
+                            if (n.isVideoAnalysis) {
+                                obj.isVideoAnalysis = n.isVideoAnalysis;
+                            } else {
+                                obj.isVideoAnalysis = "";
+                            }
+                            // callback(null, basicInfo);
                         });
+                        // console.log("basicInfo", basicInfo);
+                        // obj.SFAID = basicInfo.sfaid;
+                        // obj.Athlete_Full_Name = basicInfo.name;
+                        // obj.SchoolName = basicInfo.school;
+                        // obj.Sport = basicInfo.sportName;
+                        // obj.Gender = basicInfo.gender;
+                        // obj.Event_Category = basicInfo.event;
+                        // obj.Weight_Category = basicInfo.weight;
+                        // if (basicInfo.createdBy) {
+                        //     obj.CreatedBy = basicInfo.createdBy;
+                        // } else {
+                        //     obj.Createdby = " ";
+                        // }
 
+                        // obj.nominatedSchoolName = basicInfo.nominatedSchoolName;
+                        // obj.nominatedContactDetails = basicInfo.nominatedContactDetails;
+                        // obj.nominatedEmailId = basicInfo.nominatedEmailId;
+                        // obj.nominatedName = basicInfo.nominatedName;
+                        // obj.isVideoAnalysis = basicInfo.isVideoAnalysis;
+                        excelData.push(obj);
 
+                    });
+
+                    callback(null, excelData);
                 },
             ],
             function (err, excelData) {
                 if (err) {
                     console.log(err);
-                    callback(null, []);
+                    res.callback(null, []);
                 } else if (excelData) {
-                    if (_.isEmpty(excelData)) {
-                        callback(null, []);
-                    } else {
-                        callback(null, excelData);
-                    }
+                    Config.generateExcelOld("IndividualSport", excelData, res);
                 }
             });
     },
+
+    updateSport:function(data,callback){
+            var matchObj={
+                "gender":data.gender,
+                "ageGroup":data.ageGroup,
+                "sportslist":data.sportslist,
+                "weight":data.weight
+            }
+
+            async.waterfall([
+                function(callback){
+                    Sport.findOne(matchObj).lean().exec(function(err,sport){
+                        if(err){
+                            callback(err,null);
+                        }else if(!_.isEmpty(sport)){
+                            callback(null,sport);
+                        }else{
+                            callback("Sport Not Found For This Match",null)
+                        }
+                    });
+                },
+                function(sport,callback){
+                    var matchObj={
+                        "_id":data.individualSportId,
+                        "sport":data.oldSportId
+                    }
+                    var updateObj ={
+                        $set:{
+                            "sport.$":sport._id
+                        }
+                    }
+                    IndividualSport.updateOne(matchObj,updateObj).exec(function(err,data){
+                        if(err){
+                            callback(err,null);
+                        }else if(data){
+                            callback(null,data);
+                        }else{
+                            callback("Failed To Update",null);
+                        }
+                    });
+                }
+            ],function(err,result){
+                if(err){
+                    callback(err,null);
+                }else{
+                    callback(null,result);
+                }   
+            });
+        
+    }
 };
 module.exports = _.assign(module.exports, exports, model);

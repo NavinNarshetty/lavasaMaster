@@ -95,9 +95,22 @@ var controller = {
     },
 
     generateExcel: function (req, res) {
+        res.connection.setTimeout(200000000);
+        req.connection.setTimeout(200000000);
         IndividualSport.generateExcel(res);
     },
 
+    updateSport:function(req,res){
+        if(req.body && req.body.oldSportId && req.body.individualSportId && req.body.ageGroup && req.body.sportslist && req.body.gender && req.body.weight){
+            IndividualSport.updateSport(req.body,res.callback);
+        }else{
+            res.json({
+                data:"Insufficient Data",
+                value:false
+            });
+        }
+    }
+    
 
 
 };

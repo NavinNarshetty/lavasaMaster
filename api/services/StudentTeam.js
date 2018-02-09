@@ -22,12 +22,21 @@ var schema = new Schema({
 
 schema.plugin(deepPopulate, {
     populate: {
-        'teamId': {
-            select: '_id name teamId school'
+        "teamId": {
+            select: '_id name teamId school schoolName'
         },
-        'studentId': {
-            select: '_id firstName middleName surname'
+        "studentId": {
+            select: '_id firstName middleName sfaId surname school athleteSchoolName gender email mobile photograph'
         },
+        'studentId.school': {
+            select: 'name'
+        },
+        "sport": {
+            select: '_id sportslist gender ageGroup maxTeamPlayers minTeamPlayers weight eventPdf'
+        },
+        "sport.sportslist.sportsListSubCategory": {
+            select: '_id name inactiveimage image'
+        }
     }
 });
 schema.plugin(uniqueValidator);

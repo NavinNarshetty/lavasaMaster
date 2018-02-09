@@ -4,25 +4,25 @@ var controller = {
     saveAthelete: function (req, res) {
         if (req.body) {
             async.waterfall([
-                    function (callback) {
-                        ConfigProperty.find().lean().exec(function (err, property) {
-                            if (err) {
-                                callback(err, null);
+                function (callback) {
+                    ConfigProperty.find().lean().exec(function (err, property) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(property)) {
+                                callback(null, []);
                             } else {
-                                if (_.isEmpty(property)) {
-                                    callback(null, []);
-                                } else {
-                                    callback(null, property);
-                                }
+                                callback(null, property);
                             }
-                        });
-                    },
-                    function (property, callback) {
-                        req.body.property = property[0];
-                        Athelete.saveAthelete(req.body, res.callback);
+                        }
+                    });
+                },
+                function (property, callback) {
+                    req.body.property = property[0];
+                    Athelete.saveAthelete(req.body, res.callback);
 
-                    }
-                ],
+                }
+            ],
                 function (err, data2) {
                     if (err) {
                         console.log(err);
@@ -49,6 +49,9 @@ var controller = {
             });
         }
     },
+    searchByFilter: function (req, res) {
+        Athelete.searchByFilter(req.body, res.callback);
+    },
     search: function (req, res) {
         if (req.body) {
             Athelete.search(req.body, res.callback);
@@ -59,12 +62,49 @@ var controller = {
             });
         }
     },
+    searchByNameId: function (req, res) {
+        if (req.body) {
+            Athelete.searchByNameId(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
+    getTargetAthlete: function (req, res) {
+        res.connection.setTimeout(200000000);
+        req.connection.setTimeout(200000000);
+        if (req.body) {
+            Athelete.getTargetAthlete(req.body, res);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
+
+    getOneBySfaId: function (req, res) {
+        if (req.body) {
+            Athelete.getOneBySfaId(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
 
     generateExcelOld: function (req, res) {
+        res.connection.setTimeout(200000000);
+        req.connection.setTimeout(200000000);
         Athelete.generateExcelOld(res);
     },
 
     generateExcel: function (req, res) {
+        res.connection.setTimeout(200000000);
+        req.connection.setTimeout(200000000);
         if (req.body) {
             console.log(req.body);
             Athelete.generateExcel(req.body, res);
@@ -112,27 +152,27 @@ var controller = {
     generateEmailOTP: function (req, res) {
         if (req.body) {
             async.waterfall([
-                    function (callback) {
-                        ConfigProperty.find().lean().exec(function (err, property) {
-                            if (err) {
-                                callback(err, null);
+                function (callback) {
+                    ConfigProperty.find().lean().exec(function (err, property) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(property)) {
+                                callback(null, []);
                             } else {
-                                if (_.isEmpty(property)) {
-                                    callback(null, []);
-                                } else {
-                                    callback(null, property);
-                                }
+                                callback(null, property);
                             }
-                        });
-                    },
-                    function (property, callback) {
-                        req.body.propertyType = property[0].institutionType;
-                        req.body.city = property[0].sfaCity;
-                        req.body.year = property[0].year;
-                        req.body.eventYear = property[0].eventYear;
-                        Athelete.generateEmailOTP(req.body, res.callback);
-                    }
-                ],
+                        }
+                    });
+                },
+                function (property, callback) {
+                    req.body.propertyType = property[0].institutionType;
+                    req.body.city = property[0].sfaCity;
+                    req.body.year = property[0].year;
+                    req.body.eventYear = property[0].eventYear;
+                    Athelete.generateEmailOTP(req.body, res.callback);
+                }
+            ],
                 function (err, data2) {
                     if (err) {
                         console.log(err);
@@ -174,26 +214,26 @@ var controller = {
 
     cronAthleteWithPaymentDue: function (req, res) {
         async.waterfall([
-                function (callback) {
-                    ConfigProperty.find().lean().exec(function (err, property) {
-                        if (err) {
-                            callback(err, null);
+            function (callback) {
+                ConfigProperty.find().lean().exec(function (err, property) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(property)) {
+                            callback(null, []);
                         } else {
-                            if (_.isEmpty(property)) {
-                                callback(null, []);
-                            } else {
-                                callback(null, property);
-                            }
+                            callback(null, property);
                         }
-                    });
-                },
-                function (property, callback) {
-                    req.body.property = property[0];
-                    console.log("property", req.body.property);
-                    Athelete.cronAthleteWithPaymentDue(req.body, res.callback);
+                    }
+                });
+            },
+            function (property, callback) {
+                req.body.property = property[0];
+                console.log("property", req.body.property);
+                Athelete.cronAthleteWithPaymentDue(req.body, res.callback);
 
-                }
-            ],
+            }
+        ],
             function (err, data2) {
                 if (err) {
                     console.log(err);
@@ -204,5 +244,28 @@ var controller = {
 
             });
     },
+
+    updateAthleteName: function (req, res) {
+        if (req.body) {
+            Athelete.updateAthleteName(req.body, res.callback);
+        } else {
+            res.json({
+                data: "Body Not Found",
+                value: false
+            });
+        }
+
+    },
+    updateAthleteEmailMobileNo: function (req, res) {
+        if (req.body) {
+            Athelete.updateAthleteEmailMobileNo(req.body, res.callback);
+        } else {
+            res.json({
+                data: "No data found",
+                value: false
+            });
+        }
+    }
+
 };
 module.exports = _.assign(module.exports, controller);

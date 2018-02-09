@@ -30,6 +30,13 @@ var requrl = "http://testmumbai2015.sfanow.in/api/";
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
     maxRow: 20,
+
+    medalPoints: {
+        "gold": 5,
+        "silver": 3,
+        "bronze": 1
+    },
+
     getForeignKeys: function (schema) {
         var arr = [];
         _.each(schema.tree, function (n, name) {
@@ -43,6 +50,7 @@ var model = {
         });
         return arr;
     },
+
     checkRestrictedDelete: function (Model, schema, data, callback) {
 
         var values = schema.tree;
@@ -71,6 +79,7 @@ var model = {
             }
         });
     },
+
     manageArrayObject: function (Model, id, data, key, action, callback) {
         Model.findOne({
             "_id": id
@@ -157,6 +166,127 @@ var model = {
 
 
     },
+
+    oldReadUploaded: function (filename, width, height, style, res) {
+        res.set({
+            'Cache-Control': 'public, max-age=31557600',
+            'Expires': new Date(Date.now() + 345600000).toUTCString()
+        });
+        var buf;
+        var newNameExtire;
+        var bufs = [];
+        var proceedI = 0;
+        var wi;
+        var he;
+
+
+
+        function proceed() {
+            proceedI++;
+            if (proceedI === 2) {
+                Jimp.read(buf, function (err, image) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (style === "contain" && width && height) {
+                            image.contain(width, height).getBuffer(Jimp.AUTO, writer2);
+                        } else if (style === "cover" && (width && width > 0) && (height && height > 0)) {
+                            image.cover(width, height).getBuffer(Jimp.AUTO, writer2);
+                        } else if ((width && width > 0) && (height && height > 0)) {
+                            image.resize(width, height).getBuffer(Jimp.AUTO, writer2);
+                        } else if ((width && width > 0) && !(height && height > 0)) {
+                            image.resize(width, Jimp.AUTO).getBuffer(Jimp.AUTO, writer2);
+                        } else {
+                            image.resize(Jimp.AUTO, height).getBuffer(Jimp.AUTO, writer2);
+                        }
+                    }
+                });
+            }
+        }
+
+        function writer2(err, imageBuf) {
+            var writestream2 = gfs.createWriteStream({
+                filename: newNameExtire,
+            });
+            var bufferStream = new stream.PassThrough();
+            bufferStream.end(imageBuf);
+            bufferStream.pipe(writestream2);
+            res.send(imageBuf);
+        }
+
+        function read2(filename2) {
+            var readstream2 = gfs.createReadStream({
+                filename: filename2
+            });
+            readstream2.on('error', function (err) {
+                res.json({
+                    value: false,
+                    error: err
+                });
+            });
+            readstream2.pipe(res);
+        }
+        var onlyName = filename.split(".")[0];
+        var extension = filename.split(".").pop();
+        if ((extension == "jpg" || extension == "png" || extension == "gif") && ((width && width > 0) || (height && height > 0))) {
+            //attempt to get same size image and serve
+            console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            var newName = onlyName;
+            if (width > 0) {
+                newName += "-" + width;
+            } else {
+                newName += "-" + 0;
+            }
+            if (height) {
+                newName += "-" + height;
+            } else {
+                newName += "-" + 0;
+            }
+            if (style && (style == "contain" || style == "cover")) {
+                newName += "-" + style;
+            } else {
+                newName += "-" + 0;
+            }
+            newNameExtire = newName + "." + extension;
+            gfs.exist({
+                filename: newNameExtire
+            }, function (err, found) {
+                if (err) {
+                    // res.json({
+                    //     value: false,
+                    //     error: err
+                    // });
+                }
+                if (found) {
+                    read2(newNameExtire);
+                } else {
+                    proceed();
+                }
+            });
+            //else create a resized image and serve
+        } else {
+            console.log("--------------------------------------------------------------------");
+            var readstream = gfs.createReadStream({
+                filename: filename
+            });
+            readstream.on('error', function (err) {
+                res.json({
+                    value: false,
+                    error: err
+                });
+            });
+            readstream.on('data', function (d) {
+                bufs.push(d);
+            });
+            readstream.on('end', function () {
+                buf = Buffer.concat(bufs);
+                proceed();
+            });
+            readstream.pipe(res);
+        }
+        //error handling, e.g. file does not exist
+    },
+
     readUploaded: function (filename, width, height, style, res) {
         res.set({
             'Cache-Control': 'public, max-age=31557600',
@@ -288,6 +418,7 @@ var model = {
         });
         return dataObj;
     },
+
     importGS: function (filename, callback) {
         var readstream = gfs.createReadStream({
             filename: filename
@@ -307,6 +438,7 @@ var model = {
             callback(null, Config.import(buffer));
         });
     },
+
     generateExcel: function (name, found, res) {
         name = _.kebabCase(name);
         var excelData = [];
@@ -343,6 +475,7 @@ var model = {
         });
 
     },
+
     generateExcelOld: function (name, found, res) {
         name = _.kebabCase(name);
         var excelData = [];
@@ -379,6 +512,7 @@ var model = {
         });
 
     },
+
     excelDateToDate: function isDate(value) {
         value = (value - (25567 + 1)) * 86400 * 1000;
         var mom = moment(value);
@@ -556,6 +690,445 @@ var model = {
         }).on('error', function (err) {
             fs.unlink(dest);
             callback(err);
+        });
+    },
+
+    generatePdf: function (pdfObj, callback) {
+        console.log("generatePdf", pdfObj);
+
+        var pdf = require('html-pdf');
+
+        // obj = _.assign(obj, page);
+        var obj = {};
+        var env = {};
+
+
+        var file = pdfObj.filename;
+
+        var i = 0;
+        sails.hooks.views.render(file, {
+            data: pdfObj
+        }, function (err, html) {
+            if (err) {
+                callback(err, null);
+            } else {
+                //var path = "http://104.155.129.33:1337/upload/readFile/";
+                var path = "pdf/";
+                var newFilename = pdfObj.newFilename;
+                var writestream = fs.createWriteStream(path + newFilename);
+
+                writestream.on('finish', function (err, res) {
+                    if (err) {
+                        console.log("Something Fishy", err);
+                    } else {
+                        callback(null, {
+                            name: newFilename,
+                            url: path + newFilename
+                        });
+                    }
+                });
+
+                var options = {
+                    "paginationOffset": 5,
+                    "phantomPath": "node_modules/phantomjs-prebuilt/bin/phantomjs",
+                    // Export options 
+                    "directory": "/tmp",
+                    "height": "10.5in", // allowed units: mm, cm, in, px
+                    "width": "10in",
+                    "format": "Letter", // allowed units: A3, A4, A5, Legal, Letter, Tabloid 
+                    // "orientation": "portrait", // portrait or landscape 
+                    // "zoomFactor": "1", // default is 1 
+                    // Page options 
+                    "border": {
+                        "top": "0.5cm", // default is 0, units: mm, cm, in, px 
+                        "right": "0",
+                        "bottom": "0",
+                        "left": "0"
+                    },
+                    // File options 
+                    "type": "pdf", // allowed file types: png, jpeg, pdf 
+                    "timeout": 30000, // Timeout that will cancel phantomjs, in milliseconds 
+                    "footer": {
+                        "height": "0",
+                    },
+                    // "filename": page.filename + ".pdf"
+                };
+
+                pdf.create(html, options).toStream(function (err, stream) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        i++;
+                        stream.pipe(writestream);
+                    }
+                });
+            }
+
+        });
+    },
+
+    merge2pdfs: function (files, path, fileName, callback) {
+        const PDFMerge = require('pdf-merge');
+
+        // const files = [
+        //     "/home/wohlig/Documents/htdocs/lavasaBackend/pdf/HA17544-Athletics-certificate.pdf",
+        //     "/home/wohlig/Documents/htdocs/lavasaBackend/pdf/HA17544-Swimming-certificate.pdf",
+        // ];
+
+        async.waterfall([
+            function (callback) {
+                console.log("asdasdasdasda");
+                async.concatSeries(files, function (name, callback) {
+                    console.log(path + name);
+                    var file = path + name;
+                    callback(null, file);
+                }, function (err, files) {
+                    console.log("files", files);
+                    callback(null, files);
+                })
+            },
+            function (finalFiles, callback) {
+                // PDFMerge(files, {output: "/home/wohlig/Documents/htdocs/lavasaBackend/pdf/qq.pdf"})
+                // .then((buffer) => {
+
+                // });
+                var writestream = fs.createWriteStream(path + fileName + ".pdf");
+
+                PDFMerge(finalFiles, {
+                        output: 'Stream'
+                    })
+                    .then((stream) => {
+                        stream.pipe(writestream);
+                    });
+
+                writestream.on('finish', function (err, res) {
+                    if (err) {
+                        console.log("Something Fishy", null);
+                        callback(err, null);
+                    } else {
+                        callback(null, finalFiles);
+                    }
+                });
+            },
+            function (finalFiles, callback) {
+                _.each(finalFiles, function (n, k) {
+                    fs.unlink(n, (err) => {
+                        if (err) throw err;
+                        else {
+                            if (finalFiles.length - 1 == k) {
+                                callback(null, "merged");
+                            }
+                        }
+                    });
+                });
+            }
+        ], function (err, result) {
+            callback(null, result);
+        });
+
+    },
+
+    getWriteStreamPdf: function (pdfObj, callback) {
+        console.log("generatePdf");
+
+        var pdf = require('html-pdf');
+
+        // obj = _.assign(obj, page);
+        var obj = {};
+        var env = {};
+
+
+        var file = pdfObj.filename;
+
+        var i = 0;
+        sails.hooks.views.render(file, {
+            data: pdfObj
+        }, function (err, html) {
+            if (err) {
+                callback(err, null);
+            } else {
+                //var path = "http://104.155.129.33:1337/upload/readFile/";
+                var path = "pdf/";
+                var newFilename = pdfObj.newFilename;
+                var writestream = fs.createWriteStream(path + newFilename);
+
+                writestream.on('finish', function (err, res) {
+                    if (err) {
+                        console.log("Something Fishy", err);
+                    } else {
+                        callback(null, {
+                            name: newFilename,
+                            url: newFilename
+                        });
+                    }
+                });
+
+                var options = {
+                    "paginationOffset": 5,
+                    "phantomPath": "node_modules/phantomjs-prebuilt/bin/phantomjs",
+                    // Export options 
+                    "directory": "/tmp",
+                    "height": "10.5in", // allowed units: mm, cm, in, px
+                    "width": "10in",
+                    "format": "Letter", // allowed units: A3, A4, A5, Legal, Letter, Tabloid 
+                    // "orientation": "portrait", // portrait or landscape 
+                    // "zoomFactor": "1", // default is 1 
+                    // Page options 
+                    "border": {
+                        "top": "0.5cm", // default is 0, units: mm, cm, in, px 
+                        "right": "0",
+                        "bottom": "0",
+                        "left": "0"
+                    },
+                    // File options 
+                    "type": "pdf", // allowed file types: png, jpeg, pdf 
+                    "timeout": 30000, // Timeout that will cancel phantomjs, in milliseconds 
+                    "footer": {
+                        "height": "0",
+                    },
+                    // "filename": page.filename + ".pdf"
+                };
+                pdf.create(html, options).toStream(function (err, stream) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        i++;
+                        stream.pipe(writestream);
+                    }
+                });
+            }
+
+        });
+    },
+
+    oldrotateImage: function (filename, angle, callback, res) {
+
+        var readstream = gfs.createReadStream({
+            filename: filename
+        });
+        readstream.on('error', function (err) {
+            callback({
+                value: false,
+                error: err
+            });
+        });
+        var buf;
+        var newNameExtire;
+        var bufs = [];
+        var proceedI = 0;
+        var wi;
+        var he;
+        readstream.on('data', function (d) {
+            bufs.push(d);
+        });
+        readstream.on('end', function () {
+            buf = Buffer.concat(bufs);
+            proceed();
+        });
+
+        function proceed() {
+            proceedI++;
+            if (proceedI === 1) {
+                Jimp.read(buf, function (err, image) {
+                    gfs.remove({
+                        filename: filename,
+                    }, function () {
+                        image.rotate(parseInt(angle)).getBuffer(Jimp.AUTO, writer2);
+                    });
+
+                });
+            }
+        }
+
+        function writer2(err, imageBuf) {
+
+            var writestream2 = gfs.createWriteStream({
+                filename: filename,
+            });
+            var bufferStream = new stream.PassThrough();
+            bufferStream.end(imageBuf);
+            bufferStream.pipe(writestream2);
+            writestream2.on('err', function (err) {
+                callback(err, null);
+            });
+            writestream2.on('finish', function () {
+                callback(null, filename);
+            });
+        }
+    },
+
+    rotateImage: function (filename, angle, callback, res) {
+        var fid = filename.substr(0, filename.lastIndexOf('.')) + "-";
+        // console.log("fid", fid);
+        var readstream = gfs.createReadStream({
+            filename: filename
+        });
+        readstream.on('error', function (err) {
+            callback({
+                value: false,
+                error: err
+            });
+        });
+        var buf;
+        var newNameExtire;
+        var bufs = [];
+        var proceedI = 0;
+        var wi;
+        var he;
+        readstream.on('data', function (d) {
+            bufs.push(d);
+        });
+        readstream.on('end', function () {
+            buf = Buffer.concat(bufs);
+            proceed();
+        });
+
+        function proceed() {
+            proceedI++;
+            if (proceedI === 1) {
+                Jimp.read(buf, function (err, image) {
+                    async.waterfall([
+                            function (callback) {
+                                // var file = fid + "-";
+                                gfs.files.find({
+                                    filename: {
+                                        $regex: fid,
+                                        $options: "i"
+                                    }
+                                }).toArray(function (err, files) {
+                                    if (err) {
+                                        res.json(err);
+                                    } else if (_.isEmpty(files)) {
+                                        callback(null, image);
+                                    } else {
+                                        // console.log("files****", files);
+                                        async.concatSeries(files, function (n, callback) {
+                                            console.log("inside remove each", n);
+                                            gfs.files.remove({
+                                                _id: n._id
+                                            }, function (err, found) {
+                                                if (err) {
+                                                    console.log("error");
+                                                } else {
+                                                    console.log("image", image);
+                                                    callback(null, {
+                                                        data: "removed"
+                                                    });
+                                                }
+                                            });
+                                        }, function (err, found) {
+                                            callback(null, image);
+                                        });
+                                    }
+
+                                });
+                            },
+                            function (image, callback) {
+                                gfs.files.find({
+                                    filename: filename
+                                }).toArray(function (err, files) {
+                                    if (err) {
+                                        res.json(err);
+                                    } else {
+                                        // console.log("files", files);
+                                        async.concatSeries(files, function (n, callback) {
+                                            // console.log("inside each", n);
+                                            gfs.files.remove({
+                                                _id: n._id
+                                            }, function (err, found) {
+                                                if (err) {
+                                                    console.log("error");
+                                                } else {
+                                                    console.log("image", image);
+                                                    image.rotate(parseInt(angle)).getBuffer(Jimp.AUTO, writer2);
+                                                }
+                                            });
+                                        }, function (err, found) {
+                                            callback(null, found);
+                                        });
+                                    }
+                                });
+                            }
+                        ],
+                        function (err, complete) {
+                            if (err) {
+                                callback(null, []);
+                            } else if (complete) {
+                                if (_.isEmpty(complete)) {
+                                    callback(null, complete);
+                                } else {
+                                    callback(null, complete);
+                                }
+                            }
+                        });
+                });
+            }
+        }
+
+        function writer2(err, imageBuf) {
+            console.log("inside", imageBuf);
+            var writestream2 = gfs.createWriteStream({
+                filename: filename,
+            });
+            var bufferStream = new stream.PassThrough();
+            bufferStream.end(imageBuf);
+            bufferStream.pipe(writestream2);
+            writestream2.on('err', function (err) {
+                callback(err, null);
+            });
+            writestream2.on('finish', function () {
+                callback(null, filename);
+            });
+        }
+    },
+
+    removeChunkCover: function (callback, res) {
+        // var readstream = gfs.createReadStream({
+        //     filename: {
+        //         $regex: "cover",
+        //         $options: "i"
+        //     }
+        // });
+        // readstream.on('error', function (err) {
+        //     callback({
+        //         value: false,
+        //         error: err
+        //     });
+        // });
+        var buf;
+        var newNameExtire;
+        var bufs = [];
+        var proceedI = 0;
+        var wi;
+        var he;
+        Jimp.read(buf, function (err, image) {
+            gfs.files.find({
+                filename: {
+                    $regex: "-cover",
+                    $options: "i"
+                }
+            }).toArray(function (err, files) {
+                if (err) {
+                    res.json(err);
+                } else if (_.isEmpty(files)) {
+                    callback(null, []);
+                } else {
+                    _.each(files, function (n) {
+                        console.log("inside remove each", n);
+                        gfs.files.remove({
+                            _id: n._id
+                        }, function (err, found) {
+                            if (err) {
+                                console.log("error");
+                            } else {
+                                console.log("removed image", image);
+                            }
+                        });
+
+                    });
+                    callback(null, "data removed");
+                }
+            });
         });
     }
 };

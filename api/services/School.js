@@ -47,7 +47,8 @@
      isRegistered: {
          type: Boolean,
          default: false
-     }
+     },
+     screenName: String,
  });
 
  schema.plugin(deepPopulate, {});
@@ -57,6 +58,8 @@
 
  var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
  var model = {
+
+     searchByFilter: exports.search,
 
      search: function (data, callback) {
 
@@ -250,7 +253,6 @@
                  callback(null, found);
              }
          });
-
      },
 
      generateExcel: function (res) {

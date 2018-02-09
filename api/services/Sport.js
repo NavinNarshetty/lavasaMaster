@@ -1873,7 +1873,7 @@ var model = {
         if (data.keyword === "") {
             var deepSearch = "sportslist ageGroup weight";
             var Search = Model.find()
-
+            // data.keyword
                 .order(options)
                 .deepPopulate(deepSearch)
                 .keyword(options)
@@ -1972,7 +1972,7 @@ var model = {
         async.waterfall([
             function (callback) {
                 var deepSearch = "sportslist ageGroup weight";
-                Sport.find(data.keyword)
+                Sport.find()
                     .order(options)
                     .deepPopulate(deepSearch)
                     .keyword(options)
@@ -2911,6 +2911,7 @@ var model = {
                 }
             });
     },
+
     //except page1 without sfa
     editAthleteData1: function (data, start, maxRow, callback) {
         if (data.sportName.includes("Mix") || data.sportName.includes("mix")) {
@@ -2979,6 +2980,7 @@ var model = {
                 }
             });
     },
+
     //with sfa
     editAtheleteDataIncludingSfa: function (data, start, maxRow, callback) {
         if (data.sportName.includes("Mix") || data.sportName.includes("mix")) {

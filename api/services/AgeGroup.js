@@ -13,7 +13,7 @@ module.exports = mongoose.model('AgeGroup', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
     getAll: function (data, callback) {
-
+        
         AgeGroup.find().lean().exec(function (err, found) {
             if (err) {
                 callback(err, null);
@@ -23,6 +23,22 @@ var model = {
                 } else {
                     console.log("found0", found);
                     callback(null, found);
+                }
+            }
+        });
+    },
+    getperSportslist: function (data, callback) {
+        Sport.find({
+            sportslist: data.sportslist
+        }).lean().deepPopulate("ageGroup").exec(function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else {
+                if (_.isEmpty(found)) {
+                    callback(null, []);
+                } else {
+                    var age = _.uniqBy(found, "ageGroup.name");
+                    callback(null, age);
                 }
             }
         });

@@ -28,7 +28,11 @@ var model = {
             // Stage 1
             {
                 $match: {
-                    "school": objectid(data.school)
+                    $or: [{
+                        "school": objectid(data.school)
+                    }, {
+                        schoolName: data.schoolName
+                    }]
                 }
             },
 

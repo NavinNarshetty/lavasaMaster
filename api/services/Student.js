@@ -133,40 +133,57 @@ var model = {
 
     },
 
-
     removeDuplicates: function (data, callback) {
+
         var obj = {};
 
         // Read the file and send to the callback
         fs.readFile(data.path, handleFile)
+
         // Write the callback function
         function handleFile(err, data) {
             if (err) throw err
-            obj = JSON.parse(data);
-            async.concatSeries(obj, function (val, callback) {
-                    var id;
-                    var _id = val._id;
-                    console.log("id", _id);
-                    OldAthlete.remove({ //finds one with refrence to id
-                        _id: new ObjectId(_id)
-                    }).exec(function (err, found) {
-                        if (err) {
-                            callback(err, null);
-                        } else if (_.isEmpty(found)) {
-                            callback(null, "Data is empty");
-                        } else {
-                            // console.log("found", found);
-                            callback(null, found);
-                        }
-                    });
-                },
-                function (err, found) {
+            // obj = JSON.parse(data)
+            // console.log("obj", obj);
+            // async.each(obj, function (data, callback) {
+            //     console.log("id", data._id);
+            //     Student.remove({ //finds one with refrence to id
+            //         _id: data._id
+            //     }).
+                obj = JSON.parse(data);
+                async.concatSeries(obj, function (val, callback) {
+                        var id;
+                        var _id = val._id;
+                        console.log("id", _id);
+                        OldAthlete.remove({ //finds one with refrence to id
+                            _id: new ObjectId(_id)
+                        }).exec(function (err, found) {
                     if (err) {
                         callback(err, null);
+                    } else if (_.isEmpty(found)) {
+                        callback(null, "Data is empty");
                     } else {
+                        // console.log("found", found);
                         callback(null, found);
                     }
+
                 });
+            }, 
+            function (err, found) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    callback(null, found);
+                }
+            });
+            // function (err, data4) {
+            //     if (err) {
+            //         // console.log(err);
+            //         callback(err, null);
+            //     } else {
+            //         callback(null, "Successfully removed!");
+            //     }
+            // });
 
             // You can now play with your datas
         }

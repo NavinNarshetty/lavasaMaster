@@ -33,7 +33,20 @@ var controller = {
             ]
 
         });
-    }
+    },
+
+    removeChunkCover: function (req, res) {
+        res.connection.setTimeout(20000000000);
+        req.connection.setTimeout(20000000000);
+        if (req.body) {
+            Config.removeChunkCover(res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
 
 
 };
