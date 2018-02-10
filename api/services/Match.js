@@ -363,12 +363,14 @@ var model = {
                         if (!_.isEmpty(found.opponentsSingle)) {
                             finalData.players = [];
                             finalData.opponentsSingle = [];
+                            finalData.teams = [];
                             _.each(found.opponentsSingle, function (n) {
                                 finalData.players.push(n.athleteId);
                                 finalData.opponentsSingle.push(n._id);
                             });
                         } else {
                             finalData.teams = [];
+                            finalData.opponentsSingle = [];
                             _.each(found.opponentsTeam, function (n) {
                                 finalData.teams.push(n);
                             });
