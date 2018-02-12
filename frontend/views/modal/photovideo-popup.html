@@ -21,9 +21,9 @@
     </div>
     <!-- POPUP PHOTO HOLDER END -->
     <!-- POPUP VIDEO HOLDER  -->
-    <div class="photovideo-videoholder" ng-if="currentPic.mediatype == 'video'" style="background-image:url('{{currentPic.thumbnail}}')">
+    <div class="photovideo-videoholder" ng-if="currentPic.mediatype == 'video'" style="background-image:url('{{currentPic.thumbnail}}');">
       <!-- <iframe class="photovideo-vidframe" ng-src="{{'https://player.vimeo.com/video/' + currentPic.medialink |trusted }}" frameborder="0" title="{{currentPic.mediatitle}} | SFA Videos" title="{{currentPic.mediatitle}} | SFA Videos"  alt="{{currentPic.mediatitle}} | SFA Videos"></iframe> -->
-      <iframe class="photovideo-vidframe" ng-src="{{currentPic.medialink | linkvideo:currentPic.videoType |trusted}}" frameborder="0" title="{{currentPic.mediatitle}} | SFA Videos" title="{{currentPic.mediatitle}} | SFA Videos"  alt="{{currentPic.mediatitle}} | SFA Videos" set-height="0.56"></iframe>
+      <iframe class="photovideo-vidframe" ng-src="{{currentPic.medialink | linkvideo:currentPic.videoType |trusted}}" frameborder="0" title="{{currentPic.mediatitle}} | SFA Videos" title="{{currentPic.mediatitle}} | SFA Videos"  alt="{{currentPic.mediatitle}} | SFA Videos"></iframe>
     </div>
     <!-- POPUP VIDEO HOLDER END -->
   </div>
