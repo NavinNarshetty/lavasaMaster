@@ -133,19 +133,26 @@ var model = {
                 }
             },
             function (final, callback) {
+                var finalData = [];
                 _.each(final, function (singleData) {
                     _.each(singleData, function (n) {
-                        var len = n.length;
-                        if (len > 1) {
+                        var i = 1;
+                        if (n.length > 1) {
                             _.each(n, function (single) {
-
+                                var param = {};
+                                param.sportId = single._id;
+                                param.weight = single.weight._id;
+                                param.weightName = single.weight.name + "(" + i + ")";
+                                Weight.changeWeight(param, function (err, sportData) {
+                                    console.log("sportData", sportData);
+                                    finalData.push(sportData);
+                                });
+                                i++;
                             });
                         }
-                        // }  callback(null, singleData);
                     });
-                    // }, function (err) {
-                    //     callback(null, final);
                 });
+                callback(null, finalData);
             },
         ], function (err, complete) {
             if (err) {
@@ -153,7 +160,56 @@ var model = {
             } else {
                 callback(null, complete);
             }
-        })
+        });
+    },
+
+    changeWeight: function (data, callback) {
+        async.waterfall([
+            function (callback) {
+                var param = {};
+                param.name = data.weightName;
+                Weight.saveData(param, function (err, complete) {
+                    if (err || _.isEmpty(complete)) {
+                        err = "Save Failed !";
+                        callback(null, {
+                            error: err,
+                            success: complete
+                        });
+                    } else {
+                        console.log("weight", complete);
+                        callback(null, complete);
+                    }
+                });
+            },
+            function (complete, callback) {
+                if (complete.error) {
+                    callback(null, complete);
+                } else {
+                    var matchObj = {
+                        $set: {
+                            weight: complete.weight
+                        }
+                    };
+                    Weight.update({
+                        _id: complete.sportId
+                    }, matchObj).exec(
+                        function (err, match) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                callback(null, match);
+                            }
+                        });
+                }
+            }
+
+        ], function (err, complete) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, complete);
+            }
+        });
     }
 
 
