@@ -8,12 +8,12 @@ schema.plugin(deepPopulate, {});
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('Config', schema);
-// var requrl = "http://wohlig.io:1337/api/";
+// var requrl = "http://wohlig.io:1337/api/"; 
 // var requrl = "http://sfa2.wohlig.co.in/api/";
 // var requrl = "https://sfa.wohlig.co.in/api/";
 // var requrl = "http://mumbaischool.sfanow.in/api/";
 // var requrl = "http://mumbaicollege.sfanow.in/api/";
-// var requrl = "http://hyderabadschool.sfanow.in/api/";
+var requrl = "http://hyderabadschool.sfanow.in/api/";
 // var requrl = "http://hyderabadcollege.sfanow.in/api/";
 // var requrl = "http://ahmedabadschool.sfanow.in/api/";
 // var requrl = "http://ahmedabadcollege.sfanow.in/api/";
@@ -21,7 +21,7 @@ module.exports = mongoose.model('Config', schema);
 // var requrl = "http://testmumbai2015.sfanow.in/api/";
 // var requrl = "http://testmumbai2016.sfanow.in/api/";
 // var requrl = "http://testmumbaicollege.sfanow.in/api/";
-var requrl = "http://testhyderabadschool.sfanow.in/api/";
+// var requrl = "http://testhyderabadschool.sfanow.in/api/";
 // var requrl = "http://testhyderabadcollege.sfanow.in/api/";
 // var requrl = "http://testahmedabadschool.sfanow.in/api/";
 // var requrl = "http://testahmedabadcollege.sfanow.in/api/";
@@ -401,6 +401,10 @@ var model = {
             readstream.pipe(res);
         }
         //error handling, e.g. file does not exist
+    },
+
+    tempReadUploaded: function (filename, width, height, style, res) {
+            res.send();
     },
 
     import: function (name) {

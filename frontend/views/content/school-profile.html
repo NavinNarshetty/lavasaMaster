@@ -192,8 +192,8 @@
                             <a>
                                 <div class="sports-participate text-center">
                                     <!-- <img ng-src="{{sportDetails.inactiveimage | serverimage2}}" alt="" class="img-responsive image-width"> -->
-                                    <!-- <img ng-src="{{ sportDetails.name !== filter.sport.name?(sportDetails.inactiveimage?(sportDetails.inactiveimage | serverimage2):defaultImg):(sportDetails.image?(sportDetails.image  | serverimage2):defaultImg)}}" -->
-                                    <img ng-src="{{defaultImg}}" alt="" class="img-responsive image-width" ng-click="selectSport(sportDetails);">
+                                    <img ng-src="{{ sportDetails.name !== filter.sport.name?(sportDetails.inactiveimage?(sportDetails.inactiveimage | serverimage2):defaultImg):(sportDetails.image?(sportDetails.image  | serverimage2):defaultImg)}}"alt="" class="img-responsive image-width" ng-click="selectSport(sportDetails);">
+                                    <!-- <img ng-src="{{defaultImg}}" alt="" class="img-responsive image-width" ng-click="selectSport(sportDetails);"> -->
                                     <span class="color-base text-up f16 mt10 equalSpacing">{{sportDetails.name}}</span>
                                     <div class="combine mt10">
                                         <div class="boy-sec display-inline color-base icon-right">
