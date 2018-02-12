@@ -141,27 +141,25 @@ var model = {
                             while (len > 0) {
                                 async.waterfall([
                                     function (callback) {
-
+                                        callback(null, n);
                                     },
-
                                 ], function (err, complete) {
                                     if (err) {
                                         callback(err, null);
                                     } else {
                                         callback(null, complete);
                                     }
-                                })
+                                });
                             }
                         } else {
-                            callback(null, n)
+                            callback(null, n);
                         }
                     }, function (err) {
                         callback(null, singleData);
                     });
-                }, function (err, data2) {
-                    callback(null, data2);
+                }, function (err) {
+                    callback(null, final);
                 });
-
             },
         ], function (err, complete) {
             if (err) {

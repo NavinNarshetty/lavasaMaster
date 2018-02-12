@@ -5494,7 +5494,7 @@ var model = {
                             if (_.isEmpty(match)) {
                                 callback(null, []);
                             } else {
-                                console.log("found0", match);
+                                // console.log("found0", match);
                                 callback(null, match);
                             }
                         }
@@ -5548,7 +5548,9 @@ var model = {
                 }
                 var i = 0;
                 if (!_.isEmpty(matchData.resultHeat)) {
+                    console.log("matchData", matchData);
                     async.concatSeries(matchData.resultHeat.players, function (mainData, callback) {
+                            console.log("mainData", mainData);
                             var obj = {};
                             obj["MATCH ID"] = matchData.matchId;
                             var dateTime = moment(matchData.scheduleDate).format('DD/MM/YYYY');
@@ -5572,8 +5574,8 @@ var model = {
                             //     obj["LANE NUMBER"] = "";
                             // }
                             // obj["SFA ID"] = mainData.athleteId.sfaId;
-                            if (matchData.id) {
-                                console.log("opponentsSingle********", matchData.opponentsSingle[i], "matchid", matchData.matchId);
+                            if (mainData !== null) {
+                                // console.log("opponentsSingle********", matchData.opponentsSingle[i], "matchid", matchData.matchId);
                                 obj["SFA ID"] = matchData.opponentsSingle[i].athleteId.sfaId;
                                 if (matchData.opponentsSingle[i].athleteId.middleName) {
                                     obj["NAME"] = matchData.opponentsSingle[i].athleteId.firstName + " " + matchData.opponentsSingle[i].athleteId.middleName + " " + matchData.opponentsSingle[i].athleteId.surname;
@@ -5702,7 +5704,7 @@ var model = {
                             obj["HEAT NUMBER"] = matchData.heatNo;
                             obj["LANE NUMBER"] = matchData.laneNo;
                             // obj["SFA ID"] = mainData.athleteId.sfaId;
-                            if (matchData.id) {
+                            if (mainData != null) {
                                 obj["TEAM ID"] = matchData.opponentsTeam[i].teamId;
                                 obj["NAME"] = matchData.opponentsTeam[i].name;
                                 obj["SCHOOL"] = matchData.opponentsTeam[i].schoolName;
@@ -5726,7 +5728,6 @@ var model = {
                             } else {
                                 if (!_.isEmpty(obj["TEAM ID"])) {
                                     obj["RESULT"] = "-";
-
                                 } else {
                                     obj["RESULT"] = "";
 
@@ -5753,7 +5754,7 @@ var model = {
                     var dateTime = moment(matchData.scheduleDate).format('DD/MM/YYYY');
                     obj.DATE = dateTime;
                     obj.TIME = matchData.scheduleTime;
-                    console.log("sport", matchData.sport.sportslist.sportsListSubCategory.name);
+                    // console.log("sport", matchData.sport.sportslist.sportsListSubCategory.name);
                     obj.SPORT = matchData.sport.sportslist.sportsListSubCategory.name;
                     if (matchData.sport.gender == "male") {
                         obj.GENDER = "Male";

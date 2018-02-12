@@ -139,27 +139,6 @@ var model = {
                         unforcedError: "",
                         serviceError: "",
                         doubleFaults: ""
-                    }, {
-                        point: "",
-                        ace: "",
-                        winner: "",
-                        unforcedError: "",
-                        serviceError: "",
-                        doubleFaults: ""
-                    }, {
-                        point: "",
-                        ace: "",
-                        winner: "",
-                        unforcedError: "",
-                        serviceError: "",
-                        doubleFaults: ""
-                    }, {
-                        point: "",
-                        ace: "",
-                        winner: "",
-                        unforcedError: "",
-                        serviceError: "",
-                        doubleFaults: ""
                     }]
                     break;
             };
@@ -245,12 +224,6 @@ var model = {
                 break;
             case "Volleyball":
                 format.teamResults.sets = [{
-                    "points": ''
-                }, {
-                    "points": ''
-                }, {
-                    "points": ''
-                }, {
                     "points": ''
                 }, {
                     "points": ''
