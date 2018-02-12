@@ -5181,14 +5181,14 @@ var model = {
         var team2 = [];
         var team2Sub = [];
         final.matchId = n.matchId;
-        console.log('TTD N', n);
-        console.log('TTD Final Data', finalData);
-        console.log('TTD result', result);
+        // console.log('TTD N', n);
+        // console.log('TTD Final Data', finalData);
+        // console.log('TTD result', result);
         if (result.teams.length > 1) {
             final.teamId1 = result.teams[0].teamId;
             final.teamId2 = result.teams[1].teamId;
-            console.log("team0", result.teams[0].players.length);
-            console.log("team1", result.teams[1].players.length);
+            // console.log("team0", result.teams[0].players.length);
+            // console.log("team1", result.teams[1].players.length);
             if (result.teams.length == 2 && result.teams[0].players.length >= result.teams[1].players.length) {
                 console.log('inside 2');
                 for (var i = 0; i < result.teams[0].players.length; i++) {
@@ -5246,11 +5246,11 @@ var model = {
                     return b - a;
                 });
                 final.max = max[0];
-                console.log("max", max);
+                // console.log("max", max);
                 finalData.push(final);
                 callback(null, finalData);
             } else if (result.teams.length == 2 && result.teams[0].players.length < result.teams[1].players.length) {
-                console.log('inside 2 less');
+                // console.log('inside 2 less');
                 for (var i = 0; i < result.teams[1].players.length; i++) {
                     if (result.teams[0].players[i]) {
                         if (result.teams[0].players[i].isPlaying == true) {
@@ -5305,7 +5305,7 @@ var model = {
                     return b - a;
                 });
                 final.max = max[0];
-                console.log("max", max);
+                // console.log("max", max);
                 finalData.push(final);
                 callback(null, finalData);
             }
@@ -5339,7 +5339,7 @@ var model = {
             var max = count.sort(function (a, b) {
                 return b - a;
             });
-            console.log("max", max);
+            // console.log("max", max);
             final.max = max[0];
             finalData.push(final);
             callback(null, finalData);
@@ -5566,9 +5566,13 @@ var model = {
                             obj.EVENT = matchData.sport.sportslist.name;
                             obj["ROUND"] = matchData.round;
                             obj["HEAT NUMBER"] = matchData.heatNo;
-                            obj["LANE NUMBER"] = mainData.laneNo;
+                            // if (matchData.laneNo) {
+                            obj["LANE NUMBER"] = matchData.laneNo;
+                            // } else {
+                            //     obj["LANE NUMBER"] = "";
+                            // }
                             // obj["SFA ID"] = mainData.athleteId.sfaId;
-                            if (mainData.id) {
+                            if (matchData.id) {
                                 console.log("opponentsSingle********", matchData.opponentsSingle[i], "matchid", matchData.matchId);
                                 obj["SFA ID"] = matchData.opponentsSingle[i].athleteId.sfaId;
                                 if (matchData.opponentsSingle[i].athleteId.middleName) {
@@ -5587,10 +5591,9 @@ var model = {
                                 obj["NAME"] = "";
                                 obj["SCHOOL"] = "";
                             }
-
-
-                            if (mainData.time) {
-                                obj["TIMING"] = mainData.time;
+                            // console.log("mainData", mainData, "matchData", matchData);
+                            if (matchData.time) {
+                                obj["TIMING"] = matchData.time;
                             } else {
                                 if (!_.isEmpty(obj["SFA ID"])) {
                                     obj["TIMING"] = "-";
@@ -5598,8 +5601,8 @@ var model = {
                                     obj["TIMING"] = "";
                                 }
                             }
-                            if (mainData.result) {
-                                obj["RESULT"] = mainData.result;
+                            if (matchData.result) {
+                                obj["RESULT"] = matchData.result;
                                 obj["VIDEO TYPE"] = "";
                                 obj["VIDEO"] = "";
                             } else {
@@ -5697,9 +5700,9 @@ var model = {
                             obj.EVENT = matchData.sport.sportslist.name;
                             obj["ROUND"] = matchData.round;
                             obj["HEAT NUMBER"] = matchData.heatNo;
-                            obj["LANE NUMBER"] = mainData.laneNo;
+                            obj["LANE NUMBER"] = matchData.laneNo;
                             // obj["SFA ID"] = mainData.athleteId.sfaId;
-                            if (mainData.id) {
+                            if (matchData.id) {
                                 obj["TEAM ID"] = matchData.opponentsTeam[i].teamId;
                                 obj["NAME"] = matchData.opponentsTeam[i].name;
                                 obj["SCHOOL"] = matchData.opponentsTeam[i].schoolName;
@@ -5709,8 +5712,8 @@ var model = {
                                 obj["NAME"] = "";
                                 obj["SCHOOL"] = "";
                             }
-                            if (mainData.time) {
-                                obj["TIMING"] = mainData.time;
+                            if (matchData.time) {
+                                obj["TIMING"] = matchData.time;
                             } else {
                                 if (!_.isEmpty(obj["TEAM ID"])) {
                                     obj["TIMING"] = "-";
@@ -5718,8 +5721,8 @@ var model = {
                                     obj["TIMING"] = "";
                                 }
                             }
-                            if (mainData.result) {
-                                obj["RESULT"] = mainData.result;
+                            if (matchData.result) {
+                                obj["RESULT"] = matchData.result;
                             } else {
                                 if (!_.isEmpty(obj["TEAM ID"])) {
                                     obj["RESULT"] = "-";
