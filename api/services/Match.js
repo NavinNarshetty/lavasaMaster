@@ -169,7 +169,7 @@ var model = {
                 if (_.isEmpty(found)) {
                     callback(null, []);
                 } else {
-                    console.log("found0", found);
+                    // console.log("found0", found);
                     callback(null, found);
                 }
             }
@@ -236,7 +236,7 @@ var model = {
                             if (_.isEmpty(found)) {
                                 callback(null, []);
                             } else {
-                                console.log("found0", found);
+                                // console.log("found0", found);
                                 callback(null, found);
                             }
                         }
@@ -328,7 +328,7 @@ var model = {
                             if (_.isEmpty(found)) {
                                 callback(null, []);
                             } else {
-                                console.log("found0", found);
+                                // console.log("found0", found);
                                 callback(null, found);
                             }
                         }
@@ -465,7 +465,7 @@ var model = {
                 if (_.isEmpty(found)) {
                     callback(null, []);
                 } else {
-                    console.log("found0", found);
+                    // console.log("found0", found);
                     callback(null, found);
                 }
             }
@@ -5795,7 +5795,7 @@ var model = {
                             if (_.isEmpty(match)) {
                                 callback(null, []);
                             } else {
-                                console.log("found0", match);
+                                // console.log("found0", match);
                                 callback(null, match);
                             }
                         }
@@ -7464,7 +7464,7 @@ var model = {
                     if (importData.error) {
                         callback(null, importData);
                     } else {
-                        console.log("importData", importData);
+                        // console.log("importData", importData);
                         async.concatSeries(importData, function (n, callback) {
                                 async.waterfall([
                                         function (callback) {
@@ -7571,8 +7571,9 @@ var model = {
                                             }
                                             main.status = "IsCompleted";
                                             if (resultData.teams) {
-                                                if (n['SCORE 1']) {
-                                                    if (result.result.resultVar == "resultBasketball") {
+                                                if (!_.isEmpty(resultData.teams[0])) {
+
+                                                    if (result.result.resultVar === "resultBasketball") {
                                                         console.log("resultData", resultData.teams[0].teamResults);
                                                         resultData.teams[0].teamResults.finalGoalPoints = n['SCORE 1'];
                                                         if (n["TEAM 1 BASKET 1"] !== undefined) {
@@ -7595,36 +7596,35 @@ var model = {
                                                         } else {
                                                             resultData.teams[0].teamResults.quarterPoints[3].basket = "0";
                                                         }
-                                                        // if (n['TEAM 1 BASKET 5'] !== undefined) {
-                                                        //     resultData.teams[0].teamResults.quarterPoints[4].basket = n["TEAM 1 BASKET 5"];
-                                                        // } else {
-                                                        //     resultData.teams[0].teamResults.quarterPoints[4].basket = "0";
-                                                        // }
-                                                        // if (n["TEAM 1 BASKET 6"] != undefined) {
-                                                        //     resultData.teams[0].teamResults.quarterPoints[5].basket = n["TEAM 1 BASKET 6"];
-                                                        // } else {
-                                                        //     resultData.teams[0].teamResults.quarterPoints[5].basket = "0";
-                                                        // }
-                                                        // if (n["TEAM 1 BASKET 7"] != undefined) {
-                                                        //     resultData.teams[0].teamResults.quarterPoints[6].basket = n["TEAM 1 BASKET 7"];
-                                                        // } else {
-                                                        //     resultData.teams[0].teamResults.quarterPoints[6].basket = "0";
-                                                        // }
+                                                    } else if (result.result.resultVar === "resultsCombat" || result.result.resultVar === "resultVolleyball" || result.result.resultVar == "resultsRacquet" || result.result.resultVar === "resultThrowball") {
+                                                        console.log("in volleyball");
+                                                        var temp = {};
+                                                        console.log("n", n);
+                                                        resultData.teams[0].teamResults.sets[0].points = n["TEAM 1 SET 1"];
+                                                        if (n['TEAM 1 SET 2']) {
+                                                            temp.points = n['TEAM 1 SET 2'];
+                                                            resultData.teams[0].teamResults.sets.push(temp);
+                                                        }
+                                                        if (n['TEAM 1 SET 3']) {
+                                                            temp.points = n['TEAM 1 SET 3'];
+                                                            resultData.teams[0].teamResults.sets.push(temp);
+                                                        }
+                                                        if (n['TEAM 1 SET 4']) {
+                                                            temp.points = n['TEAM 1 SET 4'];
+                                                            resultData.teams[0].teamResults.sets.push(temp);
+                                                        }
 
-                                                    } else if (result.result.resultVar == "resultsCombat" || result.result.resultVar == "resultVolleyball" || result.result.resultVar == "resultsRacquet" || result.result.resultVar == "resultThrowball") {
-                                                        resultData.teams[0].teamResults.sets[0] = n['TEAM 1 SET 1'];
-                                                        resultData.teams[0].teamResults.sets[1] = n['TEAM 1 SET 2'];
-                                                        resultData.teams[0].teamResults.sets[2] = n['TEAM 1 SET 3'];
-                                                        resultData.teams[0].teamResults.sets[3] = n['TEAM 1 SET 4'];
-                                                        resultData.teams[0].teamResults.sets[4] = n['TEAM 1 SET 5'];
-                                                        resultData.teams[0].teamResults.sets[5] = n['TEAM 1 SET 6'];
-                                                        resultData.teams[0].teamResults.sets[6] = n['TEAM 1 SET 7'];
+                                                        // resultData.teams[0].teamResults.sets.push(n['TEAM 1 SET 3']);
+                                                        // resultData.teams[0].teamResults.sets.push(['TEAM 1 SET 4']);
+                                                        // resultData.teams[0].teamResults.sets[4] = n['TEAM 1 SET 5'];
+                                                        // resultData.teams[0].teamResults.sets[5] = n['TEAM 1 SET 6'];
+                                                        // resultData.teams[0].teamResults.sets[6] = n['TEAM 1 SET 7'];
                                                         resultData.teams[0].teamResults.finalPoints = n['SCORE 1'];
                                                     } else {
                                                         resultData.teams[0].teamResults.finalPoints = n['SCORE 1'];
                                                     }
                                                 }
-                                                if (n['SCORE 2']) {
+                                                if (!_.isEmpty(resultData.teams[1])) {
                                                     if (result.result.resultVar == "resultBasketball") {
                                                         console.log("resultData", resultData.teams[1].teamResults);
                                                         resultData.teams[1].teamResults.finalGoalPoints = n['SCORE 2'];
@@ -7650,35 +7650,32 @@ var model = {
                                                             resultData.teams[1].teamResults.quarterPoints[3].basket = "0";
                                                         }
 
-                                                        // if (n['TEAM 2 BASKET 7'] != undefined) {
-                                                        //     resultData.teams[1].teamResults.quarterPoints[4].basket = n['TEAM 2 BASKET 5'];
-                                                        // } else {
-                                                        //     resultData.teams[1].teamResults.quarterPoints[4].basket = "0";
+
+                                                    } else if (result.result.resultVar === "resultsCombat" || result.result.resultVar === "resultVolleyball" || result.result.resultVar === "resultsRacquet" || result.result.resultVar === "resultThrowball") {
+                                                        var temp = {};
+                                                        resultData.teams[1].teamResults.sets[0].points = n["TEAM 2 SET 1"];
+                                                        if (n['TEAM 2 SET 2']) {
+                                                            temp.points = n['TEAM 2 SET 2'];
+                                                            resultData.teams[1].teamResults.sets.push(temp);
+                                                        }
+                                                        if (n['TEAM 2 SET 3']) {
+                                                            temp.points = n['TEAM 2 SET 3'];
+                                                            resultData.teams[1].teamResults.sets.push(temp);
+                                                        }
+                                                        if (n['TEAM 2 SET 4']) {
+                                                            temp.points = n['TEAM 2 SET 4'];
+                                                            resultData.teams[1].teamResults.sets.push(temp);
+                                                        }
+                                                        // if (n['TEAM 2 SET 2']) {
+                                                        //     temp.points = n['TEAM 1 SET 2'];
+                                                        //     resultData.teams[1].teamResults.sets.push(temp);
                                                         // }
-                                                        // if (n['TEAM 2 BASKET 1'] != undefined) {
-                                                        //     resultData.teams[1].teamResults.quarterPoints[5].basket = n['TEAM 2 BASKET 6'];
-                                                        // } else {
-                                                        //     resultData.teams[1].teamResults.quarterPoints[5].basket = "0";
-                                                        // }
-                                                        // if (n['TEAM 2 BASKET 7'] != undefined) {
-                                                        //     resultData.teams[1].teamResults.quarterPoints[6].basket = n['TEAM 2 BASKET 7'];
-                                                        // } else {
-                                                        //     resultData.teams[1].teamResults.quarterPoints[6].basket = "0";
-                                                        // }
-                                                        // resultData.teams[1].teamResults.quarterPoints[1].basket = n['TEAM 2 BASKET 2'];
-                                                        // resultData.teams[1].teamResults.quarterPoints[2].basket = n['TEAM 2 BASKET 3'];
-                                                        // resultData.teams[1].teamResults.quarterPoints[3].basket = n['TEAM 2 BASKET 4'];
-                                                        // resultData.teams[1].teamResults.quarterPoints[4].basket = n['TEAM 2 BASKET 5'];
-                                                        // resultData.teams[1].teamResults.quarterPoints[5].basket = n['TEAM 2 BASKET 6'];
-                                                        // resultData.teams[1].teamResults.quarterPoints[6].basket = n['TEAM 2 BASKET 7'];
-                                                    } else if (result.result.resultVar == "resultsCombat" || result.result.resultVar == "resultVolleyball" || result.result.resultVar == "resultsRacquet" || result.result.resultVar == "resultThrowball") {
-                                                        resultData.teams[1].teamResults.sets[0] = n['TEAM 2 SET 1'];
-                                                        resultData.teams[1].teamResults.sets[1] = n['TEAM 2 SET 2'];
-                                                        resultData.teams[1].teamResults.sets[2] = n['TEAM 2 SET 3'];
-                                                        resultData.teams[1].teamResults.sets[3] = n['TEAM 2 SET 4'];
-                                                        resultData.teams[1].teamResults.sets[4] = n['TEAM 2 SET 5'];
-                                                        resultData.teams[1].teamResults.sets[5] = n['TEAM 2 SET 6'];
-                                                        resultData.teams[1].teamResults.sets[6] = n['TEAM 2 SET 7'];
+                                                        // resultData.teams[1].teamResults.sets.push(n['TEAM 2 SET 2']);
+                                                        // resultData.teams[1].teamResults.sets.push(n['TEAM 2 SET 3']);
+                                                        // resultData.teams[1].teamResults.sets.push(n['TEAM 2 SET 4']);
+                                                        // resultData.teams[1].teamResults.sets.push(n['TEAM 2 SET 5']);
+                                                        // resultData.teams[1].teamResults.sets[5] = n['TEAM 2 SET 6'];
+                                                        // resultData.teams[1].teamResults.sets[6] = n['TEAM 2 SET 7'];
                                                         resultData.teams[1].teamResults.finalPoints = n['SCORE 2'];
                                                     } else {
                                                         resultData.teams[1].teamResults.finalPoints = n['SCORE 2'];
@@ -8286,7 +8283,7 @@ var model = {
                             if (_.isEmpty(match)) {
                                 callback(null, []);
                             } else {
-                                console.log("found0", match);
+                                // console.log("found0", match);
                                 callback(null, match);
                             }
                         }

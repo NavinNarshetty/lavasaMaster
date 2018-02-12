@@ -133,32 +133,18 @@ var model = {
                 }
             },
             function (final, callback) {
-                async.each(final, function (singleData, callback) {
-                    async.each(singleData, function (n, callback) {
+                _.each(final, function (singleData) {
+                    _.each(singleData, function (n) {
                         var len = n.length;
                         if (len > 1) {
-                            console.log("n", n);
-                            while (len > 0) {
-                                async.waterfall([
-                                    function (callback) {
-                                        callback(null, n);
-                                    },
-                                ], function (err, complete) {
-                                    if (err) {
-                                        callback(err, null);
-                                    } else {
-                                        callback(null, complete);
-                                    }
-                                });
-                            }
-                        } else {
-                            callback(null, n);
+                            _.each(n, function (single) {
+
+                            });
                         }
-                    }, function (err) {
-                        callback(null, singleData);
+                        // }  callback(null, singleData);
                     });
-                }, function (err) {
-                    callback(null, final);
+                    // }, function (err) {
+                    //     callback(null, final);
                 });
             },
         ], function (err, complete) {

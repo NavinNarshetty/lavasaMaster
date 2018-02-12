@@ -225,12 +225,6 @@ var model = {
             case "Volleyball":
                 format.teamResults.sets = [{
                     "points": ''
-                }, {
-                    "points": ''
-                }, {
-                    "points": ''
-                }, {
-                    "points": ''
                 }];
                 format.teamResults.fouls = "";
                 format.teamResults.spike = "";
