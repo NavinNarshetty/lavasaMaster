@@ -1,9 +1,21 @@
-myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, toastr, NavigationService, $state, errorService, $stateParams, $timeout, MediaPopupService) {
+myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, toastr, NavigationService, $state, errorService, $stateParams,configService, $timeout, MediaPopupService) {
   //Used to name the .html file
 
   $scope.template = TemplateService.getHTML("content/featured-gallery.html");
   TemplateService.title = "SFA Gallery";
   $scope.navigation = NavigationService.getNavigation();
+
+    //config property
+    configService.getDetail(function (data) {
+      $scope.state = data.state;
+      $scope.year = data.year;
+      $scope.eventYear = data.eventYear;
+      $scope.sfaCity = data.sfaCity;
+      $scope.isCollege = data.isCollege;
+      $scope.type = data.type;
+      
+    });
+    //
 
   // VARIABLE INITIALISE
   $scope.mediaType = $stateParams.mediaType;

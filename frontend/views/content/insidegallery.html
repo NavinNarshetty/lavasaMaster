@@ -3,12 +3,12 @@
   <div class="container">
     <!-- HEADER -->
     <div class="event-gallery-header sport-color-primary d-fjalla-one text-uppercase">
-      SFA MUMBAI 2016-2017
+      SFA {{sfaCity}} {{eventYear}}
     </div>
     <!-- HEADER END -->
 
     <!-- VIDEOS -->
-    <div class="event-gallery-videoholder">
+    <div class="event-gallery-videoholder" ng-if="eventVideos.length>0">
       <div class="even-gallery-videoheader">
         <h3 class="d-fjalla-one text-uppercase sport-blue-table ">Videos</h3>
       </div>
@@ -19,7 +19,7 @@
           <div class="swiper-wrapper">
             <div class="swiper-slide pointer" ng-repeat="videoCard in eventVideos track by $index">
               <div class="event-video-holder" ui-sref="featuredvideogallery({mediaType:'video',name:videoCard.folder})">
-                <div class="event-thumbnailholder" style="background-image:url('{{videoCard.thumbnails[3].link}}')">
+                <div class="event-thumbnailholder" style="background-image:url('{{videoCard.thumbnails[3].link||videoCard.thumbnail}}')">
                 </div>
                 <div class="evnt-thumbnailtitle" title="{{videoCard.folder}}">
                   {{videoCard.folder | truncate:'50'}}
@@ -36,7 +36,7 @@
     <!-- VIDEOS END -->
 
     <!-- AD SPACE -->
-    <div class="event-gallery-adspace relate">
+    <div class="event-gallery-adspace relate hide">
       <div class="adspace text-center d-fjalla-one">
         <div class="get-center m-clear">AD SPACE</div>
       </div>
@@ -45,11 +45,11 @@
 
     <!-- PHOTOS -->
     <div class="event-gallery-photos">
-      <div class="event-gallery-photoheader">
+      <div class="event-gallery-photoheader" ng-if="allPhotosbyCategory.length>0 || allPhotosbySport.length>0">
         <h3 class="d-fjalla-one text-uppercase sport-blue-table">Photos</h3>
       </div>
       <!-- CATEGORY -->
-      <div class="event-gallery-category">
+      <div class="event-gallery-category" ng-if="allPhotosbyCategory.length>0">
           <div class="event-gallery-subtitle text-uppercase">
             view category
           </div>
@@ -70,7 +70,7 @@
 <!-- CATEGORY END -->
 
 <!-- AD SPACE -->
-<div class="event-gallery-adspace relate">
+<div class="event-gallery-adspace relate hide">
   <div class="adspace text-center d-fjalla-one">
     <div class="get-center m-clear">AD SPACE</div>
   </div>
@@ -78,7 +78,7 @@
 <!-- AD SPACE END -->
 
 <!-- VIEW BY SPORT -->
-<div class="event-gallery-category">
+<div class="event-gallery-category" ng-if="allPhotosbySport.length>0">
   <div class="event-gallery-subtitle text-uppercase">
     view by Sport
   </div>
