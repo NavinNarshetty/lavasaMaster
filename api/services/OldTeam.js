@@ -53,7 +53,7 @@ var model = {
                                                 if (_.isEmpty(sport)) {
                                                     callback(null, []);
                                                 } else {
-                                                    // console.log("sport", sport);
+                                                    console.log("sport", sport);
                                                     team.sport = sport.sportId;
                                                     team.name = sportData.name;
                                                     callback(null, sportData);
@@ -76,7 +76,7 @@ var model = {
                                                             team.id = sportData._id;
                                                             var studentTeam = {};
                                                             studentTeam.studentId = sport._id;
-                                                            // console.log("sport", sport, "captain", sportData.captain);
+                                                            console.log("sport", sport, "captain", sportData.captain);
                                                             if (sport._id.equals(sportData.captain)) {
                                                                 studentTeam.isCaptain = true;
                                                             } else {
@@ -104,7 +104,7 @@ var model = {
                                             });
                                     },
                                     function (team, callback) {
-                                        // console.log("team-----------", team);
+                                        console.log("team-----------", team);
                                         OldTeam.teamConfirm(team, function (err, sport) {
                                             if (err) {
                                                 callback(err, null);

@@ -2416,7 +2416,6 @@ var model = {
             },
             function (found, callback) {
                 async.concatSeries(found, function (n, callback) {
-                    console.log("n", n);
                     async.waterfall([
                         function (callback) {
                             OldAgeGroup.findOne({
@@ -2453,29 +2452,8 @@ var model = {
                                         function (err, updated) {
                                             callback(null, "updated");
                                         });
-                                    // var ageGroup = {};
-                                    // ageGroup.name = oldage.name;
-                                    // if (oldage._id) {
-                                    //     ageGroup.oldId = old._id;
-                                    // }
-                                    // AgeGroup.saveData(ageGroup, function (err, ageGroup) {
-                                    //     if (err) {
-                                    //         callback(err, null);
-                                    //     } else {
-                                    //         if (_.isEmpty(ageGroup)) {
-                                    //             callback(null, []);
-                                    //         } else {
-                                    //             callback(null, ageGroup);
-                                    //         }
-                                    //     }
-                                    // });
                                 } else {
-                                    // if (ageData.oldId) {
                                     callback(null, oldage);
-                                    // } else {
-
-                                    // }
-
                                 }
                             });
                         },
@@ -2503,5 +2481,7 @@ var model = {
             }
         });
     },
+
+
 };
 module.exports = _.assign(module.exports, exports, model);

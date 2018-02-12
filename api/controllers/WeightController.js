@@ -5,16 +5,16 @@ var controller = {
         Weight.getAll(req.body, res.callback);
     },
 
-    getWeightsByEvent: function(req,res){
-        if(req.body && req.body.sportslist && req.body.ageGroup && req.body.gender){
+    getWeightsByEvent: function (req, res) {
+        if (req.body && req.body.sportslist && req.body.ageGroup && req.body.gender) {
             var matchObj = {
-                "sportslist":req.body.sportslist,
-                "ageGroup":req.body.ageGroup,
-                "gender":req.body.gender
+                "sportslist": req.body.sportslist,
+                "ageGroup": req.body.ageGroup,
+                "gender": req.body.gender
             }
-            Weight.getWeightsByEvent(matchObj,res.callback);
+            Weight.getWeightsByEvent(matchObj, res.callback);
 
-        }else{
+        } else {
 
         }
     },
@@ -38,16 +38,16 @@ var controller = {
                 async.waterfall([
                     function (callback) {
                         Sport.findOne(matchObj, "ageGroup sportslist gender").deepPopulate("ageGroup sportslist sportslist.sportsListSubCategory").lean().exec(function (err, data) {
-                            if(err){
-                                callback(err,null);
-                            }else if(!_.isEmpty(data)){
+                            if (err) {
+                                callback(err, null);
+                            } else if (!_.isEmpty(data)) {
                                 sendObj.oldSportId = data._id;
                                 sendObj.ageGroup = data.ageGroup;
                                 sendObj.sportslist = data.sportslist;
                                 sendObj.gender = data.gender;
                                 callback();
-                            }else{
-                                callback("Sport Not Found",null);
+                            } else {
+                                callback("Sport Not Found", null);
                             }
                         });
                     },
@@ -106,7 +106,7 @@ var controller = {
                     if (req.body.thirdPlace) {
                         totalMatches = totalMatches + 2;
                         arr.push(1);
-                        req.body.rounds+=",Third Place";
+                        req.body.rounds += ",Third Place";
                     } else {
                         totalMatches = totalMatches + 1;
                     }
@@ -117,11 +117,11 @@ var controller = {
                     var roundListNames = _.split(req.body.rounds, ',');
                     var roundListNames = _.map(roundListNames, function (n) {
                         return Athelete.toTitleCase(_.trim(n));
-                    });         
+                    });
                     if (arr.length == roundListNames.length) {
                         var sendArr = [];
                         async.eachOfSeries(arr, function (item, index, callback) {
-                            async.timesSeries(item, function(n, next) {
+                            async.timesSeries(item, function (n, next) {
                                 var sendObj = {
                                     "matchId": req.body.prefix,
                                     "round": roundListNames[index],
@@ -132,7 +132,7 @@ var controller = {
                                 Match.saveMatch(sendObj, function (err, data) {
                                     next(null, data);
                                 });
-                            }, function(err, result) {
+                            }, function (err, result) {
                                 sendArr.push(result);
                                 callback();
                             });
@@ -160,23 +160,23 @@ var controller = {
 
                 },
 
-                function(result,callback){
-                    var matchObj ={
-                        "sport":req.body.sport,
-                        "range":req.body.range,
-                        "isLeagueKnockout":false
+                function (result, callback) {
+                    var matchObj = {
+                        "sport": req.body.sport,
+                        "range": req.body.range,
+                        "isLeagueKnockout": false
                     }
 
-                    if(req.body.thirdPlace){
+                    if (req.body.thirdPlace) {
                         matchObj.thirdPlace = "yes";
                     }
 
-                    Match.addPreviousMatch(matchObj,function(err,data){
-                        console.log("err,data",err,data);
-                        if(err){
-                            callback(err,null);
-                        }else{
-                            callback(null,data);
+                    Match.addPreviousMatch(matchObj, function (err, data) {
+                        console.log("err,data", err, data);
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            callback(null, data);
                         }
                     });
                 }
@@ -195,11 +195,15 @@ var controller = {
         }
     },
 
-    toUpper:function(req,res){
-        res.callback(null,Athelete.toTitleCase(req.body.str));
-    }
+    toUpper: function (req, res) {
+        res.callback(null, Athelete.toTitleCase(req.body.str));
+    },
 
-   
+    setWeightDuplicate: function (req, res) {
+        Weight.setWeightDuplicate(req.body, res.callback);
+    },
+
+
 
 
 };
