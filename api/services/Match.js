@@ -6142,22 +6142,23 @@ var model = {
 
                             if (mainData.resultKnockout) {
                                 if (mainData.resultKnockout.players.length == 2) {
-                                    if (mainData.players[0].player.noShow == true) {
+                                    if (mainData.resultKnockout.players[0].player.noShow == true) {
                                         obj["Player 1 Attendence"] = "A";
                                     } else {
                                         obj["Player 1 Attendence"] = "P";
                                     }
-                                    if (mainData.players[1].player.noShow == true) {
+                                    if (mainData.resultKnockout.players[1].player.noShow == true) {
                                         obj["Player 2 Attendence"] = "A";
                                     } else {
                                         obj["Player 2 Attendence"] = "P";
                                     }
                                 } else if (mainData.resultKnockout.players.length == 1) {
-                                    if (mainData.players[0].player.noShow == true) {
+                                    if (mainData.resultKnockout.players[0].player.noShow == true) {
                                         obj["Player 1 Attendence"] = "A";
                                     } else {
                                         obj["Player 1 Attendence"] = "P";
                                     }
+                                    obj["Player 2 Attendence"] = "-";
                                 }
                                 obj["FINAL SCORE "] = mainData.resultKnockout.finalScore;
                                 if (mainData.resultKnockout.shootOutScore) {
@@ -7011,10 +7012,10 @@ var model = {
                             if (mainData.opponentsSingle.length > 0) {
                                 console.log(mainData.opponentsSingle[0]);
                                 obj["SFAID 1"] = mainData.opponentsSingle[0].athleteId.sfaId;
-                                if(mainData.opponentsSingle[0].athleteId.middleName){
-                                    obj["NAME 1"] = mainData.opponentsSingle[0].athleteId.firstName+" "+mainData.opponentsSingle[0].athleteId.middleName+" "+mainData.opponentsSingle[0].athleteId.surname;
-                                }else{
-                                    obj["NAME 1"] = mainData.opponentsSingle[0].athleteId.firstName+" "+mainData.opponentsSingle[0].athleteId.surname;
+                                if (mainData.opponentsSingle[0].athleteId.middleName) {
+                                    obj["NAME 1"] = mainData.opponentsSingle[0].athleteId.firstName + " " + mainData.opponentsSingle[0].athleteId.middleName + " " + mainData.opponentsSingle[0].athleteId.surname;
+                                } else {
+                                    obj["NAME 1"] = mainData.opponentsSingle[0].athleteId.firstName + " " + mainData.opponentsSingle[0].athleteId.surname;
                                 }
                                 if (mainData.opponentsSingle[0].athleteId.atheleteSchoolName) {
                                     obj["SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.atheleteSchoolName;
@@ -7059,10 +7060,10 @@ var model = {
                                 console.log(mainData.opponentsSingle[0]);
                                 console.log(mainData.opponentsSingle[1]);
                                 obj["SFAID 2"] = mainData.opponentsSingle[1].athleteId.sfaId;
-                                if(mainData.opponentsSingle[1].athleteId.middleName){
-                                    obj["NAME 2"] = mainData.opponentsSingle[1].athleteId.firstName+" "+mainData.opponentsSingle[1].athleteId.middleName+" "+mainData.opponentsSingle[1].athleteId.surname;
-                                }else{
-                                    obj["NAME 2"] = mainData.opponentsSingle[1].athleteId.firstName+" "+mainData.opponentsSingle[1].athleteId.surname;
+                                if (mainData.opponentsSingle[1].athleteId.middleName) {
+                                    obj["NAME 2"] = mainData.opponentsSingle[1].athleteId.firstName + " " + mainData.opponentsSingle[1].athleteId.middleName + " " + mainData.opponentsSingle[1].athleteId.surname;
+                                } else {
+                                    obj["NAME 2"] = mainData.opponentsSingle[1].athleteId.firstName + " " + mainData.opponentsSingle[1].athleteId.surname;
                                 }
                                 if (mainData.opponentsSingle[1].athleteId.atheleteSchoolName) {
                                     obj["SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.atheleteSchoolName;
@@ -12697,6 +12698,7 @@ var model = {
                                     winner.opponentsSingle = singleData["PARTICIPANT 1"];
                                     result.winner = winner;
                                     result.status = 'IsCompleted';
+                                    result.isNoMatch = false;
                                 } else if (singleData["SFAID 2"] === singleData["WINNER SFA ID"]) {
                                     var winner = {};
                                     winner = {};
@@ -12704,9 +12706,13 @@ var model = {
                                     winner.player = singleData.playerId2;
                                     winner.opponentsSingle = singleData["PARTICIPANT 2"];
                                     result.winner = winner;
+                                    result.isNoMatch = false;
                                     result.status = 'IsCompleted';
+                                } else if (result.players[0].noShow == true && result.players[1].noShow == true) {
+                                    result.isNoMatch = true;
                                 } else {
                                     result.status = 'isLive';
+                                    result.isNoMatch = false;
                                 }
                                 callback(null, singleData);
                             }
@@ -12734,6 +12740,7 @@ var model = {
                             paramData.sport = singleData.SPORT;
                             paramData.scheduleDate = singleData.DATE;
                             paramData.scheduleTime = singleData.TIME;
+
                             // paramData.video = singleData["VIDEO"];
                             // paramData.video = singleData["VIDEO TYPE"];
                             paramData.resultKnockout = result;
