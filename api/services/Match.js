@@ -7576,26 +7576,27 @@ var model = {
                                                     if (result.result.resultVar === "resultBasketball") {
                                                         console.log("resultData", resultData.teams[0].teamResults);
                                                         resultData.teams[0].teamResults.finalGoalPoints = n['SCORE 1'];
-                                                        if (n["TEAM 1 BASKET 1"] !== undefined) {
+                                                        if (n["TEAM 1 BASKET 1"]) {
                                                             resultData.teams[0].teamResults.quarterPoints[0].basket = n["TEAM 1 BASKET 1"];
-                                                        } else {
-                                                            resultData.teams[0].teamResults.quarterPoints[0].basket = "0";
-                                                        }
-                                                        if (n["TEAM 1 BASKET 2"] !== undefined) {
+                                                        } 
+                                                        if (n["TEAM 1 BASKET 2"]) {
                                                             resultData.teams[0].teamResults.quarterPoints[1].basket = n["TEAM 1 BASKET 2"];
-                                                        } else {
-                                                            resultData.teams[0].teamResults.quarterPoints[1].basket = "0";
-                                                        }
-                                                        if (n["TEAM 1 BASKET 3"] !== undefined) {
+                                                        } 
+                                                        // else {
+                                                        //     resultData.teams[0].teamResults.quarterPoints[1].basket = "0";
+                                                        // }
+                                                        if (n["TEAM 1 BASKET 3"]) {
                                                             resultData.teams[0].teamResults.quarterPoints[2].basket = n["TEAM 1 BASKET 3"];
-                                                        } else {
-                                                            resultData.teams[0].teamResults.quarterPoints[2].basket = "0";
-                                                        }
-                                                        if (n['TEAM 1 BASKET 4'] !== undefined) {
+                                                        } 
+                                                        // else {
+                                                        //     resultData.teams[0].teamResults.quarterPoints[2].basket = "0";
+                                                        // }
+                                                        if (n['TEAM 1 BASKET 4']) {
                                                             resultData.teams[0].teamResults.quarterPoints[3].basket = n["TEAM 1 BASKET 4"];
-                                                        } else {
-                                                            resultData.teams[0].teamResults.quarterPoints[3].basket = "0";
-                                                        }
+                                                        } 
+                                                        // else {
+                                                            // resultData.teams[0].teamResults.quarterPoints[3].basket = "0";
+                                                        // }
                                                     } else if (result.result.resultVar === "resultsCombat" || result.result.resultVar === "resultVolleyball" || result.result.resultVar == "resultsRacquet" || result.result.resultVar === "resultThrowball") {
                                                         console.log("in volleyball");
                                                         var temp = {};
@@ -7628,27 +7629,31 @@ var model = {
                                                     if (result.result.resultVar == "resultBasketball") {
                                                         console.log("resultData", resultData.teams[1].teamResults);
                                                         resultData.teams[1].teamResults.finalGoalPoints = n['SCORE 2'];
-                                                        if (n['TEAM 2 BASKET 1'] != undefined) {
+                                                        if (n['TEAM 2 BASKET 1']) {
                                                             resultData.teams[1].teamResults.quarterPoints[0].basket = n['TEAM 2 BASKET 1'];
-                                                        } else {
-                                                            resultData.teams[1].teamResults.quarterPoints[0].basket = "0";
-                                                        }
+                                                        } 
+                                                        // else {
+                                                        //     resultData.teams[1].teamResults.quarterPoints[0].basket = "0";
+                                                        // }
 
-                                                        if (n['TEAM 2 BASKET 2'] != undefined) {
+                                                        if (n['TEAM 2 BASKET 2']) {
                                                             resultData.teams[1].teamResults.quarterPoints[1].basket = n['TEAM 2 BASKET 2'];
-                                                        } else {
-                                                            resultData.teams[1].teamResults.quarterPoints[2].basket = "0";
-                                                        }
-                                                        if (n['TEAM 2 BASKET 3'] != undefined) {
+                                                        } 
+                                                        // else {
+                                                        //     resultData.teams[1].teamResults.quarterPoints[2].basket = "0";
+                                                        // }
+                                                        if (n['TEAM 2 BASKET 3']) {
                                                             resultData.teams[1].teamResults.quarterPoints[2].basket = n['TEAM 2 BASKET 3'];
-                                                        } else {
-                                                            resultData.teams[1].teamResults.quarterPoints[2].basket = "0";
-                                                        }
-                                                        if (n['TEAM 2 BASKET 4'] != undefined) {
+                                                        } 
+                                                        // else {
+                                                        //     resultData.teams[1].teamResults.quarterPoints[2].basket = "0";
+                                                        // }
+                                                        if (n['TEAM 2 BASKET 4']) {
                                                             resultData.teams[1].teamResults.quarterPoints[3].basket = n['TEAM 2 BASKET 4'];
-                                                        } else {
-                                                            resultData.teams[1].teamResults.quarterPoints[3].basket = "0";
                                                         }
+                                                        //  else {
+                                                        //     resultData.teams[1].teamResults.quarterPoints[3].basket = "0";
+                                                        // }
 
 
                                                     } else if (result.result.resultVar === "resultsCombat" || result.result.resultVar === "resultVolleyball" || result.result.resultVar === "resultsRacquet" || result.result.resultVar === "resultThrowball") {
