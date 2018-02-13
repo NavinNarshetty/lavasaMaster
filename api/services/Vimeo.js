@@ -334,7 +334,7 @@ var model = {
         const projectId = 'future-oasis-145313';
         const storage = new Storage({
             projectId: projectId,
-            keyFilename: '/home/wohlig/Documents/htdoc/lavasaBackend/config/googleKey/SFA New-f0fd1402dc91.json'
+            keyFilename: '/home/accounts/lavasaBackend/config/googleKey/SFA New-f0fd1402dc91.json'
         });
         const bucketName = 'match-videos';
         storage
@@ -364,7 +364,7 @@ var model = {
         const projectId = 'future-oasis-145313';
         const storage = new Storage({
             projectId: projectId,
-            keyFilename: '/home/wohlig/Documents/htdocs/lavasaBackend/config/googleKey/SFA New-f0fd1402dc91.json'
+            keyFilename: '/home/accounts/lavasaBackend/config/googleKey/SFA New-f0fd1402dc91.json'
         });
 
         async.waterfall([
@@ -432,7 +432,7 @@ var model = {
         const projectId = 'future-oasis-145313';
         const storage = new Storage({
             projectId: projectId,
-            keyFilename: '/home/wohlig/Documents/htdocs/lavasaBackend/config/googleKey/SFA New-f0fd1402dc91.json'
+            keyFilename: '/home/accounts/lavasaBackend/config/googleKey/SFA New-f0fd1402dc91.json'
         });
 
         // Lists files in the bucket, filtered by a prefix
@@ -760,7 +760,7 @@ var model = {
         const projectId = 'future-oasis-145313';
         const storage = new Storage({
             projectId: projectId,
-            keyFilename: '/home/wohlig/Documents/htdocs/lavasaBackend/config/googleKey/SFA New-f0fd1402dc91.json'
+            keyFilename: '/home/accounts/lavasaBackend/config/googleKey/SFA New-f0fd1402dc91.json'
         });
         const bucketName = data.bucketName;
         const options = {
