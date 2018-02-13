@@ -7781,6 +7781,9 @@ var model = {
                     paramData.name = data.sportslist.name;
                     paramData.age = data.ageGroup.name;
                     paramData.gender = data.gender;
+                    if(data.weight){
+                    paramData.weight=data.weight.name;
+                    }
                     Match.getSportId(paramData, function (err, sportData) {
                         if (err || _.isEmpty(sportData)) {
                             err = "Sport,Event,AgeGroup,Gender may have wrong values";
@@ -8032,7 +8035,7 @@ var model = {
 
 
     },
-    
+
     //-----------------------------------EXCEL FOR GRAPHICS------------------------------------------
 
     generateGraphicsQualifying: function (data, res) {
