@@ -78,7 +78,8 @@ var schema = new Schema({
     minWonMatch: Number,
     minNoShow: Number,
     bucketName: String,
-    cloudUrlPrefix: String
+    cloudUrlPrefix: String,
+    keyfileName: String
 
 });
 

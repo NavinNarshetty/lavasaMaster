@@ -11,7 +11,24 @@ var controller = {
     getAllFolderNameCloud: function (req, res) {
         console.log("vimeo");
         if (req.body && req.body.folderType) {
-            Vimeo.getAllFolderNameCloud(req.body, res.callback);
+            ConfigProperty.find().lean().exec(function (err, property) {
+                if (err) {
+                    res.callback(err, null);
+                } else {
+                    if (_.isEmpty(property)) {
+                        res.callback(null, {
+                            "data": "ConfigProperty Empty",
+                            "value": false
+                        });
+                    } else {
+                        console.log("property", property);
+                        req.body.keyfileName = property[0].keyfileName;
+                        Vimeo.getAllFolderNameCloud(req.body, res.callback);
+                    }
+                }
+            });
+
+
         } else {
             res.json({
                 "data": "Insufficient Data",
@@ -23,7 +40,23 @@ var controller = {
     getFilesPerFolder: function (req, res) {
         console.log("vimeo");
         if (req.body && req.body.folderType && req.body.folderName) {
-            Vimeo.getFilesPerFolder(req.body, res.callback);
+            ConfigProperty.find().lean().exec(function (err, property) {
+                if (err) {
+                    res.callback(err, null);
+                } else {
+                    if (_.isEmpty(property)) {
+                        res.callback(null, {
+                            "data": "ConfigProperty Empty",
+                            "value": false
+                        });
+                    } else {
+                        console.log("property", property);
+                        req.body.keyfileName = property[0].keyfileName;
+                        Vimeo.getFilesPerFolder(req.body, res.callback);
+                    }
+                }
+            });
+
         } else {
             res.json({
                 "data": "Insufficient Data",

@@ -7,7 +7,8 @@
     "urlFields": [
         "_id"
     ],
-    "fields": [{
+    "fields": [
+        {
             "name": "Year",
             "type": "text",
             "tableRef": "year",
@@ -853,6 +854,19 @@
             "url": ""
         },
         {
+            "name": "KeyFile Name",
+            "type": "text",
+            "tableRef": "keyfileName",
+            "placeholder": "Enter Keyfile Name",
+            "id": "keyfileName",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "url": ""
+        },
+        {
             "name": "CloudUrlPrefix",
             "type": "text",
             "tableRef": "cloudUrlPrefix",
@@ -866,7 +880,8 @@
             "url": ""
         }
     ],
-    "action": [{
+    "action": [
+        {
             "name": "submit",
             "action": "submitConfigProperty",
             "stateName": {

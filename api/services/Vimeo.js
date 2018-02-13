@@ -358,13 +358,15 @@ var model = {
     },
 
     getAllFolderNameCloud: function (data, callback) {
+        console.log("data",data);
         var final = [];
         console.log("inside");
         const Storage = require('@google-cloud/storage');
         const projectId = 'future-oasis-145313';
         const storage = new Storage({
             projectId: projectId,
-            keyFilename: '/home/accounts/lavasaBackend/config/googleKey/SFA New-f0fd1402dc91.json'
+            keyFilename: data.keyfileName
+            // keyFilename: '/home/accounts/lavasaBackend/config/googleKey/SFA New-f0fd1402dc91.json'
         });
 
         async.waterfall([
@@ -432,7 +434,9 @@ var model = {
         const projectId = 'future-oasis-145313';
         const storage = new Storage({
             projectId: projectId,
-            keyFilename: '/home/accounts/lavasaBackend/config/googleKey/SFA New-f0fd1402dc91.json'
+            keyFilename: data.keyfileName
+            // keyFilename: '/home/accounts/lavasaBackend/config/googleKey/SFA New-f0fd1402dc91.json'
+            
         });
 
         // Lists files in the bucket, filtered by a prefix
