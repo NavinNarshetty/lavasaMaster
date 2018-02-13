@@ -8032,8 +8032,7 @@ var model = {
 
 
     },
-
-
+    
     //-----------------------------------EXCEL FOR GRAPHICS------------------------------------------
 
     generateGraphicsQualifying: function (data, res) {

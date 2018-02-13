@@ -187,11 +187,12 @@ var model = {
                 } else {
                     var matchObj = {
                         $set: {
-                            weight: complete.weight
+                            weight: complete._id
                         }
                     };
-                    Weight.update({
-                        _id: complete.sportId
+                    console.log("data", data, "complete", complete);
+                    Sport.update({
+                        _id: data.sportId
                     }, matchObj).exec(
                         function (err, match) {
                             if (err) {
