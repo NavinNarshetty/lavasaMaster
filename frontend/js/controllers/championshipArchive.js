@@ -50,8 +50,10 @@ myApp.controller('championArchiveCtrl', function ($scope, TemplateService, $stat
         } else {
           // DO NOTHING
         }
-
-        $scope.archiveGallery = $scope.archiveData.galleryVideo.concat($scope.archiveData.galleryImage)
+        $scope.archiveGalleryData = _.take(_.shuffle($scope.archiveData.galleryImage), 6);
+        $scope.archiveVideoData = _.take(_.shuffle($scope.archiveData.galleryVideo), 3);
+        // console.log($scope.archiveGalleryData, "check dummy");
+        $scope.archiveGallery = $scope.archiveVideoData.concat($scope.archiveGalleryData);
         $scope.archiveGallery = _.shuffle($scope.archiveGallery);
 
         console.log($scope.archiveGallery, "final gallery")
