@@ -6418,7 +6418,6 @@ var model = {
                                                                         } else {
                                                                             stats.status = singleData.resultKnockout.status;
                                                                         }
-
                                                                         // Athelete.findOne({
                                                                         //     _id: n.player
                                                                         // }).lean().deepPopulate("school").exec(function (err, found) {

@@ -66,8 +66,23 @@ var controller = {
     },
 
     authenticateCloud: function (req, res) {
-        console.log("vimeo");
-        Vimeo.authenticateCloud(req.body, res.callback);
+        ConfigProperty.find().lean().exec(function (err, property) {
+            if (err) {
+                res.callback(err, null);
+            } else {
+                if (_.isEmpty(property)) {
+                    res.callback(null, {
+                        "data": "ConfigProperty Empty",
+                        "value": false
+                    });
+                } else {
+                    console.log("property", property);
+                    req.body.keyfileName = property[0].keyfileName;
+                    Vimeo.authenticateCloud(req.body, res.callback);
+                }
+            }
+        });
+
     },
 
     videoUpload: function (req, res) {
@@ -84,6 +99,26 @@ var controller = {
 
     thumbnailsUpdateMedia: function (req, res) {
         Vimeo.thumbnailsUpdateMedia(req.body, res.callback);
+    },
+
+    deleteFolderImage: function (req, res) {
+        ConfigProperty.find().lean().exec(function (err, property) {
+            if (err) {
+                res.callback(err, null);
+            } else {
+                if (_.isEmpty(property)) {
+                    res.callback(null, {
+                        "data": "ConfigProperty Empty",
+                        "value": false
+                    });
+                } else {
+                    console.log("property", property);
+                    req.body.keyfileName = property[0].keyfileName;
+                    Vimeo.deleteFolderImage(req.body, res.callback);
+                }
+            }
+        });
+
     },
 
 };
