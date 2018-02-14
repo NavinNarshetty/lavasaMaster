@@ -27,7 +27,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4" ng-if="selectedType === 'Sport' && mediaType == 'photo'">
+          <div class="col-md-4 hide" ng-if="selectedType === 'Sport' && mediaType == 'photo'">
             <div class="featured-gallery-dropdown-boysgirls">
               <span ng-click="viewGender();">{{defaultGender}} <i class="fa" ng-class = " { 'fa-chevron-up' : showGenderFilter == true , 'fa-chevron-down' :  showGenderFilter == false } "></i></span>
               <div class="featured-gallery-dropdownfilter" ng-show="showGenderFilter">
@@ -62,7 +62,7 @@
       <!-- MASONRY -->
       <div class="feature-gallery-mansonryholder" ng-if="allphotosbyfolder.length>0">
         <div class="row" masonry preserve-order>
-          <div class="col-md-4 col-sm-4 col-xs-6 masonry-brick" ng-repeat="folderImage in allphotosbyfolder track by $index">
+          <div class="col-md-4 col-sm-4 col-xs-6 overridepadding masonry-brick" ng-repeat="folderImage in allphotosbyfolder track by $index">
             <div class="feature-masonry-picholder pointer" ng-click="showPopup($index, allphotosbyfolder);">
               <img ng-src="{{folderImage.mediaLink | mediapathtwo}}" alt="{{folderImage.title}} | SFA Photos" title="{{folderImage.title}} | SFA Photos"
                 class="img-responsive" ng-if="mediaType == 'photo'">
