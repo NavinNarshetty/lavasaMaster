@@ -5818,7 +5818,7 @@ var model = {
                                         callback(err, "error in mongoose");
                                     } else {
                                         async.eachSeries(matchData, function (singleData, callback) {
-                                                console.log("singleData", singleData);
+                                                // console.log("singleData", singleData);
                                                 var stats = {};
                                                 stats.year = data.year;
                                                 stats.matchId = singleData.matchId;
@@ -6395,9 +6395,10 @@ var model = {
                                                             function (found, callback) {
                                                                 stats.score = singleData.resultKnockout.finalScore;
                                                                 async.eachSeries(singleData.resultKnockout.players, function (n, callback) {
-                                                                    console.log("opponentsSingle", singleData.resultKnockout.winner.opponentsSingle, "player", n.player);
-                                                                    if (n.player === singleData.opponentsSingle._id) {
-                                                                        if (!singleData.resultKnockout.winner.opponentsSingle.equals(n.player)) {
+                                                                    // console.log("opponentsSingle", singleData.opponentsSingle._id, "player", n);
+                                                                    if (n.player.equals(singleData.opponentsSingle._id)) {
+                                                                        if (singleData.resultKnockout.winner.opponentsSingle.equals(n.player)) {
+                                                                            stats.isAthleteWinner = true;
                                                                             stats.walkover = n.walkover;
                                                                             stats.noShow = n.noShow;
                                                                         }
@@ -6407,8 +6408,6 @@ var model = {
                                                                             // if (singleData.resultKnockout.status == "IsCompleted" && singleData.resultKnockout.isNoMatch == false) {
                                                                             if (singleData.resultKnockout.winner.opponentsSingle.equals(n.player)) {
                                                                                 stats.isAthleteWinner = false;
-                                                                            } else {
-                                                                                stats.isAthleteWinner = true;
                                                                                 stats.walkover = n.walkover;
                                                                                 stats.noShow = n.noShow;
                                                                             }
@@ -6419,6 +6418,23 @@ var model = {
                                                                         } else {
                                                                             stats.status = singleData.resultKnockout.status;
                                                                         }
+
+                                                                        // Athelete.findOne({
+                                                                        //     _id: n.player
+                                                                        // }).lean().deepPopulate("school").exec(function (err, found) {
+
+                                                                        //     console.log("found", found);
+                                                                        //     if (found.middleName) {
+                                                                        //         name = found.firstName + " " + found.middleName + " " + found.surname;
+                                                                        //     } else {
+                                                                        //         name = found.firstName + " " + found.surname;
+                                                                        //     }
+                                                                        //     if (found.atheleteSchoolName) {
+                                                                        //         school = found.atheleteSchoolName;
+                                                                        //     } else {
+                                                                        //         school = found.school.name;
+                                                                        //     }
+                                                                        // });
                                                                         stats.opponentName = name;
                                                                         stats.school = school;
                                                                         profile.match.push(stats);
