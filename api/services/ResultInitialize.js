@@ -353,7 +353,7 @@ var model = {
                     return returnResult;
                 case "Tennis":
                 case "Table Tennis":
-                case "Badminton":
+                case "Badminton Singles":
                 case "Squash":
                     returnResult.resultsRacquet = format;
                     _.each(format.players, function (player, pk) {
