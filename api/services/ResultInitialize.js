@@ -14,7 +14,8 @@ var model = {
 
     getPlayerTemplate: function (sportName, player, flag) {
         console.log(player, "-----------------------");
-
+        console.log(sportName);
+        console.log(flag);
         if (flag == 'team') {
             var format = {
                 player: player.studentId._id,
@@ -272,7 +273,7 @@ var model = {
     },
 
     getResultTemplate: function (sportName, match) {
-
+       console.log(sportName);
         if (match && match.teams) {
             var format = {
                 "teams": [],
