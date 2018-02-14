@@ -97,20 +97,22 @@ var model = {
                 fullName: player.studentId.firstName + " " + player.studentId.surname
             };
             switch (sportName) {
-                case "BOXING":
-                case "JUDO":
-                case "TAEKWONDO":
-                case "KARATE":
-                case "WRESTLING":
-                case "CARROM":
-                case "KHO-KHO":
+                case "Boxing":
+                case "Judo":
+                case "Taekwondo":
+                case "Karate":
+                case "Wrestling":
+                case "Carrom":
+                case "Kho Kho":
+                case "Sport MMA":
                     format.sets = [{
                         point: "",
                     }]
                     break;
-                case "TENNIS":
-                case " TABLE-TENNIS":
-                case "BADMINTON":
+                case "Tennis":
+                case "Table Tennis":
+                case "Badminton":
+                case "Squash":
                     format.sets = [{
                         point: "",
                         ace: "",
@@ -336,21 +338,23 @@ var model = {
             var returnResult = {};
 
             switch (sportName) {
-                case "BOXING":
-                case "JUDO":
-                case "TAEKWONDO":
-                case "KARATE":
-                case "WRESTLING":
-                case "CARROM":
-                case "KHO-KHO":
+                case "Boxing":
+                case "Judo":
+                case "Taekwondo":
+                case "Karate":
+                case "Wrestling":
+                case "Carrom":
+                case "Kho Kho":
+                case "Sport MMA":
                     returnResult.resultsCombat = format;
                     _.each(format.players, function (player, pk) {
                         format.players[pk] = ResultInitialize.getPlayerTemplate(sportName, player, "indi");
                     })
                     return returnResult;
-                case "TENNIS":
-                case "TABLE-TENNIS":
-                case "BADMINTON":
+                case "Tennis":
+                case "Table Tennis":
+                case "Badminton":
+                case "Squash":
                     returnResult.resultsRacquet = format;
                     _.each(format.players, function (player, pk) {
                         format.players[pk] = ResultInitialize.getPlayerTemplate(sportName, player, "indi");
