@@ -1,21 +1,21 @@
-myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, toastr, NavigationService, $state, errorService, $stateParams,configService, $timeout, MediaPopupService) {
+myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, toastr, NavigationService, $state, errorService, $stateParams, configService, $timeout, MediaPopupService) {
   //Used to name the .html file
 
   $scope.template = TemplateService.getHTML("content/featured-gallery.html");
   TemplateService.title = "SFA Gallery";
   $scope.navigation = NavigationService.getNavigation();
 
-    //config property
-    configService.getDetail(function (data) {
-      $scope.state = data.state;
-      $scope.year = data.year;
-      $scope.eventYear = data.eventYear;
-      $scope.sfaCity = data.sfaCity;
-      $scope.isCollege = data.isCollege;
-      $scope.type = data.type;
-      
-    });
-    //
+  //config property
+  configService.getDetail(function (data) {
+    $scope.state = data.state;
+    $scope.year = data.year;
+    $scope.eventYear = data.eventYear;
+    $scope.sfaCity = data.sfaCity;
+    $scope.isCollege = data.isCollege;
+    $scope.type = data.type;
+
+  });
+  //
 
   // VARIABLE INITIALISE
   $scope.mediaType = $stateParams.mediaType;
@@ -211,25 +211,27 @@ myApp.controller('featuredGalleryCtrl', function ($scope, TemplateService, toast
         }
       });
     });
-  }
-  // API CALLS END
-
-
-  //get all videos
-  NavigationService.getAllVideos(function (data) {
-    errorService.errorCode(data, function (allData) {
-      if (!allData.message) {
-        if (allData.value === true) {
-          $scope.allfolderName = allData.data;
-          console.log("$scope.allfolderName", $scope.allfolderName);
+    //get all videos
+    NavigationService.getAllVideos(function (data) {
+      errorService.errorCode(data, function (allData) {
+        if (!allData.message) {
+          if (allData.value === true) {
+            $scope.allfolderName = allData.data;
+            console.log("$scope.allfolderName", $scope.allfolderName);
+          } else {
+            console.log("im in else");
+          }
         } else {
-          console.log("im in else");
-        }
-      } else {
 
-        toastr.error(allData.message, 'Error Message');
-      }
+          toastr.error(allData.message, 'Error Message');
+        }
+      });
     });
-  });
+
+  }
+
+
+
+
 
 });
