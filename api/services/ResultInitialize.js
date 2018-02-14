@@ -327,7 +327,7 @@ var model = {
 
             }
         } else {
-            $scope.format = {
+            var format = {
                 "players": [],
                 "matchPhoto": [],
                 "scoreSheet": [],
@@ -367,7 +367,6 @@ var model = {
 
 
     },
-
 
     getMyResult: function (sportName, match, callback) {
         var template = ResultInitialize.getResultTemplate(sportName, match);
