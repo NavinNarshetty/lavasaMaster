@@ -1,7 +1,7 @@
-myApp.controller('SfaGalleryCtrl', function ($scope, TemplateService, errorService,configService, NavigationService, $timeout) {
+myApp.controller('SfaGalleryCtrl', function ($scope, TemplateService, errorService, configService, NavigationService, $timeout) {
   //Used to name the .html file
 
-  $scope.template = TemplateService.getHTML("content/insidegallery.html");
+  $scope.template = TemplateService.getHTML("content/eventgallery.html");
   TemplateService.title = "SFA Gallery";
   $scope.navigation = NavigationService.getNavigation();
 
@@ -42,7 +42,7 @@ myApp.controller('SfaGalleryCtrl', function ($scope, TemplateService, errorServi
     $scope.sfaCity = data.sfaCity;
     $scope.isCollege = data.isCollege;
     $scope.type = data.type;
-    
+
   });
   //
 
@@ -98,13 +98,13 @@ myApp.controller('SfaGalleryCtrl', function ($scope, TemplateService, errorServi
       if (!allData.message) {
         if (allData.value === true) {
           $scope.eventVideos = allData.data;
-          _.each( $scope.eventVideos,function(key){
-            console.log("key.thumbails",key.thumbnails);
-            if(key.thumbnails!=null && key.thumbnails.length == 0 ){
-              key.thumbnail ="img/media-video-thumb.jpg";
-}else if(key.thumbails == null){
-              key.thumbnail ="img/media-video-thumb.jpg";
-            } 
+          _.each($scope.eventVideos, function (key) {
+            console.log("key.thumbails", key.thumbnails);
+            if (key.thumbnails != null && key.thumbnails.length == 0) {
+              key.thumbnail = "img/media-video-thumb.jpg";
+            } else if (key.thumbails == null) {
+              key.thumbnail = "img/media-video-thumb.jpg";
+            }
           })
         } else {
           console.log("im in else");

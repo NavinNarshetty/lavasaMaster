@@ -153,11 +153,11 @@ $grey: #e1e1e1;
 // PHOTO VIDEO SIDE END
 // VIDEO HOLDER
 .photovideo-mediaholder{
-  min-height: 350px;
+  // min-height: 350px;
 }
 .photovideo-photoholder{
   // min-height: 350px;
-  padding-top: 10%;
+  // padding-top: 10%;
   text-align: center;
 }
 .photovideo-videoholder{
@@ -166,7 +166,7 @@ $grey: #e1e1e1;
 }
 .photovideo-vidframe{
   width: 100%;
-  // min-height: 350px;
+  min-height: 350px;
 }
 .photovideo-popup .photovideo-vidframe{
   min-height: 350px;
