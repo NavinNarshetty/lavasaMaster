@@ -7738,9 +7738,11 @@ var model = {
                                                         resultData.winner.opponentsSingle = result.opponentsSingle[1];
                                                     }
                                                 } else {
+                                                    console.log('First',resultData);
                                                     resultData.isDraw = main.isDraw;
                                                     resultData.status = main.status;
                                                     resultData.isNoMatch = main.isNoMatch;
+                                                    console.log('Second',resultData);
                                                     resultData.players[0].noShow = team1.noShow;
                                                     resultData.players[0].walkover = team1.walkover;
                                                     if (n["WINNER ID"] == resultData.players[0].sfaId) {
