@@ -5906,7 +5906,7 @@ var model = {
                                                                     if (player.player !== singleData.opponentsSingle.athleteId._id.toString()) {
                                                                         stats.opponentName = name;
                                                                         stats.school = school;
-                                                                        if (singleData.resultsCombat.winner.player === player.player) {
+                                                                        if (singleData.resultsCombat.winner.player !== player.player) {
                                                                             stats.isAthleteWinner = true;
                                                                             stats.noShow = player.noShow;
                                                                             stats.walkover = player.walkover;
