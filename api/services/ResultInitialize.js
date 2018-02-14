@@ -14,8 +14,7 @@ var model = {
 
     getPlayerTemplate: function (sportName, player, flag) {
         console.log(player, "-----------------------");
-        console.log(sportName);
-        console.log(flag);
+
         if (flag == 'team') {
             var format = {
                 player: player.studentId._id,
@@ -103,7 +102,6 @@ var model = {
                 case "TAEKWONDO":
                 case "KARATE":
                 case "WRESTLING":
-                case "SPORT MMA":
                 case "CARROM":
                 case "KHO-KHO":
                     format.sets = [{
@@ -111,9 +109,8 @@ var model = {
                     }]
                     break;
                 case "TENNIS":
-                case "TABLE-TENNIS":
-                case "SQUASH":
-                case "Badminton Singles":
+                case " TABLE-TENNIS":
+                case "BADMINTON":
                     format.sets = [{
                         point: "",
                         ace: "",
@@ -273,7 +270,7 @@ var model = {
     },
 
     getResultTemplate: function (sportName, match) {
-       console.log(sportName);
+
         if (match && match.teams) {
             var format = {
                 "teams": [],
@@ -344,7 +341,6 @@ var model = {
                 case "TAEKWONDO":
                 case "KARATE":
                 case "WRESTLING":
-                case "SPORT MMA":
                 case "CARROM":
                 case "KHO-KHO":
                     returnResult.resultsCombat = format;
@@ -354,8 +350,7 @@ var model = {
                     return returnResult;
                 case "TENNIS":
                 case "TABLE-TENNIS":
-                case "SQUASH":
-                case "Badminton Singles":
+                case "BADMINTON":
                     returnResult.resultsRacquet = format;
                     _.each(format.players, function (player, pk) {
                         format.players[pk] = ResultInitialize.getPlayerTemplate(sportName, player, "indi");
