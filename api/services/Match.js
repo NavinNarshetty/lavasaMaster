@@ -7471,6 +7471,7 @@ var model = {
                                             var param = {};
                                             param.matchId = n["MATCH ID"];
                                             Match.getOne(param, function (err, matchData) {
+                                                console.log("matchData",matchData);
                                                 if (err) {
                                                     callback(err, null);
                                                 } else {

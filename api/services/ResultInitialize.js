@@ -375,6 +375,7 @@ var model = {
     },
 
     getResultVar: function (sportName, sportType) {
+        console.log("sportName", sportName, "sportType", sportType);
         if (sportName == "Shooting Air Pistol Team" || sportName == "Shooting Air Rifle Open Team" || sportName == "Shooting Air Rifle Peep Team") {
             return null;
         } else {
