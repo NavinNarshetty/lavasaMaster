@@ -7480,6 +7480,7 @@ var model = {
                                                     } else {
                                                         var final = {};
                                                         var result = ResultInitialize.getResultVar(matchData.sportsName, matchData.sportType);
+                                                        console.log('++++++++++++++++++',result);
                                                         if (!matchData[result.resultVar] == '') {
                                                             final.result = result;
                                                             final.score = matchData[result.resultVar];

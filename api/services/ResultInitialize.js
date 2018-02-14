@@ -375,6 +375,7 @@ var model = {
     },
 
     getMyResult: function (sportName, match, callback) {
+        console.log('get My Result',sportName,match);
         var template = ResultInitialize.getResultTemplate(sportName, match);
         // console.log("template", template);
         callback(null, template);
