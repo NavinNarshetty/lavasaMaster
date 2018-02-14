@@ -7743,8 +7743,13 @@ var model = {
                                                     resultData.status = main.status;
                                                     resultData.isNoMatch = main.isNoMatch;
                                                     console.log('Second',resultData);
-                                                    resultData.players[0].noShow = team1.noShow;
-                                                    resultData.players[0].walkover = team1.walkover;
+                                                    var temp = {}
+                                                    temp.noShow = team1.noShow;
+                                                    temp.walkover = team1.walkover;
+                                                    resultData.players.push(temp);
+                                                    console.log(resultData);
+                                                    // resultData.players[0].noShow = team1.noShow;
+                                                    // resultData.players[0].walkover = team1.walkover;
                                                     if (n["WINNER ID"] == resultData.players[0].sfaId) {
                                                         resultData.winner.player = resultData.players[0].player;
                                                         resultData.winner.opponentsSingle = result.opponentsSingle[0];
