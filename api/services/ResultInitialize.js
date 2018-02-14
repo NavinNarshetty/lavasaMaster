@@ -113,7 +113,7 @@ var model = {
                 case "TENNIS":
                 case "TABLE-TENNIS":
                 case "SQUASH":
-                case "BADMINTON SINGLES":
+                case "Badminton Singles":
                     format.sets = [{
                         point: "",
                         ace: "",
@@ -355,7 +355,7 @@ var model = {
                 case "TENNIS":
                 case "TABLE-TENNIS":
                 case "SQUASH":
-                case "BADMINTON SINGLES":
+                case "Badminton Singles":
                     returnResult.resultsRacquet = format;
                     _.each(format.players, function (player, pk) {
                         format.players[pk] = ResultInitialize.getPlayerTemplate(sportName, player, "indi");
