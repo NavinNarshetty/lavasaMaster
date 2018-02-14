@@ -275,72 +275,75 @@ var model = {
     },
 
     getResultTemplate: function (sportName, match) {
-
-        if (match && match.teams) {
-            var format = {
-                "teams": [],
-                "matchPhoto": [],
-                "scoreSheet": [],
-                "status": "",
-                "winner": {},
-                "isNoMatch": false
-            };
-            var returnResult = {};
-
-            switch (sportName) {
-                case "Basketball":
-                    returnResult.resultBasketball = format;
-                    returnResult.resultBasketball = ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultBasketball, match);
-                    return returnResult;
-
-                case "Football":
-                    returnResult.resultFootball = format;
-                    ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultFootball, match);
-                    return returnResult;
-
-                case "Hockey":
-                    returnResult.resultHockey = format;
-                    ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultHockey, match);
-                    return returnResult;
-
-                case "Kabaddi":
-                    returnResult.resultKabaddi = format;
-                    ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultKabaddi, match);
-                    return returnResult;
-
-                case "Volleyball":
-                    returnResult.resultVolleyball = format;
-                    ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultVolleyball, match);
-                    return returnResult;
-
-                case "Handball":
-                    returnResult.resultHandball = format;
-                    ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultHandball, match);
-                    return returnResult;
-
-                case "Throwball":
-                    returnResult.resultThrowball = format;
-                    ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultThrowball, match);
-                    return returnResult;
-
-                case "Water Polo":
-                    returnResult.resultWaterPolo = format;
-                    ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultWaterPolo, match);
-                    return returnResult;
-
-            }
-        } else {
-            var format = {
-                "players": [],
-                "matchPhoto": [],
-                "scoreSheet": [],
-                "winner": {},
-                "isNoMatch": false
-            }; 
-
-            var returnResult = {};
-
-            switch (sportName) {
+console.log('getResultTemplate enter',sportName,match);
+console.log('getResultTemplate enter if value',match && match.teams);
+if (match && match.teams) {
+    console.log('Team enter',sportName,match);
+    var format = {
+        "teams": [],
+        "matchPhoto": [],
+        "scoreSheet": [],
+        "status": "",
+        "winner": {},
+        "isNoMatch": false
+    };
+    var returnResult = {};
+    
+    switch (sportName) {
+        case "Basketball":
+        returnResult.resultBasketball = format;
+        returnResult.resultBasketball = ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultBasketball, match);
+        return returnResult;
+        
+        case "Football":
+        returnResult.resultFootball = format;
+        ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultFootball, match);
+        return returnResult;
+        
+        case "Hockey":
+        returnResult.resultHockey = format;
+        ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultHockey, match);
+        return returnResult;
+        
+        case "Kabaddi":
+        returnResult.resultKabaddi = format;
+        ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultKabaddi, match);
+        return returnResult;
+        
+        case "Volleyball":
+        returnResult.resultVolleyball = format;
+        ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultVolleyball, match);
+        return returnResult;
+        
+        case "Handball":
+        returnResult.resultHandball = format;
+        ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultHandball, match);
+        return returnResult;
+        
+        case "Throwball":
+        returnResult.resultThrowball = format;
+        ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultThrowball, match);
+        return returnResult;
+        
+        case "Water Polo":
+        returnResult.resultWaterPolo = format;
+        ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultWaterPolo, match);
+        return returnResult;
+        
+    }
+} else {
+    console.log('Indi enter',sportName,match);
+    var format = {
+        "players": [],
+        "matchPhoto": [],
+        "scoreSheet": [],
+        "winner": {},
+        "isNoMatch": false
+    }; 
+    
+    var returnResult = {};
+    
+    switch (sportName) {
                 case "Boxing":
                 case "Judo":
                 case "Taekwondo":
