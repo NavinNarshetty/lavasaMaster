@@ -14,7 +14,9 @@ var model = {
 
     getPlayerTemplate: function (sportName, player, flag) {
         console.log(player, "-----------------------");
-
+        console.log(flag, "-----------------------");
+        console.log(sportName, "-----------------------");
+        
         if (flag == 'team') {
             var format = {
                 player: player.studentId._id,
@@ -31,62 +33,63 @@ var model = {
             };
             switch (sportName) {
                 case "Basketball":
-                    format.playerPoints.freeThrow = [];
-                    format.playerPoints.Points2 = [];
-                    format.playerPoints.Points3 = [];
-                    format.playerPoints.personalFoul = [];
-                    format.playerPoints.technicalFoul = [];
-                    format.playerPoints.in = [];
-                    format.playerPoints.out = [];
-                    break;
+                format.playerPoints.freeThrow = [];
+                format.playerPoints.Points2 = [];
+                format.playerPoints.Points3 = [];
+                format.playerPoints.personalFoul = [];
+                format.playerPoints.technicalFoul = [];
+                format.playerPoints.in = [];
+                format.playerPoints.out = [];
+                break;
                 case "Hockey":
-                    format.playerPoints.goal = [];
-                    format.playerPoints.assist = [];
-                    format.playerPoints.redCard = [];
-                    format.playerPoints.yellowCard = [];
-                    format.playerPoints.greenCard = [];
-                    format.playerPoints.penaltyPoint = "";
-                    format.playerPoints.in = [];
-                    format.playerPoints.out = [];
-                    break;
+                format.playerPoints.goal = [];
+                format.playerPoints.assist = [];
+                format.playerPoints.redCard = [];
+                format.playerPoints.yellowCard = [];
+                format.playerPoints.greenCard = [];
+                format.playerPoints.penaltyPoint = "";
+                format.playerPoints.in = [];
+                format.playerPoints.out = [];
+                break;
                 case "Kabaddi":
-                    format.playerPoints.raids = [];
-                    format.playerPoints.bonusPoint = [];
-                    format.playerPoints.superRaid = [];
-                    format.playerPoints.tackle = [];
-                    format.playerPoints.in = [];
-                    format.playerPoints.out = [];
-                    break;
+                format.playerPoints.raids = [];
+                format.playerPoints.bonusPoint = [];
+                format.playerPoints.superRaid = [];
+                format.playerPoints.tackle = [];
+                format.playerPoints.in = [];
+                format.playerPoints.out = [];
+                break;
                 case "Handball":
-                    format.playerPoints.goal = [];
-                    format.playerPoints.yellowCard = [];
-                    format.playerPoints.greenCard = [];
-                    format.playerPoints.in = [];
-                    format.playerPoints.out = [];
-                    break;
+                format.playerPoints.goal = [];
+                format.playerPoints.yellowCard = [];
+                format.playerPoints.greenCard = [];
+                format.playerPoints.in = [];
+                format.playerPoints.out = [];
+                break;
                 case "Water Polo":
-                    format.playerPoints.goal = [];
-                    format.playerPoints.penaltyPoint = "";
-                    format.playerPoints.in = [];
-                    format.playerPoints.out = [];
-                    break;
+                format.playerPoints.goal = [];
+                format.playerPoints.penaltyPoint = "";
+                format.playerPoints.in = [];
+                format.playerPoints.out = [];
+                break;
                 case "Volleyball":
-                    format.playerPoints.in = [];
-                    format.playerPoints.out = [];
-                    break;
+                format.playerPoints.in = [];
+                format.playerPoints.out = [];
+                break;
                 case "Football":
-                    format.playerPoints.goals = [];
-                    format.playerPoints.assist = [];
-                    format.playerPoints.redCard = [];
-                    format.playerPoints.yellowCard = [];
-                    format.playerPoints.penaltyPoint = "";
-                    format.playerPoints.in = [];
-                    format.playerPoints.out = [];
-                    break;
+                format.playerPoints.goals = [];
+                format.playerPoints.assist = [];
+                format.playerPoints.redCard = [];
+                format.playerPoints.yellowCard = [];
+                format.playerPoints.penaltyPoint = "";
+                format.playerPoints.in = [];
+                format.playerPoints.out = [];
+                break;
             };
-
+            
             return format;
         } else if (flag == "indi") {
+            console.log(player, "-----------------------");
             var format = {
                 player: player.studentId._id,
                 sfaId: player.studentId.sfaId,
@@ -111,7 +114,7 @@ var model = {
                     break;
                 case "Tennis":
                 case "Table Tennis":
-                case "Badminton":
+                case "Badminton Singles":
                 case "Squash":
                     format.sets = [{
                         point: "",
@@ -333,7 +336,7 @@ var model = {
                 "scoreSheet": [],
                 "winner": {},
                 "isNoMatch": false
-            }
+            }; 
 
             var returnResult = {};
 
@@ -355,11 +358,14 @@ var model = {
                 case "Table Tennis":
                 case "Badminton Singles":
                 case "Squash":
+                    console.log('inside1');
                     returnResult.resultsRacquet = format;
+                    console.log('inside1 returnResult',returnResult);
                     _.each(format.players, function (player, pk) {
                         format.players[pk] = ResultInitialize.getPlayerTemplate(sportName, player, "indi");
-                    })
+                    });
                     return returnResult;
+                    console.log('returnResult',returnResult);
 
             }
 
