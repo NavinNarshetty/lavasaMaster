@@ -102,6 +102,7 @@ var model = {
                 case "TAEKWONDO":
                 case "KARATE":
                 case "WRESTLING":
+                case "SPORT MMA":
                 case "CARROM":
                 case "KHO-KHO":
                     format.sets = [{
@@ -109,8 +110,9 @@ var model = {
                     }]
                     break;
                 case "TENNIS":
-                case " TABLE-TENNIS":
-                case "BADMINTON":
+                case "TABLE-TENNIS":
+                case "SQUASH":
+                case "BADMINTON SINGLES":
                     format.sets = [{
                         point: "",
                         ace: "",
@@ -341,6 +343,7 @@ var model = {
                 case "TAEKWONDO":
                 case "KARATE":
                 case "WRESTLING":
+                case "SPORT MMA":
                 case "CARROM":
                 case "KHO-KHO":
                     returnResult.resultsCombat = format;
@@ -350,7 +353,8 @@ var model = {
                     return returnResult;
                 case "TENNIS":
                 case "TABLE-TENNIS":
-                case "BADMINTON":
+                case "SQUASH":
+                case "BADMINTON SINGLES":
                     returnResult.resultsRacquet = format;
                     _.each(format.players, function (player, pk) {
                         format.players[pk] = ResultInitialize.getPlayerTemplate(sportName, player, "indi");
