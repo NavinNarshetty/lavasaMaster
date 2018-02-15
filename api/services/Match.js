@@ -7925,7 +7925,7 @@ var model = {
                                                     } else {
                                                         var temp = {};
                                                         temp.point = n['SCORE 2'];
-                                                        resultData.players[0].sets.push(temp);
+                                                        resultData.players[1].sets.push(temp);
                                                     }
                                                 } else if (!_.isEmpty(resultData.players[1]) && !_.isEmpty(resultData.players[1].sets)) {
                                                     if (n['PLAYER 2 SET 1']) {
