@@ -229,7 +229,7 @@ var model = {
                                                 console.log("athleteData", athleteData);
                                                 _.each(athleteData, function (team) {
                                                     final.team.push(team._id);
-                                                    final.school.push(team.schoolName);
+                                                    final.school.push(team.school);
                                                 });
                                                 callback();
                                             }
@@ -268,7 +268,7 @@ var model = {
                     async.concatSeries(final, function (singleData, callback) {
                         var param = {};
                         param.sport = singleData.sport;
-                        param.player = singleData.team;
+                        param.team = singleData.team;
                         param.school = singleData.school;
                         if (singleData.medal[0] == "1") {
                             param.medalType = "gold";
