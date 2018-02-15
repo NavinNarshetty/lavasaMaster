@@ -38,11 +38,11 @@ myApp.controller('ReportCardCtrl', function ($scope, TemplateService, $state, Na
           $scope.schoolData.noRank = false;
         }
         _.each($scope.schoolData.contingent.sport, function(n){
-          if(n.maleCount == 0 && n.femaleCount == 0){
-            n.stackGender = false;
-          } else {
-            n.stackGender = true;
-          }
+          // if(n.maleCount == 0 && n.femaleCount == 0){
+          //   n.stackGender = false;
+          // } else {
+          //   n.stackGender = true;
+          // }
           if(n.maleCount == n.femaleCount){
             n.malePercent = 50;
             n.femalePercent = 50;
