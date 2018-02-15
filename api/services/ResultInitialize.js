@@ -107,7 +107,7 @@ var model = {
                 case "Sport MMA":
                     format.sets = []
                     break;
-                case "Tennis":
+                case "Tennis Singles":
                 case "Table Tennis":
                 case "Badminton Singles":
                 case "Squash":
@@ -315,42 +315,25 @@ var model = {
                 case "Kho Kho":
                 case "Sport MMA":
                     returnResult.resultsCombat = format;
-
                     ResultInitialize.initializePlayers(sportName, returnResult.resultsCombat, match);
                     return returnResult;
-                    // _.each(format.players, function (player, pk) {
-                    //     format.players[pk] = ResultInitialize.getPlayerTemplate(sportName, player, "indi");
-                    // })
-                    // return returnResult;
-                case "Tennis":
-                case "Table Tennis":
+                case "Tennis Singles":
+                    returnResult.resultsRacquet = format;
+                    ResultInitialize.initializePlayers(sportName, returnResult.resultsRacquet, match);
+                    return returnResult;
+                case "Table Tennis Singles":
+                    returnResult.resultsRacquet = format;
+                    ResultInitialize.initializePlayers(sportName, returnResult.resultsRacquet, match);
+                    return returnResult;
                 case "Badminton Singles":
-                    console.log('inside1*****');
                     returnResult.resultsRacquet = format;
-                    // console.log('inside1 returnResult', returnResult);
-                    // _.each(format.players, function (player, pk) {
-                    //     format.players[pk] = ResultInitialize.getPlayerTemplate(sportName, player, "indi");
-                    // });
-                    // // console.log("returnResult".returnResult);
-                    // return returnResult; 
                     ResultInitialize.initializePlayers(sportName, returnResult.resultsRacquet, match);
                     return returnResult;
-                    console.log('returnResult', returnResult);
                 case "Squash":
-                    console.log('inside1');
                     returnResult.resultsRacquet = format;
                     ResultInitialize.initializePlayers(sportName, returnResult.resultsRacquet, match);
                     return returnResult;
-                    // console.log('inside1 returnResult', returnResult);
-                    // _.each(format.players, function (player, pk) {
-                    //     format.players[pk] = ResultInitialize.getPlayerTemplate(sportName, player, "indi");
-                    // });
-                    // console.log("returnResult".returnResult);
-                    // return returnResult;
-                    console.log('returnResult', returnResult);
-
             }
-
         }
     },
 
