@@ -13,10 +13,6 @@ var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
     getPlayerTemplate: function (sportName, player, flag) {
-        console.log(player, "-----------------------");
-        console.log(flag, "-----------------------");
-        console.log(sportName, "-----------------------");
-        
         if (flag == 'team') {
             var format = {
                 player: player.studentId._id,
@@ -89,7 +85,6 @@ var model = {
             
             return format;
         } else if (flag == "indi") {
-            console.log(player, "-----------------------");
             var format = {
                 player: player.studentId._id,
                 sfaId: player.studentId.sfaId,
@@ -275,106 +270,100 @@ var model = {
     },
 
     getResultTemplate: function (sportName, match) {
-console.log('getResultTemplate enter',sportName,match);
-console.log('getResultTemplate enter if value',match && match.teams);
-if (match && match.teams && match.isTeam) {
-    console.log('Team enter',sportName,match);
-    var format = {
-        "teams": [],
-        "matchPhoto": [],
-        "scoreSheet": [],
-        "status": "",
-        "winner": {},
-        "isNoMatch": false
-    };
-    var returnResult = {};
-    
-    switch (sportName) {
-        case "Basketball":
-        returnResult.resultBasketball = format;
-        returnResult.resultBasketball = ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultBasketball, match);
-        return returnResult;
-        
-        case "Football":
-        returnResult.resultFootball = format;
-        ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultFootball, match);
-        return returnResult;
-        
-        case "Hockey":
-        returnResult.resultHockey = format;
-        ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultHockey, match);
-        return returnResult;
-        
-        case "Kabaddi":
-        returnResult.resultKabaddi = format;
-        ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultKabaddi, match);
-        return returnResult;
-        
-        case "Volleyball":
-        returnResult.resultVolleyball = format;
-        ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultVolleyball, match);
-        return returnResult;
-        
-        case "Handball":
-        returnResult.resultHandball = format;
-        ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultHandball, match);
-        return returnResult;
-        
-        case "Throwball":
-        returnResult.resultThrowball = format;
-        ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultThrowball, match);
-        return returnResult;
-        
-        case "Water Polo":
-        returnResult.resultWaterPolo = format;
-        ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultWaterPolo, match);
-        return returnResult;
-        
-    }
-} else {
-    console.log('Indi enter',sportName,match);
-    var format = {
-        "players": [],
-        "matchPhoto": [],
-        "scoreSheet": [],
-        "winner": {},
-        "isNoMatch": false
-    }; 
-    
-    var returnResult = {};
-    
-    switch (sportName) {
-                case "Boxing":
-                case "Judo":
-                case "Taekwondo":
-                case "Karate":
-                case "Wrestling":
-                case "Carrom":
-                case "Kho Kho":
-                case "Sport MMA":
-                    returnResult.resultsCombat = format;
-                    _.each(format.players, function (player, pk) {
-                        format.players[pk] = ResultInitialize.getPlayerTemplate(sportName, player, "indi");
-                    })
-                    return returnResult;
-                case "Tennis":
-                case "Table Tennis":
-                case "Badminton Singles":
-                case "Squash":
-                    console.log('inside1');
-                    returnResult.resultsRacquet = format;
-                    console.log('inside1 returnResult',returnResult);
-                    _.each(format.players, function (player, pk) {
-                        format.players[pk] = ResultInitialize.getPlayerTemplate(sportName, player, "indi");
-                    });
-                    return returnResult;
-                    console.log('returnResult',returnResult);
+        if (match && match.teams && match.isTeam) {
+            var format = {
+                "teams": [],
+                "matchPhoto": [],
+                "scoreSheet": [],
+                "status": "",
+                "winner": {},
+                "isNoMatch": false
+            };
+            var returnResult = {};
+            
+            switch (sportName) {
+                case "Basketball":
+                returnResult.resultBasketball = format;
+                returnResult.resultBasketball = ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultBasketball, match);
+                return returnResult;
+                
+                case "Football":
+                returnResult.resultFootball = format;
+                ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultFootball, match);
+                return returnResult;
+                
+                case "Hockey":
+                returnResult.resultHockey = format;
+                ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultHockey, match);
+                return returnResult;
+                
+                case "Kabaddi":
+                returnResult.resultKabaddi = format;
+                ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultKabaddi, match);
+                return returnResult;
+                
+                case "Volleyball":
+                returnResult.resultVolleyball = format;
+                ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultVolleyball, match);
+                return returnResult;
+                
+                case "Handball":
+                returnResult.resultHandball = format;
+                ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultHandball, match);
+                return returnResult;
+                
+                case "Throwball":
+                returnResult.resultThrowball = format;
+                ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultThrowball, match);
+                return returnResult;
+                
+                case "Water Polo":
+                returnResult.resultWaterPolo = format;
+                ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultWaterPolo, match);
+                return returnResult;
+                
+            }
+        } else {
+            var format = {
+                "players": [],
+                "matchPhoto": [],
+                "scoreSheet": [],
+                "winner": {},
+                "isNoMatch": false
+            }; 
+            
+            var returnResult = {};
+            
+            switch (sportName) {
+                        case "Boxing":
+                        case "Judo":
+                        case "Taekwondo":
+                        case "Karate":
+                        case "Wrestling":
+                        case "Carrom":
+                        case "Kho Kho":
+                        case "Sport MMA":
+                            returnResult.resultsCombat = format;
+                            _.each(format.players, function (player, pk) {
+                                format.players[pk] = ResultInitialize.getPlayerTemplate(sportName, player, "indi");
+                            })
+                            return returnResult;
+                        case "Tennis":
+                        case "Table Tennis":
+                        case "Badminton Singles":
+                        case "Squash":
+                            console.log('inside1');
+                            returnResult.resultsRacquet = format;
+                            console.log('inside1 returnResult',returnResult);
+                            _.each(format.players, function (player, pk) {
+                                format.players[pk] = ResultInitialize.getPlayerTemplate(sportName, player, "indi");
+                            });
+                            return returnResult;
+                            console.log('returnResult',returnResult);
 
             }
 
         }
-
-
     },
 
     getMyResult: function (sportName, match, callback) {

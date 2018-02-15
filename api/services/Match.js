@@ -7480,7 +7480,6 @@ var model = {
                                                     } else {
                                                         var final = {};
                                                         var result = ResultInitialize.getResultVar(matchData.sportsName, matchData.sportType);
-                                                        console.log('++++++++++++++++++',result);
                                                         if (!matchData[result.resultVar] == '') {
                                                             final.result = result;
                                                             final.score = matchData[result.resultVar];
@@ -7738,18 +7737,11 @@ var model = {
                                                         resultData.winner.opponentsSingle = result.opponentsSingle[1];
                                                     }
                                                 } else {
-                                                    console.log('First',resultData);
                                                     resultData.isDraw = main.isDraw;
                                                     resultData.status = main.status;
                                                     resultData.isNoMatch = main.isNoMatch;
-                                                    console.log('Second',resultData);
-                                                    var temp = {}
-                                                    temp.noShow = team1.noShow;
-                                                    temp.walkover = team1.walkover;
-                                                    resultData.players.push(temp);
-                                                    console.log(resultData);
-                                                    // resultData.players[0].noShow = team1.noShow;
-                                                    // resultData.players[0].walkover = team1.walkover;
+                                                    resultData.players[0].noShow = team1.noShow;
+                                                    resultData.players[0].walkover = team1.walkover;
                                                     if (n["WINNER ID"] == resultData.players[0].sfaId) {
                                                         resultData.winner.player = resultData.players[0].player;
                                                         resultData.winner.opponentsSingle = result.opponentsSingle[0];
