@@ -7470,6 +7470,7 @@ var model = {
                                         function (callback) {
                                             var param = {};
                                             param.matchId = n["MATCH ID"];
+                                            console.log("n",n);
                                             Match.getOne(param, function (err, matchData) {
                                                 console.log("matchData", matchData);
                                                 if (err) {

@@ -304,7 +304,6 @@ var model = {
             };
 
             var returnResult = {};
-
             switch (sportName) {
                 case "Boxing":
                     returnResult.resultsCombat = format;
