@@ -307,12 +307,33 @@ var model = {
 
             switch (sportName) {
                 case "Boxing":
+                    returnResult.resultsCombat = format;
+                    ResultInitialize.initializePlayers(sportName, returnResult.resultsCombat, match);
+                    return returnResult;
                 case "Judo":
+                    returnResult.resultsCombat = format;
+                    ResultInitialize.initializePlayers(sportName, returnResult.resultsCombat, match);
+                    return returnResult;
                 case "Taekwondo":
+                    returnResult.resultsCombat = format;
+                    ResultInitialize.initializePlayers(sportName, returnResult.resultsCombat, match);
+                    return returnResult;
                 case "Karate":
+                    returnResult.resultsCombat = format;
+                    ResultInitialize.initializePlayers(sportName, returnResult.resultsCombat, match);
+                    return returnResult;
                 case "Wrestling":
+                    returnResult.resultsCombat = format;
+                    ResultInitialize.initializePlayers(sportName, returnResult.resultsCombat, match);
+                    return returnResult;
                 case "Carrom":
+                    returnResult.resultsCombat = format;
+                    ResultInitialize.initializePlayers(sportName, returnResult.resultsCombat, match);
+                    return returnResult;
                 case "Kho Kho":
+                    returnResult.resultsCombat = format;
+                    ResultInitialize.initializePlayers(sportName, returnResult.resultsCombat, match);
+                    return returnResult;
                 case "Sport MMA":
                     returnResult.resultsCombat = format;
                     ResultInitialize.initializePlayers(sportName, returnResult.resultsCombat, match);
