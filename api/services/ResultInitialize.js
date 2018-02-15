@@ -277,7 +277,7 @@ var model = {
     getResultTemplate: function (sportName, match) {
 console.log('getResultTemplate enter',sportName,match);
 console.log('getResultTemplate enter if value',match && match.teams);
-if (match.isTeam) {
+if (match && match.teams && match.isTeam) {
     console.log('Team enter',sportName,match);
     var format = {
         "teams": [],
