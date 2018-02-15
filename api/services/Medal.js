@@ -459,9 +459,9 @@ var model = {
                     } else if (!_.isEmpty(data)) {
                         console.log("data", data);
                         athleteDetails = data;
-                        if(data.atheleteSchoolName){
+                        if (data.atheleteSchoolName) {
                             data.schoolName = data.atheleteSchoolName;
-                        }else{
+                        } else {
                             data.schoolName = data.school.name;
                         }
                         pdfObj.athlete = _.cloneDeep(data);
@@ -470,7 +470,7 @@ var model = {
                         } else {
                             pdfObj.athleteName = pdfObj.athlete.firstName + ' ' + pdfObj.athlete.surname;
                         }
-                        pdfObj.athleteName=_.startCase(_.toLower(pdfObj.athleteName));
+                        pdfObj.athleteName = _.startCase(_.toLower(pdfObj.athleteName));
                         callback(null, athleteDetails);
                     } else {
                         finalCallback("Athlete Not Found", null)
@@ -510,7 +510,7 @@ var model = {
                         })
                     })));
                     regSports = _.union(regTeamSport, regIndiSport);
-                    regSports = _.uniqBy(regSports,'sport');
+                    regSports = _.uniqBy(regSports, 'sport');
                     athleteDetails.regSports = regSports;
                     callback(null, athleteDetails);
                     // finalCallback(null, regSport);
@@ -689,7 +689,7 @@ var model = {
                                 function (pdfObj, sport, callback) {
                                     console.log('data***************', pdfObj, sport);
                                     if (!pdfObj.sportObj.notFound) {
-                                        pdfObj.newFilename = pdfObj.athlete.sfaId + "-" + pdfObj.sportObj.sportslist.name + "-" +  pdfObj.sportObj.ageGroup.name + "-" + pdfObj.sportObj.gender + "-" + pdfObj.sportObj.sportslist.sportsListSubCategory.name + "-" + pdfObj.filename + ".pdf";
+                                        pdfObj.newFilename = pdfObj.athlete.sfaId + "-" + pdfObj.sportObj.sportslist.name + "-" + pdfObj.sportObj.ageGroup.name + "-" + pdfObj.sportObj.gender + "-" + pdfObj.sportObj.sportslist.sportsListSubCategory.name + "-" + pdfObj.filename + ".pdf";
                                         // pdfObj.newFilename = pdfObj.sportObj.sportslist.sportsListSubCategory.name + "-" + pdfObj.sportObj.ageGroup.name + "-" + pdfObj.sportObj.gender + "-" + pdfObj.sportObj.sportslist.name + "-" + pdfObj.filename + ".pdf";
                                         Config.generatePdf(pdfObj, function (err, pdfRespo) {
                                             if (err) {
@@ -718,20 +718,20 @@ var model = {
                         });
                     },
 
-                    function(fileNameArr, callback){
-                        var path="pdf/";
-                        console.log("athleteDetails",athleteDetails);
-                        if(fileNameArr.length>1){
-                            if(athleteDetails.middleName){
-                                var fileName=athleteDetails.sfaId + "-" + athleteDetails.firstName + athleteDetails.middleName + athleteDetails.surname ;
-                            }else{
-                                var fileName=athleteDetails.sfaId + "-" + athleteDetails.firstName + athleteDetails.surname ;                                
+                    function (fileNameArr, callback) {
+                        var path = "pdf/";
+                        console.log("athleteDetails", athleteDetails);
+                        if (fileNameArr.length > 1) {
+                            if (athleteDetails.middleName) {
+                                var fileName = athleteDetails.sfaId + "-" + athleteDetails.firstName + athleteDetails.middleName + athleteDetails.surname;
+                            } else {
+                                var fileName = athleteDetails.sfaId + "-" + athleteDetails.firstName + athleteDetails.surname;
                             }
-                            Config.merge2pdfs(fileNameArr,path,fileName,function(data){
-                                callback(null,fileName+ ".pdf");
+                            Config.merge2pdfs(fileNameArr, path, fileName, function (data) {
+                                callback(null, fileName + ".pdf");
                             });
-                        }else if(fileNameArr.length==1){
-                            callback(null,fileNameArr[0]);
+                        } else if (fileNameArr.length == 1) {
+                            callback(null, fileNameArr[0]);
                         }
                     }
                 ], function (err, result) {
@@ -926,16 +926,5 @@ var model = {
                 }
             });
     },
-
-
-
-    // var fullName = '';
-    // if (pdfObj.athlete.middleName) {
-    //     fullName = pdfObj.athlete.sfaId + '-' + pdfObj.athlete.firstName + '' + pdfObj.athlete.middleName + '' + pdfObj.athlete.surname;
-    // } else {
-    //     fullName = pdfObj.athlete.sfaId + '-' + pdfObj.athlete.firstName + '' + pdfObj.athlete.surname;
-    // }
-
-
 };
 module.exports = _.assign(module.exports, exports, model);

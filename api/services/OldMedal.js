@@ -197,7 +197,7 @@ var model = {
                     async.concatSeries(mainData, function (secondData, callback) {
                         async.concatSeries(secondData, function (singleData, callback) {
                             var final = {};
-                            final.athlete = [];
+                            final.team = [];
                             final.school = [];
                             final.medal = [];
                             async.eachSeries(singleData, function (n, callback) {
@@ -268,7 +268,7 @@ var model = {
                     async.concatSeries(final, function (singleData, callback) {
                         var param = {};
                         param.sport = singleData.sport;
-                        param.player = singleData.athlete;
+                        param.player = singleData.team;
                         param.school = singleData.school;
                         if (singleData.medal[0] == "1") {
                             param.medalType = "gold";
