@@ -448,9 +448,6 @@ var model = {
                         .groupBy('sportsListSubCategory.name')
                         .map(function (values, key1) {
 
-                            if (saveObj.schoolName == "Brilliant Grammar High School ( Begum Bazar )" && (key1 == "Swimming" || key1 == "Swimming 4x50m Freestyle Relay" || key1 == "Swimming 4x50m Medley Relay")) {
-                                console.log("values", values);
-                            }
                             var returnObj = {};
                             returnObj.sportName = key1;
 
@@ -500,6 +497,9 @@ var model = {
 
                             var sport = _(values)
                                 .groupBy('athleteId.gender').value();
+                                // if (saveObj.schoolName == "Telangana State Sports School ( Hakimpet )" && (key1 == "Judo")) {
+                                //     fcallback(null,sport);
+                                // }
 
                             if (sport['male'] && sport['female']) {
                                 // console.log("1st");

@@ -1018,5 +1018,11 @@ var controller = {
         Match.deleteResult(req.body, res.callback);
     },
 
+    getUniqueEventsPlayed:function(req,res){
+        res.connection.setTimeout(200000000);
+        req.connection.setTimeout(200000000);
+        Match.getUniqueEventsPlayed(res);
+    }
+
 };
 module.exports = _.assign(module.exports, controller);

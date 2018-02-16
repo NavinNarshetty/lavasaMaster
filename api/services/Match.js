@@ -18563,5 +18563,148 @@ var model = {
                 }
             });
     },
+
+    getUniqueEventsPlayed: function (res) {
+        Match.aggregate([
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "sports",
+                    "localField": "sport",
+                    "foreignField": "_id",
+                    "as": "sport"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$sport",
+                    includeArrayIndex: "arrayIndex", // optional
+                    preserveNullAndEmptyArrays: false // optional
+                }
+            },
+
+            // Stage 3
+            {
+                $lookup: {
+                    "from": "sportslists",
+                    "localField": "sport.sportslist",
+                    "foreignField": "_id",
+                    "as": "sport.sportslist"
+                }
+            },
+
+            // Stage 4
+            {
+                $unwind: {
+                    path: "$sport.sportslist",
+                    includeArrayIndex: "arrayIndex", // optional
+                    preserveNullAndEmptyArrays: false // optional
+                }
+            },
+
+            // Stage 5
+            {
+                $lookup: {
+                    "from": "sportslistsubcategories",
+                    "localField": "sport.sportslist.sportsListSubCategory",
+                    "foreignField": "_id",
+                    "as": "sport.sportslist.sportsListSubCategory"
+                }
+            },
+
+            // Stage 6
+            {
+                $unwind: {
+                    path: "$sport.sportslist.sportsListSubCategory",
+                    includeArrayIndex: "arrayIndex", // optional
+                    preserveNullAndEmptyArrays: false // optional
+                }
+            },
+
+            // Stage 7
+            {
+                $lookup: {
+                    "from": "agegroups",
+                    "localField": "sport.ageGroup",
+                    "foreignField": "_id",
+                    "as": "sport.ageGroup"
+                }
+            },
+
+            // Stage 8
+            {
+                $unwind: {
+                    path: "$sport.ageGroup",
+                    includeArrayIndex: "arrayIndex", // optional
+                    preserveNullAndEmptyArrays: false // optional
+                }
+            },
+
+            // Stage 9
+            {
+                $lookup: {
+                    "from": "weights",
+                    "localField": "sport.weight",
+                    "foreignField": "_id",
+                    "as": "sport.weight"
+                }
+            },
+
+            // Stage 10
+            {
+                $unwind: {
+                    path: "$sport.weight",
+                    includeArrayIndex: "arrayIndex", // optional
+                    preserveNullAndEmptyArrays: true // optional
+                }
+            },
+
+            // Stage 11
+            {
+                $group: {
+                    "_id": {
+                        "event": "$sport.sportslist.name",
+                        "sport": "$sport.sportslist.sportsListSubCategory.name",
+                        "ageGroup": "$sport.ageGroup.name",
+                        "gender": "$sport.gender",
+                        "weight": "$sport.weight.name"
+                    }
+                }
+            },
+
+        ], function (err, result) {
+            // async.concatSeries(result, function (singleData, callback) {
+            //     var obj = {};
+            //     obj['event'] = singleData['_id'].event;
+            //     obj['sport'] = singleData['_id'].sport;
+            //     obj['ageGroup'] = singleData['_id'].ageGroup;
+            //     obj['gender'] = singleData['_id'].gender;
+            //     // if(obj && obj['weight']){
+            //     obj['weight'] = singleData['_id'].weight;
+            //     // }
+            //     callback(null, obj);
+            // }, function (err, result1) {
+            //     Config.generateExcel("playedEvents", result1, res);
+            //     res.callback(null,result1);
+            // });
+            console.log("result");
+            var arr=[];
+            _.each(result, function (singleData) {
+                var obj = {};
+                obj['event'] = singleData['_id'].event;
+                obj['sport'] = singleData['_id'].sport;
+                obj['ageGroup'] = singleData['_id'].ageGroup;
+                obj['gender'] = singleData['_id'].gender;
+                // if(obj && obj['weight']){
+                obj['weight'] = singleData['_id'].weight;
+                // }
+                arr.push(obj);
+            });
+            Config.generateExcel("playedEvents", arr, res);
+         
+        })
+    }
 };
 module.exports = _.assign(module.exports, exports, model);
