@@ -7734,23 +7734,77 @@ var model = {
                                                         if (n['PLAYER 1 SET 1']) {
                                                             resultData.players[0].sets[0] = n['PLAYER 1 SET 1'];
                                                         }
-                                                        if (n['PLAYER 1 SET 2']) {
+                                                        if (n['PLAYER 1 SET 2'] && resultData.players[0].sets.length == 2) {
                                                             resultData.players[0].sets[1] = n['PLAYER 1 SET 2'];
+                                                        }else{
+                                                            var temp = {};
+                                                            temp.point = n['PLAYER 1 SET 2'];
+                                                            temp.ace = 0;
+                                                            temp.winner = 0;
+                                                            temp.unforcedError = 0;
+                                                            temp.serviceError = 0;
+                                                            temp.doubleFaults = 0;
+                                                            resultData.players[0].sets.push(temp);
                                                         }
-                                                        if (n['PLAYER 1 SET 3']) {
+                                                        if (n['PLAYER 1 SET 3'] && resultData.players[0].sets.length == 3) {
                                                             resultData.players[0].sets[2] = n['PLAYER 1 SET 3'];
+                                                        }else{
+                                                            var temp = {};
+                                                            temp.point = n['PLAYER 1 SET 3'];
+                                                            temp.ace = 0;
+                                                            temp.winner = 0;
+                                                            temp.unforcedError = 0;
+                                                            temp.serviceError = 0;
+                                                            temp.doubleFaults = 0;
+                                                            resultData.players[0].sets.push(temp);
                                                         }
-                                                        if (n['PLAYER 1 SET 4']) {
+                                                        if (n['PLAYER 1 SET 4'] && resultData.players[0].sets.length == 4) {
                                                             resultData.players[0].sets[3] = n['PLAYER 1 SET 4'];
+                                                        }else{
+                                                            var temp = {};
+                                                            temp.point = n['PLAYER 1 SET 4'];
+                                                            temp.ace = 0;
+                                                            temp.winner = 0;
+                                                            temp.unforcedError = 0;
+                                                            temp.serviceError = 0;
+                                                            temp.doubleFaults = 0;
+                                                            resultData.players[0].sets.push(temp);
                                                         }
-                                                        if (n['PLAYER 1 SET 5']) {
+                                                        if (n['PLAYER 1 SET 5'] && resultData.players[0].sets.length == 5) {
                                                             resultData.players[0].sets[4] = n['PLAYER 1 SET 5'];
+                                                        }else{
+                                                            var temp = {};
+                                                            temp.point = n['PLAYER 1 SET 5'];
+                                                            temp.ace = 0;
+                                                            temp.winner = 0;
+                                                            temp.unforcedError = 0;
+                                                            temp.serviceError = 0;
+                                                            temp.doubleFaults = 0;
+                                                            resultData.players[0].sets.push(temp);
                                                         }
-                                                        if (n['PLAYER 1 SET 6']) {
+                                                        if (n['PLAYER 1 SET 6'] && resultData.players[0].sets.length == 6) {
                                                             resultData.players[0].sets[5] = n['PLAYER 1 SET 6'];
+                                                        }else{
+                                                            var temp = {};
+                                                            temp.point = n['PLAYER 1 SET 6'];
+                                                            temp.ace = 0;
+                                                            temp.winner = 0;
+                                                            temp.unforcedError = 0;
+                                                            temp.serviceError = 0;
+                                                            temp.doubleFaults = 0;
+                                                            resultData.players[0].sets.push(temp);
                                                         }
-                                                        if (n['PLAYER 1 SET 7']) {
+                                                        if (n['PLAYER 1 SET 7'] && resultData.players[0].sets.length == 7) {
                                                             resultData.players[0].sets[6] = n['PLAYER 1 SET 7'];
+                                                        }else{
+                                                            var temp = {};
+                                                            temp.point = n['PLAYER 1 SET 7'];
+                                                            temp.ace = 0;
+                                                            temp.winner = 0;
+                                                            temp.unforcedError = 0;
+                                                            temp.serviceError = 0;
+                                                            temp.doubleFaults = 0;
+                                                            resultData.players[0].sets.push(temp);
                                                         }
                                                     }
                                                     if (!_.isEmpty(resultData.players[1]) && _.isEmpty(resultData.players[1].sets)) {
@@ -7828,27 +7882,78 @@ var model = {
                                                         if (n['PLAYER 2 SET 1']) {
                                                             resultData.players[1].sets[0].point = n['PLAYER 2 SET 1'];
                                                         }
-                                                        if (n['PLAYER 2 SET 2']) {
+                                                        if (n['PLAYER 2 SET 2'] && resultData.players[1].sets.length == 2) {
                                                             resultData.players[1].sets[1].point = n['PLAYER 2 SET 2'];
+                                                        } else {
+                                                            var temp = {};
+                                                            temp.point = n['PLAYER 2 SET 2'];
+                                                            temp.ace = 0;
+                                                            temp.winner = 0;
+                                                            temp.unforcedError = 0;
+                                                            temp.serviceError = 0;
+                                                            temp.doubleFaults = 0;
+                                                            resultData.players[1].sets.push(temp);
                                                         }
-                                                        if (n['PLAYER 2 SET 3']) {
+                                                        if (n['PLAYER 2 SET 3'] && resultData.players[1].sets.length == 3) {
                                                             resultData.players[1].sets[2].point = n['PLAYER 2 SET 3'];
+                                                        } else {
+                                                            var temp = {};
+                                                            temp.point = n['PLAYER 2 SET 3'];
+                                                            temp.ace = 0;
+                                                            temp.winner = 0;
+                                                            temp.unforcedError = 0;
+                                                            temp.serviceError = 0;
+                                                            temp.doubleFaults = 0;
+                                                            resultData.players[1].sets.push(temp);
                                                         }
-                                                        if (n['PLAYER 2 SET 4']) {
+                                                        if (n['PLAYER 2 SET 4'] && resultData.players[1].sets.length == 4) {
                                                             resultData.players[1].sets[3].point = n['PLAYER 2 SET 4'];
+                                                        } else {
+                                                            var temp = {};
+                                                            temp.point = n['PLAYER 2 SET 4'];
+                                                            temp.ace = 0;
+                                                            temp.winner = 0;
+                                                            temp.unforcedError = 0;
+                                                            temp.serviceError = 0;
+                                                            temp.doubleFaults = 0;
+                                                            resultData.players[1].sets.push(temp);
                                                         }
-                                                        if (n['PLAYER 2 SET 5']) {
+                                                        if (n['PLAYER 2 SET 5'] && resultData.players[1].sets.length == 5) {
                                                             resultData.players[1].sets[4].point = n['PLAYER 2 SET 5'];
+                                                        } else {
+                                                            var temp = {};
+                                                            temp.point = n['PLAYER 2 SET 5'];
+                                                            temp.ace = 0;
+                                                            temp.winner = 0;
+                                                            temp.unforcedError = 0;
+                                                            temp.serviceError = 0;
+                                                            temp.doubleFaults = 0;
+                                                            resultData.players[1].sets.push(temp);
                                                         }
-                                                        if (n['PLAYER 2 SET 6']) {
+                                                        if (n['PLAYER 2 SET 6'] && resultData.players[1].sets.length == 6) {
                                                             resultData.players[1].sets[5].point = n['PLAYER 2 SET 6'];
+                                                        } else {
+                                                            var temp = {};
+                                                            temp.point = n['PLAYER 2 SET 6'];
+                                                            temp.ace = 0;
+                                                            temp.winner = 0;
+                                                            temp.unforcedError = 0;
+                                                            temp.serviceError = 0;
+                                                            temp.doubleFaults = 0;
+                                                            resultData.players[1].sets.push(temp);
                                                         }
-                                                        if (n['PLAYER 2 SET 7']) {
+                                                        if (n['PLAYER 2 SET 7'] && resultData.players[1].sets.length == 7) {
                                                             resultData.players[1].sets[6].point = n['PLAYER 2 SET 7'];
+                                                        } else {
+                                                            var temp = {};
+                                                            temp.point = n['PLAYER 2 SET 7'];
+                                                            temp.ace = 0;
+                                                            temp.winner = 0;
+                                                            temp.unforcedError = 0;
+                                                            temp.serviceError = 0;
+                                                            temp.doubleFaults = 0;
+                                                            resultData.players[1].sets.push(temp);
                                                         }
-                                                        // else {
-                                                        //     resultData.players[1].sets[0].point = n['SCORE 2'];
-                                                        // }
                                                     }
                                                 } else {
                                                     if (_.isEmpty(resultData.players[0].sets)) {
@@ -7892,11 +7997,12 @@ var model = {
                                                             var temp = {};
                                                             temp.point = n['PLAYER 1 SET 7'];
                                                             resultData.players[0].sets.push(temp);
-                                                        } else {
-                                                            var temp = {};
-                                                            temp.point = n['SCORE 1'];
-                                                            resultData.players[0].sets.push(temp);
                                                         }
+                                                        //  else {
+                                                        //     var temp = {};
+                                                        //     temp.point = n['SCORE 1'];
+                                                        //     resultData.players[0].sets.push(temp);
+                                                        // }
                                                     } else {
                                                         if (n['PLAYER 1 SET 1']) {
                                                             resultData.players[1].sets[0].point = n['PLAYER 1 SET 1'];
