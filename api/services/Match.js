@@ -7482,7 +7482,7 @@ var model = {
                                                         var final = {};
                                                         var result = ResultInitialize.getResultVar(matchData.sportsName, matchData.sportType);
                                                         // console.log("result", matchData[result.resultVar]);
-                                                        if (!matchData[result.resultVar] == '') {
+                                                        if (!(matchData[result.resultVar] == '')) {
                                                             final.result = result;
                                                             final.score = matchData[result.resultVar];
                                                             if (matchData.opponentsSingle.length > 0) {
@@ -7736,7 +7736,7 @@ var model = {
                                                         }
                                                         if (n['PLAYER 1 SET 2'] && resultData.players[0].sets.length == 2) {
                                                             resultData.players[0].sets[1] = n['PLAYER 1 SET 2'];
-                                                        }else{
+                                                        } else {
                                                             var temp = {};
                                                             temp.point = n['PLAYER 1 SET 2'];
                                                             temp.ace = 0;
@@ -7748,7 +7748,7 @@ var model = {
                                                         }
                                                         if (n['PLAYER 1 SET 3'] && resultData.players[0].sets.length == 3) {
                                                             resultData.players[0].sets[2] = n['PLAYER 1 SET 3'];
-                                                        }else{
+                                                        } else {
                                                             var temp = {};
                                                             temp.point = n['PLAYER 1 SET 3'];
                                                             temp.ace = 0;
@@ -7760,7 +7760,7 @@ var model = {
                                                         }
                                                         if (n['PLAYER 1 SET 4'] && resultData.players[0].sets.length == 4) {
                                                             resultData.players[0].sets[3] = n['PLAYER 1 SET 4'];
-                                                        }else{
+                                                        } else {
                                                             var temp = {};
                                                             temp.point = n['PLAYER 1 SET 4'];
                                                             temp.ace = 0;
@@ -7772,7 +7772,7 @@ var model = {
                                                         }
                                                         if (n['PLAYER 1 SET 5'] && resultData.players[0].sets.length == 5) {
                                                             resultData.players[0].sets[4] = n['PLAYER 1 SET 5'];
-                                                        }else{
+                                                        } else {
                                                             var temp = {};
                                                             temp.point = n['PLAYER 1 SET 5'];
                                                             temp.ace = 0;
@@ -7784,7 +7784,7 @@ var model = {
                                                         }
                                                         if (n['PLAYER 1 SET 6'] && resultData.players[0].sets.length == 6) {
                                                             resultData.players[0].sets[5] = n['PLAYER 1 SET 6'];
-                                                        }else{
+                                                        } else {
                                                             var temp = {};
                                                             temp.point = n['PLAYER 1 SET 6'];
                                                             temp.ace = 0;
@@ -7796,7 +7796,7 @@ var model = {
                                                         }
                                                         if (n['PLAYER 1 SET 7'] && resultData.players[0].sets.length == 7) {
                                                             resultData.players[0].sets[6] = n['PLAYER 1 SET 7'];
-                                                        }else{
+                                                        } else {
                                                             var temp = {};
                                                             temp.point = n['PLAYER 1 SET 7'];
                                                             temp.ace = 0;
@@ -8401,7 +8401,7 @@ var model = {
                                     obj["PLAYER 2 BASKET 6"] = "";
                                     obj["PLAYER 2 BASKET 7"] = "";
                                     obj["SCORE 2"] = "";
-                                } else if (sportName == "badminton singles" || sportName == "tennis singles" || sportName == "squash singles") {
+                                } else if (sportName == "badminton singles" || sportName == "tennis singles" || sportName == "squash") {
                                     obj["PLAYER 2 SET 1"] = "";
                                     obj["PLAYER 2 SET 2"] = "";
                                     obj["PLAYER 2 SET 3"] = "";
