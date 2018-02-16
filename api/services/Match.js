@@ -8359,7 +8359,7 @@ var model = {
                                     obj["PLAYER 1 BASKET 6"] = "";
                                     obj["PLAYER 1 BASKET 7"] = "";
                                     obj["SCORE 1"] = "";
-                                } else if (sportName == "badminton singles" || sportName == "tennis singles" || sportName == "squash singles") {
+                                } else if (sportName == "badminton singles" || sportName == "tennis singles" || sportName == "table tennis singles" || sportName == "squash") {
                                     obj["PLAYER 1 SET 1"] = "";
                                     obj["PLAYER 1 SET 2"] = "";
                                     obj["PLAYER 1 SET 3"] = "";
