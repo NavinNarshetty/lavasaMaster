@@ -56,6 +56,15 @@ myApp.controller('SfaGalleryCtrl', function ($scope, TemplateService, errorServi
         if (!allData.message) {
           if (allData.value === true) {
             $scope.allPhotosbyCategory = allData.data;
+            _.each($scope.allPhotosbyCategory, function (key) {
+              key.mediaThumbnail = _.compact(key.mediaThumbnail);
+              if (key.mediaThumbnail.length > 0) {
+                key.mediaThumbnail = key.mediaThumbnail[0];
+              } else {
+                key.mediaThumbnail = key.mediaLink;
+              }
+            });
+            console.log(" $scope.allPhotosbyCategory ", $scope.allPhotosbyCategory);
           } else {
             console.log("im in else");
           }
@@ -78,8 +87,17 @@ myApp.controller('SfaGalleryCtrl', function ($scope, TemplateService, errorServi
         if (!allData.message) {
           if (allData.value === true) {
             $scope.allPhotosbySport = allData.data;
-          } else {
+            _.each($scope.allPhotosbySport, function (key) {
+              key.mediaThumbnail = _.compact(key.mediaThumbnail);
+              if (key.mediaThumbnail.length > 0) {
+                key.mediaThumbnail = key.mediaThumbnail[0];
+              } else {
+                key.mediaThumbnail = key.mediaLink;
+              }
+            });
 
+          } else {
+            console.log("im in else");
           }
         } else {
 

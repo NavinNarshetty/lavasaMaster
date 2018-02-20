@@ -102,22 +102,33 @@ var controller = {
     },
 
     deleteFolderImage: function (req, res) {
-        ConfigProperty.find().lean().exec(function (err, property) {
-            if (err) {
-                res.callback(err, null);
-            } else {
-                if (_.isEmpty(property)) {
-                    res.callback(null, {
-                        "data": "ConfigProperty Empty",
-                        "value": false
-                    });
+        if (req.body.prefix) {
+            console.log(req.body.prefix);
+            ConfigProperty.find().lean().exec(function (err, property) {
+                if (err) {
+                    res.callback(err, null);
                 } else {
-                    console.log("property", property);
-                    req.body.keyfileName = property[0].keyfileName;
-                    Vimeo.deleteFolderImage(req.body, res.callback);
+                    if (_.isEmpty(property)) {
+                        res.callback(null, {
+                            "data": "ConfigProperty Empty",
+                            "value": false
+                        });
+                    } else {
+                        // console.log("property", property);
+                        req.body.keyfileName = property[0].keyfileName;
+                        req.body.bucketName = property[0].bucketName;
+                        Vimeo.deleteFolderImage(req.body, res.callback);
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            res.callback(null, {
+                "data": "Please provide parameters",
+                "value": false
+            });
+
+        }
+
 
     },
 
