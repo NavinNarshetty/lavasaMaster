@@ -78,6 +78,7 @@ var model = {
                     var arr = _.keys(team);
                     var sportlist;
                     async.eachSeries(team, function (sportData, callback) {
+                            console.log("Team", sportData);
                             async.waterfall([
                                 function (callback) {
                                     OldSport.saveCategory(sportData, function (err, category) {
@@ -761,7 +762,118 @@ var model = {
                     var team = _.groupBy(oldSportData, "sportslist.name");
                     var arr = _.keys(team);
                     var sportlist;
-                    callback(null, team);
+                    async.eachSeries(team, function (sportData, callback) {
+                            async.waterfall([
+                                function (callback) {
+                                    OldSport.saveCategory(sportData, function (err, category) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            if (_.isEmpty(category)) {
+                                                callback(null, []);
+                                            } else {
+                                                callback(null, category);
+                                            }
+                                        }
+                                    });
+                                },
+                                function (category, callback) {
+                                    console.log("category", category);
+                                    OldSport.saveSportsListSubCategory(sportData, category, function (err, subCategory) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            if (_.isEmpty(subCategory)) {
+                                                callback(null, []);
+                                            } else {
+                                                callback(null, subCategory);
+                                            }
+                                        }
+                                    });
+                                },
+
+                                function (subCategory, callback) {
+                                    async.eachSeries(sportData, function (singleData, callback) {
+                                            console.log("category", singleData);
+                                            async.waterfall([
+                                                    function (callback) {
+                                                        console.log("sportlist inside", subCategory);
+                                                        sportData.isTeam = false;
+                                                        var param = [];
+                                                        param.push(singleData);
+                                                        OldSport.saveSportsList(param, subCategory, function (err, drawFormat) {
+                                                            if (err) {
+                                                                callback(err, null);
+                                                            } else {
+                                                                if (_.isEmpty(drawFormat)) {
+                                                                    callback(null, []);
+                                                                } else {
+                                                                    callback(null, drawFormat);
+                                                                }
+                                                            }
+                                                        });
+                                                    },
+                                                    function (drawFormat, callback) {
+                                                        if (singleData.agegroup) {
+                                                            OldSport.saveAge(singleData, function (err, ageData) {
+                                                                if (err) {
+                                                                    callback(err, null);
+                                                                } else {
+                                                                    if (_.isEmpty(ageData)) {
+                                                                        callback(null, []);
+                                                                    } else {
+                                                                        sport.sportslist = drawFormat._id;
+                                                                        sport.ageGroup = ageData._id;
+                                                                        console.log("drawFormat", sport);
+                                                                        callback(null, sport);
+                                                                    }
+                                                                }
+                                                            });
+                                                        } else {
+                                                            callback(null, {
+                                                                error: "no agegroup found",
+                                                                data: sportData
+                                                            });
+                                                        }
+                                                    },
+                                                    function (sport, callback) {
+                                                        if (sport.error) {
+                                                            callback(null, sport);
+                                                        } else {
+                                                            OldSport.saveSport(singleData, sport, function (err, drawFormat) {
+                                                                if (err) {
+                                                                    callback(err, null);
+                                                                } else {
+                                                                    if (_.isEmpty(drawFormat)) {
+                                                                        callback(null, []);
+                                                                    } else {
+                                                                        callback(null, drawFormat);
+                                                                    }
+                                                                }
+                                                            });
+                                                        }
+                                                    },
+                                                ],
+                                                function (err, found) {
+                                                    if (found) {
+                                                        callback(null, found);
+                                                    } else {
+                                                        callback(null, found);
+                                                    }
+                                                });
+                                        },
+                                        function (err, found) {
+                                            callback(null, found);
+                                        });
+                                },
+                            ], function (err, found) {
+                                sport = {};
+                                callback(null, found);
+                            });
+                        },
+                        function (err, found) {
+                            callback(null, found);
+                        });
                 }
             ],
             function (err, found) {
@@ -2416,46 +2528,57 @@ var model = {
             },
             function (found, callback) {
                 async.concatSeries(found, function (n, callback) {
+                    console.log("found", n);
                     async.waterfall([
                         function (callback) {
-                            OldAgeGroup.findOne({
-                                name: n.agegroup.name
-                            }).lean().exec(function (err, oldage) {
-                                if (err) {
-                                    callback(err, null);
-                                } else {
-                                    console.log("oldage", oldage);
-                                    callback(null, oldage);
-                                }
-                            });
+                            if (n.agegroup) {
+                                OldAgeGroup.findOne({
+                                    name: n.agegroup.name
+                                }).lean().exec(function (err, oldage) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else {
+                                        // console.log("oldage", oldage);
+                                        callback(null, oldage);
+                                    }
+                                });
+                            } else {
+                                callback(null, {
+                                    error: "no age found"
+                                });
+                            }
                         },
                         function (oldage, callback) {
-                            AgeGroup.find({
-                                name: oldage.name,
-                                oldId: {
-                                    $exists: true
-                                }
-                            }).lean().exec(function (err, ageData) {
-                                if (err) {
-                                    callback(null, {
-                                        error: err
-                                    });
-                                } else if (_.isEmpty(ageData)) {
-                                    var updateObj = {
-                                        $set: {
-                                            oldId: oldage._id
-                                        }
-                                    };
-                                    AgeGroup.update({
-                                        name: oldage.name,
-                                    }, updateObj).exec(
-                                        function (err, updated) {
-                                            callback(null, "updated");
+                            if (oldage.error) {
+                                callback(null, oldage);
+                            } else {
+                                AgeGroup.find({
+                                    name: oldage.name,
+                                    oldId: {
+                                        $exists: true
+                                    }
+                                }).lean().exec(function (err, ageData) {
+                                    if (err) {
+                                        callback(null, {
+                                            error: err
                                         });
-                                } else {
-                                    callback(null, oldage);
-                                }
-                            });
+                                    } else if (_.isEmpty(ageData)) {
+                                        var updateObj = {
+                                            $set: {
+                                                oldId: oldage._id
+                                            }
+                                        };
+                                        AgeGroup.update({
+                                            name: oldage.name,
+                                        }, updateObj).exec(
+                                            function (err, updated) {
+                                                callback(null, "updated");
+                                            });
+                                    } else {
+                                        callback(null, oldage);
+                                    }
+                                });
+                            }
                         },
                     ], function (err, found) {
                         if (err) {
@@ -2466,7 +2589,6 @@ var model = {
                             callback(null, found);
                         }
                     });
-
                 }, function (err, complete) {
                     callback(null, complete);
                 });

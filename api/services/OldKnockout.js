@@ -282,9 +282,11 @@ var model = {
                     if (athelete.error) {
                         callback(null, athelete);
                     } else {
+                        console.log("singleData", singleData);
                         async.eachSeries(singleData.sport, function (n, callback) {
                             var param = {};
                             param.sport = n;
+                            console.log("param", param);
                             OldKnockout.getSportId(param, function (err, sport) {
                                 if (sport.error) {
                                     callback(null, sport);
@@ -382,9 +384,13 @@ var model = {
             {
                 $group: {
                     _id: "$team1",
-                    sport: {
-                        $addToSet: "$sport"
-                    }
+                    info: {
+                        $push: {
+                            year: "$year",
+                            sport: "$sport"
+                        }
+                    },
+
                 }
             },
 
@@ -445,8 +451,11 @@ var model = {
             {
                 $group: {
                     _id: "$team2",
-                    sport: {
-                        $addToSet: "$sport"
+                    info: {
+                        $push: {
+                            sport: "$sport",
+                            year: "$year"
+                        }
                     }
                 }
             },
@@ -474,6 +483,7 @@ var model = {
                 });
             },
             function (complete, callback) {
+                console.log("complate----->", complete);
                 OldKnockout.saveInTeam(complete, function (err, saveData) {
                     if (err) {
                         callback(err, null);
@@ -500,7 +510,8 @@ var model = {
             var i = 0;
             var team = {};
             team.team = mainData._id;
-            team.sport = mainData.sport[0];
+            team.sport = mainData.info[0].sport;
+            team.year = mainData.info[0].year;
             OldTeam.getAllTeam(team, function (err, teamData) {
                 if (err) {
                     callback(err, null);
@@ -553,7 +564,7 @@ var model = {
                     var complete = _.groupBy(found, "sport");
                     async.concatSeries(complete, function (mainData, callback) {
                             async.concatSeries(mainData, function (singleData, callback) {
-                                    console.log("singleData", singleData);
+                                    // console.log("singleData", singleData);
                                     if (singleData.round != "Third Place") {
                                         OldKnockout.getMatchDetails(singleData, function (err, matchData) {
                                             if (err) {
@@ -648,6 +659,7 @@ var model = {
                     });
                 },
                 function (found, callback) {
+                    console.log("found in team---", found, "data****", data);
                     if (data.player1) {
                         IndividualSport.findOne({
                             oldId: data.player1,
@@ -811,6 +823,7 @@ var model = {
 
     getMatchDetailsTeam: function (data, callback) {
         var match = {};
+        match.data = data;
         match.opponentsSingle = [];
         match.opponentsTeam = [];
         async.waterfall([
@@ -834,6 +847,7 @@ var model = {
                 });
             },
             function (found, callback) {
+                // console.log("found in team---", found, "data****", data);
                 if (data.team1) {
                     TeamSport.findOne({
                         oldId: data.team1,
@@ -845,10 +859,12 @@ var model = {
                             callback(null, []);
                         } else {
                             match.opponentsTeam.push(individualData._id);
+                            match.team1 = individualData;
                             callback(null, found);
                         }
                     });
                 } else {
+                    match.team1 = {};
                     callback(null, found);
                 }
             },
@@ -864,10 +880,12 @@ var model = {
                             callback(null, []);
                         } else {
                             match.opponentsTeam.push(individualData._id);
+                            match.team2 = individualData;
                             callback(null, individualData);
                         }
                     });
                 } else {
+                    match.team2 = {};
                     callback(null, found);
                 }
             },
@@ -888,6 +906,7 @@ var model = {
                             }
                         }
                     });
+                    // callback(null, match);
                 } else {
                     callback(null, match);
                 }
@@ -896,7 +915,7 @@ var model = {
             if (err) {
                 callback(err, null);
             } else {
-                callback(null, data3);
+                callback(null, match);
             }
         });
     },

@@ -51,6 +51,9 @@ var model = {
         async.waterfall([
             function (callback) {
                 OldAthlete.find({
+                    // year: {
+                    //     $exists: false
+                    // }
                     year: data.year
                     // year: "null"
                 }).lean().exec(function (err, oldSchoolData) {

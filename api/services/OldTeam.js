@@ -14,15 +14,17 @@ var model = {
 
     getAllTeam: function (data, callback) {
         var final = [];
-        // callback(null, data);
+        console.log("data*****", data);
         async.waterfall([
                 function (callback) {
                     OldTeam.find({
-                        year: data.year
+                        year: data.year,
+                        _id: data.team
                     }).lean().exec(function (err, found) {
                         if (err) {
                             callback(err, null);
                         } else {
+                            console.log("found**", found);
                             callback(null, found);
                         }
                     });
@@ -46,6 +48,7 @@ var model = {
                                         }
                                         paramData.gender = sportData.gender;
                                         paramData.weight = undefined;
+                                        console.log("param*****", paramData);
                                         OldTeam.getSportId(paramData, function (err, sport) {
                                             if (err) {
                                                 callback(err, null);
@@ -146,6 +149,7 @@ var model = {
     },
 
     getSportId: function (data, callback) {
+        console.log("data", data);
         var sport = {};
         async.waterfall([
                 function (callback) {

@@ -261,8 +261,11 @@ var model = {
             {
                 $group: {
                     _id: "$heats.team",
-                    sport: {
-                        $addToSet: "$sport"
+                    info: {
+                        $push: {
+                            sport: "$sport",
+                            year: "$year"
+                        }
                     }
                 }
             },
@@ -317,7 +320,8 @@ var model = {
             async.concatSeries(mainData._id, function (singleData, callback) {
                 var team = {};
                 team.team = singleData;
-                team.sport = mainData.sport[0];
+                team.sport = mainData.info[0].sport;
+                team.year = mainData.info[0].year;
                 OldTeam.getAllTeam(team, function (err, teamData) {
                     if (err) {
                         callback(err, null);

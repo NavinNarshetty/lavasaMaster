@@ -66,7 +66,6 @@ var model = {
 
     getAllSportsByAthlete: function (athlete, callback) {
         async.waterfall([
-
             //getAthlete Details
             function (callback) {
                 Athelete.findOne(athlete).deepPopulate("school").lean().exec(function (err, data) {
@@ -81,7 +80,6 @@ var model = {
                     }
                 });
             },
-
             //find team sports,player participated in and whether he won any of the 3 medals
             function (athleteDetails, callback) {
                 var matchObj = {
@@ -118,7 +116,6 @@ var model = {
                     // finalCallback(null, regSport);
                 });
             }
-
         ], function (err, result) {
             if (err) {
                 callback(err, null);
@@ -126,7 +123,6 @@ var model = {
                 callback(null, result);
             }
         });
-
     },
 
     getAggregatePipeLine: function (data) {
@@ -1873,7 +1869,7 @@ var model = {
         if (data.keyword === "") {
             var deepSearch = "sportslist ageGroup weight";
             var Search = Model.find()
-            // data.keyword
+                // data.keyword
                 .order(options)
                 .deepPopulate(deepSearch)
                 .keyword(options)
