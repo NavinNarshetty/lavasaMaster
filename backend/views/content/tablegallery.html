@@ -72,6 +72,9 @@
                                     <th>
                                         folderType
                                     </th>
+                                    <th>
+                                        Thumbnail
+                                    </th>
 
                                     <th>Actions</th>
                                 </tr>
@@ -86,18 +89,17 @@
                                     <td>{{item.folderName}}</td>
                                     <td>{{item.folderType}}</td>
                                     <td>
-                                        <!-- <a class="btn btn-primary" target="_blank" ui-sref="galleryDetail({id:item._id})">
-                      <i class="fa fa-pencil"></i> Edit -->
-                                        </a>
-                                        <a class="btn btn-danger" ng-click="confDel(item._id)">
+                                        <div>
+                                            <!-- <span>Thumbnail</span> -->
+                                            <input class="text-center" type="checkbox" name="thumbnailcheckbox" ng-model="item.isThumbnail" id="thumbnailcheckbox" ng-change="setThumbnail(item.folderName,item.mediaLink,item.isThumbnail,item._id)">
+                                        </div>
+                                    </td>
+                                    <td>
+
+                                        <a class="btn btn-danger" ng-click="confDel(item.folderType,item.folderName,item.image)">
                       <i class="fa fa-trash"></i> Delete
                     </a>
                                     </td>
-                                    <!--<td ng-repeat="but in json.json.action">
-                                        <a class="btn" ng-class="but.buttonClass" ng-click="json.eventAction(but,item) ">
-                                            <i class="fa" ng-class="but.icon"></i>{{but.name}}
-                                        </a>
-                                    </td>-->
                                 </tr>
                             </tbody>
                         </table>

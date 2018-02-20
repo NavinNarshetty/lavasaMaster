@@ -362,6 +362,12 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'GalleryCtrl'
         })
+        // folder 
+        .state('folder', {
+            url: "/folder",
+            templateUrl: "views/template.html",
+            controller: 'FolderCtrl'
+        })
         //galleryDetail
         .state('galleryDetail', {
             url: "/gallerydetail/:id",

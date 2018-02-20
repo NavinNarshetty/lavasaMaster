@@ -2361,7 +2361,7 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
 
     $scope.generateExcel = function (formData) {
         console.log("formdata", formData);
-        NavigationService.generateSchoolExcelWithData(formData, function (data) { });
+        NavigationService.generateSchoolExcelWithData(formData, function (data) {});
     }
 
     $scope.transferToWebsite = function (id) {
@@ -2543,15 +2543,15 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
         var param = {};
         param.file = "targetAthlete"
         var url = "Athelete/getTargetAthlete"
-        NavigationService.generateExcelWithoutData(url, param, function (data) { });
+        NavigationService.generateExcelWithoutData(url, param, function (data) {});
     }
     $scope.generateExcel = function (formdata) {
         if (_.isEmpty(formdata.type)) {
             console.log("else");
-            NavigationService.generateAthleteExcelWithData(formdata, function (data) { });
+            NavigationService.generateAthleteExcelWithData(formdata, function (data) {});
         } else {
             console.log(formdata);
-            NavigationService.generateAthleteExcelWithData(formdata, function (data) { });
+            NavigationService.generateAthleteExcelWithData(formdata, function (data) {});
         }
     }
     // OLD FUNCTIONS
@@ -2660,9 +2660,9 @@ myApp.controller('OldSchoolCtrl', function ($scope, TemplateService, NavigationS
         //     $scope.currentPage = 1;
         // }
         NavigationService.search('School/search', {
-            page: $scope.formData.page,
-            keyword: $scope.formData.keyword
-        }, ++i,
+                page: $scope.formData.page,
+                keyword: $scope.formData.keyword
+            }, ++i,
             function (data, ini) {
                 if (ini == i) {
                     $scope.items = data.data.results;
@@ -2727,22 +2727,22 @@ myApp.controller('ViewSchoolCtrl', function ($scope, TemplateService, Navigation
 });
 
 myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams) {
-    //old school filter view
-    //Used to name the .html file
-    $scope.template = TemplateService.changecontent("viewoldschool");
-    $scope.menutitle = NavigationService.makeactive("View Old School");
-    TemplateService.title = $scope.menutitle;
-    $scope.navigation = NavigationService.getnav();
-    $scope.getOneOldSchoolById = function () {
-        $scope.url = 'School/getOne';
-        $scope.constraints = {};
-        $scope.constraints._id = $stateParams.id;
-        NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
-            $scope.oldschool = data.data;
-        });
-    };
-    $scope.getOneOldSchoolById();
-})
+        //old school filter view
+        //Used to name the .html file
+        $scope.template = TemplateService.changecontent("viewoldschool");
+        $scope.menutitle = NavigationService.makeactive("View Old School");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+        $scope.getOneOldSchoolById = function () {
+            $scope.url = 'School/getOne';
+            $scope.constraints = {};
+            $scope.constraints._id = $stateParams.id;
+            NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+                $scope.oldschool = data.data;
+            });
+        };
+        $scope.getOneOldSchoolById();
+    })
 
 
 
@@ -2972,7 +2972,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.navigation = NavigationService.getnav();
 
 
-        JsonService.getJson($stateParams.id, function () { });
+        JsonService.getJson($stateParams.id, function () {});
 
         globalfunction.confDel = function (callback) {
             var modalInstance = $uibModal.open({
@@ -3090,9 +3090,9 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             //     $scope.currentPage = 1;
             // }
             NavigationService.search('School/search', {
-                page: $scope.formData.page,
-                keyword: $scope.formData.keyword
-            }, ++i,
+                    page: $scope.formData.page,
+                    keyword: $scope.formData.keyword
+                }, ++i,
                 function (data, ini) {
                     if (ini == i) {
                         $scope.items = data.data.results;
@@ -3149,10 +3149,10 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
                 $scope.currentPage = 1;
             }
             NavigationService.search($scope.json.json.apiCall.url, {
-                page: $scope.currentPage,
-                keyword: $scope.search.keyword,
-                input: ''
-            }, ++i,
+                    page: $scope.currentPage,
+                    keyword: $scope.search.keyword,
+                    input: ''
+                }, ++i,
                 function (data, ini) {
                     if (ini == i) {
                         $scope.items = data.data.results;
@@ -5060,6 +5060,17 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.formData.type = '';
         $scope.formData.keyword = '';
         // $scope.selectedStatus = 'All';
+        // CONFIG DETAIL
+        $scope.getDetailConfig = function () {
+            NavigationService.getDetailConfig(function (data) {
+                console.log(data, "config data");
+                $scope.year = data.data.data.year;
+                console.log($scope.year, "year");
+
+            })
+        }
+        $scope.getDetailConfig();
+        // CONFIG DETAIL END
         $scope.searchInTable = function (data) {
             $scope.formData.page = 1;
             if (data.length >= 2) {
@@ -5077,7 +5088,12 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
                 console.log("data.value", data);
                 if (data.value) {
                     $scope.items = data.data.results;
-                    console.log(" $scope.items", $scope.items);
+                    _.each($scope.items, function (key) {
+                        key.imageArray = _.split(key.mediaLink, '/');
+                        key.image = key.imageArray[key.imageArray.length - 1];
+                        console.log(key.image, "key");
+                    })
+                    console.log($scope.items, "at the end");
                 }
 
                 $scope.totalItems = data.data.total;
@@ -5086,11 +5102,14 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         }
         $scope.viewTable();
 
-        $scope.confDel = function (data) {
-            $scope.id = data;
+        $scope.confDel = function (type, name, image) {
+            $scope.type = type;
+            $scope.name = name;
+            $scope.image = image;
+            console.log(type, name, image, "click modal");
             $scope.modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
-                templateUrl: 'views/modal/delete.html',
+                templateUrl: 'views/modal/folderdelete.html',
                 backdrop: 'static',
                 keyboard: false,
                 size: 'sm',
@@ -5102,23 +5121,25 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.noDelete = function () {
             $scope.modalInstance.close();
         }
-        $scope.delete = function (data) {
-            console.log(data);
-            $scope.url = "gallery/delete";
-            $scope.constraints = {};
-            $scope.constraints._id = data;
-            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
-                console.log("data.value", data);
-                if (data.value) {
-                    toastr.success('Successfully Deleted', 'Gallery Meaasge');
-                    $scope.modalInstance.close();
-                    $scope.viewTable();
-                } else {
-                    toastr.error('Something went wrong while Deleting', 'Gallery Meaasge');
-                }
+        $scope.delete = function (type, name, image) {
+                console.log(type, name, image);
+                $scope.url = "Vimeo/deleteFolderImage";
+                $scope.constraints = {};
+                $scope.constraints.prefix = $scope.year + '/' + type + '/' + name;
+                $scope.constraints.fileName = image;
+                console.log($scope.constraints, "check this")
+                NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+                    console.log("data.value", data);
+                    if (data.value) {
+                        toastr.success('Successfully Deleted', 'Gallery Meaasge');
+                        $scope.modalInstance.close();
+                        $scope.viewTable();
+                    } else {
+                        toastr.error('Something went wrong while Deleting', 'Gallery Meaasge');
+                    }
 
-            });
-        },
+                });
+            },
             $scope.filterAthlete = function (formData) {
                 console.log("formData", formData);
                 $scope.url = "gallery/search";
@@ -5146,6 +5167,31 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             };
 
 
+
+        $scope.setThumbnail = function (name, link, value, id) {
+            console.log(value, "value");
+            $scope.url = "Gallery/setThumbnail";
+            $scope.constraintsObj = {}
+            $scope.constraintsObj._id = id;
+            $scope.constraintsObj.folderName = name;
+            $scope.constraintsObj.thumbnail = link;
+            console.log($scope.constraintsObj, "data for setthumbnail");
+            if (value) {
+                $scope.constraintsObj.isThumbnail = true;
+
+            } else {
+                $scope.constraintsObj.isThumbnail = false;
+
+            }
+            NavigationService.apiCall($scope.url, $scope.constraintsObj, function (data) {
+                if (data.value) {
+                    $scope.viewTable();
+                }
+            })
+
+        }
+
+        // SET THUMBNAIL END
 
     })
 
@@ -5632,12 +5678,12 @@ myApp.controller('DetailAdditionalPaymentCtrl', function ($scope, TemplateServic
 });
 
 myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
-    //Used to name the .html file
-    $scope.template = TemplateService.changecontent("dashboard");
-    $scope.menutitle = NavigationService.makeactive("Dashboard");
-    TemplateService.title = $scope.menutitle;
-    $scope.navigation = NavigationService.getnav();
-})
+        //Used to name the .html file
+        $scope.template = TemplateService.changecontent("dashboard");
+        $scope.menutitle = NavigationService.makeactive("Dashboard");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+    })
 
     .controller('headerctrl', function ($scope, TemplateService, $uibModal) {
         $scope.template = TemplateService;

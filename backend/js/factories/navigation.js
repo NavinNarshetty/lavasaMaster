@@ -143,7 +143,7 @@ myApp.factory('NavigationService', function ($http) {
             classis: "activeColor",
             sref: "#/medals",
             icon: "phone"
-        },   {
+        }, {
             name: "Report Card",
             classis: "activeColor",
             sref: "#/page/viewReportCard//",
@@ -261,6 +261,11 @@ myApp.factory('NavigationService', function ($http) {
                 classis: "activeColor",
                 sref: "#/gallery",
                 icon: "phone",
+            }, {
+                name: "Folder",
+                classis: "activeColor",
+                sref: "#/folder",
+                icon: "phone",
             }]
         },
         {
@@ -269,8 +274,8 @@ myApp.factory('NavigationService', function ($http) {
             sref: "#/page/viewConfigProperty//",
             icon: "phone",
         },
-      
-        
+
+
         // {
         //     name: "Second Category",
         //     classis: "activeColor",
@@ -369,6 +374,12 @@ myApp.factory('NavigationService', function ($http) {
                 // data = data.data;
                 callback(data);
             });
+        },
+        getDetailConfig: function (callback) {
+            $http({
+                url: adminurl + 'ConfigProperty/getDetail',
+                method: 'POST'
+            }).then(callback);
         },
         generateAthleteExcel: function (callback) {
             $http.post(adminurl + 'Athelete/generateExcel').then(function (data) {

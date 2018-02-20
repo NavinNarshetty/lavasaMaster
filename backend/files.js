@@ -72,5 +72,6 @@ module.exports = [
     'backend/js/controllers/specialawards.js',
     'backend/js/controllers/schedule.js',
     'backend/js/controllers/archive.js',
-    'backend/js/controllers/highlightsvideo.js'
+    'backend/js/controllers/highlightsvideo.js',
+    'backend/js/controllers/folder.js'
 ];
