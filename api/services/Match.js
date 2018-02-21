@@ -5044,6 +5044,11 @@ var model = {
                             Match.getResultArray(n, finalData, result, function (err, complete) {
                                 callback(null, complete);
                             });
+                        } else if (n.resultThrowball) {
+                            var result = n.resultThrowball;
+                            Match.getResultArray(n, finalData, result, function (err, complete) {
+                                callback(null, complete);
+                            });
                         } else if (n.resultHockey) {
                             var result = n.resultHockey;
                             Match.getResultArray(n, finalData, result, function (err, complete) {
@@ -10694,6 +10699,45 @@ var model = {
                                     obj["T1 PenaltyStroke"] = mainData.resultHockey.teams[0].teamResults.penaltyStroke;
                                     obj["T1 Saves"] = mainData.resultHockey.teams[0].teamResults.saves;
                                     obj["T1 Fouls"] = mainData.resultHockey.teams[0].teamResults.fouls;
+                                } else if (mainData.resultThrowball) {
+                                    if (mainData.resultThrowball.teams[0].teamResults.sets.length >= 1) {
+                                        obj["TEAM 1 SET 1"] = mainData.resultThrowball.teams[0].teamResults.sets[0].points;
+                                    } else {
+                                        obj["TEAM 1 SET 1"] = "";
+                                    }
+                                    if (mainData.resultThrowball.teams[0].teamResults.sets.length >= 2) {
+                                        obj["TEAM 1 SET 2"] = mainData.resultThrowball.teams[0].teamResults.sets[1].points;
+                                    } else {
+                                        obj["TEAM 1 SET 2"] = "";
+                                    }
+                                    if (mainData.resultThrowball.teams[0].teamResults.sets.length >= 3) {
+                                        obj["TEAM 1 SET 3"] = mainData.resultThrowball.teams[0].teamResults.sets[2].points;
+                                    } else {
+                                        obj["TEAM 1 SET 3"] = "";
+                                    }
+                                    if (mainData.resultThrowball.teams[0].teamResults.sets.length >= 4) {
+                                        obj["TEAM 1 SET 4"] = mainData.resultThrowball.teams[0].teamResults.sets[3].points;
+                                    } else {
+                                        obj["TEAM 1 SET 4"] = "";
+                                    }
+                                    if (mainData.resultThrowball.teams[0].teamResults.sets.length >= 5) {
+                                        obj["TEAM 1 SET 5"] = mainData.resultThrowball.teams[0].teamResults.sets[4].points;
+                                    } else {
+                                        obj["TEAM 1 SET 5"] = "";
+                                    }
+                                    if (mainData.resultThrowball.teams[0].teamResults.sets.length >= 6) {
+                                        obj["TEAM 1 SET 6"] = mainData.resultThrowball.teams[0].teamResults.sets[5].points;
+                                    } else {
+                                        obj["TEAM 1 SET 6"] = "";
+                                    }
+                                    if (mainData.resultThrowball.teams[0].teamResults.sets.length >= 7) {
+                                        obj["TEAM 1 SET 7"] = mainData.resultThrowball.teams[0].teamResults.sets[6].points;
+                                    } else {
+                                        obj["TEAM 1 SET 7"] = "";
+                                    }
+                                    if (mainData.opponentsTeam.length == 1) {
+                                        obj["SCORE"] = mainData.resultThrowball.teams[0].teamResults.finalScore;
+                                    }
                                 }
                             } else {
                                 obj["TEAM ID 1"] = "";
@@ -10773,6 +10817,44 @@ var model = {
                                         obj["WINNER SCHOOL"] = "";
                                     }
                                     obj["VIDEO"] = "";
+                                } else if (mainData.resultThrowball) {
+                                    if (mainData.resultThrowball.teams[1].teamResults.sets.length >= 1) {
+                                        obj["TEAM 2 SET 1"] = mainData.resultThrowball.teams[1].teamResults.sets[0].points;
+                                    } else {
+                                        obj["TEAM 2 SET 1"] = "";
+                                    }
+                                    if (mainData.resultThrowball.teams[1].teamResults.sets.length >= 2) {
+                                        obj["TEAM 2 SET 2"] = mainData.resultThrowball.teams[1].teamResults.sets[1].points;
+                                    } else {
+                                        obj["TEAM 2 SET 2"] = "";
+                                    }
+                                    if (mainData.resultThrowball.teams[1].teamResults.sets.length >= 3) {
+                                        obj["TEAM 2 SET 3"] = mainData.resultThrowball.teams[1].teamResults.sets[2].points;
+                                    } else {
+                                        obj["TEAM 2 SET 3"] = "";
+                                    }
+                                    if (mainData.resultThrowball.teams[1].teamResults.sets.length >= 4) {
+                                        obj["TEAM 2 SET 4"] = mainData.resultThrowball.teams[1].teamResults.sets[3].points;
+                                    } else {
+                                        obj["TEAM 2 SET 4"] = "";
+                                    }
+                                    if (mainData.resultThrowball.teams[1].teamResults.sets.length >= 5) {
+                                        obj["TEAM 2 SET 5"] = mainData.resultThrowball.teams[1].teamResults.sets[4].points;
+                                    } else {
+                                        obj["TEAM 2 SET 5"] = "";
+                                    }
+                                    if (mainData.resultThrowball.teams[1].teamResults.sets.length >= 6) {
+                                        obj["TEAM 2 SET 6"] = mainData.resultThrowball.teams[1].teamResults.sets[5].points;
+                                    } else {
+                                        obj["TEAM 2 SET 6"] = "";
+                                    }
+                                    if (mainData.resultThrowball.teams[1].teamResults.sets.length >= 7) {
+                                        obj["TEAM 2 SET 7"] = mainData.resultThrowball.teams[1].teamResults.sets[6].points;
+                                    } else {
+                                        obj["TEAM 2 SET 7"] = "";
+                                    }
+
+                                    obj["SCORE"] = mainData.resultThrowball.teams[0].teamResults.finalScore + "-" + mainData.resultThrowball.teams[1].teamResults.finalScore;
                                 }
                             } else {
                                 obj["TEAM ID 2"] = "";
@@ -18690,7 +18772,7 @@ var model = {
             //     res.callback(null,result1);
             // });
             console.log("result");
-            var arr=[];
+            var arr = [];
             _.each(result, function (singleData) {
                 var obj = {};
                 obj['event'] = singleData['_id'].event;
@@ -18703,7 +18785,7 @@ var model = {
                 arr.push(obj);
             });
             Config.generateExcel("playedEvents", arr, res);
-         
+
         })
     }
 };
