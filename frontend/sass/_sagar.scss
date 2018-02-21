@@ -22,6 +22,10 @@ $grey: #e1e1e1;
   bottom: auto;
   @include transform(translateY(-50%));
 
+  .modal-lg{
+    width: 1000px;
+  }
+
   .modal-content{
     border-radius: 0;
   }
@@ -54,6 +58,13 @@ $grey: #e1e1e1;
   font-size: 48px;
   line-height: 1;
   @include transform(translateY(-50%)) ;
+}
+.photovideo-navclose{
+  padding: 0px 10px;
+  top: 0;
+  right: -40px;
+  font-size: 30px;
+  @include transform(translateY(0)) ;
 }
 .photovideo-navleft {
     left: -40px;
@@ -169,7 +180,7 @@ $grey: #e1e1e1;
   min-height: 350px;
 }
 .photovideo-popup .photovideo-vidframe{
-  min-height: 350px;
+  min-height: 440px;
 }
 // VIDEO HOLDER END
 // PHOTO VIDEO POPUP END
