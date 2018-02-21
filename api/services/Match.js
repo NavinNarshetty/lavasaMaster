@@ -18773,36 +18773,19 @@ var model = {
             },
 
         ], function (err, result) {
-            // async.concatSeries(result, function (singleData, callback) {
-            //     var obj = {};
-            //     obj['event'] = singleData['_id'].event;
-            //     obj['sport'] = singleData['_id'].sport;
-            //     obj['ageGroup'] = singleData['_id'].ageGroup;
-            //     obj['gender'] = singleData['_id'].gender;
-            //     // if(obj && obj['weight']){
-            //     obj['weight'] = singleData['_id'].weight;
-            //     // }
-            //     callback(null, obj);
-            // }, function (err, result1) {
-            //     Config.generateExcel("playedEvents", result1, res);
-            //     res.callback(null,result1);
-            // });
-            console.log("result");
-            var arr = [];
-            _.each(result, function (singleData) {
+            async.concatSeries(result, function (singleData, callback) {
                 var obj = {};
                 obj['event'] = singleData['_id'].event;
                 obj['sport'] = singleData['_id'].sport;
                 obj['ageGroup'] = singleData['_id'].ageGroup;
                 obj['gender'] = singleData['_id'].gender;
-                // if(obj && obj['weight']){
                 obj['weight'] = singleData['_id'].weight;
-                // }
-                arr.push(obj);
-            });
-            Config.generateExcel("playedEvents", arr, res);
-
+                callback(null, obj);
+            }, function (err, result1) {
+                Config.generateExcel("playedEvents", result1, res);
+            });         
         })
     }
+
 };
 module.exports = _.assign(module.exports, exports, model);
