@@ -9058,7 +9058,7 @@ var model = {
                         obj["T1 FINAL SCORE"] = mainData.resultBasketball.teams[0].teamResults.finalGoalPoints;
                     } else if (mainData.resultThrowball) {
                         obj["COACH NAME 1"] = mainData.resultThrowball.teams[0].coach;
-                        obj["T1 FINAL SCORE"] = mainData.resultThrowball.teams[0].teamResults.finalGoalPoints;
+                        obj["T1 FINAL SCORE"] = mainData.resultThrowball.teams[0].teamResults.finalPoints;
                     } else if (mainData.resultWaterPolo) {
                         obj["COACH NAME 1"] = mainData.resultWaterPolo.teams[0].coach;
                         obj["T1 Shots on goal"] = mainData.resultWaterPolo.teams[0].teamResults.shotsOnGoal;
@@ -9897,7 +9897,7 @@ var model = {
                         obj["COACH NAME 2"] = mainData.resultThrowball.teams[1].coach;
 
                         if (mainData.opponentsTeam[1]) {
-                            obj["T2 FINAL SCORE"] = mainData.resultThrowball.teams[1].teamResults.finalGoalPoints;
+                            obj["T2 FINAL SCORE"] = mainData.resultThrowball.teams[1].teamResults.finalPoints;
                         } else {
                             obj["T2 FINAL SCORE"] = "";
                         }
@@ -10715,28 +10715,28 @@ var model = {
                                     } else {
                                         obj["TEAM 1 SET 3"] = "";
                                     }
-                                    if (mainData.resultThrowball.teams[0].teamResults.sets.length >= 4) {
-                                        obj["TEAM 1 SET 4"] = mainData.resultThrowball.teams[0].teamResults.sets[3].points;
-                                    } else {
-                                        obj["TEAM 1 SET 4"] = "";
-                                    }
-                                    if (mainData.resultThrowball.teams[0].teamResults.sets.length >= 5) {
-                                        obj["TEAM 1 SET 5"] = mainData.resultThrowball.teams[0].teamResults.sets[4].points;
-                                    } else {
-                                        obj["TEAM 1 SET 5"] = "";
-                                    }
-                                    if (mainData.resultThrowball.teams[0].teamResults.sets.length >= 6) {
-                                        obj["TEAM 1 SET 6"] = mainData.resultThrowball.teams[0].teamResults.sets[5].points;
-                                    } else {
-                                        obj["TEAM 1 SET 6"] = "";
-                                    }
-                                    if (mainData.resultThrowball.teams[0].teamResults.sets.length >= 7) {
-                                        obj["TEAM 1 SET 7"] = mainData.resultThrowball.teams[0].teamResults.sets[6].points;
-                                    } else {
-                                        obj["TEAM 1 SET 7"] = "";
-                                    }
+                                    // if (mainData.resultThrowball.teams[0].teamResults.sets.length >= 4) {
+                                    //     obj["TEAM 1 SET 4"] = mainData.resultThrowball.teams[0].teamResults.sets[3].points;
+                                    // } else {
+                                    //     obj["TEAM 1 SET 4"] = "";
+                                    // }
+                                    // if (mainData.resultThrowball.teams[0].teamResults.sets.length >= 5) {
+                                    //     obj["TEAM 1 SET 5"] = mainData.resultThrowball.teams[0].teamResults.sets[4].points;
+                                    // } else {
+                                    //     obj["TEAM 1 SET 5"] = "";
+                                    // }
+                                    // if (mainData.resultThrowball.teams[0].teamResults.sets.length >= 6) {
+                                    //     obj["TEAM 1 SET 6"] = mainData.resultThrowball.teams[0].teamResults.sets[5].points;
+                                    // } else {
+                                    //     obj["TEAM 1 SET 6"] = "";
+                                    // }
+                                    // if (mainData.resultThrowball.teams[0].teamResults.sets.length >= 7) {
+                                    //     obj["TEAM 1 SET 7"] = mainData.resultThrowball.teams[0].teamResults.sets[6].points;
+                                    // } else {
+                                    //     obj["TEAM 1 SET 7"] = "";
+                                    // }
                                     if (mainData.opponentsTeam.length == 1) {
-                                        obj["SCORE"] = mainData.resultThrowball.teams[0].teamResults.finalScore;
+                                        obj["SCORE"] = mainData.resultThrowball.teams[0].teamResults.finalPoints;
                                     }
                                 }
                             } else {
@@ -10833,28 +10833,44 @@ var model = {
                                     } else {
                                         obj["TEAM 2 SET 3"] = "";
                                     }
-                                    if (mainData.resultThrowball.teams[1].teamResults.sets.length >= 4) {
-                                        obj["TEAM 2 SET 4"] = mainData.resultThrowball.teams[1].teamResults.sets[3].points;
+                                    // if (mainData.resultThrowball.teams[1].teamResults.sets.length >= 4) {
+                                    //     obj["TEAM 2 SET 4"] = mainData.resultThrowball.teams[1].teamResults.sets[3].points;
+                                    // } else {
+                                    //     obj["TEAM 2 SET 4"] = "";
+                                    // }
+                                    // if (mainData.resultThrowball.teams[1].teamResults.sets.length >= 5) {
+                                    //     obj["TEAM 2 SET 5"] = mainData.resultThrowball.teams[1].teamResults.sets[4].points;
+                                    // } else {
+                                    //     obj["TEAM 2 SET 5"] = "";
+                                    // }
+                                    // if (mainData.resultThrowball.teams[1].teamResults.sets.length >= 6) {
+                                    //     obj["TEAM 2 SET 6"] = mainData.resultThrowball.teams[1].teamResults.sets[5].points;
+                                    // } else {
+                                    //     obj["TEAM 2 SET 6"] = "";
+                                    // }
+                                    // if (mainData.resultThrowball.teams[1].teamResults.sets.length >= 7) {
+                                    //     obj["TEAM 2 SET 7"] = mainData.resultThrowball.teams[1].teamResults.sets[6].points;
+                                    // } else {
+                                    //     obj["TEAM 2 SET 7"] = "";
+                                    // }
+                                    // obj["FINAL SCORE 1"] = mainData.resultThrowball.teams[0].teamResults.finalPoints;
+                                    // obj["FINAL SCORE 2"] = mainData.resultThrowball.teams[1].teamResults.finalPoints;
+                                    obj["SCORE"] = mainData.resultThrowball.teams[0].teamResults.finalPoints + "-" + mainData.resultThrowball.teams[1].teamResults.finalPoints;
+                                    if (mainData.resultThrowball.status == "IsCompleted" && mainData.resultThrowball.isNoMatch == false || mainData.resultThrowball.isDraw == false) {
+                                        if (mainData.resultThrowball.winner.player === mainData.opponentsTeam[0]._id.toString()) {
+                                            obj["WINNER NAME"] = mainData.opponentsTeam[0].name;
+                                            obj["WINNER TEAM ID"] = mainData.opponentsTeam[0].teamId;
+                                            obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 1"];
+                                        } else {
+                                            obj["WINNER NAME"] = mainData.opponentsTeam[1].name;
+                                            obj["WINNER TEAM ID"] = mainData.opponentsTeam[1].teamId;
+                                            obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 2"];
+                                        }
                                     } else {
-                                        obj["TEAM 2 SET 4"] = "";
+                                        obj["WINNER NAME"] = "";
+                                        obj["WINNER TEAM ID"] = "";
+                                        obj["WINNER SCHOOL"] = "";
                                     }
-                                    if (mainData.resultThrowball.teams[1].teamResults.sets.length >= 5) {
-                                        obj["TEAM 2 SET 5"] = mainData.resultThrowball.teams[1].teamResults.sets[4].points;
-                                    } else {
-                                        obj["TEAM 2 SET 5"] = "";
-                                    }
-                                    if (mainData.resultThrowball.teams[1].teamResults.sets.length >= 6) {
-                                        obj["TEAM 2 SET 6"] = mainData.resultThrowball.teams[1].teamResults.sets[5].points;
-                                    } else {
-                                        obj["TEAM 2 SET 6"] = "";
-                                    }
-                                    if (mainData.resultThrowball.teams[1].teamResults.sets.length >= 7) {
-                                        obj["TEAM 2 SET 7"] = mainData.resultThrowball.teams[1].teamResults.sets[6].points;
-                                    } else {
-                                        obj["TEAM 2 SET 7"] = "";
-                                    }
-
-                                    obj["SCORE"] = mainData.resultThrowball.teams[0].teamResults.finalScore + "-" + mainData.resultThrowball.teams[1].teamResults.finalScore;
                                 }
                             } else {
                                 obj["TEAM ID 2"] = "";
