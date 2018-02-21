@@ -410,17 +410,24 @@ var model = {
                     }
 
                     if (stopCount == 9) {
-                        returnObj.genderRatio = returnObj.maleCount / divideBy + ":" + returnObj.femaleCount / divideBy;
+                        var mR = returnObj.maleCount / divideBy;
+                        var fR = returnObj.femaleCount / divideBy;
+                        var m = _.round((mR/(mR+fR))*100);
+                        var f = _.round((fR/(mR+fR))*100);
+                        
+                        returnObj.genderRatio = m + ":" + f; 
                         callback(returnObj);
                     }
                 }
+                
+
             } else if (arr['male']) {
                 returnObj.maleCount = arr['male'].length;
-                returnObj.genderRatio = "1:0";
+                returnObj.genderRatio = "100:0";
                 callback(returnObj);
             } else if (arr['female']) {
                 returnObj.femaleCount = arr['female'].length;
-                returnObj.genderRatio = "0:1";
+                returnObj.genderRatio = "0:100";
                 callback(returnObj);
             } else {
                 callback(returnObj);
