@@ -267,6 +267,17 @@ myApp.factory('NavigationService', function ($http) {
                 sref: "#/folder",
                 icon: "phone",
             }]
+        }, {
+            name: "Ad Banners",
+            classis: "activeColor",
+            sref: "",
+            icon: "phone",
+            subnav: [{
+                name: "Gallery",
+                classis: "activeColor",
+                sref: "#/adgallery",
+                icon: "phone",
+            }]
         },
         {
             name: "ConfigProperty",

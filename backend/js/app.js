@@ -374,6 +374,18 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'DetailGalleryCtrl'
         })
+        // ad gallery
+        .state('adgallery', {
+            url: "/adgallery",
+            templateUrl: "views/template.html",
+            controller: 'AdGalleryCtrl'
+        })
+        //detail gallery
+        .state('detailadgallery', {
+            url: "/detailadgallery/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailAdGalleryCtrl'
+        })
         //faq
         .state('faq', {
             url: "/faq",

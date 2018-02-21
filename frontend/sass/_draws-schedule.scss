@@ -1702,7 +1702,14 @@ $sport-table-grey:#efeeee !default;
     font-size: 45px;
   }
   .event-gallery-subtitle {
-    font-size: 16px;
+    font-size: 20px;
+    color: $sport-dark-grey;
+  }
+  .event-gallery-photoheader,
+  .even-gallery-videoheader {
+    h3 {
+      font-size: 32px;
+    }
   }
 }
 
@@ -1711,6 +1718,10 @@ $sport-table-grey:#efeeee !default;
 }
 
 // COMMON
+.event-gallery-sport {
+  margin: 30px 0px;
+}
+
 .album-holder {
   .album-pic-holder {
     background-position: 50% 50%;
@@ -1724,6 +1735,9 @@ $sport-table-grey:#efeeee !default;
   }
   .album-subtitle {
     font-size: 18px;
+  }
+  .album-photo-detail {
+    color: $sport-dark-grey;
   }
 }
 
@@ -1740,7 +1754,7 @@ $sport-table-grey:#efeeee !default;
   }
   .evnt-thumbnailtitle {
     text-align: left;
-    font-size: 16px;
+    font-size: 18px;
   }
 }
 

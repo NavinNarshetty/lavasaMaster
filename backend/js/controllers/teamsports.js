@@ -79,6 +79,11 @@ myApp.controller('FormatTableTeamCtrl', function ($scope, TemplateService, Navig
         $state.go('detailtsport-team', {
           id: data.matchId
         });
+      } else if (data.sport.sportslist.sportsListSubCategory.name == 'Karate Team Kumite' && data.sport.sportslist.sportsListSubCategory.sportsListCategory.name == "Combat Sports") {
+        console.log("in combat")
+        $state.go('detailtsport-team', {
+          id: data.matchId
+        });
       }
     }
   }

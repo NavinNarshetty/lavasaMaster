@@ -1,0 +1,117 @@
+<div class="heading-sec">
+  <div class="row">
+    <div class="col-md-4 column">
+      <div class="heading-profile">
+        <h2>{{title}} Ad Banner</h2>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="widget">
+        <div class="form-elements-sec">
+          <form name="detailAdForm" role="form" class="sec">
+            <div class="row">
+              <!-- TITLE -->
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Title</label>
+                  <input type="text" name="title" ng-model="formData.title" class="form-control" placeholder="Enter Title" required>
+                  <div class="error-msg" ng-if="detailAdForm.title.$invalid && detailAdForm.title.$touched">Please Enter Valid Title *</div>
+                </div>
+                <!-- TITLE END -->
+              </div>
+              <!-- LINK TYPE -->
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="linktype">Link Type</label>
+                  <select name="linktype" id="linktype" ng-model="formData.linkType" class="form-control">
+                    <option value="internal">Internal</option>
+                    <option value="external">external</option>
+                    <option value="videolink">Video Link</option>
+                    <option value="nolink">No Link</option>
+                  </select>
+                </div>
+              </div>
+              <!-- LINK TYPE END -->
+
+              <!-- UPLOAD FILE -->
+
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Ad Banner</label>
+                  <upload-image ng-model="formData.desktop.adBanner"></upload-image>
+                </div>
+              </div>
+              <!-- UPLOAD FILE END -->
+
+              <!-- AD LINK -->
+              <div class="col-md-12" ng-if="formData.linkType !='nolink'">
+                <div class="form-group">
+                  <label>Ad Link</label>
+                  <input type="text" name="adlink" ng-model="formData.desktop.adLink" id="" class="form-control" placeholder="Enter Link" required>
+                  <div class="error-msg" ng-if="detailAdForm.adlink.$invalid && detailAdForm.adlink.$touched">Please Enter Valid Link *</div>
+                </div>
+              </div>
+              <!-- AD LINK END -->
+
+              <!-- PLACEMENT -->
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Ad Placement</label>
+                  <select name="adplacement" id="" class="form-control" title="Please enter the placement" ng-model="formData.adPlacement"
+                    required>
+                    <option value="1stbanner">1st Banner-(Top)</option>
+                    <option value="2ndbanner">2nd Banner-(Middle)</option>
+                    <option value="3rdbanner">3rd Banner-(Bottom)</option>
+                  </select>
+                </div>
+              </div>
+              <!-- PLACEMENT END -->
+
+              <!-- *****************************MOBILE****************************************** -->
+              <div class="text-center col-md-12">
+                <h4 class="text-uppercase">Mobile</h4>
+              </div>
+
+              <!-- MOBILE LINK -->
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="">Mobile Link</label>
+                  <input type="text" name="mobilelink" ng-model="formData.mobile.mobileLink" class="form-control" id="" required>
+                  <div class="error-msg" ng-if="detailAdForm.mobilelink.$invalid && detailAdForm.mobilelink.$touched">Please Enter Valid Link *</div>
+                </div>
+              </div>
+              <!-- MOBILE LINK END -->
+
+              <!-- MOBILE UPLOAD -->
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Mobile Ad Banner</label>
+                  <upload-image ng-model="formData.mobile.mobileAdBanner"></upload-image>
+                </div>
+              </div>
+              <!-- MOBILE UPLOAD END -->
+
+              <!-- <div>
+                <img ng-src="{{formData.desktop.adBanner | serverimage  }}" alt="" srcset="">
+              </div> -->
+              <!-- BUTTON -->
+              <div class="col-md-12">
+                <div class="text-center mt20 odd-even-button">
+                  <button class="btn btn-default" type="submit" ng-click="saveData(formData)">Save</button>
+                  <button class="btn btn-default" ui-sref="adgallery">Cancel</button>
+                </div>
+              </div>
+              <!-- BUTTON END -->
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

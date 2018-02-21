@@ -21,7 +21,7 @@
               <div class="event-video-holder" ui-sref="featuredvideogallery({mediaType:'video',name:videoCard.folder})">
                 <div class="event-thumbnailholder" style="background-image:url('{{videoCard.thumbnails[3].link||videoCard.thumbnail}}')">
                 </div>
-                <div class="evnt-thumbnailtitle" title="{{videoCard.folder}}">
+                <div class="evnt-thumbnailtitle d-fjalla-one" title="{{videoCard.folder}}">
                   {{videoCard.folder | truncate:'50'}}
                 </div>
               </div>
@@ -59,8 +59,8 @@
                 <div class="album-pic-holder" style="background-image:url('{{card.mediaThumbnail | mediapathtwo}}')" ui-sref="featuredgallery({mediaType:'photo',type:'Category',name:card._id})">
                 </div>
                 <div class="album-title-holder">
-                  <p class="fjalla-one text-capitalize m-clear album-subtitle" title="{{card._id}}">{{card._id | truncate:'22'}}</p>
-                  <p><span><i class="fa fa-picture-o color-darkgrey"></i></span><span> <span>{{card.totalCount}}</span> <span>Photos</span></span>
+                  <p class="d-fjalla-one text-capitalize m-clear album-subtitle" title="{{card._id}}">{{card._id | truncate:'22'}}</p>
+                  <p class="album-photo-detail"><span><i class="fa fa-picture-o color-darkgrey"></i></span><span> <span>{{card.totalCount}}</span>          <span>Photos</span></span>
           </p>
         </div>
       </div>
@@ -78,7 +78,7 @@
 <!-- AD SPACE END -->
 
 <!-- VIEW BY SPORT -->
-<div class="event-gallery-category" ng-if="allPhotosbySport.length>0">
+<div class="event-gallery-category event-gallery-sport" ng-if="allPhotosbySport.length>0">
   <div class="event-gallery-subtitle text-uppercase">
     view by Sport
   </div>
@@ -88,8 +88,8 @@
         <div class="album-pic-holder" style="background-image:url('{{card.mediaThumbnail |mediapathtwo}}')" ui-sref="featuredgallery({mediaType:'photo',type:'Sport',name:card._id})">
         </div>
         <div class="album-title-holder">
-          <p class="fjalla-one text-capitalize m-clear album-subtitle ">{{card._id | truncate:'25'}}</p>
-          <p><span>
+          <p class="d-fjalla-one text-capitalize m-clear album-subtitle ">{{card._id | truncate:'25'}}</p>
+          <p class="album-photo-detail"><span>
              <i class="fa fa-picture-o color-darkgrey"></i></span><span> <span>{{card.totalCount}}</span> <span>Photos</span></span>
           </p>
         </div>
