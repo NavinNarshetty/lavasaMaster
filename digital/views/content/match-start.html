@@ -17,7 +17,7 @@
   </div>
   <div class="matchstart-section get-center">
     <!-- PLAYER SELECTION SECTION -->
-    <div class="matchstart-playerheader" ng-if="matchDetails.prevMatch && (matchDetails.opponentsSingle.length < 2 || !matchDetails.opponentsSingle) && !matchDetails.isTeam">
+    <div class="matchstart-playerheader" ng-if="matchDetails.prevMatch.length == 0 && (matchDetails.opponentsSingle.length < 2 || !matchDetails.opponentsSingle) && !matchDetails.isTeam">
       <div class="container">
         <div class="row">
           <div class="col-md-5 col-sm-5" ng-repeat="single in savePlayerList track by $index">
