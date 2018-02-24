@@ -13301,7 +13301,7 @@ var model = {
                                                 var paramData = {};
                                                 paramData.team = singleData["SFAID 1"];
                                                 paramData.sport = singleData.SPORT;
-                                                Match.getTeamId(paramData, function (err, complete) {
+                                                Match.getAthleteId(paramData, function (err, complete) {
                                                     if (err || _.isEmpty(complete)) {
                                                         singleData["NAME 1"] = null;
                                                         err = "SFAID 1 may have wrong values";
@@ -13331,7 +13331,7 @@ var model = {
                                                 var paramData = {};
                                                 paramData.team = singleData["SFAID 2"];
                                                 paramData.sport = singleData.SPORT;
-                                                Match.getTeamId(paramData, function (err, complete) {
+                                                Match.getAthleteId(paramData, function (err, complete) {
                                                     if (err || _.isEmpty(complete)) {
                                                         singleData["NAME 2"] = null;
                                                         err = "SFAID 2 may have wrong values";
