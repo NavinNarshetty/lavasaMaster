@@ -178,7 +178,7 @@ myApp.controller('DigitalHomeCtrl', function ($scope, TemplateService, $state, N
         console.log("sportId", sportId);
         $scope.nameOfSport = sportName;
         console.log("$scope.nameOfSport", $scope.nameOfSport);
-        if (sportName === 'Boxing' || sportName === 'Judo' || sportName === 'Kumite' || sportName === 'Taekwondo' || sportName === 'Sport MMA') {
+        if (sportName === 'Boxing' || sportName === 'Judo' || sportName === 'Kumite' || sportName === 'Taekwondo' || sportName === 'Sport MMA' || sportName == 'Wrestling') {
             $scope.showWeight = true;
         } else {
             $scope.showWeight = false;
