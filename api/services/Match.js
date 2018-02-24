@@ -4558,7 +4558,7 @@ var model = {
                         } else {
                             obj["FINAL SCORE 1"] = mainData.resultWaterPolo.teams[0].teamResults.finalGoalPoints;
                         }
-                        obj["DATA POINTS 1"] = "shotsOnGoal:" + mainData.resultHockey.teams[0].teamResults.shotsOnGoal + ",totalShots:" + mainData.resultHockey.teams[0].teamResults.totalShots + ",penalty:" + mainData.resultHockey.teams[0].teamResults.penalty + ",penaltyPoints:" + mainData.resultHockey.teams[0].teamResults.penaltyPoints + ",saves:" + mainData.resultHockey.teams[0].teamResults.saves;
+                        obj["DATA POINTS 1"] = "shotsOnGoal:" + mainData.resultWaterPolo.teams[0].teamResults.shotsOnGoal + ",totalShots:" + mainData.resultWaterPolo.teams[0].teamResults.totalShots + ",penalty:" + mainData.resultWaterPolo.teams[0].teamResults.penalty + ",penaltyPoints:" + mainData.resultWaterPolo.teams[0].teamResults.penaltyPoints + ",saves:" + mainData.resultWaterPolo.teams[0].teamResults.saves;
                     } else if (mainData.resultVolleyball) {
                         if (mainData.opponentsTeam.length == 1 && mainData.resultVolleyball.winner.player === mainData.opponentsTeam[0]._id.toString()) {
                             obj["RESULT 1"] = "Bye";
@@ -4862,7 +4862,7 @@ var model = {
                         } else {
                             obj["FINAL SCORE"] = mainData.resultWaterPolo.teams[0].teamResults.finalGoalPoints;
                         }
-                        obj["DATA POINTS 2"] = "shotsOnGoal:" + mainData.resultHockey.teams[1].teamResults.shotsOnGoal + ",totalShots:" + mainData.resultHockey.teams[1].teamResults.totalShots + ",penalty:" + mainData.resultHockey.teams[1].teamResults.penalty + ",penaltyPoints:" + mainData.resultHockey.teams[1].teamResults.penaltyPoints + ",saves:" + mainData.resultHockey.teams[1].teamResults.saves;
+                        obj["DATA POINTS 2"] = "shotsOnGoal:" + mainData.resultWaterPolo.teams[1].teamResults.shotsOnGoal + ",totalShots:" + mainData.resultWaterPolo.teams[1].teamResults.totalShots + ",penalty:" + mainData.resultWaterPolo.teams[1].teamResults.penalty + ",penaltyPoints:" + mainData.resultWaterPolo.teams[1].teamResults.penaltyPoints + ",saves:" + mainData.resultWaterPolo.teams[1].teamResults.saves;
                     } else if (mainData.resultHockey) {
                         if (mainData.resultHockey.winner.player === mainData.opponentsTeam[1]._id.toString()) {
                             if (mainData.resultHockey.teams[0].walkover == true) {
@@ -4907,7 +4907,7 @@ var model = {
                         }
                         var i;
                         var sNo = 1;
-                        for (i = 1; i < mainData.resultVolleyball.teams[1].teamResults.sets.length; i++) {
+                        for (i = 0; i < mainData.resultVolleyball.teams[1].teamResults.sets.length; i++) {
                             if (i == 0) {
                                 obj["SCORE 2"] = "Set" + sNo + "-" + mainData.resultVolleyball.teams[1].teamResults.sets[i].points;
                                 sNo++;
