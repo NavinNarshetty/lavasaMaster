@@ -1,4 +1,4 @@
-myApp.controller('SfaGalleryCtrl', function ($scope, TemplateService, errorService, configService, NavigationService, $timeout) {
+myApp.controller('SfaGalleryCtrl', function ($scope, TemplateService, errorService, configService, MediaPopupService, NavigationService, $timeout) {
   //Used to name the .html file
 
   $scope.template = TemplateService.getHTML("content/eventgallery.html");
@@ -111,7 +111,7 @@ myApp.controller('SfaGalleryCtrl', function ($scope, TemplateService, errorServi
   // VIEW BY SPORT END
 
   // get all videos
-  NavigationService.getAllVideos(function (data) {
+  NavigationService.getVideos(function (data) {
     errorService.errorCode(data, function (allData) {
       if (!allData.message) {
         if (allData.value === true) {
@@ -134,7 +134,17 @@ myApp.controller('SfaGalleryCtrl', function ($scope, TemplateService, errorServi
     });
   });
 
+  $scope.showPopup = function (picIndex, picList) {
+    MediaPopupService.openMediaPopup(picIndex, picList, $scope);
+  }
+  $scope.nextSlides = function (currentindex, click) {
 
+    MediaPopupService.nextSlide(currentindex, $scope.eventVideos, $scope, click);
+  }
+  $scope.prevSlides = function (currentindex, click) {
+
+    MediaPopupService.prevSlide(currentindex, $scope.eventVideos, $scope, click);
+  }
 
 
 });

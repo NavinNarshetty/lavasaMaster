@@ -1044,8 +1044,8 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
                                 var match1, match2;
 
                                 if (!($filter('firstcapitalize')(round.name, {
-                                        column1: true
-                                    }) === 'Third Place' && key == 2)) {
+                                    column1: true
+                                }) === 'Third Place' && key == 2)) {
                                     console.log(round.name, "No Third Place");
                                     if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2] && knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar]) {
                                         match1 = knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar];
@@ -1274,6 +1274,13 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
                 method: 'POST',
             }).then(callback);
         },
+        getVideos: function (callback) {
+            $http({
+                url: adminUrl2 + 'media/getVideos',
+                method: 'POST',
+            }).then(callback);
+        },
+
         getAllVideosByFolder: function (request, callback) {
             $http({
                 url: adminUrl2 + 'media/getAllVideosByFolder',

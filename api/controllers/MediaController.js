@@ -32,8 +32,8 @@ var controller = {
             Media.getFolders(req.body, res.callback);
         } else {
             res.json({
-                data:"Insufficient Data",
-                value:false
+                data: "Insufficient Data",
+                value: false
             });
         }
     },
@@ -43,24 +43,26 @@ var controller = {
             Media.getMedias(req.body, res.callback);
         } else {
             res.json({
-                data:"Insufficient Data",
-                value:false
+                data: "Insufficient Data",
+                value: false
             });
         }
     },
 
-    getAllVideos:function(req,res){
+    getAllVideos: function (req, res) {
         Media.getAllVideos(res.callback);
     },
-
-    getAllVideosByFolder:function(req,res){
-        console.log(req.body); 
-        if(req.body && req.body.folder){
-            Media.getAllVideosByFolder(req.body,res.callback);        
-        }else{
+    getVideos: function (req, res) {
+        Media.getVideos(res.callback);
+    },
+    getAllVideosByFolder: function (req, res) {
+        console.log(req.body);
+        if (req.body && req.body.folder) {
+            Media.getAllVideosByFolder(req.body, res.callback);
+        } else {
             res.json({
-                data:"Insufficient Data",
-                value:false
+                data: "Insufficient Data",
+                value: false
             });
         }
     }

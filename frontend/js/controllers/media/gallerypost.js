@@ -1,4 +1,4 @@
-myApp.controller('GalleryPostCtrl', function ($scope, TemplateService, $http, NavigationService, configService, $stateParams) {
+myApp.controller('GalleryPostCtrl', function ($scope, TemplateService, $http, NavigationService, configService, $stateParams, $timeout) {
 
   $scope.template = TemplateService.getHTML("content/gallerypost.html");
   TemplateService.title = "Gallery Post"; //This is the Title of the Website
@@ -14,6 +14,17 @@ myApp.controller('GalleryPostCtrl', function ($scope, TemplateService, $http, Na
   });
   // CONFIG SET END
   // START OF CONTROLLER
+  // FUNCTIONS
+  // SET CONTENT HEIGHT
+  $scope.$on('$viewContentLoaded', function(event){
+    $timeout(function () {
+      $scope.contentHeight = $('.gallerypost-media').height();
+      console.log("het", $scope.contentHeight);
+      $(".gallerypost-content").innerHeight($scope.contentHeight);
+    }, 100);
+  });
+  // SET CONTENT HEIGHT END
+  // FUNCTIONS END
   // DUMMY JSONS
   $scope.pic = {
     medialink: '',

@@ -57,24 +57,24 @@ var model = {
         async.waterfall([
             function (callback) {
                 ConfigProperty.findOne({}, "year").lean().exec(function (err, configs) {
-                    if(err){
-                        callback(err,null);
-                    }else if(!_.isEmpty(configs)){
+                    if (err) {
+                        callback(err, null);
+                    } else if (!_.isEmpty(configs)) {
                         var year = configs.year;
-                        callback(null,year);
-                    }else{
-                        callback(null,[]);
+                        callback(null, year);
+                    } else {
+                        callback(null, []);
                     }
                 });
             },
-            function (year,callback) {
-                if(_.isEmpty(year)){
-                    callback(null,[])
-                }else{
+            function (year, callback) {
+                if (_.isEmpty(year)) {
+                    callback(null, [])
+                } else {
                     async.concatSeries(importData, function (singleData, callback) {
-                    // singleData.date = new Date(Math.round((singleData.date - 25569) * 86400 * 1000));
-                    singleData.date=moment(singleData.date, "DD-MM-YYYY").add(1, 'days');
-                    singleData.year = year;
+                        // singleData.date = new Date(Math.round((singleData.date - 25569) * 86400 * 1000));
+                        singleData.date = moment(singleData.date, "DD-MM-YYYY").add(1, 'days');
+                        singleData.year = year;
                         Media.saveData(singleData, function (err, data) {
                             if (err) {
                                 errorFound = true;
@@ -107,23 +107,23 @@ var model = {
                                     }
                                 }, function (err) {
                                     if (err) {
-    
+
                                     } else {
                                         console.log("Successfully Deleted");
                                     }
                                 });
-    
+
                             }
                         }
-    
+
                     });
                 }
             }
         ], function (err, finalResult) {
-            if(err){
-                callback(err,null);
-            }else{
-                callback(null,finalResult);                
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, finalResult);
             }
         });
 
@@ -131,25 +131,25 @@ var model = {
     },
 
     generateExcel: function (data, res) {
-        console.log("data",data);
+        console.log("data", data);
         var matchObj = {};
         var name = "";
 
         function populatedExcel(matchObj) {
             Media.find(matchObj).lean().exec(function (err, medias) {
                 async.concatSeries(medias, function (singleMedia, callback) {
-                        var obj = {};
-                        obj.year = singleMedia.year;
-                        obj.date = moment(singleMedia.date).format('DD-MM-YY');
-                        obj.folder = singleMedia.folder;
-                        obj.order = singleMedia.order;
-                        obj.imageorder = singleMedia.imageorder;
-                        obj.mediatitle = singleMedia.mediatitle;
-                        obj.mediatype = singleMedia.mediatype;
-                        obj.medialink = singleMedia.medialink;
-                        obj.videotype = singleMedia.videotype;
-                        callback(null, obj);
-                    },
+                    var obj = {};
+                    obj.year = singleMedia.year;
+                    obj.date = moment(singleMedia.date).format('DD-MM-YY');
+                    obj.folder = singleMedia.folder;
+                    obj.order = singleMedia.order;
+                    obj.imageorder = singleMedia.imageorder;
+                    obj.mediatitle = singleMedia.mediatitle;
+                    obj.mediatype = singleMedia.mediatype;
+                    obj.medialink = singleMedia.medialink;
+                    obj.videotype = singleMedia.videotype;
+                    callback(null, obj);
+                },
                     function (err, allMedias) {
                         Config.generateExcel(name, allMedias, res);
                     });
@@ -337,6 +337,18 @@ var model = {
                 }
             }
         );
+    },
+    getVideos: function (callback) {
+        Media.find({ "mediatype": "video" }, function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else {
+                if (!_.isEmpty(found)) {
+                    callback(null, found);
+                }
+            }
+        });
+
     },
 
     getAllVideosByFolder: function (data, callback) {

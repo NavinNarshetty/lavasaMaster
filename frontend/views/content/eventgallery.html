@@ -18,12 +18,13 @@
         <div class="swiper-container">
           <div class="swiper-wrapper">
             <div class="swiper-slide pointer" ng-repeat="videoCard in eventVideos track by $index">
-              <div class="event-video-holder" ui-sref="featuredvideogallery({mediaType:'video',name:videoCard.folder})">
+              <!-- <div class="event-video-holder" ui-sref="featuredvideogallery({mediaType:'video',name:videoCard.folder})"> -->
+              <div class="event-video-holder" ng-click="showPopup($index, eventVideos);">
                 <div class="event-thumbnailholder" style="background-image:url('{{videoCard.thumbnails[3].link||videoCard.thumbnail}}')">
                 </div>
-                <div class="evnt-thumbnailtitle d-fjalla-one" title="{{videoCard.folder}}">
-                  {{videoCard.folder | truncate:'50'}}
-                </div>
+                <!-- <div class="evnt-thumbnailtitle" title="{{videoCard.folder}}">
+                      {{videoCard.folder | truncate:'50'}}
+                    </div> -->
               </div>
             </div>
           </div>

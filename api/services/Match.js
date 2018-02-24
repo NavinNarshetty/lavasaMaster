@@ -3032,9 +3032,9 @@ var model = {
                     }
 
                     final.matchData = found;
-                    console.log("final match", final);
+                    // console.log("final match", final);
                     async.eachSeries(found, function (singleData, callback) {
-                        console.log("singleData", singleData);
+                        // console.log("singleData", singleData);
                         if (thirdPlaceCount == 0) {
                             if (count < 2) {
                                 match.prev.push(singleData._id);
@@ -3060,7 +3060,7 @@ var model = {
                     var row = 0;
                     var ThirdPlace = [];
                     async.eachSeries(final.finalPrevious, function (singleData, callback) {
-                            console.log("i", i, "row", final.matchData[row]._id);
+                            // console.log("i", i, "row", final.matchData[row]._id);
                             var id = final.matchData[row]._id;
                             var updateObj = {
                                 $set: {
@@ -3074,7 +3074,7 @@ var model = {
                                     _id: id
                                 }, updateObj).exec(
                                     function (err, match) {
-                                        console.log("updated");
+                                        // console.log("updated");
                                     });
                             }
                             i++;
@@ -3103,15 +3103,15 @@ var model = {
                             } else {
                                 if (_.isEmpty(found)) {
                                     callback(null, []);
-                                    console.log("empty");
+                                    // console.log("empty");
                                 } else {
-                                    console.log("final", found);
+                                    // console.log("final", found);
                                     var updateObj = {
                                         $set: {
                                             prevMatch: found.prevMatch
                                         }
                                     };
-                                    console.log("updateObj", updateObj);
+                                    // console.log("updateObj", updateObj);
                                     Match.update({
                                         sport: data.sport,
                                         round: "Final"
@@ -13133,7 +13133,9 @@ var model = {
                                             paramData.opponentsTeam = [];
                                             paramData.matchId = singleData["MATCH ID"];
                                             paramData.round = singleData["ROUND"];
-                                            if (_.isEmpty(singleData["TEAM NAME 1"]) || _.isEmpty(singleData["TEAM NAME 2"])) {
+                                            console.log("Team 1", singleData["TEAM NAME 1"]);
+                                            console.log("Team 2", singleData["TEAM NAME 2"]);
+                                            if (_.isEmpty(singleData["TEAM NAME 1"]) && _.isEmpty(singleData["TEAM NAME 2"])) {
                                                 paramData.opponentsTeam = [];
                                             } else if (_.isEmpty(singleData["TEAM NAME 1"])) {
                                                 paramData.opponentsTeam.push(singleData["TEAM NAME 2"]);
@@ -13207,7 +13209,7 @@ var model = {
                 },
                 function (singleData, callback) {
                     async.concatSeries(singleData, function (n, callback) {
-                            console.log("n", n);
+                            // console.log("n", n);
                             var excelType = n.STAGE.toLowerCase();
                             var thirdplace = n.ROUND.toLowerCase();
                             if (excelType == 'knockout') {
@@ -13226,7 +13228,7 @@ var model = {
                         });
                 },
                 function (singleData, callback) {
-                    console.log("singleData", singleData);
+                    // console.log("singleData", singleData);
                     if (singleData.error) {
                         callback(null, singleData);
                     } else {
@@ -18783,7 +18785,7 @@ var model = {
                 callback(null, obj);
             }, function (err, result1) {
                 Config.generateExcel("playedEvents", result1, res);
-            });         
+            });
         })
     }
 

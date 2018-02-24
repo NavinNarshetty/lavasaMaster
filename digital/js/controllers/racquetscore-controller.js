@@ -185,7 +185,7 @@ myApp.controller('RacquetScoreCtrl', function($scope, TemplateService, Navigatio
       switch (model) {
         case 'ace':
           if ($scope.set.ace == "") {
-            $scope.set.point = 1;
+            $scope.set.ace = 1;
           } else {
             $scope.set.ace = $scope.set.ace + 1;
           }
