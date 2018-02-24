@@ -5074,6 +5074,11 @@ var model = {
                             Match.getResultArray(n, finalData, result, function (err, complete) {
                                 callback(null, complete);
                             });
+                        } else if (n.resultsCombat) {
+                            var result = n.resultsCombat;
+                            Match.getResultArray(n, finalData, result, function (err, complete) {
+                                callback(null, complete);
+                            });
                         } else {
                             callback(null, finalData);
                         }
