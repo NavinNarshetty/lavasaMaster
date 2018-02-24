@@ -389,19 +389,20 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
                 "walkover": false,
                 "sets": [{
                   point: "",
-                }]
+                }],
+                "players": []
               }
-            })
-            _.each($scope.matchDetails.teams[key].studentTeam, function (m, mkey) {
-              $scope.formData.teams[key].players[mkey] = {
-                "player": m.studentId._id,
-                "firstName": m.studentId.firstName,
-                "surname": m.studentId.surname,
-                "fullName": m.studentId.firstName + " " + m.studentId.surname,
-                "sfaId": m.sfaId,
-                "isPlaying": false,
-                "jerseyNo": "",
-              }
+              _.each($scope.matchDetails.teams[key].studentTeam, function (m, mkey) {
+                $scope.formData.teams[key].players[mkey] = {
+                  "player": m.studentId._id,
+                  "firstName": m.studentId.firstName,
+                  "surname": m.studentId.surname,
+                  "fullName": m.studentId.firstName + " " + m.studentId.surname,
+                  "sfaId": m.sfaId,
+                  "isPlaying": false,
+                  "jerseyNo": "",
+                }
+              })
             })
           } else {
             $scope.formData = $scope.matchDetails.resultsCombat;
@@ -947,7 +948,7 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
         switch ($scope.matchDetails.sportType) {
           case "Combat Sports":
             if ($stateParams.drawFormat === 'Knockout') {
-              $state.go('knockout-teams', {
+              $state.go('knockout-team', {
                 drawFormat: $stateParams.drawFormat,
                 id: $stateParams.sport
               });
