@@ -113,7 +113,22 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
           _.each(result.globalResult.teams, function (n) {
             n.walkover = NavigationService.Boolean(n.walkover);
             n.noShow = NavigationService.Boolean(n.noShow);
-            team.finalPoint = result.globalResult.teams[index].teamResults.finalPoints;
+            if (result.globalResult.teams[index].teamResults) {
+              team.finalPoint = result.globalResult.teams[index].teamResults.finalPoints;
+            }
+            if (result.globalResult.teams) {
+              if (result.globalResult.teams[0].sets != undefined && result.globalResult.teams[0].sets[0]) {
+                result.score1 = result.globalResult.teams[0].sets[0].point;
+              }
+              if (result.globalResult.teams[1] && result.globalResult.teams[1].sets != undefined && result.globalResult.teams[1].sets[0]) {
+                result.score2 = result.globalResult.teams[1].sets[0].point;
+
+              }
+              result.finalScore = result.score1 + ' - ' + result.score2;
+            }
+
+
+
 
           });
           var tempWakover = _.find(result.globalResult.teams, ['walkover', true]);
