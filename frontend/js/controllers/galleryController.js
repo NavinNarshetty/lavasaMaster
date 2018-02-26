@@ -147,4 +147,24 @@ myApp.controller('SfaGalleryCtrl', function ($scope, TemplateService, errorServi
   }
 
 
+  // GET AD BANNERS
+  $scope.adBanners = function () {
+    $scope.url = "AdGallery/search";
+    NavigationService.apiCallWithoutformData($scope.url, function (data) {
+      console.log(data, "ad data");
+      $scope.adBanners = data.data.results;
+      $scope.positionadBanners = _.each($scope.adBanners, function (key) {
+        console.log(key, "inside key");
+        if (key.adPlacement === '2ndbanner') {
+          $scope.secondAdBanner = key;
+        } else if (key.adPlacement === '1stbanner') {
+          $scope.firstAdBanner = key;
+        }
+      })
+    });
+
+  }
+  $scope.adBanners();
+  // GET AD BANNERS
+
 });

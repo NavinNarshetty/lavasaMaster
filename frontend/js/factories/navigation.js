@@ -559,6 +559,14 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
             });
         },
 
+        apiCallWithoutformData: function (url, callback) {
+            $http.post(adminUrl2 + url).then(function (data) {
+                data = data.data;
+                callback(data);
+
+            });
+        },
+
         getSportRoundLeague: function (request, callback) {
             $http({
                 url: adminUrl + 'league/getSportRoundLeague',
@@ -1044,8 +1052,8 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
                                 var match1, match2;
 
                                 if (!($filter('firstcapitalize')(round.name, {
-                                    column1: true
-                                }) === 'Third Place' && key == 2)) {
+                                        column1: true
+                                    }) === 'Third Place' && key == 2)) {
                                     console.log(round.name, "No Third Place");
                                     if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2] && knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar]) {
                                         match1 = knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar];
