@@ -7397,7 +7397,7 @@ var model = {
                                 }
                                 if (mainData.opponentsSingle.length == 1) {
                                     obj["RESULT 1"] = "Bye";
-                                } else if (mainData.resultSwiss.winner.player === mainData.opponentsSingle[0]._id.toString()) {
+                                } else if (mainData.resultSwiss.winner.player.equals(mainData.opponentsSingle[0]._id)) {
                                     if (mainData.resultSwiss.players[0].walkover == true) {
                                         obj["RESULT 1"] = "walkover";
                                     } else {
@@ -7419,7 +7419,7 @@ var model = {
                                     }
                                 }
                                 if (mainData.opponentsSingle.length == 2) {
-                                    if (mainData.resultSwiss.winner.player === mainData.opponentsSingle[1]._id.toString()) {
+                                    if (mainData.resultSwiss.winner.player.equals(mainData.opponentsSingle[1]._id)) {
                                         if (mainData.resultSwiss.players[1].walkover == true) {
                                             obj["RESULT 2"] = "walkover";
                                         } else {
@@ -16365,10 +16365,10 @@ var model = {
                                                     paramData.opponentsSingle.push(singleData["NAME 2"]);
                                                     player1.id = singleData["NAME 2"];
                                                     player1.player = singleData["Athlete 2"];
-                                                    if (singleData["P2 SCORE"] !== undefined || !_.isEmpty(singleData["P2 SCORE"])) {
+                                                    if (singleData["P2 SCORE"] != undefined || !_.isEmpty(singleData["P2 SCORE"])) {
                                                         console.log("Player 2", player1);
                                                         player1.score = singleData["P2 SCORE"];
-                                                        if (singleData["P2 RANK"] !== undefined || !_.isEmpty(singleData["P2 RANK"])) {
+                                                        if (singleData["P2 RANK"] != undefined || !_.isEmpty(singleData["P2 RANK"])) {
                                                             player1.rank = singleData["P2 RANK"];
                                                         } else {
                                                             player1.rank = "";
@@ -16407,13 +16407,16 @@ var model = {
                                             if (singleData["WINNER SFAID"] == singleData["SFAID 1"]) {
                                                 winner.player = singleData["NAME 1"];
                                                 resultData.isDraw = false;
+                                                resultData.isNoMatch = false;
                                             } else if (singleData["WINNER SFAID"] == singleData["SFAID 2"]) {
                                                 winner.player = singleData["NAME 2"];
                                                 resultData.isDraw = false;
+                                                resultData.isNoMatch = false;
                                             } else if (temp.isNoMatch1 == true && temp.isNoMatch2 == true) {
                                                 resultData.isNoMatch = true;
                                             } else {
                                                 resultData.isDraw = true;
+                                                resultData.isNoMatch = false;
                                             }
                                             resultData.winner = winner;
                                             paramData.resultSwiss = resultData;
