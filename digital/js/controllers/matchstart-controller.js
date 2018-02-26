@@ -194,7 +194,6 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
                     });
                   }
                   break;
-
               }
             } else {
               toastr.error('Data save failed. Please try again or check your internet connection.', 'Save Error');
@@ -770,7 +769,7 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
   // SAVE TEAM RESULT
   $scope.saveTeamResult = function (formData) {
     $scope.initialiseResults('redirect', 'team');
-    console.log(bool, formData, 'svae data');
+    console.log(formData, 'svae data');
   }
   // SAVE TEAM RESULT END
   // UPDATE WINNER RESULT
