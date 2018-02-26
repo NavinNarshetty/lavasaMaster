@@ -22,8 +22,21 @@
                   <input type="text" name="title" ng-model="formData.title" class="form-control" placeholder="Enter Title" required>
                   <div class="error-msg" ng-if="detailAdForm.title.$invalid && detailAdForm.title.$touched">Please Enter Valid Title *</div>
                 </div>
-                <!-- TITLE END -->
               </div>
+              <!-- TITLE END -->
+
+              <!-- STATUS -->
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="">Status</label>
+                  <select name="status" id="status" ng-model="formData.status" class="form-control">
+                    <option value="enable">Enable</option>
+                    <option value="disable">Disable</option>
+                  </select>
+                </div>
+              </div>
+              <!-- STATUS -->
+
               <!-- LINK TYPE -->
               <div class="col-md-12">
                 <div class="form-group">
@@ -71,6 +84,8 @@
                 </div>
               </div>
               <!-- PLACEMENT END -->
+
+
 
               <!-- *****************************MOBILE****************************************** -->
               <div class="text-center col-md-12">

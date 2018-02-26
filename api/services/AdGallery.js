@@ -11,7 +11,8 @@ var schema = new Schema({
         mobileLink: String,
         mobileAdBanner: String
     },
-    adPlacement: String
+    adPlacement: String,
+    status: String
 });
 
 schema.plugin(deepPopulate, {});
