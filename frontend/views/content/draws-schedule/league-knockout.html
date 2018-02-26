@@ -102,7 +102,8 @@
                   <span class="display-block" ng-if="data.status === 'IsCompleted' && data.walkover && !data.reason">Won by walkover</span>
                   <span class="display-block" ng-if="data.status === 'IsCompleted' && data.isNoMatch && !data.reason">No match</span>
                   <span class="display-block" ng-if="data.reason">Bye</span>
-                  <a class="display-block" ng-if="data.status === 'IsCompleted' && !data.isNoMatch && !data.walkover && !data.resultFencing && !data.reason && !content.reason"
+                  <a class="display-block" ng-if="data.finalScore && data.status === 'IsCompleted' && !data.isNoMatch && !data.walkover && !data.isDraw  && !data.resultFencing && !data.reason">{{data.finalScore}}</a>
+                  <a class="display-block" ng-if="!data.finalScore && data.status === 'IsCompleted' && !data.isNoMatch && !data.walkover && !data.resultFencing && !data.reason"
                     ng-click="matchCenter(data)">Match Center</a>
                   <p class="m-clear" ng-if="data.status === 'IsCompleted' && !data.isNoMatch && !data.walkover && data.resultFencing && data.resultFencing.players[0].finalPoints && data.resultFencing.players[1].finalPoints">{{data.resultFencing.players[0].finalPoints}} - {{data.resultFencing.players[1].finalPoints}}</p>
                 </div>
@@ -370,7 +371,8 @@
                             <span class="display-block" ng-if="content.status === 'IsCompleted' && content.isNoMatch">No Match</span>
                             <span class="display-block" ng-if="content.isDraw">Draw</span>
                             <span class="display-block" ng-if="content.reason">Bye</span>
-                            <a class="display-block" ng-if="content.status === 'IsCompleted' && !content.isNoMatch && !content.walkover && !content.isDraw  && !content.resultFencing && !content.reason"
+                            <a class="display-block" ng-if="content.finalScore && content.status === 'IsCompleted' && !content.isNoMatch && !content.walkover && !content.isDraw  && !content.resultFencing && !content.reason">{{content.finalScore}}</a>
+                            <a class="display-block" ng-if="!content.finalScore && content.status === 'IsCompleted' && !content.isNoMatch && !content.walkover && !content.isDraw  && !content.resultFencing && !content.reason"
                               ng-click="matchCenter(content)">Match Center</a>
                             <p class="m-clear" ng-if="content.status === 'IsCompleted' && !content.isNoMatch && !content.walkover && content.resultFencing">{{content.resultFencing.players[0].finalPoints}} - {{content.resultFencing.players[1].finalPoints}}</p>
 
