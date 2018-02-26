@@ -108,7 +108,7 @@ var model = {
                     format.sets = []
                     break;
                 case "Tennis Singles":
-                case "Table Tennis":
+                case "Table Tennis Singles":
                 case "Badminton Singles":
                 case "Squash":
                     console.log(" case inside");
