@@ -22,6 +22,10 @@ $grey: #e1e1e1;
   bottom: auto;
   @include transform(translateY(-50%));
 
+  .modal-lg{
+    width: 1000px;
+  }
+
   .modal-content{
     border-radius: 0;
   }
@@ -54,6 +58,13 @@ $grey: #e1e1e1;
   font-size: 48px;
   line-height: 1;
   @include transform(translateY(-50%)) ;
+}
+.photovideo-navclose{
+  padding: 0px 10px;
+  top: 0;
+  right: -40px;
+  font-size: 30px;
+  @include transform(translateY(0)) ;
 }
 .photovideo-navleft {
     left: -40px;
@@ -132,7 +143,8 @@ $grey: #e1e1e1;
     flex-wrap: nowrap;
 }
 .photovideo-sharebox {
-    flex: auto;
+    // flex: auto;
+    margin: 0px 5px;
     text-align: center;
 }
 .photovideo-socialbutton {
@@ -169,7 +181,7 @@ $grey: #e1e1e1;
   min-height: 350px;
 }
 .photovideo-popup .photovideo-vidframe{
-  min-height: 350px;
+  min-height: 440px;
 }
 // VIDEO HOLDER END
 // PHOTO VIDEO POPUP END
@@ -2328,10 +2340,24 @@ $tickerDuration: 60s;
   // min-height: calc( 100vh - 100px);
   padding: 60px 0 50px;
 }
-// GALLERY POST MEDIA SECTION
-.gallerypost-media{
-
+.gallerypost-card{
+  border: 1px solid $grey;
+  .col-md-8, .col-sm-8, .col-xs-12{
+    padding: 0;
+  }
 }
+.gallerypost-btnholder{
+  margin: 20px 0;
+  text-align: center;
+}
+.btn-gallerypost{
+  background-color: transparent;
+  border: 1px solid $sport-primary;
+  color: $sport-primary;
+  font-size: 16px;
+}
+// GALLERY POST MEDIA SECTION
+.gallerypost-media{}
 .gallerypost-videoholder{
   background: rgba(0,0,0,0.7);
   background-position: 50% 50%;
@@ -2341,7 +2367,8 @@ $tickerDuration: 60s;
 // GALLERY POST MEDIA SECTION END
 // GALLERY POST CONTENT SECTION
 .gallerypost-content{
-  padding: 10px;
+  padding: 10px 20px;
+  position: relative;
 }
 .gallerypost-title {
   margin-bottom: 15px;
@@ -2365,6 +2392,11 @@ $tickerDuration: 60s;
   border-bottom: 1px solid #ccc;
 }
 .gallerypost-shareholder{
+  width: 100%;
+  padding: 10px 20px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
   p{
     font-weight: 700;
   }

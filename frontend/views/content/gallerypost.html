@@ -1,6 +1,7 @@
 <div class="gallerypost-page d-opensans-regular">
   <div class="container">
-    <div class="row">
+    <!-- GALLERY POST -->
+    <div class="row gallerypost-card">
       <!-- MEDIA HOLDER -->
       <div class="col-md-8 col-sm-8 col-xs-12">
         <div class="gallerypost-media">
@@ -26,8 +27,18 @@
             <span ng-if="pic.mediatype == 'video'">{{pic.mediatitle}}</span>
           </div>
           <!-- GALLERY POST TITLE END -->
+          <!-- TAG MESSAGE -->
+          <div class="gallerypost-tagmsg">
+            <!-- NO LOGIN MSG -->
+            <p>Want to add this picture to your SFA Profile? Simply log in using your SFA ID and Tag Yourself on this image.</p>
+            <!-- NO LOGIN MSG END -->
+            <!-- LOGIN MSG -->
+            <p>To add this picture to your SFA Profile simply click on <a >Tag Yourself</a></p>
+            <!-- LOGIN MSG END-->
+          </div>
+          <!-- TAG MESSAGE END -->
           <!-- TAGS HOLDER -->
-          <div class="gallerypost-tagsholder" ng-if="pic.tags.length > 0">
+          <div class="gallerypost-tagsholder hide" ng-if="pic.tags.length > 0">
             <ul class="list-unstyled">
               <li class="gallerypost-taglist" ng-repeat="tag in pic.tags track by $index">
                 <div class="gallerrypost-tagcard text-capitalize">
@@ -70,5 +81,11 @@
         </div>
       </div>
     </div>
+    <!-- GALLERY POST END -->
+    <!-- GO GALLERY BUTTON -->
+    <div class="gallerypost-btnholder">
+      <button class="btn btn-gallerypost">GO TO GALLERY</button>
+    </div>
+    <!-- GO GALLERY BUTTON END -->
   </div>
 </div>

@@ -194,7 +194,6 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
                     });
                   }
                   break;
-
               }
             } else {
               toastr.error('Data save failed. Please try again or check your internet connection.', 'Save Error');
@@ -389,19 +388,20 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
                 "walkover": false,
                 "sets": [{
                   point: "",
-                }]
+                }],
+                "players": []
               }
-            })
-            _.each($scope.matchDetails.teams[key].studentTeam, function (m, mkey) {
-              $scope.formData.teams[key].players[mkey] = {
-                "player": m.studentId._id,
-                "firstName": m.studentId.firstName,
-                "surname": m.studentId.surname,
-                "fullName": m.studentId.firstName + " " + m.studentId.surname,
-                "sfaId": m.sfaId,
-                "isPlaying": false,
-                "jerseyNo": "",
-              }
+              _.each($scope.matchDetails.teams[key].studentTeam, function (m, mkey) {
+                $scope.formData.teams[key].players[mkey] = {
+                  "player": m.studentId._id,
+                  "firstName": m.studentId.firstName,
+                  "surname": m.studentId.surname,
+                  "fullName": m.studentId.firstName + " " + m.studentId.surname,
+                  "sfaId": m.sfaId,
+                  "isPlaying": false,
+                  "jerseyNo": "",
+                }
+              })
             })
           } else {
             $scope.formData = $scope.matchDetails.resultsCombat;
@@ -769,7 +769,7 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
   // SAVE TEAM RESULT
   $scope.saveTeamResult = function (formData) {
     $scope.initialiseResults('redirect', 'team');
-    console.log(bool, formData, 'svae data');
+    console.log(formData, 'svae data');
   }
   // SAVE TEAM RESULT END
   // UPDATE WINNER RESULT
@@ -947,7 +947,7 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
         switch ($scope.matchDetails.sportType) {
           case "Combat Sports":
             if ($stateParams.drawFormat === 'Knockout') {
-              $state.go('knockout-teams', {
+              $state.go('knockout-team', {
                 drawFormat: $stateParams.drawFormat,
                 id: $stateParams.sport
               });

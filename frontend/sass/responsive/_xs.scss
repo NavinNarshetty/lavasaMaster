@@ -2,6 +2,14 @@
    // Mobile
    //  PHOTO VIDEO POPUP
    .photovideo-modal{
+     .modal-lg{
+       width: auto;
+     }
+   }
+   .photovideo-popup .photovideo-vidframe{
+     min-height: initial;
+   }
+   .photovideo-modal{
      top: 0;
      bottom: 0;
      @include transform( translateY(0));
@@ -37,6 +45,11 @@
    }
    .photovideo-photoholder{
      min-height: initial;
+   }
+   .photovideo-navclose{
+     padding: 0;
+     right: -18px;
+     font-size: 18px;
    }
    //  PHOTO VIDEO POPUP END
    //  ATHLETE PROFILE CARD

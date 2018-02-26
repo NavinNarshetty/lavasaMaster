@@ -1,6 +1,11 @@
 <div class="photovideo-popup">
   <!-- <div class="closer"> <span class="fa fa-times"></span></div> -->
   <!-- PHOTO VIDEO NAV -->
+  <!-- NAV CLOSE -->
+  <div class="photovideo-nav photovideo-navclose" ng-click="$dismiss()" >
+    <div class=""> <span class="fa fa-times"></span></div>
+  </div>
+  <!-- NAV CLOSE END -->
   <!-- NAV LEFT -->
   <div class="photovideo-nav photovideo-navleft" ng-click="prevSlides(currentIndex, 'c');" ng-if="!firstSlide">
     <div class=""> <span class="fa fa-angle-left"></span></div>

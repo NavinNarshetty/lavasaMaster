@@ -1,6 +1,14 @@
  @media (max-width: $screen-sm-max) {
      // Tablet
      // PHOTO VIDEO POPUP
+     .photovideo-modal{
+       .modal-lg{
+         width: 700px;
+       }
+     }
+     .photovideo-popup .photovideo-vidframe{
+       min-height: 220px;
+     }
      .photovideo-popup{
        padding-right: 200px;
      }
@@ -22,6 +30,10 @@
      }
      .photovideo-footer{
        font-size: 10px;
+     }
+     .photovideo-navclose{
+       font-size: 24px;
+       right: -30px;
      }
      // PHOTO VIDEO POPUP END
     //  RESULTS PAGE

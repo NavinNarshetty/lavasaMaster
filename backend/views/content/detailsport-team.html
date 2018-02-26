@@ -331,7 +331,7 @@
                 <!--***************HEATS HOLDER END*****************  -->
 
                 <!--***************COMBAT HOLDER*****************  -->
-                <div class="winner-COMBAT-holder" ng-if="formData.sport.sportslist.name==='Kho Kho' || formData.sport.sportslist.name=='Throwball'">
+                <div class="winner-COMBAT-holder" ng-if="formData.sport.sportslist.name==='Kho Kho' || formData.sport.sportslist.name=='Throwball' || formData.sport.sportslist.name=='Karate Team Kumite'">
                   <div class="commmon-holder">
                     <div class="row">
                       <div class="col-md-8">
@@ -517,19 +517,20 @@
                             </div>
                             <div class="row mb15">
                               <!-- SETS THROWBALL -->
-                              <button class="btn btn-dark pull-right" type="submit " ng-click="addTeamSet($index,'result')">ADD</button>
+                              <button class="btn btn-dark pull-right" type="submit " ng-click="addTeamSet($index,'result','combat')">ADD</button>
                               <div class="col-md-2" ng-repeat="set in team.teamResults.sets track by $index" ng-if="formData.sport.sportslist.name==='Throwball'">
                                 <label for="">Set {{$index+1}}</label>
                                 <span class="cross-team-set" ng-click="removeTeamSet(teamIndex,$index,'result')"><i class="fa fa-times" aria-hidden="true"></i></span>
                                 <input type="number" name="setpoints" ng-model="set.points" class="form-control" placeholder="Enter Points">
                               </div>
                               <!-- SETS THROWBALL END -->
-                              <!-- SETS  POINTS KHO KHO -->
-                              <div class="col-md-2" ng-repeat="set in team.sets track by $index" ng-if="formData.sport.sportslist.name==='Kho Kho'">
+                              <!-- SETS  POINTS KHO KHO AND KARATE TEAM KUMITE -->
+                              <div class="col-md-2" ng-repeat="set in team.sets track by $index" ng-if="formData.sport.sportslist.name==='Kho Kho' || formData.sport.sportslist.name=='Karate Team Kumite'">
                                 <label for="">Set {{$index+1}}</label>
+                                <span class="cross-team-set" ng-click="removeTeamSet(teamIndex,$index,'result','combat')"><i class="fa fa-times" aria-hidden="true"></i></span>
                                 <input type="number" name="setpoints" ng-model="set.point" class="form-control" placeholder="Enter Points">
                               </div>
-                              <!-- SETS POINTS END -->
+                              <!-- SETS POINTS KHO KHO AND KARATE TEAM KUMITE END -->
 
 
                             </div>
@@ -1520,14 +1521,14 @@
                       <div class="volleyball-team-data-holder">
                         <!-- SETS HOLDER -->
                         <div class="form-group team-data-points-holder">
-                          <button class="btn btn-dark pull-right" type="submit " ng-click="addTeamSet($index,'resultVolleyball')">ADD</button>
+                          <button class="btn btn-dark pull-right" type="submit " ng-click="addTeamSet($index,'resultVolleyball','team')">ADD</button>
                           <h5> TEAM DATA POINTS</h5>
                           <div class="team-data-points-1">
                             <div class="row mb15">
                               <!-- SETS  POINTS -->
                               <div class="col-md-2 relative" ng-repeat="set in team.teamResults.sets track by $index">
                                 <label for="">Set {{$index+1}}</label>
-                                <span class="cross-team-set" ng-click="removeTeamSet($parent.$index,$index,'resultVolleyball')"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                <span class="cross-team-set" ng-click="removeTeamSet($parent.$index,$index,'resultVolleyball','team')"><i class="fa fa-times" aria-hidden="true"></i></span>
                                 <input type="number" name="setpoints" ng-model="set.points" class="form-control" placeholder="Enter Points">
                               </div>
                               <!-- SETS POINTS END -->

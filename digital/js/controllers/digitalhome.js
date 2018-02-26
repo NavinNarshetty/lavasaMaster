@@ -178,7 +178,7 @@ myApp.controller('DigitalHomeCtrl', function ($scope, TemplateService, $state, N
         console.log("sportId", sportId);
         $scope.nameOfSport = sportName;
         console.log("$scope.nameOfSport", $scope.nameOfSport);
-        if (sportName === 'Boxing' || sportName === 'Judo' || sportName === 'Kumite' || sportName === 'Taekwondo' || sportName === 'Sport MMA') {
+        if (sportName === 'Boxing' || sportName === 'Judo' || sportName === 'Kumite' || sportName === 'Taekwondo' || sportName === 'Sport MMA' || sportName == 'Wrestling') {
             $scope.showWeight = true;
         } else {
             $scope.showWeight = false;
@@ -220,10 +220,17 @@ myApp.controller('DigitalHomeCtrl', function ($scope, TemplateService, $state, N
                                 switch ($scope.drawDetails.sportType) {
                                     case 'Racquet Sports':
                                         if ($scope.drawDetails.isTeam) {
+                                          if ($scope.drawDetails.drawFormat === 'League cum Knockout') {
+                                            $state.go('league-knockoutTeam', {
+                                                drawFormat: $scope.drawDetails.drawFormat,
+                                                id: $scope.drawDetails.sport,
+                                            });
+                                          } else {
                                             $state.go('knockout-doubles', {
                                                 drawFormat: $scope.drawDetails.drawFormat,
                                                 id: $scope.drawDetails.sport
                                             });
+                                          }
                                         } else {
                                             $state.go('knockout', {
                                                 drawFormat: $scope.drawDetails.drawFormat,
@@ -338,7 +345,9 @@ myApp.controller('DigitalHomeCtrl', function ($scope, TemplateService, $state, N
                                         switch ($scope.drawDetails.drawFormat) {
                                             case 'Knockout':
                                                 if ($scope.drawDetails.isTeam === true) {
+                                                  console.log("drawform", $scope.drawDetails);
                                                     $state.go('knockout-team', {
+                                                        drawFormat: $scope.drawDetails.drawFormat,
                                                         id: $scope.drawDetails.sport
                                                     });
                                                 } else {

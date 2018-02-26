@@ -3,5 +3,12 @@
  }
 
  @media screen and (max-width: 1200px) {
-   
+   .photovideo-modal{
+     .modal-lg{
+       width: 900px;
+     }
+   }
+   .photovideo-popup .photovideo-vidframe{
+     min-height: 330px;
+   }
  }

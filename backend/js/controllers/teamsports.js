@@ -429,6 +429,7 @@ myApp.controller('DetailSportTeamCtrl', function ($scope, TemplateService, Navig
             $scope.formData.result = $scope.formData.resultThrowball;
             break;
           case "Kho Kho":
+          case "Karate Team Kumite":
             $scope.formData.result = $scope.formData.resultsCombat;
             break;
         }
@@ -493,18 +494,29 @@ myApp.controller('DetailSportTeamCtrl', function ($scope, TemplateService, Navig
 
 
   // ADD SET 
-  $scope.addTeamSet = function (data, result) {
-    console.log(data, result, 'in add')
-    $scope.formData[result].teams[data].teamResults.sets.push({
-      points: ''
-    });
+  $scope.addTeamSet = function (data, result, type) {
+    console.log(data, result, type, 'in add')
+    if (type === 'combat') {
+      $scope.formData[result].teams[data].sets.push({
+        point: ''
+      });
+    } else if (type === 'team') {
+      $scope.formData[result].teams[data].teamResults.sets.push({
+        points: ''
+      });
+    }
+
   }
   // ADD SET  END
 
   // REMOVE  SET
-  $scope.removeTeamSet = function (data, index, result) {
-    console.log(data, index, 'in remove');
-    $scope.formData[result].teams[data].teamResults.sets.splice(index, 1);
+  $scope.removeTeamSet = function (data, index, result, type) {
+    console.log(data, index, result, type, 'in remove');
+    if (type === 'combat') {
+      $scope.formData[result].teams[data].sets.splice(index, 1);
+    } else if (type === 'team') {
+      $scope.formData[result].teams[data].teamResults.sets.splice(index, 1);
+    }
   }
   // REMOVE  SET END
 

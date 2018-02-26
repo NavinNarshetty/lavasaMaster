@@ -230,6 +230,18 @@
                         </div>
                         <!-- THROWBALL END -->
 
+                        <!-- TEAM KUMITE -->
+                        <div class="fz12" ng-if="form.sportslist.name =='Karate Team Kumite'">
+                          <span ng-if="item.resultsCombat.isNoMatch">No Match</span>
+                          <span ng-if="item.resultsCombat.winner.reason =='Bye'">Bye</span>
+                          <span ng-repeat="wresult in item.resultsCombat.teams track by $index">
+                                       <span ng-if="wresult.walkover">Won by Walker</span>
+                          </span>
+                          <span ng-class="{'fz10':item.resultsCombat.teams[0].sets.length > 2 }">  <span ng-repeat="set in item.resultsCombat.teams[0].sets track by $index">{{item.resultsCombat.teams[0].sets[$index].points}} <span ng-if="item.resultsCombat.teams.length > 1" ng-hide="item.resultsCombat.winner.reason==='Bye'|| item.resultsCombat.teams[0].walkover===true || item.resultsCombat.teams[1].walkover===true" >-</span>                          {{item.resultsCombat.teams[1].sets[$index].points}} <span ng-if="item.resultsCombat.teams[0].sets.length!==1 && item.resultsCombat.teams[0].sets.length!==0 && $index!==item.resultsCombat.teams[0].sets.length-1">,</span>                          </span>
+                          </span>
+                        </div>
+                        <!-- TEAM KUMITE END -->
+
                       </td>
                       <td>
                         <a class="btn btn-primary" target="_blank" ng-click="specificFormat(item)">

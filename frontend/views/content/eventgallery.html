@@ -21,10 +21,14 @@
               <!-- <div class="event-video-holder" ui-sref="featuredvideogallery({mediaType:'video',name:videoCard.folder})"> -->
               <div class="event-video-holder" ng-click="showPopup($index, eventVideos);">
                 <div class="event-thumbnailholder" style="background-image:url('{{videoCard.thumbnails[3].link||videoCard.thumbnail}}')">
+                  <div class="event-video-playholder">
+                    <i class="fa fa-play event-play-button"></i>
+                  </div>
                 </div>
                 <!-- <div class="evnt-thumbnailtitle" title="{{videoCard.folder}}">
                       {{videoCard.folder | truncate:'50'}}
                     </div> -->
+
               </div>
             </div>
           </div>
