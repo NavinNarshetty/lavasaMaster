@@ -41,7 +41,7 @@
     <!-- VIDEOS END -->
 
     <!-- AD SPACE -->
-    <div class="event-gallery-adspace relate" style="height:180px; overflow:hidden;">
+    <div class="event-gallery-adspace relate" style="height:180px; overflow:hidden;" ng-if="firstAdBanner.status=='enable'">
       <div class="adspace text-center d-fjalla-one">
         <!-- NO LINK -->
           <div class="ad-nolink" ng-if="firstAdBanner.linkType=='nolink'">
@@ -75,14 +75,14 @@
         <!-- VIDEO -->
         <div class="ad-video" ng-if="firstAdBanner.linkType=='videolink'">
           <!-- DESKTOP -->
-          <a class="fancybox.iframe" fancybox href="{{firstAdBanner.desktop.adLink}}">
-            <img ng-src="{{firstAdBanner.desktop.adBanner | serverimage2 }}"  alt="image" class="img-responsive hidden-xs">
+          <a class="fancybox.iframe hidden-xs" fancybox href="{{firstAdBanner.desktop.adLink}}">
+            <img ng-src="{{firstAdBanner.desktop.adBanner | serverimage2 }}"  alt="image" class="img-responsive">
           </a>
           <!-- DESKTOP END -->
 
           <!-- MOBILE -->
-          <a class="fancybox.iframe" fancybox href="{{firstAdBanner.mobile.mobileLink}}">
-            <img ng-src="{{firstAdBanner.mobile.mobileAdBanner | serverimage2 }}"  alt="image" class="img-responsive  visible-xs">
+          <a class="fancybox.iframe visible-xs" fancybox href="{{firstAdBanner.mobile.mobileLink}}">
+            <img ng-src="{{firstAdBanner.mobile.mobileAdBanner | serverimage2 }}"  alt="image" class="img-responsive">
           </a>
           <!-- MOBILE END -->
         </div>
@@ -119,7 +119,7 @@
 <!-- CATEGORY END -->
 
 <!-- AD SPACE -->
-<div class="event-gallery-adspace relate" style="height:190px;overflow:hidden;">
+<div class="event-gallery-adspace relate" style="height:190px;overflow:hidden;" ng-if="secondAdBanner.status=='enable'">
   <div class="adspace text-center d-fjalla-one">
 
     <!-- NO LINK -->
@@ -157,13 +157,13 @@
     <!-- VIDEO -->
     <div class="ad-video" ng-if="secondAdBanner.linkType=='videolink'">
       <!-- DESKTOP  -->
-      <a class="fancybox.iframe" fancybox href="{{secondAdBanner.desktop.adLink}}" class="hidden-xs">
+      <a class="fancybox.iframe hidden-xs" fancybox href="{{secondAdBanner.desktop.adLink}}">
         <img ng-src="{{secondAdBanner.desktop.adBanner | serverimage2 }}" alt="image" class="img-responsive">
       </a>
       <!-- DESKTOP  END -->
 
       <!-- MOBILE -->
-      <a class="fancybox.iframe" fancybox href="{{secondAdBanner.mobile.mobileLink}}" class="visible-xs">
+      <a class="fancybox.iframe visible-xs" fancybox href="{{secondAdBanner.mobile.mobileLink}}">
         <img ng-src="{{secondAdBanner.mobile.mobileAdBanner | serverimage2 }}" alt="image" class="img-responsive">
       </a>
       <!-- MOBILE END -->

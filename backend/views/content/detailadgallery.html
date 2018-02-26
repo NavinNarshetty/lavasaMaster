@@ -64,7 +64,7 @@
               <!-- AD LINK -->
               <div class="col-md-12" ng-if="formData.linkType !='nolink'">
                 <div class="form-group">
-                  <label>Ad Link</label>
+                  <label>Ad Link</label> <span><b>For eg:https://player.vimeo.com/video/255187744</b></span>
                   <input type="text" name="adlink" ng-model="formData.desktop.adLink" id="" class="form-control" placeholder="Enter Link" required>
                   <div class="error-msg" ng-if="detailAdForm.adlink.$invalid && detailAdForm.adlink.$touched">Please Enter Valid Link *</div>
                 </div>
@@ -95,7 +95,7 @@
               <!-- MOBILE LINK -->
               <div class="col-md-12">
                 <div class="form-group">
-                  <label for="">Mobile Link</label>
+                  <label for="">Mobile Link</label> <span><b>For eg:https://player.vimeo.com/video/255187744</b></span>
                   <input type="text" name="mobilelink" ng-model="formData.mobile.mobileLink" class="form-control" id="" required>
                   <div class="error-msg" ng-if="detailAdForm.mobilelink.$invalid && detailAdForm.mobilelink.$touched">Please Enter Valid Link *</div>
                 </div>

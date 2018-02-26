@@ -159,9 +159,17 @@ myApp.controller('SfaGalleryCtrl', function ($scope, TemplateService, errorServi
       $scope.positionadBanners = _.each($scope.adBanners, function (key) {
         console.log(key, "inside key");
         if (key.adPlacement === '2ndbanner') {
-          $scope.secondAdBanner = key;
+          if (key.status == 'enable') {
+            $scope.secondAdBanner = key;
+          } else {
+            $scope.secondAdBanner = ' ';
+          }
         } else if (key.adPlacement === '1stbanner') {
-          $scope.firstAdBanner = key;
+          if (key.status === 'enable') {
+            $scope.firstAdBanner = key;
+          } else {
+            $scope.firstAdBanner = ' ';
+          }
         }
       })
     });
