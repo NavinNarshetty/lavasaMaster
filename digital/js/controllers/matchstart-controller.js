@@ -951,6 +951,11 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
                 drawFormat: $stateParams.drawFormat,
                 id: $stateParams.sport
               });
+            } else if($stateParams.drawFormat === 'League cum Knockout') {
+              $state.go('league-knockoutTeam', {
+                drawFormat: $stateParams.drawFormat,
+                id: $stateParams.sport
+              });
             } else if ($stateParams.drawFormat === 'Heats') {
               $state.go('heats', {
                 drawFormat: $stateParams.drawFormat,
@@ -975,10 +980,17 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
             switch ($scope.matchDetails.sportsName) {
               case "Kho Kho":
               case "Throwball":
+              if ($stateParams.drawFormat === 'Knockout') {
                 $state.go('knockout-team', {
                   drawFormat: $stateParams.drawFormat,
                   id: $stateParams.sport
                 });
+              } else if($stateParams.drawFormat === 'League cum Knockout') {
+                $state.go('league-knockoutTeam', {
+                  drawFormat: $stateParams.drawFormat,
+                  id: $stateParams.sport
+                });
+              }
                 break;
             }
             break;
