@@ -120,8 +120,11 @@ myApp.controller('SfaGalleryCtrl', function ($scope, TemplateService, errorServi
             console.log("key.thumbails", key.thumbnails);
             if (key.thumbnails != null && key.thumbnails.length == 0) {
               key.thumbnail = "img/media-video-thumb.jpg";
-            } else if (key.thumbails == null) {
+            } else if (key.thumbnails == null) {
               key.thumbnail = "img/media-video-thumb.jpg";
+            } else {
+              console.log("here thumb", nk);
+              key.thumbnail = key.thumbnails[3].link;
             }
           })
         } else {
