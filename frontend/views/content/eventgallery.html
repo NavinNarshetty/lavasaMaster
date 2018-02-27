@@ -41,9 +41,53 @@
     <!-- VIDEOS END -->
 
     <!-- AD SPACE -->
-    <div class="event-gallery-adspace relate hide">
+    <div class="event-gallery-adspace relate" style="height:180px; overflow:hidden;" ng-if="firstAdBanner.status=='enable'">
       <div class="adspace text-center d-fjalla-one">
-        <div class="get-center m-clear">AD SPACE</div>
+        <!-- NO LINK -->
+          <div class="ad-nolink" ng-if="firstAdBanner.linkType=='nolink'">
+            <!-- DESKTOP -->
+            <img  ng-src="{{firstAdBanner.desktop.adBanner | serverimage2}}" alt="{{firstAdBanner.title}}" title="{{firstAdBanner.title}}" class="img-responsive hidden-xs">
+            <!-- DESKTOP END -->
+
+            <!-- MOBILE -->
+            <img  ng-src="{{firstAdBanner.mobile.mobileAdBanner | serverimage2}}" alt="{{firstAdBanner.title}}" title="{{firstAdBanner.title}}" class="img-responsive  visible-xs">
+            <!-- MOBILE END -->
+          </div>
+        <!-- NO LINK END -->
+    
+        <!-- INTERNAL && EXTERNAL LINK -->
+        <div class="ad-internal-external" ng-if="firstAdBanner.linkType=='internal' || firstAdBanner.linkType=='external'" >
+          <!-- DESKTOP -->
+          <a href="{{firstAdBanner.desktop.adLink}}" target="{{firstAdBanner.linkType=='external' ? '_new' : '_self'}}">
+              <img ng-src="{{firstAdBanner.desktop.adBanner | serverimage2}}"  alt="{{firstAdBanner.title}}" title="{{firstAdBanner.title}}"  class="img-responsive hidden-xs">
+          </a>
+          <!-- DESKTOP END -->
+
+          <!-- MOBILE  -->
+          <a href="{{firstAdBanner.mobile.mobileLink}}" target="{{firstAdBanner.linkType=='external' ? '_new' : '_self'}}">
+            <img ng-src="{{firstAdBanner.mobile.mobileAdBanner | serverimage2}}"  alt="{{firstAdBanner.title}}" title="{{firstAdBanner.title}}"  class="img-responsive  visible-xs">
+          </a>
+          <!-- MOBILE  END -->
+            
+        </div>
+        <!-- INTERNAL && EXTERNAL LINK END -->
+    
+        <!-- VIDEO -->
+        <div class="ad-video" ng-if="firstAdBanner.linkType=='videolink'">
+          <!-- DESKTOP -->
+          <a class="fancybox.iframe hidden-xs" fancybox href="{{firstAdBanner.desktop.adLink}}">
+            <img ng-src="{{firstAdBanner.desktop.adBanner | serverimage2 }}"  alt="image" class="img-responsive">
+          </a>
+          <!-- DESKTOP END -->
+
+          <!-- MOBILE -->
+          <a class="fancybox.iframe visible-xs" fancybox href="{{firstAdBanner.mobile.mobileLink}}">
+            <img ng-src="{{firstAdBanner.mobile.mobileAdBanner | serverimage2 }}"  alt="image" class="img-responsive">
+          </a>
+          <!-- MOBILE END -->
+        </div>
+        <!-- VIDEO END -->
+        <!-- <div class="get-center m-clear">AD SPACE</div> -->
       </div>
     </div>
     <!-- AD SPACE END -->
@@ -75,9 +119,57 @@
 <!-- CATEGORY END -->
 
 <!-- AD SPACE -->
-<div class="event-gallery-adspace relate hide">
+<div class="event-gallery-adspace relate" style="height:190px;overflow:hidden;" ng-if="secondAdBanner.status=='enable'">
   <div class="adspace text-center d-fjalla-one">
-    <div class="get-center m-clear">AD SPACE</div>
+
+    <!-- NO LINK -->
+    <div class="ad-nolink" ng-if="secondAdBanner.linkType=='nolink'">
+      <!-- DESKTOP -->
+      <img ng-src="{{secondAdBanner.desktop.adBanner | serverimage2}}" alt="" class="img-responsive hidden-xs">
+      <!-- DESKTOP END -->
+
+      <!-- MOBILE  -->
+      <img ng-src="{{secondAdBanner.mobile.mobileAdBanner | serverimage2}}" alt="" class="img-responsive  visible-xs">
+      <!-- MOBILE  END -->
+    </div>
+    <!-- NO LINK END -->
+
+    <!-- INTERNAL && EXTERNAL LINK -->
+    <div class="ad-internal-external" ng-if="secondAdBanner.linkType=='internal' || secondAdBanner.linkType=='external'">
+      <!-- DESKTOP -->
+      <a href="{{secondAdBanner.desktop.adLink}}" class="hidden-xs" target="{{secondAdBanner.linkType=='external' ? '_new' : '_self'}}">
+        <img ng-src="{{secondAdBanner.desktop.adBanner | serverimage2}}" alt="{{secondAdBanner.title}}" title="{{secondAdBanner.title}}"
+        class="img-responsive">
+        
+      </a>
+      <!-- DESKTOP END -->
+
+      <!-- MOBILE -->
+      <a href="{{secondAdBanner.mobile.mobileLink}}" class="visible-xs" target="{{secondAdBanner.linkType=='external' ? '_new' : '_self'}}">
+        <img ng-src="{{secondAdBanner.mobile.mobileAdBanner | serverimage2}}" alt="{{secondAdBanner.title}}" title="{{secondAdBanner.title}}"
+        class="img-responsive">
+        
+      </a>
+      <!-- MOBILE END -->
+    </div>
+    <!-- INTERNAL && EXTERNAL LINK END -->
+
+    <!-- VIDEO -->
+    <div class="ad-video" ng-if="secondAdBanner.linkType=='videolink'">
+      <!-- DESKTOP  -->
+      <a class="fancybox.iframe hidden-xs" fancybox href="{{secondAdBanner.desktop.adLink}}">
+        <img ng-src="{{secondAdBanner.desktop.adBanner | serverimage2 }}" alt="image" class="img-responsive">
+      </a>
+      <!-- DESKTOP  END -->
+
+      <!-- MOBILE -->
+      <a class="fancybox.iframe visible-xs" fancybox href="{{secondAdBanner.mobile.mobileLink}}">
+        <img ng-src="{{secondAdBanner.mobile.mobileAdBanner | serverimage2 }}" alt="image" class="img-responsive">
+      </a>
+      <!-- MOBILE END -->
+    </div>
+    <!-- VIDEO END -->
+    <!-- <div class="get-center m-clear">AD SPACE</div> -->
   </div>
 </div>
 <!-- AD SPACE END -->

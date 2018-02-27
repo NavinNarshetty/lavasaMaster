@@ -76,7 +76,7 @@
               </uib-accordion-heading>
               <div class="row">
                 <div class="">
-                  <div class="col-md-4 col-sm-6 col-xs-6" ng-if="currentMatch.sport.sportslist.name=='Tennis Doubles'">
+                  <div class="col-md-4 col-sm-6 col-xs-6" ng-if="currentMatch.sport.sportslist.name=='Tennis Doubles' || currentMatch.sport.sportslist.name=='Tennis Mixed Doubles'">
                     <label class="text-uppercase setpoint-label">Ace</label>
                     <input type="number" ng-model="set.ace" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
                   </div>
@@ -92,7 +92,7 @@
                     <label class="text-uppercase setpoint-label">Service Error</label>
                     <input type="number" ng-model="set.serviceError" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
                   </div>
-                  <div class="col-md-4 col-sm-6 col-xs-6" ng-if="currentMatch.sport.sportslist.name=='Tennis Doubles'">
+                  <div class="col-md-4 col-sm-6 col-xs-6" ng-if="currentMatch.sport.sportslist.name=='Tennis Doubles' || currentMatch.sport.sportslist.name=='Tennis Mixed Doubles'">
                     <label class="text-uppercase setpoint-label">Double Faults</label>
                     <input type="number" ng-model="set.doubleFaults" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
                   </div>

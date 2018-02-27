@@ -1674,6 +1674,8 @@ var model = {
                                             paramData.gender = "male";
                                         } else if (gen == "Girls" || gen == "Female" || gen == "female") {
                                             paramData.gender = "female";
+                                        } else if (gen == "Mixed" || gen == "mixed" || gen == "both" || gen == "Both") {
+                                            paramData.gender = "both";
                                         }
                                         var weight = singleData["WEIGHT CATEGORIES"];
                                         paramData.weight = _.trimStart(weight, " ");
@@ -1851,10 +1853,13 @@ var model = {
                                         var paramData = {};
                                         paramData.name = _.trim(singleData.EVENT);
                                         paramData.age = _.trim(singleData["AGE GROUP"]);
-                                        if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
+                                        var gen = _.trim(singleData.GENDER);
+                                        if (gen == "Boys" || gen == "Male" || gen == "male") {
                                             paramData.gender = "male";
-                                        } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
+                                        } else if (gen == "Girls" || gen == "Female" || gen == "female") {
                                             paramData.gender = "female";
+                                        } else if (gen == "Mixed" || gen == "mixed" || gen == "both" || gen == "Both") {
+                                            paramData.gender = "both";
                                         }
                                         var weight = singleData["WEIGHT CATEGORIES"];
                                         paramData.weight = _.trimStart(weight, " ");
@@ -1949,10 +1954,13 @@ var model = {
                     var paramData = {};
                     paramData.name = _.trim(singleData["EVENT"]);
                     paramData.age = _.trim(singleData["AGE GROUP"]);
-                    if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
+                    var gen = _.trim(singleData.GENDER);
+                    if (gen == "Boys" || gen == "Male" || gen == "male") {
                         paramData.gender = "male";
-                    } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
+                    } else if (gen == "Girls" || gen == "Female" || gen == "female") {
                         paramData.gender = "female";
+                    } else if (gen == "Mixed" || gen == "mixed" || gen == "both" || gen == "Both") {
+                        paramData.gender = "both";
                     }
                     var weight = _.trim(singleData["NEW WEIGHT"]);
                     paramData.weight = _.trimStart(weight, " ");
@@ -2013,10 +2021,13 @@ var model = {
                     var paramData = {};
                     paramData.name = _.trim(singleData["EVENT"]);
                     paramData.age = _.trim(singleData["AGE GROUP"]);
-                    if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
+                    var gen = _.trim(singleData.GENDER);
+                    if (gen == "Boys" || gen == "Male" || gen == "male") {
                         paramData.gender = "male";
-                    } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
+                    } else if (gen == "Girls" || gen == "Female" || gen == "female") {
                         paramData.gender = "female";
+                    } else if (gen == "Mixed" || gen == "mixed" || gen == "both" || gen == "Both") {
+                        paramData.gender = "both";
                     }
                     var weight = _.trim(singleData["NEW WEIGHT"]);
                     paramData.weight = _.trimStart(weight, " ");
@@ -2182,10 +2193,13 @@ var model = {
                                             var paramData = {};
                                             paramData.name = _.trim(singleData["EVENT"]);
                                             paramData.age = _.trim(singleData["AGE GROUP"]);
-                                            if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
+                                            var gen = _.trim(singleData.GENDER);
+                                            if (gen == "Boys" || gen == "Male" || gen == "male") {
                                                 paramData.gender = "male";
-                                            } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
+                                            } else if (gen == "Girls" || gen == "Female" || gen == "female") {
                                                 paramData.gender = "female";
+                                            } else if (gen == "Mixed" || gen == "mixed" || gen == "both" || gen == "Both") {
+                                                paramData.gender = "both";
                                             }
                                             paramData.weight = undefined;
                                             Match.getSportId(paramData, function (err, sportData) {
@@ -2348,10 +2362,13 @@ var model = {
                                             var paramData = {};
                                             paramData.name = _.trim(singleData["EVENT"]);
                                             paramData.age = _.trim(singleData["AGE GROUP"]);
-                                            if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
+                                            var gen = _.trim(singleData.GENDER);
+                                            if (gen == "Boys" || gen == "Male" || gen == "male") {
                                                 paramData.gender = "male";
-                                            } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
+                                            } else if (gen == "Girls" || gen == "Female" || gen == "female") {
                                                 paramData.gender = "female";
+                                            } else if (gen == "Mixed" || gen == "mixed" || gen == "both" || gen == "Both") {
+                                                paramData.gender = "both";
                                             }
                                             paramData.weight = undefined;
                                             Match.getSportId(paramData, function (err, sportData) {
@@ -2506,10 +2523,13 @@ var model = {
                                     var paramData = {};
                                     paramData.name = _.trim(singleData['EVENT']);
                                     paramData.age = _.trim(singleData["AGE GROUP"]);
-                                    if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
+                                    var gen = _.trim(singleData.GENDER);
+                                    if (gen == "Boys" || gen == "Male" || gen == "male") {
                                         paramData.gender = "male";
-                                    } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
+                                    } else if (gen == "Girls" || gen == "Female" || gen == "female") {
                                         paramData.gender = "female";
+                                    } else if (gen == "Mixed" || gen == "mixed" || gen == "both" || gen == "Both") {
+                                        paramData.gender = "both";
                                     }
                                     paramData.weight = undefined;
                                     Match.getSportId(paramData, function (err, sportData) {
@@ -2648,10 +2668,13 @@ var model = {
                                 var paramData = {};
                                 paramData.name = _.trim(singleData.EVENT);
                                 paramData.age = _.trim(singleData["AGE GROUP"]);
-                                if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
+                                var gen = _.trim(singleData.GENDER);
+                                if (gen == "Boys" || gen == "Male" || gen == "male") {
                                     paramData.gender = "male";
-                                } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
+                                } else if (gen == "Girls" || gen == "Female" || gen == "female") {
                                     paramData.gender = "female";
+                                } else if (gen == "Mixed" || gen == "mixed" || gen == "both" || gen == "Both") {
+                                    paramData.gender = "both";
                                 }
                                 var weight = singleData["WEIGHT CATEGORIES"];
                                 paramData.weight = _.trimStart(weight, " ");
@@ -3154,10 +3177,13 @@ var model = {
                                     var paramData = {};
                                     paramData.name = _.trim(singleData['EVENT']);
                                     paramData.age = _.trim(singleData["AGE GROUP"]);
-                                    if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
+                                    var gen = _.trim(singleData.GENDER);
+                                    if (gen == "Boys" || gen == "Male" || gen == "male") {
                                         paramData.gender = "male";
-                                    } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
+                                    } else if (gen == "Girls" || gen == "Female" || gen == "female") {
                                         paramData.gender = "female";
+                                    } else if (gen == "Mixed" || gen == "mixed" || gen == "both" || gen == "Both") {
+                                        paramData.gender = "both";
                                     }
                                     paramData.weight = undefined;
                                     Match.getSportId(paramData, function (err, sportData) {
@@ -3296,10 +3322,13 @@ var model = {
                                 var paramData = {};
                                 paramData.name = _.trim(singleData.EVENT);
                                 paramData.age = _.trim(singleData["AGE GROUP"]);
-                                if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
+                                var gen = _.trim(singleData.GENDER);
+                                if (gen == "Boys" || gen == "Male" || gen == "male") {
                                     paramData.gender = "male";
-                                } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
+                                } else if (gen == "Girls" || gen == "Female" || gen == "female") {
                                     paramData.gender = "female";
+                                } else if (gen == "Mixed" || gen == "mixed" || gen == "both" || gen == "Both") {
+                                    paramData.gender = "both";
                                 }
                                 if (_.isEmpty(singleData["WEIGHT CATEGORIES"])) {
                                     paramData.weight = undefined;
@@ -3489,10 +3518,13 @@ var model = {
                                 var paramData = {};
                                 paramData.name = singleData.EVENT;
                                 paramData.age = singleData["AGE GROUP"];
-                                if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
+                                var gen = _.trim(singleData.GENDER);
+                                if (gen == "Boys" || gen == "Male" || gen == "male") {
                                     paramData.gender = "male";
-                                } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
+                                } else if (gen == "Girls" || gen == "Female" || gen == "female") {
                                     paramData.gender = "female";
+                                } else if (gen == "Mixed" || gen == "mixed" || gen == "both" || gen == "Both") {
+                                    paramData.gender = "both";
                                 }
                                 if (_.isEmpty(singleData["WEIGHT CATEGORIES"])) {
                                     paramData.weight = undefined;
@@ -3677,10 +3709,13 @@ var model = {
                                     var paramData = {};
                                     paramData.name = _.trim(singleData.EVENT);
                                     paramData.age = _.trim(singleData["AGE GROUP"]);
-                                    if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
+                                    var gen = _.trim(singleData.GENDER);
+                                    if (gen == "Boys" || gen == "Male" || gen == "male") {
                                         paramData.gender = "male";
-                                    } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
+                                    } else if (gen == "Girls" || gen == "Female" || gen == "female") {
                                         paramData.gender = "female";
+                                    } else if (gen == "Mixed" || gen == "mixed" || gen == "both" || gen == "Both") {
+                                        paramData.gender = "both";
                                     }
                                     paramData.weight = undefined;
                                     Match.getSportId(paramData, function (err, sportData) {
@@ -6152,18 +6187,18 @@ var model = {
 
                             if (mainData.resultKnockout) {
                                 if (mainData.resultKnockout.players.length == 2) {
-                                    if (mainData.resultKnockout.players[0].player.noShow == true) {
+                                    if (mainData.resultKnockout.players[0].noShow == true) {
                                         obj["Player 1 Attendence"] = "A";
                                     } else {
                                         obj["Player 1 Attendence"] = "P";
                                     }
-                                    if (mainData.resultKnockout.players[1].player.noShow == true) {
+                                    if (mainData.resultKnockout.players[1].noShow == true) {
                                         obj["Player 2 Attendence"] = "A";
                                     } else {
                                         obj["Player 2 Attendence"] = "P";
                                     }
                                 } else if (mainData.resultKnockout.players.length == 1) {
-                                    if (mainData.resultKnockout.players[0].player.noShow == true) {
+                                    if (mainData.resultKnockout.players[0].noShow == true) {
                                         obj["Player 1 Attendence"] = "A";
                                     } else {
                                         obj["Player 1 Attendence"] = "P";
@@ -7351,7 +7386,7 @@ var model = {
                                     obj["P1 SCORE"] = mainData.resultSwiss.players[0].score;
                                     obj["P2 SCORE"] = mainData.resultSwiss.players[1].score;
                                     obj["P1 RANK"] = mainData.resultSwiss.players[0].rank;
-                                    obj["P2 RANK"] = mainData.resultSwiss.players[1].score;
+                                    obj["P2 RANK"] = mainData.resultSwiss.players[1].rank;
 
                                 } else {
                                     obj["P1 SCORE"] = mainData.resultSwiss.players[0].score;
@@ -7362,7 +7397,7 @@ var model = {
                                 }
                                 if (mainData.opponentsSingle.length == 1) {
                                     obj["RESULT 1"] = "Bye";
-                                } else if (mainData.resultSwiss.winner.player === mainData.opponentsSingle[0]._id.toString()) {
+                                } else if (mainData.resultSwiss.winner.player.equals(mainData.opponentsSingle[0]._id)) {
                                     if (mainData.resultSwiss.players[0].walkover == true) {
                                         obj["RESULT 1"] = "walkover";
                                     } else {
@@ -7384,7 +7419,7 @@ var model = {
                                     }
                                 }
                                 if (mainData.opponentsSingle.length == 2) {
-                                    if (mainData.resultSwiss.winner.player === mainData.opponentsSingle[1]._id.toString()) {
+                                    if (mainData.resultSwiss.winner.player.equals(mainData.opponentsSingle[1]._id)) {
                                         if (mainData.resultSwiss.players[1].walkover == true) {
                                             obj["RESULT 2"] = "walkover";
                                         } else {
@@ -11895,10 +11930,13 @@ var model = {
                                                     var paramData = {};
                                                     paramData.name = singleData.EVENT;
                                                     paramData.age = singleData["AGE GROUP"];
-                                                    if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
+                                                    var gen = _.trim(singleData.GENDER);
+                                                    if (gen == "Boys" || gen == "Male" || gen == "male") {
                                                         paramData.gender = "male";
-                                                    } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
+                                                    } else if (gen == "Girls" || gen == "Female" || gen == "female") {
                                                         paramData.gender = "female";
+                                                    } else if (gen == "Mixed" || gen == "mixed" || gen == "both" || gen == "Both") {
+                                                        paramData.gender = "both";
                                                     }
                                                     paramData.weight = undefined;
                                                     Match.getSportId(paramData, function (err, sportData) {
@@ -12055,10 +12093,13 @@ var model = {
                                     var paramData = {};
                                     paramData.name = singleData['EVENT'];
                                     paramData.age = singleData["AGE GROUP"];
-                                    if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
+                                    var gen = _.trim(singleData.GENDER);
+                                    if (gen == "Boys" || gen == "Male" || gen == "male") {
                                         paramData.gender = "male";
-                                    } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
+                                    } else if (gen == "Girls" || gen == "Female" || gen == "female") {
                                         paramData.gender = "female";
+                                    } else if (gen == "Mixed" || gen == "mixed" || gen == "both" || gen == "Both") {
+                                        paramData.gender = "both";
                                     }
                                     paramData.weight = singleData["WEIGHT CATEGORIES"];
                                     Match.getSportId(paramData, function (err, sportData) {
@@ -12354,10 +12395,13 @@ var model = {
                                                     var paramData = {};
                                                     paramData.name = singleData.EVENT;
                                                     paramData.age = singleData["AGE GROUP"];
-                                                    if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
+                                                    var gen = _.trim(singleData.GENDER);
+                                                    if (gen == "Boys" || gen == "Male" || gen == "male") {
                                                         paramData.gender = "male";
-                                                    } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
+                                                    } else if (gen == "Girls" || gen == "Female" || gen == "female") {
                                                         paramData.gender = "female";
+                                                    } else if (gen == "Mixed" || gen == "mixed" || gen == "both" || gen == "Both") {
+                                                        paramData.gender = "both";
                                                     }
                                                     paramData.weight = undefined;
                                                     Match.getSportId(paramData, function (err, sportData) {
@@ -12510,10 +12554,13 @@ var model = {
                                     var paramData = {};
                                     paramData.name = singleData['EVENT'];
                                     paramData.age = singleData["AGE GROUP"];
-                                    if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
+                                    var gen = _.trim(singleData.GENDER);
+                                    if (gen == "Boys" || gen == "Male" || gen == "male") {
                                         paramData.gender = "male";
-                                    } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
+                                    } else if (gen == "Girls" || gen == "Female" || gen == "female") {
                                         paramData.gender = "female";
+                                    } else if (gen == "Mixed" || gen == "mixed" || gen == "both" || gen == "Both") {
+                                        paramData.gender = "both";
                                     }
                                     Match.getSportId(paramData, function (err, sportData) {
                                         if (err || _.isEmpty(sportData)) {
@@ -12688,10 +12735,13 @@ var model = {
                         paramData.name = singleData.EVENT;
                         console.log("para,", paramData.name);
                         paramData.age = singleData["AGE GROUP"];
-                        if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
+                        var gen = _.trim(singleData.GENDER);
+                        if (gen == "Boys" || gen == "Male" || gen == "male") {
                             paramData.gender = "male";
-                        } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
+                        } else if (gen == "Girls" || gen == "Female" || gen == "female") {
                             paramData.gender = "female";
+                        } else if (gen == "Mixed" || gen == "mixed" || gen == "both" || gen == "Both") {
+                            paramData.gender = "both";
                         }
                         paramData.weight = undefined;
                         Match.getSportId(paramData, function (err, sportData) {
@@ -12843,7 +12893,6 @@ var model = {
                             paramData.sport = singleData.SPORT;
                             paramData.scheduleDate = singleData.DATE;
                             paramData.scheduleTime = singleData.TIME;
-
                             // paramData.video = singleData["VIDEO"];
                             // paramData.video = singleData["VIDEO TYPE"];
                             paramData.resultKnockout = result;
@@ -12886,10 +12935,13 @@ var model = {
                                     var paramData = {};
                                     paramData.name = singleData['EVENT'];
                                     paramData.age = singleData["AGE GROUP"];
-                                    if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
+                                    var gen = _.trim(singleData.GENDER);
+                                    if (gen == "Boys" || gen == "Male" || gen == "male") {
                                         paramData.gender = "male";
-                                    } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
+                                    } else if (gen == "Girls" || gen == "Female" || gen == "female") {
                                         paramData.gender = "female";
+                                    } else if (gen == "Mixed" || gen == "mixed" || gen == "both" || gen == "Both") {
+                                        paramData.gender = "both";
                                     }
                                     paramData.weight = singleData["WEIGHT CATEGORIES"];
 
@@ -13047,10 +13099,13 @@ var model = {
                                         var paramData = {};
                                         paramData.name = singleData.EVENT;
                                         paramData.age = singleData["AGE GROUP"];
-                                        if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
+                                        var gen = _.trim(singleData.GENDER);
+                                        if (gen == "Boys" || gen == "Male" || gen == "male") {
                                             paramData.gender = "male";
-                                        } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
+                                        } else if (gen == "Girls" || gen == "Female" || gen == "female") {
                                             paramData.gender = "female";
+                                        } else if (gen == "Mixed" || gen == "mixed" || gen == "both" || gen == "Both") {
+                                            paramData.gender = "both";
                                         }
                                         if (_.isEmpty(singleData["WEIGHT CATEGORIES"])) {
                                             paramData.weight = undefined;
@@ -13264,10 +13319,13 @@ var model = {
                                         var paramData = {};
                                         paramData.name = singleData.EVENT;
                                         paramData.age = singleData["AGE GROUP"];
-                                        if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
+                                        var gen = _.trim(singleData.GENDER);
+                                        if (gen == "Boys" || gen == "Male" || gen == "male") {
                                             paramData.gender = "male";
-                                        } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
+                                        } else if (gen == "Girls" || gen == "Female" || gen == "female") {
                                             paramData.gender = "female";
+                                        } else if (gen == "Mixed" || gen == "mixed" || gen == "both" || gen == "Both") {
+                                            paramData.gender = "both";
                                         }
                                         if (_.isEmpty(singleData["WEIGHT CATEGORIES"])) {
                                             paramData.weight = undefined;
@@ -16147,10 +16205,13 @@ var model = {
                                         var paramData = {};
                                         paramData.name = singleData['EVENT'];
                                         paramData.age = singleData["AGE GROUP"];
-                                        if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
+                                        var gen = _.trim(singleData.GENDER);
+                                        if (gen == "Boys" || gen == "Male" || gen == "male") {
                                             paramData.gender = "male";
-                                        } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
+                                        } else if (gen == "Girls" || gen == "Female" || gen == "female") {
                                             paramData.gender = "female";
+                                        } else if (gen == "Mixed" || gen == "mixed" || gen == "both" || gen == "Both") {
+                                            paramData.gender = "both";
                                         }
                                         Match.getSportId(paramData, function (err, sportData) {
                                             if (err || _.isEmpty(sportData)) {
@@ -16304,10 +16365,10 @@ var model = {
                                                     paramData.opponentsSingle.push(singleData["NAME 2"]);
                                                     player1.id = singleData["NAME 2"];
                                                     player1.player = singleData["Athlete 2"];
-                                                    if (singleData["P2 SCORE"] !== undefined || !_.isEmpty(singleData["P2 SCORE"])) {
+                                                    if (singleData["P2 SCORE"] != undefined || !_.isEmpty(singleData["P2 SCORE"])) {
                                                         console.log("Player 2", player1);
                                                         player1.score = singleData["P2 SCORE"];
-                                                        if (singleData["P2 RANK"] !== undefined || !_.isEmpty(singleData["P2 RANK"])) {
+                                                        if (singleData["P2 RANK"] != undefined || !_.isEmpty(singleData["P2 RANK"])) {
                                                             player1.rank = singleData["P2 RANK"];
                                                         } else {
                                                             player1.rank = "";
@@ -16346,13 +16407,16 @@ var model = {
                                             if (singleData["WINNER SFAID"] == singleData["SFAID 1"]) {
                                                 winner.player = singleData["NAME 1"];
                                                 resultData.isDraw = false;
+                                                resultData.isNoMatch = false;
                                             } else if (singleData["WINNER SFAID"] == singleData["SFAID 2"]) {
                                                 winner.player = singleData["NAME 2"];
                                                 resultData.isDraw = false;
+                                                resultData.isNoMatch = false;
                                             } else if (temp.isNoMatch1 == true && temp.isNoMatch2 == true) {
                                                 resultData.isNoMatch = true;
                                             } else {
                                                 resultData.isDraw = true;
+                                                resultData.isNoMatch = false;
                                             }
                                             resultData.winner = winner;
                                             paramData.resultSwiss = resultData;
@@ -16484,10 +16548,13 @@ var model = {
                                         var paramData = {};
                                         paramData.name = _.trim(singleData.EVENT);
                                         paramData.age = _.trim(singleData["AGE GROUP"]);
-                                        if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
+                                        var gen = _.trim(singleData.GENDER);
+                                        if (gen == "Boys" || gen == "Male" || gen == "male") {
                                             paramData.gender = "male";
-                                        } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
+                                        } else if (gen == "Girls" || gen == "Female" || gen == "female") {
                                             paramData.gender = "female";
+                                        } else if (gen == "Mixed" || gen == "mixed" || gen == "both" || gen == "Both") {
+                                            paramData.gender = "both";
                                         }
                                         var weight = singleData["WEIGHT CATEGORIES"];
                                         paramData.weight = _.trimStart(weight, " ");
@@ -16643,10 +16710,13 @@ var model = {
                                         paramData.name = _.trim(singleData.EVENT);
                                         paramData.age = _.trim(singleData["AGE GROUP"]);
                                         var gen = _.trim(singleData.GENDER);
+                                        var gen = _.trim(singleData.GENDER);
                                         if (gen == "Boys" || gen == "Male" || gen == "male") {
                                             paramData.gender = "male";
                                         } else if (gen == "Girls" || gen == "Female" || gen == "female") {
                                             paramData.gender = "female";
+                                        } else if (gen == "Mixed" || gen == "mixed" || gen == "both" || gen == "Both") {
+                                            paramData.gender = "both";
                                         }
                                         var weight = singleData["WEIGHT CATEGORIES"];
                                         paramData.weight = _.trimStart(weight, " ");

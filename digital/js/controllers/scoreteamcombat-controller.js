@@ -251,10 +251,17 @@ myApp.controller('CombatTeamCtrl', function($scope, TemplateService, NavigationS
           }
           NavigationService.saveMatch($scope.matchResult, function(data){
             if(data.value == true){
-                  $state.go('knockout-team', {
-                    drawFormat: $stateParams.drawFormat,
-                    id: $stateParams.sport
-                  });
+              if ($stateParams.drawFormat === 'Knockout') {
+                $state.go('knockout-team', {
+                  drawFormat: $stateParams.drawFormat,
+                  id: $stateParams.sport
+                });
+              } else if ($stateParams.drawFormat === 'League cum Knockout') {
+                $state.go('league-knockoutTeam', {
+                  drawFormat: $stateParams.drawFormat,
+                  id: $stateParams.sport
+                });
+              }
               console.log('save success');
             } else{
               toastr.error('Data save failed. Please try again or check your internet connection.', 'Save Error');

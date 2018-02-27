@@ -4,7 +4,7 @@ myApp.controller('DigitalHomeCtrl', function ($scope, TemplateService, $state, N
     $scope.navigation = NavigationService.getNavigation();
 
     $scope.sportList = ['football', 'Basketball', 'tennis', 'chess'];
-    $scope.genderList = ['male', 'female', 'mixed'];
+    $scope.genderList = ['male', 'female', 'both'];
     $scope.data = [1, 2, 3, 4, 5, 6, 7, 8];
     $scope.schedulelist = [{
         sport: 'Archery',

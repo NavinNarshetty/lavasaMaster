@@ -5047,7 +5047,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.medalInfoForm.studentTeam = [];;
         $scope.medalInfoForm.school = [];
         $scope.medalTypeArr = ['gold', 'silver', 'bronze'];
-        $scope.genderList = ['male', 'female', 'mixed'];
+        $scope.genderList = ['male', 'female', 'both'];
 
         $scope.onCancel = function (sendTo) {
             $state.go(sendTo);
