@@ -13405,9 +13405,9 @@ var model = {
                                             } else {
                                                 // console.log("singleData1", singleData);
                                                 var paramData = {};
-                                                paramData.team = singleData["SFAID 1"];
+                                                paramData.participant = singleData["SFAID 1"];
                                                 paramData.sport = singleData.SPORT;
-                                                Match.getTeamId(paramData, function (err, complete) {
+                                                Match.getAthleteId(paramData, function (err, complete) {
                                                     if (err || _.isEmpty(complete)) {
                                                         singleData["NAME 1"] = null;
                                                         err = "SFAID 1 may have wrong values";
@@ -13435,9 +13435,9 @@ var model = {
                                                 callback(null, singleData);
                                             } else {
                                                 var paramData = {};
-                                                paramData.team = singleData["SFAID 2"];
+                                                paramData.participant = singleData["SFAID 2"];
                                                 paramData.sport = singleData.SPORT;
-                                                Match.getTeamId(paramData, function (err, complete) {
+                                                Match.getAthleteId(paramData, function (err, complete) {
                                                     if (err || _.isEmpty(complete)) {
                                                         singleData["NAME 2"] = null;
                                                         err = "SFAID 2 may have wrong values";
@@ -13508,41 +13508,6 @@ var model = {
                             callback(null, singleData)
                         });
                 },
-                function (singleData, callback) {
-                    async.concatSeries(singleData, function (n, callback) {
-                            // console.log("n", n);
-                            if (countError != 0 && n.error == null) {
-                                // console.log("inside", n._id, "count", countError);
-                                Match.remove({
-                                    _id: n.success._id
-                                }).exec(function (err, found) {
-                                    if (err || _.isEmpty(found)) {
-                                        callback(err, null);
-                                    } else {
-                                        callback(null, n);
-                                    }
-                                });
-                            } else {
-                                callback(null, n);
-                            }
-                        },
-                        function (err, singleData) {
-                            callback(null, singleData);
-                        });
-
-                },
-                function (singleData, callback) {
-                    // console.log("singleData", singleData);
-                    if (singleData.error) {
-                        callback(null, singleData);
-                    } else {
-                        data.isLeagueKnockout = true;
-                        data.sport = singleData[0].success.sport;
-                        Match.addPreviousMatch(data, function (err, sportData) {
-                            callback(null, singleData);
-                        });
-                    }
-                }
             ],
             function (err, results) {
                 if (err || _.isEmpty(results)) {
