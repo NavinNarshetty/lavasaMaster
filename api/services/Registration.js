@@ -11,8 +11,6 @@ var request = require("request");
 var generator = require('generate-password');
 autoIncrement.initialize(mongoose);
 require('mongoose-middleware').initialize(mongoose);
-
-
 var schema = new Schema({
     registerID: Number,
     institutionType: {
@@ -28,8 +26,10 @@ var schema = new Schema({
         default: "Pending"
     },
     password: String,
-    year: String,
-
+    currentYear: String,
+    year: [{
+        type: String
+    }],
     schoolName: String,
     schoolType: String,
     schoolCategory: String,
@@ -48,8 +48,6 @@ var schema = new Schema({
     website: String,
     mobile: String,
     enterOTP: String,
-
-
     schoolPrincipalName: String,
     schoolPrincipalMobile: String,
     schoolPrincipalLandline: String,
@@ -92,7 +90,6 @@ var schema = new Schema({
             type: String
         }
     }],
-
     registrationFee: String,
     paymentStatus: {
         type: String,
@@ -106,7 +103,6 @@ var schema = new Schema({
         type: String,
     },
     verifiedDate: Date,
-
     remarks: String,
     accessToken: String,
     utm_medium: String,
