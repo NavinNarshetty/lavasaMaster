@@ -1217,6 +1217,10 @@ var model = {
                                 "resultWaterPolo.teams.team": teamid,
                             }, {
                                 "resultThrowball.teams.team": teamid,
+                            }, {
+                                "resultsCombat.teams.team": teamid,
+                            }, {
+                                "resultsRacquet.teams.team": teamid,
                             }],
                             round: standings.name
                         }
@@ -1418,6 +1422,50 @@ var model = {
                                     scores.win = ++scores.win;
                                     scores.points = scores.points + 3;
                                 } else if (_.isEmpty(match.resultThrowball.winner.player) && match.resultThrowball.isDraw == true) {
+                                    scores.draw = ++scores.draw;
+                                    scores.points = scores.points + 1;
+                                } else {
+                                    scores.loss = ++scores.loss;
+                                }
+                            } else if (match.resultsCombat) {
+                                console.log('Inside match result', match.resultsCombat);
+                                if (match.resultsCombat.teams.length === 2) {
+                                    if (teamData._id == match.resultsCombat.teams[0].team && match.resultsCombat.teams[0].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    } else if (teamData._id == match.resultsCombat.teams[1].team && match.resultsCombat.teams[1].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    }
+                                } else {
+                                    if (teamData._id == match.resultsCombat.teams[0].team && match.resultsCombat.teams[0].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    }
+                                }
+                                if (teamData._id == match.resultsCombat.winner.player) {
+                                    scores.win = ++scores.win;
+                                    scores.points = scores.points + 3;
+                                } else if (_.isEmpty(match.resultsCombat.winner.player) && match.resultsCombat.isDraw == true) {
+                                    scores.draw = ++scores.draw;
+                                    scores.points = scores.points + 1;
+                                } else {
+                                    scores.loss = ++scores.loss;
+                                }
+                            } else if (match.resultsRacquet) {
+                                console.log('Inside match result', match.resultsRacquet);
+                                if (match.resultsRacquet.teams.length === 2) {
+                                    if (teamData._id == match.resultsRacquet.teams[0].team && match.resultsRacquet.teams[0].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    } else if (teamData._id == match.resultsRacquet.teams[1].team && match.resultsRacquet.teams[1].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    }
+                                } else {
+                                    if (teamData._id == match.resultsRacquet.teams[0].team && match.resultsRacquet.teams[0].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    }
+                                }
+                                if (teamData._id == match.resultsRacquet.winner.player) {
+                                    scores.win = ++scores.win;
+                                    scores.points = scores.points + 3;
+                                } else if (_.isEmpty(match.resultsRacquet.winner.player) && match.resultsRacquet.isDraw == true) {
                                     scores.draw = ++scores.draw;
                                     scores.points = scores.points + 1;
                                 } else {
