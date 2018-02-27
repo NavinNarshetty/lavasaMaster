@@ -330,7 +330,7 @@
                 </div>
                 <div class="report-content">
                   <p class="text-uppercase m-clear color-sportprimary d-opensans-semibold">Did Not Participate In:</p>
-                  <div class=""><span class="participation-name" ng-repeat="sportNo in schoolData.contingent.nonParticipatedSport track by $index">{{sportNo}} <span class="participation-comma">,</span></span></div>
+                  <div class=""><span class="participation-name" ng-repeat="sportNo in schoolData.contingent.nonParticipatedSport track by $index">{{sportNo}}<span class="participation-comma">,</span></span></div>
                 </div>
               </div>
             </div>
@@ -372,7 +372,9 @@
                 <tr ng-repeat="school in schoolData.performance track by $index">
                   <td>
                     <div class="text-left">
+                      <a ui-sref="school-profile({id:school.schoolId})" class="report-schoollink">
                       {{school.topSchoolName}}
+                      </a>
                     </div>
                   </td>
                   <td>
