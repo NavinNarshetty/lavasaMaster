@@ -1,7 +1,7 @@
 // TABLE CALENDER
 myApp.controller('TableCalenderCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
   //Used to name the .html file
-  $scope.template = TemplateService.changecontent("table-calender");
+  $scope.template = TemplateService.changecontent("other/calender/table-calender");
   $scope.menutitle = NavigationService.makeactive("Calender");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
@@ -80,7 +80,7 @@ myApp.controller('TableCalenderCtrl', function ($scope, TemplateService, Navigat
 // DETAIL CALENDER
 myApp.controller('DetailCalenderCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
   //Used to name the .html file
-  $scope.template = TemplateService.changecontent("detail-calender");
+  $scope.template = TemplateService.changecontent("other/calender/detail-calender");
   $scope.menutitle = NavigationService.makeactive("Detail Calender");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();

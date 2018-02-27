@@ -1,7 +1,7 @@
 // TABLE SPECIAL AWARD BANNER
 myApp.controller('SpecialAwardBannerCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
   //Used to name the .html file
-  $scope.template = TemplateService.changecontent("tablespecialawardbanner");
+  $scope.template = TemplateService.changecontent("other/special-award/banner/tablespecialawardbanner");
   $scope.menutitle = NavigationService.makeactive("Special Award");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
@@ -77,7 +77,7 @@ myApp.controller('SpecialAwardBannerCtrl', function ($scope, TemplateService, Na
 // DETAIL SPECIAL AWARD BANNER
 myApp.controller('DetailSpecialAwardBannerCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
   //Used to name the .html file
-  $scope.template = TemplateService.changecontent("detailspecialawardbanner");
+  $scope.template = TemplateService.changecontent("other/special-award/banner/detailspecialawardbanner");
   $scope.menutitle = NavigationService.makeactive("Special Award");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
@@ -141,7 +141,7 @@ myApp.controller('DetailSpecialAwardBannerCtrl', function ($scope, TemplateServi
 // TABLE SPECIAL AWARD
 myApp.controller('SpecialAwardCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
   //Used to name the .html file
-  $scope.template = TemplateService.changecontent("tablespecialaward");
+  $scope.template = TemplateService.changecontent("other/special-award/listofaward/tablespecialaward");
   $scope.menutitle = NavigationService.makeactive("Special Award");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
@@ -219,7 +219,7 @@ myApp.controller('SpecialAwardCtrl', function ($scope, TemplateService, Navigati
 // DETAIL TABLE SPECIAL AWARD
 myApp.controller('DetailSpecialAwardCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
   //Used to name the .html file
-  $scope.template = TemplateService.changecontent("detailspecialaward");
+  $scope.template = TemplateService.changecontent("other/special-award/listofaward/detailspecialaward");
   $scope.menutitle = NavigationService.makeactive("Detail Special Award");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
@@ -285,7 +285,7 @@ myApp.controller('DetailSpecialAwardCtrl', function ($scope, TemplateService, Na
 // SPORTS AWARDS DETAIL TABLE
 myApp.controller('SpecialAwardDetailCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
   //Used to name the .html file
-  $scope.template = TemplateService.changecontent("tablespecialawarddetail");
+  $scope.template = TemplateService.changecontent("other/special-award/awarddetail/tablespecialawarddetail");
   $scope.menutitle = NavigationService.makeactive("Special Award");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
@@ -361,7 +361,7 @@ myApp.controller('SpecialAwardDetailCtrl', function ($scope, TemplateService, Na
 // SPORTS AWARDS DETAIL 
 myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
   //Used to name the .html file
-  $scope.template = TemplateService.changecontent("detailawardspecial");
+  $scope.template = TemplateService.changecontent("other/special-award/awarddetail/detailawardspecial");
   $scope.menutitle = NavigationService.makeactive("Special Award");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
@@ -675,7 +675,7 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
 // RISING STAR
 myApp.controller('RisingCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
   //Used to name the .html file
-  $scope.template = TemplateService.changecontent("tablerising");
+  $scope.template = TemplateService.changecontent("other/special-award/rising/tablerising");
   $scope.menutitle = NavigationService.makeactive("Rising Star");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
@@ -749,7 +749,7 @@ myApp.controller('RisingCtrl', function ($scope, TemplateService, NavigationServ
 // DETAIL RISING STAR
 myApp.controller('DetailRisingCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
   //Used to name the .html file
-  $scope.template = TemplateService.changecontent("detailrising");
+  $scope.template = TemplateService.changecontent("other/special-award/rising/detailrising");
   $scope.menutitle = NavigationService.makeactive("Detail Rising Star");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();

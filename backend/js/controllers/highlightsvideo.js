@@ -1,6 +1,6 @@
 myApp.controller('HighlightvideoCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
   //Used to name the .html file
-  $scope.template = TemplateService.changecontent("tablehighlights");
+  $scope.template = TemplateService.changecontent("champions-archive/tablehighlights");
   $scope.menutitle = NavigationService.makeactive("Highlights Page");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
@@ -69,7 +69,7 @@ myApp.controller('HighlightvideoCtrl', function ($scope, TemplateService, Naviga
 
 myApp.controller('DetailHighlightCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
   //Used to name the .html file
-  $scope.template = TemplateService.changecontent("detailhighlights");
+  $scope.template = TemplateService.changecontent("champions-archive/detailhighlights");
   $scope.menutitle = NavigationService.makeactive("Detail Highlights Page");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();

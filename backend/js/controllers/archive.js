@@ -1,6 +1,6 @@
 myApp.controller('ArchiveCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
   //Used to name the .html file
-  $scope.template = TemplateService.changecontent("tablearchive");
+  $scope.template = TemplateService.changecontent("champions-archive/tablearchive");
   $scope.menutitle = NavigationService.makeactive("Archive Page");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
@@ -69,7 +69,7 @@ myApp.controller('ArchiveCtrl', function ($scope, TemplateService, NavigationSer
 
 myApp.controller('DetailArchiveCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
   //Used to name the .html file
-  $scope.template = TemplateService.changecontent("detailarchive");
+  $scope.template = TemplateService.changecontent("champions-archive/detailarchive");
   $scope.menutitle = NavigationService.makeactive("Detail Archive Page");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();

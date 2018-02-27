@@ -379,7 +379,7 @@ myApp.controller('DetailRulesCtrl', function ($scope, TemplateService, Navigatio
 myApp.controller('FaqCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr, $uibModal) {
     //registration filter view
     //Used to name the .html file
-    $scope.template = TemplateService.changecontent("tablefaq");
+    $scope.template = TemplateService.changecontent("other/faq/tablefaq");
     $scope.menutitle = NavigationService.makeactive("Faq");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
@@ -450,7 +450,7 @@ myApp.controller('FaqCtrl', function ($scope, TemplateService, NavigationService
 myApp.controller('DetailFaqCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr, $uibModal) {
     //registration filter view
     //Used to name the .html file
-    $scope.template = TemplateService.changecontent("faqdetail");
+    $scope.template = TemplateService.changecontent("other/faq/faqdetail");
     $scope.menutitle = NavigationService.makeactive("Deatil Faq");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
@@ -4417,7 +4417,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 
     .controller('MedalsCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $uibModal, $state, toastr) {
         //Used to name the .html file
-        $scope.template = TemplateService.changecontent("tablemedal");
+        $scope.template = TemplateService.changecontent("medal/tablemedal");
         $scope.menutitle = NavigationService.makeactive("Medal List");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
@@ -4540,7 +4540,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
     })
     .controller('MediaCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $uibModal, $state, toastr) {
         //Used to name the .html file
-        $scope.template = TemplateService.changecontent("media");
+        $scope.template = TemplateService.changecontent("galleria/media");
         $scope.menutitle = NavigationService.makeactive("Media List");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
@@ -4629,7 +4629,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
     })
     .controller('DetailMedalCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
         //Used to name the .html file
-        $scope.template = TemplateService.changecontent("detailmedal");
+        $scope.template = TemplateService.changecontent("medal/detailmedal");
         $scope.menutitle = NavigationService.makeactive("Medal Detail");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
@@ -5037,7 +5037,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 
     .controller('GalleryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, $uibModal, toastr) {
         //Used to name the .html file
-        $scope.template = TemplateService.changecontent("tablegallery");
+        $scope.template = TemplateService.changecontent("galleria/tablegallery");
         $scope.menutitle = NavigationService.makeactive("Gallery");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
@@ -5197,7 +5197,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 
     .controller('DetailGalleryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
         //Used to name the .html file
-        $scope.template = TemplateService.changecontent("gallerydetail");
+        $scope.template = TemplateService.changecontent("galleria/gallerydetail");
         $scope.menutitle = NavigationService.makeactive("Gallery Detail");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
@@ -5246,7 +5246,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 myApp.controller('CertificateBannerCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, $uibModal, toastr) {
     //registration filter view
     //Used to name the .html file
-    $scope.template = TemplateService.changecontent("tablecertificatebanner");
+    $scope.template = TemplateService.changecontent("other/certificate/tablecertificatebanner");
     $scope.menutitle = NavigationService.makeactive("Certificate Banner");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
@@ -5318,7 +5318,7 @@ myApp.controller('CertificateBannerCtrl', function ($scope, TemplateService, Nav
 myApp.controller('DetailCertificateBannerCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
     //registration filter view
     //Used to name the .html file
-    $scope.template = TemplateService.changecontent("detailcertificatebanner");
+    $scope.template = TemplateService.changecontent("other/certificate/detailcertificatebanner");
     $scope.menutitle = NavigationService.makeactive("Detail Certificate Banner");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
@@ -5391,7 +5391,7 @@ myApp.controller('DetailCertificateBannerCtrl', function ($scope, TemplateServic
 myApp.controller('CertificateDetailsCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, $uibModal, toastr) {
     //registration filter view
     //Used to name the .html file
-    $scope.template = TemplateService.changecontent("tablecertificatedetails");
+    $scope.template = TemplateService.changecontent("other/certificate/tablecertificatedetails");
     $scope.menutitle = NavigationService.makeactive("Certificate Details");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
@@ -5463,7 +5463,7 @@ myApp.controller('CertificateDetailsCtrl', function ($scope, TemplateService, Na
 myApp.controller('DetailCertificateDetailsCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
     //registration filter view
     //Used to name the .html file
-    $scope.template = TemplateService.changecontent("detailcertificatedetails");
+    $scope.template = TemplateService.changecontent("other/certificate/detailcertificatedetails");
     $scope.menutitle = NavigationService.makeactive("Detail Certificate Details");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
