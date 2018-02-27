@@ -111,12 +111,21 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
             if (result.globalResult.teams) {
               if (result.globalResult.teams[0].sets != undefined && result.globalResult.teams[0].sets[0]) {
                 result.score1 = result.globalResult.teams[0].sets[0].point;
+
+                if (result.score1 == undefined) {
+                  result.score1 = ' ';
+                }
               }
               if (result.globalResult.teams[1] && result.globalResult.teams[1].sets != undefined && result.globalResult.teams[1].sets[0]) {
                 result.score2 = result.globalResult.teams[1].sets[0].point;
+                if (result.score2 == undefined) {
+                  result.score2 = ' ';
+                }
 
               }
-              result.finalScore = result.score1 + ' - ' + result.score2;
+              if (result.resultsCombat) {
+                result.finalScore = result.score1 + ' - ' + result.score2;
+              }
             }
 
 
