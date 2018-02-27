@@ -1,7 +1,7 @@
 //DETAIL SCHEDULE
 myApp.controller('DetailScheduleCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
   //Used to name the .html file
-  $scope.template = TemplateService.changecontent("detailchampionschedule");
+  $scope.template = TemplateService.changecontent("other/champions-schedule/detailchampionschedule");
   $scope.menutitle = NavigationService.makeactive("Detail Champion Schedule");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
@@ -101,7 +101,7 @@ myApp.controller('DetailScheduleCtrl', function ($scope, TemplateService, Naviga
 // TABLE SCHEDULE
 myApp.controller('ChampionScheduleCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
   //Used to name the .html file
-  $scope.template = TemplateService.changecontent("tablechampionsschedule");
+  $scope.template = TemplateService.changecontent("other/champions-schedule/tablechampionsschedule");
   $scope.menutitle = NavigationService.makeactive("Champion Schedule");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();

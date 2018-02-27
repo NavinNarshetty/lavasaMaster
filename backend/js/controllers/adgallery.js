@@ -1,7 +1,7 @@
 // TABLE GALLERY
 myApp.controller('AdGalleryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
   //Used to name the .html file
-  $scope.template = TemplateService.changecontent("tableadgallery");
+  $scope.template = TemplateService.changecontent("adbanners/tableadgallery");
   $scope.menutitle = NavigationService.makeactive("Ad Gallery");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
@@ -75,7 +75,7 @@ myApp.controller('AdGalleryCtrl', function ($scope, TemplateService, NavigationS
 // DETAIL GALLERY
 myApp.controller('DetailAdGalleryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
   //Used to name the .html file
-  $scope.template = TemplateService.changecontent("detailadgallery");
+  $scope.template = TemplateService.changecontent("adbanners/detailadgallery");
   $scope.menutitle = NavigationService.makeactive("Detail Gallery");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();

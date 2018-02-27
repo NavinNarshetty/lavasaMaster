@@ -1,7 +1,7 @@
 // TABLE SPONSOR
 myApp.controller('SponsorCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
   //Used to name the .html file
-  $scope.template = TemplateService.changecontent("tablesponsor");
+  $scope.template = TemplateService.changecontent("other/sponsor/tablesponsor");
   $scope.menutitle = NavigationService.makeactive("Sponsor");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
@@ -73,7 +73,7 @@ myApp.controller('SponsorCtrl', function ($scope, TemplateService, NavigationSer
 // DETAIL SPONSOR
 myApp.controller('DetailSponsorCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
   //Used to name the .html file
-  $scope.template = TemplateService.changecontent("detailsponsor");
+  $scope.template = TemplateService.changecontent("other/sponsor/detailsponsor");
   $scope.menutitle = NavigationService.makeactive("Detail Sponsor");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
@@ -148,7 +148,7 @@ myApp.controller('DetailSponsorCtrl', function ($scope, TemplateService, Navigat
 // TABLE SPONSOR CARD
 myApp.controller('SponsorCardCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
   //Used to name the .html file
-  $scope.template = TemplateService.changecontent("tablesponsorcard");
+  $scope.template = TemplateService.changecontent("other/sponsor/tablesponsorcard");
   $scope.menutitle = NavigationService.makeactive("Sponsor");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
@@ -222,7 +222,7 @@ myApp.controller('SponsorCardCtrl', function ($scope, TemplateService, Navigatio
 // DETAIL SPONSOR CARD
 myApp.controller('DetailSponsorCardCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
   //Used to name the .html file
-  $scope.template = TemplateService.changecontent("detailponsorcard");
+  $scope.template = TemplateService.changecontent("other/sponsor/detailponsorcard");
   $scope.menutitle = NavigationService.makeactive("Sponsor");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();

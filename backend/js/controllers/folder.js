@@ -1,6 +1,6 @@
 myApp.controller('FolderCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
   //Used to name the .html file
-  $scope.template = TemplateService.changecontent("tablefolderpage");
+  $scope.template = TemplateService.changecontent("galleria/tablefolderpage");
   $scope.menutitle = NavigationService.makeactive("Folder Page");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
