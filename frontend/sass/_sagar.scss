@@ -2326,11 +2326,18 @@ $tickerDuration: 60s;
 }
 .participation-name{
   margin-right: 5px;
+  display: inline-block;
   &:last-child{
     .participation-comma{
       margin-right: 0;
       display: none;
     }
+  }
+}
+.report-schoollink{
+  color: #fff;
+  &:hover, &:active, &:focus{
+    color: #fff;
   }
 }
 // REPORT CARD PAGE END
