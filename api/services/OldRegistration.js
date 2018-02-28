@@ -149,6 +149,7 @@ var model = {
                             callback(err, null);
                         } else if (_.isEmpty(found)) {
                             var formData = {};
+                            formData.currentYear = singleData.year;
                             formData.sfaID = singleData.sfaID;
                             formData.receiptId = singleData.receiptId;
                             formData.institutionType = singleData.institutionType;
@@ -171,12 +172,12 @@ var model = {
                             formData.teamSports = singleData.teamSports;
                             formData.sportsDepartment = singleData.sportsDepartment;
                             formData.status = singleData.status;
-                            formData.currentYear = singleData.year;
                             callback(null, formData);
                         } else {
                             var formData = {};
                             found.year.push(singleData.year);
-                            if (found.currentYear < singleData.year) {
+                            var i = (found.year.length - 1);
+                            if (singleData.year < found.year[i]) {
                                 formData._id = found._id;
                                 formData.sfaID = singleData.sfaID;
                                 formData.receiptId = singleData.receiptId;
@@ -184,8 +185,66 @@ var model = {
                                 formData.password = singleData.password;
                                 formData.year = found.year;
                                 formData.schoolName = singleData.schoolName;
+                                if (singleData.schoolType) {
+                                    formData.schoolType = singleData.schoolType;
+                                }
+                                if (singleData.schoolLogo) {
+                                    formData.schoolLogo = singleData.schoolLogo;
+                                }
+                                if (singleData.schoolCategory) {
+                                    formData.schoolCategory = singleData.schoolCategory;
+                                }
+                                if (singleData.affiliatedBoard) {
+                                    formData.affiliatedBoard = singleData.affiliatedBoard;
+                                }
+                                if (singleData.schoolAddress) {
+                                    formData.schoolAddress = singleData.schoolAddress;
+                                }
+                                if (singleData.schoolAddressLine2) {
+                                    formData.schoolAddressLine2 = singleData.schoolAddressLine2;
+                                }
+
                                 formData.state = singleData.state;
+                                if (singleData.district) {
+                                    formData.district = singleData.district;
+                                }
                                 formData.city = singleData.city;
+                                if (singleData.locality) {
+                                    formData.locality = singleData.locality;
+                                }
+                                if (singleData.pinCode) {
+                                    formData.pinCode = singleData.pinCode;
+                                }
+                                if (singleData.contactPerson) {
+                                    formData.contactPerson = singleData.contactPerson;
+                                }
+                                if (singleData.landline) {
+                                    formData.landline = singleData.landline;
+                                }
+                                if (singleData.email) {
+                                    formData.email = singleData.email;
+                                }
+                                if (singleData.website) {
+                                    formData.website = singleData.website;
+                                }
+                                if (singleData.mobile) {
+                                    formData.mobile = singleData.mobile;
+                                }
+                                if (singleData.enterOTP) {
+                                    formData.enterOTP = singleData.enterOTP;
+                                }
+                                if (singleData.schoolPrincipalEmail) {
+                                    formData.schoolPrincipalEmail = singleData.schoolPrincipalEmail;
+                                }
+                                if (singleData.schoolPrincipalLandline) {
+                                    formData.schoolPrincipalLandline = singleData.schoolPrincipalLandline;
+                                }
+                                if (singleData.schoolPrincipalMobile) {
+                                    formData.schoolPrincipalMobile = singleData.schoolPrincipalMobile;
+                                }
+                                if (singleData.schoolPrincipalName) {
+                                    formData.schoolPrincipalName = singleData.schoolPrincipalName;
+                                }
                                 formData.registrationFee = singleData.registrationFee;
                                 formData.verifyCount = singleData.verifyCount;
                                 formData.paymentStatus = singleData.paymentStatus;
@@ -206,8 +265,66 @@ var model = {
                                 formData.password = found.password;
                                 formData.year = found.year;
                                 formData.schoolName = found.schoolName;
+                                if (found.schoolType) {
+                                    formData.schoolType = found.schoolType;
+                                }
+                                if (found.schoolLogo) {
+                                    formData.schoolLogo = found.schoolLogo;
+                                }
+                                if (found.schoolCategory) {
+                                    formData.schoolCategory = found.schoolCategory;
+                                }
+                                if (found.affiliatedBoard) {
+                                    formData.affiliatedBoard = found.affiliatedBoard;
+                                }
+                                if (found.schoolAddress) {
+                                    formData.schoolAddress = found.schoolAddress;
+                                }
+                                if (found.schoolAddressLine2) {
+                                    formData.schoolAddressLine2 = found.schoolAddressLine2;
+                                }
+
                                 formData.state = found.state;
+                                if (found.district) {
+                                    formData.district = found.district;
+                                }
                                 formData.city = found.city;
+                                if (found.locality) {
+                                    formData.locality = found.locality;
+                                }
+                                if (found.pinCode) {
+                                    formData.pinCode = found.pinCode;
+                                }
+                                if (found.contactPerson) {
+                                    formData.contactPerson = found.contactPerson;
+                                }
+                                if (found.landline) {
+                                    formData.landline = found.landline;
+                                }
+                                if (found.email) {
+                                    formData.email = found.email;
+                                }
+                                if (found.website) {
+                                    formData.website = found.website;
+                                }
+                                if (found.mobile) {
+                                    formData.mobile = found.mobile;
+                                }
+                                if (found.enterOTP) {
+                                    formData.enterOTP = found.enterOTP;
+                                }
+                                if (found.schoolPrincipalEmail) {
+                                    formData.schoolPrincipalEmail = found.schoolPrincipalEmail;
+                                }
+                                if (found.schoolPrincipalLandline) {
+                                    formData.schoolPrincipalLandline = found.schoolPrincipalLandline;
+                                }
+                                if (found.schoolPrincipalMobile) {
+                                    formData.schoolPrincipalMobile = found.schoolPrincipalMobile;
+                                }
+                                if (found.schoolPrincipalName) {
+                                    formData.schoolPrincipalName = found.schoolPrincipalName;
+                                }
                                 formData.registrationFee = found.registrationFee;
                                 formData.verifyCount = found.verifyCount;
                                 formData.paymentStatus = found.paymentStatus;
@@ -252,7 +369,7 @@ var model = {
             } else {
                 callback(null, final);
             }
-        })
+        });
 
     }
 

@@ -25,8 +25,10 @@ var schema = new Schema({
         ref: 'School',
         index: true
     },
-
-    year: String,
+    year: [{
+        type: String
+    }],
+    currentYear: String,
     idProof: String,
     surname: String,
     password: String,
