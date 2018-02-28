@@ -1220,7 +1220,7 @@ var model = {
                                 function (subCategory, callback) {
                                     console.log("sportlist inside", subCategory);
                                     // saveSportsList
-                                    OldSport.saveSportsListAcquatics(sportData, subCategory, function (err, drawFormat) {
+                                    OldSport.saveSportsList(sportData, subCategory, function (err, drawFormat) {
                                         if (err) {
                                             callback(err, null);
                                         } else {
@@ -1365,7 +1365,7 @@ var model = {
                                 function (subCategory, callback) {
                                     console.log("sportlist inside", subCategory);
                                     // saveSportsList
-                                    OldSport.saveSportsListAcquatics(sportData, subCategory, function (err, drawFormat) {
+                                    OldSport.saveSportsList(sportData, subCategory, function (err, drawFormat) {
                                         if (err) {
                                             callback(err, null);
                                         } else {
@@ -1510,7 +1510,7 @@ var model = {
                                 function (subCategory, callback) {
                                     console.log("sportlist inside", subCategory);
                                     // saveSportsList
-                                    OldSport.saveSportsListAcquatics(sportData, subCategory, function (err, drawFormat) {
+                                    OldSport.saveSportsList(sportData, subCategory, function (err, drawFormat) {
                                         if (err) {
                                             callback(err, null);
                                         } else {
@@ -1655,7 +1655,7 @@ var model = {
                                 function (subCategory, callback) {
                                     console.log("sportlist inside", subCategory);
                                     // saveSportsList
-                                    OldSport.saveSportsListAcquatics(sportData, subCategory, function (err, drawFormat) {
+                                    OldSport.saveSportsList(sportData, subCategory, function (err, drawFormat) {
                                         if (err) {
                                             callback(err, null);
                                         } else {
