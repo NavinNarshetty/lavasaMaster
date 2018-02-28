@@ -18875,7 +18875,713 @@ var model = {
                 Config.generateExcel("playedEvents", result1, res);
             });
         })
-    }
+    },
+
+    generateIndiMatches: function (res) {
+        var indSportMatches = [
+            // Stage 1
+            {
+                $match: {
+                    "opponentsTeam": {
+                        "$size": 0
+                    }
+                }
+            },
+
+            // Stage 2
+            {
+                $lookup: {
+                    "from": "sports",
+                    "localField": "sport",
+                    "foreignField": "_id",
+                    "as": "sport"
+                }
+            },
+
+            // Stage 3
+            {
+                $unwind: {
+                    path: "$sport",
+                    includeArrayIndex: "arrayIndex", // optional
+                    preserveNullAndEmptyArrays: false // optional
+                }
+            },
+
+            // Stage 4
+            {
+                $lookup: {
+                    "from": "sportslists",
+                    "localField": "sport.sportslist",
+                    "foreignField": "_id",
+                    "as": "sport.sportslist"
+                }
+            },
+
+            // Stage 5
+            {
+                $unwind: {
+                    path: "$sport.sportslist",
+                    includeArrayIndex: "arrayIndex", // optional
+                    preserveNullAndEmptyArrays: false // optional
+                }
+            },
+
+            // Stage 6
+            {
+                $lookup: {
+                    "from": "sportslistsubcategories",
+                    "localField": "sport.sportslist.sportsListSubCategory",
+                    "foreignField": "_id",
+                    "as": "sport.sportslist.sportsListSubCategory"
+                }
+            },
+
+            // Stage 7
+            {
+                $unwind: {
+                    path: "$sport.sportslist.sportsListSubCategory",
+                    includeArrayIndex: "arrayIndex", // optional
+                    preserveNullAndEmptyArrays: false // optional
+                }
+            },
+
+            // Stage 8
+            {
+                $lookup: {
+                    "from": "agegroups",
+                    "localField": "sport.ageGroup",
+                    "foreignField": "_id",
+                    "as": "sport.ageGroup"
+                }
+            },
+
+            // Stage 9
+            {
+                $unwind: {
+                    path: "$sport.ageGroup",
+                    includeArrayIndex: "arrayIndex", // optional
+                    preserveNullAndEmptyArrays: false // optional
+                }
+            },
+
+            // Stage 10
+            {
+                $lookup: {
+                    "from": "weights",
+                    "localField": "sport.weight",
+                    "foreignField": "_id",
+                    "as": "sport.weight"
+                }
+            },
+
+            // Stage 11
+            {
+                $unwind: {
+                    path: "$sport.weight",
+                    includeArrayIndex: "arrayIndex", // optional
+                    preserveNullAndEmptyArrays: true // optional
+                }
+            },
+
+            // Stage 12
+            {
+                $lookup: {
+                    "from": "individualsports",
+                    "localField": "opponentsSingle",
+                    "foreignField": "_id",
+                    "as": "opponentsSingle"
+                }
+            },
+
+            // Stage 13
+            {
+                $lookup: {
+                    "from": "atheletes",
+                    "localField": "opponentsSingle.athleteId",
+                    "foreignField": "_id",
+                    "as": "opponentsSingle"
+                }
+            },
+
+            // Stage 14
+            {
+                $unwind: {
+                    path: "$opponentsSingle",
+                    includeArrayIndex: "arrayIndex", // optional
+                    preserveNullAndEmptyArrays: true // optional
+                }
+            },
+
+            // Stage 15
+            {
+                $lookup: {
+                    "from": "schools",
+                    "localField": "opponentsSingle.school",
+                    "foreignField": "_id",
+                    "as": "opponentsSingle.school"
+                }
+            },
+
+            // Stage 16
+            {
+                $unwind: {
+                    path: "$opponentsSingle.school",
+                    includeArrayIndex: "arrayIndex", // optional
+                    preserveNullAndEmptyArrays: true // optional
+                }
+            },
+
+            // Stage 17
+            {
+                $group: {
+                    "_id": "$_id",
+                    "scheduleDate": {
+                        "$first": "$scheduleDate"
+                    },
+                    "scheduleTime": {
+                        "$first": "$scheduleTime"
+                    },
+                    "matchId": {
+                        "$first": "$matchId"
+                    },
+                    "round": {
+                        "$first": "$round"
+                    },
+                    "sport": {
+                        "$first": "$sport.sportslist.sportsListSubCategory.name"
+                    },
+                    "event": {
+                        "$first": "$sport.sportslist.name"
+                    },
+                    "ageGroup": {
+                        "$first": "$sport.ageGroup.name"
+                    },
+                    "gender": {
+                        "$first": "$sport.gender"
+                    },
+                    "weight": {
+                        "$first": "$sport.weight.name"
+                    },
+                    "prevMatch": {
+                        "$first": "$prevMatch"
+                    },
+                    "video": {
+                        "$first": "$video"
+                    },
+                    "videoType": {
+                        "$first": "$videoType"
+                    },
+                    "opponentsSingle": {
+                        "$push": {
+                            "_id": "$opponentsSingle._id",
+                            "firstName": "$opponentsSingle.firstName",
+                            "middleName": "$opponentsSingle.middleName",
+                            "surname": "$opponentsSingle.surname",
+                            "sfaId": "$opponentsSingle.sfaId",
+                            "atheleteSchoolName": "$opponentsSingle.atheleteSchoolName",
+                            "school": {
+                                "_id": "$opponentsSingle.school._id",
+                                "name": "$opponentsSingle.school.name",
+                                "sfaId": "$opponentsSingle.school.sfaid"
+                            }
+                        }
+                    },
+                    "resultsCombat": {
+                        "$first": "$resultsCombat"
+                    },
+                    "resultsRacquet": {
+                        "$first": "$resultsRacquet"
+                    },
+                    "resultHeat": {
+                        "$first": "$resultHeat"
+                    },
+                    "resultHockey": {
+                        "$first": "$resultHockey"
+                    },
+                    "resultBasketball": {
+                        "$first": "$resultBasketball"
+                    },
+                    "resultVolleyball": {
+                        "$first": "$resultVolleyball"
+                    },
+                    "resultHandball": {
+                        "$first": "$resultHandball"
+                    },
+                    "resultWaterPolo": {
+                        "$first": "$resultWaterPolo"
+                    },
+                    "resultKabaddi": {
+                        "$first": "$resultKabaddi"
+                    },
+                    "resultFootball": {
+                        "$first": "$resultFootball"
+                    },
+                    "resultQualifyingRound": {
+                        "$first": "$resultQualifyingRound"
+                    },
+                    "resultKnockout": {
+                        "$first": "$resultKnockout"
+                    },
+                    "resultShooting": {
+                        "$first": "$resultShooting"
+                    },
+                    "resultSwiss": {
+                        "$first": "$resultSwiss"
+                    },
+                    "resultFencing": {
+                        "$first": "$resultFencing"
+                    },
+                    "resultImages": {
+                        "$first": "$resultImages"
+                    },
+                    "resultThrowball": {
+                        "$first": "$resultThrowball"
+                    },
+                }
+            },
+        ];
+
+        Match.aggregate(indSportMatches, function (err, result) {
+            if (err) {
+                res.callback(err, null);
+            } else {
+                // async.concatSeries(result, function (singleData, callback) {
+                //     var pdfobj = {};
+                //     pdfobj['Date'] = singleData['scheduleDate'];
+                //     pdfobj['Time'] = singleData['scheduleTime'];  
+                //     pdfobj['Match Id'] = singleData['matchId'];                    
+                //     pdfobj['Round'] = singleData['round'];    
+                //     pdfobj['Sport'] = singleData['sport'];
+                //     pdfobj['Event'] = singleData['ageGroup'];
+                //     pdfobj['Age Group'] = singleData['ageGroup'];
+                //     pdfobj['Gender'] = singleData['gender'];
+                //     pdfobj['Weight'] = singleData['weight'];
+
+                //     if(singleData['opponentsSingle'].length>2){
+                //         pdfobj['Player']="";
+                //         _.each(singleData['opponentsSingle'],function(n){
+                //             pdfobj.player =pdfobj.player + n.sfaId + "-" + n.firstName + " " + n.middleName + " " + n.surname ;
+                //         })
+                //     }else{
+                //         _.each(singleData['opponentsSingle'],function(n,index){
+                //             if(index==0){
+                //                 pdfobj['Player 1'] = n.sfaId;
+                //                 pdfobj['Player 1 Name'] = n.firstName + " " + n.middleName + " " + n.surname;   
+                //                 if(n.atheleteSchoolName!=""){
+                //                     pdfobj['Player 1 School'] = n.school.sfaId + "-" + n.atheleteSchoolName;
+                //                 }else{
+                //                     pdfobj['Player 1 School'] = n.school.sfaId + "-" + n.school.name;                                    
+                //                 }                             
+                //             }else if(index==1){
+                //                 pdfobj['Player 2'] = n.sfaId;
+                //                 pdfobj['Player 2 Name'] = n.firstName + " " + n.middleName + " " + n.surname;
+                //                 if(n.atheleteSchoolName!=""){
+                //                     pdfobj['Player 1 School'] = n.school.sfaId + "-" + n.atheleteSchoolName;
+                //                 }else{
+                //                     pdfobj['Player 1 School'] = n.school.sfaId + "-" + n.school.name;                                    
+                //                 }
+                //             }
+                //         })
+                //     }
+
+                //     pdfobj['Video'] = singleData['video'];
+                //     pdfobj['Video Type'] = singleData['videoType'];
+
+                //     callback(null, pdfobj);
+                // }, function (err, result1) {
+                //     Config.generateExcel("Individual Matches", result1, res);
+                // });
+
+                var arr = [];
+                _.each(result, function (singleData, index1) {
+                    var pdfobj = {};
+                    pdfobj['Date'] = singleData['scheduleDate'];
+                    pdfobj['Time'] = singleData['scheduleTime'];
+                    pdfobj['Match Id'] = singleData['matchId'];
+                    pdfobj['Round'] = singleData['round'];
+                    pdfobj['Sport'] = singleData['sport'];
+                    pdfobj['Event'] = singleData['event'];
+                    pdfobj['Age Group'] = singleData['ageGroup'];
+                    pdfobj['Gender'] = singleData['gender'];
+                    pdfobj['Weight'] = singleData['weight'];
+                    pdfobj['Player'] = "";
+                    pdfobj['Player 1'] = "";
+                    pdfobj['Player 1 Name'] = "";
+                    pdfobj['Player 1 School'] = "";
+                    pdfobj['Player 2'] = "";
+                    pdfobj['Player 2 Name'] = "";
+                    pdfobj['Player 2 School'] = "";
+                    if (singleData['opponentsSingle'].length > 2) {
+                        pdfobj['Player'] = "";
+                        _.each(singleData['opponentsSingle'], function (n) {
+                            pdfobj['Player'] = pdfobj['Player'] + n.sfaId + "-" + n.firstName + " " + (n.middleName == undefined ? '' : n.middleName) + " " + n.surname + ", ";
+                        })
+                    } else {
+                        _.each(singleData['opponentsSingle'], function (n, index) {
+                            if (index == 0) {
+                                pdfobj['Player 1'] = n.sfaId;
+                                pdfobj['Player 1 Name'] = n.firstName + " " + (n.middleName == undefined ? '' : n.middleName) + " " + n.surname;
+                                pdfobj['Player 1 School'] = ((n.school.sfaId == undefined || n.school.sfaId == "") ? '' : (n.school.sfaId + "-"));
+                                pdfobj['Player 1 School'] = pdfobj['Player 1 School'] + ((n.atheleteSchoolName == undefined || n.atheleteSchoolName == "") ? n.school.name : n.atheleteSchoolName);
+                            } else if (index == 1) {
+                                pdfobj['Player 2'] = n.sfaId;
+                                pdfobj['Player 2 School'] = ((n.school.sfaId == undefined || n.school.sfaId == "") ? '' : (n.school.sfaId + "-"));
+                                pdfobj['Player 2 School'] = pdfobj['Player 2 School'] + ((n.atheleteSchoolName == undefined || n.atheleteSchoolName == "") ? n.school.name : n.atheleteSchoolName);
+                            }
+                        })
+                    }
+
+                    pdfobj['Video'] = singleData['video'];
+                    pdfobj['Video Type'] = singleData['videoType'];
+
+                    arr.push(pdfobj);
+                    if (index1 == result.length - 1) {
+                        Config.generateExcel("Individual Matches", arr, res);
+                    }
+                });
+            }
+        });
+    },
+
+    generateTeamMatches: function (res) {
+        var teamSportMatches = [
+            // Stage 1
+            {
+                $match: {
+                    "opponentsSingle": {
+                        "$size": 0
+                    }
+                }
+            },
+
+            // Stage 2
+            {
+                $lookup: {
+                    "from": "sports",
+                    "localField": "sport",
+                    "foreignField": "_id",
+                    "as": "sport"
+                }
+            },
+
+            // Stage 3
+            {
+                $unwind: {
+                    path: "$sport",
+                    includeArrayIndex: "arrayIndex", // optional
+                    preserveNullAndEmptyArrays: false // optional
+                }
+            },
+
+            // Stage 4
+            {
+                $lookup: {
+                    "from": "sportslists",
+                    "localField": "sport.sportslist",
+                    "foreignField": "_id",
+                    "as": "sport.sportslist"
+                }
+            },
+
+            // Stage 5
+            {
+                $unwind: {
+                    path: "$sport.sportslist",
+                    includeArrayIndex: "arrayIndex", // optional
+                    preserveNullAndEmptyArrays: false // optional
+                }
+            },
+
+            // Stage 6
+            {
+                $lookup: {
+                    "from": "sportslistsubcategories",
+                    "localField": "sport.sportslist.sportsListSubCategory",
+                    "foreignField": "_id",
+                    "as": "sport.sportslist.sportsListSubCategory"
+                }
+            },
+
+            // Stage 7
+            {
+                $unwind: {
+                    path: "$sport.sportslist.sportsListSubCategory",
+                    includeArrayIndex: "arrayIndex", // optional
+                    preserveNullAndEmptyArrays: false // optional
+                }
+            },
+
+            // Stage 8
+            {
+                $lookup: {
+                    "from": "agegroups",
+                    "localField": "sport.ageGroup",
+                    "foreignField": "_id",
+                    "as": "sport.ageGroup"
+                }
+            },
+
+            // Stage 9
+            {
+                $unwind: {
+                    path: "$sport.ageGroup",
+                    includeArrayIndex: "arrayIndex", // optional
+                    preserveNullAndEmptyArrays: false // optional
+                }
+            },
+
+            // Stage 10
+            {
+                $lookup: {
+                    "from": "weights",
+                    "localField": "sport.weight",
+                    "foreignField": "_id",
+                    "as": "sport.weight"
+                }
+            },
+
+            // Stage 11
+            {
+                $unwind: {
+                    path: "$sport.weight",
+                    includeArrayIndex: "arrayIndex", // optional
+                    preserveNullAndEmptyArrays: true // optional
+                }
+            },
+
+            // Stage 12
+            {
+                $lookup: {
+                    "from": "teamsports",
+                    "localField": "opponentsTeam",
+                    "foreignField": "_id",
+                    "as": "opponentsTeam"
+                }
+            },
+
+            // Stage 13
+            {
+                $unwind: {
+                    path: "$opponentsTeam",
+                    includeArrayIndex: "arrayIndex", // optional
+                    preserveNullAndEmptyArrays: false // optional
+                }
+            },
+
+            // Stage 14
+            {
+                $lookup: {
+                    "from": "registrations",
+                    "localField": "opponentsTeam.school",
+                    "foreignField": "_id",
+                    "as": "opponentsTeam.school"
+                }
+            },
+
+            // Stage 15
+            {
+                $unwind: {
+                    path: "$opponentsTeam.school",
+                    includeArrayIndex: "arrayIndex", // optional
+                    preserveNullAndEmptyArrays: true // optional
+                }
+            },
+
+            // Stage 16
+            {
+                $lookup: {
+                    "from": "studentteams",
+                    "localField": "opponentsTeam.studentTeam",
+                    "foreignField": "_id",
+                    "as": "opponentsTeam.studentTeam"
+                }
+            },
+
+            // Stage 17
+            {
+                $lookup: {
+                    "from": "atheletes",
+                    "localField": "opponentsTeam.studentTeam.studentId",
+                    "foreignField": "_id",
+                    "as": "opponentsTeam.studentTeam.studentId"
+                }
+            },
+
+            // Stage 18
+            {
+                $group: {
+                    "_id": "$_id",
+                    "scheduleDate": {
+                        "$first": "$scheduleDate"
+                    },
+                    "scheduleTime": {
+                        "$first": "$scheduleTime"
+                    },
+                    "matchId": {
+                        "$first": "$matchId"
+                    },
+                    "round": {
+                        "$first": "$round"
+                    },
+                    "sport": {
+                        "$first": "$sport.sportslist.sportsListSubCategory.name"
+                    },
+                    "event": {
+                        "$first": "$sport.sportslist.name"
+                    },
+                    "ageGroup": {
+                        "$first": "$sport.ageGroup.name"
+                    },
+                    "gender": {
+                        "$first": "$sport.gender"
+                    },
+                    "weight": {
+                        "$first": "$sport.weight.name"
+                    },
+                    "prevMatch": {
+                        "$first": "$prevMatch"
+                    },
+                    "video": {
+                        "$first": "$video"
+                    },
+                    "videoType": {
+                        "$first": "$videoType"
+                    },
+                    "opponentsTeam": {
+                        "$push": {
+                            "_id": "$opponentsTeam._id",
+                            "teamId": "$opponentsTeam.teamId",
+                            "teamName": "$opponentsTeam.name",
+                            "school": {
+                                "sfaId": "$opponentsTeam.school.sfaID",
+                                "schoolName": "$opponentsTeam.school.schoolName"
+                            },
+                            "students": "$opponentsTeam.studentTeam.studentId"
+                        }
+                    },
+                    "resultsCombat": {
+                        "$first": "$resultsCombat"
+                    },
+                    "resultsRacquet": {
+                        "$first": "$resultsRacquet"
+                    },
+                    "resultHeat": {
+                        "$first": "$resultHeat"
+                    },
+                    "resultHockey": {
+                        "$first": "$resultHockey"
+                    },
+                    "resultBasketball": {
+                        "$first": "$resultBasketball"
+                    },
+                    "resultVolleyball": {
+                        "$first": "$resultVolleyball"
+                    },
+                    "resultHandball": {
+                        "$first": "$resultHandball"
+                    },
+                    "resultWaterPolo": {
+                        "$first": "$resultWaterPolo"
+                    },
+                    "resultKabaddi": {
+                        "$first": "$resultKabaddi"
+                    },
+                    "resultFootball": {
+                        "$first": "$resultFootball"
+                    },
+                    "resultQualifyingRound": {
+                        "$first": "$resultQualifyingRound"
+                    },
+                    "resultKnockout": {
+                        "$first": "$resultKnockout"
+                    },
+                    "resultShooting": {
+                        "$first": "$resultShooting"
+                    },
+                    "resultSwiss": {
+                        "$first": "$resultSwiss"
+                    },
+                    "resultFencing": {
+                        "$first": "$resultFencing"
+                    },
+                    "resultImages": {
+                        "$first": "$resultImages"
+                    },
+                    "resultThrowball": {
+                        "$first": "$resultThrowball"
+                    }
+                }
+            },
+        ];
+        Match.aggregate(teamSportMatches, function (err, result) {
+            if (err) {
+                res.callback(err, null);
+            } else {
+                console.log("result.length",result.length);
+                var arr = [];
+                _.each(result, function (singleData, index1) {
+                    console.log(index1);
+                    var pdfobj = {};
+                    pdfobj['Date'] = singleData['scheduleDate'];
+                    pdfobj['Time'] = singleData['scheduleTime'];
+                    pdfobj['Match Id'] = singleData['matchId'];
+                    pdfobj['Round'] = singleData['round'];
+                    pdfobj['Sport'] = singleData['sport'];
+                    pdfobj['Event'] = singleData['event'];
+                    pdfobj['Age Group'] = singleData['ageGroup'];
+                    pdfobj['Gender'] = singleData['gender'];
+                    pdfobj['Weight'] = singleData['weight'];
+                    pdfobj['Teams'] = "";
+                    pdfobj['Team 1'] = "";
+                    pdfobj['Team 1 Name'] = "";
+                    pdfobj['Team 1 Players'] = ""; 
+                    pdfobj['Team 1 School'] = "";
+                    pdfobj['Team 2'] = "";
+                    pdfobj['Team 2 Name'] = "";
+                    pdfobj['Team 2 Players'] = "";                    
+                    pdfobj['Team 2 School'] = "";
+
+                    if (singleData['opponentsTeam'].length > 2) {
+                        pdfobj['Player'] = "";
+                        _.each(singleData['opponentsTeam'], function (n) {
+                            pdfobj['Teams'] = pdfobj['Teams'] + n.teamId + "-" + n.teamName + ",";
+                        });
+                    } else {
+                        _.each(singleData['opponentsTeam'], function (n, index) {
+                            if (index == 0) {
+                                pdfobj['Team 1'] = n.teamId;
+                                pdfobj['Team 1 Name'] = n.teamName;
+                                pdfobj['Team 1 School'] = n.school.schoolName;
+                                _.each(n.students,function(m){
+                                    pdfobj['Team 1 Players'] = pdfobj['Team 1 Players'] + m.sfaId + "-" + m.firstName + " " + (m.middleName == undefined ? '' : m.middleName) + " " + m.surname + ", "
+                                });
+                            } else if (index == 1) {
+                                pdfobj['Team 2'] = n.sfaId;
+                                pdfobj['Team 2 Name'] =  n.teamName;
+                                pdfobj['Team 2 School'] = n.school.schoolName;
+                                _.each(n.students,function(m){
+                                    pdfobj['Team 2 Players'] = pdfobj['Team 1 Players'] + m.sfaId + "-" + m.firstName + " " + (m.middleName == undefined ? '' : m.middleName) + " " + m.surname + ", "
+                                });
+                            }
+                        })
+                    }
+
+                    pdfobj['Video'] = singleData['video'];
+                    pdfobj['Video Type'] = singleData['videoType'];
+
+                    arr.push(pdfobj);
+                    if (index1 == result.length - 1) {
+                        Config.generateExcel("Team Matches", arr, res);
+                        // res.callback(null, arr);
+                    }
+                });
+
+                // res.callback(null, result);
+                
+                
+            }
+        });
+    },
 
 };
 module.exports = _.assign(module.exports, exports, model);

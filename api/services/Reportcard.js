@@ -68,7 +68,6 @@ var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
     getOneReportCard: function (data, callback) {
-
         function calPerformance(obj, callback) {
 
             async.waterfall([
@@ -88,18 +87,20 @@ var model = {
 
                     Reportcard.findOne().sort({
                         "totalStrength": -1
-                    }).exec(function (err, result) {
+                    }).lean().exec(function (err, result) {
                         if (err) {
                             obj.performance.push({
                                 "criteria": "Contingent Strength"
                             })
                         } else if (!_.isEmpty(result)) {
-                            obj.performance.push({
+                            var tp = {
+                                "schoolId":result.schoolId,
                                 "topSchoolName": result.schoolName,
                                 "criteria": "Contingent Strength",
                                 "topPerformance": result.totalStrength,
                                 "myPerformance": obj.contingent.totalStrength
-                            });
+                            }
+                            obj.performance.push(tp);
                             callback(null, property);
                         }
                     });
@@ -119,6 +120,7 @@ var model = {
                             })
                         } else if (!_.isEmpty(result)) {
                             obj.performance.push({
+                                "schoolId":result.schoolId,
                                 "topSchoolName": result.schoolName,
                                 "criteria": "Maximum Male Athletes",
                                 "topPerformance": result.maleCount,
@@ -141,6 +143,7 @@ var model = {
                             })
                         } else if (!_.isEmpty(result)) {
                             obj.performance.push({
+                                "schoolId":result.schoolId,
                                 "topSchoolName": result.schoolName,
                                 "criteria": "Maximum Female Athletes",
                                 "topPerformance": result.femaleCount,
@@ -163,6 +166,7 @@ var model = {
                             })
                         } else if (!_.isEmpty(result)) {
                             obj.performance.push({
+                                "schoolId":result.schoolId,
                                 "topSchoolName": result.schoolName,
                                 "criteria": "Maximum Sports Participated",
                                 "topPerformance": result.sportParticipationCount,
@@ -191,6 +195,7 @@ var model = {
                             })
                         } else if (!_.isEmpty(result)) {
                             obj.performance.push({
+                                "schoolId":result.schoolId,
                                 "topSchoolName": result.schoolName,
                                 "criteria": "Minimum No Show %",
                                 "topPerformance": result.noShowPercent,
@@ -217,6 +222,7 @@ var model = {
                             })
                         } else if (!_.isEmpty(result)) {
                             obj.performance.push({
+                                "schoolId":result.schoolId,
                                 "topSchoolName": result.schoolName,
                                 "criteria": "Maximum Win %",
                                 "topPerformance": result.winPercent,
@@ -227,7 +233,7 @@ var model = {
                     })
                 }
             ], function (err, result) {
-                callback(obj);
+                callback(err,obj);
             });
 
         };
@@ -239,7 +245,7 @@ var model = {
                     "schoolName": data.name
                 }
 
-                Reportcard.findOne(matchObj).exec(function (err, result) {
+                Reportcard.findOne(matchObj).lean().exec(function (err, result) {
                     if (err) {
                         callback(err, null);
                     } else if (!_.isEmpty(result)) {
@@ -262,27 +268,66 @@ var model = {
                             sendObj.schoolRank = index + 1;
                             sendObj.medalsTally = result[index];
                             sendObj.performance = sendObj.contingent.performance;
-
-
                             var maxTotalMedalsWon = _.maxBy(result, 'totalCount');
                             var maxGoldMedalsWon = _.maxBy(result, 'medal.gold.count');
+                            var topRankedSchoolId = "";
+                            var maxMedalSchoolId = "";
+                            var maxGoldSchoolId = "";
 
-                            sendObj.performance.push({
-                                topSchoolName: result[0].name,
-                                criteria: "School Rank (Out of " + result.length + ")",
-                                topPerformance: 1,
-                                myPerformance: index + 1
-                            }, {
-                                topSchoolName: maxTotalMedalsWon.name,
-                                criteria: "Maximum Medals Won",
-                                topPerformance: maxTotalMedalsWon.totalCount,
-                                myPerformance: result[index].totalCount
-                            }, {
-                                topSchoolName: maxGoldMedalsWon.name,
-                                criteria: "Maximum Gold Medals Won",
-                                topPerformance: maxGoldMedalsWon.medal.gold.count,
-                                myPerformance: (result[index].medal && result[index].medal.gold) ? result[index].medal.gold.count : 0
+
+                            Registration.findOne({"schoolName":result[0].name}).lean().exec(function(err,topRanked){
+                                topRankedSchoolId = topRanked._id;
+                                sendObj.performance.push({
+                                    schoolId:topRankedSchoolId,
+                                    topSchoolName: result[0].name,
+                                    criteria: "School Rank (Out of " + result.length + ")",
+                                    topPerformance: 1,
+                                    myPerformance: index + 1
+                                });
                             });
+
+                            Registration.findOne({"schoolName":maxTotalMedalsWon.name}).lean().exec(function(err,maxMedalSchool){
+                                console.log("maxMedalSchool",maxMedalSchool);
+                                maxMedalSchoolId = maxMedalSchool._id;
+                                sendObj.performance.push({
+                                    schoolId:maxMedalSchoolId,                                
+                                    topSchoolName: maxTotalMedalsWon.name,
+                                    criteria: "Maximum Medals Won",
+                                    topPerformance: maxTotalMedalsWon.totalCount,
+                                    myPerformance: result[index].totalCount
+                                })
+                            });
+
+                            Registration.findOne({"schoolName":maxGoldMedalsWon.name}).lean().exec(function(err,maxGoldSchool){
+                                maxGoldSchoolId = maxGoldSchool._id;
+                                sendObj.performance.push({
+                                    schoolId:maxGoldSchoolId,                                                                
+                                    topSchoolName: maxGoldMedalsWon.name,
+                                    criteria: "Maximum Gold Medals Won",
+                                    topPerformance: maxGoldMedalsWon.medal.gold.count,
+                                    myPerformance: (result[index].medal && result[index].medal.gold) ? result[index].medal.gold.count : 0
+                                })
+                            });
+
+                            // sendObj.performance.push({
+                            //     schoolId:topRankedSchoolId,
+                            //     topSchoolName: result[0].name,
+                            //     criteria: "School Rank (Out of " + result.length + ")",
+                            //     topPerformance: 1,
+                            //     myPerformance: index + 1
+                            // }, {      
+                            //     schoolId:maxMedalSchoolId,                                
+                            //     topSchoolName: maxTotalMedalsWon.name,
+                            //     criteria: "Maximum Medals Won",
+                            //     topPerformance: maxTotalMedalsWon.totalCount,
+                            //     myPerformance: result[index].totalCount
+                            // }, {                                
+                            //     schoolId:maxGoldSchoolId,                                                                
+                            //     topSchoolName: maxGoldMedalsWon.name,
+                            //     criteria: "Maximum Gold Medals Won",
+                            //     topPerformance: maxGoldMedalsWon.medal.gold.count,
+                            //     myPerformance: (result[index].medal && result[index].medal.gold) ? result[index].medal.gold.count : 0
+                            // });
 
 
                         } else {
@@ -323,7 +368,6 @@ var model = {
                                             "totalGold": data['goldMedal']
                                         }
                                     } else {
-                                        // console.log(data);
                                         sendObj.medalsTally.medal = {
                                             'gold': {
                                                 "totalGold": data['goldMedal']
@@ -356,18 +400,9 @@ var model = {
 
             // calPerformance
             function (sendObj, callback) {
-                calPerformance(sendObj, function (obj) {
-                    callback(null, obj);
-                })
+                calPerformance(sendObj, callback)
             }
-        ], function (err, result) {
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, result);
-            }
-
-        })
+        ],callback);
 
 
     },
@@ -509,15 +544,12 @@ var model = {
                                 // }
 
                             if (sport['male'] && sport['female']) {
-                                // console.log("1st");
                                 returnObj.maleCount = sport['male'].length;
                                 returnObj.femaleCount = sport['female'].length;
-                            } else if (sport['male']) {
-                                // console.log("2nd");                        
+                            } else if (sport['male']) {              
                                 returnObj.maleCount = sport['male'].length;
                                 returnObj.femaleCount = 0;
-                            } else if (sport['female']) {
-                                // console.log("3rd");                        
+                            } else if (sport['female']) {             
                                 returnObj.maleCount = 0;
                                 returnObj.femaleCount = sport['female'].length;
                             } else {
@@ -669,6 +701,7 @@ var model = {
             async.concatLimit(schoolsList, 1, function (school, callback) {
                 var saveObj = {};
                 saveObj.schoolName = school.schoolName;
+                saveObj.schoolId = school._id;
                 saveObj.sfaId = school.sfaID;
                 saveObj.winTotalMatches = 0;
                 saveObj.noShowTotalMatches = 0;
@@ -1016,7 +1049,6 @@ var model = {
                                                 //for knockout and league knockout
                                                 var winKnock = function (obj) {
                                                     if (singleData.type == 'indi') {
-                                                        // console.log("Indi winKnock");
                                                         if (obj.status == "IsCompleted" && !(obj && obj.winner && !_.isEmpty(obj.winner)) && obj.isNoMatch == false) {
                                                             singleData.isDraw = true;
                                                             // singleData.delete = true;
@@ -1027,8 +1059,7 @@ var model = {
                                                                 singleData.won = false;
                                                             }
                                                         }
-                                                    } else if (singleData.type == 'team') {
-                                                        // console.log("Team winKnock");                                                        
+                                                    } else if (singleData.type == 'team') {                                             
                                                         if (obj.status == "IsCompleted" && !(obj && obj.winner && !_.isEmpty(obj.winner))) {
                                                             singleData.isDraw = true;
                                                             // singleData.delete = true;

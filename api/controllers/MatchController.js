@@ -1022,7 +1022,20 @@ var controller = {
         res.connection.setTimeout(200000000);
         req.connection.setTimeout(200000000);
         Match.getUniqueEventsPlayed(res);
+    },
+
+    generateIndiMatches:function(req,res){
+        res.connection.setTimeout(200000000);
+        req.connection.setTimeout(200000000);
+        Match.generateIndiMatches(res);
+    },
+    
+    generateTeamMatches:function(req,res){
+        res.connection.setTimeout(200000000);
+        req.connection.setTimeout(200000000);
+        Match.generateTeamMatches(res);
     }
+
 
 };
 module.exports = _.assign(module.exports, controller);
