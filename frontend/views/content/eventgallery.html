@@ -103,9 +103,9 @@
             view category
           </div>
           <div class="row">
-            <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="card in allPhotosbyCategory track by $index">
-              <div class="album-holder pointer">
-                <div class="album-pic-holder" style="background-image:url('{{card.mediaThumbnail | mediapathtwo}}')" ui-sref="featuredgallery({mediaType:'photo',type:'Category',name:card._id})">
+            <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="card in allPhotosbyCategory | orderBy:'folderName' track by $index">
+              <div class="album-holder pointer" ui-sref="featuredgallery({mediaType:'photo',type:'Category',name:card._id})">
+                <div class="album-pic-holder" style="background-image:url('{{card.mediaThumbnail | mediapathtwo}}')">
                 </div>
                 <div class="album-title-holder">
                   <p class="d-fjalla-one text-capitalize m-clear album-subtitle" title="{{card._id}}">{{card._id | truncate:'22'}}</p>
@@ -180,9 +180,9 @@
     view by Sport
   </div>
   <div class="row">
-    <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="card in allPhotosbySport track by $index">
-      <div class="album-holder pointer">
-        <div class="album-pic-holder" style="background-image:url('{{card.mediaThumbnail |mediapathtwo}}')" ui-sref="featuredgallery({mediaType:'photo',type:'Sport',name:card._id})">
+    <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="card in allPhotosbySport | orderBy:'folderName' track by $index">
+      <div class="album-holder pointer" ui-sref="featuredgallery({mediaType:'photo',type:'Sport',name:card._id})">
+        <div class="album-pic-holder" style="background-image:url('{{card.mediaThumbnail |mediapathtwo}}')">
         </div>
         <div class="album-title-holder">
           <p class="d-fjalla-one text-capitalize m-clear album-subtitle ">{{card._id | truncate:'25'}}</p>

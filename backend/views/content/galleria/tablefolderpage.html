@@ -39,7 +39,7 @@
               </thead>
               <tbody>
                 <!--<tr ng-repeat="item in items">-->
-                <tr ng-repeat="item in foldersData track by $index">
+                <tr ng-repeat="item in foldersData | orderBy:'fileName'  track by $index">
                   <!--<tr>-->
                   <td>{{$index + 1}}</td>
                   <!--<td>{{($index + 1)}}</td>-->
