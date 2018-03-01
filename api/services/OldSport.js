@@ -2285,7 +2285,7 @@ var model = {
                         sportsSubCategory.name = data[0].sportslist.name;
                     }
                     sportsSubCategory.sportsListCategory = category._id;
-                    if (category.name == "Team Sport") {
+                    if (category.name == "Team Sports") {
                         sportsSubCategory.isTeam = true;
                     } else {
                         sportsSubCategory.isTeam = false;
