@@ -643,6 +643,10 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
     if (data.type == 'school' || data.type == 'college') {
       delete data.gender;
     }
+    if (data.type == 'school' && data.awardType !== 'max') {
+      // console.log("i am in new sports")
+      delete data.sports;
+    }
     $scope.url = "SpecialAwardDetails/save";
     NavigationService.apiCall($scope.url, data, function (data) {
       console.log("save sponsor")
