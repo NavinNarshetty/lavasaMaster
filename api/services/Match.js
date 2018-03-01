@@ -7712,7 +7712,7 @@ var model = {
                                                             temp.doubleFaults = 0;
                                                             resultData.players[0].sets.push(temp);
                                                         }
-                                                        if (n['PLAYER 1 SET 6'] != undefined|| !_.isEmpty(n['PLAYER 1 SET 6'])) {
+                                                        if (n['PLAYER 1 SET 6'] != undefined || !_.isEmpty(n['PLAYER 1 SET 6'])) {
                                                             var temp = {};
                                                             temp.point = n['PLAYER 1 SET 6'];
                                                             temp.ace = 0;
@@ -7733,7 +7733,7 @@ var model = {
                                                             resultData.players[0].sets.push(temp);
                                                         }
                                                     } else {
-                                                        if (n['PLAYER 1 SET 1'] != undefined ) {
+                                                        if (n['PLAYER 1 SET 1'] != undefined) {
                                                             resultData.players[0].sets[0] = n['PLAYER 1 SET 1'];
                                                         }
                                                         if (n['PLAYER 1 SET 2'] != undefined && resultData.players[0].sets.length >= 2) {
@@ -7996,7 +7996,9 @@ var model = {
                                                     resultData.teams[0].walkover = team1.walkover;
                                                     resultData.teams[1].noShow = team2.noShow;
                                                     resultData.teams[1].walkover = team2.walkover;
+                                                    console.log(winner, n["WINNER ID"], "0", resultData.teams[0].team, "1", resultData.teams[1].team);
                                                     if (n["WINNER ID"] == resultData.teams[0].teamId) {
+                                                        // if (n["WINNER ID"] == n["SFAID 1"] || n["WINNER ID"] == n["SFAID 1"]) {
                                                         resultData.winner.player = resultData.teams[0].team;
                                                     } else if (n["WINNER ID"] == resultData.teams[1].teamId) {
                                                         resultData.winner.player = resultData.teams[1].team;
@@ -8020,10 +8022,11 @@ var model = {
                                                     resultData.players[0].walkover = team1.walkover;
                                                     resultData.players[1].noShow = team2.noShow;
                                                     resultData.players[1].walkover = team2.walkover;
+                                                    console.log("winner", n["WINNER ID"], "0", resultData.players[0].sfaId, "1", resultData.players[1].sfaId);
                                                     if (n["WINNER ID"] == resultData.players[0].sfaId) {
                                                         resultData.winner.player = resultData.players[0].player;
                                                         resultData.winner.opponentsSingle = result.opponentsSingle[0];
-                                                    } else if (n["WINNER ID"] == resultData.players[1].sdaId) {
+                                                    } else if (n["WINNER ID"] == resultData.players[1].sfaId) {
                                                         resultData.winner.player = resultData.players[1].player;
                                                         resultData.winner.opponentsSingle = result.opponentsSingle[1];
                                                     }
