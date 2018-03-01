@@ -82,7 +82,7 @@
                                                 <button class="btn btn-sm mrtp school" type="button" ng-click="filterSchool(formData)">Go</button>
                                             </div>
                                         </div>
-                                        <div class="row" ng-if="formData.type != 'Date' && formData.type != ''">
+                                        <div class="row" ng-if="formData.type != 'Date' && formData.type != '' && formData.type!='payuStatus'">
                                             <div class="col-md-6 mtp5">
                                                 <input type="text" ng-model="formData.input" class="form-control" placeholder="Enter {{formData.type}}">
                                             </div>

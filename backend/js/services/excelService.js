@@ -6,6 +6,11 @@ myApp.service('excelService', function ($http, TemplateService, $state, toastr, 
     "email": "digital@sfanow.in",
     "password": "sfabackend2017-18"
   };
+  var adminPayu = {
+    "schoolPassword": "123",
+    "atheletePassword": "456"
+
+  }
   this.loginPopup = function (data, varScope, type) {
     console.log(data);
     commonExcelData = data;
@@ -45,9 +50,9 @@ myApp.service('excelService', function ($http, TemplateService, $state, toastr, 
             var param = {};
             param.file = "targetAthlete"
             // var url = "Athelete/getTargetAthlete"
-            NavigationService.generateExcelWithoutData(url, param, function (data) {});
+            NavigationService.generateExcelWithoutData(url, param, function (data) { });
           } else {
-            NavigationService.generateCommonExcelWithData(url, commonExcelData, filename, function (data) {});
+            NavigationService.generateCommonExcelWithData(url, commonExcelData, filename, function (data) { });
           }
           console.log("after")
           // if (_.isEmpty(athleteexcelData.type)) {
@@ -67,6 +72,41 @@ myApp.service('excelService', function ($http, TemplateService, $state, toastr, 
       }
       login.password = '';
     }
-  }
+  };
+
+  // FOR SCHOOL AND ATHELETE PAYU 
+  this.loginPayuPopup = function (varScope) {
+    modalInstance1 = $uibModal.open({
+      animation: true,
+      scope: varScope,
+      backdrop: 'static',
+      keyboard: false,
+      templateUrl: 'views/modal/loginPayuPopup.html',
+      size: 'sm',
+      windowClass: 'loginpopup'
+    });
+  };
+  this.submitPayuPopup = function (login, type) {
+    if (type == 'School') {
+      if (login.password == adminPayu.schoolPassword) {
+        $.jStorage.set("isSchoolPayu", 'school');
+        modalInstance1.close();
+        toastr.success('Login Successfull', 'Success Message');
+      } else {
+        toastr.error('Please check Password entered', 'Acess Denied')
+      }
+
+    } else if (type == 'Athelete') {
+      if (login.password == adminPayu.atheletePassword) {
+        $.jStorage.set("isAtheletePayu", 'athelete');
+        modalInstance1.close();
+        toastr.success('Login Successfull', 'Success Message');
+      } else {
+        toastr.error('Please check Password entered', 'Acess Denied');
+      }
+
+    }
+
+  };
 
 });

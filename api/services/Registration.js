@@ -2591,6 +2591,283 @@ var model = {
                 });
             }
         });
-    }
+    },
+
+    getSchoolPayuStatus: function (data, callback) {
+        var maxRow = Config.maxRow;
+        console.log(data);
+        var page = 1;
+        if (data.page) {
+            page = data.page;
+        }
+        var field = data.field;
+        var options = {
+            field: data.field,
+            filters: {
+                keyword: {
+                    fields: ['schoolName', 'sfaID'],
+                    term: data.keyword
+                }
+            },
+            sort: {
+                desc: 'createdAt'
+            },
+            start: (page - 1) * maxRow,
+            count: maxRow
+        };
+        var matchObj = {
+            $and: [{
+                registrationFee: {
+                    $eq: "online PAYU"
+                }
+            }, {
+                paymentStatus: {
+                    $eq: "Pending"
+                }
+            }],
+        };
+        if (data.type == "Date") {
+
+            var endOfDay = moment(data.endDate).endOf("day").toDate();
+            matchObj.createdAt = {
+                $gt: data.startDate,
+                $lt: endOfDay,
+            };
+        } else if (data.type == "SFA-ID") {
+            matchObj = {
+                sfaID: {
+                    $regex: data.input,
+                    $options: "i"
+                },
+                $and: [{
+                    registrationFee: {
+                        $eq: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $eq: "Pending"
+                    }
+                }]
+            };
+        } else if (data.type == "UTM_Source") {
+            matchObj = {
+                utm_source: {
+                    $regex: data.input,
+                    $options: "i"
+                },
+                $and: [{
+                    registrationFee: {
+                        $eq: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $eq: "Pending"
+                    }
+                }]
+            };
+        } else if (data.type == "UTM_Campaign") {
+            matchObj = {
+                utm_campaign: {
+                    $regex: data.input,
+                    $options: "i"
+                },
+                $and: [{
+                    registrationFee: {
+                        $eq: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $eq: "Pending"
+                    }
+                }]
+            };
+        } else if (data.type == "UTM_Medium") {
+            matchObj = {
+                utm_medium: {
+                    $regex: data.input,
+                    $options: "i"
+                },
+                $and: [{
+                    registrationFee: {
+                        $eq: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $eq: "Pending"
+                    }
+                }]
+            };
+        } else if (data.type == "School Name") {
+            matchObj = {
+                'schoolName': {
+                    $regex: data.input,
+                    $options: "i"
+                },
+                $and: [{
+                    registrationFee: {
+                        $eq: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $eq: "Pending"
+                    }
+                }]
+
+            };
+        } else if (data.type == "Payment Mode") {
+            if (data.input == "cash" || data.input == "Cash") {
+                matchObj = {
+                    'registrationFee': "cash",
+                };
+            } else if (data.input == "online" || data.input == "Online") {
+                matchObj = {
+                    'registrationFee': "online PAYU",
+                    paymentStatus: {
+                        $eq: "Pending"
+                    }
+                };
+
+            }
+            //-----------for sponsored---------
+            else if (data.input == "sponsor" || data.input == "Sponsor") {
+                matchObj = {
+                    'registrationFee': "Sponsor",
+                    paymentStatus: {
+                        $eq: "Pending"
+                    }
+                };
+
+            }
+            //-----------for sponsored---------
+        } else if (data.type == "Payment Status") {
+            if (data.input == "Paid" || data.input == "paid") {
+                matchObj = {
+                    'paymentStatus': "Paid",
+                };
+            } else if (data.input == "Pending" || data.input == "pending") {
+                matchObj = {
+                    'paymentStatus': "Pending",
+                    registrationFee: {
+                        $eq: "online PAYU"
+                    }
+                };
+            }
+
+        } else if (data.type == "Verified Status") {
+            matchObj = {
+                'status': {
+                    $regex: data.input,
+                    $options: "i"
+
+                },
+
+                $and: [{
+                    registrationFee: {
+                        $eq: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $eq: "Pending"
+                    }
+                }]
+            };
+        } else {
+            var matchObj = {
+                $and: [{
+                    registrationFee: {
+                        $eq: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $eq: "Pending"
+                    }
+                }]
+            };
+        }
+        if (data.keyword !== "") {
+            Registration.aggregate(
+                [{
+                    $match: {
+
+                        $or: [{
+                            "schoolName": {
+                                $regex: data.keyword,
+                                $options: "i"
+                            }
+                        },
+                        {
+                            "sfaID": data.keyword
+                        }
+                        ]
+
+                    }
+                },
+                // Stage 4
+                {
+                    $match: {
+                        $and: [{
+                            registrationFee: {
+                                $eq: "online PAYU"
+                            }
+                        }, {
+                            paymentStatus: {
+                                $eq: "Pending"
+                            }
+                        }]
+                    }
+                },
+                {
+                    $sort: {
+                        "createdAt": -1
+
+                    }
+                },
+                ],
+                function (err, returnReq) {
+                    console.log("returnReq : ", returnReq);
+                    if (err) {
+                        console.log(err);
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(returnReq)) {
+                            var count = returnReq.length;
+                            console.log("count", count);
+
+                            var data = {};
+                            data.options = options;
+
+                            data.results = returnReq;
+                            data.total = count;
+                            callback(null, data);
+                        } else {
+                            var count = returnReq.length;
+                            console.log("count", count);
+
+                            var data = {};
+                            data.options = options;
+
+                            data.results = returnReq;
+                            data.total = count;
+                            callback(null, data);
+
+                        }
+                    }
+                });
+        } else {
+            Registration.find(matchObj)
+                .order(options)
+                .keyword(options)
+                .page(options, function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(found)) {
+                        callback(null, "Data is empty");
+                    } else {
+                        callback(null, found);
+                    }
+                });
+        }
+    },
+
 };
 module.exports = _.assign(module.exports, exports, model);

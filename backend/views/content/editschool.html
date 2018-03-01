@@ -1,0 +1,369 @@
+<div class="heading-sec">
+  <div class="row">
+    <div class="col-md-4 column">
+      <div class="heading-profile">
+        <h2>View School</h2>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Top Bar Chart -->
+<div class="panel-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="widget">
+        <div class="form-elements-sec">
+          <form name="detailForm" role="form" class="sec">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Date of Registration</label>
+                  <input type="text" ng-model="school.createdAt | date:'dd/MM/yyyy'" class="form-control">
+                </div>
+                <div class="form-group" ng-if="school.utm_source != null">
+                  <label>UTM Source</label>
+                  <input type="text" ng-model="school.utm_source" class="form-control">
+                </div>
+                <div class="form-group" ng-if="school.utm_medium != null">
+                  <label>UTM Medium</label>
+                  <input type="text" ng-model="school.utm_medium" class="form-control">
+                </div>
+                <div class="form-group" ng-if="school.utm_campaign != null">
+                  <label>UTM Campaign</label>
+                  <input type="text" ng-model="school.utm_campaign" class="form-control">
+                </div>
+                <div class="form-group" ng-if="school.atheleteSchoolName != null">
+                  <label class="">School Name</label>
+                  <input type="text" name="schoolName" ng-model="school.schoolName" class="form-control">
+                </div>
+
+                <div class="form-group">
+                  <label class="">School Type</label>
+                  <input type="text" name="schoolType" ng-model="school.schoolType" class="form-control">
+
+                </div>
+
+                <div class="form-group">
+                  <label class="">School Category</label>
+                  <input type="text" name="schoolCategory" ng-model="school.schoolCategory" class="form-control">
+
+                </div>
+                <div class="form-group">
+                  <label class="">Affiliated Board</label>
+                  <input type="text" name="affiliatedBoard" ng-model="school.affiliatedBoard" class="form-control">
+
+                </div>
+
+                <div class="form-group">
+                  <label class="">School Logo</label>
+                  <div class="form-group">
+                    <!-- <label for="exampleInputEmail1" style="margin:5px;">Image Upload</label> -->
+                    <!-- ngIf: model && !isMultiple -->
+                    <div class="img-box">
+                      <a href="{{school.schoolLogo|uploadpath}}" fancybox-box>
+                                          <img ng-src="{{school.schoolLogo|uploadpath}}"
+                                                  class="img-responsive uploadingImage img-thumbnail">
+                                                  </a>
+                    </div>
+
+
+                    <div class="form-group">
+                      <label class="">School Address</label>
+                      <input type="text" name="address" ng-model="school.schoolAddress" class="form-control">
+                      <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid Address</div>-->
+                    </div>
+
+                    <div class="form-group">
+                      <label class="">Line 2</label>
+                      <input type="text" name="address2" ng-model="school.schoolAddressLine2" class="form-control">
+                      <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid Address</div>-->
+                    </div>
+
+                    <div class="form-group">
+                      <label class="">State</label>
+                      <input type="text" name="addressLine2" ng-model="school.state" class="form-control">
+
+                      <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched &amp;&amp; type.required">Please enter valid State</div>-->
+                    </div>
+
+                    <div class="form-group">
+                      <label class="">District</label>
+                      <input type="text" name="addressLine2" ng-model="school.district" class="form-control">
+                      <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched &amp;&amp; type.required">Please enter valid District</div>-->
+                    </div>
+
+                    <div class="form-group">
+                      <label class="">City</label>
+                      <input type="text" name="addressLine2" ng-model="school.city" class="form-control">
+                      <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched &amp;&amp; type.required">Please enter valid City</div>-->
+                    </div>
+
+                    <div class="form-group">
+                      <label class="">Locality</label>
+                      <input type="text" name="locality" ng-model="school.locality" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                      <label class="">PinCode</label>
+                      <input type="text" name="pinCode" ng-model="school.pinCode" class="form-control">
+                      <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid PinCode</div>-->
+                    </div>
+
+                    <div class="ng-scope">
+                      <!--<a class="btn btn-primary pull-right" ng-click="createBox('Create')">Add New</a>-->
+                      <label class="">Contact Details</label>
+                      <!--<span style="float:right;width:200px;"><input type="search" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-model="search.text"> </span>-->
+                    </div>
+                    <div class="sec">
+                      <div>
+                        <table class="table table-input">
+                          <thead>
+                            <tr>
+                              <th>Contact Person</th>
+                              <th>Email</th>
+                              <th>Mobile</th>
+                              <th>Landline</th>
+                              <th>Website</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <!-- ngRepeat: data in model | filter:search.text  -->
+                            <tr>
+                              <td>{{school.contactPerson}}</td>
+                              <td>{{school.email}}</td>
+                              <td>{{school.mobile}}</td>
+                              <td>{{school.landline}}</td>
+                              <td>{{school.website}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div class="ng-scope">
+                      <!--<a class="btn btn-primary pull-right" ng-click="createBox('Create')">Add New</a>-->
+                      <label class="">Principal Details</label>
+                      <!--<span style="float:right;width:200px;"><input type="search" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-model="search.text"> </span>-->
+                    </div>
+                    <div class="sec">
+                      <div>
+                        <table class="table table-input">
+                          <thead>
+                            <tr>
+                              <th>Name</th>
+                              <th>Email</th>
+                              <th>Mobile</th>
+                              <th>Landline</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>{{school.schoolPrincipalName}}</td>
+                              <td>{{school.schoolPrincipalEmail}}</td>
+                              <td>{{school.schoolPrincipalMobile}}</td>
+                              <td>{{school.schoolPrincipalLandline}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div class="ng-scope">
+                      <!--<a class="btn btn-primary pull-right" ng-click="createBox('Create')">Add New</a>-->
+                      <label class="">Sports Department</label>
+                      <!--<span style="float:right;width:200px;"><input type="search" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-model="search.text"> </span>-->
+                    </div>
+                    <div class="sec">
+                      <div>
+                        <table class="table table-input">
+                          <thead>
+                            <tr>
+                              <th>Name</th>
+                              <th>Designation</th>
+                              <th>Email</th>
+                              <th>Mobile</th>
+                              <th>Photograph</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr ng-repeat="data in school.sportsDepartment">
+                              <td>{{data.name}}</td>
+                              <td>{{data.designation}}</td>
+                              <td>{{data.email}}</td>
+                              <td>{{data.mobile}}</td>
+                              <td>
+                                <div class="img-box">
+                                  <a href="{{data.photograph|uploadpath}}" fancybox-box>
+                                                                       <img ng-src="{{data.photograph|uploadpath}}" class="img-responsive uploadingImage img-thumbnail">
+                                                                  </a>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="ng-scope" ng-if="school.teamSports.length > 0">
+                      <!--<a class="btn btn-primary pull-right" ng-click="createBox('Create')">Add New</a>-->
+                      <label class="">Team Sports</label>
+                      <!--<span style="float:right;width:200px;"><input type="search" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-model="search.text"> </span>-->
+                    </div>
+                    <div class="sec" ng-if="school.teamSports.length > 0">
+                      <div>
+                        <table class="table table-input">
+                          <tbody>
+                            <tr>
+                              <td ng-repeat="data in school.teamSports">{{data.name}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="ng-scope" ng-if="school.combatSports.length > 0">
+                      <!--<a class="btn btn-primary pull-right" ng-click="createBox('Create')">Add New</a>-->
+                      <label class="">Combat Sports</label>
+                      <!--<span style="float:right;width:200px;"><input type="search" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-model="search.text"> </span>-->
+                    </div>
+                    <div class="sec" ng-if="school.combatSports.length > 0">
+                      <div>
+                        <table class="table table-input">
+                          <tbody>
+                            <tr>
+                              <td ng-repeat="data in school.combatSports">{{data.name}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="ng-scope" ng-if="school.individualSports.length > 0">
+                      <!--<a class="btn btn-primary pull-right" ng-click="createBox('Create')">Add New</a>-->
+                      <label class="">Individual Sports</label>
+                      <!--<span style="float:right;width:200px;"><input type="search" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-model="search.text"> </span>-->
+                    </div>
+                    <div class="sec" ng-if="school.individualSports.length > 0">
+                      <div>
+                        <table class="table table-input">
+                          <tbody>
+                            <tr>
+                              <td ng-repeat="data in school.individualSports">{{data.name}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="ng-scope" ng-if="school.racquetSports.length > 0">
+                      <!--<a class="btn btn-primary pull-right" ng-click="createBox('Create')">Add New</a>-->
+                      <label class="">Racquet Sports</label>
+                      <!--<span style="float:right;width:200px;"><input type="search" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-model="search.text"> </span>-->
+                    </div>
+                    <div class="sec" ng-if="school.racquetSports.length > 0">
+                      <div>
+                        <table class="table table-input">
+                          <tbody>
+                            <tr>
+                              <td ng-repeat="data in school.racquetSports">{{data.name}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="ng-scope" ng-if="school.targetSports.length > 0">
+                      <!--<a class="btn btn-primary pull-right" ng-click="createBox('Create')">Add New</a>-->
+                      <label class="">Target Sports</label>
+                      <!--<span style="float:right;width:200px;"><input type="search" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-model="search.text"> </span>-->
+                    </div>
+                    <div class="sec" ng-if="school.targetSports.length > 0">
+                      <div>
+                        <table class="table table-input">
+                          <tbody>
+                            <tr>
+                              <td ng-repeat="data in school.targetSports">{{data.name}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="ng-scope" ng-if="school.aquaticsSports.length > 0">
+                      <!--<a class="btn btn-primary pull-right" ng-click="createBox('Create')">Add New</a>-->
+                      <label class="">Aquatics Sports</label>
+                      <!--<span style="float:right;width:200px;"><input type="search" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-model="search.text"> </span>-->
+                    </div>
+                    <div class="sec" ng-if="school.aquaticsSports.length > 0">
+                      <div>
+                        <table class="table table-input">
+                          <tbody>
+                            <tr>
+                              <td ng-repeat="data in school.aquaticsSports">{{data.name}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+
+                    <div class="form-group">
+                      <label class="">Payment Mode</label>
+                      <input type="text" name="pinCode" ng-model="school.registrationFee" class="form-control">
+                      <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched &amp;&amp; type.required">Please enter valid Payment Mode</div>-->
+                    </div>
+
+                    <div class="form-group">
+                      <label class="">Payment Status</label>
+                      <input type="text" name="pinCode" ng-model="school.paymentStatus" class="form-control">
+                      <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched &amp;&amp; type.required">Please enter valid Payment Status</div>-->
+                    </div>
+
+                    <div class="form-group">
+                      <label class="">Transaction ID</label>
+                      <input type="text" name="transactionID" ng-model="school.transactionID" class="form-control ">
+                      <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid Transaction ID</div>-->
+                    </div>
+
+                    <div class="form-group">
+                      <label class="">Verification Status</label>
+                      <input type="text" name="pinCode" ng-model="school.status" class="form-control">
+                      <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched &amp;&amp; type.required">Please enter valid Verification Status</div>-->
+                    </div>
+
+                    <div class="form-group">
+                      <label class="">SFA ID</label>
+                      <input type="text" name="sfaId" ng-model="school.sfaID" class="form-control">
+                      <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid SFA ID</div>-->
+                    </div>
+
+                    <div class="form-group">
+                      <label class="">PAN No</label>
+                      <input type="text" name="panNo" ng-model="school.panNo" class="form-control">
+                      <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid SFA ID</div>-->
+                    </div>
+
+                    <div class="form-group">
+                      <label class="">GST No</label>
+                      <input type="text" name="gstNo" ng-model="school.gstNo" class="form-control">
+                      <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid SFA ID</div>-->
+                    </div>
+
+                    <div class="form-group">
+                      <label class="">Password</label>
+                      <input type="text" name="password" ng-model="school.password" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                      <label class="">Remarks</label>
+                      <input type="text" name="remarks" ng-model="school.remarks" class="form-control ">
+                    </div>
+                    <div class="mt20 odd-even-button text-center">
+                      <button class="btn btn-default" type="submit" ng-click="saveData(school);">Save</button>
+                      <button class="btn btn-default" type="submit" ui-sref="schoolpayustatus">Back</button>
+                    </div>
+                  </div>
+                  </detail-field>
+                </div>
+              </div>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -269,6 +269,18 @@ var controller = {
                 value: false
             });
         }
+    },
+
+    getAthletePaymentStatus: function (req, res) {
+        if (req.body) {
+            Athelete.getAthletePaymentStatus(req.body, res.callback);
+
+        } else {
+            res.json({
+                data: "No data found",
+                value: false
+            });
+        }
     }
 
 };

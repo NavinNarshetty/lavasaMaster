@@ -159,6 +159,16 @@ var controller = {
             });
         }
 
+    },
+    getSchoolPayuStatus: function (req, res) {
+        if (req.body) {
+            Registration.getSchoolPayuStatus(req.body, res.callback);
+        } else {
+            res.json({
+                data: "No data found",
+                value: false
+            });
+        }
     }
 
 

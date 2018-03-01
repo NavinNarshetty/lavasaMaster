@@ -37,10 +37,21 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'SchoolCtrl'
         })
 
+        .state('schoolpayustatus', {
+            url: "/schoolpayustatus",
+            templateUrl: "views/template.html",
+            controller: 'SchoolpayustatuslCtrl'
+        })
+
         .state('athlete', {
             url: "/athlete",
             templateUrl: "views/template.html",
             controller: 'AthleteCtrl'
+        })
+        .state('athletepayustatus', {
+            url: "/athletepayustatus",
+            templateUrl: "views/template.html",
+            controller: 'AthletepayustatusCtrl'
         })
         .state('oldschool', {
             url: "/oldschool",
@@ -51,6 +62,16 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             url: "/viewSchool/:id",
             templateUrl: "views/template.html",
             controller: 'ViewSchoolCtrl'
+        })
+        .state('editSchool', {
+            url: "/editSchool/:id",
+            templateUrl: "views/template.html",
+            controller: 'EditSchoolCtrl'
+        })
+        .state('editAthlete', {
+            url: "/editAthlete/:id",
+            templateUrl: "views/template.html",
+            controller: 'EditAthleteCtrl'
         })
 
         .state('viewAthlete', {

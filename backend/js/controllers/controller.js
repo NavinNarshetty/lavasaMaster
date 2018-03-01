@@ -2783,6 +2783,7 @@ myApp.controller('AthletepayustatusCtrl', function ($scope, TemplateService, Nav
         excelService.loginSubmit(login, navigationUrl, filename)
 
     }
+    
     $scope.transferToWebsite = function (id) {
         $scope.constraints = {};
         $scope.constraints.athleteId = base64Service.encode(id);
@@ -2827,6 +2828,27 @@ myApp.controller('AthletepayustatusCtrl', function ($scope, TemplateService, Nav
         // console.log($scope.constraintis);
 
     }
+//LOGIN POPUP FOR ATHELETE PAYU
+      
+ if($.jStorage.get("isAtheletePayu")== null){
+    excelService.loginPayuPopup($scope);
+}
+
+$scope.submit = function(login){
+   console.log("immin");
+    if(login){
+        console.log("login",login);
+        excelService.submitPayuPopup(login,'Athelete');
+    }
+
+}
+
+$scope.logout=function(){
+    $.jStorage.deleteKey("isAtheletePayu");
+    toastr.success("Logout Successfully",'Success Message');
+    $state.reload();
+}
+//LOGIN POPUP FOR ATHELETE PAYU END
 })
 
 myApp.controller('OldSchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
@@ -3015,7 +3037,7 @@ myApp.controller('EditSchoolCtrl', function ($scope, TemplateService, Navigation
         }
     };
 });
-myApp.controller('SchoolpayustatuslCtrl', function ($scope, TemplateService, NavigationService, $timeout, excelService, $state, $stateParams) {
+myApp.controller('SchoolpayustatuslCtrl', function ($scope, TemplateService, NavigationService,toastr, $timeout, $uibModal, excelService, $state, $stateParams) {
     //old school filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tableschoolpayu");
@@ -3068,6 +3090,26 @@ myApp.controller('SchoolpayustatuslCtrl', function ($scope, TemplateService, Nav
     $scope.login = {};
     var navigationUrl;
     var filename = 'School';
+    
+// LOGIN POPUP FOR PAYU
+  if($.jStorage.get("isSchoolPayu")== null){
+        excelService.loginPayuPopup($scope);
+    }
+
+    $scope.submit = function(login){
+       console.log("immin");
+        if(login){
+            excelService.submitPayuPopup(login,'School');
+        }
+
+    }
+
+    $scope.logout=function(){
+        $.jStorage.deleteKey("isSchoolPayu");
+        toastr.success("Logout Successfully",'Success Message');
+        $state.reload();
+    }
+    //LOGIN POPUP FOR  PAYU END
 
     // INITIALISE VARIABLES END
     $scope.loginPopup = function (commonData, type) {
