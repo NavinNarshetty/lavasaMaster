@@ -103,6 +103,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'ScoringCtrl'
         })
+        .state('scoreteamkumite', {
+            url: "/scorekumite",
+            templateUrl: tempateURL,
+            controller: 'KumiteScoreCtrl'
+        })
         .state('scorequalifying', {
             url: "/qualifying/:flag/:sportName/:drawFormat/:sport/:roundName/:sportId",
             templateUrl: tempateURL,

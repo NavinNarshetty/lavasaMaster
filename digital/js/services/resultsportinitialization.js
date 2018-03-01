@@ -1,4 +1,4 @@
-myApp.factory('ResultSportInitialization', function () {
+myApp.factory('ResultSportInitialization', function (toastr) {
     var obj = {
 
         //for getting TEPLATE for result"Spotname" eg:resultFootball,resultBasketball etc
@@ -128,8 +128,7 @@ myApp.factory('ResultSportInitialization', function () {
                 coach: "",
                 schoolName: team.schoolName,
                 teamResults: {},
-                players: [],
-                isDraw: false
+                players: []
             };
             switch (sportName) {
                 case "Basketball":
@@ -171,6 +170,11 @@ myApp.factory('ResultSportInitialization', function () {
                     // format.teamResults.finalGoalPoints = "";
                     format.teamResults.superTackle = "";
                     format.teamResults.allOut = "";
+                    break;
+
+                case "Karate Team Kumite":
+                    format.teamResults.finalPoints = "";
+                    format.teamResults.sets = [];
                     break;
 
                 case "Water Polo":
@@ -248,7 +252,8 @@ myApp.factory('ResultSportInitialization', function () {
                     "scoreSheet": [],
                     "status": "",
                     "winner": {},
-                    "isNoMatch": false
+                    "isNoMatch": false,
+                    "isDraw": false
                 };
                 var returnResult = {};
 
@@ -290,6 +295,11 @@ myApp.factory('ResultSportInitialization', function () {
 
                     case "Water Polo":
                         returnResult.resultWaterPolo = format;
+                        obj.initializeTeamAndPlayers(sportName, returnResult.resultWaterPolo, match);
+                        return returnResult;
+
+                    case "Karate Team Kumite":
+                        returnResult.resultKumite = format;
                         obj.initializeTeamAndPlayers(sportName, returnResult.resultWaterPolo, match);
                         return returnResult;
 
@@ -474,13 +484,15 @@ myApp.factory('ResultSportInitialization', function () {
         },
 
         nullOrEmptyTo0: function (sportName, format) {
+          var nullScore = false;
+          console.log("b4",nullScore);
             switch (sportName) {
                 case "Basketball":
-                    format.teamResults.quarterPoints[0].basket = format.teamResults.quarterPoints[0].basket || 0;
-                    format.teamResults.quarterPoints[1].basket = format.teamResults.quarterPoints[1].basket || 0;
-                    format.teamResults.quarterPoints[2].basket = format.teamResults.quarterPoints[2].basket || 0;
-                    format.teamResults.quarterPoints[3].basket = format.teamResults.quarterPoints[3].basket || 0;
-                    format.teamResults.finalGoalPoints = format.teamResults.finalGoalPoints || 0;
+                    nullScore = format.teamResults.quarterPoints[0].basket || true;
+                    nullScore = format.teamResults.quarterPoints[1].basket || true;
+                    nullScore = format.teamResults.quarterPoints[2].basket || true;
+                    nullScore = format.teamResults.quarterPoints[3].basket || true;
+                    nullScore = format.teamResults.finalGoalPoints || true;
                     break;
 
                 case "Handball":
@@ -535,19 +547,19 @@ myApp.factory('ResultSportInitialization', function () {
                     break;
 
                 case "Football":
-                    format.formation = "";
-                    format.teamResults.halfPoints = format.teamResults.halfPoints || 0;
-                    format.teamResults.finalPoints = format.teamResults.finalPoints || 0;
-                    format.teamResults.shotsOnGoal = format.teamResults.shotsOnGoal || 0;
-                    format.teamResults.totalShots = format.teamResults.totalShots || 0;
-                    format.teamResults.corners = format.teamResults.corners || 0;
-                    format.teamResults.penalty = format.teamResults.penalty || 0;
-                    format.teamResults.saves = format.teamResults.saves || 0;
-                    format.teamResults.fouls = format.teamResults.fouls || 0;
-                    format.teamResults.offSide = format.teamResults.offSide || 0;
-                    format.teamResults.cleanSheet = format.teamResults.cleanSheet || 0;
-                    format.teamResults.noShow = format.teamResults.noShow || 0;
-                    format.teamResults.walkover = format.teamResults.walkover || 0;
+                    // nullScore = "";
+                    nullScore = (format.teamResults.halfPoints === '' || format.teamResults.shotsOnGoal=== '' || format.teamResults.penalty=== '' || format.teamResults.corners=== '' || format.teamResults.saves=== '' || format.teamResults.fouls=== '' || format.teamResults.offSide=== '')?true:false ;
+                    // nullScore = format.teamResults.finalPoints || '';
+                    // nullScore = format.teamResults.shotsOnGoal || '';
+                    // nullScore = format.teamResults.totalShots || '';
+                    // nullScore = format.teamResults.corners || '';
+                    // // nullScore = format.teamResults.penalty || '';
+                    // nullScore = format.teamResults.saves || '';
+                    // nullScore = format.teamResults.fouls || '';
+                    // nullScore = format.teamResults.offSide || '';
+                    // nullScore = format.teamResults.cleanSheet || '';
+                    // nullScore = format.teamResults.noShow || '';
+                    // nullScore = format.teamResults.walkover || '';
                     break;
 
                 case "Throwball":
@@ -558,7 +570,8 @@ myApp.factory('ResultSportInitialization', function () {
 
                     break;
             };
-            return format;
+          console.log("atr",nullScore);
+            return nullScore;
         }
 
     }

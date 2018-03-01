@@ -7,7 +7,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
     "drawFormat": $stateParams.drawFormat,
     "sport": $stateParams.sport
   };
-  
+
   $scope.matchId = $stateParams.id;
   var teamSelectionModal;
   var completeMatchModal;
@@ -350,52 +350,70 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
       flag = '3';
       $interval.cancel(promise);
       console.log("resultVar", $scope.match[resultVar]);
-      _.each($scope.match[resultVar].teams, function (team, tk) {
-        team = ResultSportInitialization.nullOrEmptyTo0($scope.match.sportsName, team);
-        if ($scope.match[resultVar].teams.length - 1 == tk) {
-          console.log("in tk", flag);
-          console.log("resultVar", $scope.match[resultVar]);
-           save();
-           $scope.btnDisable = false;
-        }
-      });
-
+      save();
+      $scope.btnDisable = false;
       completeMatchModal.close();
     };
 
+
     if (flag == '3') {
       console.log(match);
-      if (match[resultVar].matchPhoto.length != 0) {
-        if (match[resultVar].scoreSheet.length != 0) {
-          if (match[resultVar].winner && match[resultVar].winner.player && match[resultVar].winner.player != "") {
-            // match[resultVar].status = "IsCompleted";
-            completeMatchModal = $uibModal.open({
-              animation: true,
-              scope: $scope,
-              // backdrop: 'static',
-              // keyboard: false,
-              templateUrl: 'views/modal/confirmcomplete.html',
-              windowClass: 'completematch-modal'
-            })
+      _.each($scope.match[resultVar].teams, function (team, tk) {
+        noScore = ResultSportInitialization.nullOrEmptyTo0($scope.match.sportsName, team);
+        if ($scope.match[resultVar].teams.length - 1 == tk) {
+          console.log("in tk", flag);
+          console.log("resultVar", $scope.match[resultVar]);
+        }
+      });
+      if (noScore==false) {
+        if (match[resultVar].matchPhoto.length != 0) {
+          if (match[resultVar].scoreSheet.length != 0) {
+            if(match.stage!= 'League' || (match.stage == 'League' && match[resultVar].isDraw == false)){
+              if (match[resultVar].winner && match[resultVar].winner.player && match[resultVar].winner.player != "") {
+                // match[resultVar].status = "IsCompleted";
+                completeMatchModal = $uibModal.open({
+                  animation: true,
+                  scope: $scope,
+                  // backdrop: 'static',
+                  // keyboard: false,
+                  templateUrl: 'views/modal/confirmcomplete.html',
+                  windowClass: 'completematch-modal'
+                })
+              } else {
+                toastr.error('Winner is compulsury BEFORE completing match');
+                return;
+              }
+            } else {
+              console.log('stage', match.stage);
+              if (match.stage == 'League' && match[resultVar].isDraw == true) {
+                completeMatchModal = $uibModal.open({
+                  animation: true,
+                  scope: $scope,
+                  // backdrop: 'static',
+                  // keyboard: false,
+                  templateUrl: 'views/modal/confirmcomplete.html',
+                  windowClass: 'completematch-modal'
+                })
+              }
+            }
           } else {
-            toastr.error('Winner is compulsury BEFORE completing match');
+            toastr.error('Please upload atleast one scoresheets photo');
             return;
           }
         } else {
-          toastr.error('Please upload atleast one scoresheets photo');
+          toastr.error('Please upload atleast one match photo');
           return;
         }
       } else {
-        toastr.error('Please upload atleast one match photo');
-        return;
+        toastr.error("Please fill all madatory fields");
       }
+
     } else {
       save();
     }
 
 
   };
-
 
   $scope.savePenaltyScore = function (result) {
     $scope.match[resultVar] = result;

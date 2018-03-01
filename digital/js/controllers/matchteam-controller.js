@@ -95,9 +95,10 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                         case 'Handball':
                         case "Throwball":
                         case 'Water Polo':
-                            console.log("For Data Initialization");
-                            initilizeMyTemplate();
-                            break;
+                        case 'Karate Team Kumite':
+                          console.log("For Data Initialization");
+                          initilizeMyTemplate();
+                        break;
                     }
                     // INITIALISE RESULTS END
                 }
@@ -362,7 +363,7 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                 //     $scope.matchResult.resultVolleyball.status = "IsPending";
                 // }
                 // break;
-            case "Throwball":                
+            case "Throwball":
             case "Basketball":
             case 'Hockey':
             case 'Kabaddi':

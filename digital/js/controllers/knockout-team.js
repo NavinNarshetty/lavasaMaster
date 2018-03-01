@@ -47,7 +47,7 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
       if (card && card[$scope.resultVar.resultVar] && card[$scope.resultVar.resultVar].status == 'IsCompleted') {
         toastr.warning("This match has already been scored.", 'Scoring Completed');
       } else {
-        if (card.sport.sportslist.name == 'Kho Kho' || card.sport.sportslist.name == 'Karate Team Kumite') {
+        if (card.sport.sportslist.name == 'Kho Kho' ) {
           $state.go("matchstart",{
             drawFormat: $stateParams.drawFormat,
             sport: $stateParams.id,

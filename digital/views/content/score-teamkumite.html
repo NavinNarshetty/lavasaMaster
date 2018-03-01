@@ -1,0 +1,186 @@
+<div class="scorevolleyball-page">
+    <div class="matchstart-header clearfix">
+        <div class="container">
+            <!-- <pre>{{match|json}}</pre> -->
+            <div class="pull-right">
+                <p class="m-clear">match id: <span>{{match.matchId}}</span> </p>
+            </div>
+            <p class="m-clear"><span>{{match.sportsName}}</span> - <span>{{match.age}}</span> <span>{{match.gender}}</span> <span>{{match.round}}</span></p>
+            <!-- <p style="color:red">{{match.resultsRacquet.status}}</p> -->
+        </div>
+    </div>
+    <div class="football-scoring">
+        <div class="container">
+            <!-- TEAM HEADERS -->
+            <div class="row">
+                <div class="col-md-6 col-sm-6" ng-repeat="team in match.teams track by $index">
+                    <div class="teamcard mainteamcard">
+                        <div class="teamcard-header text-uppercase">
+                            <p title="{{team.schoolName}}">{{team.schoolName}}</p>
+                            <p>Team ID: <span> {{team.teamId}} </span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- TEAM HEADERS -->
+            <!-- TEAM SCORING -->
+            <div class="teamscoring-section">
+                <div class="row">
+                    <!-- TEAM PLAYER LIST DETAILS -->
+                    <div class="col-md-6 col-sm-6" ng-repeat = "team in match.resultKumite.teams track by $index">
+                      <div class="teamcard mainteamcard">
+                          <div class="teamcard-header text-uppercase">
+                              <p title="{{team.schoolName}}">{{team.schoolName}}</p>
+                              <p>Team ID: <span> {{team.teamId}} </span></p>
+                              <div class="">
+                                <input type="text" placeholder="Enter Coach Name" class="form-control" ng-model="team.coach">
+                              </div>
+                          </div>
+                      </div>
+                        <!-- <p class="clearfix m-clear"><span class="pull-right">Jersey No.</span><span>Player Name</span></p> -->
+                        <div class="teamplaying">
+                            <div class="teamplaying-title">
+                                <p class="clearfix">PLAYERS LIST <span class="pull-right">SFA ID</span></p>
+                            </div>
+                            <div class="team-playing" ng-repeat="player in team.players track by $index">
+                                <!-- <p ng-if="$index==0">Players</p> -->
+                                <div class="teamplayer">
+                                    <p class="clearfix m-clear" title="{{player.firstName}} {{player.surname}}"><span class="pull-right">{{player.sfaId}}</span> <span>{{player.fullName}}</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- TEAM PLAYER LIST DETAILS END -->
+                </div>
+            </div>
+            <!-- TEAM SCORING END -->
+            <!-- ADD/ REMOVE SET -->
+            <div class="showhide-set clearfix">
+                <div class="addset">
+                    <button class="btn btn-green-outline" ng-click="addSet();">Add Set</button>
+                    <button class="btn btn-green-outline" ng-click="removeSets();">Remove Set</button>
+                </div>
+            </div>
+            <!-- ADD/ REMOVE SET END -->
+
+            <!-- SCORING SECTION -->
+            <div class="teamscoring-section">
+              <div class="row">
+                <div class="col-md-6 col-sm-6 kumite-scoreteam" ng-repeat= "team in match.resultKumite.teams track by $index">
+                  <!-- SETS -->
+                  <div class="" ng-repeat="set in team.teamResults.sets">
+                    <label class="teamdatapoint-name text-center">Set {{$index +1}}</label>
+                    <div class="scorekumite-set">
+                      <div class="scorekumite-setplayer">
+                      <div class="">
+                        <select class="form-control" name="" ng-model="set.player">
+                          <option value="" ng-repeat="player in team.players track by $index" ng-if="player.isPlaying == false"> {{player.fullName}}</option>
+                        </select>
+                      </div>
+                    </div>
+                      <div class="scorekumite-setpoint">
+                      <div class="relate teamscore-point">
+                          <!-- <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="scoreTeamPoints(team, 'fouls','-');"><i class="fa fa-minus"></i></button> -->
+                          <input type="number" ng-model="set.points" min="0" placeholder="0" max="99" class="score-number teamscore-number display-inline form-control" limit-to-max>
+                          <!-- <button class="btn score-buttons teamscore-buttons score-increment" ng-click="scoreTeamPoints(team, 'fouls','+');"><i class="fa fa-plus"></i></button> -->
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                  <!-- SETS END -->
+                  <!-- FINAL POINTS -->
+                    <div class="scorekumite-final">
+                      <div class="scorekumite-finalpoint">
+                        <div class="relate teamscore-point">
+                          <label class="teamdatapoint-name text-center">Final Score</label>
+                            <input type="number" ng-model="team.teamResults.finalPoints" min="0" placeholder="0" max="99" class="score-number teamscore-number display-inline form-control" limit-to-max>
+                        </div>
+                      </div>
+                    </div>
+                  <!-- FINAL POINTS END -->
+                </div>
+              </div>
+            </div>
+            <!-- SCORING SECTION END -->
+
+            <!-- FINAL DETAILS SECTION -->
+            <div class="combatscore-uploads text-center">
+                <!-- RESULT PICS -->
+                <div class="combatscore-pics">
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-5 col-sm-6">
+                            <div class="matchstart-uploadholder text-uppercase ">
+                                <button class="btn btn-green-outline btn-scoring btn-uploadscoring">Upload Picture</button>
+                                <upload-image ng-model="match.resultKumite.matchPhoto" ng-callback="getMatchPhoto(data)" allow-type="image/*" no-view class="pointer upload-scorecard" multiple inobj></upload-image>
+                            </div>
+                            <div class=" digital-swiper">
+                                <div class="combatscore-uploadpic text-uppercase" ng-repeat="pic in match.resultKumite.matchPhoto track by $index">
+                                    <span class="remove-pic" ng-click="removeMatchScore(pic,'matchPhoto')"><i class="fa fa-times"></i></span>
+                                    <img ng-src="{{pic.image|serverimage}}" alt="" class="img-responsive">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-6">
+                            <div class="matchstart-uploadholder text-uppercase ">
+                                <button class="btn btn-green-outline btn-scoring btn-uploadscoring">Upload Scorecard</button>
+                                <upload-image ng-model="match.resultKumite.scoreSheet" ng-callback="getMatchPhoto(data)" allow-type="image/*" no-view class="pointer upload-scorecard" multiple inobj></upload-image>
+                            </div>
+                            <div class="digital-swiper">
+                                <div class="combatscore-uploadpic text-uppercase" ng-repeat="pic in match.resultKumite.scoreSheet">
+                                    <span class="remove-pic" ng-click="removeMatchScore(pic,'scoreSheet')"><i class="fa fa-times"></i></span>
+                                    <img ng-src="{{pic.image|serverimage}}" alt="" class="img-responsive">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- RESULT PICS END -->
+                <!-- RESULT SELECTS -->
+                <div class="combatscore-selects">
+                    <div class="row">
+                        <div class="col-md-offset-4 col-md-4 col-sm-6">
+                            <div class="match-selectwinner text-left">
+                                <label for="matchWinnerPlayer" class="text-uppercase">Select Winner</label>
+                                <!-- UI SELECT -->
+                                <ui-select id="matchWinnerPlayer" ng-model="match.resultKumite.winner.player" theme="bootstrap" ng-disabled="match.resultKumite.isDraw == true">
+                                    <ui-select-match placeholder="Select Winner"> {{$select.selected.schoolName}}</ui-select-match>
+                                    <ui-select-choices repeat="team._id as team in match.teams | filter: $select.search">
+                                        <p class="opponentsingle-selector">{{team.schoolName}}</p>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <!-- UI SELECT END -->
+                            </div>
+                        </div>
+                        <!-- MATCH DRAW -->
+                        <div class="col-md-2 col-sm-6" ng-if="match.stage == 'League'">
+                          <div class="text-left draw-checkbox">
+                            <label for="match.resultKumite.isDraw">For Draw Match</label>
+                            <div class="custom-checkbox" ng-class="{'custom-checkbox-checked': match.resultKumite.isDraw == true}" ng-model="match.resultKumite.isDraw"
+                              ng-click="matchDraw()" id="match.resultKumite.isDraw">
+                              <span class="fa fa-check get-center pointer"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- MATCH DRAW END -->
+                    </div>
+                </div>
+                <!-- RESULT SELECTS END -->
+                <!-- FINAL BUTTONS -->
+                <div class="row">
+                    <div class="col-md-4 col-sm-4">
+                        <button class="btn btn-green-outline btn-scoring" ui-sref="matchteam({'drawFormat':stateParam.drawFormat, 'sport': stateParam.sport, 'id':matchId})">back</button>
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                        <button class="btn btn-green-outline btn-scoring" promise-btn="yourPromise" ng-click="saveMatch(match,'2')">Save</button>
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                        <button class="btn btn-green-outline btn-scoring" ng-click="saveMatch(match,'3');">complete</button>
+                    </div>
+                </div>
+                <!-- FINAL BUTTONS END -->
+            </div>
+            <!-- FINAL DETAILS SECTION END -->
+        </div>
+    </div>
+</div>

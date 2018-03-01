@@ -1514,3 +1514,38 @@ header {
   border: 1px solid #ccc;
 }
 // CREATE MATCH WEIGHTS END
+
+// KUMITE
+.scorekumite-set{
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+
+  .scorekumite-setplayer{
+    flex: 0.8;
+  }
+  .scorekumite-setpoint{
+    flex: 0.2;
+  }
+}
+.scorekumite-final{
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  flex-direction: row-reverse;
+  margin: 15px 0;
+}
+.scorekumite-finalpoint{
+  flex: 0.4;
+}
+.kumite-scoreteam{
+  &:nth-child(even){
+    .scorekumite-set{
+      flex-direction: row-reverse;
+    }
+    .scorekumite-final{
+      flex-direction: row;
+    }
+  }
+}
+// KUMITE END
