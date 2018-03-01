@@ -1,5 +1,5 @@
 // COLORS
-$sport-primary: #0a1a72!default; //blue
+$sport-primary: #0a1a72 !default; //blue
 $sport-success: #27b465 !default; //green
 $sport-warning: #ffb026 !default; //yellow
 $sport-danger: #da495b !default; //red
@@ -17,136 +17,156 @@ $grey: #e1e1e1;
 // COLORS END
 // COMMON CLASSES
 // PHOTO VIDEO POPUP
-.photovideo-modal{
-  top: 50%;
-  bottom: auto;
-  @include transform(translateY(-50%));
-
-  .modal-lg{
-    width: 1000px;
-  }
-
-  .modal-content{
-    border-radius: 0;
-  }
-  ::-webkit-scrollbar {
-   width: 10px;
-   height: 10px;
- }
-  ::-webkit-scrollbar-track {
-   background-color: transparent;
- }
-  ::-webkit-scrollbar-thumb {
-   background-color: $grey;
- }
+.photovideo-modal {
+    top: 50%;
+    bottom: auto;
+    @include transform(translateY(-50%));
+    .modal-lg {
+        width: 1000px;
+    }
+    .modal-content {
+        border-radius: 0;
+    }
+    ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+    ::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: $grey;
+    }
 }
-.photovideo-modal + .modal-backdrop.in{
-  opacity: 0.7;
+
+.photovideo-modal+.modal-backdrop.in {
+    opacity: 0.9;
 }
+
 .photovideo-popup {
-  padding-right: 300px;
-  position: relative;
-  background: #fff;
+    padding-right: 300px;
+    position: relative;
+    background: #fff;
 }
+
+.photovideo-close {
+    width: 20px;
+    height: 20px;
+}
+
 // PHOTO VIDEO NAV
 .photovideo-nav {
-  padding: 10px;
-  color: #fff;
-  position: absolute;
-  top: 50%;
-  cursor: pointer;
-  font-size: 48px;
-  line-height: 1;
-  @include transform(translateY(-50%)) ;
+    padding: 10px;
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    cursor: pointer;
+    font-size: 48px;
+    line-height: 1;
+    @include transform(translateY(-50%));
 }
-.photovideo-navclose{
-  padding: 0px 10px;
-  top: 0;
-  right: -40px;
-  font-size: 30px;
-  @include transform(translateY(0)) ;
+
+.photovideo-navclose {
+    padding: 0px 10px;
+    top: 0;
+    right: -40px;
+    font-size: 30px;
+    @include transform(translateY(0));
 }
+
 .photovideo-navleft {
     left: -40px;
 }
+
 .photovideo-navright {
     right: -40px;
 }
+
 // PHOTO VIDEO NAV END
 // PHOTO VIDEO MEDIA HOLDER
 .photovideo-mediaholder {
-  width: 100%;
+    width: 100%;
 }
+
 // PHOTO VIDEO MEDIA HOLDER END
 // PHOTO VIDEO SIDE
 .photovideo-sidesection {
-  width: 300px;
-  height: 100%;
-  padding: 20px;
-  position: absolute;
-  top: 0;
-  right: 0;
+    width: 300px;
+    height: 100%;
+    padding: 20px;
+    position: absolute;
+    top: 0;
+    right: 0;
 }
-.photovideo-sidecontent{
-  height: 100%;
-  position: relative;
+
+.photovideo-sidecontent {
+    height: 100%;
+    position: relative;
 }
-.photovideo-sidescroll{
-  // height: calc(100% - 130px);
-  height: calc(100% - 80px);
-  overflow-y: auto;
+
+.photovideo-sidescroll {
+    // height: calc(100% - 130px);
+    height: calc(100% - 80px);
+    overflow-y: auto;
 }
-.photovideo-sidetitle{
-  font-size: 16px;
-  font-weight: 700;
+
+.photovideo-sidetitle {
+    font-size: 16px;
+    font-weight: 700;
 }
+
 .photovideo-footer {
-  width: 100%;
-  padding: 5px;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  font-size: 12px;
+    width: 100%;
+    padding: 5px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    font-size: 12px;
 }
+
 // PHOTO VIDEO SIDE FOOTER
-.photovideo-loginfoot{
-  .input-group{
-    font-weight: 700;
-    text-transform: uppercase;
-      .input-group-addon{
-        padding: 0px;
-        border: none;
-        background-color: transparent;
-        font-size: 16px;
+.photovideo-loginfoot {
+    .input-group {
         font-weight: 700;
-      }
-      .form-control{
-        width: 100%;
-        height: auto;
-        padding: 0 5px;
-        margin-left: 5px;
-        border: none;
-        border-bottom: 1px solid #000;
-        font-size: 12px;
-      }
-  }
+        text-transform: uppercase;
+        .input-group-addon {
+            padding: 0px;
+            border: none;
+            background-color: transparent;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        .form-control {
+            width: 100%;
+            height: auto;
+            padding: 0 5px;
+            margin-left: 5px;
+            border: none;
+            border-bottom: 1px solid #000;
+            font-size: 12px;
+        }
+    }
 }
+
 // FOOTER SHARE
-.photovideo-footershare{
-  margin-top: 10px;
-  p{
-    font-weight: 700;
-  }
+.photovideo-footershare {
+    margin-top: 10px;
+    p {
+        font-weight: 700;
+    }
 }
+
 .photovideo-shareholder {
     display: flex;
     flex-wrap: nowrap;
 }
+
 .photovideo-sharebox {
     // flex: auto;
     margin: 0px 5px;
     text-align: center;
 }
+
 .photovideo-socialbutton {
     width: 25px;
     height: 25px;
@@ -156,48 +176,55 @@ $grey: #e1e1e1;
     font-size: 15px;
     line-height: 25px;
     text-align: center;
-    a{
-      color: #fff;
+    a {
+        color: #fff;
     }
 }
+
 // FOOTER SHARE END
 // PHOTO VIDEO SIDE FOOTER END
 // PHOTO VIDEO SIDE END
 // VIDEO HOLDER
-.photovideo-mediaholder{
-  // min-height: 350px;
+.photovideo-mediaholder {
+    // min-height: 350px;
 }
-.photovideo-photoholder{
-  // min-height: 350px;
-  // padding-top: 10%;
-  text-align: center;
+
+.photovideo-photoholder {
+    // min-height: 350px;
+    // padding-top: 10%;
+    text-align: center;
 }
-.photovideo-videoholder{
-  background-position: 50% 50%;
-  background-size: cover;
+
+.photovideo-videoholder {
+    background-position: 50% 50%;
+    background-size: cover;
 }
-.photovideo-vidframe{
-  width: 100%;
-  min-height: 350px;
+
+.photovideo-vidframe {
+    width: 100%;
+    min-height: 350px;
 }
-.photovideo-popup .photovideo-vidframe{
-  min-height: 440px;
+
+.photovideo-popup .photovideo-vidframe {
+    min-height: 440px;
 }
+
 // VIDEO HOLDER END
 // PHOTO VIDEO POPUP END
-.m0-auto{
-  margin: 0 auto;
+.m0-auto {
+    margin: 0 auto;
 }
+
 .full-height {
     height: 100%;
 }
 
-.float-clear{
-  float: none !important;
+.float-clear {
+    float: none !important;
 }
 
-.pad-clear{
-  padding: 0 !important;
+.pad-clear {
+    padding: 0 !important;
 }
 
 .pointer {
@@ -216,20 +243,24 @@ $grey: #e1e1e1;
     color: $sport-lightblue;
 }
 
-.bg-team-male{
-  background-image: url('../img/medal-icon/male-team.png');
+.bg-team-male {
+    background-image: url('../img/medal-icon/male-team.png');
 }
-.bg-team-female{
-  background-image: url('../img/medal-icon/female-team.png');
+
+.bg-team-female {
+    background-image: url('../img/medal-icon/female-team.png');
 }
-.bg-athlete-male{
-  background-image: url('../img/medal-icon/male-athlete.png');
+
+.bg-athlete-male {
+    background-image: url('../img/medal-icon/male-athlete.png');
 }
-.bg-athlete-female{
-  background-image: url('../img/medal-icon/male-athlete.png');
+
+.bg-athlete-female {
+    background-image: url('../img/medal-icon/male-athlete.png');
 }
-.bg-school-icon{
-  background-image: url('../img/medal-icon/school-icon.png');
+
+.bg-school-icon {
+    background-image: url('../img/medal-icon/school-icon.png');
 }
 
 // AD SPACE
@@ -284,13 +315,12 @@ $grey: #e1e1e1;
     border-radius: 100%;
     overflow: hidden; // border: 5px solid #ddd;
     position: relative;
-
-    img.loading{
-      width: 100%;
-      height: auto;
-      position: absolute;
-      top: 0;
-      left: 0;
+    img.loading {
+        width: 100%;
+        height: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
     }
 }
 
@@ -337,35 +367,37 @@ $grey: #e1e1e1;
 .profileathlete-athletesports {
     font-size: 12px;
     margin-bottom: 5px;
-    ::-webkit-scrollbar{
-      width: 0;
-      height: 4px;
+    ::-webkit-scrollbar {
+        width: 0;
+        height: 4px;
     }
-    ::-webkit-scrollbar-thumb{
-      background-color: #ccc;
+    ::-webkit-scrollbar-thumb {
+        background-color: #ccc;
     }
-    ::-webkit-scrollbar-track{
-      background-color: transparent;
+    ::-webkit-scrollbar-track {
+        background-color: transparent;
     }
 }
 
-.profileathlete-athletesportslabel{
-  max-width: 65px;
-  display: inline-block;
+.profileathlete-athletesportslabel {
+    max-width: 65px;
+    display: inline-block;
 }
-.profileathlete-athletesportslist{
-  width: calc(100% - 70px);
-  margin-bottom: -10px;
-  display: inline-block;
-  overflow: auto;
-  white-space: nowrap;
+
+.profileathlete-athletesportslist {
+    width: calc(100% - 70px);
+    margin-bottom: -10px;
+    display: inline-block;
+    overflow: auto;
+    white-space: nowrap;
 }
-.profileathlete-sportitem{
-  &:last-child{
-    .separater{
-      display: none;
+
+.profileathlete-sportitem {
+    &:last-child {
+        .separater {
+            display: none;
+        }
     }
-  }
 }
 
 .profile-bluemedals {
@@ -693,7 +725,7 @@ $grey: #e1e1e1;
 
 .result-schooltableholder {
     .table {
-      margin-bottom: 20px;
+        margin-bottom: 20px;
         >thead>tr {
             background-color: #10259c;
             color: #fff;
@@ -757,7 +789,7 @@ $grey: #e1e1e1;
             text-align: center;
         }
         .table-medalimage {
-          min-width: 50px;
+            min-width: 50px;
             text-align: center;
         }
         .profile-bluemedals {
@@ -796,26 +828,27 @@ $grey: #e1e1e1;
     color: $sport-darkgrey;
 }
 
-.allmedals-filterholder{
-  margin-bottom: 10px;
-  .sportfilter-select{
-    padding: 0;
-
-    .ui-select-bootstrap {
-      .ui-select-choices-row > span{
-        font-size: 12px;
-      }
+.allmedals-filterholder {
+    margin-bottom: 10px;
+    .sportfilter-select {
+        padding: 0;
+        .ui-select-bootstrap {
+            .ui-select-choices-row>span {
+                font-size: 12px;
+            }
+        }
     }
-  }
 }
 
 .result-tablemedal {
     width: 18px;
     margin: 0 auto;
 }
-.result-tablemedal + p{
-  font-size: 12px;
+
+.result-tablemedal+p {
+    font-size: 12px;
 }
+
 // RESULTS PAGE END
 // DROPDOWN
 .result-dropdown {
@@ -841,50 +874,52 @@ $grey: #e1e1e1;
         }
     }
 }
+
 // DROPDOWN TABLE
 // RESULT DROPDOWN TABLE
-.result-dropdownselect{
-  padding-right: 20px;
-  position: relative;
-  background-color: transparent;
-  color: $sport-success;
-  font-size: 24px;
-  &:after{
-    content: '\f107';
-    font: normal normal normal 14px/1 FontAwesome;
-    font-size: 24px;
-    position: absolute;
-    top: 50%;
-    right: 0;
-    @include transform(translateY(-50%));
-  }
-  .select{
-    border: none;
+.result-dropdownselect {
+    padding-right: 20px;
+    position: relative;
     background-color: transparent;
-    text-transform: uppercase;
-    @include appearance(none);
+    color: $sport-success;
+    font-size: 24px;
+    &:after {
+        content: '\f107';
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: 24px;
+        position: absolute;
+        top: 50%;
+        right: 0;
+        @include transform(translateY(-50%));
+    }
+    .select {
+        border: none;
+        background-color: transparent;
+        text-transform: uppercase;
+        @include appearance(none);
+        option {
+            font-size: 14px;
+            color: #000;
+        }
+    }
+}
 
-    option{
-      font-size: 14px;
-      color: #000;
-    }
-  }
-}
 // RESULT DROPDOWN TABLE END
-.schoolrank-details{
-  .table{
-    margin: 0;
-    tbody {
-      tr{
-        border: 1px solid #ccc;
-      }
+.schoolrank-details {
+    .table {
+        margin: 0;
+        tbody {
+            tr {
+                border: 1px solid #ccc;
+            }
+        }
+        .dd-sportname {
+            text-align: left;
+            text-transform: uppercase;
+        }
     }
-    .dd-sportname{
-      text-align: left;
-      text-transform: uppercase;
-    }
-  }
 }
+
 // DROPDOWN TABLE END
 // DROPDOWN END
 .custom-toggle {
@@ -984,12 +1019,12 @@ $grey: #e1e1e1;
     position: relative;
     overflow: hidden;
     vertical-align: middle;
-    img.loading{
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: auto;
+    img.loading {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
     }
 }
 
@@ -1015,10 +1050,10 @@ $grey: #e1e1e1;
 } //VIEW ALL WINNER CARD END
 // TEAM MATCH CENTER
 .teammatchcenter-modal {
-  .modal-dialog{
-    margin: 30px auto;
-    height: auto;
-  }
+    .modal-dialog {
+        margin: 30px auto;
+        height: auto;
+    }
     .modal-content {
         border-radius: 0;
     }
@@ -1107,14 +1142,13 @@ $grey: #e1e1e1;
             border-bottom: 1px solid #ddd;
             background-color: transparent;
         }
-        .panel-default{
-          &:last-child{
-            > .panel-heading{
-              border-bottom: 0px;
+        .panel-default {
+            &:last-child {
+                >.panel-heading {
+                    border-bottom: 0px;
+                }
             }
-          }
         }
-
         .panel-body {
             border: none;
         }
@@ -1273,14 +1307,14 @@ $grey: #e1e1e1;
         @include transform(scale(1.02));
         @include transition(600ms linear ease);
     }
-     ::-webkit-scrollbar {
+    ::-webkit-scrollbar {
         width: 5px;
         height: 5px;
     }
-     ::-webkit-scrollbar-track {
+    ::-webkit-scrollbar-track {
         background-color: transparent;
     }
-     ::-webkit-scrollbar-thumb {
+    ::-webkit-scrollbar-thumb {
         background-color: $sport-grey;
     }
 }
@@ -1432,7 +1466,8 @@ $grey: #e1e1e1;
     position: absolute;
     top: 50%;
     left: 50%;
-    @include transform(tranlate(-50%, -50%));
+    @include transform(tranlate(-50%,
+    -50%));
 } // TILE CARD WIREFRAME END
 // CUSTOM UPLOAD BUTTON
 .matchstart-uploadholder {
@@ -1457,7 +1492,6 @@ $grey: #e1e1e1;
 //     border: 1px solid red;
 //     background-color: green;
 // }
-
 .liveupdate-bannerslide {
     width: 100%;
     height: 300px;
@@ -1744,14 +1778,14 @@ $grey: #e1e1e1;
     height: 320px;
     padding: 5px;
     float: left;
-     ::-webkit-scrollbar {
+    ::-webkit-scrollbar {
         width: 5px;
         height: 5px;
     }
-     ::-webkit-scrollbar-thumb {
+    ::-webkit-scrollbar-thumb {
         background-color: #fff;
     }
-     ::-webkit-scrollbar-track {
+    ::-webkit-scrollbar-track {
         background-color: transparent;
     }
     &:nth-of-type(odd) {
@@ -1868,364 +1902,398 @@ $tickerDuration: 60s;
 // **************************************************************************
 // CUSTOM TICKER END
 // LIVE UPDATES PAGE END
-
 // RESULTS PAGE
-.result-sportfilter{
-  margin: 30px 0;
+.result-sportfilter {
+    margin: 30px 0;
 }
-.sportfilter-label{
-  font-weight: 500;
-  text-transform: uppercase;
+
+.sportfilter-label {
+    font-weight: 500;
+    text-transform: uppercase;
 }
+
 .sportfilter-select {
-  width: 100%;
-  padding: 0 10px;
-  display: inline-block;
-  vertical-align: middle;
-  text-transform: uppercase;
-
-  // CUSTOM FILTER UI SELECT
-  .ui-select-bootstrap{
-    ::-webkit-scrollbar {
-        width: 5px;
-        height: 5px;
-    }
-    ::-webkit-scrollbar-thumb {
-        background-color: #ccc;
-    }
-    ::-webkit-scrollbar-track {
-        background-color: transparent;
-    }
-    input[type="search"]{
-      border: 2px solid #ccc;
-    }
-    .ui-select-toggle{
-      border: 2px solid #ccc;
-    }
-    .ui-select-choices{
-      border: 1px solid #ccc;
-      border-radius: 0;
-      left: 0;
-    }
-    .ui-select-choices-row > span{
-      padding: 5px 15px;
-    }
-    .ui-select-choices-row.active > span{
-        background-color: #a0a0a0;
-    }
-    .ui-select-toggle > .caret{
-      width: 30px;
-      height: 100%;
-      border: none;
-      border-left: 2px solid #ccc;
-      margin: 0;
-      top: 0;
-      right: 0;
-      font: normal normal normal 14px/1 FontAwesome;
-      text-rendering: auto;
-      font-size: 24px;
-      line-height: 1;
-      text-align: center;
-      &:before{
-        content: "\f0d7";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        color: #ccc;
-        @include transform(translate(-50%, -50%));
-      }
-    }
-  }
-  // CUSTOM FILTER UI SELECT END
-}
-
-.result-sportfilter{
-  .sportfilter-select{
-    width: 250px;
-  }
-}
-// RESULTS PAGE END
-
-// REPORT CARD PAGE
-.reportcard-page{
-  min-height: 100vh;
-  padding: 40px 0 50px;
-}
-.reportcard-header{
-  background-color: $sport-primary;
-  padding: 20px;
-  margin-top: 10px;
-}
-.report-greenbar{
-  width: 100%;
-  background-color: $brand-green;
-}
-.report-yellowbar{
-  width: 40%;
-  height: 20px;
-  background-color: $brand-warning;
-  position: relative;
-  &:after{
-    content: '';
-    position: absolute;
-    top: 0;
-    right: -20px;
-    border-right: 20px solid transparent;
-    border-bottom: 20px solid $brand-warning;
-  }
-}
-.reportcard-school{
-  color: #fff;
-  font-size: 24px;
-  text-transform: uppercase;
-}
-.reportcard-sfaid{
-  color: $sport-lightblue;
-  font-size: 21px;
-  text-transform: uppercase;
-}
-.report-cupholder{
-  width: 48px;
-  display: inline-block;
-  vertical-align: middle;
-}
-.report-cuprank {
-  width: auto;
-  display: inline-block;
-  color: #fff;
-  text-align: center;
-  text-transform: uppercase;
-  vertical-align: middle;
-}
-.report-ranktext{
-  display: block;
-  line-height: 1;
-}
-.report-ranktext-big{
-  font-size: 42px;
-}
-.report-ranktext-small{
-  font-size: 30px;
-}
-.report-detailsection{
-  padding: 20px 0;
-}
-.report-titles {
-  margin: 10px 0;
-  color: $sport-primary;
-  font-size: 24px;
-  text-transform: uppercase;
-  @extend .d-fjalla-one;
-}
-.report-content{
-  padding: 0px 15px;
-  margin: 20px 0;
-}
-.report-medaltableholder{
-  .table{
-    > thead{
-      border: 1px solid #000;
-      >tr{
-        >td{
-          padding: 10px 8px;
-          vertical-align: bottom;
-        }
-      }
-    }
-    >tbody{
-      tr{
-        background-color: transparent;
-        >td{
-          padding: 0 8px;
-          border: none;
-          border-bottom: 2px solid #eee;
-          text-transform: uppercase;
-          &:first-child{
-            border: none;
-          }
-        }
-      }
-      .report-medal-td{
-        padding-top: 15px;
-        line-height: 1.4;
-      }
-    }
-  }
-}
-.report-medalholder{
-  width: 18px;
-  display: inline-block;
-}
-.report-medalcount{
-  color: $sport-primary;
-}
-.report-rankholder{
-  width: calc(100% - 22px);
-  display: inline-block;
-  font-size: 15px;
-  line-height: 1;
-  text-transform: uppercase;
-
-  .report-ranktext-big{
-    color: $sport-primary;
-  }
-}
-.reporttable-sportdetails{
-  border-bottom: 2px solid $brand-green;
-  margin-right: 5px;
-  text-align: left;
-}
-.reporttable-sportcount{
-  min-width: 35px;
-  padding: 0px 5px;
-  display: inline-block;
-  background-color: $brand-green;
-  text-align: center;
-}
-.report-contingentholder{
-  padding: 0;
-}
-.report-medalsummaryholder{
-  padding: 0;
-}
-.report-contingenttotal{
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #000;
-}
-.report-contingentblock{
-  width: 49%;
-  display: inline-block;
-  line-height: 1;
-  text-align: center;
-  text-transform: uppercase;
-  vertical-align: middle;
-}
-.report-contingentcount{
-  font-size: 40px;
-  color: $sport-primary;
-  @extend .d-teko-semibold;
-}
-.report-countmale{
-  color: $light-blue;
-  font-size: 36px;
-  vertical-align: middle;
-}
-.report-countfemale{
-  color: $light-orange;
-  font-size: 36px;
-  vertical-align: middle;
-}
-.contingent-flexbox{
-  display: flex;
-  flex-wrap: nowrap;
-}
-.reportcontingent-gender{
-  // width: 49%;
-  margin-bottom: 5px;
-  // display: inline-block;
-  vertical-align: middle;
-  flex: auto;
-}
-.report-gendericon{
-  width: 20px;
-  margin-right: 5px;
-  display: inline-block;
-  vertical-align: middle;
-}
-.reportperformance-content{
-  .report-cupholder{
-    width: 65px;
-    margin-bottom: 10px;
-  }
-  .report-cupcard{
-    padding: 20px 30px;
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-  }
-  .report-cuprank{
-    padding: 0px 15px;
-    color: #000;
-    text-align: left;
-  }
-}
-.report-schoolranktitle{
-  font-size: 16px;
-}
-.report-schoolrank{
-  color: $sport-primary;
-  font-size: 30px;
-  @extend .d-fjalla-one;
-}
-.reportperformance-medallist{
-  padding: 10px 30px;
-  border-bottom: 1px solid #ccc;
-
-  .report-medalholder{
-    width: 25px;
-  }
-  .report-rankholder{
-    width: calc(100% - 30px);
-    font-size: 16px;
-  }
-  .report-ranktext-big{
-    font-size: 48px;
-  }
-}
-.report-medalflex{
-  display: flex;
-}
-.report-medalcol{
-  flex: auto;
-  flex-wrap: wrap;
-}
-.report-contingentprogress{
-  width: 200px;
-  display: inline-block;
-  vertical-align: middle;
-
-  .progress{
-    border-radius: 0px;
-    margin-bottom: 10px;
-    background-color: transparent;
-  }
-  .reportgender-stats{
-    color: #000;
-    min-width: 20%;
-    max-width: 80%;
-  }
-  .male-statistics{
-    padding: 0px 5px;
-    background-color: $bg-color-male;
-  }
-  .female-statistics{
-    padding: 0px 5px;
-    background-color: $bg-color-female;
-  }
-}
-.report-noshowcontingent {
-  min-width: 35px;
-  padding: 0 5px;
-  margin: 0 0px 10px 5px;
-  background: #ccc;
-  display: inline-block;
-  text-align: center;
-  vertical-align: middle;
-}
-.reportcontingent-keycard{
-  padding: 10px;
-  border: 1px solid #000;
-
-  ul{
-    margin: 0;
-  }
-}
-.reportcontingent-key{
-  margin-bottom: 5px;
-  >span{
+    width: 100%;
+    padding: 0 10px;
+    display: inline-block;
     vertical-align: middle;
-  }
+    text-transform: uppercase; // CUSTOM FILTER UI SELECT
+    .ui-select-bootstrap {
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+        }
+        ::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+        input[type="search"] {
+            border: 2px solid #ccc;
+        }
+        .ui-select-toggle {
+            border: 2px solid #ccc;
+        }
+        .ui-select-choices {
+            border: 1px solid #ccc;
+            border-radius: 0;
+            left: 0;
+        }
+        .ui-select-choices-row>span {
+            padding: 5px 15px;
+        }
+        .ui-select-choices-row.active>span {
+            background-color: #a0a0a0;
+        }
+        .ui-select-toggle>.caret {
+            width: 30px;
+            height: 100%;
+            border: none;
+            border-left: 2px solid #ccc;
+            margin: 0;
+            top: 0;
+            right: 0;
+            font: normal normal normal 14px/1 FontAwesome;
+            text-rendering: auto;
+            font-size: 24px;
+            line-height: 1;
+            text-align: center;
+            &:before {
+                content: "\f0d7";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                color: #ccc;
+                @include transform(translate(-50%,
+                -50%));
+            }
+        }
+    } // CUSTOM FILTER UI SELECT END
 }
+
+.result-sportfilter {
+    .sportfilter-select {
+        width: 250px;
+    }
+}
+
+// RESULTS PAGE END
+// REPORT CARD PAGE
+.reportcard-page {
+    min-height: 100vh;
+    padding: 40px 0 50px;
+}
+
+.reportcard-header {
+    background-color: $sport-primary;
+    padding: 20px;
+    margin-top: 10px;
+}
+
+.report-greenbar {
+    width: 100%;
+    background-color: $brand-green;
+}
+
+.report-yellowbar {
+    width: 40%;
+    height: 20px;
+    background-color: $brand-warning;
+    position: relative;
+    &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: -20px;
+        border-right: 20px solid transparent;
+        border-bottom: 20px solid $brand-warning;
+    }
+}
+
+.reportcard-school {
+    color: #fff;
+    font-size: 24px;
+    text-transform: uppercase;
+}
+
+.reportcard-sfaid {
+    color: $sport-lightblue;
+    font-size: 21px;
+    text-transform: uppercase;
+}
+
+.report-cupholder {
+    width: 48px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.report-cuprank {
+    width: auto;
+    display: inline-block;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    vertical-align: middle;
+}
+
+.report-ranktext {
+    display: block;
+    line-height: 1;
+}
+
+.report-ranktext-big {
+    font-size: 42px;
+}
+
+.report-ranktext-small {
+    font-size: 30px;
+}
+
+.report-detailsection {
+    padding: 20px 0;
+}
+
+.report-titles {
+    margin: 10px 0;
+    color: $sport-primary;
+    font-size: 24px;
+    text-transform: uppercase;
+    @extend .d-fjalla-one;
+}
+
+.report-content {
+    padding: 0px 15px;
+    margin: 20px 0;
+}
+
+.report-medaltableholder {
+    .table {
+        >thead {
+            border: 1px solid #000;
+            >tr {
+                >td {
+                    padding: 10px 8px;
+                    vertical-align: bottom;
+                }
+            }
+        }
+        >tbody {
+            tr {
+                background-color: transparent;
+                >td {
+                    padding: 0 8px;
+                    border: none;
+                    border-bottom: 2px solid #eee;
+                    text-transform: uppercase;
+                    &:first-child {
+                        border: none;
+                    }
+                }
+            }
+            .report-medal-td {
+                padding-top: 15px;
+                line-height: 1.4;
+            }
+        }
+    }
+}
+
+.report-medalholder {
+    width: 18px;
+    display: inline-block;
+}
+
+.report-medalcount {
+    color: $sport-primary;
+}
+
+.report-rankholder {
+    width: calc(100% - 22px);
+    display: inline-block;
+    font-size: 15px;
+    line-height: 1;
+    text-transform: uppercase;
+    .report-ranktext-big {
+        color: $sport-primary;
+    }
+}
+
+.reporttable-sportdetails {
+    border-bottom: 2px solid $brand-green;
+    margin-right: 5px;
+    text-align: left;
+}
+
+.reporttable-sportcount {
+    min-width: 35px;
+    padding: 0px 5px;
+    display: inline-block;
+    background-color: $brand-green;
+    text-align: center;
+}
+
+.report-contingentholder {
+    padding: 0;
+}
+
+.report-medalsummaryholder {
+    padding: 0;
+}
+
+.report-contingenttotal {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #000;
+}
+
+.report-contingentblock {
+    width: 49%;
+    display: inline-block;
+    line-height: 1;
+    text-align: center;
+    text-transform: uppercase;
+    vertical-align: middle;
+}
+
+.report-contingentcount {
+    font-size: 40px;
+    color: $sport-primary;
+    @extend .d-teko-semibold;
+}
+
+.report-countmale {
+    color: $light-blue;
+    font-size: 36px;
+    vertical-align: middle;
+}
+
+.report-countfemale {
+    color: $light-orange;
+    font-size: 36px;
+    vertical-align: middle;
+}
+
+.contingent-flexbox {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.reportcontingent-gender {
+    // width: 49%;
+    margin-bottom: 5px; // display: inline-block;
+    vertical-align: middle;
+    flex: auto;
+}
+
+.report-gendericon {
+    width: 20px;
+    margin-right: 5px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.reportperformance-content {
+    .report-cupholder {
+        width: 65px;
+        margin-bottom: 10px;
+    }
+    .report-cupcard {
+        padding: 20px 30px;
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+    }
+    .report-cuprank {
+        padding: 0px 15px;
+        color: #000;
+        text-align: left;
+    }
+}
+
+.report-schoolranktitle {
+    font-size: 16px;
+}
+
+.report-schoolrank {
+    color: $sport-primary;
+    font-size: 30px;
+    @extend .d-fjalla-one;
+}
+
+.reportperformance-medallist {
+    padding: 10px 30px;
+    border-bottom: 1px solid #ccc;
+    .report-medalholder {
+        width: 25px;
+    }
+    .report-rankholder {
+        width: calc(100% - 30px);
+        font-size: 16px;
+    }
+    .report-ranktext-big {
+        font-size: 48px;
+    }
+}
+
+.report-medalflex {
+    display: flex;
+}
+
+.report-medalcol {
+    flex: auto;
+    flex-wrap: wrap;
+}
+
+.report-contingentprogress {
+    width: 200px;
+    display: inline-block;
+    vertical-align: middle;
+    .progress {
+        border-radius: 0px;
+        margin-bottom: 10px;
+        background-color: transparent;
+    }
+    .reportgender-stats {
+        color: #000;
+        min-width: 20%;
+        max-width: 80%;
+    }
+    .male-statistics {
+        padding: 0px 5px;
+        background-color: $bg-color-male;
+    }
+    .female-statistics {
+        padding: 0px 5px;
+        background-color: $bg-color-female;
+    }
+}
+
+.report-noshowcontingent {
+    min-width: 35px;
+    padding: 0 5px;
+    margin: 0 0px 10px 5px;
+    background: #ccc;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.reportcontingent-keycard {
+    padding: 10px;
+    border: 1px solid #000;
+    ul {
+        margin: 0;
+    }
+}
+
+.reportcontingent-key {
+    margin-bottom: 5px;
+    >span {
+        vertical-align: middle;
+    }
+}
+
 .report-keybox {
     width: 15px;
     height: 15px;
@@ -2233,180 +2301,207 @@ $tickerDuration: 60s;
     background: #ccc;
     vertical-align: middle;
 }
-.keybox-male{
-  background-color: $bg-color-male;
+
+.keybox-male {
+    background-color: $bg-color-male;
 }
-.keybox-female{
-  background-color: $bg-color-female;
+
+.keybox-female {
+    background-color: $bg-color-female;
 }
-.report-wingraph{
-  width: 20%;
-  // border: 1px solid #000;
-  display: inline-block;
-  position: relative;
-  vertical-align: middle;
+
+.report-wingraph {
+    width: 20%; // border: 1px solid #000;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
 }
-.report-winpercentholder{
-  font-size: 21px;
-  color: $sport-primary;
-  line-height: 1;
-  text-align: center;
-  @extend .d-teko-semibold;
+
+.report-winpercentholder {
+    font-size: 21px;
+    color: $sport-primary;
+    line-height: 1;
+    text-align: center;
+    @extend .d-teko-semibold;
 }
-.winpercent-big{
-  font-size: 36px;
-  vertical-align: top;
+
+.winpercent-big {
+    font-size: 36px;
+    vertical-align: top;
 }
-.report-summarycard{
-  max-width: 75%;
-  padding: 10px;
-  margin: 0 5px;
-  border: 1px solid #000;
-  display: inline-block;
-  text-transform: uppercase;
-  vertical-align: middle;
-  ul{
-    margin: 0;
-  }
+
+.report-summarycard {
+    max-width: 75%;
+    padding: 10px;
+    margin: 0 5px;
+    border: 1px solid #000;
+    display: inline-block;
+    text-transform: uppercase;
+    vertical-align: middle;
+    ul {
+        margin: 0;
+    }
 }
+
 .report-schoolheader {
-  padding: 15px;
-  display: inline-block;
-  background: $sport-lightblue;
-  position: relative;
-  color: #fff;
-  font-size: 21px;
-  text-transform: uppercase;
-  &:after{
-    content: '';
-    position: absolute;
-    top: 0;
-    right: -50px;
-    border-right: 50px solid transparent;
-    border-bottom: 60px solid $sport-lightblue;
-  }
-}
-.reportsummary-schooltable{
-  padding: 30px;
-  background-color: $sport-primary;
-}
-.reporttable-schoolheader {
-  color: #00aaff;
-  font-size: 18px;
-  text-transform: uppercase;
-}
-.reportschool-tableholder{
-  .table{
-    >tbody{
-      color: #fff;
-      >tr{
-        >td{
-          border: none;
-        }
-      }
-    }
-  }
-  .table-stiped{
-    >thead{
-      >tr{
-        >td{
-          border: none;
-        }
-      }
-    }
-  }
-  .table-striped > tbody > tr:nth-of-type(odd){
-    background-color: #21338f;
-    // background-color: #172675;
-    // background-color: rgba(255,255,255,0.3);
-  }
-  .table-striped > tbody > tr:nth-of-type(even){
-    background-color: transparent;
-  }
-}
-.participation-name{
-  margin-right: 5px;
-  display: inline-block;
-  &:last-child{
-    .participation-comma{
-      margin-right: 0;
-      display: none;
-    }
-  }
-}
-.report-schoollink{
-  color: #fff;
-  &:hover, &:active, &:focus{
+    padding: 15px;
+    display: inline-block;
+    background: $sport-lightblue;
+    position: relative;
     color: #fff;
-  }
+    font-size: 21px;
+    text-transform: uppercase;
+    &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: -50px;
+        border-right: 50px solid transparent;
+        border-bottom: 60px solid $sport-lightblue;
+    }
 }
+
+.reportsummary-schooltable {
+    padding: 30px;
+    background-color: $sport-primary;
+}
+
+.reporttable-schoolheader {
+    color: #00aaff;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+.reportschool-tableholder {
+    .table {
+        >tbody {
+            color: #fff;
+            >tr {
+                >td {
+                    border: none;
+                }
+            }
+        }
+    }
+    .table-stiped {
+        >thead {
+            >tr {
+                >td {
+                    border: none;
+                }
+            }
+        }
+    }
+    .table-striped>tbody>tr:nth-of-type(odd) {
+        background-color: #21338f; // background-color: #172675;
+        // background-color: rgba(255,255,255,0.3);
+    }
+    .table-striped>tbody>tr:nth-of-type(even) {
+        background-color: transparent;
+    }
+}
+
+.participation-name {
+    margin-right: 5px;
+    display: inline-block;
+    &:last-child {
+        .participation-comma {
+            margin-right: 0;
+            display: none;
+        }
+    }
+}
+
+.report-schoollink {
+    color: #fff;
+    &:hover,
+    &:active,
+    &:focus {
+        color: #fff;
+    }
+}
+
 // REPORT CARD PAGE END
 // GALLERY POST PAGE
-.gallerypost-page{
-  // min-height: 100vh;
-  // min-height: calc( 100vh - 100px);
-  padding: 60px 0 50px;
+.gallerypost-page {
+    // min-height: 100vh;
+    // min-height: calc( 100vh - 100px);
+    padding: 60px 0 50px;
 }
-.gallerypost-card{
-  border: 1px solid $grey;
-  .col-md-8, .col-sm-8, .col-xs-12{
-    padding: 0;
-  }
+
+.gallerypost-card {
+    border: 1px solid $grey;
+    .col-md-8,
+    .col-sm-8,
+    .col-xs-12 {
+        padding: 0;
+    }
 }
-.gallerypost-btnholder{
-  margin: 20px 0;
-  text-align: center;
+
+.gallerypost-btnholder {
+    margin: 20px 0;
+    text-align: center;
 }
-.btn-gallerypost{
-  background-color: transparent;
-  border: 1px solid $sport-primary;
-  color: $sport-primary;
-  font-size: 16px;
+
+.btn-gallerypost {
+    background-color: transparent;
+    border: 1px solid $sport-primary;
+    color: $sport-primary;
+    font-size: 16px;
 }
+
 // GALLERY POST MEDIA SECTION
-.gallerypost-media{}
-.gallerypost-videoholder{
-  background: rgba(0,0,0,0.7);
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  background-size: cover;
+.gallerypost-media {}
+
+.gallerypost-videoholder {
+    background: rgba(0, 0, 0, 0.7);
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
+
 // GALLERY POST MEDIA SECTION END
 // GALLERY POST CONTENT SECTION
-.gallerypost-content{
-  padding: 10px 20px;
-  position: relative;
+.gallerypost-content {
+    padding: 10px 20px;
+    position: relative;
 }
+
 .gallerypost-title {
-  margin-bottom: 15px;
-  font-size: 18px;
-  font-weight: 700;
-}
-.gallerypost-tagsholder{
-  max-height: 330px;
-  margin-bottom: 15px;
-  overflow: auto;
-}
-.gallerypost-taglist{
-  &:last-child{
-    .gallerrypost-tagcard{
-      border-bottom: none;
-    }
-  }
-}
-.gallerrypost-tagcard {
-  padding: 5px;
-  border-bottom: 1px solid #ccc;
-}
-.gallerypost-shareholder{
-  width: 100%;
-  padding: 10px 20px;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  p{
+    margin-bottom: 15px;
+    font-size: 18px;
     font-weight: 700;
-  }
 }
+
+.gallerypost-tagsholder {
+    max-height: 330px;
+    margin-bottom: 15px;
+    overflow: auto;
+}
+
+.gallerypost-taglist {
+    &:last-child {
+        .gallerrypost-tagcard {
+            border-bottom: none;
+        }
+    }
+}
+
+.gallerrypost-tagcard {
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+}
+
+.gallerypost-shareholder {
+    width: 100%;
+    padding: 10px 20px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    p {
+        font-weight: 700;
+    }
+}
+
 // GALLERY POST CONTENT SECTION END
 // GALLERY POST PAGE END

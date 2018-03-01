@@ -443,6 +443,25 @@
     font-size: 16px;
   }
   .album-holder .album-subtitle {
-    font-size: 16px;
+    font-size: 12px;
+  }
+  .album-holder .album-pic-holder {
+    height: 100px;
+  }
+  .album-holder .album-photo-detail {
+    font-size: 10px;
+  }
+  .event-gallery-swiperholder .swiper-button-prev,
+  .event-gallery-swiperholder .swiper-button-next,
+  .event-gallery-swiperholder .swiper-container-rtl .swiper-button-prev,
+  .event-gallery-swiperholder .swiper-container-rtl .swiper-button-next {
+    width: 10px;
+    height: 20px;
+  }
+  .event-gallery-swiperholder .swiper-button-prev {
+    left: 4px;
+  }
+  .event-gallery-swiperholder .swiper-button-next {
+    right: 4px;
   } // EVENT GALLERY END
 }

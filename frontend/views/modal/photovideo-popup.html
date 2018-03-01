@@ -2,8 +2,10 @@
   <!-- <div class="closer"> <span class="fa fa-times"></span></div> -->
   <!-- PHOTO VIDEO NAV -->
   <!-- NAV CLOSE -->
-  <div class="photovideo-nav photovideo-navclose" ng-click="$dismiss()" >
-    <div class=""> <span class="fa fa-times"></span></div>
+  <div class="photovideo-nav photovideo-navclose" ng-click="$dismiss()">
+    <div class="photovideo-close"> <span class="">
+    <img src="img/medal-icon/multiply.png" alt="Close" class="img-responsive">  
+    </span></div>
   </div>
   <!-- NAV CLOSE END -->
   <!-- NAV LEFT -->
@@ -22,13 +24,15 @@
   <div class="photovideo-mediaholder">
     <!-- POPUP PHOTO HOLDER -->
     <div class="photovideo-photoholder" ng-if="currentPic.mediatype == 'photo'">
-      <img ng-src="{{currentPic.mediaLink|mediapathtwo}}" alt="{{currentPic.title}} | Sports For All" title="{{currentPic.title}} | Sports For All" class="img-responsive m-auto">
+      <img ng-src="{{currentPic.mediaLink|mediapathtwo}}" alt="{{currentPic.title}} | Sports For All" title="{{currentPic.title}} | Sports For All"
+        class="img-responsive m-auto">
     </div>
     <!-- POPUP PHOTO HOLDER END -->
     <!-- POPUP VIDEO HOLDER  -->
     <div class="photovideo-videoholder" ng-if="currentPic.mediatype == 'video'" style="background-image:url('{{currentPic.thumbnail}}');">
       <!-- <iframe class="photovideo-vidframe" ng-src="{{'https://player.vimeo.com/video/' + currentPic.medialink |trusted }}" frameborder="0" title="{{currentPic.mediatitle}} | SFA Videos" title="{{currentPic.mediatitle}} | SFA Videos"  alt="{{currentPic.mediatitle}} | SFA Videos"></iframe> -->
-      <iframe class="photovideo-vidframe" ng-src="{{currentPic.medialink | linkvideo:currentPic.videoType |trusted}}" frameborder="0" title="{{currentPic.mediatitle}} | SFA Videos" title="{{currentPic.mediatitle}} | SFA Videos"  alt="{{currentPic.mediatitle}} | SFA Videos"></iframe>
+      <iframe class="photovideo-vidframe" ng-src="{{currentPic.medialink | linkvideo:currentPic.videoType |trusted}}" frameborder="0"
+        title="{{currentPic.mediatitle}} | SFA Videos" title="{{currentPic.mediatitle}} | SFA Videos" alt="{{currentPic.mediatitle}} | SFA Videos"></iframe>
     </div>
     <!-- POPUP VIDEO HOLDER END -->
   </div>
