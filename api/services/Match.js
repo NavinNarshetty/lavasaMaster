@@ -7996,7 +7996,7 @@ var model = {
                                                     resultData.teams[0].walkover = team1.walkover;
                                                     resultData.teams[1].noShow = team2.noShow;
                                                     resultData.teams[1].walkover = team2.walkover;
-                                                    console.log(winner, n["WINNER ID"], "0", resultData.teams[0].team, "1", resultData.teams[1].team);
+                                                    console.log("winner", n["WINNER ID"], "0", resultData.teams[0].team, "1", resultData.teams[1].team);
                                                     if (n["WINNER ID"] == resultData.teams[0].teamId) {
                                                         // if (n["WINNER ID"] == n["SFAID 1"] || n["WINNER ID"] == n["SFAID 1"]) {
                                                         resultData.winner.player = resultData.teams[0].team;
