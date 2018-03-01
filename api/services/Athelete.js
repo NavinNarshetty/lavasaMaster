@@ -2788,7 +2788,7 @@ var model = {
                         //         obj.school = "";
                         //     }
                         // }
-                        if (n.school !== null) {
+                        if (n.school !== null && !n.atheleteSchoolName) {
                             obj.school = n.school.name;
                         } else {
                             obj.school = "";
@@ -2946,7 +2946,7 @@ var model = {
                 //         obj.school = "";
                 //     }
                 // }
-                if (n.school !== null) {
+                if (n.school !== null && !n.atheleteSchoolName) {
                     obj.school = n.school.name;
                 } else {
                     obj.school = "";
