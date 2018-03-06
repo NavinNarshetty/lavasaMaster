@@ -463,5 +463,29 @@
   }
   .event-gallery-swiperholder .swiper-button-next {
     right: 4px;
+  }
+  .featured-gallery-page .featured-gallery-dropdown .up-arrow-green,
+  .featured-gallery-page .featured-gallery-dropdown-boysgirls .up-arrow-green,
+  .featured-gallery-page .featured-gallery-dropdown-sports .up-arrow-gree {
+    width: 18px;
+    height: 18px;
+  }
+  .featured-gallery-page .featured-gallery-dropdown .down-arrow-green,
+  .featured-gallery-page .featured-gallery-dropdown-boysgirls .down-arrow-green,
+  .featured-gallery-page .featured-gallery-dropdown-sports .down-arrow-green {
+    width: 18px;
+    height: 18px;
+  }
+  .featured-gallery-page .featured-gallery-dropdownfilter {
+    width: 100%;
+    font-size: 12px;
   } // EVENT GALLERY END
+  // MEDIA POPUP
+  .photovideo-navclose {
+    top: -16px;
+  }
+  .photovideo-close {
+    width: 14px;
+    height: 14px;
+  } // MEDIA POPUP END
 }

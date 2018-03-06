@@ -1688,8 +1688,7 @@ $sport-table-grey:#efeeee !default;
 // END REGISTRATION MODAL END
 // GALLERY
 .adspace {
-  background-color: #ddd;
-  height: 130px;
+  background-color: #ddd; // height: 130px;
   margin: 40px 0px;
   font-size: 30px;
 }
@@ -1713,15 +1712,22 @@ $sport-table-grey:#efeeee !default;
   }
 }
 
-.event-gallery-videoholder {
+.event-gallery-sport-search {
+  .form-control {
+    padding: 5px;
+    height: auto;
+    margin-bottom: 8px;
+    font-size: 12px;
+    line-height: 1;
+  }
+}
+
+.event-gallery-videoholder,
+.event-gallery-photos {
   margin: 40px 0px;
 }
 
 // COMMON
-.event-gallery-sport {
-  margin: 30px 0px;
-}
-
 .album-holder {
   .album-pic-holder {
     background-position: 50% 50%;
@@ -1825,13 +1831,13 @@ $sport-table-grey:#efeeee !default;
     .down-arrow-green {
       width: 30px;
       height: 30px;
-      @include transition(all 5ms ease);
+      @include transition(all 300ms linear);
     }
     .up-arrow-green {
       width: 30px;
       height: 30px;
       transform: rotate(180deg);
-      @include transition(all 5ms ease);
+      @include transition(all 300ms linear);
     }
     @extend .d-fjalla-one;
   }

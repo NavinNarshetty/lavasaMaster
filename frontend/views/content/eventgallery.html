@@ -47,8 +47,8 @@
     <!-- VIDEOS END -->
 
     <!-- AD SPACE -->
-    <div class="event-gallery-adspace relate" style="height:180px; overflow:hidden;" ng-if="firstAdBanner.status=='enable'">
-      <div class="adspace text-center d-fjalla-one">
+    <div class="event-gallery-adspace relate" ng-if="firstAdBanner.status=='enable'">
+      <div class="text-center d-fjalla-one">
         <!-- NO LINK -->
         <div class="ad-nolink" ng-if="firstAdBanner.linkType=='nolink'">
           <!-- DESKTOP -->
@@ -127,7 +127,7 @@
       <!-- CATEGORY END -->
 
       <!-- AD SPACE -->
-      <div class="event-gallery-adspace relate" style="height:190px;overflow:hidden;" ng-if="secondAdBanner.status=='enable'">
+      <div class="event-gallery-adspace relate" ng-if="secondAdBanner.status=='enable'">
         <div class="adspace text-center d-fjalla-one">
 
           <!-- NO LINK -->
@@ -184,11 +184,18 @@
 
       <!-- VIEW BY SPORT -->
       <div class="event-gallery-category event-gallery-sport" ng-if="allPhotosbySport.length>0">
-        <div class="event-gallery-subtitle text-uppercase">
-          view by Sport
+        <div class="row">
+          <div class="event-gallery-subtitle text-uppercase col-md-6 col-sm-6 col-xs-6">
+            view by Sport
+          </div>
+          <!-- SEARCH -->
+          <div class="col-md-6 col-sm-6 col-xs-6 event-gallery-sport-search visible-xs">
+            <input type="text" name="sport" ng-model="card.folderName" id="" placeholder="Search By Sport" class="form-control">
+          </div>
+          <!-- SEARCH -->
         </div>
         <div class="row">
-          <div class="col-md-3 col-sm-6 col-xs-6" ng-repeat="card in allPhotosbySport | orderBy:'folderName' track by $index">
+          <div class="col-md-3 col-sm-6 col-xs-6" ng-repeat="card in allPhotosbySport | orderBy:'folderName' | filter:card.folderName track by $index">
             <div class="album-holder pointer" ui-sref="featuredgallery({mediaType:'photo',type:'Sport',name:card._id})">
               <div class="album-pic-holder" style="background-image:url('{{card.mediaThumbnail |mediapathtwo}}')">
               </div>

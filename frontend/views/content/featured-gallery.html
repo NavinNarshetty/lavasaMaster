@@ -27,7 +27,7 @@
               <div class="featured-gallery-dropdownfilter" ng-if="showFolderFilter">
                 <ul class="list-unstyled m-clear">
                   <li class="text-uppercase" ng-click="selectFolder('all');"></li>
-                  <input type="text" name="searchSport" id="" ng-model="folder.folderName" class="form-control" placeholder="Search By Sport">
+                  <!-- <input type="text" name="searchSport" id="" ng-model="folder.folderName" class="form-control visible-xs" placeholder="Search"> -->
                   <li class="custom-featuredgallery-dropdown text-uppercase" ng-repeat="folder in allfolderName | filter:folder.folderName track by $index"
                     ng-click="selectFolder(folder);">
                     {{folder._id}}
