@@ -77,6 +77,7 @@ var model = {
                 var sportUniq = _.uniqBy(found, 'sportslist.name');
                 OldSport.saveSportlist(sportUniq, function (err, complete) {
                     if (err || _.isEmpty(complete)) {
+                        var err = "Error found in SportsList";
                         callback(err, null);
                     } else {
                         callback(null, found);
@@ -87,6 +88,7 @@ var model = {
                 var sportUniq = _.uniqBy(found, 'sportslist.sportsListSubCategory.name');
                 OldSport.savesportsListSubCategory(sportUniq, function (err, complete) {
                     if (err || _.isEmpty(complete)) {
+                        var err = "Error found in sportsListSubCategory";
                         callback(err, null);
                     } else {
                         callback(null, found);
@@ -97,6 +99,7 @@ var model = {
                 var sportUniq = _.uniqBy(found, 'sportslist.sportsListSubCategory.sportsListCategory.name');
                 OldSport.savesportsListCategory(sportUniq, function (err, complete) {
                     if (err || _.isEmpty(complete)) {
+                        var err = "Error found in SportsListCategory";
                         callback(err, null);
                     } else {
                         callback(null, found);
@@ -107,6 +110,7 @@ var model = {
                 var sportUniq = _.uniqBy(found, 'sportslist.sportsListSubCategory.rules.name');
                 OldSport.saveRules(sportUniq, function (err, complete) {
                     if (err || _.isEmpty(complete)) {
+                        var err = "Error found in Rules";
                         callback(err, null);
                     } else {
                         callback(null, found);
@@ -117,6 +121,7 @@ var model = {
                 var sportUniq = _.uniqBy(found, 'ageGroup.name');
                 OldSport.saveAgeGroup(sportUniq, function (err, complete) {
                     if (err || _.isEmpty(complete)) {
+                        var err = "Error found in AgeGroup";
                         callback(err, null);
                     } else {
                         callback(null, found);
@@ -124,9 +129,26 @@ var model = {
                 });
             },
             function (found, callback) {
-                var sportUniq = _.uniqBy(found, 'weight.name');
-                OldSport.saveWeight(sportUniq, function (err, complete) {
+                // var sportUniq = _.uniqBy(found, 'weight.name');
+                // callback(null, sportUniq);
+                OldSport.saveWeight(found, function (err, complete) {
                     if (err || _.isEmpty(complete)) {
+                        var err = "Error found in weight";
+                        callback(err, null);
+                    } else {
+                        callback(null, found);
+                    }
+                });
+            },
+            function (found, callback) {
+                // console.log("found length", found.length, "found", found);
+                // var calling = {};
+                // calling.found = found;
+                // calling.size = found.length;
+                // callback(null, calling);
+                OldSport.saveSport(found, function (err, complete) {
+                    if (err || _.isEmpty(complete)) {
+                        var err = "Error found in sport";
                         callback(err, null);
                     } else {
                         callback(null, found);
@@ -290,7 +312,7 @@ var model = {
     saveRules: function (data, callback) {
         async.eachSeries(data, function (n, callback) {
             if (n.sportslist != null && n.sportslist.sportsListSubCategory != null && n.sportslist.sportsListSubCategory.rules != null) {
-                console.log("n", n.sportslist);
+                // console.log("n", n.sportslist);
                 var formData = {};
                 formData.name = n.sportslist.sportsListSubCategory.rules.name;
                 Rules.findOne({
@@ -333,12 +355,14 @@ var model = {
 
     saveAgeGroup: function (data, callback) {
         async.eachSeries(data, function (n, callback) {
-            if (n.age != null) {
+            // console.log("n", n);
+            if (n.ageGroup != null) {
                 var formData = {};
                 formData.name = n.ageGroup.name;
                 AgeGroup.findOne({
                     name: formData.name
                 }).lean().exec(function (err, found) {
+                    console.log("ageGroup", found);
                     if (err) {
                         callback(err, null);
                     } else {
@@ -475,7 +499,8 @@ var model = {
                             sportData.maxTeamPlayers = n.maxTeamPlayers;
                             sportData.toDate = n.toDate;
                             sportData.fromDate = n.fromDate;
-                            if (sportData.weight != null) {
+                            console.log("sportdata", sportData);
+                            if (sportData.weight) {
                                 Sport.findOne({
                                     sportslist: sportData.sportslist,
                                     gender: sportData.gender,
