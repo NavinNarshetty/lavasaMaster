@@ -227,6 +227,13 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
     // console.log(index, 'indexS');
     var id = "#rank" + index;
     var demo = "";
+    // GET WIDTH OF DIVS
+    var widthGold = $(id+"gold").outerWidth();
+    var widthSilver = $(id+"silver").outerWidth();
+    var widthBronze = $(id+"bronze").outerWidth();
+    var widthTotal = $(id+"total").outerWidth();
+    console.log("Width",widthGold,widthSilver,widthBronze,widthTotal);
+    // GET WIDTH OF DIVS END
     if (detail.rowDetail == true) {
       detailId = "#rankDetail" + index;
       // console.log(detailId, 'det');
@@ -252,7 +259,7 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
         }
         // console.log('sport', n);
         // <td colspan="3"> <div> </div> </td>
-        detailTable = detailTable + '<tr>   <td class="dd-sportname" colspan="2">' + n.name + ' </td> <td colspan="1"> <div class="detail-resultholder"> ' + n.goldMedal + ' </div> </td> <td colspan="1"> <div class="detail-resultholder">' + n.silverMedal + ' </div> </td> <td colspan="1"> <div class="detail-resultholder">' + n.bronzeMedal + ' </div> </td> <td colspan="1"> <div class="detail-resultholder">' + n.totalPoints + ' </div> </td> </tr>';
+        detailTable = detailTable + '<tr><td class="dd-sportname " colspan="2">' + n.name + ' </td> <td colspan="1" style="width:'+ widthGold +'px"> <div class="detail-resultholder"> ' + n.goldMedal + ' </div> </td> <td colspan="1" style="width:'+ widthSilver +'px"> <div class="detail-resultholder">' + n.silverMedal + ' </div> </td> <td colspan="1" style="width:'+ widthBronze + 'px"> <div class="detail-resultholder">' + n.bronzeMedal + ' </div> </td> <td colspan="1" style="width: '+ widthTotal +'px"> <div class="detail-resultholder">' + n.totalPoints + ' </div> </td> </tr>';
       });
       $scope.rankDetail = detail;
       demo = '<tr id="rankDetail' + index + '"> <td class = "pad-clear" colspan = "6"> <div class="schoolrank-details"> <table class = "table"> ' + detailTable + '</table> </div> </td> </tr>'

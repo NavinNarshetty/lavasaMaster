@@ -2,7 +2,7 @@
   <div class="container">
 
     <!-- RESULT TITLE SECTION -->
-    <div class="result-titlesection">
+    <div class="result-titlesection d-fjalla-one">
       <!-- <button class="btn btn-primary" ng-click="generateTable();">Generate Table</button> -->
       <div class="result-title">{{type | firstcapitalize}} Result
         <div class="display-inline" ng-if="sfaCity === 'Mumbai' && type ==='school'">
@@ -20,7 +20,7 @@
     <!-- RESULT TITLE SECTION END -->
     <!-- SCHOOL RANKING SECTION  -->
     <div class="result-schoolsection">
-      <div class="result-schooltitle">
+      <div class="result-schooltitle d-fjalla-one">
         <h3>{{type}} ranking table</h3>
       </div>
       <div class="result-schooldesc hide">
@@ -86,22 +86,22 @@
                   {{school.name}}
                 </div>
               </td>
-              <td>
+              <td id="rank{{$index}}gold">
                 <div class="">
                   {{school.goldCount}}
                 </div>
               </td>
-              <td>
+              <td id="rank{{$index}}silver">
                 <div class="">
                   {{school.silverCount}}
                 </div>
               </td>
-              <td>
+              <td id="rank{{$index}}bronze">
                 <div class="">
                   {{school.bronzeCount}}
                 </div>
               </td>
-              <td class="">
+              <td class="" id="rank{{$index}}total">
                 <div class="">
                   {{school.totalPoints}}
                   <span ng-if="school.sportData.length>0" ng-click="closeAllOpen($index, school);" class="pointer fa " ng-class="{'fa-angle-down': school.rowDetail == false, 'fa-angle-up':school.rowDetail == true }"></span>
@@ -129,7 +129,7 @@
     <!-- AD SPACE END -->
     <!-- SPORT WISE SCHOOL RANKING -->
     <div class="result-sportwise">
-      <div class="result-schooltitle">
+      <div class="result-schooltitle d-fjalla-one">
         <h3>{{type}} ranking basis specific sport</h3>
       </div>
       <div class="result-sportfilter">
@@ -160,7 +160,7 @@
         <div class="row" ng-if="sportTable.length > 0">
           <div class="col-md-7 col-sm-12 col-xs-12">
             <div class="schoolranktable-head" id="sportRankingTable">
-              <h3 class="text-uppercase color-sport-lightblue fjalla-one">
+              <h3 class="text-uppercase color-sport-lightblue d-fjalla-one">
                 {{sportName}}
               </h3>
             </div>
@@ -334,7 +334,7 @@
             </div>
           </div>
         </div>
-        <div class="resultsport-viewmedalwinner">
+        <div class="resultsport-viewmedalwinnerholder">
           <!-- <a class="btn-viewmore" ng-click="showMoreSport($index);" ng-if="sportTable.length>5">View <span>Full</span><span ng-if="">Less</span> Ranking Table</a>
           <a class="btn-viewmore" ng-click="showMedalWinner();">View All Medal Winners</a> -->
           <div class="result-viewall-medalwinners" ng-show="showAllMedalWinner">
@@ -409,7 +409,7 @@
                   <!-- <pre>{{medalWinner|json}}</pre> -->
                 </p>
                 <div class="viewall-winnerrow">
-                  <div class="row " ng-if="medalWinner.male" ng-repeat="winner in medalWinner.male track by $index">
+                  <div class="row " ng-if="medalWinner.male" ng-repeat="winner in medalWinner.male track by $index" ng-class="{'result-maleholder':medalWinner.female,'':!medalWinner.female}">
                     <div class="col-md-12">
                       <p class="text-uppercase">Male</p>
                     </div>

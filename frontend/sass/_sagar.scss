@@ -709,7 +709,7 @@ $grey: #e1e1e1;
 
 .result-title {
     color: $sport-primary;
-    font-size: 36px;
+    font-size: 42px;
     text-transform: uppercase;
 }
 
@@ -848,7 +848,10 @@ $grey: #e1e1e1;
 .result-tablemedal+p {
     font-size: 12px;
 }
-
+.result-maleholder{
+  margin-bottom: 10px;
+  border-bottom: 1px solid #e1e1e1;
+}
 // RESULTS PAGE END
 // DROPDOWN
 .result-dropdown {
@@ -2502,6 +2505,5 @@ $tickerDuration: 60s;
         font-weight: 700;
     }
 }
-
 // GALLERY POST CONTENT SECTION END
 // GALLERY POST PAGE END
