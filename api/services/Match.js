@@ -7617,6 +7617,9 @@ var model = {
                                                             resultData.teams[0].teamResults.sets.push(temp);
                                                         }
                                                         resultData.teams[0].teamResults.finalPoints = n['SCORE 1'];
+                                                    } else if (result.result.resultVar === "resultFootball") {
+                                                        resultData.teams[0].teamResults.finalPoints = n['SCORE 1'];
+                                                        resultData.teams[0].teamResults.penalty = n['PENALTY 1'];
                                                     } else {
                                                         resultData.teams[0].teamResults.finalPoints = n['SCORE 1'];
                                                     }
@@ -7655,6 +7658,9 @@ var model = {
                                                             resultData.teams[1].teamResults.sets.push(temp);
                                                         }
                                                         resultData.teams[1].teamResults.finalPoints = n['SCORE 2'];
+                                                    } else if (result.result.resultVar === "resultFootball") {
+                                                        resultData.teams[0].teamResults.finalPoints = n['SCORE 2'];
+                                                        resultData.teams[0].teamResults.penalty = n['PENALTY 2'];
                                                     } else {
                                                         resultData.teams[1].teamResults.finalPoints = n['SCORE 2'];
                                                     }
@@ -8164,6 +8170,9 @@ var model = {
                                     obj["TEAM 1 SET 6"] = "";
                                     obj["TEAM 1 SET 7"] = "";
                                     obj["SCORE 1"] = "";
+                                } else if (sportName == "football") {
+                                    obj["SCORE 1"] = "";
+                                    obj["PENALTY 1"] = "";
                                 } else {
                                     obj["SCORE 1"] = "";
                                 }
@@ -8194,10 +8203,12 @@ var model = {
                                     obj["TEAM 2 SET 6"] = "";
                                     obj["TEAM 2 SET 7"] = "";
                                     obj["SCORE 2"] = "";
+                                } else if (sportName == "football") {
+                                    obj["SCORE 2"] = "";
+                                    obj["PENALTY 2"] = "";
                                 } else {
                                     obj["SCORE 2"] = "";
                                 }
-                                // obj["SCORE 2"] = "";
                                 obj["NO MATCH"] = "";
                                 obj["DRAW"] = "";
                                 obj["WINNER ID"] = "";
