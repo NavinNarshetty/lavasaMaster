@@ -125,7 +125,7 @@ var model = {
             },
             function (found, callback) {
                 var sportUniq = _.uniqBy(found, 'weight.name');
-                OldSport.saveAgeGroup(sportUniq, function (err, complete) {
+                OldSport.saveWeight(sportUniq, function (err, complete) {
                     if (err || _.isEmpty(complete)) {
                         callback(err, null);
                     } else {
