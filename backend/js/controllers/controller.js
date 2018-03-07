@@ -2364,7 +2364,7 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
 
     $scope.generateExcel = function (formData) {
         console.log("formdata", formData);
-        NavigationService.generateSchoolExcelWithData(formData, function (data) {});
+        NavigationService.generateSchoolExcelWithData(formData, function (data) { });
     }
 
     $scope.transferToWebsite = function (id) {
@@ -2569,15 +2569,15 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
         var param = {};
         param.file = "targetAthlete"
         var url = "Athelete/getTargetAthlete"
-        NavigationService.generateExcelWithoutData(url, param, function (data) {});
+        NavigationService.generateExcelWithoutData(url, param, function (data) { });
     }
     $scope.generateExcel = function (formdata) {
         if (_.isEmpty(formdata.type)) {
             console.log("else");
-            NavigationService.generateAthleteExcelWithData(formdata, function (data) {});
+            NavigationService.generateAthleteExcelWithData(formdata, function (data) { });
         } else {
             console.log(formdata);
-            NavigationService.generateAthleteExcelWithData(formdata, function (data) {});
+            NavigationService.generateAthleteExcelWithData(formdata, function (data) { });
         }
     }
     // OLD FUNCTIONS
@@ -2795,15 +2795,15 @@ myApp.controller('AthletepayustatusCtrl', function ($scope, TemplateService, Nav
         var param = {};
         param.file = "targetAthlete"
         var url = "Athelete/getTargetAthlete"
-        NavigationService.generateExcelWithoutData(url, param, function (data) {});
+        NavigationService.generateExcelWithoutData(url, param, function (data) { });
     }
     $scope.generateExcel = function (formdata) {
         if (_.isEmpty(formdata.type)) {
             console.log("else");
-            NavigationService.generateAthleteExcelWithData(formdata, function (data) {});
+            NavigationService.generateAthleteExcelWithData(formdata, function (data) { });
         } else {
             console.log(formdata);
-            NavigationService.generateAthleteExcelWithData(formdata, function (data) {});
+            NavigationService.generateAthleteExcelWithData(formdata, function (data) { });
         }
     }
     // OLD FUNCTIONS
@@ -2945,9 +2945,9 @@ myApp.controller('OldSchoolCtrl', function ($scope, TemplateService, NavigationS
         //     $scope.currentPage = 1;
         // }
         NavigationService.search('School/search', {
-                page: $scope.formData.page,
-                keyword: $scope.formData.keyword
-            }, ++i,
+            page: $scope.formData.page,
+            keyword: $scope.formData.keyword
+        }, ++i,
             function (data, ini) {
                 if (ini == i) {
                     $scope.items = data.data.results;
@@ -3149,109 +3149,101 @@ myApp.controller('SchoolpayustatuslCtrl', function ($scope, TemplateService, Nav
     var filename = 'School';
 
     // LOGIN POPUP FOR PAYU
+    $scope.jSchoolPayu = $.jStorage.get("isSchoolPayu");
     if ($.jStorage.get("isSchoolPayu") == null) {
         excelService.loginPayuPopup($scope);
     }
 
+
     $scope.submit = function (login) {
         console.log("immin");
         if (login) {
+            excelService.submitPayuPopup(login, 'School', $state);
+        }
 
-            excelService.submitPayuPopup(login, 'School');
+    }
 
-            $scope.jSchoolPayu = $.jStorage.get("isSchoolPayu");
-            if ($.jStorage.get("isSchoolPayu") == null) {
-                excelService.loginPayuPopup($scope);
-            }
-            $scope.submit = function (login) {
-                console.log("immin");
-                if (login) {
-                    excelService.submitPayuPopup(login, 'School', $state);
-                }
+    $scope.logout = function () {
+        $.jStorage.deleteKey("isSchoolPayu");
+        toastr.success("Logout Successfully", 'Success Message');
+        $state.reload();
+    }
+    //LOGIN POPUP FOR  PAYU END
 
-            }
+    // INITIALISE VARIABLES END
+    $scope.loginPopup = function (commonData, type) {
+        if (type === 'excel') {
+            navigationUrl = 'Registration/generateExcel';
+        }
+        console.log(commonData, "*********************");
+        excelService.loginPopup(commonData, $scope, type);
+    }
+    $scope.loginSubmit = function (login) {
+        console.log(login, "check")
 
-            $scope.logout = function () {
-                $.jStorage.deleteKey("isSchoolPayu");
-                toastr.success("Logout Successfully", 'Success Message');
-                $state.reload();
-            }
-            //LOGIN POPUP FOR  PAYU END
+        excelService.loginSubmit(login, navigationUrl, filename)
 
-            // INITIALISE VARIABLES END
-            $scope.loginPopup = function (commonData, type) {
-                if (type === 'excel') {
-                    navigationUrl = 'Registration/generateExcel';
-                }
-                console.log(commonData, "*********************");
-                excelService.loginPopup(commonData, $scope, type);
-            }
-            $scope.loginSubmit = function (login) {
-                console.log(login, "check")
+    }
 
-                excelService.loginSubmit(login, navigationUrl, filename)
+    $scope.generateExcel = function (formData) {
+        console.log("formdata", formData);
+        NavigationService.generateSchoolExcelWithData(formData, function (data) { });
+    }
 
-            }
-
-            $scope.generateExcel = function (formData) {
-                console.log("formdata", formData);
-                NavigationService.generateSchoolExcelWithData(formData, function (data) {});
-            }
-
-            $scope.transferToWebsite = function (id) {
-                console.log(id);
-                $scope.constraints = {};
-                $scope.constraints.schoolId = base64Service.encode(id);
-                if (window.location.origin == 'http://mumbaischool.sfanow.in') {
-                    window.location = 'http://mumbaischool.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
-                } else if (window.location.origin == 'http://mumbaicollege.sfanow.in') {
-                    window.location = 'http://mumbaicollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
-                } else if (window.location.origin == 'http://hyderabadschool.sfanow.in') {
-                    window.location = 'http://hyderabadschool.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
-                } else if (window.location.origin == 'http://ahmedabadschool.sfanow.in') {
-                    window.location = 'http://ahmedabadschool.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
-                } else if (window.location.origin == 'http://hyderabadcollege.sfanow.in') {
-                    window.location = 'http://hyderabadcollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
-                } else if (window.location.origin == 'http://ahmedabadcollege.sfanow.in') {
-                    window.location = 'http://ahmedabadcollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
-                } else if (window.location.origin == 'http://testmumbaischool.sfanow.in') {
-                    window.location = 'http://testmumbaischool.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
-                } else if (window.location.origin == 'http://testhyderabadschool.sfanow.in') {
-                    window.location = 'http://testhyderabadschool.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
-                } else if (window.location.origin == 'http://testahmedabadschool.sfanow.in') {
-                    window.location = 'http://testahmedabadschool.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
-                } else if (window.location.origin == 'http://testmumbaicollege.sfanow.in') {
-                    window.location = 'http://testmumbaicollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
-                } else if (window.location.origin == 'http://testhyderabadcollege.sfanow.in') {
-                    window.location = 'http://testhyderabadcollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
-                } else if (window.location.origin == 'http://testahmedabadcollege.sfanow.in') {
-                    window.location = 'http://testahmedabadcollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
-                } else if (window.location.origin == 'http://localhost:8081') {
-                    window.location = 'http://localhost:8082/#/sports-selection/' + 'school/' + $scope.constraints.schoolId;
-                }
-            }
-
+    $scope.transferToWebsite = function (id) {
+        console.log(id);
+        $scope.constraints = {};
+        $scope.constraints.schoolId = base64Service.encode(id);
+        if (window.location.origin == 'http://mumbaischool.sfanow.in') {
+            window.location = 'http://mumbaischool.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+        } else if (window.location.origin == 'http://mumbaicollege.sfanow.in') {
+            window.location = 'http://mumbaicollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+        } else if (window.location.origin == 'http://hyderabadschool.sfanow.in') {
+            window.location = 'http://hyderabadschool.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+        } else if (window.location.origin == 'http://ahmedabadschool.sfanow.in') {
+            window.location = 'http://ahmedabadschool.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+        } else if (window.location.origin == 'http://hyderabadcollege.sfanow.in') {
+            window.location = 'http://hyderabadcollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+        } else if (window.location.origin == 'http://ahmedabadcollege.sfanow.in') {
+            window.location = 'http://ahmedabadcollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+        } else if (window.location.origin == 'http://testmumbaischool.sfanow.in') {
+            window.location = 'http://testmumbaischool.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+        } else if (window.location.origin == 'http://testhyderabadschool.sfanow.in') {
+            window.location = 'http://testhyderabadschool.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+        } else if (window.location.origin == 'http://testahmedabadschool.sfanow.in') {
+            window.location = 'http://testahmedabadschool.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+        } else if (window.location.origin == 'http://testmumbaicollege.sfanow.in') {
+            window.location = 'http://testmumbaicollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+        } else if (window.location.origin == 'http://testhyderabadcollege.sfanow.in') {
+            window.location = 'http://testhyderabadcollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+        } else if (window.location.origin == 'http://testahmedabadcollege.sfanow.in') {
+            window.location = 'http://testahmedabadcollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+        } else if (window.location.origin == 'http://localhost:8081') {
+            window.location = 'http://localhost:8082/#/sports-selection/' + 'school/' + $scope.constraints.schoolId;
         }
     }
+
+
+
 });
 
 myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams) {
-        //old school filter view
-        //Used to name the .html file
-        $scope.template = TemplateService.changecontent("viewoldschool");
-        $scope.menutitle = NavigationService.makeactive("View Old School");
-        TemplateService.title = $scope.menutitle;
-        $scope.navigation = NavigationService.getnav();
-        $scope.getOneOldSchoolById = function () {
-            $scope.url = 'School/getOne';
-            $scope.constraints = {};
-            $scope.constraints._id = $stateParams.id;
-            NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
-                $scope.oldschool = data.data;
-            });
-        };
-        $scope.getOneOldSchoolById();
-    })
+    //old school filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("viewoldschool");
+    $scope.menutitle = NavigationService.makeactive("View Old School");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+    $scope.getOneOldSchoolById = function () {
+        $scope.url = 'School/getOne';
+        $scope.constraints = {};
+        $scope.constraints._id = $stateParams.id;
+        NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+            $scope.oldschool = data.data;
+        });
+    };
+    $scope.getOneOldSchoolById();
+})
 
 
 
@@ -3481,7 +3473,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.navigation = NavigationService.getnav();
 
 
-        JsonService.getJson($stateParams.id, function () {});
+        JsonService.getJson($stateParams.id, function () { });
 
         globalfunction.confDel = function (callback) {
             var modalInstance = $uibModal.open({
@@ -3599,9 +3591,9 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             //     $scope.currentPage = 1;
             // }
             NavigationService.search('School/search', {
-                    page: $scope.formData.page,
-                    keyword: $scope.formData.keyword
-                }, ++i,
+                page: $scope.formData.page,
+                keyword: $scope.formData.keyword
+            }, ++i,
                 function (data, ini) {
                     if (ini == i) {
                         $scope.items = data.data.results;
@@ -3658,10 +3650,10 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
                 $scope.currentPage = 1;
             }
             NavigationService.search($scope.json.json.apiCall.url, {
-                    page: $scope.currentPage,
-                    keyword: $scope.search.keyword,
-                    input: ''
-                }, ++i,
+                page: $scope.currentPage,
+                keyword: $scope.search.keyword,
+                input: ''
+            }, ++i,
                 function (data, ini) {
                     if (ini == i) {
                         $scope.items = data.data.results;
@@ -5641,24 +5633,24 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             $scope.modalInstance.close();
         }
         $scope.delete = function (type, name, image) {
-                console.log(type, name, image);
-                $scope.url = "Vimeo/deleteFolderImage";
-                $scope.constraints = {};
-                $scope.constraints.prefix = $scope.year + '/' + type + '/' + name;
-                $scope.constraints.fileName = image;
-                console.log($scope.constraints, "check this")
-                NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
-                    console.log("data.value", data);
-                    if (data.value) {
-                        toastr.success('Successfully Deleted', 'Gallery Meaasge');
-                        $scope.modalInstance.close();
-                        $scope.viewTable();
-                    } else {
-                        toastr.error('Something went wrong while Deleting', 'Gallery Meaasge');
-                    }
+            console.log(type, name, image);
+            $scope.url = "Vimeo/deleteFolderImage";
+            $scope.constraints = {};
+            $scope.constraints.prefix = $scope.year + '/' + type + '/' + name;
+            $scope.constraints.fileName = image;
+            console.log($scope.constraints, "check this")
+            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+                console.log("data.value", data);
+                if (data.value) {
+                    toastr.success('Successfully Deleted', 'Gallery Meaasge');
+                    $scope.modalInstance.close();
+                    $scope.viewTable();
+                } else {
+                    toastr.error('Something went wrong while Deleting', 'Gallery Meaasge');
+                }
 
-                });
-            },
+            });
+        },
             $scope.filterAthlete = function (formData) {
                 console.log("formData", formData);
                 $scope.url = "gallery/search";
@@ -6197,12 +6189,12 @@ myApp.controller('DetailAdditionalPaymentCtrl', function ($scope, TemplateServic
 });
 
 myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
-        //Used to name the .html file
-        $scope.template = TemplateService.changecontent("dashboard");
-        $scope.menutitle = NavigationService.makeactive("Dashboard");
-        TemplateService.title = $scope.menutitle;
-        $scope.navigation = NavigationService.getnav();
-    })
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("dashboard");
+    $scope.menutitle = NavigationService.makeactive("Dashboard");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+})
 
     .controller('headerctrl', function ($scope, TemplateService, $uibModal) {
         $scope.template = TemplateService;
