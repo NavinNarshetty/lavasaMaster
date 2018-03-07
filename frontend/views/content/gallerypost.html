@@ -1,4 +1,4 @@
-<div class="gallerypost-page d-opensans-regular">
+<div class="gallerypost-page d-opensans-regular" ng-init="shareUrl='https://sfanow.in'">
   <div class="container">
     <!-- GALLERY POST -->
     <div class="row gallerypost-card">
@@ -53,28 +53,63 @@
           <!-- POST SHARING SECTION -->
           <div class="gallerypost-shareholder">
             <p class="text-uppercase">Share This <span>Picture</span> <span>Video</span></p>
-            <div class="photovideo-shareholder">
+            <ul class="list-inline">
+              <!-- FB SHARING -->
+              <li>
+                <a target="_blank" title="Share on Facebook | Sports For All" ng-href="https://www.facebook.com/sharer/sharer.php?u={{shareUrl}}/&title=Sports For All" >
+                  <div class="photovideo-socialbutton" >
+                    <span class="fa fa-facebook"></span>
+                  </div>
+                </a>
+              </li>
+              <!-- FB SHARING END -->
+              <!-- TWITTER SHARING -->
+              <li>
+                <a target="_blank" title="Share on Twitter | Sports For All" ng-href="https://twitter.com/intent/tweet?url={{shareUrl}}/&title=Sports For All">
+                  <div class="photovideo-socialbutton" >
+                    <span class="fa fa-twitter"></span>
+                  </div>
+                </a>
+              </li>
+              <!-- TWITTER SHARING END -->
+              <!-- GOOGLE+ SHARING  -->
+              <li>
+                <a target="_blank" title="Share on Google+ | Sports for All" ng-href="https://plus.google.com/share?url=={{shareUrl}}/&title=Sports For All">
+                  <div class="photovideo-socialbutton" >
+                    <span class="fa fa-google-plus"></span>
+                  </div>
+                </a>
+              </li>
+              <!-- GOOGLE+ SHARING END -->
+            </ul>
+            <div class="photovideo-shareholder hide">
+              <!-- FB SHARING -->
               <div class="photovideo-sharebox">
-                <div class="photovideo-socialbutton">
-                  <a>
-                            <span class="fa fa-facebook"></span>
-                          </a>
+                <div class="photovideo-socialbutton" title="Share on Facebook | Sports For All">
+                  <a target="_blank" ng-href="https://www.facebook.com/sharer/sharer.php?u={{shareUrl}}/&title=Sports For All" >
+                    <span class="fa fa-facebook"></span>
+                  </a>
                 </div>
               </div>
+              <!-- FB SHARING END -->
+              <!-- TWITTER SHARING  -->
               <div class="photovideo-sharebox">
-                <div class="photovideo-socialbutton">
-                  <a>
-                            <span class="fa fa-twitter"></span>
-                          </a>
+                <div class="photovideo-socialbutton" title="Share on Twitter | Sports For All">
+                  <a target="_blank" ng-href="https://twitter.com/intent/tweet?url={{shareUrl}}&hashtags=unstppable/&title=Sports For All/]">
+                    <span class="fa fa-twitter"></span>
+                  </a>
                 </div>
               </div>
+              <!-- TWITTER SHARING END -->
+              <!-- GOOGLE+ SHARING -->
               <div class="photovideo-sharebox">
-                <div class="photovideo-socialbutton">
-                  <a>
-                            <span class="fa fa-google-plus"></span>
-                          </a>
+                <div class="photovideo-socialbutton" title="Share on Google+ | Sports for All">
+                  <a target="_blank" ng-href="https://plus.google.com/share?url=={{shareUrl}}/&title=Sports For All">
+                    <span class="fa fa-google-plus"></span>
+                  </a>
                 </div>
               </div>
+              <!-- GOOGLE+ SHARING END -->
             </div>
           </div>
           <!-- POST SHARING SECTION END -->

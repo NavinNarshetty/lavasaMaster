@@ -174,6 +174,8 @@ $grey: #e1e1e1;
     border-radius: 100%;
     display: inline-block;
     background: $brand-primary;
+    color: #fff;
+    cursor: pointer;
     font-size: 15px;
     line-height: 25px;
     text-align: center;
@@ -272,6 +274,33 @@ $grey: #e1e1e1;
   line-height: 1;
 }
 
+// TABLE FOOTER MEDAL LIST
+.point-color-box {
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.gold-box {
+    background-color: #e8c936;
+}
+
+.silver-box {
+    background-color: #c9c9cf;
+}
+
+.bronze-box {
+    background-color: #d38936;
+}
+
+.point-number {
+    margin: 0;
+    text-transform: uppercase;
+    vertical-align: middle;
+}
+// TABLE FOOTER MEDAL LIST END
 // AD SPACE
 .highlight-adspace {
     background-color: #ddd;
@@ -282,7 +311,13 @@ $grey: #e1e1e1;
 // AD SPACE END
 // VIEW MORE
 .viewmore {
-    text-align: right;
+    // text-align: right;
+    .result-tablemedal{
+      width: 15px;
+    }
+    .result-tablemedal+span{
+      margin-left: -2px;
+    }
 }
 
 .btn-viewmore {
@@ -291,6 +326,7 @@ $grey: #e1e1e1;
     background-color: transparent;
     color: $sport-primary;
     text-decoration: underline;
+    float: right;
     &:active,
     &:hover,
     &:focus,
@@ -800,7 +836,8 @@ $grey: #e1e1e1;
             text-align: center;
         }
         .table-medalimage {
-            min-width: 50px;
+            // min-width: 50px;
+            margin-bottom: 5px;
             text-align: center;
         }
         .profile-bluemedals {
@@ -905,7 +942,7 @@ $grey: #e1e1e1;
 // DROPDOWN TABLE
 // RESULT DROPDOWN TABLE
 .result-dropdownselect {
-    padding-right: 20px;
+    // padding-right: 20px;
     position: relative;
     background-color: transparent;
     color: $sport-success;
@@ -918,8 +955,10 @@ $grey: #e1e1e1;
         top: 50%;
         right: 0;
         @include transform(translateY(-50%));
+        z-index: -1;
     }
     .select {
+        padding-right: 20px;
         border: none;
         background-color: transparent;
         text-transform: uppercase;
@@ -941,7 +980,7 @@ $grey: #e1e1e1;
             }
         }
         .dd-sportname {
-            text-align: left;
+            text-align: right;
             text-transform: uppercase;
         }
     }

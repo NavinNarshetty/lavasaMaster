@@ -7,12 +7,11 @@
       <div class="result-title">{{type | firstcapitalize}} Result
         <div class="display-inline" ng-if="sfaCity === 'Mumbai' && type ==='school'">
             <div class="result-dropdownselect">
-                <select ng-change="loadResult(filter.year);" class="select" ng-model="filter.year">
-                            <option value="2015">SFA MUMBAI {{year15}}</option>
-                            <option value="2016">SFA MUMBAI {{year16}}</option>
-                            <option value="2017">SFA MUMBAI {{eventYear}}</option>
-                        </select>
-                <span class="only-border"></span>
+                <select ng-change="loadResult(filter.year);" class="select" ng-model="filter.year" >
+                  <option value="2015">SFA MUMBAI {{year15}}</option>
+                  <option value="2016">SFA MUMBAI {{year16}}</option>
+                  <option value="2017">SFA MUMBAI {{eventYear}}</option>
+                </select>
             </div>
         </div>
       </div>
@@ -47,7 +46,7 @@
                   <div class="result-tablemedal">
                     <img ng-src="{{'gold'|medalicon:'white'}}" alt="Gold Medals" class="img-responsive">
                   </div>
-                  <p class="m-clear">5 points</p>
+                  <!-- <p class="m-clear">5 points</p> -->
                 </div>
               </th>
               <th>
@@ -55,7 +54,7 @@
                   <div class="result-tablemedal">
                     <img ng-src="{{'silver'|medalicon:'white'}}" alt="Silver Medals" class="img-responsive">
                   </div>
-                  <p class="m-clear">3 points</p>
+                  <!-- <p class="m-clear">3 points</p> -->
                 </div>
               </th>
               <th>
@@ -63,7 +62,7 @@
                   <div class="result-tablemedal">
                     <img ng-src="{{'bronze'|medalicon:'white'}}" alt="Bronze Medals" class="img-responsive">
                   </div>
-                  <p class="m-clear">1 point</p>
+                  <!-- <p class="m-clear">1 point</p> -->
                 </div>
               </th>
               <th>
@@ -112,11 +111,29 @@
         </table>
       </div>
       <!-- RESULT SCHOOL TABLE END -->
-      <div class="viewmore" ng-if="rankTable.length>20">
-        <a type="button" class="btn btn-viewmore" ng-click="viewMoreRanking(rankTable.showTable);">View
+      <div class="viewmore" >
+        <a type="button" ng-if="rankTable.length>20" class="btn btn-viewmore" ng-click="viewMoreRanking(rankTable.showTable);">View
           <span ng-if="rankTable.showTable == true">More</span>
           <span ng-if="rankTable.showTable == false">Less</span>
         </a>
+
+        <div class="point-list">
+          <ul class="list-inline">
+            <li>
+              <div class="point-color-box gold-box"></div>
+              <span class="point-number">5 Point</span>
+            </li>
+            <li>
+              <div class="point-color-box silver-box"></div>
+              <span class="point-number">3 Point</span>
+            </li>
+            <li>
+              <div class="point-color-box bronze-box"></div>
+              <span class="point-number">1 Point</span>
+            </li>
+          </ul>
+        </div>
+
       </div>
     </div>
     <!-- SCHOOL RANKING SECTION END -->
@@ -185,7 +202,7 @@
                             <div class="profile-bluemedals">
                               <img ng-src="{{'gold' |medalicon:'white'}}" alt="" class="img-responsive">
                             </div>
-                            <p class="schoolmedal-points m-clear">5 points</p>
+                            <!-- <p class="schoolmedal-points m-clear">5 points</p> -->
                           </div>
                         </th>
                         <th>
@@ -193,7 +210,7 @@
                             <div class="profile-bluemedals">
                               <img ng-src="{{'silver' | medalicon:'white'}}" alt="" class="img-responsive">
                             </div>
-                            <p class="schoolmedal-points m-clear">3 points</p>
+                            <!-- <p class="schoolmedal-points m-clear">3 points</p> -->
                           </div>
                         </th>
                         <th>
@@ -201,7 +218,7 @@
                             <div class="profile-bluemedals">
                               <img ng-src="{{'bronze' | medalicon:'white'}}" alt="" class="img-responsive">
                             </div>
-                            <p class="schoolmedal-points m-clear">1 points</p>
+                            <!-- <p class="schoolmedal-points m-clear">1 points</p> -->
                           </div>
                         </th>
                         <th>
@@ -256,7 +273,23 @@
               <a class="btn-viewmore" ng-click="viewMoreSport(sportTable.showTable);" ng-if="sportTable.length>5">View
                 <span ng-if="sportTable.showTable == true">Full</span>
                 <span ng-if="sportTable.showTable == false">Less</span> Ranking Table</a>
-              <a class="btn-viewmore" ng-click="showMedalWinner();" ng-if="medalWinners">View <span ng-if="!showAllMedalWinner">All</span> <span ng-if="showAllMedalWinner">Less</span> Medal Winners</a>
+              <a class="btn-viewmore hidden-sm hidden-xs" ng-click="showMedalWinner();" ng-if="medalWinners">View <span ng-if="!showAllMedalWinner">All</span> <span ng-if="showAllMedalWinner">Less</span> Medal Winners</a>
+              <div class="point-list">
+                <ul class="list-inline">
+                  <li>
+                    <div class="point-color-box gold-box"></div>
+                    <span class="point-number">5 Point</span>
+                  </li>
+                  <li>
+                    <div class="point-color-box silver-box"></div>
+                    <span class="point-number">3 Point</span>
+                  </li>
+                  <li>
+                    <div class="point-color-box bronze-box"></div>
+                    <span class="point-number">1 Point</span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
           <div class="col-md-5 col-sm-12 col-xs-12" ng-if="risingAthletes.length>0">
@@ -299,7 +332,7 @@
                             </div>
                             <div class="inline-block text-center ">
                               <p class="m-clear sport-color-primary lh1">{{athlete.countGold}}</p>
-                              <p class="m-clear lh1">Gold</p>
+                              <p class="m-clear lh1 medalcount-text">Gold</p>
                             </div>
                           </li>
                           <li>
@@ -310,7 +343,7 @@
                             </div>
                             <div class="inline-block text-center ">
                               <p class="m-clear sport-color-primary lh1">{{athlete.countSilver}}</p>
-                              <p class="m-clear lh1">Silver</p>
+                              <p class="m-clear lh1 medalcount-text">Silver</p>
                             </div>
                           </li>
                           <li>
@@ -321,7 +354,7 @@
                             </div>
                             <div class="inline-block  text-center ">
                               <p class="m-clear sport-color-primary lh1">{{athlete.countBronze}}</p>
-                              <p class="m-clear lh1">Bronze</p>
+                              <p class="m-clear lh1 medalcount-text">Bronze</p>
                             </div>
                           </li>
                         </ul>
@@ -334,9 +367,9 @@
             </div>
           </div>
         </div>
-        <div class="resultsport-viewmedalwinnerholder">
-          <!-- <a class="btn-viewmore" ng-click="showMoreSport($index);" ng-if="sportTable.length>5">View <span>Full</span><span ng-if="">Less</span> Ranking Table</a>
-          <a class="btn-viewmore" ng-click="showMedalWinner();">View All Medal Winners</a> -->
+        <div class="resultsport-viewmedalwinnerholder" ng-if="sportTable.length > 0">
+          <!-- <a class="btn-viewmore" ng-click="showMoreSport($index);" ng-if="sportTable.length>5">View <span>Full</span><span ng-if="">Less</span> Ranking Table</a> -->
+          <a class="btn-viewmore visible-sm visible-xs float-clear" ng-click="showMedalWinner();" ng-if="medalWinners">View <span ng-if="!showAllMedalWinner">All</span> <span ng-if="showAllMedalWinner">Less</span> Medal Winners</a>
           <div class="result-viewall-medalwinners" ng-show="showAllMedalWinner">
             <!-- FILTER -->
             <div class="allmedals-filterholder">
