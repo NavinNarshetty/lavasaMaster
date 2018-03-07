@@ -71,7 +71,13 @@
    }
    .profile-bluemedals {
      width: 15px;
-   } //  ATHLETE PROFILE CARD END
+   }
+   .profileathletecard-medallist{
+     .medalcount-text{
+       font-size: 12px;
+     }
+   }
+    //  ATHLETE PROFILE CARD END
    // RESULT PAGE
    .resultsport-topplayer {
      width: auto;
