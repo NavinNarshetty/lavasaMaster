@@ -74,21 +74,10 @@ var model = {
                 });
             },
             function (found, callback) {
-                var sportUniq = _.uniqBy(found, 'sportslist.name');
-                OldSport.saveSportlist(sportUniq, function (err, complete) {
+                var sportUniq = _.uniqBy(found, 'sportslist.sportsListSubCategory.rules.name');
+                OldSport.saveRules(sportUniq, function (err, complete) {
                     if (err || _.isEmpty(complete)) {
-                        var err = "Error found in SportsList";
-                        callback(err, null);
-                    } else {
-                        callback(null, found);
-                    }
-                });
-            },
-            function (found, callback) {
-                var sportUniq = _.uniqBy(found, 'sportslist.sportsListSubCategory.name');
-                OldSport.savesportsListSubCategory(sportUniq, function (err, complete) {
-                    if (err || _.isEmpty(complete)) {
-                        var err = "Error found in sportsListSubCategory";
+                        var err = "Error found in Rules";
                         callback(err, null);
                     } else {
                         callback(null, found);
@@ -107,10 +96,21 @@ var model = {
                 });
             },
             function (found, callback) {
-                var sportUniq = _.uniqBy(found, 'sportslist.sportsListSubCategory.rules.name');
-                OldSport.saveRules(sportUniq, function (err, complete) {
+                var sportUniq = _.uniqBy(found, 'sportslist.sportsListSubCategory.name');
+                OldSport.savesportsListSubCategory(sportUniq, function (err, complete) {
                     if (err || _.isEmpty(complete)) {
-                        var err = "Error found in Rules";
+                        var err = "Error found in sportsListSubCategory";
+                        callback(err, null);
+                    } else {
+                        callback(null, found);
+                    }
+                });
+            },
+            function (found, callback) {
+                var sportUniq = _.uniqBy(found, 'sportslist.name');
+                OldSport.saveSportlist(sportUniq, function (err, complete) {
+                    if (err || _.isEmpty(complete)) {
+                        var err = "Error found in SportsList";
                         callback(err, null);
                     } else {
                         callback(null, found);
@@ -129,8 +129,7 @@ var model = {
                 });
             },
             function (found, callback) {
-                // var sportUniq = _.uniqBy(found, 'weight.name');
-                // callback(null, sportUniq);
+                var sportUniq = _.uniqBy(found, 'weight.name');
                 OldSport.saveWeight(found, function (err, complete) {
                     if (err || _.isEmpty(complete)) {
                         var err = "Error found in weight";
@@ -141,11 +140,16 @@ var model = {
                 });
             },
             function (found, callback) {
-                // console.log("found length", found.length, "found", found);
-                // var calling = {};
-                // calling.found = found;
-                // calling.size = found.length;
-                // callback(null, calling);
+                OldSport.getEvent(found, function (err, complete) {
+                    if (err || _.isEmpty(complete)) {
+                        var err = "Error found in sport";
+                        callback(err, null);
+                    } else {
+                        callback(null, complete);
+                    }
+                });
+            },
+            function (found, callback) {
                 OldSport.saveSport(found, function (err, complete) {
                     if (err || _.isEmpty(complete)) {
                         var err = "Error found in sport";
@@ -167,33 +171,95 @@ var model = {
     saveSportlist: function (data, callback) {
         async.eachSeries(data, function (n, callback) {
             if (n.sportslist != null) {
-                console.log("n", n.sportslist);
-                var formData = {};
-                formData.name = n.sportslist.name;
-                if (n.sportslist.sportsListSubCategory != null) {
-                    formData.sportsListSubCategory = n.sportslist.sportsListSubCategory._id;
-                }
-                formData.drawFormat = n.sportslist.drawFormat._id;
-                SportsList.findOne({
-                    name: formData.name
-                }).lean().exec(function (err, found) {
-                    if (err) {
-                        callback(err, null);
-                    } else {
-                        if (_.isEmpty(found)) {
-                            SportsList.saveData(formData, function (err, complete) {
-                                if (err || _.isEmpty(complete)) {
-                                    callback(null, {
-                                        error: "Error",
-                                        success: complete
+                async.waterfall([
+                    function (callback) {
+                        DrawFormat.findOne({
+                            name: n.sportslist.drawFormat.name
+                        }).lean().exec(function (err, drawFormatData) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(drawFormatData)) {
+                                    var param = {};
+                                    param.name = n.sportslist.drawFormat.name;
+                                    DrawFormat.saveData(param, function (err, complete) {
+                                        if (err || _.isEmpty(complete)) {
+                                            callback(null, {
+                                                error: "Error",
+                                                success: complete
+                                            });
+                                        } else {
+                                            callback(null, complete);
+                                        }
                                     });
                                 } else {
-                                    callback(null, complete);
+                                    callback(null, drawFormatData);
+                                }
+                            }
+                        });
+                    },
+                    function (drawFormatData, callback) {
+                        if (n.sportslist.sportsListSubCategory != null) {
+                            SportsListSubCategory.findOne({
+                                name: n.sportslist.sportsListSubCategory.name
+                            }).lean().exec(function (err, sportsListSubCategoryData) {
+                                if (err) {
+                                    callback(err, null);
+                                } else {
+                                    if (_.isEmpty(sportsListSubCategoryData)) {
+                                        var final = {};
+                                        final.drawFormat = drawFormatData;
+                                        final.sportsListSubCategory = null;
+                                    } else {
+                                        var final = {};
+                                        final.drawFormat = drawFormatData;
+                                        final.sportsListSubCategory = sportsListSubCategoryData;
+                                        callback(null, final);
+                                    }
                                 }
                             });
                         } else {
-                            callback(null, found);
+                            var final = {};
+                            final.drawFormat = drawFormatData;
+                            final.sportsListSubCategory = null;
                         }
+                    },
+                    function (final, callback) {
+                        // console.log("n", n.sportslist);
+                        var formData = {};
+                        formData.name = n.sportslist.name;
+                        if (final.sportsListSubCategory != null) {
+                            formData.sportsListSubCategory = final.sportsListSubCategory._id;
+                        }
+                        formData.drawFormat = final.drawFormat._id;
+                        SportsList.findOne({
+                            name: formData.name
+                        }).lean().exec(function (err, found) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(found)) {
+                                    SportsList.saveData(formData, function (err, complete) {
+                                        if (err || _.isEmpty(complete)) {
+                                            callback(null, {
+                                                error: "Error",
+                                                success: complete
+                                            });
+                                        } else {
+                                            callback(null, complete);
+                                        }
+                                    });
+                                } else {
+                                    callback(null, found);
+                                }
+                            }
+                        });
+                    }
+                ], function (err, complete) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        callback(null, complete);
                     }
                 });
             } else {
@@ -214,42 +280,110 @@ var model = {
 
     savesportsListSubCategory: function (data, callback) {
         async.eachSeries(data, function (n, callback) {
-                if (n.sportslist != null && n.sportslist.sportsListSubCategory != null) {
-                    console.log("n", n.sportslist);
-                    var formData = {};
-                    formData.name = n.sportslist.sportsListSubCategory.name;
-                    if (n.sportslist.sportsListSubCategory.sportsListCategory != null) {
-                        formData.sportsListCategory = n.sportslist.sportsListSubCategory.sportsListCategory._id;
-                    }
-                    if (n.sportslist.sportsListSubCategory.rules != null) {
-                        formData.rules = n.sportslist.sportsListSubCategory.rules._id;
-                    }
-                    formData.isTeam = n.sportslist.sportsListSubCategory.isTeam;
-                    SportsListSubCategory.findOne({
-                        name: formData.name
-                    }).lean().exec(function (err, found) {
-                        if (err) {
-                            callback(err, null);
-                        } else {
-                            if (_.isEmpty(found)) {
-                                SportsListSubCategory.saveData(formData, function (err, complete) {
-                                    if (err || _.isEmpty(complete)) {
-                                        callback(null, {
-                                            error: "Error",
-                                            success: complete
-                                        });
+                if (n.sportslist != null && n.sportslist.sportsListSubCategory != null && n.sportslist.sportsListSubCategory.sportsListCategory != null) {
+                    async.waterfall([
+                        function (callback) {
+                            if (n.sportslist.sportsListSubCategory.rules != null) {
+                                Rules.findOne({
+                                    name: n.sportslist.rules.name
+                                }).lean().exec(function (err, rulesData) {
+                                    if (err) {
+                                        callback(err, null);
                                     } else {
-                                        callback(null, complete);
+                                        callback(null, rulesData);
                                     }
                                 });
                             } else {
-                                callback(null, found);
+                                callback(null, {});
                             }
+                        },
+                        function (rulesData, callback) {
+                            console.log("n----->", n);
+                            if (n.sportslist.sportsListSubCategory.sportsListCategory != null) {
+                                SportsListSubCategory.findOne({
+                                    name: n.sportslist.sportsListSubCategory.sportsListCategory.name
+                                }).lean().exec(function (err, found) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else {
+                                        if (_.isEmpty(found)) {
+                                            var final = {};
+                                            if (_.isEmpty(rulesData)) {
+                                                final.rules = null;
+                                                final.sportsListCategory = null;
+                                            } else {
+                                                final.rules = rulesData;
+                                                final.sportsListCategory = null;
+                                            }
+                                            callback(null, final);
+                                        } else {
+                                            var final = {};
+                                            if (_.isEmpty(rulesData)) {
+                                                final.rules = null;
+                                                final.sportsListCategory = found;
+                                            } else {
+                                                final.rules = rulesData;
+                                                final.sportsListCategory = found;
+                                            }
+                                            callback(null, final);
+                                        }
+                                    }
+                                });
+                            } else {
+                                var final = {};
+                                if (_.isEmpty(rulesData)) {
+                                    final.rules = null;
+                                    final.sportsListCategory = null;
+                                } else {
+                                    final.rules = rulesData;
+                                    final.sportsListCategory = null;
+                                }
+                                callback(null, final);
+                            }
+                        },
+                        function (final, callback) {
+                            console.log("n", n.sportslist);
+                            var formData = {};
+                            formData.name = n.sportslist.sportsListSubCategory.name;
+                            if (final.sportsListCategory != null) {
+                                formData.sportsListCategory = final.sportsListCategory._id;
+                            }
+                            if (final.rules != null) {
+                                formData.rules = final.rules._id;
+                            }
+                            formData.isTeam = n.sportslist.sportsListSubCategory.isTeam;
+                            SportsListSubCategory.findOne({
+                                name: formData.name
+                            }).lean().exec(function (err, found) {
+                                if (err) {
+                                    callback(err, null);
+                                } else {
+                                    if (_.isEmpty(found)) {
+                                        SportsListSubCategory.saveData(formData, function (err, complete) {
+                                            if (err || _.isEmpty(complete)) {
+                                                callback(null, {
+                                                    error: "Error",
+                                                    success: complete
+                                                });
+                                            } else {
+                                                callback(null, data);
+                                            }
+                                        });
+                                    } else {
+                                        callback(null, data);
+                                    }
+                                }
+                            });
+                        }
+                    ], function (err, complete) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            callback(null, complete);
                         }
                     });
-
                 } else {
-                    callback();
+                    callback(null, data);
                 }
             },
             function (err) {
@@ -285,16 +419,16 @@ var model = {
                                         success: complete
                                     });
                                 } else {
-                                    callback(null, complete);
+                                    callback(null, data);
                                 }
                             });
                         } else {
-                            callback(null, found);
+                            callback(null, data);
                         }
                     }
                 });
             } else {
-                callback();
+                callback(null, data);
             }
         }, function (err) {
             if (err) {
@@ -312,7 +446,7 @@ var model = {
     saveRules: function (data, callback) {
         async.eachSeries(data, function (n, callback) {
             if (n.sportslist != null && n.sportslist.sportsListSubCategory != null && n.sportslist.sportsListSubCategory.rules != null) {
-                // console.log("n", n.sportslist);
+                console.log("n", n.sportslist);
                 var formData = {};
                 formData.name = n.sportslist.sportsListSubCategory.rules.name;
                 Rules.findOne({
@@ -329,16 +463,16 @@ var model = {
                                         success: complete
                                     });
                                 } else {
-                                    callback(null, complete);
+                                    callback(null, data);
                                 }
                             });
                         } else {
-                            callback(null, found);
+                            callback(null, data);
                         }
                     }
                 });
             } else {
-                callback();
+                callback(null, data);
             }
         }, function (err) {
             if (err) {
@@ -442,9 +576,9 @@ var model = {
     },
 
     saveSport: function (data, callback) {
-        async.eachSeries(data, function (n, callback) {
+        async.eachSeries(data.sport, function (n, callback) {
                 var sportData = {};
-                if (n.sportslist != null) {
+                if (n.sportslist) {
                     async.parallel([
                         function (callback) {
                             SportsList.findOne({
@@ -488,45 +622,75 @@ var model = {
                                 }).lean().exec(function (err, found) {
                                     if (!_.isEmpty(found)) {
                                         sportData.weight = found._id;
-                                    } else {
-                                        sportData.weight = null;
-                                    }
-                                });
-                            }
-                            sportData.gender = n.gender;
-                            sportData.maxTeam = n.maxTeam;
-                            sportData.minTeamPlayers = n.minTeamPlayers;
-                            sportData.maxTeamPlayers = n.maxTeamPlayers;
-                            sportData.toDate = n.toDate;
-                            sportData.fromDate = n.fromDate;
-                            console.log("sportdata", sportData);
-                            if (sportData.weight) {
-                                Sport.findOne({
-                                    sportslist: sportData.sportslist,
-                                    gender: sportData.gender,
-                                    ageGroup: sportData.ageGroup,
-                                    weight: sportData.weight
-                                }).lean().exec(function (err, found) {
-                                    if (err) {
-                                        callback(err, null);
-                                    } else {
-                                        if (_.isEmpty(found)) {
-                                            Sport.saveData(sportData, function (err, complete) {
-                                                if (err || _.isEmpty(complete)) {
-                                                    callback(null, {
-                                                        error: "Error",
-                                                        success: complete
+                                        sportData.gender = n.gender;
+                                        sportData.maxTeam = n.maxTeam;
+                                        sportData.minTeamPlayers = n.minTeamPlayers;
+                                        sportData.maxTeamPlayers = n.maxTeamPlayers;
+                                        sportData.toDate = n.toDate;
+                                        sportData.fromDate = n.fromDate;
+
+                                        Sport.findOne({
+                                            sportslist: sportData.sportslist,
+                                            gender: sportData.gender,
+                                            ageGroup: sportData.ageGroup,
+                                            weight: sportData.weight
+                                        }).lean().exec(function (err, found) {
+                                            if (err) {
+                                                callback(err, null);
+                                            } else {
+                                                if (_.isEmpty(found)) {
+                                                    var arr = [];
+                                                    arr.push(data.event._id);
+                                                    sportData.eventId = arr;
+                                                    Sport.saveData(sportData, function (err, complete) {
+                                                        if (err || _.isEmpty(complete)) {
+                                                            callback(null, {
+                                                                error: "Error",
+                                                                success: complete
+                                                            });
+                                                        } else {
+                                                            callback(null, complete);
+                                                        }
                                                     });
                                                 } else {
-                                                    callback(null, complete);
+                                                    callback(null, found);
+                                                }
+                                            }
+                                        });
+                                    } else {
+                                        var arr = [];
+                                        arr = found.eventId;
+                                        arr.push(data.event._id);
+                                        var updateObj = {
+                                            $set: {
+                                                eventId: arr
+                                            }
+                                        };
+                                        Sport.update({
+                                            matchId: found._id
+                                        }, updateObj).exec(
+                                            function (err, sportData) {
+                                                if (err) {
+                                                    callback(err, null);
+                                                } else {
+                                                    if (_.isEmpty(sportData)) {
+                                                        callback(null, []);
+                                                    } else {
+                                                        callback(null, sportData);
+                                                    }
                                                 }
                                             });
-                                        } else {
-                                            callback(null, found);
-                                        }
                                     }
                                 });
                             } else {
+                                sportData.weight = null;
+                                sportData.gender = n.gender;
+                                sportData.maxTeam = n.maxTeam;
+                                sportData.minTeamPlayers = n.minTeamPlayers;
+                                sportData.maxTeamPlayers = n.maxTeamPlayers;
+                                sportData.toDate = n.toDate;
+                                sportData.fromDate = n.fromDate;
+                                sportData.oldId = n._id;
                                 Sport.findOne({
                                     sportslist: sportData.sportslist,
                                     gender: sportData.gender,
@@ -536,6 +700,9 @@ var model = {
                                         callback(err, null);
                                     } else {
                                         if (_.isEmpty(found)) {
+                                            var arr = [];
+                                            arr.push(data.event._id);
+                                            sportData.eventId = arr;
                                             Sport.saveData(sportData, function (err, complete) {
                                                 if (err || _.isEmpty(complete)) {
                                                     callback(null, {
@@ -547,7 +714,28 @@ var model = {
                                                 }
                                             });
                                         } else {
-                                            callback(null, found);
+                                            var arr = [];
+                                            arr = found.eventId;
+                                            arr.push(data.event._id);
+                                            var updateObj = {
+                                                $set: {
+                                                    eventId: arr
+                                                }
+                                            };
+                                            Sport.update({
+                                                matchId: found._id
+                                            }, updateObj).exec(
+                                                function (err, sportData) {
+                                                    if (err) {
+                                                        callback(err, null);
+                                                    } else {
+                                                        if (_.isEmpty(sportData)) {
+                                                            callback(null, []);
+                                                        } else {
+                                                            callback(null, sportData);
+                                                        }
+                                                    }
+                                                });
                                         }
                                     }
                                 });
@@ -555,7 +743,7 @@ var model = {
                         }
                     });
                 } else {
-                    callback();
+                    callback(null, n);
                 }
             },
             function (err) {
@@ -569,6 +757,60 @@ var model = {
                 }
             });
 
+    },
+
+    getOldSport: function (data, callback) {
+        var deepSearch = "sportslist.sportsListSubCategory.sportsListCategory sportslist.sportsListSubCategory.rules ageGroup weight sportslist.drawFormat";
+        OldSport.find().lean().deepPopulate(deepSearch).exec(function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else {
+                if (_.isEmpty(found)) {
+                    callback(null, []);
+                } else {
+                    callback(null, found);
+                }
+            }
+        });
+    },
+
+    getEvent: function (data, callback) {
+        async.waterfall([
+            function (callback) {
+                ConfigProperty.findOne().exec(function (err, property) {
+                    if (err || _.isEmpty(property)) {
+                        callback(null, {
+                            error: "error"
+                        });
+                    } else {
+                        callback(null, property);
+                    }
+                });
+            },
+            function (property, callback) {
+                Event.findOne({
+                    city: property.city,
+                    year: property.year
+                }).exec(function (err, eventData) {
+                    if (err || _.isEmpty(eventData)) {
+                        callback(null, {
+                            error: "error"
+                        });
+                    } else {
+                        var final = {};
+                        final.sport = data;
+                        final.event = eventData;
+                        callback(null, final);
+                    }
+                });
+            }
+        ], function (err, complete) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, complete);
+            }
+        });
     }
 
 

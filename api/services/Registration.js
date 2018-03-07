@@ -109,7 +109,12 @@ var schema = new Schema({
     utm_source: String,
     utm_campaign: String,
     panNo: String,
-    gstNo: String
+    gstNo: String,
+    oldId: {
+        type: Schema.Types.ObjectId,
+        ref: 'OldRegistration',
+        index: true
+    }
 });
 
 schema.plugin(deepPopulate, {});

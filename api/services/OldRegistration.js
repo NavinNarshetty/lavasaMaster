@@ -93,7 +93,8 @@ var schema = new Schema({
     utm_source: String,
     utm_campaign: String,
     panNo: String,
-    gstNo: String
+    gstNo: String,
+
 });
 
 schema.plugin(deepPopulate, {});
@@ -172,6 +173,7 @@ var model = {
                             formData.teamSports = singleData.teamSports;
                             formData.sportsDepartment = singleData.sportsDepartment;
                             formData.status = singleData.status;
+                            formData.oldId = singleData._id;
                             callback(null, formData);
                         } else {
                             var formData = {};

@@ -183,6 +183,7 @@ var model = {
                             formData.sportLevel = singleData.sportLevel;
                             formData.playedTournaments = singleData.playedTournaments;
                             formData.status = singleData.status;
+                            formData.oldId = singleData._id;
                             callback(null, formData);
                         } else {
                             var formData = {};
