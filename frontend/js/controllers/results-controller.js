@@ -435,8 +435,21 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
         $scope.sportTable.tableLimit = 5;
         $scope.sportTable.showTable = true;
         _.each($scope.risingAthletes, function (n) {
-          n.fullName = n.athleteProfile.firstName + n.athleteProfile.surname;
-          // n.goldCount = n.medalData
+          n.countGold = n.countSilver = n.countBronze = 0;
+          if(n.athleteProfile.middleName){
+            n.fullName = n.athleteProfile.firstName + ' ' + n.athleteProfile.middleName + ' ' + n.athleteProfile.surname;
+          } else{
+            n.fullName = n.athleteProfile.firstName + ' ' + n.athleteProfile.surname;
+          }
+          if(n.medalData.gold){
+            n.countGold = n.medalData.gold[0].count;
+          }
+          if(n.medalData.silver){
+            n.countSilver = n.medalData.silver[0].count;
+          }
+          if(n.medalData.bronze){
+            n.countBronze = n.medalData.bronze[0].count;
+          }
         });
         $scope.showAllMedalWinner = false;
         // console.log('School Table', $scope.sportTable);
