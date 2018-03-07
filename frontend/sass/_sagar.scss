@@ -7,6 +7,7 @@ $sport-info: #000072 !default; //lighter-blue
 $sport-base: #1a1a1a !default; //black
 $sport-lightblue:#00aaff !default;
 $sport-grey: #e1e1e1 !default;
+$sport-light-grey: #e5e5e5 !default;
 $sport-darkgrey: #757575 !default;
 $brand-green: #0eda85 !default; //green
 $light-blue:#00aaff !default;
@@ -256,11 +257,15 @@ $grey: #e1e1e1;
 }
 
 .bg-athlete-female {
-    background-image: url('../img/medal-icon/male-athlete.png');
+    background-image: url('../img/medal-icon/female-athlete.png');
 }
 
 .bg-school-icon {
     background-image: url('../img/medal-icon/school-icon.png');
+}
+
+.bg-light-grey{
+  background-color: $sport-light-grey;
 }
 
 .lh1{
@@ -319,6 +324,8 @@ $grey: #e1e1e1;
     border-radius: 100%;
     overflow: hidden; // border: 5px solid #ddd;
     position: relative;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
     img.loading {
         width: 100%;
         height: auto;

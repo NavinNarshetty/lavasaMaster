@@ -266,7 +266,7 @@
                 <div class="resultsport-topplayer" ng-repeat="athlete in risingAthletes track by $index">
                   <div class="profileathlete-card relate" ng-init="school.type='school'" ng-class="{'card-school':school.type=='school','card-college':school.type=='college'}">
                     <div class="inline-block v-top profileathlete-cardimgholder">
-                      <div class="profileathleteimage-holder">
+                      <div class="profileathleteimage-holder " ng-class="{'bg-athlete-male bg-light-grey': !athlete.athleteProfile.photograph && athlete.gender== 'male','bg-athlete-female bg-light-grey': !athlete.athleteProfile.photograph && athlete.gender== 'female' }">
                         <img ng-src="{{athlete.athleteProfile.photograph | serverimage2}}" class="img-responsive">
                       </div>
                     </div>
