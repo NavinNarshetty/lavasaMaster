@@ -2875,7 +2875,6 @@ myApp.controller('AthletepayustatusCtrl', function ($scope, TemplateService, Nav
 
     }
     //LOGIN POPUP FOR ATHELETE PAYU
-<<<<<<< HEAD
 
     if ($.jStorage.get("isAtheletePayu") == null) {
         excelService.loginPayuPopup($scope);
@@ -2890,7 +2889,6 @@ myApp.controller('AthletepayustatusCtrl', function ($scope, TemplateService, Nav
 
     }
 
-=======
     $scope.jAtheletePayu = $.jStorage.get("isAtheletePayu");
     if ($.jStorage.get("isAtheletePayu") == null) {
         excelService.loginPayuPopup($scope);
@@ -2902,7 +2900,6 @@ myApp.controller('AthletepayustatusCtrl', function ($scope, TemplateService, Nav
         }
     }
 
->>>>>>> b2838d9b996747f3585d9eb009642e8282b0492b
     $scope.logout = function () {
         $.jStorage.deleteKey("isAtheletePayu");
         toastr.success("Logout Successfully", 'Success Message');
@@ -3152,7 +3149,6 @@ myApp.controller('SchoolpayustatuslCtrl', function ($scope, TemplateService, Nav
     var filename = 'School';
 
     // LOGIN POPUP FOR PAYU
-<<<<<<< HEAD
     if ($.jStorage.get("isSchoolPayu") == null) {
         excelService.loginPayuPopup($scope);
     }
@@ -3160,82 +3156,83 @@ myApp.controller('SchoolpayustatuslCtrl', function ($scope, TemplateService, Nav
     $scope.submit = function (login) {
         console.log("immin");
         if (login) {
+
             excelService.submitPayuPopup(login, 'School');
-=======
 
-    $scope.jSchoolPayu = $.jStorage.get("isSchoolPayu");
-    if ($.jStorage.get("isSchoolPayu") == null) {
-        excelService.loginPayuPopup($scope);
-    }
-    $scope.submit = function (login) {
-        console.log("immin");
-        if (login) {
-            excelService.submitPayuPopup(login, 'School', $state);
->>>>>>> b2838d9b996747f3585d9eb009642e8282b0492b
+            $scope.jSchoolPayu = $.jStorage.get("isSchoolPayu");
+            if ($.jStorage.get("isSchoolPayu") == null) {
+                excelService.loginPayuPopup($scope);
+            }
+            $scope.submit = function (login) {
+                console.log("immin");
+                if (login) {
+                    excelService.submitPayuPopup(login, 'School', $state);
+                }
+
+            }
+
+            $scope.logout = function () {
+                $.jStorage.deleteKey("isSchoolPayu");
+                toastr.success("Logout Successfully", 'Success Message');
+                $state.reload();
+            }
+            //LOGIN POPUP FOR  PAYU END
+
+            // INITIALISE VARIABLES END
+            $scope.loginPopup = function (commonData, type) {
+                if (type === 'excel') {
+                    navigationUrl = 'Registration/generateExcel';
+                }
+                console.log(commonData, "*********************");
+                excelService.loginPopup(commonData, $scope, type);
+            }
+            $scope.loginSubmit = function (login) {
+                console.log(login, "check")
+
+                excelService.loginSubmit(login, navigationUrl, filename)
+
+            }
+
+            $scope.generateExcel = function (formData) {
+                console.log("formdata", formData);
+                NavigationService.generateSchoolExcelWithData(formData, function (data) {});
+            }
+
+            $scope.transferToWebsite = function (id) {
+                console.log(id);
+                $scope.constraints = {};
+                $scope.constraints.schoolId = base64Service.encode(id);
+                if (window.location.origin == 'http://mumbaischool.sfanow.in') {
+                    window.location = 'http://mumbaischool.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+                } else if (window.location.origin == 'http://mumbaicollege.sfanow.in') {
+                    window.location = 'http://mumbaicollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+                } else if (window.location.origin == 'http://hyderabadschool.sfanow.in') {
+                    window.location = 'http://hyderabadschool.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+                } else if (window.location.origin == 'http://ahmedabadschool.sfanow.in') {
+                    window.location = 'http://ahmedabadschool.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+                } else if (window.location.origin == 'http://hyderabadcollege.sfanow.in') {
+                    window.location = 'http://hyderabadcollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+                } else if (window.location.origin == 'http://ahmedabadcollege.sfanow.in') {
+                    window.location = 'http://ahmedabadcollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+                } else if (window.location.origin == 'http://testmumbaischool.sfanow.in') {
+                    window.location = 'http://testmumbaischool.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+                } else if (window.location.origin == 'http://testhyderabadschool.sfanow.in') {
+                    window.location = 'http://testhyderabadschool.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+                } else if (window.location.origin == 'http://testahmedabadschool.sfanow.in') {
+                    window.location = 'http://testahmedabadschool.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+                } else if (window.location.origin == 'http://testmumbaicollege.sfanow.in') {
+                    window.location = 'http://testmumbaicollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+                } else if (window.location.origin == 'http://testhyderabadcollege.sfanow.in') {
+                    window.location = 'http://testhyderabadcollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+                } else if (window.location.origin == 'http://testahmedabadcollege.sfanow.in') {
+                    window.location = 'http://testahmedabadcollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+                } else if (window.location.origin == 'http://localhost:8081') {
+                    window.location = 'http://localhost:8082/#/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+                }
+            }
+
         }
-
     }
-
-    $scope.logout = function () {
-        $.jStorage.deleteKey("isSchoolPayu");
-        toastr.success("Logout Successfully", 'Success Message');
-        $state.reload();
-    }
-    //LOGIN POPUP FOR  PAYU END
-
-    // INITIALISE VARIABLES END
-    $scope.loginPopup = function (commonData, type) {
-        if (type === 'excel') {
-            navigationUrl = 'Registration/generateExcel';
-        }
-        console.log(commonData, "*********************");
-        excelService.loginPopup(commonData, $scope, type);
-    }
-    $scope.loginSubmit = function (login) {
-        console.log(login, "check")
-
-        excelService.loginSubmit(login, navigationUrl, filename)
-
-    }
-
-    $scope.generateExcel = function (formData) {
-        console.log("formdata", formData);
-        NavigationService.generateSchoolExcelWithData(formData, function (data) {});
-    }
-
-    $scope.transferToWebsite = function (id) {
-        console.log(id);
-        $scope.constraints = {};
-        $scope.constraints.schoolId = base64Service.encode(id);
-        if (window.location.origin == 'http://mumbaischool.sfanow.in') {
-            window.location = 'http://mumbaischool.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
-        } else if (window.location.origin == 'http://mumbaicollege.sfanow.in') {
-            window.location = 'http://mumbaicollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
-        } else if (window.location.origin == 'http://hyderabadschool.sfanow.in') {
-            window.location = 'http://hyderabadschool.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
-        } else if (window.location.origin == 'http://ahmedabadschool.sfanow.in') {
-            window.location = 'http://ahmedabadschool.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
-        } else if (window.location.origin == 'http://hyderabadcollege.sfanow.in') {
-            window.location = 'http://hyderabadcollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
-        } else if (window.location.origin == 'http://ahmedabadcollege.sfanow.in') {
-            window.location = 'http://ahmedabadcollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
-        } else if (window.location.origin == 'http://testmumbaischool.sfanow.in') {
-            window.location = 'http://testmumbaischool.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
-        } else if (window.location.origin == 'http://testhyderabadschool.sfanow.in') {
-            window.location = 'http://testhyderabadschool.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
-        } else if (window.location.origin == 'http://testahmedabadschool.sfanow.in') {
-            window.location = 'http://testahmedabadschool.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
-        } else if (window.location.origin == 'http://testmumbaicollege.sfanow.in') {
-            window.location = 'http://testmumbaicollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
-        } else if (window.location.origin == 'http://testhyderabadcollege.sfanow.in') {
-            window.location = 'http://testhyderabadcollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
-        } else if (window.location.origin == 'http://testahmedabadcollege.sfanow.in') {
-            window.location = 'http://testahmedabadcollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
-        } else if (window.location.origin == 'http://localhost:8081') {
-            window.location = 'http://localhost:8082/#/sports-selection/' + 'school/' + $scope.constraints.schoolId;
-        }
-    }
-
 });
 
 myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams) {
