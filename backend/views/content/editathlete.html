@@ -18,38 +18,38 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label>Date of Registration</label>
-                  <input type="text" ng-model="athlete.createdAt | date:'dd/MM/yyyy'" class="form-control">
+                  <input type="text" ng-model="athlete.createdAt | date:'dd/MM/yyyy'" class="form-control" readonly>
                 </div>
                 <div class="form-group" ng-if="athlete.utm_source != null">
                   <label>UTM Source</label>
-                  <input type="text" ng-model="athlete.utm_source" class="form-control">
+                  <input type="text" ng-model="athlete.utm_source" class="form-control" readonly>
                 </div>
                 <div class="form-group" ng-if="athlete.utm_medium != null">
                   <label>UTM Medium</label>
-                  <input type="text" ng-model="athlete.utm_medium" class="form-control">
+                  <input type="text" ng-model="athlete.utm_medium" class="form-control" readonly>
                 </div>
                 <div class="form-group" ng-if="athlete.utm_campaign != null">
                   <label>UTM Campaign</label>
-                  <input type="text" ng-model="athlete.utm_campaign" class="form-control">
+                  <input type="text" ng-model="athlete.utm_campaign" class="form-control" readonly>
                 </div>
                 <div class="form-group" ng-if="athlete.school != null">
                   <label class="">School</label>
-                  <input type="text" ng-model="athlete.school" class="form-control">
+                  <input type="text" ng-model="athlete.school" class="form-control" readonly>
                 </div>
                 <div class="form-group" ng-if="athlete.atheleteSchoolName != null">
                   <label class="">Added School Name</label>
-                  <input type="text" name="atheleteSchoolName" ng-model="athlete.atheleteSchoolName" class="form-control">
+                  <input type="text" name="atheleteSchoolName" ng-model="athlete.atheleteSchoolName" class="form-control" readonly>
                 </div>
 
                 <div class="form-group">
                   <label class="">Locality</label>
-                  <input type="text" name="atheleteSchoolLocality" ng-model="athlete.atheleteSchoolLocality" class="form-control">
+                  <input type="text" name="atheleteSchoolLocality" ng-model="athlete.atheleteSchoolLocality" class="form-control" readonly>
 
                 </div>
 
                 <div class="form-group">
                   <label class="">School Contact</label>
-                  <input type="text" name="atheleteSchoolContact" ng-model="athlete.atheleteSchoolContact" class="form-control">
+                  <input type="text" name="atheleteSchoolContact" ng-model="athlete.atheleteSchoolContact" class="form-control" readonly>
 
                 </div>
 
@@ -65,58 +65,58 @@
                     </div>
                     <div class="form-group">
                       <label class="">Surname</label>
-                      <input type="text" name="surname" ng-model="athlete.surname" class="form-control">
+                      <input type="text" name="surname" ng-model="athlete.surname" class="form-control" readonly>
                       <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid Surname</div>-->
                     </div>
                     <div class="form-group">
                       <label class="">First Name</label>
-                      <input type="text" name="firstName" ng-model="athlete.firstName" class="form-control">
+                      <input type="text" name="firstName" ng-model="athlete.firstName" class="form-control" readonly>
                       <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid First Name</div>-->
                     </div>
                     <div class="form-group">
                       <label class="">Middle Name</label>
-                      <input type="text" name="middleName" ng-model="athlete.middleName" class="form-control">
+                      <input type="text" name="middleName" ng-model="athlete.middleName" class="form-control" readonly>
 
                       <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid Middle Name</div>-->
                     </div>
                     <div class="form-group">
                       <label class="">Gender</label>
-                      <input type="text" name="middleName" ng-model="athlete.gender" class="form-control">
+                      <input type="text" name="middleName" ng-model="athlete.gender" class="form-control" readonly>
                       <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched &amp;&amp; type.required">Please enter valid Gender</div>-->
                     </div>
                     <div class="form-group" ng-if="athlete.standard">
                       <label class="">Standard</label>
-                      <input type="text" name="middleName" ng-model="athlete.standard" class="form-control">
+                      <input type="text" name="middleName" ng-model="athlete.standard" class="form-control" readonly>
                       <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched &amp;&amp; type.required">Please enter valid Standard</div>-->
                     </div>
                     <div class="form-group" ng-if="athlete.university">
                       <label class="">University</label>
-                      <input type="text" name="middleName" ng-model="athlete.university" class="form-control">
+                      <input type="text" name="middleName" ng-model="athlete.university" class="form-control" readonly>
 
                     </div>
                     <div class="form-group" ng-if="athlete.faculty">
                       <label class="">Faculty</label>
-                      <input type="text" name="middleName" ng-model="athlete.faculty" class="form-control">
+                      <input type="text" name="middleName" ng-model="athlete.faculty" class="form-control" readonly>
 
                     </div>
                     <div class="form-group" ng-if="athlete.course">
                       <label class="">Course</label>
-                      <input type="text" name="middleName" ng-model="athlete.course" class="form-control">
+                      <input type="text" name="middleName" ng-model="athlete.course" class="form-control" readonly>
 
                     </div>
                     <div class="form-group" ng-if="athlete.degree">
                       <label class="">Degree</label>
-                      <input type="text" name="middleName" ng-model="athlete.degree" class="form-control">
+                      <input type="text" name="middleName" ng-model="athlete.degree" class="form-control" readonly>
 
                     </div>
                     <div class="form-group" ng-if="athlete.collegeYear">
                       <label class="">Year</label>
-                      <input type="text" name="middleName" ng-model="athlete.collegeYear" class="form-control">
+                      <input type="text" name="middleName" ng-model="athlete.collegeYear" class="form-control" readonly>
 
                     </div>
                     <div class="form-group">
                       <label class="">Blood Group</label>
-                      <input type="text" name="middleName" ng-model="athlete.bloodGroup" class="form-control">
+                      <input type="text" name="middleName" ng-model="athlete.bloodGroup" class="form-control" readonly>
                       <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched &amp;&amp; type.required">Please enter valid Blood Group</div>-->
                     </div>
                     <div class="form-group">
@@ -132,13 +132,13 @@
 
                     <div class="form-group">
                       <label class="">DOB</label>
-                      <input type="text" name="date" ng-model="athlete.dob | date:'dd/MM/yyyy'" class="form-control">
+                      <input type="text" name="date" ng-model="athlete.dob | date:'dd/MM/yyyy'" class="form-control" readonly>
                       <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid DOB</div>-->
                     </div>
 
                     <div class="form-group">
                       <label class="">Age<span ng-show="type.size" class="">(250 x 250)</span></label>
-                      <input type="text" name="mobile" class="form-control" ng-model="athlete.age">
+                      <input type="text" name="mobile" class="form-control" ng-model="athlete.age" readonly>
                     </div>
 
                     <div class="form-group">
@@ -165,49 +165,49 @@
                     </div>
                     <div class="form-group">
                       <label class="">Mobile</label>
-                      <input type="text" name="mobile" class="form-control" ng-model="athlete.mobile">
+                      <input type="text" name="mobile" class="form-control" ng-model="athlete.mobile" readonly>
                       <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid Mobile</div>-->
                     </div>
 
                     <div class="form-group">
                       <label class="">Email</label>
-                      <input type="text" name="email" ng-model="athlete.email" class="form-control">
+                      <input type="text" name="email" ng-model="athlete.email" class="form-control" readonly>
                       <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid Email</div>-->
                     </div>
 
                     <div class="form-group">
                       <label class="">Address</label>
-                      <input type="text" name="address" ng-model="athlete.address" class="form-control">
+                      <input type="text" name="address" ng-model="athlete.address" class="form-control" readonly>
                       <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid Address</div>-->
                     </div>
 
                     <div class="form-group">
                       <label class="">Line 2</label>
-                      <input type="text" name="addressLine2" ng-model="athlete.addressLine2" class="form-control">
+                      <input type="text" name="addressLine2" ng-model="athlete.addressLine2" class="form-control" readonly>
                       <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid Line 2</div>-->
                     </div>
                     <div class="form-group">
                       <label class="">State</label>
-                      <input type="text" name="addressLine2" ng-model="athlete.state" class="form-control">
+                      <input type="text" name="addressLine2" ng-model="athlete.state" class="form-control" readonly>
 
                       <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched &amp;&amp; type.required">Please enter valid State</div>-->
                     </div>
 
                     <div class="form-group">
                       <label class="">District</label>
-                      <input type="text" name="addressLine2" ng-model="athlete.district" class="form-control">
+                      <input type="text" name="addressLine2" ng-model="athlete.district" class="form-control" readonly>
                       <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched &amp;&amp; type.required">Please enter valid District</div>-->
                     </div>
 
                     <div class="form-group">
                       <label class="">City</label>
-                      <input type="text" name="addressLine2" ng-model="athlete.city" class="form-control">
+                      <input type="text" name="addressLine2" ng-model="athlete.city" class="form-control" readonly>
                       <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched &amp;&amp; type.required">Please enter valid City</div>-->
                     </div>
 
                     <div class="form-group">
                       <label class="">PinCode</label>
-                      <input type="text" name="pinCode" ng-model="athlete.pinCode" class="form-control">
+                      <input type="text" name="pinCode" ng-model="athlete.pinCode" class="form-control" readonly>
                       <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid PinCode</div>-->
                     </div>
 
@@ -268,7 +268,7 @@
 
                     <div class="form-group">
                       <label class="">Payment Mode</label>
-                      <input type="text" name="pinCode" ng-model="athlete.registrationFee" class="form-control">
+                      <input type="text" name="pinCode" ng-model="athlete.registrationFee" class="form-control" readonly>
                       <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched &amp;&amp; type.required">Please enter valid Payment Mode</div>-->
                     </div>
 
@@ -280,19 +280,19 @@
 
                     <div class="form-group">
                       <label class="">Transaction ID</label>
-                      <input type="text" name="transactionID" ng-model="athlete.transactionID" class="form-control ">
+                      <input type="text" name="transactionID" ng-model="athlete.transactionID" class="form-control " readonly>
                       <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid Transaction ID</div>-->
                     </div>
 
                     <div class="form-group">
                       <label class="">Verification Status</label>
-                      <input type="text" name="pinCode" ng-model="athlete.status" class="form-control">
+                      <input type="text" name="pinCode" ng-model="athlete.status" class="form-control" readonly>
                       <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched &amp;&amp; type.required">Please enter valid Verification Status</div>-->
                     </div>
 
                     <div class="form-group">
                       <label class="">SFA ID</label>
-                      <input type="text" name="sfaId" ng-model="athlete.sfaId" class="form-control">
+                      <input type="text" name="sfaId" ng-model="athlete.sfaId" class="form-control" readonly>
                       <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid SFA ID</div>-->
                     </div>
                     <!--
@@ -308,13 +308,13 @@
 
                     <div class="form-group">
                       <label class="">Password</label>
-                      <input type="text" name="password" ng-model="athlete.password" class="form-control">
+                      <input type="text" name="password" ng-model="athlete.password" class="form-control" readonly>
                       <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid Password</div>-->
                     </div>
 
                     <div class="form-group">
                       <label class="">Remarks</label>
-                      <input type="text" name="remarks" ng-model="athlete.remarks" class="form-control ">
+                      <input type="text" name="remarks" ng-model="athlete.remarks" class="form-control" readonly>
                       <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid Remarks</div>-->
                     </div>
                   </div>

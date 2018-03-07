@@ -106,7 +106,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="item in items">
+                <tr ng-repeat="item in items | orderBy:'schoolName' track by $index">
                   <!--<tr>-->
                   <!--<td>{{$index + 1}}</td>-->
                   <td>{{($index + 1)+((formData.page-1)*maxRow)}}</td>
