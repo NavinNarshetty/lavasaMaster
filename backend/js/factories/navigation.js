@@ -78,6 +78,23 @@ myApp.factory('NavigationService', function ($http) {
             }]
         },
         {
+            name: "Sport Ops",
+            classis: "activeColor",
+            sref: "",
+            icon: "phone",
+            subnavs: [{
+                name: "School SportOps",
+                classis: "",
+                sref: "#/schoolOps",
+                icon: "phone"
+            }, {
+                name: "Athlete SportOps",
+                classis: "",
+                sref: "#/athleteOps",
+                icon: "phone"
+            }]
+        },
+        {
             name: "Additional Payment",
             classis: "activeColor",
             sref: "#/additional-payment",

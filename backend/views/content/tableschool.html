@@ -100,6 +100,7 @@
                              " ng-model="search" />
                                     </form>
                                     <a class="btn btn-success" ng-click="loginPopup(formData,'excel')">Excel Export</a>
+                                    <a class="btn btn-danger" ng-click="logout()" ng-if="!showAccess && jSchoolops!=null">Logout</a>
                                 </div>
                             </div>
                         </div>
@@ -144,8 +145,9 @@
                                         <a class="btn btn-info" target="_blank" ui-sref="viewSchool({id:item._id})">
                                             <i class="fa fa-eye"></i> View
                                         </a>
-                                        <a class="btn btn-link" ng-click="transferToWebsite(item._id)" target="_new"><i class="fa  fa-user"></i> Access
+                                        <a class="btn btn-link" ng-click="transferToWebsite(item._id)" target="_new" ng-if="showAccess"><i class="fa  fa-user"></i> Access
                                         </a>
+
                                     </td>
                                     <!--<td ng-repeat="but in json.json.action">
                                         <a class="btn" ng-class="but.buttonClass" ng-click="json.eventAction(but,item) ">
