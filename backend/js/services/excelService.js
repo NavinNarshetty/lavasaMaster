@@ -7,10 +7,14 @@ myApp.service('excelService', function ($http, TemplateService, $state, toastr, 
     "password": "sfabackend2017-18"
   };
   var adminPayu = {
-    "schoolPassword": "123",
-    "atheletePassword": "456"
+    "schoolPassword": "payu1234",
+    "atheletePassword": "payu1234"
 
-  }
+  };
+  var sportsOpsPassword = {
+    "schoolOps": "sportops1234",
+    "atheleteOps": "sportops1234"
+  };
   this.loginPopup = function (data, varScope, type) {
     console.log(data);
     commonExcelData = data;
@@ -86,11 +90,12 @@ myApp.service('excelService', function ($http, TemplateService, $state, toastr, 
       windowClass: 'loginpopup'
     });
   };
-  this.submitPayuPopup = function (login, type) {
+  this.submitPayuPopup = function (login, type, state) {
     if (type == 'School') {
       if (login.password == adminPayu.schoolPassword) {
         $.jStorage.set("isSchoolPayu", 'school');
         modalInstance1.close();
+        state.reload();
         toastr.success('Login Successfull', 'Success Message');
       } else {
         toastr.error('Please check Password entered', 'Acess Denied')
@@ -100,6 +105,27 @@ myApp.service('excelService', function ($http, TemplateService, $state, toastr, 
       if (login.password == adminPayu.atheletePassword) {
         $.jStorage.set("isAtheletePayu", 'athelete');
         modalInstance1.close();
+        state.reload();
+        toastr.success('Login Successfull', 'Success Message');
+      } else {
+        toastr.error('Please check Password entered', 'Acess Denied');
+      }
+
+    } else if (type == 'schoolOps') {
+      if (login.password == sportsOpsPassword.schoolOps) {
+        $.jStorage.set("schoolOps", 'schoolOps');
+        modalInstance1.close();
+        state.reload();
+        toastr.success('Login Successfull', 'Success Message');
+      } else {
+        toastr.error('Please check Password entered', 'Acess Denied');
+      }
+
+    } else if (type == 'athleteOps') {
+      if (login.password == sportsOpsPassword.atheleteOps) {
+        $.jStorage.set("athleteOps", 'athleteOps');
+        modalInstance1.close();
+        state.reload();
         toastr.success('Login Successfull', 'Success Message');
       } else {
         toastr.error('Please check Password entered', 'Acess Denied');

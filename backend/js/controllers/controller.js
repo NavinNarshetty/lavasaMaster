@@ -2272,7 +2272,7 @@ myApp.controller('ViewIndividualSportCtrl', function ($scope, TemplateService, N
     $scope.getOneOldSchoolById();
 });
 
-myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, base64Service, excelService) {
+myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, toastr, $state, $stateParams, base64Service, excelService) {
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tableschool");
@@ -2420,6 +2420,29 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
         // console.log($scope.constraintis);
 
     }
+
+    // FOR SPORTOPS START
+    if ($state.current.name == "schoolOps") {
+        $scope.jSchoolops = $.jStorage.get('schoolOps');
+        if ($.jStorage.get('schoolOps') == null) {
+            excelService.loginPayuPopup($scope);
+        }
+    }
+    $scope.submit = function (login) {
+        excelService.submitPayuPopup(login, 'schoolOps', $state);
+    }
+    $scope.logout = function () {
+        $.jStorage.deleteKey("schoolOps");
+        toastr.success("Logout Successfully", 'Success Message');
+        $state.reload();
+    }
+    if ($state.current.name == 'schoolOps') {
+        $scope.showAccess = false;
+    } else {
+        $scope.showAccess = true;
+    }
+
+    // FOR SPORTOPS END
 })
 
 myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, base64Service, $uibModal, toastr, excelService) {
@@ -2624,6 +2647,29 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
         // console.log($scope.constraintis);
 
     }
+    // for SPORTOPS LOGIN
+    $scope.jAtheletOps = $.jStorage.get('athleteOps');
+    if ($state.current.name == "athleteOps") {
+        if ($.jStorage.get('athleteOps') == null) {
+            excelService.loginPayuPopup($scope);
+        }
+    }
+
+    $scope.submit = function (login) {
+        excelService.submitPayuPopup(login, 'athleteOps', $state);
+    }
+    $scope.logout = function () {
+        $.jStorage.deleteKey("athleteOps");
+        toastr.success("Logout Successfully", 'Success Message');
+        $state.reload();
+    }
+
+    if ($state.current.name == 'athleteOps') {
+        $scope.showAccess = false;
+    } else {
+        $scope.showAccess = true;
+    }
+    // for SPORTOPS LOGIN END
 })
 myApp.controller('AthletepayustatusCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, base64Service, $uibModal, toastr, excelService) {
     //athlete filter view
@@ -2829,6 +2875,7 @@ myApp.controller('AthletepayustatusCtrl', function ($scope, TemplateService, Nav
 
     }
     //LOGIN POPUP FOR ATHELETE PAYU
+<<<<<<< HEAD
 
     if ($.jStorage.get("isAtheletePayu") == null) {
         excelService.loginPayuPopup($scope);
@@ -2843,6 +2890,19 @@ myApp.controller('AthletepayustatusCtrl', function ($scope, TemplateService, Nav
 
     }
 
+=======
+    $scope.jAtheletePayu = $.jStorage.get("isAtheletePayu");
+    if ($.jStorage.get("isAtheletePayu") == null) {
+        excelService.loginPayuPopup($scope);
+    }
+    $scope.submit = function (login) {
+        if (login) {
+            console.log("login", login);
+            excelService.submitPayuPopup(login, 'Athelete', $state);
+        }
+    }
+
+>>>>>>> b2838d9b996747f3585d9eb009642e8282b0492b
     $scope.logout = function () {
         $.jStorage.deleteKey("isAtheletePayu");
         toastr.success("Logout Successfully", 'Success Message');
@@ -3092,6 +3152,7 @@ myApp.controller('SchoolpayustatuslCtrl', function ($scope, TemplateService, Nav
     var filename = 'School';
 
     // LOGIN POPUP FOR PAYU
+<<<<<<< HEAD
     if ($.jStorage.get("isSchoolPayu") == null) {
         excelService.loginPayuPopup($scope);
     }
@@ -3100,6 +3161,17 @@ myApp.controller('SchoolpayustatuslCtrl', function ($scope, TemplateService, Nav
         console.log("immin");
         if (login) {
             excelService.submitPayuPopup(login, 'School');
+=======
+
+    $scope.jSchoolPayu = $.jStorage.get("isSchoolPayu");
+    if ($.jStorage.get("isSchoolPayu") == null) {
+        excelService.loginPayuPopup($scope);
+    }
+    $scope.submit = function (login) {
+        console.log("immin");
+        if (login) {
+            excelService.submitPayuPopup(login, 'School', $state);
+>>>>>>> b2838d9b996747f3585d9eb009642e8282b0492b
         }
 
     }

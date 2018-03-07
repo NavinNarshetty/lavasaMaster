@@ -76,7 +76,7 @@
                              " ng-model="search" />
                   </form>
                   <a class="btn btn-success" ng-click="loginPopup(formData,'excel')">Excel Export</a>
-                  <a class="btn btn-danger" ng-click="logout()">Logout</a>
+                  <a class="btn btn-danger" ng-click="logout()" ng-if="jSchoolPayu!=null">Logout</a>
                 </div>
               </div>
             </div>

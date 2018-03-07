@@ -109,12 +109,13 @@
                             <div class="col-md-6 ">
                                 <div class="pull-right">
                                     <form class="search-form mr-form ">
-                                        <input type="text" ng-keydown="$event.keyCode === 13 && searchInAthlete(search)" placeholder="Search Here...
-                             " ng-model="search" />
+                                        <input type="text" ng-keydown="$event.keyCode === 13 && searchInAthlete(search)" placeholder="Search Here..." ng-model="search"
+                                        />
                                     </form>
                                     <a class="btn btn-success" ng-click="loginPopup(formData,'excel')"> <span style="font-size:12px;">Excel Export</span></a>
                                     <!-- <a class="btn btn-success" ng-click="loginPopup(formData,'excel')">Login</a> -->
                                     <a class="btn btn-success" ng-click="loginPopup('','targetexcel')"> <span style="font-size:12px;" >Target Export</span></a>
+                                    <a class="btn btn-danger" ng-click="logout()" ng-if="!showAccess && jAtheletOps!=null">Logout</a>
                                 </div>
                             </div>
                         </div>
@@ -160,7 +161,7 @@
                                         <a class="btn btn-info" target="_blank" ui-sref="viewAthlete({id:item._id})">
                                             <i class="fa fa-eye"></i> View
                                         </a>
-                                        <a class="btn btn-link" ng-click="transferToWebsite(item._id)">
+                                        <a class="btn btn-link" ng-click="transferToWebsite(item._id)" ng-if="showAccess">
                                             <i class="fa  fa-user"></i> Access
                                         </a>
                                     </td>

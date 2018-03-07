@@ -36,6 +36,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'SchoolCtrl'
         })
+        .state('schoolOps', {
+            url: "/schoolOps",
+            templateUrl: "views/template.html",
+            controller: 'SchoolCtrl'
+        })
 
         .state('schoolpayustatus', {
             url: "/schoolpayustatus",
@@ -45,6 +50,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
 
         .state('athlete', {
             url: "/athlete",
+            templateUrl: "views/template.html",
+            controller: 'AthleteCtrl'
+        })
+        .state('athleteOps', {
+            url: "/athleteOps",
             templateUrl: "views/template.html",
             controller: 'AthleteCtrl'
         })
