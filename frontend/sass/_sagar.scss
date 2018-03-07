@@ -263,6 +263,10 @@ $grey: #e1e1e1;
     background-image: url('../img/medal-icon/school-icon.png');
 }
 
+.lh1{
+  line-height: 1;
+}
+
 // AD SPACE
 .highlight-adspace {
     background-color: #ddd;
@@ -299,7 +303,7 @@ $grey: #e1e1e1;
 // ATHLETE PROFILE CARD
 .profileathlete-card {
     position: relative;
-    box-shadow: 0px 0px 5px #e5e5e5;
+    box-shadow: 1px 1px 5px #e5e5e5;
 }
 
 .profileathlete-cardimgholder {
@@ -815,6 +819,19 @@ $grey: #e1e1e1;
 
 .resultsport-topplayer {
     margin-top: 25px;
+    .profileathlete-athletesportslabel{
+      vertical-align: top;
+    }
+    .profileathlete-athletesportslist{
+      margin-bottom: 0;
+      vertical-align: top;
+    }
+    .profile-bluemedals{
+      width: 16px;
+    }
+    .profileathlete-athletesports{
+      margin-bottom: 0;
+    }
 }
 
 .resultsport-viewmedalwinner {

@@ -1,4 +1,4 @@
-  <div class="resultpage">
+<div class="resultpage d-opensans-regular">
   <div class="container">
 
     <!-- RESULT TITLE SECTION -->
@@ -271,7 +271,7 @@
                       </div>
                     </div>
                     <div class="inline-block v-top profileathlete-cardcontent relate">
-                      <div class="athletecard-starflag">
+                      <div class="athletecard-starflag hide">
                         <div class="athletecard-flagholder hide">
                           <img src="img/icon/flag.png" alt="Athlete Flag" class="img-responsive">
                         </div>
@@ -281,7 +281,7 @@
                       </div>
                       <p class="profileathlete-athletename m-clear" title="">{{athlete.fullName}}</p>
                       <p class="profileathlete-athleteschool" title="{{athlete.athletProfile.school.name}}">{{athlete.athleteProfile.school.name}}</p>
-                      <div class="text-uppercase profileathlete-athletesports">
+                      <div class="text-uppercase profileathlete-athletesports d-opensans-semibold">
                         <div class="profileathlete-athletesportslabel">sports</div> :
                         <div class="profileathlete-athletesportslist">
                           <span class="profileathlete-sportitem" ng-repeat="sport in athlete.sportsPlayed track by $index">{{sport}}
@@ -294,34 +294,34 @@
                           <li>
                             <div class="inline-block">
                               <div class="profile-bluemedals">
-                                <img ng-src="{{'gold' | medalicon:'blue'}}" alt="" class="img-responsive">
+                                <img ng-src="{{'gold' | medalicon:'blue'}}" alt="Gold Medal | Sports For All" class="img-responsive">
                               </div>
                             </div>
-                            <div class="inline-block text-center lh1">
-                              <p class="m-clear color-primary">999</p>
-                              <p class="m-clear">Gold</p>
+                            <div class="inline-block text-center ">
+                              <p class="m-clear sport-color-primary lh1">{{athlete.countGold}}</p>
+                              <p class="m-clear lh1">Gold</p>
                             </div>
                           </li>
                           <li>
                             <div class="inline-block">
                               <div class="profile-bluemedals">
-                                <img ng-src="{{'silver' | medalicon:'blue'}}" alt="" class="img-responsive">
+                                <img ng-src="{{'silver' | medalicon:'blue'}}" alt="Silver Medal | Sports For All" class="img-responsive">
                               </div>
                             </div>
-                            <div class="inline-block text-center lh1">
-                              <p class="m-clear color-primary">999</p>
-                              <p class="m-clear">Silver</p>
+                            <div class="inline-block text-center ">
+                              <p class="m-clear sport-color-primary lh1">{{athlete.countSilver}}</p>
+                              <p class="m-clear lh1">Silver</p>
                             </div>
                           </li>
                           <li>
                             <div class="inline-block">
                               <div class="profile-bluemedals">
-                                <img ng-src="{{'bronze' | medalicon:'blue'}}" alt="" class="img-responsive">
+                                <img ng-src="{{'bronze' | medalicon:'blue'}}" alt="Bronze Medal | Sports For All" class="img-responsive">
                               </div>
                             </div>
-                            <div class="inline-block  text-center lh1">
-                              <p class="m-clear color-primary">999</p>
-                              <p class="m-clear">Bronze</p>
+                            <div class="inline-block  text-center ">
+                              <p class="m-clear sport-color-primary lh1">{{athlete.countBronze}}</p>
+                              <p class="m-clear lh1">Bronze</p>
                             </div>
                           </li>
                         </ul>
