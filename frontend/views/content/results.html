@@ -452,18 +452,18 @@
                         <div class="allmedal-medalholder">
                           <img ng-src="{{player.medal|medalicon:'blue'}}" alt="{{player.medal}} Medal" class="img-responsive">
                         </div>
-                        <div class="allmedal-profilepic" ng-if="player.profile">
-                          <img ng-src="{{player.profile|serverimage2:60:60:'cover'}}" alt="{{winner.sfaId}} - {{winner.name}} | {{winner.school}}" class="img-responsive">
+                        <div class="allmedal-profilepic" ng-if="player.profile" title="{{player.sfaId}} - {{player.participantName}} | {{player.school}}">
+                          <img ng-src="{{player.profile|serverimage2:60:60:'cover'}}" alt="{{player.sfaId}} - {{player.participantName}} | {{player.school}}" class="img-responsive">
                         </div>
                         <div class="allmedal-studentdetails ">
                           <!-- <pre>{{player|json}}</pre> -->
                           <div class="pointer" ng-if="player.sfaId" ui-sref="student-profile({id:player.athleteId})">
-                            <p class="allmedal-studentname">{{player.participantName}}</p>
-                            <p class="allmedal-studentschool">{{player.school}}</p>
+                            <p class="allmedal-studentname" title="{{player.participantName}}" >{{player.participantName|truncate:18}}</p>
+                            <p class="allmedal-studentschool" title="{{player.school}}" >{{player.school|truncate:21}}</p>
                           </div>
                           <div class="" ng-if="player.TeamId" ng-click="medalSchoolRedirect(player);" ng-class="{'pointer': player.schoolId}">
                             <p class="allmedal-studentname">{{player.TeamId}}</p>
-                            <p class="allmedal-studentschool">{{player.school}}</p>
+                            <p class="allmedal-studentschool" title="{{player.school}}" >{{player.school|truncate:21}}</p>
                           </div>
                         </div>
                       </div>
@@ -479,17 +479,17 @@
                         <div class="allmedal-medalholder">
                           <img ng-src="{{player.medal|medalicon:'blue'}}" alt="{{player.medal}} Medal" class="img-responsive">
                         </div>
-                        <div class="allmedal-profilepic" ng-if="player.profile">
-                          <img ng-src="{{player.profile|serverimage2:60:60:'cover'}}" alt="{{winner.sfaId}} - {{winner.name}} | {{winner.school}}" class="img-responsive">
+                        <div class="allmedal-profilepic" ng-if="player.profile" title="{{player.sfaId}} - {{player.participantName}} | {{player.school}}">
+                          <img ng-src="{{player.profile|serverimage2:60:60:'cover'}}" alt="{{player.sfaId}} - {{player.participantName}} | {{player.school}}" class="img-responsive">
                         </div>
                         <div class="allmedal-studentdetails ">
                           <div class="pointer" ng-if="player.sfaId" ui-sref="student-profile({id:player.athleteId})">
-                            <p class="allmedal-studentname">{{player.participantName}}</p>
-                            <p class="allmedal-studentschool">{{player.school}}</p>
+                            <p class="allmedal-studentname" title="{{player.participantName}}" >{{player.participantName|truncate:18}}</p>
+                            <p class="allmedal-studentschool" title="{{player.school}}" >{{player.school|truncate:21}}</p>
                           </div>
                           <div class="" ng-if="player.TeamId" ng-click="medalSchoolRedirect(player);" ng-class="{'pointer': player.schoolId}">
                             <p class="allmedal-studentname">{{player.TeamId}}</p>
-                            <p class="allmedal-studentschool">{{player.school}}</p>
+                            <p class="allmedal-studentschool" title="{{player.school}}">{{player.school|truncate:21}}</p>
                           </div>
                         </div>
                       </div>
