@@ -18,11 +18,11 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
     //INTEGRATION
 
     var initilizeMyTemplate = function () {
-        console.log("For Data Initialization", $scope.matchDetails);
+        console.log("For Data Initialization", $scope.resultVar.resultVar, $scope.matchDetails[$scope.resultVar.resultVar]);
         if ($scope.matchDetails[$scope.resultVar.resultVar] == null || $scope.matchDetails[$scope.resultVar.resultVar] == "" || $scope.matchDetails[$scope.resultVar.resultVar] == undefined) {
             ResultSportInitialization.getMyResult($scope.matchDetails.sportsName, $scope.matchDetails, function (result) {
                 console.log("finalResult", result);
-                var resultVar = ResultSportInitialization.getResultVariable($scope.matchDetails.sportsName);
+                var resultVar = ResultSportInitialization.getResultVariable($scope.matchDetails.sportsName, $scope.matchDetails.sportType);
                 $scope.formData = result[resultVar.resultVar];
                 console.log(resultVar, $scope.formData);
             });
@@ -64,7 +64,9 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                 }
                 $scope.matchDetails = data.data;
                 $scope.matchDetails.matchId = $scope.matchData.matchId;
-                $scope.resultVar = resultVar = ResultSportInitialization.getResultVariable($scope.matchDetails.sportsName);
+                console.log("$scope.matchDetails.sportType", $scope.matchDetails.sportType);
+                $scope.resultVar = resultVar = ResultSportInitialization.getResultVariable($scope.matchDetails.sportsName, $scope.matchDetails.sportType);
+                console.log("$scope.resultVar", $scope.resultVar);
                 console.log($scope.matchDetails, '$scope.matchDetails');
                 if ($scope.matchDetails.teams.length == 0) {
                     toastr.error("EmptyData");
@@ -96,9 +98,8 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                         case "Throwball":
                         case 'Water Polo':
                         case 'Karate Team Kumite':
-                          console.log("For Data Initialization");
-                          initilizeMyTemplate();
-                        break;
+                            initilizeMyTemplate();
+                            break;
                     }
                     // INITIALISE RESULTS END
                 }
@@ -155,6 +156,7 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                         case 'Kabaddi':
                         case 'Handball':
                         case 'Water Polo':
+                        case 'Karate Team Kumite':
                             $scope.matchResult[$scope.resultVar.resultVar] = formData;
                             if (!$scope.matchResult[$scope.resultVar.resultVar].status) {
                                 $scope.matchResult[$scope.resultVar.resultVar].status = "IsLive";
@@ -200,7 +202,14 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                                             sport: $stateParams.sport,
                                             id: $scope.matchData.matchId
                                         })
+                                    case 'Karate Team Kumite':
+                                        $state.go('scoreteamkumite', {
+                                            drawFormat: $stateParams.drawFormat,
+                                            sport: $stateParams.sport,
+                                            id: $scope.matchData.matchId
+                                        })
                                 }
+
 
                             } else {
                                 toastr.error('Data save failed. Please try again.', 'Save Error');

@@ -400,6 +400,7 @@ var model = {
                         }
                     });
                 },
+                
                 function (sendObj, callback) {
                     if (data.event && data.age && data.gender) {
                         var final = [];

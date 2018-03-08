@@ -3,7 +3,7 @@
 </div>
 <div class="modal-body" id="modal-body">
   <ul class="list-inline">
-    <li class="setshow-element" ng-repeat="length in setLength track by $index">
+    <li class="setshow-element" ng-repeat="length in sets track by $index">
       <div class="form-group">
         <label for="set{{$index}}" class="pointer"><input type="radio" name="setShowRadio" id="set{{$index}}" ng-value="$index" ng-model="setDelete.value"> Set {{$index + 1}}</label>
       </div>

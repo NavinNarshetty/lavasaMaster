@@ -12,7 +12,7 @@
     <div class="football-scoring">
         <div class="container">
             <!-- TEAM HEADERS -->
-            <div class="row">
+            <div class="row hide">
                 <div class="col-md-6 col-sm-6" ng-repeat="team in match.teams track by $index">
                     <div class="teamcard mainteamcard">
                         <div class="teamcard-header text-uppercase">
@@ -68,16 +68,14 @@
             <div class="teamscoring-section">
               <div class="row">
                 <div class="col-md-6 col-sm-6 kumite-scoreteam" ng-repeat= "team in match.resultKumite.teams track by $index">
-                  <!-- SETS -->
+                  <!-- SETS {{team.teamResults.sets}} -->
                   <div class="" ng-repeat="set in team.teamResults.sets">
                     <label class="teamdatapoint-name text-center">Set {{$index +1}}</label>
                     <div class="scorekumite-set">
                       <div class="scorekumite-setplayer">
                       <div class="">
-                        <select class="form-control" name="" ng-model="set.player">
-                          <option value="" ng-repeat="player in team.players track by $index" ng-if="player.isPlaying == false"> {{player.fullName}}</option>
-                        </select>
-                      </div>
+                        <select class="form-control" name="" ng-model="team.teamResults.sets[$index]" ng-change="isClicked(team.teamResults.sets[$index],team.players)" ng-options="player.fullName disable when (player.isPlaying==true) for player in team.players | formatTeam: team.teamResults.sets track by player.sfaId"></select>
+                    </div>
                     </div>
                       <div class="scorekumite-setpoint">
                       <div class="relate teamscore-point">
@@ -105,7 +103,9 @@
             <!-- SCORING SECTION END -->
 
             <!-- FINAL DETAILS SECTION -->
+           
             <div class="combatscore-uploads text-center">
+             
                 <!-- RESULT PICS -->
                 <div class="combatscore-pics">
                     <div class="row">

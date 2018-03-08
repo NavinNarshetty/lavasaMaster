@@ -1,4 +1,4 @@
-myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationService, ResultSportInitialization, $timeout, $uibModal,$rootScope, $stateParams, $state, $interval, toastr) {
+myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationService, ResultSportInitialization, $timeout, $uibModal, $rootScope, $stateParams, $state, $interval, toastr) {
 
   $scope.matchData = {};
   $scope.drawFormat = $stateParams.drawFormat;
@@ -19,14 +19,14 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
   // CLEAVE FUNCTION OPTIONS
   $scope.options = {
     formation: {
-          blocks: [1, 1, 1, 1],
-          uppercase: true,
-          delimiters: ['-']
-      },
-      score: {
-        blocks: [2],
-        numeral: true
-      }
+      blocks: [1, 1, 1, 1],
+      uppercase: true,
+      delimiters: ['-']
+    },
+    score: {
+      blocks: [2],
+      numeral: true
+    }
   }
   // CLEAVE FUNCTION OPTIONS END
 
@@ -44,7 +44,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
       if (data.value == true) {
         if (data.data.error) {
           $scope.matchError = data.data.error;
-          console.log($scope.matchError, 'error');
+        
           toastr.error('Invalid MatchID. Please check the MatchID entered.', 'Error');
           $state.go('knockout-team', {
             drawFormat: $stateParams.drawFormat,
@@ -53,16 +53,17 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
         }
         $scope.match = data.data;
         $scope.match.matchId = $stateParams.id;
-        $scope.matchData = ResultSportInitialization.getResultVariable($scope.match.sportsName);
+       
+        $scope.matchData = ResultSportInitialization.getResultVariable($scope.match.sportsName, $scope.match.sportType);
         resultVar = $scope.matchData.resultVar;
         $scope.matchData.matchId = $stateParams.id;
         initPage();
-        console.log($scope.match);
-        console.log($scope.matchData);
-        console.log(resultVar);
-        if ($scope.match[resultVar].teams[0] == "" || $scope.match[resultVar].teams[1].coach == "" || $scope.match[resultVar].teams[1] == '') {
-          console.log("aa gya",$scope.match[resultVar].teams[0]);
-          $scope.selectTeam($scope.match);
+    
+        if ($scope.match[resultVar] && $scope.match[resultVar].teams && ($scope.match[resultVar].teams[0] == "" || $scope.match[resultVar].teams[1].coach == "" || $scope.match[resultVar].teams[1] == '')) {
+        
+          if ($scope.match.sportsName != "Karate Team Kumite") {
+            $scope.selectTeam($scope.match);
+          }
         }
       } else {
         console.log("ERROR IN getOneMatch");
@@ -74,12 +75,12 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
 
 
   //Common Modal For All Matches
-  //SELECT TEAM
+  //SELECT TEAM POPUP
   $scope.selectTeam = function (match) {
     $scope.clonedMatch = _.cloneDeep(match);
-    console.log($scope.clonedMatch);
+  
     $scope.result = $scope.clonedMatch[resultVar];
-    console.log($scope.result);
+   
     teamSelectionModal = $uibModal.open({
       animation: true,
       scope: $scope,
@@ -101,9 +102,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
         $scope.playingCount = $scope.playingCount + 1;
       }
     });
-    console.log('isPlaying', player.isPlaying);
-    console.log($scope.playingCount, 'playingCount');
-    console.log("minTeamPlayers", $scope.match.minTeamPlayers);
+   
 
     if (player.isPlaying == false) {
       if ($scope.playingCount < $scope.match.minTeamPlayers) {
@@ -127,7 +126,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
 
 
   $scope.savePlayingTeam = function (result) {
-    console.log(result, 'result');
+  
     var saveCounter = 0;
     _.each(result.teams, function (n, nKey) {
       var countLength = 0;
@@ -154,7 +153,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
       $scope.matchResult[resultVar] = result
       $scope.matchResult.matchId = $scope.matchData.matchId;
 
-      console.log($scope.matchResult, "matchResult");
+    
       $scope.saveMatch($scope.matchResult, '1');
     }
   }
@@ -189,7 +188,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
   // PLAYER SCORE INCREMENT
   $scope.scorePlayerPoints = function (player, pointVar, flag) {
     var isArray = Array.isArray(player.playerPoints[pointVar]);
-    console.log(player, pointVar, flag);
+  
     if (flag == '+') {
       if (isArray) {
         player.playerPoints[pointVar].push({
@@ -221,7 +220,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
 
 
   $scope.updatePlayerDetails = function (playingPlayer, substitutePlayer) {
-    console.log(playingPlayer);
+   
     var playingPlayerIndex = _.findIndex($scope.match[resultVar].teams[$scope.selectedTeamIndex].players, ['player', playingPlayer.player]);
     if (!playingPlayer.isPlaying) {
       if (!_.isEmpty(substitutePlayer)) {
@@ -287,7 +286,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
 
   $scope.modalPenaltyShootout = function (matchPenalty) {
     // var matchPenalty;
-    console.log(matchPenalty);
+   
     $scope.matchPenalty = _.cloneDeep(matchPenalty);
 
     penaltyShootoutModal = $uibModal.open({
@@ -316,6 +315,25 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
       } else if ($stateParams.drawFormat == "League cum Knockout") {
         url = "match/updateLeagueKnockout";
       }
+
+      if ($scope.match.sportsName == "Karate Team Kumite") {
+        // console.log("match",match);
+        // console.log("match.resultKumite.teams",match.resultKumite.teams);
+        _.each(match.resultKumite.teams,function(team){
+          console.log("before",team.teamResults.sets);
+          // team.teamResults.sets = _.map(team.teamResults.sets,function(n){
+          //   return { 
+          //     "playerId":n.player,
+          //     "playerName":n.fullName,
+          //     "points":n.points,
+          //     "sfaId":n.sfaId
+          //   }
+          // })   
+          console.log("after",team.teamResults.sets);       
+        });
+      } 
+
+
 
       NavigationService.saveMatchPp(match, $scope.matchData.resultVar, url, function (data) {
         if (data.value == true) {
@@ -349,7 +367,6 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
       $scope.match[resultVar].status = "IsCompleted";
       flag = '3';
       $interval.cancel(promise);
-      console.log("resultVar", $scope.match[resultVar]);
       save();
       $scope.btnDisable = false;
       completeMatchModal.close();
@@ -357,18 +374,16 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
 
 
     if (flag == '3') {
-      console.log(match);
       _.each($scope.match[resultVar].teams, function (team, tk) {
         noScore = ResultSportInitialization.nullOrEmptyTo0($scope.match.sportsName, team);
-        if ($scope.match[resultVar].teams.length - 1 == tk) {
-          console.log("in tk", flag);
-          console.log("resultVar", $scope.match[resultVar]);
-        }
+        // if ($scope.match[resultVar].teams.length - 1 == tk) {
+         
+        // }
       });
-      if (noScore==false) {
+      if (noScore == false) {
         if (match[resultVar].matchPhoto.length != 0) {
           if (match[resultVar].scoreSheet.length != 0) {
-            if(match.stage!= 'League' || (match.stage == 'League' && match[resultVar].isDraw == false)){
+            if (match.stage != 'League' || (match.stage == 'League' && match[resultVar].isDraw == false)) {
               if (match[resultVar].winner && match[resultVar].winner.player && match[resultVar].winner.player != "") {
                 // match[resultVar].status = "IsCompleted";
                 completeMatchModal = $uibModal.open({
@@ -384,7 +399,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
                 return;
               }
             } else {
-              console.log('stage', match.stage);
+            
               if (match.stage == 'League' && match[resultVar].isDraw == true) {
                 completeMatchModal = $uibModal.open({
                   animation: true,
@@ -433,13 +448,13 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
   $scope.autoSave();
 
   $scope.$on('$destroy', function () {
-    console.log('destroy');
+  
     $interval.cancel(promise);
   })
   // AUTO SAVE FUNCTION END
 
   // MATCH DRAW
-  $scope.matchDraw = function(){
+  $scope.matchDraw = function () {
     if ($scope.match[resultVar].isDraw == false) {
       $scope.match[resultVar].isDraw = true;
     } else {
@@ -450,10 +465,16 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
   // ADD SET
   $scope.setLength = [];
   $scope.addSet = function () {
+    var obj = {};
+    if ($scope.match.sportsName == "Karate Team Kumite") {
+      obj.playerId = '',
+        obj.playerName = '',
+        obj.points = ''
+    } else {
+      obj.points = ''
+    }
     _.each($scope.match[resultVar].teams, function (n) {
-      n.teamResults.sets.push({
-        points: ''
-      });
+      n.teamResults.sets.push(obj);
     })
     _.each($scope.match[resultVar].teams[0].teamResults.sets, function (n, key) {
       $scope.setLength[key] = {
@@ -470,7 +491,11 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
   // ADD SET END
   // REMOVE SET
   $scope.removeSets = function () {
-    var modalSetDelete;
+    $scope.sets = new Array($scope.match[resultVar].teams[0].teamResults.sets.length);
+    $scope.setDelete = {
+      value: 0
+    };
+
     $rootScope.modalInstance = $uibModal.open({
       animation: true,
       scope: $scope,
@@ -480,9 +505,12 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
     })
   }
   $scope.deleteSet = function (index) {
-    console.log(index, 'index che');
-    _.each($scope.match[resultVar].teams, function (n) {
-      if (n.teamResults.sets.length > 1) {
+    var limit = 1;
+    _.each($scope.match[resultVar].teams, function (n,key) {
+      if($scope.match.sportsName=="Karate Team Kumite"){
+        limit=0;
+      }
+      if (n.teamResults.sets.length > limit) {
         n.teamResults.sets.splice(index, 1);
         $scope.setLength = [];
         _.each($scope.match[resultVar].teams[0].teamResults.sets, function (n, key) {
@@ -493,15 +521,35 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
         $scope.setDisplay = {
           value: 0
         };
-        $scope.setDelete = {
-          value: 0
-        };
-        toastr.success('Set deleted successfully');
+        if(key==1){
+          toastr.success('Set '+ (index+1) +' deleted successfully');
+        }
         $rootScope.modalInstance.close('a');
-        console.log($scope.match[resultVar], 'After delete');
+    
       } else {
         toastr.warning('Minimum 1 Set required');
       }
+    });
+  }
+
+
+  $scope.isClicked = function(player,team){
+    if(player){
+      obj = _.find(team,['sfaId',player.sfaId]);
+      if(obj){
+        obj.isPlaying=true;
+        console.log("obj",obj);
+      }
+    }
+    _.each($scope.match.resultKumite.teams,function(team){
+      team.teamResults.sets = _.map(team.teamResults.sets,function(n){
+        return { 
+          "playerId":n.player || n.playerId,
+          "playerName":n.fullName || n.playerName,
+          "points":n.points,
+          "sfaId":n.sfaId
+        }
+      })
     });
   }
   // REMOVE SET END
@@ -520,7 +568,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
   //           drawFormat: $stateParams.drawFormat,
   //           id: $stateParams.sport
   //         });
-  //         console.log('save success');
+  //        
   //       } else {
   //         toastr.error('Data save failed. Please try again.', 'Save Error');
   //       }

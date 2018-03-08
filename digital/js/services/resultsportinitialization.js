@@ -300,7 +300,7 @@ myApp.factory('ResultSportInitialization', function (toastr) {
 
                     case "Karate Team Kumite":
                         returnResult.resultKumite = format;
-                        obj.initializeTeamAndPlayers(sportName, returnResult.resultWaterPolo, match);
+                        obj.initializeTeamAndPlayers(sportName, returnResult.resultKumite, match);
                         return returnResult;
 
                 }
@@ -353,6 +353,7 @@ myApp.factory('ResultSportInitialization', function (toastr) {
 
         //for getting result variable that sport contains
         getResultVariable: function (sportName, sportType) {
+              
             if (sportType == "Racquet Sports") {
                 var arr = _.split(sportName, " ");
                 var foundDoubles = _.indexOf(arr, 'Doubles');
@@ -370,9 +371,11 @@ myApp.factory('ResultSportInitialization', function (toastr) {
 
             } else if (sportType == "Combat Sports") {
                 switch (sportName) {
-                    case "Karate Team Kumite":
+                    case "Karate Team Kumite":  
                         return {
-                            resultVar: "resultsCombat",
+                            resultVar: "resultKumite",
+                            opponentsVar: "opponentsTeam",
+                            html: "score-teamkumite.html",
                             opponentsVar: "opponentsTeam"
                         };
                     default:
