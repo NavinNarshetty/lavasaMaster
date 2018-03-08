@@ -8122,7 +8122,7 @@ var model = {
                 },
                 function (match, callback) {
                     // console.log("match", match);
-                    if (match[0].opponentsTeam.length > 0) {
+                    if (match[0].sport.sportslist.sportsListSubCategory.isTeam == true) {
                         async.concatSeries(match, function (mainData, callback) {
                                 var obj = {};
                                 obj["MATCH ID"] = mainData.matchId;
