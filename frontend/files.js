@@ -3,7 +3,7 @@ module.exports = [
   'bower_components/jquery/dist/jquery.min.js',
   'bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js',
   'bower_components/flexslider/jquery.flexslider-min.js',
-  'bower_components/fancyBox/source/jquery.fancybox.js',
+  'bower_components/fancybox/dist/jquery.fancybox.js',
   'bower_components/smart-app-banner/smart-app-banner.js',
   'bower_components/moment/min/moment.min.js',
   'bower_components/jquery-ui/jquery-ui.js',

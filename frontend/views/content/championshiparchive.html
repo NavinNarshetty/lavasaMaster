@@ -62,7 +62,7 @@
         </p>
       </div>
       <div class="archive-readmore text-right" ng-show="showRead">
-        <span ng-click="readMore()">Read <span ng-if="!readvariable">More</span><span ng-if="readvariable">Less</span> </span>
+        <span class="btn" ng-click="readMore()">Read <span ng-if="!readvariable">More</span><span ng-if="readvariable">Less</span> </span>
       </div>
     </section>
     <!-- CHAMPIONS HEADER && CONTENT END -->
@@ -260,12 +260,12 @@
         <div class="col-md-4 col-sm-6 col-xs-6  masonry-brick" ng-repeat="gallery in archiveGallery track by $index">
           <div class="archive-photovideocard relate">
             <div class="archive-photocard" ng-if="gallery.mediaType=='image'">
-              <a fancybox href="{{gallery.image | serverimage2}}">
+              <a fancybox href="{{gallery.image | serverimage2}}" data-fancybox="group"  data-caption="{{gallery.image}}" rel="arcGal">
                     <img ng-src="{{gallery.image | serverimage2}}" alt="image" class="img-responsive">
                   </a>
             </div>
-            <div class="archive-videocard" ng-if="gallery.mediaType=='video'">
-              <a class="fancybox.iframe" fancybox href="{{gallery.videoLink | linkvideo:gallery.videoSource}}">
+            <div class="archive-videocard" ng-if="gallery.mediaType=='video'" >
+              <a class="fancybox.iframe" fancybox href="{{gallery.videoLink | linkvideo:gallery.videoSource}}" data-fancybox="group" rel="arcGal">
                     <img ng-src="{{gallery.thumbnail}}" alt="video" class="img-responsive">
               </a>
             </div>

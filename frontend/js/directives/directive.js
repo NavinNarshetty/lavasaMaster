@@ -54,13 +54,24 @@ myApp.directive('img', function ($compile, $parse) {
                 }
 
                 target.fancybox({
-                    openEffect: 'fade',
-                    closeEffect: 'fade',
-                    closeBtn: true,
-                    padding: 0,
-                    helpers: {
-                        media: {}
-                    }
+                  padding: 0,
+                  openEffect: 'fade',
+                  closeEffect: 'fade',
+                  closeBtn: true,
+                  arrows : true,
+                  keyboard : true,
+                  infobar : false,
+                  helpers: {
+                    media: {}
+                  },
+                  buttons: [
+                    // 'fullScreen',
+                    'thumbs',
+                    // 'share',
+                    //'download',
+                    'zoom',
+                    'close'
+                  ],
                 });
             }
         };
