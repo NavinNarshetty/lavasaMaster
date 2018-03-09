@@ -100,6 +100,16 @@
                         <!-- finalPoints END -->
                     </div>
                     <!-- VOLLEYBALL FINAL POINTS END -->
+                    <!-- KARATE TEAM KUMITE FINAL POINTS -->
+                    <div class="sportwise-finalpointholder" ng-if = "currentMatch.sportName == 'Karate Team Kumite'">
+                      <!-- finalPoints -->
+                      <div class="relate setpoint-element" ng-if="team.teamResults.finalPoints">
+                        <label class="text-uppercase setpointlabel">Final Point</label>
+                        <input type="number" ng-model="team.teamResults.finalPoints" class="score-number display-inline form-control" placeholder="0" readonly>
+                      </div>
+                      <!-- finalPoints END -->
+                    </div>
+                    <!-- KARATE TEAM KUMITE FINAL POINTS END -->
                 </div>
             </div>
             <div class="row">
@@ -369,6 +379,19 @@
                                 </div>
                             </div>
                             <!-- TEAM POINTS WATERPOLO END -->
+                            <!-- TEAM POINTS KARATE KUMITE -->
+                            <div class="teamdetail-points" ng-if="currentMatch.sportName == 'Karate Team Kumite'">
+                              <div class="team-kumitetitle">
+                                <label class="team-kumitescores-player">Player</label>
+                                <label class="team-kumitescores-point">Points</label>
+                              </div>
+                              <div class="team-kumitescores" ng-repeat="set in team.teamResults.sets track by $index">
+                                <span class="team-kumitescores-player">{{set.sfaId}} - {{set.playerName}}</span>
+                                <span class="team-kumitescores-point">{{set.points}}</span>
+                                <!-- <pre>{{set|json}}</pre> -->
+                              </div>
+                            </div>
+                            <!-- TEAM POINTS KARATE KUMITE END -->
                         </div>
                         <!-- TEAM POINTS END -->
                     </div>
@@ -382,7 +405,7 @@
                             <div uib-accordion-group class="panel-default" is-open="player.open" ng-repeat="player in team.players track by $index" is-disabled="currentMatch.sportName == 'Volleyball'">
                                 <uib-accordion-heading class="clearfix">
                                     <span class="pull-right playerangle-accordion fa " ng-class="{'fa-angle-up': player.open, 'fa-angle-down': !player.open}"
-                                        ng-hide="currentMatch.sportName == 'Volleyball' || currentMatch.sportName == 'Throwball'"></span>
+                                        ng-hide="currentMatch.sportName == 'Volleyball' || currentMatch.sportName == 'Throwball' || currentMatch.sportName == 'Karate Team Kumite'"></span>
                                     <p class="m-clear playerhead-accordion">
                                         <span>{{player.fullName}}</span>
                                     </p>

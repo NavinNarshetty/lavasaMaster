@@ -509,144 +509,6 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
         }, 600);
     }
     $scope.initSwiper();
-    // $scope.$on('$viewContentLoaded', function (event) {
-    //   $scope.initSwiper();
-    // });
-
-
-    // END SWIPER
-
-    // DOUBLES JSON
-    // $scope.knockoutMatch = [{
-    //     players: [{
-    //         player: 'Harshit shah',
-    //         schoolname: 'Dhirubhai Ambani Intertional',
-    //         winner: true
-    //     }, {
-    //         player: 'Harshit shah',
-    //         schoolname: 'Dhirubhai Ambani Intertional',
-    //         winner: true
-    //     }, {
-    //         player: 'Harshit shah',
-    //         schoolname: 'Dhirubhai Ambani Intertional'
-    //     }, {
-    //         player: 'Harshit shah',
-    //         schoolname: 'Dhirubhai Ambani Intertional'
-    //     }],
-    //     date: '27th July, 2017',
-    //     time: '10.30am'
-    // }, {
-    //     players: [{
-    //         player: 'Harshit shah',
-    //         schoolname: 'Dhirubhai Ambani Intertional',
-    //         winner: true
-    //     }, {
-    //         player: 'Harshit shah',
-    //         schoolname: 'Dhirubhai Ambani Intertional',
-    //         winner: true
-    //     }, {
-    //         player: 'Harshit shah',
-    //         schoolname: 'Dhirubhai Ambani Intertional'
-    //     }, {
-    //         player: 'Harshit shah',
-    //         schoolname: 'Dhirubhai Ambani Intertional'
-    //     }],
-    //     matchcenter: true
-    // }, {
-    //     players: [{
-    //         player: 'Harshit shah',
-    //         schoolname: 'Dhirubhai Ambani Intertional',
-    //         winner: true
-    //     }, {
-    //         player: 'Harshit shah',
-    //         schoolname: 'Dhirubhai Ambani Intertional',
-    //         winner: true
-    //     }, {
-    //         player: 'Harshit shah',
-    //         schoolname: 'Dhirubhai Ambani Intertional'
-    //     }, {
-    //         player: 'Harshit shah',
-    //         schoolname: 'Dhirubhai Ambani Intertional'
-    //     }],
-    //     matchcenter: true
-    // }, {
-    //     players: [{
-    //         player: 'Harshit shah',
-    //         schoolname: 'Dhirubhai Ambani Intertional',
-    //         winner: true
-    //     }, {
-    //         player: 'Harshit shah',
-    //         schoolname: 'Dhirubhai Ambani Intertional',
-    //         winner: true
-    //     }],
-    //     date: '27th July, 2017',
-    //     time: '10.30am'
-    // },]
-    // // END DOUBLES JSON
-
-    // $scope.winnersCard = [{
-    //     player: 'Harshit shah',
-    //     schoolname: 'Dhirubhai Ambani Intertional',
-    //     medal: 'gold'
-
-    // }, {
-    //     player: 'Harshit shah',
-    //     schoolname: 'Dhirubhai Ambani Intertional',
-    //     medal: 'silver'
-
-    // }, {
-    //     player: 'Harshit shah',
-    //     schoolname: 'Dhirubhai Ambani Intertional',
-    //     medal: 'bronze'
-
-    // }, {
-    //     player: 'Harshit shah',
-    //     schoolname: 'Dhirubhai Ambani Intertional',
-    //     medal: 'bronze'
-
-    // }]
-
-    // $scope.winnerDoubles = [{
-    //     players: [{
-    //         player: 'Harshit shah',
-    //         schoolname: 'Dhirubhai Ambani Intertional',
-    //         winner: true
-    //     }, {
-    //         player: 'Harshit shah',
-    //         schoolname: 'Dhirubhai Ambani Intertional',
-    //         winner: true
-    //     }],
-    //     medal: 'gold'
-
-    // }, {
-    //     players: [{
-    //         player: 'Harshit shah',
-    //         schoolname: 'Dhirubhai Ambani Intertional',
-    //         winner: true
-    //     }, {
-    //         player: 'Harshit shah',
-    //         schoolname: 'Dhirubhai Ambani Intertional',
-    //         winner: true
-    //     }],
-    //     medal: 'silver'
-
-    // }, {
-    //     players: [{
-    //         player: 'Harshit shah',
-    //         schoolname: 'Dhirubhai Ambani Intertional',
-    //         winner: true
-    //     }, {
-    //         player: 'Harshit shah',
-    //         schoolname: 'Dhirubhai Ambani Intertional',
-    //         winner: true
-    //     }],
-    //     medal: 'bronze'
-
-    // }];
-
-
-
-    // console.log("im in konckout team");
 
     $scope.constraints = {};
     $scope.getSportSpecificRounds = function (roundName) {
@@ -697,8 +559,10 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
                                         value.finalResult = value.resultsCombat;
                                         knockoutService.sortResult($scope.roundsList);
                                     } else if (value && value.resultThrowball && value.resultThrowball.teams) {
-
                                         value.finalResult = value.resultThrowball;
+                                        knockoutService.sortResult($scope.roundsList);
+                                    } else if (value && value.resultKumite && value.resultKumite.teams) {
+                                        value.finalResult = value.resultKumite;
                                         knockoutService.sortResult($scope.roundsList);
                                     } else {
                                         console.log("no Sport Result Found");
@@ -776,6 +640,9 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
             case "Throwball":
                 $scope.currentMatch.result = $scope.currentMatch.resultThrowball;
                 break;
+            case "Karate Team Kumite":
+                $scope.currentMatch.result = $scope.currentMatch.resultKumite;
+              break;
         }
         modal = $uibModal.open({
             animation: true,

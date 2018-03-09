@@ -89,7 +89,6 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
                   if (value && value.resultVolleyball && value.resultVolleyball.teams) {
                     value.finalResult = value.resultVolleyball;
                     knockoutService.sortResult($scope.roundsList);
-
                   } else if (value && value.resultHockey && value.resultHockey.teams) {
                     value.finalResult = value.resultHockey;
                     knockoutService.sortResult($scope.roundsList);
@@ -110,6 +109,9 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
                     knockoutService.sortResult($scope.roundsList);
                   } else if (value && value.resultsCombat && value.resultsCombat.teams) {
                     value.finalResult = value.resultsCombat;
+                    knockoutService.sortResult($scope.roundsList);
+                  } else if (value && value.resultKumite && value.resultKumite.teams) {
+                    value.finalResult = value.resultKumite;
                     knockoutService.sortResult($scope.roundsList);
                   } else {
                     console.log("no Sport Result Found");
@@ -157,6 +159,10 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
       case "Throwball":
         $scope.currentMatch.result = $scope.currentMatch.resultThrowball;
       break;
+      case "Karate Team Kumite":
+        $scope.currentMatch.result = $scope.currentMatch.resultKumite;
+      break;
+
     }
       modal = $uibModal.open({
           animation: true,

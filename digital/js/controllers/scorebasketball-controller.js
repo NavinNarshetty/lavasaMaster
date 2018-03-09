@@ -1,5 +1,6 @@
 myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationService, ResultSportInitialization, $timeout, $uibModal, $rootScope, $stateParams, $state, $interval, toastr) {
 
+  var promise;
   $scope.matchData = {};
   $scope.drawFormat = $stateParams.drawFormat;
   $scope.stateParam = {
@@ -44,7 +45,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
       if (data.value == true) {
         if (data.data.error) {
           $scope.matchError = data.data.error;
-        
+
           toastr.error('Invalid MatchID. Please check the MatchID entered.', 'Error');
           $state.go('knockout-team', {
             drawFormat: $stateParams.drawFormat,
@@ -53,14 +54,14 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
         }
         $scope.match = data.data;
         $scope.match.matchId = $stateParams.id;
-       
+
         $scope.matchData = ResultSportInitialization.getResultVariable($scope.match.sportsName, $scope.match.sportType);
         resultVar = $scope.matchData.resultVar;
         $scope.matchData.matchId = $stateParams.id;
         initPage();
-    
+
         if ($scope.match[resultVar] && $scope.match[resultVar].teams && ($scope.match[resultVar].teams[0] == "" || $scope.match[resultVar].teams[1].coach == "" || $scope.match[resultVar].teams[1] == '')) {
-        
+
           if ($scope.match.sportsName != "Karate Team Kumite") {
             $scope.selectTeam($scope.match);
           }
@@ -78,9 +79,9 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
   //SELECT TEAM POPUP
   $scope.selectTeam = function (match) {
     $scope.clonedMatch = _.cloneDeep(match);
-  
+
     $scope.result = $scope.clonedMatch[resultVar];
-   
+
     teamSelectionModal = $uibModal.open({
       animation: true,
       scope: $scope,
@@ -102,7 +103,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
         $scope.playingCount = $scope.playingCount + 1;
       }
     });
-   
+
 
     if (player.isPlaying == false) {
       if ($scope.playingCount < $scope.match.minTeamPlayers) {
@@ -126,7 +127,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
 
 
   $scope.savePlayingTeam = function (result) {
-  
+
     var saveCounter = 0;
     _.each(result.teams, function (n, nKey) {
       var countLength = 0;
@@ -153,7 +154,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
       $scope.matchResult[resultVar] = result
       $scope.matchResult.matchId = $scope.matchData.matchId;
 
-    
+
       $scope.saveMatch($scope.matchResult, '1');
     }
   }
@@ -188,7 +189,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
   // PLAYER SCORE INCREMENT
   $scope.scorePlayerPoints = function (player, pointVar, flag) {
     var isArray = Array.isArray(player.playerPoints[pointVar]);
-  
+
     if (flag == '+') {
       if (isArray) {
         player.playerPoints[pointVar].push({
@@ -220,7 +221,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
 
 
   $scope.updatePlayerDetails = function (playingPlayer, substitutePlayer) {
-   
+
     var playingPlayerIndex = _.findIndex($scope.match[resultVar].teams[$scope.selectedTeamIndex].players, ['player', playingPlayer.player]);
     if (!playingPlayer.isPlaying) {
       if (!_.isEmpty(substitutePlayer)) {
@@ -286,7 +287,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
 
   $scope.modalPenaltyShootout = function (matchPenalty) {
     // var matchPenalty;
-   
+
     $scope.matchPenalty = _.cloneDeep(matchPenalty);
 
     penaltyShootoutModal = $uibModal.open({
@@ -322,16 +323,16 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
         _.each(match.resultKumite.teams,function(team){
           console.log("before",team.teamResults.sets);
           // team.teamResults.sets = _.map(team.teamResults.sets,function(n){
-          //   return { 
+          //   return {
           //     "playerId":n.player,
           //     "playerName":n.fullName,
           //     "points":n.points,
           //     "sfaId":n.sfaId
           //   }
-          // })   
-          console.log("after",team.teamResults.sets);       
+          // })
+          console.log("after",team.teamResults.sets);
         });
-      } 
+      }
 
 
 
@@ -399,7 +400,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
                 return;
               }
             } else {
-            
+
               if (match.stage == 'League' && match[resultVar].isDraw == true) {
                 completeMatchModal = $uibModal.open({
                   animation: true,
@@ -448,7 +449,6 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
   $scope.autoSave();
 
   $scope.$on('$destroy', function () {
-  
     $interval.cancel(promise);
   })
   // AUTO SAVE FUNCTION END
@@ -482,7 +482,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
       if(minSetLength>$scope.match[resultVar].teams[0].teamResults.sets.length){
         allowAddSet = true;
       }else{
-        allowAddSet = false;        
+        allowAddSet = false;
       }
 
       obj.playerId = '',
@@ -550,7 +550,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
           toastr.success('Set '+ (index+1) +' deleted successfully');
         }
         $rootScope.modalInstance.close('a');
-    
+
       } else {
         toastr.warning('Minimum 1 Set required');
       }
@@ -568,7 +568,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
     }
     _.each($scope.match.resultKumite.teams,function(team){
       team.teamResults.sets = _.map(team.teamResults.sets,function(n){
-        return { 
+        return {
           "playerId":n.player || n.playerId,
           "playerName":n.fullName || n.playerName,
           "points":n.points,
@@ -593,7 +593,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
   //           drawFormat: $stateParams.drawFormat,
   //           id: $stateParams.sport
   //         });
-  //        
+  //
   //       } else {
   //         toastr.error('Data save failed. Please try again.', 'Save Error');
   //       }

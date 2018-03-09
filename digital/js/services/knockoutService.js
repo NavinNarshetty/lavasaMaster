@@ -26,15 +26,12 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
                 value.isWinner = team.isWinner;
                 value.reason = value.finalResult.winner.reason;
                 value.winnerName = team.schoolName;
-
               } else {
                 team.isWinner = false;
               }
             }
-
           });
         }
-
       });
     });
     return roundsList;
@@ -248,7 +245,7 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
 
 
   //===================End of sorting result of league-cum-knockout==================
-  //Qualifying Knockout 
+  //Qualifying Knockout
   this.sortQfKnockout = function (obj) {
     console.log("obj", obj);
     if (obj.resultKnockout) {

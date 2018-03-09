@@ -61,8 +61,13 @@ myApp.directive('img', function ($compile, $parse) {
                   arrows : true,
                   keyboard : true,
                   infobar : false,
+                  protect : true,
                   helpers: {
-                    media: {}
+                    media: {
+                      youtube : {
+                        autoplay : 1
+                      }
+                    }
                   },
                   buttons: [
                     // 'fullScreen',

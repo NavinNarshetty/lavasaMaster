@@ -1189,6 +1189,27 @@ header {
     }
   }
 }
+.team-kumitescores{
+  padding: 6px 12px;
+  border: 1px solid #e1e1e1;
+  margin: 5px 0;
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+}
+.team-kumitetitle{
+  padding: 0px 12px;
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+}
+.team-kumitescores-player{
+  flex: 0.8;
+}
+.team-kumitescores-point{
+  flex: 0.2;
+  text-align: center;
+}
 // TEAM MATCH CENTER END
 
 // COMBAT TEAM

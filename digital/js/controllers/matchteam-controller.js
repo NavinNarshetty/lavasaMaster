@@ -69,7 +69,7 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                 console.log("$scope.resultVar", $scope.resultVar);
                 console.log($scope.matchDetails, '$scope.matchDetails');
                 if ($scope.matchDetails.teams.length == 0) {
-                    toastr.error("EmptyData");
+                    toastr.error("Empty Data");
                     if ($stateParams.drawFormat === 'Knockout') {
                         $state.go('knockout-team', {
                             drawFormat: $stateParams.drawFormat,
@@ -197,13 +197,8 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                                     case 'Kabaddi':
                                     case 'Handball':
                                     case 'Water Polo':
-                                        $state.go('scorebasketball', {
-                                            drawFormat: $stateParams.drawFormat,
-                                            sport: $stateParams.sport,
-                                            id: $scope.matchData.matchId
-                                        })
                                     case 'Karate Team Kumite':
-                                        $state.go('scoreteamkumite', {
+                                        $state.go('scorebasketball', {
                                             drawFormat: $stateParams.drawFormat,
                                             sport: $stateParams.sport,
                                             id: $scope.matchData.matchId
@@ -242,6 +237,7 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
             case 'Kabaddi':
             case 'Handball':
             case 'Water Polo':
+            case "Karate Team Kumite":
                 $scope.matchResult[$scope.resultVar.resultVar] = $scope.formData;
                 $scope.matchResult[$scope.resultVar.resultVar].status = "IsCompleted";
                 break;
@@ -333,7 +329,6 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                 size: 'lg',
                 windowClass: 'match-nomatch'
             })
-
 
         } else {
             toastr.error('No player data to enter.', 'Error');
