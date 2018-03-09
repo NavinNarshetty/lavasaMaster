@@ -114,6 +114,11 @@ var model = {
                     console.log(" case inside");
                     format.sets = []
                     break;
+                case "Epee":
+                case "Sabre":
+                case "Foil":
+                    format.finalPoints = 0
+                    break;
             };
             return format;
         }
@@ -353,6 +358,19 @@ var model = {
                     returnResult.resultsRacquet = format;
                     ResultInitialize.initializePlayers(sportName, returnResult.resultsRacquet, match);
                     return returnResult;
+                case "Epee":
+                    returnResult.resultFencing = format;
+                    ResultInitialize.initializePlayers(sportName, returnResult.resultFencing, match);
+                    return returnResult;
+                case "Sabre":
+                    returnResult.resultFencing = format;
+                    ResultInitialize.initializePlayers(sportName, returnResult.resultFencing, match);
+                    return returnResult;
+                case "Foil":
+                    returnResult.resultFencing = format;
+                    ResultInitialize.initializePlayers(sportName, returnResult.resultFencing, match);
+                    return returnResult;
+
             }
         }
     },
@@ -389,7 +407,17 @@ var model = {
                             resultVar: "resultsCombat",
                             opponentsVar: "opponentsTeam"
                         };
-                    case "Fencing":
+                    case "Epee":
+                        return {
+                            resultVar: "resultFencing",
+                            opponentsVar: "opponentsSingle"
+                        };
+                    case "Sabre":
+                        return {
+                            resultVar: "resultFencing",
+                            opponentsVar: "opponentsSingle"
+                        };
+                    case "Foil":
                         return {
                             resultVar: "resultFencing",
                             opponentsVar: "opponentsSingle"

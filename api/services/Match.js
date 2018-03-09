@@ -7481,7 +7481,7 @@ var model = {
                                                     } else {
                                                         var final = {};
                                                         var result = ResultInitialize.getResultVar(matchData.sportsName, matchData.sportType);
-                                                        // console.log("result", matchData[result.resultVar]);
+                                                        console.log("result", matchData[result.resultVar]);
                                                         if (!(matchData[result.resultVar] == '')) {
                                                             final.result = result;
                                                             final.score = matchData[result.resultVar];
@@ -7494,6 +7494,7 @@ var model = {
                                                             final.resultName = result.resultVar;
                                                             // console.log("final", final);
                                                             ResultInitialize.getMyResult(matchData.sportsName, matchData, function (err, complete) {
+                                                                console.log("complete", complete);
                                                                 matchData[result.resultVar] = complete[result.resultVar];
                                                                 var placeholder = {};
                                                                 placeholder[result.resultVar] = complete[result.resultVar];
@@ -7600,9 +7601,9 @@ var model = {
                                                         }
 
                                                     } else if (result.result.resultVar === "resultsCombat" || result.result.resultVar === "resultVolleyball" || result.result.resultVar == "resultsRacquet" || result.result.resultVar === "resultThrowball") {
-                                                        console.log("in volleyball");
+                                                        // console.log("in volleyball");
                                                         var temp = {};
-                                                        console.log("n", n);
+                                                        // console.log("n", n);
                                                         resultData.teams[0].teamResults.sets[0].points = n["TEAM 1 SET 1"];
                                                         if (n['TEAM 1 SET 2'] != undefined) {
                                                             temp.points = n['TEAM 1 SET 2'];
@@ -7626,7 +7627,7 @@ var model = {
                                                 }
                                                 if (!_.isEmpty(resultData.teams[1])) {
                                                     if (result.result.resultVar == "resultBasketball") {
-                                                        console.log("resultData", resultData.teams[1].teamResults);
+                                                        // console.log("resultData", resultData.teams[1].teamResults);
                                                         resultData.teams[1].teamResults.finalGoalPoints = n['SCORE 2'];
                                                         if (n['TEAM 2 BASKET 1'] != undefined) {
                                                             resultData.teams[1].teamResults.quarterPoints[0].basket = n['TEAM 2 BASKET 1'];
@@ -7659,8 +7660,8 @@ var model = {
                                                         }
                                                         resultData.teams[1].teamResults.finalPoints = n['SCORE 2'];
                                                     } else if (result.result.resultVar === "resultFootball") {
-                                                        resultData.teams[0].teamResults.finalPoints = n['SCORE 2'];
-                                                        resultData.teams[0].teamResults.penalty = n['PENALTY 2'];
+                                                        resultData.teams[1].teamResults.finalPoints = n['SCORE 2'];
+                                                        resultData.teams[1].teamResults.penalty = n['PENALTY 2'];
                                                     } else {
                                                         resultData.teams[1].teamResults.finalPoints = n['SCORE 2'];
                                                     }
@@ -7738,6 +7739,8 @@ var model = {
                                                             temp.doubleFaults = 0;
                                                             resultData.players[0].sets.push(temp);
                                                         }
+                                                    } else if (result.result.resultVar === "resultFencing") {
+                                                        resultData.players[0].finalPoints = n['SCORE 1'];
                                                     } else {
                                                         if (n['PLAYER 1 SET 1'] != undefined) {
                                                             resultData.players[0].sets[0] = n['PLAYER 1 SET 1'];
@@ -7866,6 +7869,8 @@ var model = {
                                                             resultData.players[1].sets[6].point = n['PLAYER 2 SET 7'];
                                                         }
 
+                                                    } else if (result.result.resultVar === "resultFencing") {
+                                                        resultData.players[1].finalPoints = n['SCORE 2'];
                                                     }
                                                 } else {
                                                     if (_.isEmpty(resultData.players[0].sets)) {
@@ -7964,6 +7969,8 @@ var model = {
                                                         var temp = {};
                                                         temp.point = n['PLAYER 2 SET 7'];
                                                         resultData.players[1].sets.push(temp);
+                                                    } else if (result.result.resultVar === "resultFencing") {
+                                                        resultData.players[1].finalPoints = n['SCORE 2'];
                                                     } else {
                                                         var temp = {};
                                                         temp.point = n['SCORE 2'];
@@ -8002,7 +8009,7 @@ var model = {
                                                     resultData.teams[0].walkover = team1.walkover;
                                                     resultData.teams[1].noShow = team2.noShow;
                                                     resultData.teams[1].walkover = team2.walkover;
-                                                    console.log("winner", n["WINNER ID"], "0", resultData.teams[0].team, "1", resultData.teams[1].team);
+                                                    // console.log("winner", n["WINNER ID"], "0", resultData.teams[0].team, "1", resultData.teams[1].team);
                                                     if (n["WINNER ID"] == resultData.teams[0].teamId) {
                                                         // if (n["WINNER ID"] == n["SFAID 1"] || n["WINNER ID"] == n["SFAID 1"]) {
                                                         resultData.winner.player = resultData.teams[0].team;
@@ -8028,7 +8035,7 @@ var model = {
                                                     resultData.players[0].walkover = team1.walkover;
                                                     resultData.players[1].noShow = team2.noShow;
                                                     resultData.players[1].walkover = team2.walkover;
-                                                    console.log("winner", n["WINNER ID"], "0", resultData.players[0].sfaId, "1", resultData.players[1].sfaId);
+                                                    // console.log("winner", n["WINNER ID"], "0", resultData.players[0].sfaId, "1", resultData.players[1].sfaId);
                                                     if (n["WINNER ID"] == resultData.players[0].sfaId) {
                                                         resultData.winner.player = resultData.players[0].player;
                                                         resultData.winner.opponentsSingle = result.opponentsSingle[0];
