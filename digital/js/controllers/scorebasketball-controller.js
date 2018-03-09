@@ -466,21 +466,46 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
   $scope.setLength = [];
   $scope.addSet = function () {
     var obj = {};
+    var allowAddSet;
     if ($scope.match.sportsName == "Karate Team Kumite") {
+      var t1Length = $scope.match[resultVar].teams[0].players.length;
+      var t2Length = $scope.match[resultVar].teams[1].players.length;
+      console.log("t1Length,t2Length",t1Length,t2Length);
+      var minSetLength ;
+
+      if(t1Length<=t2Length){
+        minSetLength =t1Length;
+      }else{
+        minSetLength =t2Length;
+      }
+
+      if(minSetLength>$scope.match[resultVar].teams[0].teamResults.sets.length){
+        allowAddSet = true;
+      }else{
+        allowAddSet = false;        
+      }
+
       obj.playerId = '',
         obj.playerName = '',
         obj.points = ''
     } else {
       obj.points = ''
+      allowAddSet = true;
     }
-    _.each($scope.match[resultVar].teams, function (n) {
-      n.teamResults.sets.push(obj);
-    })
-    _.each($scope.match[resultVar].teams[0].teamResults.sets, function (n, key) {
-      $scope.setLength[key] = {
-        setShow: true
-      }
-    })
+
+    if(allowAddSet){
+      _.each($scope.match[resultVar].teams, function (n) {
+        n.teamResults.sets.push(obj);
+      })
+
+      _.each($scope.match[resultVar].teams[0].teamResults.sets, function (n, key) {
+        $scope.setLength[key] = {
+          setShow: true
+        }
+      })
+    }else{
+      toastr.error("Cant add more sets");
+    }
     $scope.setDisplay = {
       value: 0
     };
