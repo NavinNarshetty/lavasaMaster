@@ -20,7 +20,17 @@ var schema = new Schema({
     nominatedSchoolName: String,
     nominatedContactDetails: String,
     nominatedEmailId: String,
-    isVideoAnalysis: Boolean
+    isVideoAnalysis: Boolean,
+    eventId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Event',
+        index: true
+    },
+    oldId: {
+        type: Schema.Types.ObjectId,
+        ref: 'OldIndividualSport',
+        index: true
+    }
 });
 
 schema.plugin(deepPopulate, {
@@ -2518,54 +2528,54 @@ var model = {
             });
     },
 
-    updateSport:function(data,callback){
-            var matchObj={
-                "gender":data.gender,
-                "ageGroup":data.ageGroup,
-                "sportslist":data.sportslist,
-                "weight":data.weight
-            }
+    updateSport: function (data, callback) {
+        var matchObj = {
+            "gender": data.gender,
+            "ageGroup": data.ageGroup,
+            "sportslist": data.sportslist,
+            "weight": data.weight
+        }
 
-            async.waterfall([
-                function(callback){
-                    Sport.findOne(matchObj).lean().exec(function(err,sport){
-                        if(err){
-                            callback(err,null);
-                        }else if(!_.isEmpty(sport)){
-                            callback(null,sport);
-                        }else{
-                            callback("Sport Not Found For This Match",null)
-                        }
-                    });
-                },
-                function(sport,callback){
-                    var matchObj={
-                        "_id":data.individualSportId,
-                        "sport":data.oldSportId
+        async.waterfall([
+            function (callback) {
+                Sport.findOne(matchObj).lean().exec(function (err, sport) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (!_.isEmpty(sport)) {
+                        callback(null, sport);
+                    } else {
+                        callback("Sport Not Found For This Match", null)
                     }
-                    var updateObj ={
-                        $set:{
-                            "sport.$":sport._id
-                        }
-                    }
-                    IndividualSport.updateOne(matchObj,updateObj).exec(function(err,data){
-                        if(err){
-                            callback(err,null);
-                        }else if(data){
-                            callback(null,data);
-                        }else{
-                            callback("Failed To Update",null);
-                        }
-                    });
+                });
+            },
+            function (sport, callback) {
+                var matchObj = {
+                    "_id": data.individualSportId,
+                    "sport": data.oldSportId
                 }
-            ],function(err,result){
-                if(err){
-                    callback(err,null);
-                }else{
-                    callback(null,result);
-                }   
-            });
-        
+                var updateObj = {
+                    $set: {
+                        "sport.$": sport._id
+                    }
+                }
+                IndividualSport.updateOne(matchObj, updateObj).exec(function (err, data) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (data) {
+                        callback(null, data);
+                    } else {
+                        callback("Failed To Update", null);
+                    }
+                });
+            }
+        ], function (err, result) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, result);
+            }
+        });
+
     }
 };
 module.exports = _.assign(module.exports, exports, model);

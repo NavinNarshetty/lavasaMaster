@@ -142,7 +142,8 @@ var model = {
                     formData.schoolName = n.schoolName;
                     formData.createdBy = n.createdBy;
                     formData.eventId = data.event;
-                    OldTeamSport.saveData(formData, function (err, complete) {
+                    console.log("formData", formData);
+                    TeamSport.saveData(formData, function (err, complete) {
                         if (err || _.isEmpty(complete)) {
                             callback(null, {
                                 error: "Error",
@@ -155,6 +156,7 @@ var model = {
                 },
                 function (complete, callback) {
                     n.teamId = complete._id;
+                    console.log("n in student", n);
                     OldTeamSport.setStudentTeam(n, function (err, complete) {
                         if (err || _.isEmpty(complete)) {
                             var err = "Error found in Rules";
@@ -163,8 +165,30 @@ var model = {
                             callback(null, complete);
                         }
                     });
+                },
+                function (complete, callback) {
+                    var studentTeam = [];
+                    _.each(complete.studentTeam, function (n) {
+                        studentTeam.push(n._id);
+                    });
+                    updateObj = {
+                        $set: {
+                            studentTeam: studentTeam
+                        }
+                    };
+                    TeamSport.update({
+                        _id: complete.studentTeam[0].teamId
+                    }, updateObj).exec(
+                        function (err, teamData) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (_.isEmpty(teamData)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, teamData);
+                            }
+                        });
                 }
-
             ], function (err, complete) {
                 if (err) {
                     callback(err, null);
@@ -185,7 +209,10 @@ var model = {
     },
 
     setStudentTeam: function (data, callback) {
+        var final = {};
+        final.studentTeam = [];
         async.eachSeries(data.studentTeam, function (n, callback) {
+            console.log("data", n);
             async.waterfall([
                 function (callback) {
                     OldStudentTeam.findOne({
@@ -220,40 +247,45 @@ var model = {
                 },
                 function (found, callback) {
                     var formData = {};
-                    formData.teamId = data._id;
+                    formData.teamId = data.teamId;
                     formData.sport = data.sport;
                     formData.studentId = found.studentId;
                     formData.isCaptain = found.isCaptain;
                     formData.isGoalKeeper = found.isGoalKeeper;
-                    OldStudentTeam.saveData(formData, function (err, complete) {
+                    StudentTeam.saveData(formData, function (err, complete) {
                         if (err || _.isEmpty(complete)) {
                             callback(null, {
                                 error: "Error",
                                 success: complete
                             });
                         } else {
-                            callback(null, complete);
+                            final.studentTeam.push(complete);
+                            callback(null, final);
                         }
                     });
+
                 }
             ], function (err, complete) {
                 if (err) {
                     callback(err, null);
                 } else {
+                    // console.log("data2", final);
                     callback(null, complete);
                 }
             });
-        }, function (err) {
+        }, function (err, data2) {
             if (err) {
                 callback(null, {
                     error: "error found",
                     data: data
                 });
             } else {
-                callback(null, data);
+                callback(null, final);
             }
         });
-    }
+    },
+
+
 
 };
 module.exports = _.assign(module.exports, exports, model);
