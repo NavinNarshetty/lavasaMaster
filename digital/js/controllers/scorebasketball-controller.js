@@ -376,9 +376,9 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
     if (flag == '3') {
       _.each($scope.match[resultVar].teams, function (team, tk) {
         noScore = ResultSportInitialization.nullOrEmptyTo0($scope.match.sportsName, team);
-        // if ($scope.match[resultVar].teams.length - 1 == tk) {
-         
-        // }
+        if(noScore){
+          return false;
+        }
       });
       if (noScore == false) {
         if (match[resultVar].matchPhoto.length != 0) {
