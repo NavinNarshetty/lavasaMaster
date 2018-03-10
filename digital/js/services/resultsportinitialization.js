@@ -505,7 +505,7 @@ myApp.factory('ResultSportInitialization', function (toastr) {
                 case "Handball":
 
 
-                    nullScore = (_.isNull(format.teamResults.halfPoints) || format.teamResults.halfPoints==undefined || _isNull(format.teamResults.finalPoints) ||format.teamResults.finalPoints == undefined || _isNull(format.teamResults.shotsOnGoal) ||format.teamResults.shotsOnGoal == undefined || _isNull(format.teamResults.penalty) ||format.teamResults.penalty == undefined || _isNull(format.teamResults.saves) ||format.teamResults.saves == undefined );
+                    nullScore = (_.isNull(format.teamResults.halfPoints) || format.teamResults.halfPoints==undefined || _.isNull(format.teamResults.finalPoints) ||format.teamResults.finalPoints == undefined || _.isNull(format.teamResults.shotsOnGoal) ||format.teamResults.shotsOnGoal == undefined || _.isNull(format.teamResults.penalty) ||format.teamResults.penalty == undefined || _.isNull(format.teamResults.saves) ||format.teamResults.saves == undefined );
 
 
                     // format.teamResults.halfPoints = format.teamResults.halfPoints || 0;
@@ -516,7 +516,7 @@ myApp.factory('ResultSportInitialization', function (toastr) {
                     break;
 
                 case "Hockey":
-                    nullScore = (_.isNull(format.teamResults.halfPoints) || format.teamResults.halfPoints==undefined || _isNull(format.teamResults.finalPoints) ||format.teamResults.finalPoints == undefined || _isNull(format.teamResults.shotsOnGoal) ||format.teamResults.shotsOnGoal == undefined || _isNull(format.teamResults.penalty) ||format.teamResults.penalty == undefined || _isNull(format.teamResults.totalShots) ||format.teamResults.totalShots == undefined || _isNull(format.teamResults.penaltyPoints) ||format.teamResults.penaltyPoints == undefined || _isNull(format.teamResults.penaltyCorners) ||format.teamResults.penaltyCorners == undefined || _isNull(format.teamResults.penaltyStroke) ||format.teamResults.penaltyStroke == undefined || _isNull(format.teamResults.saves) ||format.teamResults.saves == undefined || _isNull(format.teamResults.fouls) ||format.teamResults.fouls == undefined );
+                    nullScore = (_.isNull(format.teamResults.halfPoints) || format.teamResults.halfPoints==undefined || _.isNull(format.teamResults.finalPoints) ||format.teamResults.finalPoints == undefined || _.isNull(format.teamResults.shotsOnGoal) ||format.teamResults.shotsOnGoal == undefined || _.isNull(format.teamResults.penalty) ||format.teamResults.penalty == undefined || _.isNull(format.teamResults.totalShots) ||format.teamResults.totalShots == undefined || _.isNull(format.teamResults.penaltyPoints) ||format.teamResults.penaltyPoints == undefined || _.isNull(format.teamResults.penaltyCorners) ||format.teamResults.penaltyCorners == undefined || _.isNull(format.teamResults.penaltyStroke) ||format.teamResults.penaltyStroke == undefined || _.isNull(format.teamResults.saves) ||format.teamResults.saves == undefined || _.isNull(format.teamResults.fouls) ||format.teamResults.fouls == undefined );
 
                     // format.teamResults.halfPoints = format.teamResults.halfPoints || 0;
                     // format.teamResults.finalPoints = format.teamResults.finalPoints || 0;
@@ -531,7 +531,7 @@ myApp.factory('ResultSportInitialization', function (toastr) {
                     break;
 
                 case "Kabaddi":
-                    nullScore = (_.isNull(format.teamResults.halfPoints) || format.teamResults.halfPoints==undefined || _isNull(format.teamResults.finalPoints) ||format.teamResults.finalPoints == undefined || _isNull(format.teamResults.superTackle) ||format.teamResults.superTackle == undefined || _isNull(format.teamResults.allOut) ||format.teamResults.allOut == undefined);
+                    nullScore = (_.isNull(format.teamResults.halfPoints) || format.teamResults.halfPoints==undefined || _.isNull(format.teamResults.finalPoints) ||format.teamResults.finalPoints == undefined || _.isNull(format.teamResults.superTackle) ||format.teamResults.superTackle == undefined || _.isNull(format.teamResults.allOut) ||format.teamResults.allOut == undefined);
 
 
                     // format.teamResults.halfPoints = format.teamResults.halfPoints || 0;
@@ -543,7 +543,7 @@ myApp.factory('ResultSportInitialization', function (toastr) {
                 case "Water Polo":
 
                     var isThereNullQuarterPoints = (_.findIndex(format.teamResults.quarterPoints, ['points', null]) != -1) || (_.findIndex(format.teamResults.quarterPoints, ['points', undefined]) != -1) ? true : false;
-                    var isThereNulLRemainingScore = (_.isNull(format.teamResults.finalGoalPoints) || format.teamResults.finalGoalPoints==undefined || _isNull(format.teamResults.shotsOnGoal) ||format.teamResults.shotsOnGoal == undefined || _isNull(format.teamResults.totalShots) ||format.teamResults.totalShots == undefined || _isNull(format.teamResults.penalty) ||format.teamResults.penalty == undefined || _isNull(format.teamResults.penaltyPoints) ||format.teamResults.penaltyPoints == undefined || _isNull(format.teamResults.saves) ||format.teamResults.saves == undefined);
+                    var isThereNulLRemainingScore = (_.isNull(format.teamResults.finalGoalPoints) || format.teamResults.finalGoalPoints==undefined || _.isNull(format.teamResults.shotsOnGoal) ||format.teamResults.shotsOnGoal == undefined || _.isNull(format.teamResults.totalShots) ||format.teamResults.totalShots == undefined || _.isNull(format.teamResults.penalty) ||format.teamResults.penalty == undefined || _.isNull(format.teamResults.penaltyPoints) ||format.teamResults.penaltyPoints == undefined || _.isNull(format.teamResults.saves) ||format.teamResults.saves == undefined);
                     nullScore = (isThereNullQuarterPoints || isThereNulLRemainingScore);
 
 
@@ -571,7 +571,7 @@ myApp.factory('ResultSportInitialization', function (toastr) {
 
                 case "Football":
                     // nullScore = "";
-                    nullScore = (_.isNull(format.teamResults.finalPoints) || format.teamResults.finalPoints==undefined || _isNull(format.teamResults.shotsOnGoal) ||format.teamResults.shotsOnGoal == undefined || _isNull(format.teamResults.totalShots) ||format.teamResults.totalShots == undefined || _isNull(format.teamResults.corners) ||format.teamResults.corners == undefined || _isNull(format.teamResults.penalty) ||format.teamResults.penalty == undefined || _isNull(format.teamResults.saves) ||format.teamResults.saves == undefined || _isNull(format.teamResults.fouls) ||format.teamResults.fouls == undefined || _isNull(format.teamResults.offSide) ||format.teamResults.offSide == undefined || _isNull(format.teamResults.cleanSheet) ||format.teamResults.cleanSheet == undefined || _isNull(format.teamResults.noShow) ||format.teamResults.noShow == undefined || _isNull(format.teamResults.walkover) ||format.teamResults.walkover == undefined );
+                    nullScore = (_.isNull(format.teamResults.finalPoints) || format.teamResults.finalPoints==undefined || _.isNull(format.teamResults.shotsOnGoal) ||format.teamResults.shotsOnGoal == undefined || _.isNull(format.teamResults.totalShots) ||format.teamResults.totalShots == undefined || _.isNull(format.teamResults.corners) ||format.teamResults.corners == undefined || _.isNull(format.teamResults.penalty) ||format.teamResults.penalty == undefined || _.isNull(format.teamResults.saves) ||format.teamResults.saves == undefined || _.isNull(format.teamResults.fouls) ||format.teamResults.fouls == undefined || _.isNull(format.teamResults.offSide) ||format.teamResults.offSide == undefined || _.isNull(format.teamResults.cleanSheet) ||format.teamResults.cleanSheet == undefined || _.isNull(format.teamResults.noShow) ||format.teamResults.noShow == undefined || _.isNull(format.teamResults.walkover) ||format.teamResults.walkover == undefined );
                     // nullScore = format.teamResults.finalPoints || '';
                     // nullScore = format.teamResults.shotsOnGoal || '';
                     // nullScore = format.teamResults.totalShots || '';
