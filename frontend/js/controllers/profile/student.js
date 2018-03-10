@@ -222,7 +222,7 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
             // console.log(data);
             if (data.value) {
                 _.each(data.data, function (key) {
-                    window.open($scope.url + key.url, '_blank');
+                    window.open($scope.url +'/'+ key.url, '_blank');
                     //   window.open(adminUrl2 + 'pdf' + data, '_blank');
                 });
             }
