@@ -65,5 +65,57 @@ module.exports = {
         } else {
             console.log("file not found");
         }
+    },
+    tempTransferPing: function (req,res){
+        UploadSkipLimit.find().exec(function (error, data) {
+            if (error || data === undefined) {
+                console.log("error in cron call", error);
+            } else {
+                if (!_.isEmpty(data)) {
+                    if (data[0].isCronRunning === false) {
+                        UploadSkipLimit.update({
+                            _id: data[0]._id
+                        }, {
+                                isCronRunning: true
+                            }, function (err, updatedRecord) {
+                                Upload.gridFsToMongoImageTransfer({}, function (error, gridFsToMongoImageTransferRes) {
+                                    console.log("Cron is already running gridFsToMongoImageTransfer", error, gridFsToMongoImageTransferRes);
+                                });
+                            });
+                    } else {
+                        console.log("Cron is already running");
+                    }
+                } else {
+                    Upload.gridFsToMongoImageTransfer({}, function (error, gridFsToMongoImageTransferRes) {
+                        console.log("Cron is already running gridFsToMongoImageTransfer 2", error, gridFsToMongoImageTransferRes);
+                    });
+                    console.log("No record found");
+                }
+            }          
+        });
+    },
+    gfsToUpload: function (req,res){
+        gfs.files.find().skip(0).limit(25).toArray(function (err, files) {
+                if (err) {
+                    callback(err, null);
+                } else if (_.isEmpty(files)) {
+                    callback(null, []);
+                } else {
+                    _.each(files,function(n){
+                        var fileObj = {};
+                        fileObj.name = n.filename;
+                        fileObj.storageName = n.filename;
+                        Upload.saveData(fileObj,function(err,file){
+                            if (err) {
+                                res.callback(err, null);
+                            } else if (_.isEmpty(file)) {
+                                res.callback(null, []);
+                            } else {
+                                res.callback(null, file);
+                            }
+                        });
+                    });
+                }
+            });
     }
 };
