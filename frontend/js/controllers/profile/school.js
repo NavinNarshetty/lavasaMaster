@@ -452,7 +452,7 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
             // console.log(data);
             if (data.value) {
                 _.each(data.data, function (key) {
-                    window.open($scope.url + '/pdf/' + key.url, '_blank');
+                    window.open($scope.url + key.url, '_blank');
                 });
             }
         });
