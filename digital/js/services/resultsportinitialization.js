@@ -492,7 +492,7 @@ myApp.factory('ResultSportInitialization', function (toastr) {
                 case "Basketball":
 
                     var isThereNullBaskets = (_.findIndex(format.teamResults.quarterPoints, ['basket', null]) != -1) || (_.findIndex(format.teamResults.quarterPoints, ['basket', undefined]) != -1) ? true : false;
-                    var isThereNulLFinalScore = (format.teamResults.finalGoalPoints == null || format.teamResults.finalGoalPoints == undefined || format.teamResults.finalGoalPoints == "") ? true : false;
+                    var isThereNulLFinalScore = (_.isNull(format.teamResults.finalGoalPoints) || format.teamResults.finalGoalPoints==undefined);
                     nullScore = (isThereNullBaskets || isThereNulLFinalScore);
 
                     // nullScore = format.teamResults.quarterPoints[0].basket || true;
@@ -505,7 +505,7 @@ myApp.factory('ResultSportInitialization', function (toastr) {
                 case "Handball":
 
 
-                    nullScore = (format.teamResults.halfPoints >= 0 && format.teamResults.halfPoints >= 0 && format.teamResults.halfPoints >= 0 && format.teamResults.halfPoints >= 0 && format.teamResults.halfPoints >= 0);
+                    nullScore = (_.isNull(format.teamResults.halfPoints) || format.teamResults.halfPoints==undefined || _isNull(format.teamResults.finalPoints) ||format.teamResults.finalPoints == undefined || _isNull(format.teamResults.shotsOnGoal) ||format.teamResults.shotsOnGoal == undefined || _isNull(format.teamResults.penalty) ||format.teamResults.penalty == undefined || _isNull(format.teamResults.saves) ||format.teamResults.saves == undefined );
 
 
                     // format.teamResults.halfPoints = format.teamResults.halfPoints || 0;
@@ -516,7 +516,7 @@ myApp.factory('ResultSportInitialization', function (toastr) {
                     break;
 
                 case "Hockey":
-                    nullScore = !(format.teamResults.halfPoints >= 0 && format.teamResults.finalPoints >= 0 && format.teamResults.shotsOnGoal >= 0 && format.teamResults.totalShots >= 0 && format.teamResults.penalty >= 0 && format.teamResults.penaltyPoints >= 0 && format.teamResults.penaltyCorners >= 0 && format.teamResults.penaltyStroke >= 0 && format.teamResults.saves >= 0 && format.teamResults.fouls >= 0);
+                    nullScore = (_.isNull(format.teamResults.halfPoints) || format.teamResults.halfPoints==undefined || _isNull(format.teamResults.finalPoints) ||format.teamResults.finalPoints == undefined || _isNull(format.teamResults.shotsOnGoal) ||format.teamResults.shotsOnGoal == undefined || _isNull(format.teamResults.penalty) ||format.teamResults.penalty == undefined || _isNull(format.teamResults.totalShots) ||format.teamResults.totalShots == undefined || _isNull(format.teamResults.penaltyPoints) ||format.teamResults.penaltyPoints == undefined || _isNull(format.teamResults.penaltyCorners) ||format.teamResults.penaltyCorners == undefined || _isNull(format.teamResults.penaltyStroke) ||format.teamResults.penaltyStroke == undefined || _isNull(format.teamResults.saves) ||format.teamResults.saves == undefined || _isNull(format.teamResults.fouls) ||format.teamResults.fouls == undefined );
 
                     // format.teamResults.halfPoints = format.teamResults.halfPoints || 0;
                     // format.teamResults.finalPoints = format.teamResults.finalPoints || 0;
@@ -531,7 +531,7 @@ myApp.factory('ResultSportInitialization', function (toastr) {
                     break;
 
                 case "Kabaddi":
-                    nullScore = !(format.teamResults.halfPoints >= 0 && format.teamResults.finalPoints >= 0 && format.teamResults.superTackle >= 0 && format.teamResults.allOut);
+                    nullScore = (_.isNull(format.teamResults.halfPoints) || format.teamResults.halfPoints==undefined || _isNull(format.teamResults.finalPoints) ||format.teamResults.finalPoints == undefined || _isNull(format.teamResults.superTackle) ||format.teamResults.superTackle == undefined || _isNull(format.teamResults.allOut) ||format.teamResults.allOut == undefined);
 
 
                     // format.teamResults.halfPoints = format.teamResults.halfPoints || 0;
@@ -543,7 +543,7 @@ myApp.factory('ResultSportInitialization', function (toastr) {
                 case "Water Polo":
 
                     var isThereNullQuarterPoints = (_.findIndex(format.teamResults.quarterPoints, ['points', null]) != -1) || (_.findIndex(format.teamResults.quarterPoints, ['points', undefined]) != -1) ? true : false;
-                    var isThereNulLRemainingScore = !(format.teamResults.finalGoalPoints >= 0 && format.teamResults.shotsOnGoal >= 0 && format.teamResults.totalShots >= 0 && format.teamResults.penalty >= 0 && format.teamResults.penaltyPoints >= 0 && format.teamResults.penalty >= 0 && format.teamResults.saves >= 0 && format.teamResults.halfPoints >= 0)
+                    var isThereNulLRemainingScore = (_.isNull(format.teamResults.finalGoalPoints) || format.teamResults.finalGoalPoints==undefined || _isNull(format.teamResults.shotsOnGoal) ||format.teamResults.shotsOnGoal == undefined || _isNull(format.teamResults.totalShots) ||format.teamResults.totalShots == undefined || _isNull(format.teamResults.penalty) ||format.teamResults.penalty == undefined || _isNull(format.teamResults.penaltyPoints) ||format.teamResults.penaltyPoints == undefined || _isNull(format.teamResults.saves) ||format.teamResults.saves == undefined);
                     nullScore = (isThereNullQuarterPoints || isThereNulLRemainingScore);
 
 
@@ -571,7 +571,7 @@ myApp.factory('ResultSportInitialization', function (toastr) {
 
                 case "Football":
                     // nullScore = "";
-                    nullScore = (format.teamResults.halfPoints === '' || format.teamResults.shotsOnGoal === '' || format.teamResults.penalty === '' || format.teamResults.corners === '' || format.teamResults.saves === '' || format.teamResults.fouls === '' || format.teamResults.offSide === '') ? true : false;
+                    nullScore = (_.isNull(format.teamResults.finalPoints) || format.teamResults.finalPoints==undefined || _isNull(format.teamResults.shotsOnGoal) ||format.teamResults.shotsOnGoal == undefined || _isNull(format.teamResults.totalShots) ||format.teamResults.totalShots == undefined || _isNull(format.teamResults.corners) ||format.teamResults.corners == undefined || _isNull(format.teamResults.penalty) ||format.teamResults.penalty == undefined || _isNull(format.teamResults.saves) ||format.teamResults.saves == undefined || _isNull(format.teamResults.fouls) ||format.teamResults.fouls == undefined || _isNull(format.teamResults.offSide) ||format.teamResults.offSide == undefined || _isNull(format.teamResults.cleanSheet) ||format.teamResults.cleanSheet == undefined || _isNull(format.teamResults.noShow) ||format.teamResults.noShow == undefined || _isNull(format.teamResults.walkover) ||format.teamResults.walkover == undefined );
                     // nullScore = format.teamResults.finalPoints || '';
                     // nullScore = format.teamResults.shotsOnGoal || '';
                     // nullScore = format.teamResults.totalShots || '';
@@ -588,7 +588,7 @@ myApp.factory('ResultSportInitialization', function (toastr) {
                 case "Throwball":
 
                     var isThereNullSetPoints = (_.findIndex(format.teamResults.sets, ['points', null]) != -1) || (_.findIndex(format.teamResults.sets, ['points', undefined]) != -1) ? true : false;
-                    var isThereNulLFinalPoints = (format.teamResults.finalPoints == null || format.teamResults.finalPoints == undefined || format.teamResults.finalPoints == "") ? true : false;
+                    var isThereNulLFinalPoints = (_.isNull(format.teamResults.finalPoints) || format.teamResults.finalPoints == undefined || format.teamResults.finalPoints == "") ? true : false;
                     nullScore = (isThereNullSetPoints || isThereNulLFinalPoints);
 
                     // _.each(format.teamResults.sets, function (n) {
@@ -598,7 +598,8 @@ myApp.factory('ResultSportInitialization', function (toastr) {
                     break;
                 case "Karate Team Kumite":
                     var isThereNullSetPoints = (_.findIndex(format.teamResults.sets, ['points', null]) != -1) || (_.findIndex(format.teamResults.sets, ['points', undefined]) != -1) ? true : false;
-                    var isThereNulLFinalScore = (format.teamResults.finalPoints == null || format.teamResults.finalPoints == undefined || format.teamResults.finalPoints == "") ? true : false;
+                    var isThereNulLFinalScore = (_.isNull(format.teamResults.finalPoints) || format.teamResults.finalPoints==undefined);
+                  
                     nullScore = (isThereNullSetPoints || isThereNulLFinalScore);
                     break;
             };
