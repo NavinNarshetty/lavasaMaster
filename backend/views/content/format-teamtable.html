@@ -1,8 +1,13 @@
 <div class="heading-sec">
   <div class="row">
-    <div class="col-md-4 column">
-      <div class="heading-profile">
-        <h5 class="text-uppercase">{{form.sportslist.name }} TABLE</h5>
+    <div class="col-md-12 column">
+      <div class="pull-right">
+        <span>{{tableSportName}}</span>
+        <span>{{tableAge}}</span>
+        <span>{{tableGender}}</span>
+      </div>
+      <div>
+        <h5 class="text-uppercase m-clear">{{drawType}} TABLE</h5>
       </div>
     </div>
   </div>
@@ -287,17 +292,10 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <!--<tr ng-repeat="item in items">-->
-                    <!-- <tr ng-repeat="item in items"> -->
                     <tr ng-repeat="item in items|filter:item.matchId">
-                      <!--<tr>-->
                       <td>{{($index + 1)+((form.page-1)*maxRow)}}</td>
-                      <!--<td>{{($index + 1)}}</td>-->
                       <td>{{item.matchId}}</td>
                       <td>{{item.round}}
-                        <!-- <pre>{{item.sport.sportslist.sportsListSubCategory.sportsListCategory.name}}</pre>
-                                            <pre>{{item.matchId}}</pre>
-                                            <pre>{{item.sport.sportslist.sportsListSubCategory.isTeam}}</pre> -->
                       </td>
                       <td title="{{item.opponentsTeam[0].schoolName}}">
                         {{item.opponentsTeam[0].teamId}}-{{item.opponentsTeam[0].schoolName | truncate:10;}}
@@ -319,11 +317,6 @@
                                                 <i class="fa fa-trash"></i> Delete
                                               </a>
                       </td>
-                      <!--<td ng-repeat="but in json.json.action">
-                                                                  <a class="btn" ng-class="but.buttonClass" ng-click="json.eventAction(but,item) ">
-                                                                      <i class="fa" ng-class="but.icon"></i>{{but.name}}
-                                                                  </a>
-                                                              </td>-->
                     </tr>
                   </tbody>
                 </table>

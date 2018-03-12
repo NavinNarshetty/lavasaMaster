@@ -6,6 +6,7 @@ myApp.controller('FormatTableTeamCtrl', function ($scope, TemplateService, Navig
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
   console.log($.jStorage.get("detail"), 'JStorage');
+  $scope.drawType = $stateParams.type;
   $scope.formData = {};
   $scope.formData.page = 1;
   $scope.formData.type = '';
@@ -45,6 +46,9 @@ myApp.controller('FormatTableTeamCtrl', function ($scope, TemplateService, Navig
     // $scope.formData = formValue;
     $scope.form = $.jStorage.get("detail");
     $scope.form.page = $scope.form.page++;
+    $scope.tableSportName = $scope.form.sportslist.name;
+    $scope.tableAge = $scope.form.ageGroup.name;
+    $scope.tableGender = $scope.form.gender;
     console.log("form......", $scope.form);
     NavigationService.apiCall($scope.url, $scope.form, function (data) {
       console.log("data.value heat", data);
