@@ -287,7 +287,6 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
 
   $scope.modalPenaltyShootout = function (matchPenalty) {
     // var matchPenalty;
-
     $scope.matchPenalty = _.cloneDeep(matchPenalty);
 
     penaltyShootoutModal = $uibModal.open({
@@ -308,6 +307,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
   //3-complete and save
   //
   $scope.saveMatch = function (match, flag) {
+    console.log("match",match);
     var url = "";
 
     function save() {
@@ -317,30 +317,12 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
         url = "match/updateLeagueKnockout";
       }
 
-      if ($scope.match.sportsName == "Karate Team Kumite") {
-        // console.log("match",match);
-        // console.log("match.resultKumite.teams",match.resultKumite.teams);
-        _.each(match.resultKumite.teams,function(team){
-          console.log("before",team.teamResults.sets);
-          // team.teamResults.sets = _.map(team.teamResults.sets,function(n){
-          //   return {
-          //     "playerId":n.player,
-          //     "playerName":n.fullName,
-          //     "points":n.points,
-          //     "sfaId":n.sfaId
-          //   }
-          // })
-          console.log("after",team.teamResults.sets);
-        });
-      }
-
-
-
       NavigationService.saveMatchPp(match, $scope.matchData.resultVar, url, function (data) {
         if (data.value == true) {
           //for saving players selected
           if (flag == '1') {
             $scope.getOneMatch();
+            $('.modal-backdrop').remove();
             teamSelectionModal.close();
           } else if (flag == '2') {
             //Do Nothing
@@ -375,7 +357,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
 
 
     if (flag == '3') {
-      _.each($scope.match[resultVar].teams, function (team, tk) {
+      _.each(match[resultVar].teams, function (team, tk) {
         noScore = ResultSportInitialization.nullOrEmptyTo0($scope.match.sportsName, team);
         if(noScore){
           return false;
@@ -432,9 +414,21 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
   };
 
   $scope.savePenaltyScore = function (result) {
-    $scope.match[resultVar] = result;
-    $scope.saveMatch($scope.match, '2');
-    penaltyShootoutModal.close();
+    console.log("result",result);
+   _.each(result.teams,function(n,k){
+    if(n.teamResults.penaltyPoints || n.teamResults.penaltyPoints===0){
+      console.log(k);
+      if(k==1){
+        $scope.match[resultVar] = result;
+        $scope.saveMatch($scope.match, '2');
+        // $('body').removeClass('modal-open');
+        penaltyShootoutModal.close();     
+      }
+    }else{
+      toastr.error("Please Fill Up final Penalty Points");
+      return false;
+    }
+   });
   }
 
 
@@ -489,13 +483,13 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
         obj.playerName = '',
         obj.points = ''
     } else {
-      obj.points = ''
+      obj.points = null
       allowAddSet = true;
     }
 
     if(allowAddSet){
       _.each($scope.match[resultVar].teams, function (n) {
-        n.teamResults.sets.push(obj);
+        n.teamResults.sets.push(_.cloneDeep(obj));
       })
 
       _.each($scope.match[resultVar].teams[0].teamResults.sets, function (n, key) {
@@ -579,29 +573,4 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
   }
   // REMOVE SET END
   // MATCH DRAW END
-
-  // $scope.matchComplete = function () {
-  //   if ($scope.match.resultVolleyball) {
-  //     $scope.match.resultVolleyball.status = "IsCompleted";
-  //     $scope.matchResult = {
-  //       resultVolleyball: $scope.match.resultVolleyball,
-  //       matchId: $scope.matchData.matchId
-  //     }
-  //     NavigationService.saveMatch($scope.matchResult, function (data) {
-  //       if (data.value == true) {
-  //         $state.go('knockout-team', {
-  //           drawFormat: $stateParams.drawFormat,
-  //           id: $stateParams.sport
-  //         });
-  //
-  //       } else {
-  //         toastr.error('Data save failed. Please try again.', 'Save Error');
-  //       }
-  //     });
-  //     console.log($scope.matchResult, 'result#');
-  //   } else {
-  //     toastr.error('No data to save. Please check for valid MatchID.', 'Save Error');
-  //   }
-  // }
-
 });

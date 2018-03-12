@@ -156,9 +156,9 @@
                             <input type="number" ng-model="team.teamResults.finalGoalPoints" id="player1score" min="0" placeholder="0" max="99" class="score-number display-inline form-control"
                                 limit-to-max>
                         </div>
-                        <div class="relate setpoint-element" ng-if="match.resultWaterPolo.teams[0] && match.resultWaterPolo.teams[0].teamResults && match.resultWaterPolo.teams[0].teamResults.penaltyPoints && match.resultWaterPolo.teams[1] && match.resultWaterPolo.teams[1].teamResults && match.resultWaterPolo.teams[1].teamResults.penaltyPoints && match.resultWaterPolo.teams[0].teamResults.penaltyPoints !='' && match.resultWaterPolo.teams[1].teamResults.penaltyPoints !=''">
+                        <div class="relate setpoint-element"  ng-if="match.resultWaterPolo.teams[0] && match.resultWaterPolo.teams[0].teamResults && (match.resultWaterPolo.teams[0].teamResults.penaltyPoints || match.resultWaterPolo.teams[0].teamResults.penaltyPoints === 0) && match.resultWaterPolo.teams[1] && match.resultWaterPolo.teams[1].teamResults && (match.resultWaterPolo.teams[1].teamResults.penaltyPoints || match.resultWaterPolo.teams[1].teamResults.penaltyPoints===0)">
                             <label for="player1score" class="text-uppercase">Penalty Points </label>
-                            <input type="number" ng-model="team.teamResults.penaltyPoints" id="player1score" min="0" placeholder="0" max="99" class="score-number display-inline form-control"
+                            <input type="number" readonly ng-model="team.teamResults.penaltyPoints" id="player1score" min="0" placeholder="0" max="99" class="score-number display-inline form-control"
                                 limit-to-max>
                         </div>
                     </div>
