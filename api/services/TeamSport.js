@@ -45,6 +45,11 @@ var schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Event',
         index: true
+    },
+    oldId: {
+        type: Schema.Types.ObjectId,
+        ref: 'OldTeamSport',
+        index: true
     }
 });
 

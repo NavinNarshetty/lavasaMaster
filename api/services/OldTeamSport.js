@@ -142,6 +142,7 @@ var model = {
                     formData.schoolName = n.schoolName;
                     formData.createdBy = n.createdBy;
                     formData.eventId = data.event;
+                    formData.oldId = n._id;
                     console.log("formData", formData);
                     TeamSport.saveData(formData, function (err, complete) {
                         if (err || _.isEmpty(complete)) {
