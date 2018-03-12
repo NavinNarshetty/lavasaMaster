@@ -62,6 +62,11 @@ var schema = new Schema({
     heatNo: String,
     resultType: String,
     drawFormat: String,
+    oldId: {
+        type: Schema.Types.ObjectId,
+        ref: 'OldMatch',
+        index: true
+    },
 });
 
 schema.plugin(deepPopulate, {

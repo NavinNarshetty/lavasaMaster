@@ -93,112 +93,128 @@ var model = {
         });
     },
 
+    getSportId: function (data, callback) {
+        var sportData = {};
+        async.waterfall([
+            function (callback) {
+                var deepSearch = "sportslist.sportsListSubCategory.sportsListCategory sportslist.sportsListSubCategory.rules ageGroup weight sportslist.drawFormat";
+                OldSport.findOne({
+                    _id: data
+                }).lean().deepPopulate(deepSearch).exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(found)) {
+                            callback(null, []);
+                        } else {
+                            sportData.gender = found.gender;
+                            callback(null, found);
+                        }
+                    }
+                });
+            },
+            function (found, callback) {
+                SportsList.findOne({
+                    name: found.sportslist.name
+                }).lean().exec(function (err, sportslistData) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        sportData.sportslist = sportslistData._id;
+                        callback(null, found);
+                    }
+                });
+            },
+            function (found, callback) {
+                AgeGroup.findOne({
+                    name: found.ageGroup.name
+                }).lean().exec(function (err, ageData) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        sportData.ageGroup = ageData._id;
+                        callback(null, found);
+                    }
+                });
+            },
+            function (found, callback) {
+                if (found.weight) {
+                    Weight.findOne({
+                        name: found.weight.name
+                    }).lean().exec(function (err, ageData) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            sportData.weight = ageData._id;
+                            callback(null, found);
+                        }
+                    });
+                } else {
+                    callback(null, found);
+                }
+            },
+            function (found, callback) {
+                if (sportData.weight) {
+                    var deepSearch = "sportslist.sportsListSubCategory";
+                    Sport.findOne({
+                        sportslist: sportData.sportslist,
+                        ageGroup: sportData.ageGroup,
+                        gender: sportData.gender,
+                        weight: sportData.weight
+                    }).lean().deepPopulate(deepSearch).exec(function (err, sport) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            sportData.sport = sport._id;
+                            sportData.sportsListSubCategory = sport.sportslist.sportsListSubCategory._id;
+                            callback(null, sportData);
+                        }
+                    });
+                } else {
+                    var deepSearch = "sportslist.sportsListSubCategory";
+                    Sport.findOne({
+                        sportslist: sportData.sportslist,
+                        ageGroup: sportData.ageGroup,
+                        gender: sportData.gender,
+                    }).lean().deepPopulate(deepSearch).exec(function (err, sport) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            sportData.sport = sport._id;
+                            sportData.sportsListSubCategory = sport.sportslist.sportsListSubCategory._id;
+                            callback(null, sportData);
+                        }
+                    });
+                }
+            }
+        ], function (err, complete) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, complete);
+            }
+        });
+    },
+
     setsportId: function (data, callback) {
         var sportData = {};
         sportData.sport = [];
         var length = data.length;
         async.eachSeries(data, function (n, callback) {
-            async.waterfall([
-                function (callback) {
-                    var deepSearch = "sportslist.sportsListSubCategory.sportsListCategory sportslist.sportsListSubCategory.rules ageGroup weight sportslist.drawFormat";
-                    OldSport.findOne({
-                        _id: n
-                    }).lean().deepPopulate(deepSearch).exec(function (err, found) {
-                        if (err) {
-                            callback(err, null);
-                        } else {
-                            if (_.isEmpty(found)) {
-                                callback(null, []);
-                            } else {
-                                sportData.gender = found.gender;
-                                callback(null, found);
-                            }
-                        }
-                    });
-                },
-                function (found, callback) {
-                    SportsList.findOne({
-                        name: found.sportslist.name
-                    }).lean().exec(function (err, sportslistData) {
-                        if (err) {
-                            callback(err, null);
-                        } else {
-                            sportData.sportslist = sportslistData._id;
-                            callback(null, found);
-                        }
-                    });
-                },
-                function (found, callback) {
-                    AgeGroup.findOne({
-                        name: found.ageGroup.name
-                    }).lean().exec(function (err, ageData) {
-                        if (err) {
-                            callback(err, null);
-                        } else {
-                            sportData.ageGroup = ageData._id;
-                            callback(null, found);
-                        }
-                    });
-                },
-                function (found, callback) {
-                    if (found.weight) {
-                        Weight.findOne({
-                            name: found.weight.name
-                        }).lean().exec(function (err, ageData) {
-                            if (err) {
-                                callback(err, null);
-                            } else {
-                                sportData.weight = ageData._id;
-                                callback(null, found);
-                            }
-                        });
-                    } else {
-                        callback(null, found);
-                    }
-                },
-                function (found, callback) {
-                    if (sportData.weight) {
-                        var deepSearch = "sportslist.sportsListSubCategory";
-                        Sport.findOne({
-                            sportslist: sportData.sportslist,
-                            ageGroup: sportData.ageGroup,
-                            gender: sportData.gender,
-                            weight: sportData.weight
-                        }).lean().deepPopulate(deepSearch).exec(function (err, sport) {
-                            if (err) {
-                                callback(err, null);
-                            } else {
-                                sportData.sport.push(sport._id);
-                                sportData.sportsListSubCategory = sport.sportslist.sportsListSubCategory._id;
-                                callback(null, sportData);
-                            }
-                        });
-                    } else {
-                        var deepSearch = "sportslist.sportsListSubCategory";
-                        Sport.findOne({
-                            sportslist: sportData.sportslist,
-                            ageGroup: sportData.ageGroup,
-                            gender: sportData.gender,
-                        }).lean().deepPopulate(deepSearch).exec(function (err, sport) {
-                            if (err) {
-                                callback(err, null);
-                            } else {
-                                sportData.sport.push(sport._id);
-                                sportData.sportsListSubCategory = sport.sportslist.sportsListSubCategory._id;
-                                callback(null, sportData);
-                            }
-                        });
-                    }
-                }
-            ], function (err, complete) {
-                if (err) {
+            OldIndividualSport.getSportId(n, function (err, complete) {
+                if (err || _.isEmpty(complete)) {
+                    var err = "Error found in Rules";
                     callback(err, null);
                 } else {
-                    callback(null, complete);
+                    sportData.ageGroup = complete.ageGroup;
+                    sportData.gender = complete.gender;
+                    sportData.weight = complete.weight;
+                    sportData.sportslist = complete.sportslist;
+                    sportData.sport.push(complete.sport);
+                    sportData.sportsListSubCategory = complete.sportsListSubCategory;
+                    callback(null, sportData);
                 }
             });
-
-
         }, function (err) {
             if (err) {
                 callback(null, {
