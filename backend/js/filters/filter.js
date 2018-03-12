@@ -162,4 +162,17 @@ myApp.filter('truncate', function () {
             }
         }
     }
-})
+});
+myApp.filter('formatTeam', function () {
+    return function (team, sets) {
+        // console.log("team,set", team, sets);
+        _.each(team, function (n) {
+            var obj = _.find(sets, ['sfaId', n.sfaId])
+            if (!obj) {
+                // console.log(n.fullName);
+                n.isPlaying = false;
+            }
+        });
+        return team;
+    };
+});

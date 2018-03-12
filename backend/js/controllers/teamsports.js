@@ -430,7 +430,7 @@ myApp.controller('DetailSportTeamCtrl', function ($scope, TemplateService, Navig
             break;
           case "Kho Kho":
           case "Karate Team Kumite":
-            $scope.formData.result = $scope.formData.resultsCombat;
+            $scope.formData.result = $scope.formData.resultKumite;
             break;
         }
         // TO MAKE A COMMON RESULT OBJECT FOR ALL SPORTS END
@@ -449,6 +449,33 @@ myApp.controller('DetailSportTeamCtrl', function ($scope, TemplateService, Navig
 
   // GET ONE BACKEND
 
+
+  // TEAM KUMITE
+
+  $scope.isClicked = function (player, team) {
+    console.log(player, team, "check for team kumite");
+    if (player) {
+      obj = _.find(team, ['sfaId', player.sfaId]);
+      if (obj) {
+        obj.isPlaying = true;
+        console.log("obj", obj);
+      }
+    }
+    // console.log($scope.formData.resultKumite.teams, "for kumite");
+    _.each($scope.formData.resultKumite.teams, function (team) {
+      // console.log(team, "inside each");
+      team.teamResults.sets = _.map(team.teamResults.sets, function (n) {
+        // console.log(n, "check inside map");
+        return {
+          "playerId": n.player || n.playerId,
+          "playerName": n.fullName || n.playerName,
+          "points": n.points,
+          "sfaId": n.sfaId
+        }
+      })
+    });
+  }
+  // TEAM KUMITE
 
   // SAVE
   $scope.saveDataMatch = function () {
@@ -502,6 +529,12 @@ myApp.controller('DetailSportTeamCtrl', function ($scope, TemplateService, Navig
       });
     } else if (type === 'team') {
       $scope.formData[result].teams[data].teamResults.sets.push({
+        points: ''
+      });
+    } else if (type = 'kumite') {
+      $scope.formData[result].teams[data].teamResults.sets.push({
+        playerId: '',
+        playerName: '',
         points: ''
       });
     }
