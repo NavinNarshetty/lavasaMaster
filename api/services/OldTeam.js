@@ -19,7 +19,7 @@ var model = {
                 function (callback) {
                     OldTeam.find({
                         year: data.year,
-                        _id: data.team
+                        // _id: data.team
                     }).lean().exec(function (err, found) {
                         if (err) {
                             callback(err, null);
