@@ -4558,6 +4558,9 @@ var model = {
                                 sNo++;
                             }
                         }
+                        if(mainData.resultKumite.teams[0].teamResults.sets.length == 0){
+                            obj["SCORE 1"] = '';
+                        }
                         // obj["DATA POINTS 1"] = mainData.resultKumite.teams[0].sets;
                     } else if (mainData.resultsRacquet) {
                         if (mainData.opponentsTeam.length == 1 && mainData.resultsRacquet.winner.player === mainData.opponentsTeam[0]._id.toString()) {
