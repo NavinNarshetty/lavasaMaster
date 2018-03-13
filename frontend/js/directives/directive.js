@@ -46,13 +46,24 @@ myApp.directive('img', function ($compile, $parse) {
             replace: false,
             link: function (scope, element, attr) {
                 var $element = $(element);
-                var target;
+                var target, shareUrl;
                 if (attr.rel) {
                     target = $("[rel='" + attr.rel + "']");
                 } else {
                     target = element;
                 }
-
+                if (attr.share) {
+                  console.log("in share");
+                    shareUrl = attr.share;
+                } else {
+                  shareUrl = '';
+                }
+                // CUSTOM TAGGING
+                $.fancybox.defaults.btnTpl.tag = '<button data-fancybox-fb class="fancybox-button fancybox-button--fb" title="Tag"> <span class="fa fa-tags"></span></button>';
+                // CUSTOM TAGGING END
+                // CUSTOM SHARING
+                $.fancybox.defaults.btnTpl.sharing = '<button data-fancybox-fb class="fancybox-button fancybox-btnshare" title="Share"> <span class="fa fa-share-alt"></span><span class="fancy-sharelist"> <ul class="list-unstyled"> <li> <a target="_blank" title="Share on Facebook | Sports For All" href="https://www.facebook.com/sharer/sharer.php?u='+ shareUrl +'&title=Sports For All" > <div class="photovideo-socialbutton" > <span class="fa fa-facebook"></span> </div> </a> </li> <li> <a target="_blank" title="Share on Twitter | Sports For All" href="https://twitter.com/intent/tweet?url='+ shareUrl +'&title=Sports For All"> <div class="photovideo-socialbutton" > <span class="fa fa-twitter"></span> </div> </a> </li> <li> <a target="_blank" title="Share on Google+ | Sports for All" href="https://plus.google.com/share?url=='+ shareUrl +'&title=Sports For All"> <div class="photovideo-socialbutton"> <span class="fa fa-google-plus"></span> </div> </a> </li> </ul></span> </button>';
+                // CUSTOM SHARING END
                 target.fancybox({
                   padding: 0,
                   openEffect: 'fade',
@@ -71,12 +82,17 @@ myApp.directive('img', function ($compile, $parse) {
                   },
                   buttons: [
                     // 'fullScreen',
-                    'thumbs',
-                    // 'share',
                     //'download',
+                    // 'thumbs',
                     'zoom',
-                    'close'
+                    // 'tag',
+                    // 'share', //default share
+                    // 'sharing', //custom share
+                    'close',
                   ],
+                  thumbs: {
+                    axis: 'x'
+                  }
                 });
             }
         };
