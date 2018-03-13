@@ -21,12 +21,17 @@
                   <p class="m-clear">Sr. No</p>
                 </div>
               </th>
-              <th>
+              <th ng-if="match.isTeam == true">
+                <div>
+                  <p class="m-clear">Team ID</p>
+                </div>
+              </th>
+              <th ng-if="match.isTeam == false">
                 <div>
                   <p class="m-clear">Sfa ID</p>
                 </div>
               </th>
-              <th>
+              <th ng-if="match.isTeam == false">
                 <div>
                   <p class="m-clear">name</p>
                 </div>
@@ -34,13 +39,28 @@
               <th>
                 <div>
                   <p class="m-clear">
-                    school
+                    school Name
                   </p>
                 </div>
               </th>
               <th>
                 <div class="">
                   <p class="m-clear">Present</p>
+                </div>
+              </th>
+              <th>
+                <div class="">
+                  <p class="m-clear">Lane No.</p>
+                </div>
+              </th>
+              <th>
+                <div class="">
+                  <p class="m-clear">Time</p>
+                </div>
+              </th>
+              <th>
+                <div class="">
+                  <p class="m-clear">Result</p>
                 </div>
               </th>
             </tr>
@@ -50,10 +70,13 @@
               <td>
                 <div class="text-capitalize text-left">{{$index + 1}} </div>
               </td>
-              <td>
+              <td ng-if="match.isTeam == true">
+                <div class="text-capitalize text-left">{{player.teamId}} </div>
+              </td>
+              <td ng-if="match.isTeam == false">
                 <div class="text-capitalize text-left">{{player.sfaId}} </div>
               </td>
-              <td>
+              <td ng-if="match.isTeam == false">
                 <div class="text-capitalize text-left" title="{{match.opponentsSingle[0].athleteId.firstName}} {{match.opponentsSingle[0].athleteId.surname}}">{{player.firstName}} {{player.surname}} </div>
               </td>
               <td>
@@ -64,6 +87,21 @@
               <td >
                 <div class="form-group text-center">
                   <input type="checkbox" ng-model="player.attendance" class="form-control">
+                </div>
+              </td>
+              <td>
+                <div class="form-group">
+                  <input type="text" class="form-control" ng-model="match.resultHeat.players[$index].laneNo" placeholder="Enter Lane No" min="0">
+                </div>
+              </td>
+              <td>
+                <div class="form-group">
+                  <input type="text" class="form-control" ng-model="match.resultHeat.players[$index].time" placeholder="Enter Time" min="0">
+                </div>
+              </td>
+              <td>
+                <div class="form-group">
+                  <input type="text" class="form-control" ng-model="match.resultHeat.players[$index].result" placeholder="Enter Result">
                 </div>
               </td>
             </tr>

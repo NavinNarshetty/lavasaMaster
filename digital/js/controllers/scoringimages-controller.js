@@ -46,24 +46,66 @@ myApp.controller('ScoringImagestCtrl', function($scope, TemplateService, Navigat
                 $scope.match = data.data;
                 console.log($scope.match, 'getMatch');
                 $scope.match.matchId = $scope.matchData.matchId;
+                // INITIALISE RESULTIMAGE
               if (!$scope.match.resultImages) {
                   $scope.match.resultImages = {
                     "matchPhoto": [],
                     "scoreSheet": [],
                     "players" : []
                   }
-                  _.each($scope.match.players, function(n, nindex){
-                    console.log('player',n);
-                    $scope.match.resultImages.players[nindex] = {
-                      "player": n._id,
-                      "firstName": n.firstName,
-                      "surname": n.surname,
-                      "sfaId": n.sfaId,
-                      "schoolName": n.school.name,
-                      "attendance": false
-                    }
-                  });
+                  if ($scope.match.isTeam == false) {
+                    _.each($scope.match.players, function(n, nindex){
+                      console.log('player',n);
+                      $scope.match.resultImages.players[nindex] = {
+                        "player": n._id,
+                        "firstName": n.firstName,
+                        "surname": n.surname,
+                        "sfaId": n.sfaId,
+                        "schoolName": n.school.name,
+                        "attendance": false
+                      }
+                    });
+                  } else {
+                    _.each($scope.match.teams, function(n, nindex){
+                      console.log('player',n);
+                      $scope.match.resultImages.players[nindex] = {
+                        "player": n._id,
+                        "teamId": n.teamId,
+                        "schoolName": n.schoolName,
+                        "attendance": false
+                      }
+                    });
+                  }
                 }
+                // INITIALISE RESULTIMAGE END
+                // INITIALISE RESULTHEAT
+                if (!$scope.match.resultHeat) {
+                    $scope.match.resultHeat = {
+                      "players" : []
+                    }
+                    if ($scope.match.isTeam == false) {
+                      _.each($scope.match.players, function(n, nindex){
+                        console.log('player',n);
+                        $scope.match.resultHeat.players[nindex] = {
+                          "id": n._id,
+                          "laneNo": "",
+                          "time": "",
+                          "result": ""
+                        }
+                      });
+                    } else {
+                      _.each($scope.match.teams, function(n, nindex){
+                        console.log('player',n);
+                        $scope.match.resultHeat.players[nindex] = {
+                          "id": n._id,
+                          "laneNo": "",
+                          "time": "",
+                          "result": ""
+                        }
+                      });
+                    }
+                  }
+                  // INITIALISE RESULTHEAT END
                 console.log($scope.match, 'Match');
             } else {
                 console.log("ERROR IN getOneMatch");
