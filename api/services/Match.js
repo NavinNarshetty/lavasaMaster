@@ -9460,7 +9460,7 @@ var model = {
                     } else {
                         obj["TEAM 2 SCORE"] = "";
                     }
-                    if (mainData.resultKumite.winner.player === mainData.resultKumite.opponentsTeam[0]._id.toString()) {
+                    if (mainData.resultKumite.winner.player === mainData.opponentsTeam[0]._id.toString()) {
                         obj["WINNER TEAM ID"] = obj["TEAM ID 1"];
                         obj["WINNER SCHOOL"] = obj["SCREEN SCHOOL NAME 1"];
                     } else {
