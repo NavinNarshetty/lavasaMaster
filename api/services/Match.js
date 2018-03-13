@@ -4546,14 +4546,14 @@ var model = {
 
                         var i;
                         var sNo = 1;
-                        for (i = 0; i < mainData.resultKumite.teams[0].sets.length; i++) {
+                        for (i = 0; i < mainData.resultKumite.teams[0].teamResults.sets.length; i++) {
                             if (i == 0) {
-                                obj["SCORE 1"] = "Set" + sNo + "-" + mainData.resultKumite.teams[0].sets[i].points;
+                                obj["SCORE 1"] = "Set" + sNo + "-" + mainData.resultKumite.teams[0].teamResults.sets[i].points;
                                 // obj["DATA POINTS 1"] = mainData.resultKumite.teams[0].sets[i];
                                 sNo++;
 
                             } else {
-                                obj["SCORE 1"] = obj["SCORE 1"] + "," + "Set" + sNo + "-" + mainData.resultKumite.teams[0].sets[i].points;
+                                obj["SCORE 1"] = obj["SCORE 1"] + "," + "Set" + sNo + "-" + mainData.resultKumite.teams[0].teamResults.sets[i].points;
                                 // obj["DATA POINTS 1"] = obj["DATA POINTS 1"] + "," + mainData.resultKumite.teams[0].sets[i];
                                 sNo++;
                             }
@@ -4893,13 +4893,13 @@ var model = {
                         }
                         var i;
                         var sNo = 1;
-                        for (i = 0; i < mainData.resultKumite.teams[1].sets.length; i++) {
+                        for (i = 0; i < mainData.resultKumite.teams[1].teamResults.sets.length; i++) {
                             if (i == 0) {
-                                obj["SCORE 2"] = "Set" + sNo + "-" + mainData.resultKumite.teams[1].sets[i].points;
+                                obj["SCORE 2"] = "Set" + sNo + "-" + mainData.resultKumite.teams[1].teamResults.sets[i].points;
                                 // obj["DATA POINTS 2"] = mainData.resultKumite.teams[1].sets[i];
                                 sNo++;
                             } else {
-                                obj["SCORE 2"] = obj["SCORE 2"] + "," + "Set" + sNo + "-" + mainData.resultKumite.teams[1].sets[i].points;
+                                obj["SCORE 2"] = obj["SCORE 2"] + "," + "Set" + sNo + "-" + mainData.resultKumite.teams[1].teamResults.sets[i].points;
                                 // obj["DATA POINTS 2"] = obj["DATA POINTS 2"] + "," + mainData.resultKumite.teams[1].sets[i];
                                 sNo++;
                             }
@@ -6598,7 +6598,7 @@ var model = {
                                         }
                                     }
 
-                                } else if (mainData.resultThrowball) {
+                                } else if (mainData.resultKumite) {
                                     console.log(mainData.resultKumite.teams[0].teamResults.sets);
                                     var i;
                                     var sNo = 1;
@@ -9226,11 +9226,11 @@ var model = {
                         if (mainData.resultKumite.winner) {
                             var i;
                             var sNo = 1;
-                            for (i = 0; i < mainData.resultKumite.teams[0].sets.length; i++) {
+                            for (i = 0; i < mainData.resultKumite.teams[0].teamResults.sets.length; i++) {
                                 if (i == 0) {
-                                    obj["TEAM 1 SCORE"] = mainData.resultKumite.teams[0].sets[i].points;
+                                    obj["TEAM 1 SCORE"] = mainData.resultKumite.teams[0].teamResults.sets[i].points;
                                 } else {
-                                    obj["TEAM 1 SCORE"] = obj["TEAM 1 SCORE"] + mainData.resultKumite.teams[0].sets[i].points;
+                                    obj["TEAM 1 SCORE"] = obj["TEAM 1 SCORE"] + mainData.resultKumite.teams[0].teamResults.sets[i].points;
                                 }
                             }
                         } else {
@@ -9447,11 +9447,11 @@ var model = {
                     var i;
                     var sNo = 1;
                     if (mainData.resultKumite.teams[1]) {
-                        for (i = 0; i < mainData.resultKumite.teams[1].sets.length; i++) {
+                        for (i = 0; i < mainData.resultKumite.teams[1].teamResults.sets.length; i++) {
                             if (i == 0) {
-                                obj["TEAM 2 SCORE"] = mainData.resultKumite.teams[1].sets[i].points;
+                                obj["TEAM 2 SCORE"] = mainData.resultKumite.teams[1].teamResults.sets[i].points;
                             } else {
-                                obj["TEAM 2 SCORE"] = obj["TEAM 2 SCORE"] + mainData.resultKumite.teams[1].sets[i].points;
+                                obj["TEAM 2 SCORE"] = obj["TEAM 2 SCORE"] + mainData.resultKumite.teams[1].teamResults.sets[i].points;
                             }
                         }
                     } else {
