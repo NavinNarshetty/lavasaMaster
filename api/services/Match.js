@@ -329,7 +329,7 @@ var model = {
                             if (_.isEmpty(found)) {
                                 callback(null, []);
                             } else {
-                                console.log("found0", found);
+                                // console.log("found0", found);
                                 callback(null, found);
                             }
                         }
@@ -341,6 +341,8 @@ var model = {
                             error: "Wrong MatchId"
                         });
                     } else {
+                        console.log("found", found.sport.ageGroup);
+                        console.log("found*****", found.sport.sportslist.sportsListSubCategory);
                         var finalData = {};
                         finalData.isTeam = found.sport.sportslist.sportsListSubCategory.isTeam;
                         finalData.sportsName = found.sport.sportslist.name;
@@ -434,6 +436,7 @@ var model = {
                         } else {
                             finalData.resultFencing = found.resultFencing;
                         }
+                        // console.log("finalData", finalData);
                         callback(null, finalData);
                     }
 

@@ -1,18 +1,18 @@
 var schema = new Schema({
     teamId: {
         type: Schema.Types.ObjectId,
-        ref: 'OldTeamSport',
+        ref: 'TeamSport',
         index: true,
         key: 'studentTeam'
     },
     sport: {
         type: Schema.Types.ObjectId,
-        ref: 'OldSport',
+        ref: 'Sport',
         index: true
     },
     studentId: {
         type: Schema.Types.ObjectId,
-        ref: 'OldAthelete',
+        ref: 'Athelete',
         index: true
     },
     isCaptain: Boolean,

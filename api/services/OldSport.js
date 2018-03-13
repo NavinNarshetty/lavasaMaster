@@ -300,7 +300,7 @@ var model = {
                         function (rulesData, callback) {
                             console.log("n----->", n);
                             if (n.sportslist.sportsListSubCategory.sportsListCategory != null) {
-                                SportsListSubCategory.findOne({
+                                SportsListCategory.findOne({
                                     name: n.sportslist.sportsListSubCategory.sportsListCategory.name
                                 }).lean().exec(function (err, found) {
                                     if (err) {
