@@ -9227,14 +9227,18 @@ var model = {
                         }
                     } else if (mainData.resultKumite) {
                         if (mainData.resultKumite.winner) {
-                            var i;
-                            var sNo = 1;
-                            for (i = 0; i < mainData.resultKumite.teams[0].teamResults.sets.length; i++) {
-                                if (i == 0) {
-                                    obj["TEAM 1 SCORE"] = mainData.resultKumite.teams[0].teamResults.sets[i].points;
-                                } else {
-                                    obj["TEAM 1 SCORE"] = obj["TEAM 1 SCORE"] + mainData.resultKumite.teams[0].teamResults.sets[i].points;
+                            if(mainData.resultKumite.teams[0].teamResults.sets.length > 0){
+                                var i;
+                                var sNo = 1;
+                                for (i = 0; i < mainData.resultKumite.teams[0].teamResults.sets.length; i++) {
+                                    if (i == 0) {
+                                        obj["TEAM 1 SCORE"] = mainData.resultKumite.teams[0].teamResults.sets[i].points;
+                                    } else {
+                                        obj["TEAM 1 SCORE"] = obj["TEAM 1 SCORE"] + mainData.resultKumite.teams[0].teamResults.sets[i].points;
+                                    }
                                 }
+                            }else{
+                                obj["TEAM 1 SCORE"] = "";
                             }
                         } else {
                             obj["TEAM 1 SCORE"] = "";
