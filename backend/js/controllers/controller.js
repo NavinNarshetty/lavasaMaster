@@ -6194,6 +6194,13 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         $scope.menutitle = NavigationService.makeactive("Dashboard");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
+
+        $scope.generateExcel = function(){
+            $scope.url = "match/getUniqueEventsPlayed";
+            NavigationService.generateExcel($scope.url, function (data) {
+                window.location.href = adminurl + $scope.url;
+            });
+        }
     })
 
     .controller('headerctrl', function ($scope, TemplateService, $uibModal) {
