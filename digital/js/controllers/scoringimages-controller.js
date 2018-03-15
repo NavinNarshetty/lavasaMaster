@@ -143,6 +143,7 @@ myApp.controller('ScoringImagestCtrl', function($scope, TemplateService, Navigat
           $scope.match.resultImages.status = "IsCompleted";
         }
           $scope.matchResult = {
+            resultHeat : $scope.match.resultHeat,
             resultImages : $scope.match.resultImages,
             matchId: $scope.matchData.matchId
           }
