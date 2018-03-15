@@ -346,6 +346,7 @@ var model = {
                         var finalData = {};
                         finalData.isTeam = found.sport.sportslist.sportsListSubCategory.isTeam;
                         finalData.sportsName = found.sport.sportslist.name;
+                        finalData.sportsCategory = found.sport.sportslist.sportsListSubCategory.name;
                         finalData.age = found.sport.ageGroup.name;
                         if (found.drawFormat) {
                             finalData.drawFormat = found.drawFormat;

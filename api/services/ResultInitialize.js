@@ -15,19 +15,30 @@ var model = {
     getPlayerTemplate: function (sportName, player, flag) {
         console.log("sportName", sportName, "player", player, "flag", flag);
         if (flag == 'team') {
-            var format = {
-                player: player.studentId._id,
-                sfaId: player.studentId.sfaId,
-                jerseyNo: "",
-                isPlaying: false,
-                noShow: false,
-                walkover: false,
-                color: "",
-                playerPoints: {},
-                firstName: player.studentId.firstName,
-                surname: player.studentId.surname,
-                fullName: player.studentId.firstName + " " + player.studentId.surname
-            };
+            if (sportName == "Badminton Doubles" || sportName == "Tennis Doubles" || sportName == "Table Tennis Doubles" || sportName == "Tennis Mixed Doubles" || sportName == "Squash Doubles") {
+                var format = {
+                    player: player.studentId._id,
+                    sfaId: player.studentId.sfaId,
+                    isPlaying: false,
+                    firstName: player.studentId.firstName,
+                    surname: player.studentId.surname,
+                    fullName: player.studentId.firstName + " " + player.studentId.surname
+                };
+            } else {
+                var format = {
+                    player: player.studentId._id,
+                    sfaId: player.studentId.sfaId,
+                    jerseyNo: "",
+                    isPlaying: false,
+                    noShow: false,
+                    walkover: false,
+                    color: "",
+                    playerPoints: {},
+                    firstName: player.studentId.firstName,
+                    surname: player.studentId.surname,
+                    fullName: player.studentId.firstName + " " + player.studentId.surname
+                };
+            }
             switch (sportName) {
                 case "Basketball":
                     format.playerPoints.freeThrow = [];
@@ -220,6 +231,19 @@ var model = {
                 }];
                 format.teamResults.finalPoints = "";
                 break;
+            case "Badminton Doubles":
+            case "Table Tennis Doubles":
+            case "Tennis Doubles":
+            case "Tennis Mixed Doubles":
+            case "Squash Doubles":
+                format.sets = [{
+                    "points": '',
+                    "ace": '',
+                    "winner": '',
+                    "unforcedError": '',
+                    "serviceError": '',
+                    "doubleFaults": ''
+                }];
         };
 
         _.each(team.studentTeam, function (player, pk) {
@@ -231,12 +255,37 @@ var model = {
 
     },
 
+    getHeatTemplate: function (sportName, team) {
+        var format = {
+            id: team._id,
+            time: '',
+            result: '',
+            laneNo: ''
+        };
+        return format;
+    },
+
     initializeTeamAndPlayers: function (sportName, resultSportname, match) {
         _.each(match.teams, function (team, tk) {
             resultSportname.teams[tk] = ResultInitialize.getTeamTemplate(sportName, team);
         });
         return resultSportname;
     },
+
+    initializeTeamHeat: function (sportName, resultSportname, match) {
+        _.each(match.teams, function (team, tk) {
+            resultSportname.teams[tk] = ResultInitialize.getHeatTemplate(sportName, team);
+        });
+        return resultSportname;
+    },
+
+    initializeHeat: function (sportName, resultSportname, match) {
+        _.each(match.players, function (player, tk) {
+            resultSportname.players[tk] = ResultInitialize.getHeatTemplate(sportName, player);
+        });
+        return resultSportname;
+    },
+
     initializePlayers: function (sportName, resultSportname, match) {
         console.log("match", match);
         _.each(match.players, function (player, tk) {
@@ -254,6 +303,9 @@ var model = {
                 "status": "",
                 "winner": {},
                 "isNoMatch": false
+            };
+            var formatHeat = {
+                "teams": []
             };
             var returnResult = {};
 
@@ -298,6 +350,40 @@ var model = {
                     ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultWaterPolo, match);
                     return returnResult;
 
+                case "Badminton Doubles":
+                    returnResult.resultsRacquet = format;
+                    ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultsRacquet, match);
+                    return returnResult;
+
+                case "Table Tennis Doubles":
+                    returnResult.resultsRacquet = format;
+                    ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultsRacquet, match);
+                    return returnResult;
+
+                case "Tennis Doubles":
+                    returnResult.resultsRacquet = format;
+                    ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultsRacquet, match);
+                    return returnResult;
+
+                case "Tennis Mixed Doubles":
+                    returnResult.resultsRacquet = format;
+                    ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultsRacquet, match);
+                    return returnResult;
+
+                case "Squash Doubles":
+                    returnResult.resultsRacquet = format;
+                    ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultsRacquet, match);
+                    return returnResult;
+
+                case "Athletics 4x100m Relay":
+                case "Athletics 4x50m Relay":
+                case "Athletics Medley Relay":
+                case "Swimming 4x50m Freestyle Relay":
+                case "Swimming 4x50m Medley Relay":
+                    returnResult.resultHeat = formatHeat;
+                    ResultInitialize.initializeTeamHeat(sportName, returnResult.resultHeat, match);
+                    return returnResult;
+
             }
         } else {
             var format = {
@@ -306,6 +392,9 @@ var model = {
                 "scoreSheet": [],
                 "winner": {},
                 "isNoMatch": false
+            };
+            var formatHeat = {
+                "players": []
             };
 
             var returnResult = {};
@@ -369,6 +458,11 @@ var model = {
                 case "Foil":
                     returnResult.resultFencing = format;
                     ResultInitialize.initializePlayers(sportName, returnResult.resultFencing, match);
+                    return returnResult;
+
+                case "Athletics":
+                    returnResult.resultHeat = formatHeat;
+                    ResultInitialize.initializeHeat(sportName, returnResult.resultHeat, match);
                     return returnResult;
 
             }
