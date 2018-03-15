@@ -265,6 +265,17 @@ var model = {
         return format;
     },
 
+    getQualifyingTemplate: function (sportName, team) {
+        var format = {
+            id: team._id,
+            attempt: [],
+            bestAttempt: '',
+            result: '',
+            laneNo: ''
+        };
+        return format;
+    },
+
     initializeTeamAndPlayers: function (sportName, resultSportname, match) {
         _.each(match.teams, function (team, tk) {
             resultSportname.teams[tk] = ResultInitialize.getTeamTemplate(sportName, team);
@@ -282,6 +293,13 @@ var model = {
     initializeHeat: function (sportName, resultSportname, match) {
         _.each(match.players, function (player, tk) {
             resultSportname.players[tk] = ResultInitialize.getHeatTemplate(sportName, player);
+        });
+        return resultSportname;
+    },
+
+    initializeQualifying: function (sportName, resultSportname, match) {
+        _.each(match.players, function (player, tk) {
+            resultSportname.players[tk] = ResultInitialize.getQualifyingTemplate(sportName, player);
         });
         return resultSportname;
     },
