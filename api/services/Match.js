@@ -435,6 +435,11 @@ var model = {
                         } else {
                             finalData.resultFencing = found.resultFencing;
                         }
+                        if (_.isEmpty(found.resultHeat)) {
+                            finalData.resultHeat = "";
+                        } else {
+                            finalData.resultHeat = found.resultHeat;
+                        }
                         callback(null, finalData);
                     }
 
@@ -16959,15 +16964,23 @@ var model = {
                     callback(null, results);
                 }
             });
-
     },
 
     updateResultImages: function (data, callback) {
-        var matchObj = {
-            $set: {
-                resultImages: data.resultImages
-            }
-        };
+        if(data.resultHeat){
+            var matchObj = {
+                $set: {
+                    resultImages: data.resultImages,
+                    resultHeat: data.resultHeat
+                }
+            };
+        } else {
+            var matchObj = {
+                $set: {
+                    resultImages: data.resultImages
+                }
+            };
+        }
         Match.update({
             matchId: data.matchId
         }, matchObj).exec(
