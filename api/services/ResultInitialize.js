@@ -270,8 +270,17 @@ var model = {
             id: team._id,
             attempt: [],
             bestAttempt: '',
-            result: '',
-            laneNo: ''
+            noShow: '',
+            result: ''
+        };
+        return format;
+    },
+
+    getKnockoutTemplate: function (sportName, team) {
+        var format = {
+            player: team._id,
+            noShow: '',
+            walkover: ''
         };
         return format;
     },
@@ -300,6 +309,13 @@ var model = {
     initializeQualifying: function (sportName, resultSportname, match) {
         _.each(match.players, function (player, tk) {
             resultSportname.players[tk] = ResultInitialize.getQualifyingTemplate(sportName, player);
+        });
+        return resultSportname;
+    },
+
+    initializeQualifyingKnockout: function (sportName, resultSportname, match) {
+        _.each(match.players, function (player, tk) {
+            resultSportname.players[tk] = ResultInitialize.getKnockoutTemplate(sportName, player);
         });
         return resultSportname;
     },
@@ -415,6 +431,13 @@ var model = {
                 "players": []
             };
 
+            var formatKnockout = {
+                "players": [],
+                "winner": {},
+                "finalScore": '',
+                "status": ''
+            };
+
             var returnResult = {};
             switch (sportName) {
                 case "Boxing":
@@ -481,6 +504,11 @@ var model = {
                 case "Athletics":
                     returnResult.resultHeat = formatHeat;
                     ResultInitialize.initializeHeat(sportName, returnResult.resultHeat, match);
+                    return returnResult;
+
+                case "Archery":
+                    returnResult.resultknockout = formatKnockout;
+                    ResultInitialize.initializeHeat(sportName, returnResult.resultknockout, match);
                     return returnResult;
 
             }
