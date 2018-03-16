@@ -13307,8 +13307,8 @@ var model = {
         async.waterfall([
                 function (callback) {
                     async.concatSeries(importData, function (singleData, callback) {
-                        var dateTime = moment(singleData.DATE, "DD-MM-YYYY").add(1, 'days');
-                        singleData.DATE = dateTime;
+                        // var dateTime = moment(singleData.DATE, "DD-MM-YYYY").add(1, 'days');
+                        // singleData.DATE = dateTime;
                         async.waterfall([
                                 function (callback) {
                                     // console.log("singleData", singleData);
@@ -13481,8 +13481,10 @@ var model = {
         var updateObj1 = {};
         var countError = 0;
         async.concatSeries(importData, function (singleData, callback) {
-            var dateTime = moment(singleData.DATE, "DD-MM-YYYY").add(1, 'days');
-            singleData.DATE = dateTime;
+            if (singleData.DATE != "invalid date") {
+                var dateTime = moment(singleData.DATE, "DD-MM-YYYY").add(1, 'days');
+                singleData.DATE = dateTime;
+            }
             var result = {};
             result.players = [];
             result.winner = {};
@@ -19465,5 +19467,6 @@ var model = {
                 }
             });
     },
+    
 };
 module.exports = _.assign(module.exports, exports, model);

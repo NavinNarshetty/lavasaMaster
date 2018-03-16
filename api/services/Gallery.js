@@ -1,21 +1,43 @@
 var schema = new Schema({
-    title: {
+    year: {
         type: String,
-        unique: true
+        required: true
     },
-    folderName: String,
-    gender: [{
+    folder: {
+        type: String,
+        required: true
+    },
+    order: {
+        type: Number,
+        required: true
+    },
+    imageorder: {
+        type: Number,
+        required: true
+    },
+    date: {
+        type: Date,
+        // required: true
+    },
+    mediatitle: {
+        type: String,
+        required: function (v) {
+            return this.mediatype === 'photo';
+        }
+    },
+    mediatype: {
+        type: String,
+        required: true
+    },
+    medialink: {
+        type: String,
+        required: true
+        // validate: [validators.matches(/\.(gif|jpg|jpeg|tiff|png)$/i)]
+    },
+    videotype: {
         type: String
-    }],
-    tags: [{
-        type: String
-    }],
-    shareUrl: String,
-    mediatype: String,
-    mediaLink: String,
-    year: String,
-    folderType: String,
-    eventName: String
+    },
+    thumbnails: [],
 });
 
 schema.plugin(deepPopulate, {});
@@ -24,62 +46,5 @@ schema.plugin(timestamps);
 module.exports = mongoose.model('Gallery', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
-var model = {
-
-    getAllPhotosByType: function (data, callback) {
-        Gallery.aggregate(
-            [{
-                $match: {
-                    "mediatype": "photo",
-                    "folderType": data.folderType
-                }
-            }, {
-                $group: {
-                    "_id": "$folderName",
-                    "folderName":{
-                        "$first":"$folderName"
-                    },
-                    "totalCount": {
-                        "$sum": 1
-                    },
-                    "mediaLink": {
-                        "$first": "$mediaLink"
-                    },
-                    "mediatype": {
-                        "$first": "$mediatype"
-                    }
-                }
-            }],
-            function (err, photos) {
-                if (err) {
-                    callback(err, null);
-                } else if (!_.isEmpty(photos)) {
-                    callback(null, photos);
-                } else {
-                    callback(null, []);
-                }
-            }
-        );
-    },
-
-    getAllPhotosByFolder:function(data,callback){
-       
-            Gallery.find({
-                "mediatype":"photo",
-                "folderType":data.folderType,
-                "folderName":data.folderName
-            },"mediaLink title tags shareUrl mediatype").lean().exec(function(err,photos){
-                if(err){
-                    callback(err,null);
-                }else if(!_.isEmpty(photos)){
-                    callback(null,photos);
-                }else{
-                    callback(null,[]);
-                }
-            });
-      
-    },
-
-
-};
+var model = {};
 module.exports = _.assign(module.exports, exports, model);

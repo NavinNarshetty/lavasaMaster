@@ -20,7 +20,7 @@ var schema = new Schema({
     },
     date: {
         type: Date,
-        required: true
+        // required: true
     },
     mediatitle: {
         type: String,
@@ -40,7 +40,9 @@ var schema = new Schema({
     videotype: {
         type: String
     },
-    thumbnails: []
+    thumbnails: [],
+
+
 });
 
 schema.plugin(deepPopulate, {});
@@ -57,24 +59,24 @@ var model = {
         async.waterfall([
             function (callback) {
                 ConfigProperty.findOne({}, "year").lean().exec(function (err, configs) {
-                    if(err){
-                        callback(err,null);
-                    }else if(!_.isEmpty(configs)){
+                    if (err) {
+                        callback(err, null);
+                    } else if (!_.isEmpty(configs)) {
                         var year = configs.year;
-                        callback(null,year);
-                    }else{
-                        callback(null,[]);
+                        callback(null, year);
+                    } else {
+                        callback(null, []);
                     }
                 });
             },
-            function (year,callback) {
-                if(_.isEmpty(year)){
-                    callback(null,[])
-                }else{
+            function (year, callback) {
+                if (_.isEmpty(year)) {
+                    callback(null, [])
+                } else {
                     async.concatSeries(importData, function (singleData, callback) {
-                    // singleData.date = new Date(Math.round((singleData.date - 25569) * 86400 * 1000));
-                    singleData.date=moment(singleData.date, "DD-MM-YYYY").add(1, 'days');
-                    singleData.year = year;
+                        // singleData.date = new Date(Math.round((singleData.date - 25569) * 86400 * 1000));
+                        singleData.date = moment(singleData.date, "DD-MM-YYYY").add(1, 'days');
+                        singleData.year = year;
                         Media.saveData(singleData, function (err, data) {
                             if (err) {
                                 errorFound = true;
@@ -107,23 +109,23 @@ var model = {
                                     }
                                 }, function (err) {
                                     if (err) {
-    
+
                                     } else {
                                         console.log("Successfully Deleted");
                                     }
                                 });
-    
+
                             }
                         }
-    
+
                     });
                 }
             }
         ], function (err, finalResult) {
-            if(err){
-                callback(err,null);
-            }else{
-                callback(null,finalResult);                
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, finalResult);
             }
         });
 
@@ -131,7 +133,7 @@ var model = {
     },
 
     generateExcel: function (data, res) {
-        console.log("data",data);
+        console.log("data", data);
         var matchObj = {};
         var name = "";
 
