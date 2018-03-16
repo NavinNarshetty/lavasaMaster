@@ -15,6 +15,8 @@ var schema = new Schema({
         ref: 'Package',
         index: true
     },
+    amountPaid: String,
+    paymentMode: String,
 });
 
 schema.plugin(deepPopulate, {});
