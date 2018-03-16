@@ -2647,3 +2647,68 @@ $tickerDuration: 60s;
 }
 // GALLERY POST CONTENT SECTION END
 // GALLERY POST PAGE END
+// FORGOT PASSWORD POPUP
+.modal-forgotpassword{
+  .modal-dialog{
+    margin-top: 100px;
+  }
+  .modal-content{
+    border-radius: 0px;
+    box-shadow: none;
+  }
+  .forgotpassword-modal{
+    padding: 20px 30px;
+    text-align: center;
+  }
+  .forgotmodal-title{
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: $brand-primary;
+    text-transform: uppercase;
+  }
+  .forgotmodal-input{
+    margin-bottom: 20px;
+    label{
+      font-weight: 500;
+    }
+    .input-group{
+      width: 50%;
+      margin: 0px auto 10px;
+      border: none;
+      input{
+        border: 1px solid $brand-primary;
+      }
+      input[type=number]::-webkit-inner-spin-button,
+      input[type=number]::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          appearance: none;
+      }
+      .btn{
+        border: 1px solid $brand-primary;
+        background-color: transparent;
+        color: $brand-primary;
+        text-transform: uppercase;
+      }
+    }
+    .forgototp-input{
+      width: 40%;
+    }
+  }
+  .resetpassword-holder{
+    width: 50%;
+    margin: 0 auto;
+    input{
+      margin-bottom: 20px;
+    }
+    .btn-resetsubmit{
+      padding: 6px 12px;
+      color: $base;
+      &:active, &:focus, &:hover{
+        color: $base;
+      }
+    }
+  }
+}
+
+// FORGOT PASSWORD POPUP END

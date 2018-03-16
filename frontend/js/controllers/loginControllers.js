@@ -1,4 +1,4 @@
-myApp.controller('SportsRegistrationCtrl', function ($scope, selectService, TemplateService, loginService, NavigationService, $timeout, toastr, $state, $rootScope, errorService, configService) {
+myApp.controller('SportsRegistrationCtrl', function ($scope, selectService, TemplateService, loginService, NavigationService, $timeout, toastr, $state, $rootScope, errorService, configService, $uibModal) {
     $scope.template = TemplateService.getHTML("content/sports-registration.html");
     TemplateService.title = "Sports Registration";
     $scope.navigation = NavigationService.getNavigation();
@@ -122,6 +122,20 @@ myApp.controller('SportsRegistrationCtrl', function ($scope, selectService, Temp
             });
         });
     };
+
+    // FORGOT PASSWORD POPUP
+    $scope.popForgot = function(){
+      $uibModal.open({
+        animation: true,
+        scope: $scope,
+        // backdrop: 'static',
+        keyboard: false,
+        templateUrl: 'views/modal/forgotpassword.html',
+        // size: 'lg',
+        windowClass: 'modal-forgotpassword'
+      })
+    }
+    // FORGOT PASSWORD POPUP END
 });
 
 myApp.controller('ForgotPasswordCtrl', function ($scope, TemplateService, NavigationService, $timeout, toastr, $state, errorService, $filter, configService) {
