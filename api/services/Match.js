@@ -6152,18 +6152,18 @@ var model = {
 
                             if (mainData.resultKnockout) {
                                 if (mainData.resultKnockout.players.length == 2) {
-                                    if (mainData.players[0].player.noShow == true) {
+                                    if (mainData.resultKnockout.players[0].player.noShow == true) {
                                         obj["Player 1 Attendence"] = "A";
                                     } else {
                                         obj["Player 1 Attendence"] = "P";
                                     }
-                                    if (mainData.players[1].player.noShow == true) {
+                                    if (mainData.resultKnockout.players[1].player.noShow == true) {
                                         obj["Player 2 Attendence"] = "A";
                                     } else {
                                         obj["Player 2 Attendence"] = "P";
                                     }
                                 } else if (mainData.resultKnockout.players.length == 1) {
-                                    if (mainData.players[0].player.noShow == true) {
+                                    if (mainData.resultKnockout.players[0].player.noShow == true) {
                                         obj["Player 1 Attendence"] = "A";
                                     } else {
                                         obj["Player 1 Attendence"] = "P";
