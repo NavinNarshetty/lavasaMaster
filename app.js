@@ -28,6 +28,7 @@ mongoose = require('mongoose');
 // global["database"] = "sfa1";
 // global["database"] = "live-sfa";
 global["database"] = "test-sfa";
+// global["database"] = "migrated2016";
 // global["database"] = "sfa";
 // global["database"] = "migration";
 // global["database"] = "16Migration";
