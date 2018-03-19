@@ -233,7 +233,7 @@ var model = {
 
     },
 
-    forgotPassword: function (data, callback) {
+    oldforgotPassword: function (data, callback) {
         var sfatype = data.sfaid.charAt(1);
         console.log(sfatype, data);
         if (data.type == "school" && sfatype == 'S') {
@@ -370,6 +370,199 @@ var model = {
 
     },
 
+    forgotPassword: function (data, callback) {
+        var sfatype = data.sfaId.charAt(1);
+
+        if (data.type == "school" && sfatype == 'S') {
+            Registration.findOne({
+                sfaID: data.sfaId,
+                status: "Verified"
+            }).lean().exec(function (err, found) {
+                if (err) {
+                    callback("Internal Error", null);
+                } else if (_.isEmpty(found)) {
+                    callback("Invalid Sfa Id", null);
+                } else {
+                    var otp ="";
+                    async.waterfall([
+                        
+                        //generate 4-digit OTP
+                        function (callback) {
+                            otp = Athelete.generateOtp();
+                            console.log("otp",otp);
+                            callback();
+                        },
+
+                        //save in schools Profile (Registration Table)
+                        function (callback) {
+                            var updateObj = {
+                                "enterOTP":otp
+                            }
+                            Registration.update({
+                                _id: found._id
+                            }, updateObj).exec(callback);
+                        },
+
+                        //send OTP on Mobile
+                        function(resp,callback){    
+                            if(found.mobile){
+                                console.log("OTP Sent On Mobile ");
+                                var mobileObj = {
+                                    "otp":otp,
+                                    "mobile":found.mobile,
+                                    "content":"OTP Athlete: Your Mobile OTP (One time Password) for SFA registration is "
+                                }
+                                Athelete.sendOTPMobile(mobileObj,callback);
+                            }else{
+                                callback(null,"Move Ahead");
+                            }
+                        },
+
+                        // send OTP on email
+                        function(resp,callback){
+                            console.log("OTP Sent On Email");                          
+                            var emailObj = {
+                                "emailOtp":otp,
+                                "mobile":found.mobile,
+                                "content":"OTP Athlete: Your Mobile OTP (One time Password) for SFA registration is ",
+                                "from":"info@sfanow.in",
+                                "filename": "emailOtp.ejs",
+                                "subject": "SFA: Your Email OTP (One time Password) for SFA registration is"
+                            }
+                    
+                            // Config.email(emailObj,callback);
+                            callback(null,"Next");
+                        },
+
+                        function(resp,callback){
+                            var sendObj = {
+                                "sfaId":found.sfaID,
+                                "mobile":found.mobile,
+                                "email":found.email,
+                                "accessToken":found.accessToken
+                            }
+                            callback(null,sendObj);
+                        }
+                    ],callback);
+                }
+
+            });
+
+        } else if (data.type == "athlete" && sfatype == 'A') {
+            Athelete.findOne({
+                sfaId: data.sfaid,
+                status: "Verified",
+                email: {
+                    $regex: data.email,
+                    $options: "i"
+                }
+            }).lean().exec(function (err, found) {
+                if (err) {
+                    callback(err, null);
+                } else if (_.isEmpty(found)) {
+                    callback("Incorrect User Details", null);
+                } else {
+                    var newPassword = generator.generate({
+                        length: 8,
+                        numbers: true
+                    });
+                    var matchObj = {
+                        $set: {
+                            password: newPassword
+                        }
+                    }
+                    Athelete.update({
+                        _id: found._id
+                    }, matchObj).exec(
+                        function (err, data3) {
+                            if (err) {
+                                console.log(err);
+                                callback(err, null);
+                            } else if (data3) {
+                                console.log("New password generated");
+                                var emailData = {};
+                                emailData.from = data.property.infoId;
+                                emailData.sfaid = found.sfaId;
+                                emailData.email = found.email;
+                                emailData.city = data.property.sfaCity;
+                                emailData.year = data.property.year;
+                                emailData.eventYear = data.property.eventYear;
+                                emailData.infoId = data.property.infoId;
+                                emailData.infoNo = data.property.infoNo;
+                                emailData.cityAddress = data.property.cityAddress;
+                                emailData.ddFavour = data.property.ddFavour;
+                                emailData.password = newPassword;
+                                emailData.filename = "forgotPassword.ejs";
+                                emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.eventYear;
+                                console.log("emaildata", emailData);
+                                Config.email(emailData, function (err, emailRespo) {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(null, err);
+                                    } else if (emailRespo) {
+                                        callback(null, emailRespo);
+                                    } else {
+                                        callback(null, "Invalid data");
+                                    }
+                                });
+
+                            }
+                        });
+                }
+
+            });
+
+        } else {
+            callback("Incorrect Type", null);
+        }
+
+    },
+
+    validateOtp:function(data,callback){
+        var sfatype = data.sfaId.charAt(1);
+        
+        if (data.type == "school" && sfatype == 'S') {
+            Registration.findOne({
+                sfaID: data.sfaId,
+                status: "Verified"
+            }).lean().exec(function (err, found) {
+                if (err) {
+                    callback("Internal Error", null);
+                } else if (_.isEmpty(found)) {
+                    callback("Invalid Sfa Id", null);
+                } else {
+                    if(found.enterOTP == data.otp){
+                        callback(null,"Correct OTP")
+                    }else{
+                        callback("Incorrect OTP",null)
+                    }
+                }
+            });
+
+        } else if (data.type == "athlete" && sfatype == 'A') {
+            Athelete.findOne({
+                sfaId: data.sfaid,
+                status: "Verified",
+                email: {
+                    $regex: data.email,
+                    $options: "i"
+                }
+            }).lean().exec(function (err, found) {
+                if (err) {
+                    callback(err, null);
+                } else if (_.isEmpty(found)) {
+                    callback("Incorrect User Details", null);
+                } else {
+
+                }
+
+            });
+
+        } else {
+            callback("Incorrect Type", null);
+        }
+    },
+
     changeSchoolPassword: function (data, callback) {
         if (data.password && data.password != "" && data.oldPassword && data.oldPassword != "") {
             if (data.password != data.oldPassword) {
@@ -384,7 +577,7 @@ var model = {
                             error: err
                         });
                     } else if (data1) {
-                        callback(null, data1);
+                        callback(null, "Password Successfully Updated");
                     } else {
                         callback("Incorrect Old Password", null);
                     }
@@ -411,13 +604,65 @@ var model = {
                             error: err
                         });
                     } else if (data1) {
-                        callback(null, data1);
+                        callback(null, "Password Successfully Updated");
                     } else {
                         callback("Incorrect Old Password", null);
                     }
                 });
             } else {
                 callback("Password match or Same password exist", null);
+            }
+        } else {
+            callback("Invalid data", null);
+        }
+    },
+
+    resetSchoolPassword: function (data, callback) {
+        if (data.newPassword && data.newPassword != "" && data.confirmPassword && data.confirmPassword != "") {
+            if (data.newPassword == data.confirmPassword) {
+                Registration.findOneAndUpdate({
+                    _id: data._id
+                }, {
+                    password: data.newPassword
+                }, function (err, data1) {
+                    if (err) {
+                        callback(null, {
+                            error: err
+                        });
+                    } else if (data1) {
+                        callback(null, "Password Successfully Updated");
+                    } else {
+                        callback("Error Occured While Updating", null);
+                    }
+                });
+            } else {
+                callback("MisMatch Password And Confirm Password", null);
+            }
+        } else {
+            callback("Invalid data", null);
+        }
+    },
+
+    resetAthletePassword: function (data, callback) {
+        if (data.newPassword && data.newPassword != "" && data.confirmPassword && data.confirmPassword != "") {
+            if (data.newPassword == data.confirmPassword) {
+                Athelete.findOneAndUpdate({
+                    _id: data._id,
+                }, {
+                    password: data.newPassword
+                }, function (err, data1) {
+                    if (err) {
+                        callback(null, {
+                            error: err
+                        });
+                    } else if (data1) {
+                        callback(null, "Password Successfully Updated");
+                    } else {
+                        callback("Error Occured While Updating", null);
+                    }
+                });
+            } else {
+                callback("MisMatch Password And Confirm Password", null);
             }
         } else {
             callback("Invalid data", null);

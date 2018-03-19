@@ -143,11 +143,33 @@ var controller = {
         console.log('enter');
     },
 
+    forgotPassword: function (req, res) {
+        if (req.body && req.body.type && req.body.sfaId) {
+            Login.forgotPassword(req.body, res.callback);
+        } else {
+            res.json({
+                data: "Invalid Params",
+                value: false
+            });
+        }
+    },
+
+    validateOtp: function (req, res) {
+        if (req.body && req.body.type && req.body.sfaId && req.body.otp) {
+            Login.validateOtp(req.body, res.callback);
+        } else {
+            res.json({
+                data: "Invalid Params",
+                value: false
+            });
+        }
+    },
+
     changePassword: function (req, res) {
         if (req.body) {
             Login.tokenCheck(req.body, function (err, complete) {
                 if (err) {
-                    callback(err, null);
+                    res.callback(err, null);
                 } else if (complete) {
                     if (complete.school) {
                         req.body._id = complete.school;
@@ -156,7 +178,32 @@ var controller = {
                         req.body._id = complete.athlete;
                         Login.changeAthletePassword(req.body, res.callback);
                     } else {
-                        callback(err, "Access Token not identified");
+                        res.callback(err, "Access Token not identified");
+                    }
+                }
+            });
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
+
+    resetPassword: function (req, res) {
+        if (req.body) {
+            Login.tokenCheck(req.body, function (err, complete) {
+                if (err) {
+                    res.callback(err, null);
+                } else if (complete) {
+                    if (complete.school) {
+                        req.body._id = complete.school;
+                        Login.resetSchoolPassword(req.body, res.callback);
+                    } else if (complete.athlete) {
+                        req.body._id = complete.athlete;
+                        Login.resetAthletePassword(req.body, res.callback);
+                    } else {
+                        res.callback(err, "Access Token not identified");
                     }
                 }
             });
@@ -177,6 +224,6 @@ var controller = {
                 data: "Invalid Request"
             });
         }
-    },
+    }
 };
 module.exports = _.assign(module.exports, controller);
