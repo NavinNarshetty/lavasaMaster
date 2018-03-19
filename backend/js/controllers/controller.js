@@ -6195,7 +6195,7 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
         
-        $state.reload();
+        // $state.reload();
 
 
         $scope.generateExcel = function(){
