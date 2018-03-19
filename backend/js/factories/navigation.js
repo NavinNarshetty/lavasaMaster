@@ -6,9 +6,12 @@ var uploadurl = imgurl;
 
 
 myApp.factory('NavigationService', function ($http) {
+    var data;
     if($.jStorage.get('profile')){
-        console.log('Enter Null');
-        var data = $.jStorage.get('profile').accessLevel;
+         data = $.jStorage.get('profile').accessLevel;
+    } else {
+         data = 'default';
+    }
         switch (data) {
             case "Admin":
             var navigation = [{
@@ -334,14 +337,6 @@ myApp.factory('NavigationService', function ($http) {
             }];
                 break;
         }
-    } else {
-        var navigation = [{
-            name: "Users",
-            classis: "active",
-            sref: "#!/page/viewUser//",
-            icon: "phone"
-        }];
-    }
 
     return {
         getnav: function () {
