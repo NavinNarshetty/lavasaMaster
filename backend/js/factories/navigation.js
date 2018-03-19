@@ -6,331 +6,333 @@ var uploadurl = imgurl;
 
 
 myApp.factory('NavigationService', function ($http) {
-    var data = $.jStorage.get('profile').accessLevel;
-    switch (data) {
-        case "Admin":
-        var navigation = [{
-            name: "Registration",
-            classis: "activeColor",
-            sref: "",
-            icon: "phone",
-            subnav: [{
-                name: "School",
+    if($.jStorage.get('profile') !== null){
+        var data = $.jStorage.get('profile').accessLevel;
+        switch (data) {
+            case "Admin":
+            var navigation = [{
+                name: "Registration",
                 classis: "activeColor",
                 sref: "",
                 icon: "phone",
-                subnavs: [{
-                    name: "Edit School",
-                    classis: "",
-                    sref: "#/page/viewRegistration//",
-                    icon: "phone"
+                subnav: [{
+                    name: "School",
+                    classis: "activeColor",
+                    sref: "",
+                    icon: "phone",
+                    subnavs: [{
+                        name: "Edit School",
+                        classis: "",
+                        sref: "#/page/viewRegistration//",
+                        icon: "phone"
+                    }, {
+                        name: "View School",
+                        classis: "",
+                        sref: "#/school",
+                        icon: "phone"
+                    }]
                 }, {
-                    name: "View School",
-                    classis: "",
-                    sref: "#/school",
+                    name: "Athlete",
+                    classis: "activeColor",
+                    sref: "",
+                    icon: "phone",
+                    subnavs: [{
+                        name: "Edit Athlete",
+                        classis: "",
+                        sref: "#/page/viewAthelete//",
+                        icon: "phone"
+                    }, {
+                        name: "View Athlete",
+                        classis: "",
+                        sref: "#/athlete",
+                        icon: "phone"
+                    }]
+                }, {
+                    name: "Old School",
+                    classis: "activeColor",
+                    sref: "",
+                    icon: "phone",
+                    subnavs: [{
+                        name: "Edit Old School",
+                        classis: "",
+                        sref: "#/page/viewOldSchool//",
+                        icon: "phone"
+                    }, {
+                        name: "View Old School",
+                        classis: "",
+                        sref: "#/oldschool",
+                        icon: "phone"
+                    }]
+                },
+                {
+                    name: "PAYU",
+                    classis: "activeColor",
+                    sref: "",
+                    icon: "phone",
+                    subnavs: [{
+                        name: "School PAYU",
+                        classis: "",
+                        sref: "#/schoolpayustatus",
+                        icon: "phone"
+                    }, {
+                        name: "Athlete PAYU",
+                        classis: "",
+                        sref: "#/athletepayustatus",
+                        icon: "phone"
+                    }]
+                },
+                {
+                    name: "Sport Ops",
+                    classis: "activeColor",
+                    sref: "",
+                    icon: "phone",
+                    subnavs: [{
+                        name: "School SportOps",
+                        classis: "",
+                        sref: "#/schoolOps",
+                        icon: "phone"
+                    }, {
+                        name: "Athlete SportOps",
+                        classis: "",
+                        sref: "#/athleteOps",
+                        icon: "phone"
+                    }]
+                },
+                {
+                    name: "Additional Payment",
+                    classis: "activeColor",
+                    sref: "#/additional-payment",
                     icon: "phone"
                 }]
             }, {
-                name: "Athlete",
+                name: "Sports Detail",
                 classis: "activeColor",
                 sref: "",
                 icon: "phone",
-                subnavs: [{
-                    name: "Edit Athlete",
-                    classis: "",
-                    sref: "#/page/viewAthelete//",
+                subnav: [{
+                    name: "Age Group",
+                    classis: "activeColor",
+                    sref: "#/agegroup",
                     icon: "phone"
                 }, {
-                    name: "View Athlete",
-                    classis: "",
-                    sref: "#/athlete",
+                    name: "Rules",
+                    classis: "activeColor",
+                    sref: "#/rules",
                     icon: "phone"
+                }, {
+                    name: "Weight",
+                    classis: "activeColor",
+                    sref: "#/firstcategory",
+                    icon: "phone"
+                }, {
+                    name: "Draw Format",
+                    classis: "activeColor",
+                    sref: "#/drawformat",
+                    icon: "phone"
+                }, {
+                    name: "Category",
+                    classis: "activeColor",
+                    sref: "#/sports-list-cat",
+                    icon: "phone"
+                }, {
+                    name: "Sub Category",
+                    classis: "activeColor",
+                    sref: "#/sports-list-subcat",
+                    icon: "phone"
+                }, {
+                    name: "Sports List",
+                    classis: "activeColor",
+                    sref: "#/sports-list",
+                    icon: "phone"
+                }, {
+                    name: "Sports",
+                    classis: "activeColor",
+                    sref: "#/sports",
+                    icon: "phone"
+                }, {
+                    name: "Rounds",
+                    classis: "activeColor",
+                    sref: "#/rounds",
+                    icon: "phone"
+                }, {
+                    name: "Event Pdf",
+                    classis: "activeColor",
+                    sref: "#/tablepdf",
+                    icon: "phone",
                 }]
+        
+        
             }, {
-                name: "Old School",
+                name: "Individual Sport",
+                classis: "activeColor",
+                sref: "#/individual-sport",
+                icon: "phone"
+            }, {
+                name: "Team Sport",
+                classis: "activeColor",
+                sref: "#/teamsport",
+                icon: "phone"
+            }, {
+                name: "Matches",
+                classis: "activeColor",
+                sref: "#/matches",
+                icon: "phone"
+            }, {
+                name: "Medals",
+                classis: "activeColor",
+                sref: "#/medals",
+                icon: "phone"
+            }, {
+                name: "Report Card",
+                classis: "activeColor",
+                sref: "#/page/viewReportCard//",
+                icon: "phone",
+            }, {
+                name: "Other",
                 classis: "activeColor",
                 sref: "",
                 icon: "phone",
-                subnavs: [{
-                    name: "Edit Old School",
-                    classis: "",
-                    sref: "#/page/viewOldSchool//",
+                subnav: [{
+                    name: "Calender",
+                    classis: "activeColor",
+                    sref: "#/calender",
                     icon: "phone"
                 }, {
-                    name: "View Old School",
-                    classis: "",
-                    sref: "#/oldschool",
+                    name: "Sponsor",
+                    classis: "activeColor",
+                    sref: "",
+                    icon: "phone",
+                    subnavs: [{
+                        name: "Sponsor Page",
+                        classis: "",
+                        sref: "#/sponsor",
+                        icon: "phone"
+                    }, {
+                        name: "Sponsor Card",
+                        classis: "",
+                        sref: "#/sponsorcard",
+                        icon: "phone"
+                    }]
+                }, {
+                    name: "Special Awards",
+                    classis: "activeColor",
+                    sref: "",
+                    icon: "phone",
+                    subnavs: [{
+                        name: "Award Banner",
+                        classis: "",
+                        sref: "#/specialaward-banner",
+                        icon: "phone"
+                    }, {
+                        name: "List of Award",
+                        classis: "",
+                        sref: "#/specialaward",
+                        icon: "phone"
+                    }, {
+                        name: "Award Detail",
+                        classis: "",
+                        sref: "#/specialaward-detail",
+                        icon: "phone"
+                    }, {
+                        name: "Rising Star",
+                        classis: "",
+                        sref: "#/risingstar",
+                        icon: "phone"
+                    }]
+                }, {
+                    name: "Champion Schedule",
+                    classis: "activeColor",
+                    sref: "#/championschedule",
                     icon: "phone"
+                }, {
+                    name: "Faq",
+                    classis: "activeColor",
+                    sref: "#/faq",
+                    icon: "phone"
+                }, {
+                    name: "Certificate",
+                    classis: "activeColor",
+                    sref: "",
+                    icon: "phone",
+                    subnavs: [{
+                        name: "Certificate Banner",
+                        classis: "",
+                        sref: "#/certificatebanner",
+                        icon: "phone"
+                    }, {
+                        name: "Certificate Details",
+                        classis: "",
+                        sref: "#/certificatedetails",
+                        icon: "phone"
+                    }]
                 }]
-            },
-            {
-                name: "PAYU",
+        
+        
+            }, {
+                name: "Champions Archive",
                 classis: "activeColor",
                 sref: "",
                 icon: "phone",
-                subnavs: [{
-                    name: "School PAYU",
-                    classis: "",
-                    sref: "#/schoolpayustatus",
+                subnav: [{
+                    name: "Archive",
+                    classis: "activeColor",
+                    sref: "#/archive",
                     icon: "phone"
                 }, {
-                    name: "Athlete PAYU",
-                    classis: "",
-                    sref: "#/athletepayustatus",
+                    name: "Highlight Video",
+                    classis: "activeColor",
+                    sref: "#/highlight-video",
                     icon: "phone"
                 }]
-            },
-            {
-                name: "Sport Ops",
+            }, {
+                name: "Galleria",
                 classis: "activeColor",
                 sref: "",
                 icon: "phone",
-                subnavs: [{
-                    name: "School SportOps",
-                    classis: "",
-                    sref: "#/schoolOps",
-                    icon: "phone"
+                subnav: [{
+                    name: "Media",
+                    classis: "activeColor",
+                    sref: "#/media",
+                    icon: "phone",
                 }, {
-                    name: "Athlete SportOps",
-                    classis: "",
-                    sref: "#/athleteOps",
-                    icon: "phone"
+                    name: "Gallery",
+                    classis: "activeColor",
+                    sref: "#/gallery",
+                    icon: "phone",
+                }, {
+                    name: "Remove Folder",
+                    classis: "activeColor",
+                    sref: "#/folder",
+                    icon: "phone",
                 }]
-            },
-            {
-                name: "Additional Payment",
-                classis: "activeColor",
-                sref: "#/additional-payment",
-                icon: "phone"
-            }]
-        }, {
-            name: "Sports Detail",
-            classis: "activeColor",
-            sref: "",
-            icon: "phone",
-            subnav: [{
-                name: "Age Group",
-                classis: "activeColor",
-                sref: "#/agegroup",
-                icon: "phone"
             }, {
-                name: "Rules",
-                classis: "activeColor",
-                sref: "#/rules",
-                icon: "phone"
-            }, {
-                name: "Weight",
-                classis: "activeColor",
-                sref: "#/firstcategory",
-                icon: "phone"
-            }, {
-                name: "Draw Format",
-                classis: "activeColor",
-                sref: "#/drawformat",
-                icon: "phone"
-            }, {
-                name: "Category",
-                classis: "activeColor",
-                sref: "#/sports-list-cat",
-                icon: "phone"
-            }, {
-                name: "Sub Category",
-                classis: "activeColor",
-                sref: "#/sports-list-subcat",
-                icon: "phone"
-            }, {
-                name: "Sports List",
-                classis: "activeColor",
-                sref: "#/sports-list",
-                icon: "phone"
-            }, {
-                name: "Sports",
-                classis: "activeColor",
-                sref: "#/sports",
-                icon: "phone"
-            }, {
-                name: "Rounds",
-                classis: "activeColor",
-                sref: "#/rounds",
-                icon: "phone"
-            }, {
-                name: "Event Pdf",
-                classis: "activeColor",
-                sref: "#/tablepdf",
-                icon: "phone",
-            }]
-    
-    
-        }, {
-            name: "Individual Sport",
-            classis: "activeColor",
-            sref: "#/individual-sport",
-            icon: "phone"
-        }, {
-            name: "Team Sport",
-            classis: "activeColor",
-            sref: "#/teamsport",
-            icon: "phone"
-        }, {
-            name: "Matches",
-            classis: "activeColor",
-            sref: "#/matches",
-            icon: "phone"
-        }, {
-            name: "Medals",
-            classis: "activeColor",
-            sref: "#/medals",
-            icon: "phone"
-        }, {
-            name: "Report Card",
-            classis: "activeColor",
-            sref: "#/page/viewReportCard//",
-            icon: "phone",
-        }, {
-            name: "Other",
-            classis: "activeColor",
-            sref: "",
-            icon: "phone",
-            subnav: [{
-                name: "Calender",
-                classis: "activeColor",
-                sref: "#/calender",
-                icon: "phone"
-            }, {
-                name: "Sponsor",
+                name: "Ad Banners",
                 classis: "activeColor",
                 sref: "",
                 icon: "phone",
-                subnavs: [{
-                    name: "Sponsor Page",
-                    classis: "",
-                    sref: "#/sponsor",
-                    icon: "phone"
-                }, {
-                    name: "Sponsor Card",
-                    classis: "",
-                    sref: "#/sponsorcard",
-                    icon: "phone"
+                subnav: [{
+                    name: "Gallery",
+                    classis: "activeColor",
+                    sref: "#/adgallery",
+                    icon: "phone",
                 }]
             }, {
-                name: "Special Awards",
+                name: "ConfigProperty",
                 classis: "activeColor",
-                sref: "",
+                sref: "#/page/viewConfigProperty//",
                 icon: "phone",
-                subnavs: [{
-                    name: "Award Banner",
-                    classis: "",
-                    sref: "#/specialaward-banner",
-                    icon: "phone"
-                }, {
-                    name: "List of Award",
-                    classis: "",
-                    sref: "#/specialaward",
-                    icon: "phone"
-                }, {
-                    name: "Award Detail",
-                    classis: "",
-                    sref: "#/specialaward-detail",
-                    icon: "phone"
-                }, {
-                    name: "Rising Star",
-                    classis: "",
-                    sref: "#/risingstar",
-                    icon: "phone"
-                }]
-            }, {
-                name: "Champion Schedule",
-                classis: "activeColor",
-                sref: "#/championschedule",
+            }];
+                break;
+        
+            default:
+            var navigation = [{
+                name: "Users",
+                classis: "active",
+                sref: "#!/page/viewUser//",
                 icon: "phone"
-            }, {
-                name: "Faq",
-                classis: "activeColor",
-                sref: "#/faq",
-                icon: "phone"
-            }, {
-                name: "Certificate",
-                classis: "activeColor",
-                sref: "",
-                icon: "phone",
-                subnavs: [{
-                    name: "Certificate Banner",
-                    classis: "",
-                    sref: "#/certificatebanner",
-                    icon: "phone"
-                }, {
-                    name: "Certificate Details",
-                    classis: "",
-                    sref: "#/certificatedetails",
-                    icon: "phone"
-                }]
-            }]
-    
-    
-        }, {
-            name: "Champions Archive",
-            classis: "activeColor",
-            sref: "",
-            icon: "phone",
-            subnav: [{
-                name: "Archive",
-                classis: "activeColor",
-                sref: "#/archive",
-                icon: "phone"
-            }, {
-                name: "Highlight Video",
-                classis: "activeColor",
-                sref: "#/highlight-video",
-                icon: "phone"
-            }]
-        }, {
-            name: "Galleria",
-            classis: "activeColor",
-            sref: "",
-            icon: "phone",
-            subnav: [{
-                name: "Media",
-                classis: "activeColor",
-                sref: "#/media",
-                icon: "phone",
-            }, {
-                name: "Gallery",
-                classis: "activeColor",
-                sref: "#/gallery",
-                icon: "phone",
-            }, {
-                name: "Remove Folder",
-                classis: "activeColor",
-                sref: "#/folder",
-                icon: "phone",
-            }]
-        }, {
-            name: "Ad Banners",
-            classis: "activeColor",
-            sref: "",
-            icon: "phone",
-            subnav: [{
-                name: "Gallery",
-                classis: "activeColor",
-                sref: "#/adgallery",
-                icon: "phone",
-            }]
-        }, {
-            name: "ConfigProperty",
-            classis: "activeColor",
-            sref: "#/page/viewConfigProperty//",
-            icon: "phone",
-        }];
-            break;
-    
-        default:
-        var navigation = [{
-            name: "Users",
-            classis: "active",
-            sref: "#!/page/viewUser//",
-            icon: "phone"
-        }];
-            break;
+            }];
+                break;
+        }
     }
 
     return {
