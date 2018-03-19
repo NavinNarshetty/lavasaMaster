@@ -6194,6 +6194,9 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         $scope.menutitle = NavigationService.makeactive("Dashboard");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
+        
+        $state.reload();
+
 
         $scope.generateExcel = function(){
             $scope.url = "match/getUniqueEventsPlayed";
