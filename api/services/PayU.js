@@ -111,7 +111,7 @@ var models = {
         // var txnid = found._id;
         // found.transactionID = txnid;
 
-        var amount = found.property.totalAmountAthlete;
+        var amount = found.package.finalPrice;
         var firstname = found.firstName;
         var lastname = found.surname;
         var pincode = found.pinCode;
@@ -122,7 +122,7 @@ var models = {
         var athleteAddress2 = found.addressLine2;
         var email = found.email;
         var phone = found.mobile;
-        var productinfo = "Athelete registeration to SFA";
+        var productinfo = found.package.description;
         var hash = sha512(payukey + "|" + txnid + "|" + amount + "|" + productinfo + "|" + firstname + "|" + email + "|||||||||||" + payusalt);
         var hashtext = hash.toString('hex');
         request.post({

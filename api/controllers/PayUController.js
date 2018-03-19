@@ -46,7 +46,7 @@ var controller = {
                         var id = (req.query.id);
                         Athelete.findOne({
                             _id: id
-                        }).lean().exec(function (err, data) {
+                        }).lean().deepPopulate("package").exec(function (err, data) {
                             data.property = property[0];
                             PayU.atheletePayment(data, function (err, httpResponse) {
                                 if (httpResponse.statusCode == 302) {
@@ -298,7 +298,6 @@ var controller = {
                                 callback(null, "Data is empty");
                             } else {
                                 console.log("found", found);
-
                                 // res.redirect("http://mumbaischool.sfanow.in/sorryAthelete");
 
                                 // res.redirect("http://mumbaicollege.sfanow.in/sorryAthelete");

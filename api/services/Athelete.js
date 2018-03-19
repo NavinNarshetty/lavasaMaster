@@ -30,6 +30,11 @@ var schema = new Schema({
         ref: 'Package',
         index: true
     },
+    // transactionDetails: [{
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'Transaction',
+    //     index: true
+    // }],
     selectedEvent: Number,
     year: String,
     idProof: String,
@@ -112,7 +117,8 @@ var schema = new Schema({
 
 schema.plugin(deepPopulate, {
     populate: {
-        school: "_id name"
+        school: "_id name",
+        package: ''
     }
 });
 schema.plugin(uniqueValidator);
@@ -988,6 +994,123 @@ var model = {
 
     },
 
+    saveNewAthlete: function (data, callback) {
+        async.waterfall([
+            function (callback) {
+                if (_.isEmpty(data.school)) {
+                    data.school = undefined;
+                }
+                Athelete.aggregate([{
+                        $match: {
+                            $and: [{
+                                    firstName: data.firstName
+                                }, {
+                                    surname: data.surname
+                                },
+                                {
+                                    $or: [{
+                                        email: data.email
+                                    }]
+                                },
+                            ]
+                        }
+                    }],
+                    function (err, found) {
+                        if (err) {
+                            callback(null, {
+                                error: err,
+                                data: data
+                            });
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+
+            },
+            function (found, callback) {
+                if (found.error) {
+                    callback(null, found);
+                } else if (_.isEmpty(found)) {
+                    data.year = new Date().getFullYear();
+                    data.verifyCount = 0;
+                    data.atheleteID = 0;
+                    Athelete.saveAthleteData(data, found, function (err, vData) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (vData) {
+                            callback(null, vData);
+                        }
+                    });
+
+                } else {
+                    callback("Athlete Already Exist", null);
+                }
+            }
+        ], function (err, complete) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, complete);
+            }
+        });
+    },
+
+    saveAthleteData: function (data, callback) {
+        async.waterfall([
+            function (callback) {
+                Athelete.saveData(data, function (err, athleteData) {
+                    if (err || _.isEmpty(athleteData)) {
+                        callback(null, {
+                            error: "No data found",
+                            data: data
+                        });
+                    } else {
+                        callback(null, athleteData);
+                    }
+                });
+            },
+            function (athleteData, callback) {
+                var param = {};
+                param.athlete = athleteData._id;
+                param.school = undefined;
+                param.transaction = [];
+                Accounts.saveData(param, function (err, accountsData) {
+                    if (err || _.isEmpty(accountsData)) {
+                        callback(null, {
+                            error: "No data found",
+                            data: athleteData
+                        });
+                    } else {
+                        callback(null, athleteData);
+                    }
+                });
+            },
+
+            function (athleteData, callback) {
+                if (athleteData.error) {
+                    callback(null, athleteData);
+                } else {
+                    if (athleteData.registrationFee == "cash") {
+                        Athelete.atheletePaymentMail(athleteData, function (err, vData) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (vData) {
+                                callback(null, vData);
+                            }
+                        });
+                    } else {
+                        callback(null, athleteData);
+                    }
+                }
+            }
+        ], function (err, complete) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, complete);
+            }
+        });
+    },
     //genarate sfa when status changes to verified and sfaid is blank
     generateAtheleteSfaID: function (data, callback) {
         //find and first time atheleteID idea is for string id generation if required
@@ -1307,6 +1430,155 @@ var model = {
                                     }
 
                                 });
+                        }
+                    });
+                }
+            ],
+            function (err, data2) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
+                    callback(null, data2);
+                }
+
+            });
+    },
+    updatePaymentStatusNew: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    ConfigProperty.find().lean().exec(function (err, property) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(property)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, property);
+                            }
+                        }
+                    });
+                },
+                function (property, callback) {
+                    console.log("inside update", data);
+                    var matchObj = {
+                        $set: {
+                            paymentStatus: "Paid",
+                            transactionID: data.transactionid
+                        }
+                    };
+                    Athelete.findOne({ //finds one with refrence to id
+                        firstName: data.firstName,
+                        surname: data.surname,
+                        email: data.email,
+                    }).lean().exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            console.log("empty in Athelete found");
+                            callback(null, "Data is empty");
+                        } else {
+                            async.waterfall([
+                                function (callback) {
+                                    var param = {};
+                                    param.athlete = found._id;
+                                    param.school = undefined;
+                                    param.dateOfTransaction = new date();
+                                    param.package = found.package;
+                                    param.amountPaid = found.package.finalPrice;
+                                    param.paymentMode = "onlinePayu";
+                                    Transaction.saveData(param, function (err, transactData) {
+                                        if (err || _.isEmpty(transactData)) {
+                                            callback(null, {
+                                                error: "No Data",
+                                                data: found
+                                            });
+                                        } else {
+                                            callback(null, found);
+                                        }
+                                    });
+                                },
+                                function (found, callback) {
+                                    if (found.error) {
+                                        callback(null, found);
+                                    } else {
+                                        console.log("found in update", found);
+                                        Athelete.update({
+                                            _id: found._id
+                                        }, matchObj).exec(
+                                            function (err, data3) {
+                                                if (err) {
+                                                    console.log(err);
+                                                    callback(err, null);
+                                                } else if (data3) {
+                                                    async.parallel([
+                                                            function (callback) {
+                                                                Athelete.atheletePaymentMail(found, function (err, vData) {
+                                                                    if (err) {
+                                                                        callback(err, null);
+                                                                    } else if (vData) {
+                                                                        callback(null, vData);
+                                                                    }
+                                                                });
+                                                                // if (property[0].institutionType == "school") {
+                                                                //     Athelete.atheletePaymentMail(found, function (err, vData) {
+                                                                //         if (err) {
+                                                                //             callback(err, null);
+                                                                //         } else if (vData) {
+                                                                //             callback(null, vData);
+                                                                //         }
+                                                                //     });
+                                                                // } else {
+                                                                //     Athelete.atheletePaymentMailCollege(found, function (err, vData) {
+                                                                //         if (err) {
+                                                                //             callback(err, null);
+                                                                //         } else if (vData) {
+                                                                //             callback(null, vData);
+                                                                //         }
+                                                                //     });
+                                                                // }
+
+                                                            },
+                                                            function (callback) {
+                                                                Athelete.receiptMail(found, function (err, mailsms) {
+                                                                    if (err) {
+                                                                        callback(err, null);
+                                                                    } else {
+                                                                        if (_.isEmpty(mailsms)) {
+                                                                            callback(null, "Data not found");
+                                                                        } else {
+                                                                            callback(null, mailsms);
+                                                                        }
+                                                                    }
+
+                                                                });
+                                                            }
+                                                        ],
+                                                        function (err, data2) {
+                                                            if (err) {
+                                                                console.log(err);
+                                                                callback(null, []);
+                                                            } else if (data2) {
+                                                                if (_.isEmpty(data2)) {
+                                                                    callback(null, []);
+                                                                } else {
+                                                                    callback(null, data2);
+                                                                }
+                                                            }
+                                                        });
+                                                }
+
+                                            });
+                                    }
+                                }
+                            ], function (err, complete) {
+                                if (err) {
+                                    callback(err, callback);
+                                } else {
+                                    callback(null, complete);
+                                }
+                            });
+
                         }
                     });
                 }
