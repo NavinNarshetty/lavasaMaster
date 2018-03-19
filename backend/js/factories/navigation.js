@@ -333,6 +333,13 @@ myApp.factory('NavigationService', function ($http) {
             }];
                 break;
         }
+    } else {
+        var navigation = [{
+            name: "Users",
+            classis: "active",
+            sref: "#!/page/viewUser//",
+            icon: "phone"
+        }];
     }
 
     return {
