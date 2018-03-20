@@ -111,7 +111,8 @@ var model = {
                 case "Boxing":
                 case "Judo":
                 case "Taekwondo":
-                case "Karate":
+                case "Kumite":
+                case "Kata":
                 case "Wrestling":
                 case "Carrom":
                 case "Kho Kho":
@@ -411,7 +412,11 @@ var model = {
                     returnResult.resultsCombat = format;
                     ResultInitialize.initializePlayers(sportName, returnResult.resultsCombat, match);
                     return returnResult;
-                case "Karate":
+                case "Kumite":
+                    returnResult.resultsCombat = format;
+                    ResultInitialize.initializePlayers(sportName, returnResult.resultsCombat, match);
+                    return returnResult;
+                case "Kata":
                     returnResult.resultsCombat = format;
                     ResultInitialize.initializePlayers(sportName, returnResult.resultsCombat, match);
                     return returnResult;
