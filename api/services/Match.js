@@ -8201,7 +8201,7 @@ var model = {
                                     obj["TEAM 2 BASKET 6"] = "";
                                     obj["TEAM 2 BASKET 7"] = "";
                                     obj["SCORE 2"] = "";
-                                } else if (sportName == "badminton doubles" || sportName == "tennis doubles " || sportName == "table tennis doubles " || sportName == "squash doubles" || sportName == "volleyball" || sportName == "throwball") {
+                                } else if (sportName == "badminton doubles" || sportName == "tennis doubles" || sportName == "table tennis doubles" || sportName == "squash doubles" || sportName == "volleyball" || sportName == "throwball") {
                                     obj["TEAM 2 SET 1"] = "";
                                     obj["TEAM 2 SET 2"] = "";
                                     obj["TEAM 2 SET 3"] = "";
