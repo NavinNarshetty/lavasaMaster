@@ -64,7 +64,6 @@ module.exports.globals = {
 
 // Mongoose Globals
 global["mongoose"] = require('mongoose');
-global.storageBucket = "dummy-sfa";
 global["deepPopulate"] = require('mongoose-deep-populate')(mongoose);
 global["uniqueValidator"] = require('mongoose-unique-validator');
 global["timestamps"] = require('mongoose-timestamp-plugin');
@@ -80,6 +79,7 @@ gfs.mongo = mongoose.mongo;
 global["async"] = require('async');
 
 // Storage
+global.storageBucket = "dummy-sfa";
 global.skipper = require('skipper-gclouds');
 global.gCloudKey = './config/googleKey/SFA New-f0fd1402dc91.json';
 global.Storage = require('@google-cloud/storage');
