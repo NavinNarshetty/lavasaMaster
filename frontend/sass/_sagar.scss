@@ -2971,7 +2971,7 @@ $tickerDuration: 60s;
   @extend .d-opensans-semibold;
   &:active, &:focus, &:hover, &.active{
     background-color: $sport-lightblue;
-    color: $sport-darkgrey;
+    color: $sport-primary;
   }
 }
 .registerstep-btnholder{

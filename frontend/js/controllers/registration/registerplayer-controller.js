@@ -137,13 +137,11 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
     'slidePhotos':[]
   };
   $scope.getGallerySlides = function(gallery){
-    console.log("gallery", gallery);
     $scope.gallerySlides = _.chunk(gallery, 6);
-    console.log("slides", $scope.gallerySlides);
     _.each($scope.gallerySlides, function(n, nkey){
       $scope.allGallery.slidePhotos[nkey] =_.chunk(n,3);
     })
-    console.log("picslide",$scope.allGallery);
+    // console.log("picslide",$scope.allGallery);
   }
   // GALLERY END
   // FUNCTIONS END

@@ -393,7 +393,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'GalleryCtrl'
         })
-        // folder 
+        // folder
         .state('folder', {
             url: "/folder",
             templateUrl: "views/template.html",
@@ -593,6 +593,16 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             url: "/detailregistorcontent",
             templateUrl: "views/template.html",
             controller: 'DetailRegistorContentCtrl'
+        })
+        .state('testimonial', {
+            url: "/testimonial",
+            templateUrl: "views/template.html",
+            controller: 'TestimonialCtrl'
+        })
+        .state('detailtestimonial', {
+            url: "/detailtestimonial",
+            templateUrl: "views/template.html",
+            controller: 'DetailTestimonialCtrl'
         })
 
         // **********************PLAYER REGISTORION END ********************
