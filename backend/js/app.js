@@ -583,6 +583,19 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'DetailHighlightCtrl'
         })
 
+        // **********************PLAYER REGISTORION ********************
+        .state('registorcontent', {
+            url: "/registorcontent",
+            templateUrl: "views/template.html",
+            controller: 'RegistorContentCtrl'
+        })
+        .state('detailregistorcontent', {
+            url: "/detailregistorcontent",
+            templateUrl: "views/template.html",
+            controller: 'DetailRegistorContentCtrl'
+        })
+
+        // **********************PLAYER REGISTORION END ********************
         .state('jagz', {
             url: "/jagz",
             templateUrl: "views/jagz.html",
@@ -600,8 +613,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             url: "/package",
             templateUrl: "views/template.html",
             controller: 'PackageCtrl'
-        })
-        ;
+        });
 
     $urlRouterProvider.otherwise("/dashboard");
     $locationProvider.html5Mode(isproduction);

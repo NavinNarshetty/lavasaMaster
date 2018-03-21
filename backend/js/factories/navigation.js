@@ -318,7 +318,7 @@ myApp.factory('NavigationService', function ($http) {
                 subnav: [{
                     name: "Register Content",
                     classis: "activeColor",
-                    sref: "#/",
+                    sref: "#/registorcontent",
                     icon: "phone",
                 }, {
                     name: "Questions",
