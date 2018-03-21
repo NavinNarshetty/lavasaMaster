@@ -1,11 +1,13 @@
 var schema = new Schema({
-    name: String,
-    price: Number,
-    discount: Number,
-    finalPrice: Number,
-    tax: Number,
-    eventCount: Number,
-    description: String
+    name: {
+        type: String,
+        required: true,
+        unique: true,
+        uniqueCaseInsensitive: true,
+        excel: {
+            name: "Name"
+        }
+    }
 });
 
 schema.plugin(deepPopulate, {});
