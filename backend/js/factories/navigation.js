@@ -7,107 +7,108 @@ var uploadurl = imgurl;
 
 myApp.factory('NavigationService', function ($http) {
     var data;
-    if($.jStorage.get('profile')){
-         data = $.jStorage.get('profile').accessLevel;
+    if ($.jStorage.get('profile')) {
+        data = $.jStorage.get('profile').accessLevel;
     } else {
-         data = 'default';
+        data = 'default';
     }
-        switch (data) {
-            case "Admin":
+    switch (data) {
+        case "Admin":
             var navigation = [{
                 name: "Registration",
                 classis: "activeColor",
                 sref: "",
                 icon: "phone",
                 subnav: [{
-                    name: "School",
-                    classis: "activeColor",
-                    sref: "",
-                    icon: "phone",
-                    subnavs: [{
-                        name: "Edit School",
-                        classis: "",
-                        sref: "#/page/viewRegistration//",
-                        icon: "phone"
+                        name: "School",
+                        classis: "activeColor",
+                        sref: "",
+                        icon: "phone",
+                        subnavs: [{
+                            name: "Edit School",
+                            classis: "",
+                            sref: "#/page/viewRegistration//",
+                            icon: "phone"
+                        }, {
+                            name: "View School",
+                            classis: "",
+                            sref: "#/school",
+                            icon: "phone"
+                        }]
                     }, {
-                        name: "View School",
-                        classis: "",
-                        sref: "#/school",
-                        icon: "phone"
-                    }]
-                }, {
-                    name: "Athlete",
-                    classis: "activeColor",
-                    sref: "",
-                    icon: "phone",
-                    subnavs: [{
-                        name: "Edit Athlete",
-                        classis: "",
-                        sref: "#/page/viewAthelete//",
-                        icon: "phone"
+                        name: "Athlete",
+                        classis: "activeColor",
+                        sref: "",
+                        icon: "phone",
+                        subnavs: [{
+                            name: "Edit Athlete",
+                            classis: "",
+                            sref: "#/page/viewAthelete//",
+                            icon: "phone"
+                        }, {
+                            name: "View Athlete",
+                            classis: "",
+                            sref: "#/athlete",
+                            icon: "phone"
+                        }]
                     }, {
-                        name: "View Athlete",
-                        classis: "",
-                        sref: "#/athlete",
+                        name: "Old School",
+                        classis: "activeColor",
+                        sref: "",
+                        icon: "phone",
+                        subnavs: [{
+                            name: "Edit Old School",
+                            classis: "",
+                            sref: "#/page/viewOldSchool//",
+                            icon: "phone"
+                        }, {
+                            name: "View Old School",
+                            classis: "",
+                            sref: "#/oldschool",
+                            icon: "phone"
+                        }]
+                    },
+                    {
+                        name: "PAYU",
+                        classis: "activeColor",
+                        sref: "",
+                        icon: "phone",
+                        subnavs: [{
+                            name: "School PAYU",
+                            classis: "",
+                            sref: "#/schoolpayustatus",
+                            icon: "phone"
+                        }, {
+                            name: "Athlete PAYU",
+                            classis: "",
+                            sref: "#/athletepayustatus",
+                            icon: "phone"
+                        }]
+                    },
+                    {
+                        name: "Sport Ops",
+                        classis: "activeColor",
+                        sref: "",
+                        icon: "phone",
+                        subnavs: [{
+                            name: "School SportOps",
+                            classis: "",
+                            sref: "#/schoolOps",
+                            icon: "phone"
+                        }, {
+                            name: "Athlete SportOps",
+                            classis: "",
+                            sref: "#/athleteOps",
+                            icon: "phone"
+                        }]
+                    },
+                    {
+                        name: "Additional Payment",
+                        classis: "activeColor",
+                        sref: "#/additional-payment",
                         icon: "phone"
-                    }]
-                }, {
-                    name: "Old School",
-                    classis: "activeColor",
-                    sref: "",
-                    icon: "phone",
-                    subnavs: [{
-                        name: "Edit Old School",
-                        classis: "",
-                        sref: "#/page/viewOldSchool//",
-                        icon: "phone"
-                    }, {
-                        name: "View Old School",
-                        classis: "",
-                        sref: "#/oldschool",
-                        icon: "phone"
-                    }]
-                },
-                {
-                    name: "PAYU",
-                    classis: "activeColor",
-                    sref: "",
-                    icon: "phone",
-                    subnavs: [{
-                        name: "School PAYU",
-                        classis: "",
-                        sref: "#/schoolpayustatus",
-                        icon: "phone"
-                    }, {
-                        name: "Athlete PAYU",
-                        classis: "",
-                        sref: "#/athletepayustatus",
-                        icon: "phone"
-                    }]
-                },
-                {
-                    name: "Sport Ops",
-                    classis: "activeColor",
-                    sref: "",
-                    icon: "phone",
-                    subnavs: [{
-                        name: "School SportOps",
-                        classis: "",
-                        sref: "#/schoolOps",
-                        icon: "phone"
-                    }, {
-                        name: "Athlete SportOps",
-                        classis: "",
-                        sref: "#/athleteOps",
-                        icon: "phone"
-                    }]
-                },
-                {
-                    name: "Additional Payment",
-                    classis: "activeColor",
-                    sref: "#/additional-payment",
-                    icon: "phone"
-                }]
+                    }
+                ]
             }, {
                 name: "Sports Detail",
                 classis: "activeColor",
@@ -164,8 +165,8 @@ myApp.factory('NavigationService', function ($http) {
                     sref: "#/tablepdf",
                     icon: "phone",
                 }]
-        
-        
+
+
             }, {
                 name: "Individual Sport",
                 classis: "activeColor",
@@ -270,8 +271,8 @@ myApp.factory('NavigationService', function ($http) {
                         icon: "phone"
                     }]
                 }]
-        
-        
+
+
             }, {
                 name: "Champions Archive",
                 classis: "activeColor",
@@ -310,6 +311,43 @@ myApp.factory('NavigationService', function ($http) {
                     icon: "phone",
                 }]
             }, {
+                name: "Player Registration",
+                classis: "activeColor",
+                sref: "",
+                icon: "phone",
+                subnav: [{
+                    name: "Register Content",
+                    classis: "activeColor",
+                    sref: "#/",
+                    icon: "phone",
+                }, {
+                    name: "Questions",
+                    classis: "activeColor",
+                    sref: "#/",
+                    icon: "phone",
+                }, {
+                    name: "Testimonial",
+                    classis: "activeColor",
+                    sref: "#/",
+                    icon: "phone",
+                }]
+            }, {
+                name: "Packages",
+                classis: "activeColor",
+                sref: "",
+                icon: "phone",
+                subnav: [{
+                    name: "Packages Detail",
+                    classis: "activeColor",
+                    sref: "#/",
+                    icon: "phone",
+                }, {
+                    name: "Features",
+                    classis: "activeColor",
+                    sref: "#/",
+                    icon: "phone",
+                }]
+            }, {
                 name: "Ad Banners",
                 classis: "activeColor",
                 sref: "",
@@ -326,17 +364,17 @@ myApp.factory('NavigationService', function ($http) {
                 sref: "#/page/viewConfigProperty//",
                 icon: "phone",
             }];
-                break;
-        
-            default:
+            break;
+
+        default:
             var navigation = [{
                 name: "Users",
                 classis: "active",
                 sref: "#!/page/viewUser//",
                 icon: "phone"
             }];
-                break;
-        }
+            break;
+    }
 
     return {
         getnav: function () {
