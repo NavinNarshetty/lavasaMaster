@@ -111,5 +111,7 @@ module.exports = [
   'frontend/js/controllers/galleryController.js',
   'frontend/js/controllers/featuredgallery.js',
   'frontend/js/controllers/championshipArchive.js',
-  'frontend/js/controllers/media/gallerypost.js'
+  'frontend/js/controllers/media/gallerypost.js',
+  // NEW REGISTER
+  'frontend/js/controllers/registration/registerplayer-controller.js'
 ];

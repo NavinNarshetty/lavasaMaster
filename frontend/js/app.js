@@ -510,7 +510,15 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             url: "/gallery/post",
             templateUrl: tempateURL,
             controller: 'GalleryPostCtrl'
-        });
+        })
+        // NEW REGISTRATION PAGES
+        .state('registerplayer', {
+            url: "/register/player",
+            templateUrl: tempateURL,
+            controller: 'RegisterPlayerCtrl'
+        })
+        // NEW REGISTRATION PAGES
+        ;
     // if (window.location.origin != "http://testmumbaischool.sfanow.in") {
     if (window.location.origin == "http://mumbaischool.sfanow.in") {
         $urlRouterProvider.otherwise("/championship");

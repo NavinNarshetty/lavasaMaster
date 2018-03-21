@@ -1,0 +1,268 @@
+<div class="registerplayer-page">
+  <div class="container">
+    <!-- HEADER -->
+    <section class="registerplayer-header">
+      <!-- TITLE -->
+      <div class="registerplayer-title">
+        REGISTRATIONS <span class="regiterplayer-titlesmall">Sfa Hyderabad 2018-19</span>
+      </div>
+      <!-- TITLE END -->
+      <!-- BANNER -->
+      <div class="registerplayer-bannerslider">
+        <div class="swiper-container">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide" ng-repeat="banner in banners track by $index">
+              <div class="registerplayer-banner">
+                <img ng-src="{{banner.image}}" alt="Player Registrations | Sports For All" class="img-responsive">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- BANNER END -->
+      <!-- ACCORDION -->
+      <div class="registerplayer-accordion">
+        <uib-accordion close-others="oneAtATime">
+          <div uib-accordion-group class="panel-default" is-open="s.open">
+            <uib-accordion-heading class="clearfix">
+              <span class="pull-right register-accordion-view"> View <span ng-if="!s.open">Details</span> <span ng-if='s.open'>Less</span> <i class="fa " ng-class="{'fa-chevron-up': s.open, 'fa-chevron-down': !s.open}"></i></span>
+                <h4 class="d-fjalla-one text-uppercase m-clear">Quick Details About SFA Championship 2018-19</h4>
+            </uib-accordion-heading>
+            <div class="register-accordioncontent">
+              <div class="register-contentholder">
+                <label class="display-block">Sports:</label>
+                <span class="register-sportlist">BasketBall <span class="register-seperator">|</span> </span>
+              </div>
+              <div class="register-contentholder">
+                <label for="">Dates:</label>
+                <span>10th - 17th November 2017</span>
+              </div>
+              <div class="register-contentholder">
+                <label for="">Venue:</label>
+                <span>Gachibowli Sports Complex | LB Stadium (Tennis) </span>
+              </div>
+              <div class="register-contentholder">
+                <ul class="list-inline">
+                  <li>
+                    <a class="registeraccordion-links">About Championship</a>
+                  </li>
+                  <li>
+                    <a class="registeraccordion-links">Championship Schedule</a>
+                  </li>
+                  <li>
+                    <a class="registeraccordion-links">Age & Event Categories</a>
+                  </li>
+                  <li>
+                    <a class="registeraccordion-links">FAQs</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </uib-accordion>
+      </div>
+      <!-- ACCORDION END -->
+      <!-- INTRO SECTION -->
+      <div class="registerplayer-intro">
+        <div class="registerplayer-introtitle">Player Registrations</div>
+        <div class="registerplayer-introcontent">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente tempore cum ipsa deleniti culpa laboriosam veritatis, labore asperiores debitis, placeat pariatur saepe optio. Quibusdam consectetur ut ad assumenda quae veritatis?
+        </div>
+      </div>
+      <!-- INTRO SECTION END -->
+    </section>
+    <!-- HEADER END -->
+    <!-- PACKAGE TABLE -->
+    <section class="registerplayer-package"></section>
+    <!-- PACKAGE TABLE END -->
+    <!-- REGISTER FORM  -->
+    <section class="registerplayer-form">
+      <div class="registerform-btnholder">
+        <button class="btn btn-mainregister" ng-click="registerOpen();" ng-class="{'active': showForm}">Register For SFA Mumbai 2018-19</button>
+      </div>
+      <div class="registerform-holder" ng-show="showForm">
+        <p class="registerform-intro">All players must complete the following two step registration process</p>
+        <!-- STEP BUTTONS -->
+        <ul class="list-inline">
+          <li>
+            <button class="btn btn-registerstep" ng-click="showStep(1)" ng-class="{'active': stepTab == 1}">Step 1: Registration & Verification</button>
+          </li>
+          <li>
+            <button class="btn btn-registerstep" ng-click="showStep(2)" ng-class="{'active': stepTab == 2}">Step 2: Sports Registration</button>
+          </li>
+        </ul>
+        <!-- STEP BUTTONS END -->
+        <!-- STEP 1 FORM -->
+        <div class="" ng-show="stepTab == 1">
+          <div class="registerstep-btnholder">
+            <ul class="list-unstyled">
+              <li>
+                <button class="btn btn-register1" >Participating  for the First Time</button>
+              </li>
+              <li>
+                <button class="btn btn-register1" ng-click="showStepForm()" ng-class="{'active': stepForm}">Have Participated Before</button>
+              </li>
+            </ul>
+          </div>
+          <div class="registerform-step1" ng-show="stepForm">
+            <p>Kindly Enter</p>
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="SFA ID">
+              <div class="input-group-btn">
+                <button class="btn m-clear">Send OTP</button>
+              </div>
+            </div>
+            <p>An OTP will be sent to your registered Mobile Number & Email Id</p>
+            <div class="">
+              <p>An OTP has been sent to your registered Mobile no: <span>98xxxxxx14</span> | Email Id: <span>xxxxx@gmail.com</span></p>
+              <div class="input-group forgototp-input">
+                <input type="number" class="form-control" placeholder="OTP">
+                <div class="input-group-btn">
+                  <button class="btn m-clear"><span class="fa fa-arrow-right"></span></button>
+                </div>
+              </div>
+              <ul class="list-inline">
+                <li><a href="">Resend OTP</a></li>
+                <li>|</li>
+                <li><a ng-click="changeDetails();">Change Registered Email/Mobile</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- STEP 1 FORM END -->
+        <!-- STEP 2 FORM -->
+        <div class="registerform-step2 " ng-show="stepTab == 2" ng-class="{'active': stepTab == 2}">
+          <div class="register-step2holder">
+            <p>Kindly Enter</p>
+            <div class="form-group">
+              <input type="text" placeholder="SFA ID" class="form-control  register-stepinput">
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Password" class="form-control register-stepinput">
+            </div>
+            <div class="form-group">
+              <button class="btn btn-register2">Enter</button>
+            </div>
+            <div class="form-group">
+              <a class="btn btn-link" ng-click="showForgotPassword()">Forgot Password</a>
+            </div>
+          </div>
+          <div class="register-step-error">
+            <p class="m-clear">You have not completed the Registration & Verification process.</p>
+            <p class="m-clear">Kindly complete Step 1 and then proceed to Sports Registration.</p>
+          </div>
+        </div>
+        <!-- STEP 2 FORM END -->
+      </div>
+    </section>
+    <!-- REGISTER FORM END  -->
+    <!-- QUESTIONS  -->
+    <section class="registerplayer-questions">
+      <div class="registerplayer-questiontitle">
+        Questions you may have
+      </div>
+      <div class="registerplayer-questionlist">
+        <ul class="list-unstyled">
+          <li>
+            <div class="registerplayer-questionitem">
+              1.  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum mollitia adipisci officia labore </br>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis inventore iusto doloremque totam error, esse explicabo repudiandae sapiente commodi odit deleniti adipisci, accusamus quas quia fugiat temporibus hic! Minus, ipsum.
+            </div>
+          </li>
+          <li>
+            <div class="registerplayer-questionitem">
+              1.  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum mollitia adipisci officia labore </br>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis inventore iusto doloremque totam error, esse explicabo repudiandae sapiente commodi odit deleniti adipisci, accusamus quas quia fugiat temporibus hic! Minus, ipsum.
+            </div>
+          </li>
+          <li>
+            <div class="registerplayer-questionitem">
+              1.  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum mollitia adipisci officia labore </br>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis inventore iusto doloremque totam error, esse explicabo repudiandae sapiente commodi odit deleniti adipisci, accusamus quas quia fugiat temporibus hic! Minus, ipsum.
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="registerplayer-questionknowmore text-right" >
+        <a ng-click="moreQuestions();" class="btn">View <span ng-if="questionLimit.more">More</span> <span ng-if="!questionLimit.more">Less</span></a>
+      </div>
+    </section>
+    <!-- QUESTIONS END  -->
+    <!-- TESTIMONIALS  -->
+    <section class="registerplayer-testimonials">
+      <div class="registerplayer-introtitle">Testimonials From Past Championships</div>
+      <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+          <div class="registerplayer-testimonialslider">
+            <div class="swiper-container">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide" ng-repeat="card in testimonials track by $index">
+                  <div class="register-testimonialcard">
+                    <div class="register-testimonialimg">
+                      <img src="img/m1.jpg" alt="Testimonial | Sports For All" class="img-responsive">
+                      <div class="register-testimonialquote">
+                        <img src="img/icon/quote-open.png" alt="" class="img-responsive">
+                      </div>
+                    </div>
+                    <div class="register-testimonialcontent">
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas consectetur, ipsam eos nostrum sint voluptatem minus quaerat accusantium atque ea error. Nulla explicabo, itaque, consectetur et necessitatibus labore soluta! Ullam?
+                    </div>
+                    <div class="register-testimonialauthor text-right">
+                      <p class="register-testimonialname">- <span>Rahi Shah</span></p>
+                      <p class="register-testimonialposition">Digital Team</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Add Arrows -->
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- TESTIMONIALS END  -->
+  </div>
+    <!-- COUNTS  -->
+    <section class="registerplayer-counts">
+      <div class="container">
+        <div class="registercount-flex">
+          <div class="registercount-item" ng-repeat = "count in counts track by $index">
+            <div class="registercount-number">{{count.number}}</div>
+            <div class="registercount-label">{{count.label}}</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- COUNTS END  -->
+    <!-- PHOTOS  -->
+    <section class="registerplayer-photos">
+      <div class="container">
+        <div class="registerplayer-introtitle">Photos From Past Championships</div>
+        <div class="registerplayer-galleryslider">
+          <div class="swiper-container">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide" ng-repeat="slide in allGallery.slidePhotos track by $index">
+                <div class="registergallery-slide">
+                  <div class="row">
+                    <div class="col-md-6 registergallery-photoslide" ng-repeat="photoList in slide track by $index">
+                      <div class="registergallery-photo">
+                        <div class="registergallery-photoholder" ng-repeat="photo in photoList|limitTo:3">
+                          <img ng-src="{{photo.image}}" alt="Sports For All" class="img-responsive">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+        </div>
+      </div>
+    </section>
+    <!-- PHOTOS END  -->
+
+</div>
