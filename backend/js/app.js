@@ -593,7 +593,15 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             url: "/login/:id",
             templateUrl: "views/login.html",
             controller: 'LoginCtrl'
-        });
+        })
+
+        //PLAYER REGISTRATION
+        .state('package', {
+            url: "/package",
+            templateUrl: "views/template.html",
+            controller: 'PackageCtrl'
+        })
+        ;
 
     $urlRouterProvider.otherwise("/dashboard");
     $locationProvider.html5Mode(isproduction);
