@@ -344,7 +344,7 @@ myApp.factory('NavigationService', function ($http) {
                 }, {
                     name: "Features",
                     classis: "activeColor",
-                    sref: "#/",
+                    sref: "#/featurepackage",
                     icon: "phone",
                 }]
             }, {
