@@ -15,87 +15,96 @@
         <div class="form-elements-sec">
           <form name="detailForm" role="form" class="sec">
             <div class="row">
+              <!-- FEATURE NAME -->
               <div class="col-md-12">
                 <div class="form-group">
-                  <label>Name*</label>
-                  <input type="text" ng-model="formData.name" name="name" class="form-control" placeholder="Enter Name" required>
+                  <label>Feature Name*</label>
+                  <input type="text" ng-model="formData.featureName" name="name" class="form-control" placeholder="Enter Name" required>
                   <div class="error-msg" ng-if="detailForm.name.$invalid && detailForm.name.$touched">Please Enter Valid Name *</div>
                 </div>
-                <div class="form-group">
-                  <label>Price</label>
-                  <input type="number" ng-model="formData.price" name="price" class="form-control" placeholder="Enter Price" required>
-                  <div class="error-msg" ng-if="detailForm.price.$invalid && detailForm.price.$touched">Please Enter Price*</div>
-                </div>
-                <div class="form-group">
-                  <label>Discount</label>
-                  <input type="number" ng-model="formData.discount" name: "discount" class="form-control" placeholder="Enter Discount" required>
-                  <div class="error-msg" ng-if="detailForm.discount.$invalid && detailForm.discount.$touched">Please Enter Discount*</div>
-                </div>
-                <div class="form-group">
-                  <label>Final Price</label>
-                  <input type="number" ng-model="formData.finalPrice" name="finalprice" class="form-control" placeholder="Enter Final Price"
-                    required>
-                  <div class="error-msg" ng-if="detailForm.finalprice.$invalid && detailForm.finalprice.$touched">Please Enter Final Price*</div>
-                </div>
-                <div class="form-group">
-                  <label>IGST Percent</label>
-                  <input type="number" ng-model="formData.igstPercent" name="igstpercent" class="form-control" placeholder="Enter IGST Percent"
-                    required>
-                  <div class="error-msg" ng-if="detailForm.igstpercent.$invalid && detailForm.igstpercent.$touched">Please Enter IGST Percent *</div>
-                </div>
-                <div class="form-group">
-                  <label>CGST Percent</label>
-                  <input type="number" ng-model="formData.cgstPercent" name="cgstpercent" class="form-control" placeholder="Enter CGST Percent"
-                    required>
-                  <div class="error-msg" ng-if="detailForm.cgstpercent.$invalid && detailForm.cgstpercent.$touched">Please Enter CGST Percent *</div>
-                </div>
-                <div class="form-group">
-                  <label>SGST Percent</label>
-                  <input type="number" ng-model="formData.sgstPercent" name="sgstpercent" class="form-control" placeholder="Enter SGST Percent"
-                    required>
-                  <div class="error-msg" ng-if="detailForm.sgstpercent.$invalid && detailForm.sgstpercent.$touched">Please Enter SGST Percent*</div>
-                </div>
-                <div class="form-group">
-                  <label>IGST Amount</label>
-                  <input type="number" step="0.01" ng-model="formData.igstAmt" name="igstamt" class="form-control" placeholder="Enter IGST Amount"
-                    required>
-                  <div class="error-msg" ng-if="detailForm.igstamt.$invalid && detailForm.igstamt.$touched">Please Enter IGST Amount*</div>
-                </div>
-                <div class="form-group">
-                  <label>CGST Amount</label>
-                  <input type="number" step="0.01" ng-model="formData.cgstAmt" name="cgstamt" class="form-control" placeholder="Enter CGST Amount"
-                    required>
-                  <div class="error-msg" ng-if="detailForm.cgstamt.$invalid && detailForm.cgstamt.$touched">Please Enter CGST Amount*</div>
-                </div>
-                <div class="form-group">
-                  <label>SGST Amount</label>
-                  <input type="number" step="0.01" ng-model="formData.sgstAmt" name="sgst" class="form-control" placeholder="Enter SGST Amount"
-                    required>
-                  <div class="error-msg" ng-if="detailForm.sgst.$invalid && detailForm.sgst.$touched">Please Enter SGST Amount *</div>
-                </div>
-                <div class="form-group">
-                  <label>Event Count</label>
-                  <input type="number" ng-model="formData.eventCount" name="eventcount" class="form-control" placeholder="Enter Event Count"
-                    required>
-                  <div class="error-msg" ng-if="detailForm.eventcount.$invalid && detailForm.eventcount.$touched">Please Enter Event Count *</div>
-                </div>
-                <div class="form-group">
-                  <label>Description</label>
-                  <input type="text" ng-model="formData.description" name="description" class="form-control" placeholder="Enter Description"
-                    required>
-                  <div class="error-msg" ng-if="detailForm.description.$invalid && detailForm.description.$touched">Please Enter Description *</div>
-                </div>
+              </div>
+              <!-- FEATURE NAME END -->
 
+              <!-- TABLE -->
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="packages" class="fz12">Package Selection</label>
+                  <div class="pull-right" ng-click="addRow(formData,'gallery');">
+                    <button class="btn btn-primary" type="submit">Add Row</button>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="table-responsive registercontent-gallerybanners">
+                    <table class="table table-condensed">
+                      <thead>
+                        <tr>
+                          <th>
+                            <div>
+                              Package Name
+                            </div>
+                          </th>
+                          <th>
+                            <div>
+                              Type
+                            </div>
+                          </th>
+                          <th>
+                            <div>
+                              Value
+                            </div>
+                          </th>
+                          <th>
+                            <div>
+                              Action
+                            </div>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="table-imageresponsive">
+                          <td>
+                            <div class="form-group">
+                              <select name="" id="" class="form-control" ng-model="feature.packageName">
+                                <option value=""></option>
+                              </select>
+                            </div>
+                          </td>
+                          <td>
+                            <div>
+                              <select name="" id="" class="form-control" ng-model="feature.featureType">
+                                    <option value="checkbox">Checkbox</option>
+                                    <option value="text">text</option>
+                              </select>
+                            </div>
+                          </td>
+                          <td>
+                            <div ng-if="feature.featureType=='checkbox'">
+                              <input type="checkbox" name="" id="" class="form-control" ng-model="feature.featureCheck">
+                            </div>
+                            <div ng-if="feature.featureType=='text'">
+                              <input type="text" class="form-control" placeholder="Enter Text" ng-model="feature.featureText">
+                            </div>
+                          </td>
+                          <td>
+                            <div ng-click="deleteRowButton(formData,type,$index);">
+                              <button class="btn btn-danger text-center" type="submit">Delete</button>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <!-- TABLE END -->
+
+              <div class="col-md-12">
                 <div class="text-center mt20 odd-even-button">
                   <button class="btn btn-default" type="submit" ng-click="saveData(formData)">Save</button>
                   <button class="btn btn-default" ng-click="onCancel('package')">Cancel</button>
                 </div>
               </div>
             </div>
-            <!--<div class="text-center mt20 odd-even-button">
-                            <button class="btn btn-default" type="submit" ng-click="saveData(data)">Save</button>
-                            <button class="btn btn-default" ng-click="onCancel(json.json.action[1].stateName)">Cancel</button>
-                        </div>-->
           </form>
         </div>
       </div>
