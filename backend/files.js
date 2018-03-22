@@ -78,6 +78,7 @@ module.exports = [
     'backend/js/controllers/adgallery.js',
     'backend/js/controllers/registorcontent.js',
     'backend/js/controllers/testimonial.js',
-    'backend/js/controllers/playerquestion.js'
+    'backend/js/controllers/playerquestion.js',
+    'backend/js/controllers/package.js'
 
 ];

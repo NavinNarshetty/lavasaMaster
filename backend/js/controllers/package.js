@@ -1,4 +1,4 @@
-// TABLE GALLERY
+///***************************START OF PACKAGE************************** */
 myApp.controller('PackageCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, crudService, $state, toastr, $uibModal) {
   //Used to name the .html file
   $scope.template = TemplateService.changecontent("package/detailpackage/tablepackage");
@@ -50,7 +50,7 @@ myApp.controller('PackageCtrl', function ($scope, TemplateService, NavigationSer
 
 });
 
-// DETAIL GALLERY
+// DETAIL PACKAGE
 myApp.controller('DetailPackageCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, crudService, $state, toastr, $uibModal) {
   //Used to name the .html file
   $scope.template = TemplateService.changecontent("package/detailpackage/detailpackage");
@@ -91,9 +91,12 @@ myApp.controller('DetailPackageCtrl', function ($scope, TemplateService, Navigat
   };
 
 });
+///***************************END OF PACKAGE************************** */
 
-///Feature package
-// TABLE GALLERY
+
+
+///***************************START OF FEATURED PACKAGE************************** */
+// TABLE FEATURE PACKAGE
 myApp.controller('featurePackageCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, crudService, $state, toastr, $uibModal) {
   //Used to name the .html file
   $scope.template = TemplateService.changecontent("package/featuredpackage/featuretable");
@@ -186,3 +189,6 @@ myApp.controller('detailFeatureCtrl', function ($scope, TemplateService, Navigat
   };
 
 });
+
+
+///***************************END OF FEATURED PACKAGE************************** */
