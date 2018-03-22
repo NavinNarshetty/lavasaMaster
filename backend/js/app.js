@@ -590,7 +590,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'RegistorContentCtrl'
         })
         .state('detailregistorcontent', {
-            url: "/detailregistorcontent",
+            url: "/detailregistorcontent/:id",
             templateUrl: "views/template.html",
             controller: 'DetailRegistorContentCtrl'
         })
@@ -624,7 +624,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'featurePackageCtrl'
         })
         .state('detailfeature', {
-            url: "/detailpackage/:id",
+            url: "/detailfeature/:id",
             templateUrl: "views/template.html",
             controller: 'detailFeatureCtrl'
         })
