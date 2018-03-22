@@ -606,6 +606,29 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
 
         // **********************PLAYER REGISTORION END ********************
+
+        // *******************PACKAGE START******************************
+        .state('package', {
+            url: "/package",
+            templateUrl: "views/template.html",
+            controller: 'PackageCtrl'
+        })
+        .state('detailpackage', {
+            url: "/detailpackage/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailPackageCtrl'
+        })
+        .state('featurepackage', {
+            url: "/featurepackage",
+            templateUrl: "views/template.html",
+            controller: 'featurePackageCtrl'
+        })
+        .state('detailfeature', {
+            url: "/detailpackage/:id",
+            templateUrl: "views/template.html",
+            controller: 'detailFeatureCtrl'
+        })
+        // *******************PACKAGE END******************************
         .state('jagz', {
             url: "/jagz",
             templateUrl: "views/jagz.html",
@@ -618,12 +641,6 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'LoginCtrl'
         })
 
-        //PLAYER REGISTRATION
-        .state('package', {
-            url: "/package",
-            templateUrl: "views/template.html",
-            controller: 'PackageCtrl'
-        });
 
     $urlRouterProvider.otherwise("/dashboard");
     $locationProvider.html5Mode(isproduction);

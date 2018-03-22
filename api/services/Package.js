@@ -1,13 +1,19 @@
 var schema = new Schema({
-    name: {
-        type: String,
-        required: true,
-        unique: true,
-        uniqueCaseInsensitive: true,
-        excel: {
-            name: "Name"
-        }
-    }
+    name: String,
+    price: Number,
+    discount: Number,
+    finalPrice: Number,
+    igstPercent: Number,
+    cgstPercent: Number,
+    sgstPercent: Number,
+    // igstAmt: Schema.Types.Decimal128,
+    // cgstAmt: Schema.Types.Decimal128,
+    // sgstAmt: Schema.Types.Decimal128,
+    igstAmt: Number,
+    cgstAmt: Number,
+    sgstAmt: Number,
+    eventCount: Number,
+    description: String
 });
 
 schema.plugin(deepPopulate, {});

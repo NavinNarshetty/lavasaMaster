@@ -20,94 +20,94 @@ myApp.factory('NavigationService', function ($http) {
                 sref: "",
                 icon: "phone",
                 subnav: [{
-                        name: "School",
-                        classis: "activeColor",
-                        sref: "",
-                        icon: "phone",
-                        subnavs: [{
-                            name: "Edit School",
-                            classis: "",
-                            sref: "#/page/viewRegistration//",
-                            icon: "phone"
-                        }, {
-                            name: "View School",
-                            classis: "",
-                            sref: "#/school",
-                            icon: "phone"
-                        }]
-                    }, {
-                        name: "Athlete",
-                        classis: "activeColor",
-                        sref: "",
-                        icon: "phone",
-                        subnavs: [{
-                            name: "Edit Athlete",
-                            classis: "",
-                            sref: "#/page/viewAthelete//",
-                            icon: "phone"
-                        }, {
-                            name: "View Athlete",
-                            classis: "",
-                            sref: "#/athlete",
-                            icon: "phone"
-                        }]
-                    }, {
-                        name: "Old School",
-                        classis: "activeColor",
-                        sref: "",
-                        icon: "phone",
-                        subnavs: [{
-                            name: "Edit Old School",
-                            classis: "",
-                            sref: "#/page/viewOldSchool//",
-                            icon: "phone"
-                        }, {
-                            name: "View Old School",
-                            classis: "",
-                            sref: "#/oldschool",
-                            icon: "phone"
-                        }]
-                    },
-                    {
-                        name: "PAYU",
-                        classis: "activeColor",
-                        sref: "",
-                        icon: "phone",
-                        subnavs: [{
-                            name: "School PAYU",
-                            classis: "",
-                            sref: "#/schoolpayustatus",
-                            icon: "phone"
-                        }, {
-                            name: "Athlete PAYU",
-                            classis: "",
-                            sref: "#/athletepayustatus",
-                            icon: "phone"
-                        }]
-                    },
-                    {
-                        name: "Sport Ops",
-                        classis: "activeColor",
-                        sref: "",
-                        icon: "phone",
-                        subnavs: [{
-                            name: "School SportOps",
-                            classis: "",
-                            sref: "#/schoolOps",
-                            icon: "phone"
-                        }, {
-                            name: "Athlete SportOps",
-                            classis: "",
-                            sref: "#/athleteOps",
-                            icon: "phone"
-                        }]
-                    },
-                    {
-                        name: "Additional Payment",
-                        classis: "activeColor",
-                        sref: "#/additional-payment",
+                    name: "School",
+                    classis: "activeColor",
+                    sref: "",
+                    icon: "phone",
+                    subnavs: [{
+                        name: "Edit School",
+                        classis: "",
+                        sref: "#/page/viewRegistration//",
                         icon: "phone"
-                    }
+                    }, {
+                        name: "View School",
+                        classis: "",
+                        sref: "#/school",
+                        icon: "phone"
+                    }]
+                }, {
+                    name: "Athlete",
+                    classis: "activeColor",
+                    sref: "",
+                    icon: "phone",
+                    subnavs: [{
+                        name: "Edit Athlete",
+                        classis: "",
+                        sref: "#/page/viewAthelete//",
+                        icon: "phone"
+                    }, {
+                        name: "View Athlete",
+                        classis: "",
+                        sref: "#/athlete",
+                        icon: "phone"
+                    }]
+                }, {
+                    name: "Old School",
+                    classis: "activeColor",
+                    sref: "",
+                    icon: "phone",
+                    subnavs: [{
+                        name: "Edit Old School",
+                        classis: "",
+                        sref: "#/page/viewOldSchool//",
+                        icon: "phone"
+                    }, {
+                        name: "View Old School",
+                        classis: "",
+                        sref: "#/oldschool",
+                        icon: "phone"
+                    }]
+                },
+                {
+                    name: "PAYU",
+                    classis: "activeColor",
+                    sref: "",
+                    icon: "phone",
+                    subnavs: [{
+                        name: "School PAYU",
+                        classis: "",
+                        sref: "#/schoolpayustatus",
+                        icon: "phone"
+                    }, {
+                        name: "Athlete PAYU",
+                        classis: "",
+                        sref: "#/athletepayustatus",
+                        icon: "phone"
+                    }]
+                },
+                {
+                    name: "Sport Ops",
+                    classis: "activeColor",
+                    sref: "",
+                    icon: "phone",
+                    subnavs: [{
+                        name: "School SportOps",
+                        classis: "",
+                        sref: "#/schoolOps",
+                        icon: "phone"
+                    }, {
+                        name: "Athlete SportOps",
+                        classis: "",
+                        sref: "#/athleteOps",
+                        icon: "phone"
+                    }]
+                },
+                {
+                    name: "Additional Payment",
+                    classis: "activeColor",
+                    sref: "#/additional-payment",
+                    icon: "phone"
+                }
                 ]
             }, {
                 name: "Sports Detail",
@@ -339,12 +339,12 @@ myApp.factory('NavigationService', function ($http) {
                 subnav: [{
                     name: "Packages Detail",
                     classis: "activeColor",
-                    sref: "#/",
+                    sref: "#/package",
                     icon: "phone",
                 }, {
                     name: "Features",
                     classis: "activeColor",
-                    sref: "#/",
+                    sref: "#/featurepackage",
                     icon: "phone",
                 }]
             }, {

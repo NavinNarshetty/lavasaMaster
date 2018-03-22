@@ -1,0 +1,104 @@
+<div class="heading-sec">
+  <div class="row">
+    <div class="col-md-4 column">
+      <div class="heading-profile">
+        <h2>{{title}} Package</h2>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="widget">
+        <div class="form-elements-sec">
+          <form name="detailForm" role="form" class="sec">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Name*</label>
+                  <input type="text" ng-model="formData.name" name="name" class="form-control" placeholder="Enter Name" required>
+                  <div class="error-msg" ng-if="detailForm.name.$invalid && detailForm.name.$touched">Please Enter Valid Name *</div>
+                </div>
+                <div class="form-group">
+                  <label>Price</label>
+                  <input type="number" ng-model="formData.price" name="price" class="form-control" placeholder="Enter Price" required>
+                  <div class="error-msg" ng-if="detailForm.price.$invalid && detailForm.price.$touched">Please Enter Price*</div>
+                </div>
+                <div class="form-group">
+                  <label>Discount</label>
+                  <input type="number" ng-model="formData.discount" name: "discount" class="form-control" placeholder="Enter Discount" required>
+                  <div class="error-msg" ng-if="detailForm.discount.$invalid && detailForm.discount.$touched">Please Enter Discount*</div>
+                </div>
+                <div class="form-group">
+                  <label>Final Price</label>
+                  <input type="number" ng-model="formData.finalPrice" name="finalprice" class="form-control" placeholder="Enter Final Price"
+                    required>
+                  <div class="error-msg" ng-if="detailForm.finalprice.$invalid && detailForm.finalprice.$touched">Please Enter Final Price*</div>
+                </div>
+                <div class="form-group">
+                  <label>IGST Percent</label>
+                  <input type="number" ng-model="formData.igstPercent" name="igstpercent" class="form-control" placeholder="Enter IGST Percent"
+                    required>
+                  <div class="error-msg" ng-if="detailForm.igstpercent.$invalid && detailForm.igstpercent.$touched">Please Enter IGST Percent *</div>
+                </div>
+                <div class="form-group">
+                  <label>CGST Percent</label>
+                  <input type="number" ng-model="formData.cgstPercent" name="cgstpercent" class="form-control" placeholder="Enter CGST Percent"
+                    required>
+                  <div class="error-msg" ng-if="detailForm.cgstpercent.$invalid && detailForm.cgstpercent.$touched">Please Enter CGST Percent *</div>
+                </div>
+                <div class="form-group">
+                  <label>SGST Percent</label>
+                  <input type="number" ng-model="formData.sgstPercent" name="sgstpercent" class="form-control" placeholder="Enter SGST Percent"
+                    required>
+                  <div class="error-msg" ng-if="detailForm.sgstpercent.$invalid && detailForm.sgstpercent.$touched">Please Enter SGST Percent*</div>
+                </div>
+                <div class="form-group">
+                  <label>IGST Amount</label>
+                  <input type="number" step="0.01" ng-model="formData.igstAmt" name="igstamt" class="form-control" placeholder="Enter IGST Amount"
+                    required>
+                  <div class="error-msg" ng-if="detailForm.igstamt.$invalid && detailForm.igstamt.$touched">Please Enter IGST Amount*</div>
+                </div>
+                <div class="form-group">
+                  <label>CGST Amount</label>
+                  <input type="number" step="0.01" ng-model="formData.cgstAmt" name="cgstamt" class="form-control" placeholder="Enter CGST Amount"
+                    required>
+                  <div class="error-msg" ng-if="detailForm.cgstamt.$invalid && detailForm.cgstamt.$touched">Please Enter CGST Amount*</div>
+                </div>
+                <div class="form-group">
+                  <label>SGST Amount</label>
+                  <input type="number" step="0.01" ng-model="formData.sgstAmt" name="sgst" class="form-control" placeholder="Enter SGST Amount"
+                    required>
+                  <div class="error-msg" ng-if="detailForm.sgst.$invalid && detailForm.sgst.$touched">Please Enter SGST Amount *</div>
+                </div>
+                <div class="form-group">
+                  <label>Event Count</label>
+                  <input type="number" ng-model="formData.eventCount" name="eventcount" class="form-control" placeholder="Enter Event Count"
+                    required>
+                  <div class="error-msg" ng-if="detailForm.eventcount.$invalid && detailForm.eventcount.$touched">Please Enter Event Count *</div>
+                </div>
+                <div class="form-group">
+                  <label>Description</label>
+                  <input type="text" ng-model="formData.description" name="description" class="form-control" placeholder="Enter Description"
+                    required>
+                  <div class="error-msg" ng-if="detailForm.description.$invalid && detailForm.description.$touched">Please Enter Description *</div>
+                </div>
+
+                <div class="text-center mt20 odd-even-button">
+                  <button class="btn btn-default" type="submit" ng-click="saveData(formData)">Save</button>
+                  <button class="btn btn-default" ng-click="onCancel('package')">Cancel</button>
+                </div>
+              </div>
+            </div>
+            <!--<div class="text-center mt20 odd-even-button">
+                            <button class="btn btn-default" type="submit" ng-click="saveData(data)">Save</button>
+                            <button class="btn btn-default" ng-click="onCancel(json.json.action[1].stateName)">Cancel</button>
+                        </div>-->
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

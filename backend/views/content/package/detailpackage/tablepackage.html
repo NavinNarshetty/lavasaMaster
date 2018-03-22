@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-4 column">
       <div class="heading-profile">
-        <h2>Medals</h2>
+        <h2>Package</h2>
       </div>
     </div>
   </div>
@@ -19,7 +19,7 @@
               <div class="col-md-5">
                 <div class="form-group">
                   <div class="mtp5">
-                    <div class="dropdown">
+                    <!-- <div class="dropdown">
                       <button class="btn default btn-md dropdown-toggle" type="button" data-toggle="dropdown">Filter
                                                   <span class="caret"></span></button>
                       <ul class="dropdown-menu cur">
@@ -30,30 +30,30 @@
                           <label for="radio2">Sport</label>
                         </li>
                       </ul>
-                    </div>
-                    <div class="row" ng-if="formData.type != ''">
+                    </div> -->
+                    <!-- <div class="row" ng-if="formData.type != ''">
                       <div class="col-md-6 mtp5">
                         <input type="text" ng-model="formData.input" class="form-control" placeholder="Enter {{formData.type}}">
                       </div>
                       <div class="col-md-4 mtp5">
                         <button class="btn btn-sm school" type="button" ng-click="viewTable(formData)">Go</button>
                       </div>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
               <div class="col-md-7">
                 <div class="pull-right">
                   <!--<div class="pull-right">-->
-                  <form class="search-form mr-form ">
+                  <!-- <form class="search-form mr-form ">
                     <input type="text " ng-change="searchInTable(search) " placeholder="Search Here...
                                                " ng-model="search" />
-                  </form>
-                  <a class="btn btn-success" ui-sref="detailmedal">
+                  </form> -->
+                  <a class="btn btn-success" ui-sref="detailpackage">
                                    Create
                                 </a>
-                  <a class="btn btn-success" ng-click="generateExcel()">Export</a>
-                  <a class="btn btn-success" ng-click="updateTable()">Update Rank</a>
+                  <!-- <a class="btn btn-success" ng-click="generateExcel()">Export</a> -->
+                  <!-- <a class="btn btn-success" ng-click="updateTable()">Update Rank</a> -->
                 </div>
               </div>
             </div>
@@ -63,27 +63,20 @@
             <table class="table">
               <thead>
                 <tr>
-                  <!-- <th>#</th> -->
-                  <!-- <th>
-                                      Name
-                                  </th> -->
                   <th>
-                    Medal Type
-                  </th>
-                  <!-- <th>
-                                      School
-                                  </th> -->
-                  <th>
-                    Sport
+                    Name
                   </th>
                   <th>
-                    Player
+                    Price
                   </th>
                   <th>
-                    Team
+                    Discount
                   </th>
                   <th>
-                    School
+                    finalPrice
+                  </th>
+                  <th>
+                    eventCount
                   </th>
                   <th>Actions</th>
                 </tr>
@@ -96,52 +89,28 @@
                   <!--<td>{{($index + 1)}}</td>-->
                   <!-- <td>{{item.name}}</td> -->
                   <td>
-                    {{item.medalType|firstcapitalize}}
+                    {{item.name|firstcapitalize}}
                   </td>
-                  <!-- <td>
-                                      {{item.school.schoolName}}
-                                  </td> -->
+
                   <td>
-                    {{item.name}}
-                  </td>
-                  <td ng-if="item.player.length > 0">
-                    <div ng-if="item.player.length == 1" ng-repeat="player in item.player">
-                      {{player.sfaId}} - {{player.firstName}} {{player.middleName}} {{player.surname}}
-                    </div>
-                    <div ng-if="item.player.length > 1" ng-repeat="player in item.player">
-                      {{player.sfaId}} - {{player.firstName}} {{player.middleName}} {{player.surname}}<br>
-                    </div>
-                  </td>
-                  <td ng-if="item.player.length <= 0">
-                    -
-                  </td>
-                  <td ng-if="item.team.length > 0">
-                    <div ng-if="item.team.length == 1" ng-repeat="team in item.team">
-                      {{team.teamId}} - {{team.schoolName}}
-                    </div>
-                    <div ng-if="item.team.length > 1" ng-repeat="team in item.team">
-                      {{team.teamId}} - {{team.schoolName}}<br>
-                    </div>
-                  </td>
-                  <td ng-if="item.team.length <= 0">
-                    -
-                  </td>
-                  <td ng-if="item.school.length > 0">
-                    <div ng-if="item.school.length == 1" ng-repeat="school in item.school">
-                      {{school.schoolName}}
-                    </div>
-                    <div ng-if="item.school.length > 1" ng-repeat="school in item.school">
-                      {{school.schoolName}}<br>
-                    </div>
-                  </td>
-                  <td ng-if="item.school.length <= 0">
-                    -
+                    {{item.price}}
                   </td>
                   <td>
-                    <a class="btn btn-primary" target="_blank" ui-sref="detailmedal({id:item._id})">
+                    {{item.discount}}
+                  </td>
+                  <td>
+                    {{item.finalPrice}}
+                  </td>
+                  <td>
+                    {{item.eventCount}}
+                  </td>
+
+
+                  <td>
+                    <a class="btn btn-primary" target="_blank" ui-sref="detailpackage({id:item._id})">
                     <i class="fa fa-pencil"></i> Edit
                   </a>
-                    <a class="btn btn-danger" ng-click="confDel(item._id)">
+                    <a class="btn btn-danger" ng-click="confirmDelete(item._id)">
                     <i class="fa fa-trash"></i> Delete
                   </a>
                   </td>
