@@ -1,15 +1,14 @@
 // TABLE GALLERY
-myApp.controller('PackageCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
+myApp.controller('PackageCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, crudService, $state, toastr, $uibModal) {
   //Used to name the .html file
-  $scope.template = TemplateService.changecontent("playerregistration/tablepackage");
-  $scope.menutitle = NavigationService.makeactive("Ad Gallery");
+  $scope.template = TemplateService.changecontent("package/detailpackage/tablepackage");
+  $scope.menutitle = NavigationService.makeactive("Package");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
-
   // VAR
   $scope.formData = {};
   $scope.formData.page = 1;
-  $scope.formData.type = '';
+  // $scope.formData.type = '';
   $scope.formData.keyword = '';
 
   // SEARCHTABLE
@@ -26,8 +25,10 @@ myApp.controller('PackageCtrl', function ($scope, TemplateService, NavigationSer
 
   // VIEW TABLE
   $scope.viewTable = function () {
-    $scope.url = "AdGallery/search";
+    $scope.url = "Package/search";
     $scope.formData.page = $scope.formData.page++;
+    $scope.formData.filter = {};
+    // $scope.formData.filter.pageType = '';
     NavigationService.apiCall($scope.url, $scope.formData, function (data) {
       console.log("data.value", data);
       $scope.items = data.data.results;
@@ -36,85 +37,57 @@ myApp.controller('PackageCtrl', function ($scope, TemplateService, NavigationSer
     });
   }
   $scope.viewTable();
+  // VIEW TABLE
 
-
-  $scope.confDel = function (data) {
-    $scope.id = data;
-    $scope.modalInstance = $uibModal.open({
-      animation: $scope.animationsEnabled,
-      templateUrl: 'views/modal/delete.html',
-      backdrop: 'static',
-      keyboard: false,
-      size: 'sm',
-      scope: $scope
-    });
+  // DELETE
+  $scope.crudService = crudService;
+  var url = "Package/delete";
+  $scope.confirmDelete = function (data) {
+    crudService.confirmDelete(data, url, $scope);
   };
+  // DELETE END
 
 
-  $scope.noDelete = function () {
-    $scope.modalInstance.close();
-  }
-
-  $scope.delete = function (data) {
-    // console.log(data);
-    $scope.url = "AdGallery/delete";
-    $scope.constraints = {};
-    $scope.constraints._id = data;
-    NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
-      if (data.value) {
-        toastr.success('Successfully Deleted', 'Age Group Message');
-        $scope.modalInstance.close();
-        $scope.viewTable();
-      } else {
-        toastr.error('Something Went Wrong while Deleting', 'Age Group Message');
-      }
-    });
-  }
 });
 
 // DETAIL GALLERY
-myApp.controller('DetailAdGalleryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
+myApp.controller('DetailPackageCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, crudService, $state, toastr, $uibModal) {
   //Used to name the .html file
-  $scope.template = TemplateService.changecontent("adbanners/detailadgallery");
-  $scope.menutitle = NavigationService.makeactive("Detail Gallery");
+  $scope.template = TemplateService.changecontent("package/detailpackage/detailpackage");
+  $scope.menutitle = NavigationService.makeactive("Detail Package");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
+  $scope.title = 'Create';
+  $scope.formData = {};
+  $scope.formData.pageType = ' ';
 
-
-  // GETONE
-  if ($stateParams.id != '') {
+  var url = 'Package';
+  // GET ONE
+  // GET ONE
+  if ($stateParams.id) {
     $scope.title = 'Edit';
-    $scope.url = "AdGallery/getOne"
-    $scope.constraints = {};
-    $scope.constraints._id = $stateParams.id;
-    $scope.getOneAdGallery = function () {
-      NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
-        console.log(data, "get on data");
-        $scope.formData = data.data;
-      })
-    }
-    $scope.getOneAdGallery();
-  }
-
-
-  // SAVEDATA
-  $scope.saveData = function (data) {
-    console.log(data, "save data")
-    $scope.url = "AdGallery/save";
-    NavigationService.apiCall($scope.url, data, function (data) {
-      console.log(data, "data insode api")
-      if (data.value) {
-        if (data.data.nModified == 1) {
-          toastr.success('Ad Updated Successfully', 'Ad Gallery')
-          $state.go('adgallery')
-        } else {
-          toastr.success('Ad saved Successfully ', 'Ad Gallery');
-          $state.go('adgallery')
-        }
-      } else {
-        toastr.error("Something went wrong", 'Error')
+    var id = $stateParams.id;
+    crudService.getOneData(url, id, function (data) {
+      if (data) {
+        $scope.formData = data;
       }
     });
+  }
+  // GET ONE END
+  // GET ONE END
+
+
+  // SAVE FUNCTION
+  var state = 'package';
+  $scope.saveData = function (data) {
+    crudService.saveData(data, url, state);
   };
-  // SAVEDATA END
+  // SAVE FUNCTION END
+
+
+  //
+  $scope.onCancel = function (state) {
+    $state.go(state);
+  };
+
 });

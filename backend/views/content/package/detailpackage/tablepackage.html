@@ -1,0 +1,138 @@
+<div class="heading-sec">
+  <div class="row">
+    <div class="col-md-4 column">
+      <div class="heading-profile">
+        <h2>Package</h2>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Table-->
+<div class=" panel-content ">
+  <div class="row ">
+    <div class="col-md-12 ">
+      <div class="widget ">
+        <div class="table-area ">
+          <div class="widget-title ">
+            <h3>List of Medals<span class="tableTotal ">(Total : {{totalItems}}) </span></h3>
+            <div class="row">
+              <div class="col-md-5">
+                <div class="form-group">
+                  <div class="mtp5">
+                    <div class="dropdown">
+                      <button class="btn default btn-md dropdown-toggle" type="button" data-toggle="dropdown">Filter
+                                                  <span class="caret"></span></button>
+                      <ul class="dropdown-menu cur">
+                        <li><input type="radio" id="radio8" ng-model="formData.type" ng-change="changeAll()" value="">
+                          <label for="radio8">All</label>
+                        </li>
+                        <li><input type="radio" id="radio2" ng-model="formData.type" value="Sport" ng-change="changeInput()">
+                          <label for="radio2">Sport</label>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="row" ng-if="formData.type != ''">
+                      <div class="col-md-6 mtp5">
+                        <input type="text" ng-model="formData.input" class="form-control" placeholder="Enter {{formData.type}}">
+                      </div>
+                      <div class="col-md-4 mtp5">
+                        <button class="btn btn-sm school" type="button" ng-click="viewTable(formData)">Go</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7">
+                <div class="pull-right">
+                  <!--<div class="pull-right">-->
+                  <form class="search-form mr-form ">
+                    <input type="text " ng-change="searchInTable(search) " placeholder="Search Here...
+                                               " ng-model="search" />
+                  </form>
+                  <a class="btn btn-success" ui-sref="detailpackage">
+                                   Create
+                                </a>
+                  <a class="btn btn-success" ng-click="generateExcel()">Export</a>
+                  <a class="btn btn-success" ng-click="updateTable()">Update Rank</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive ">
+            <!--<div class="table-responsive " ng-show="totalItems>0 ">-->
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>
+                    Name
+                  </th>
+                  <th>
+                    Price
+                  </th>
+                  <th>
+                    Discount
+                  </th>
+                  <th>
+                    finalPrice
+                  </th>
+                  <th>
+                    eventCount
+                  </th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!--<tr ng-repeat="item in items">-->
+                <tr ng-repeat="item in items">
+                  <!--<tr>-->
+                  <!-- <td>{{($index + 1)+((formData.page-1)*maxRow)}}</td> -->
+                  <!--<td>{{($index + 1)}}</td>-->
+                  <!-- <td>{{item.name}}</td> -->
+                  <td>
+                    {{item.name|firstcapitalize}}
+                  </td>
+
+                  <td>
+                    {{item.price}}
+                  </td>
+                  <td>
+                    {{item.discount}}
+                  </td>
+                  <td>
+                    {{item.finalPrice}}
+                  </td>
+                  <td>
+                    {{item.eventCount}}
+                  </td>
+
+
+                  <td>
+                    <a class="btn btn-primary" target="_blank" ui-sref="detailpackage({id:item._id})">
+                    <i class="fa fa-pencil"></i> Edit
+                  </a>
+                    <a class="btn btn-danger" ng-click="confirmDelete(item._id)">
+                    <i class="fa fa-trash"></i> Delete
+                  </a>
+                  </td>
+                  <!--<td ng-repeat="but in json.json.action">
+                                      <a class="btn" ng-class="but.buttonClass" ng-click="json.eventAction(but,item) ">
+                                          <i class="fa" ng-class="but.icon"></i>{{but.name}}
+                                      </a>
+                                  </td>-->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tableData " ng-show="totalItems===0 ">
+            <h5>No data found</h5>
+          </div>
+          <div class="tableData " ng-show="totalItems===undefined ">
+            <h5>Loading Data</h5>
+          </div>
+          <ul ng-if="totalItems" ng-change="viewTable()" uib-pagination total-items="totalItems" items-per-page="maxRow" ng-model="formData.page"
+            max-size="template.pageMax" class="pagination-sm" boundary-links="true " force-ellipses="true "></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
