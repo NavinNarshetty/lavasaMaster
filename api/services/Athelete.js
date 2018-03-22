@@ -1444,6 +1444,7 @@ var model = {
 
             });
     },
+
     updatePaymentStatusNew: function (data, callback) {
         async.waterfall([
                 function (callback) {
@@ -1872,9 +1873,7 @@ var model = {
         }
     },
 
-    registeredUnregisteredMail: function (data, callback) {
-
-    },
+    registeredUnregisteredMail: function (data, callback) {},
 
     registeredOnlinePaymentMailSms: function (data, callback) {
         async.waterfall([
