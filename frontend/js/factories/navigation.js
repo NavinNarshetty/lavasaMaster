@@ -1305,6 +1305,26 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
             }).then(function (data) {
                 callback(data.data);
             });
+        },
+
+        // PLAYER REGISTRATION PAGE
+        getTestimonials: function (callback) {
+            $http({
+                url: adminUrl2 + 'Testimonial/search',
+                method: 'POST',
+            }).then(callback);
+        },
+        getPlayerRegistration: function (callback) {
+            $http({
+                url: adminUrl2 + 'Playerregistration/search',
+                method: 'POST',
+            }).then(callback);
+        },
+        getPlayerQuestions: function (callback) {
+            $http({
+                url: adminUrl2 + 'PlayerQuestions/search',
+                method: 'POST',
+            }).then(callback);
         }
     };
 });

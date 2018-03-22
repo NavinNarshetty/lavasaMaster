@@ -1,8 +1,8 @@
 // TABLE CONTROLLER
-myApp.controller('TestimonialCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal, crudService) {
+myApp.controller('PlayerQuestionCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal, crudService) {
   //Used to name the .html file
-  $scope.template = TemplateService.changecontent("player-registration/testimonial/tabletestimonial");
-  $scope.menutitle = NavigationService.makeactive("Testimonial");
+  $scope.template = TemplateService.changecontent("player-registration/questions/tablequestion");
+  $scope.menutitle = NavigationService.makeactive("Question");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
 
@@ -26,7 +26,7 @@ myApp.controller('TestimonialCtrl', function ($scope, TemplateService, Navigatio
 
   // VIEW TABLE
   $scope.viewTable = function () {
-    $scope.url = "Testimonial/search";
+    $scope.url = "PlayerQuestions/search";
     $scope.formData.page = $scope.formData.page++;
     NavigationService.apiCall($scope.url, $scope.formData, function (data) {
       console.log("data.value", data);
@@ -40,7 +40,7 @@ myApp.controller('TestimonialCtrl', function ($scope, TemplateService, Navigatio
 
   // DELETE
   $scope.crudService = crudService;
-  var url = "Testimonial/delete";
+  var url = "PlayerQuestions/delete";
   $scope.confirmDelete = function (data) {
     crudService.confirmDelete(data, url, $scope);
   }
@@ -50,13 +50,13 @@ myApp.controller('TestimonialCtrl', function ($scope, TemplateService, Navigatio
 // TABLE CONTROLLER END
 
 // DETAIL CONTROLLER
-myApp.controller('DetailTestimonialCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal, crudService) {
+myApp.controller('DetailPlayerQuestionCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal, crudService) {
   //Used to name the .html file
-  $scope.template = TemplateService.changecontent("player-registration/testimonial/detailtestimonial");
-  $scope.menutitle = NavigationService.makeactive("Testimonial");
+  $scope.template = TemplateService.changecontent("player-registration/questions/detailquestion");
+  $scope.menutitle = NavigationService.makeactive("Questions");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
-  var url = 'Testimonial'
+  var url = 'PlayerQuestions'
 
   $scope.formData = {};
   // GET ONE
@@ -71,7 +71,7 @@ myApp.controller('DetailTestimonialCtrl', function ($scope, TemplateService, Nav
   }
   // GET ONE END
   // SAVE FUNCTION
-  var state = 'testimonial'
+  var state = 'playerquestion'
   $scope.saveData = function (data) {
     crudService.saveData(data, url, state);
   }

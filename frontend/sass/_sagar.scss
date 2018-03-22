@@ -2783,6 +2783,13 @@ $tickerDuration: 60s;
       }
     }
   }
+  .register-venue{
+    &:last-child{
+      .register-seperator{
+        display: none;
+      }
+    }
+  }
   .registeraccordion-links{
     color: $sport-lightblue;
     text-transform: uppercase;
@@ -2829,6 +2836,7 @@ $tickerDuration: 60s;
 }
 .register-testimonialcard{
   max-width: 350px;
+  width: 350px;
   padding: 20px;
   // border: 1px solid $grey;
   border-bottom: 2px solid $sport-success;

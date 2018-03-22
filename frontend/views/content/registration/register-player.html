@@ -4,16 +4,21 @@
     <section class="registerplayer-header">
       <!-- TITLE -->
       <div class="registerplayer-title">
-        REGISTRATIONS <span class="regiterplayer-titlesmall">Sfa Hyderabad 2018-19</span>
+        REGISTRATIONS <span class="regiterplayer-titlesmall">Sfa {{sfaCity}} {{eventYear}}</span>
       </div>
       <!-- TITLE END -->
       <!-- BANNER -->
       <div class="registerplayer-bannerslider">
         <div class="swiper-container">
           <div class="swiper-wrapper">
-            <div class="swiper-slide" ng-repeat="banner in banners track by $index">
+            <div class="swiper-slide hidden-xs" ng-repeat="banner in banners.desktop track by $index">
               <div class="registerplayer-banner">
-                <img ng-src="{{banner.image}}" alt="Player Registrations | Sports For All" class="img-responsive">
+                <img ng-src="{{banner.image|serverimage2}}" alt="Player Registrations | Sports For All" class="img-responsive">
+              </div>
+            </div>
+            <div class="swiper-slide visible-xs" ng-repeat="banner in banners.mobile track by $index">
+              <div class="registerplayer-banner">
+                <img ng-src="{{banner.image|serverimage2}}" alt="Player Registrations | Sports For All" class="img-responsive">
               </div>
             </div>
           </div>
@@ -26,20 +31,20 @@
           <div uib-accordion-group class="panel-default" is-open="s.open">
             <uib-accordion-heading class="clearfix">
               <span class="pull-right register-accordion-view"> View <span ng-if="!s.open">Details</span> <span ng-if='s.open'>Less</span> <i class="fa " ng-class="{'fa-chevron-up': s.open, 'fa-chevron-down': !s.open}"></i></span>
-                <h4 class="d-fjalla-one text-uppercase m-clear">Quick Details About SFA Championship 2018-19</h4>
+                <h4 class="d-fjalla-one text-uppercase m-clear">Quick Details About SFA Championship {{eventYear}}</h4>
             </uib-accordion-heading>
             <div class="register-accordioncontent">
               <div class="register-contentholder">
                 <label class="display-block">Sports:</label>
-                <span class="register-sportlist">BasketBall <span class="register-seperator">|</span> </span>
+                <span class="register-sportlist" ng-repeat="sport in sports track by $index">{{sport}} <span class="register-seperator">|</span> </span>
               </div>
               <div class="register-contentholder">
                 <label for="">Dates:</label>
-                <span>10th - 17th November 2017</span>
+                <span>{{sfaDates}}</span>
               </div>
               <div class="register-contentholder">
                 <label for="">Venue:</label>
-                <span>Gachibowli Sports Complex | LB Stadium (Tennis) </span>
+                <span class="register-venue" ng-repeat="place in venue track by $index">{{place}} <span class="register-seperator">|</span></span>
               </div>
               <div class="register-contentholder">
                 <ul class="list-inline">
@@ -50,7 +55,7 @@
                     <a class="registeraccordion-links">Championship Schedule</a>
                   </li>
                   <li>
-                    <a class="registeraccordion-links">Age & Event Categories</a>
+                    <a href="{{ageEventPdf}}" target="_new" class="registeraccordion-links">Age & Event Categories</a>
                   </li>
                   <li>
                     <a class="registeraccordion-links">FAQs</a>
@@ -65,9 +70,7 @@
       <!-- INTRO SECTION -->
       <div class="registerplayer-intro">
         <div class="registerplayer-introtitle">Player Registrations</div>
-        <div class="registerplayer-introcontent">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente tempore cum ipsa deleniti culpa laboriosam veritatis, labore asperiores debitis, placeat pariatur saepe optio. Quibusdam consectetur ut ad assumenda quae veritatis?
-        </div>
+        <div class="registerplayer-introcontent" ng-bind-html="content"></div>
       </div>
       <!-- INTRO SECTION END -->
     </section>
@@ -157,39 +160,24 @@
     </section>
     <!-- REGISTER FORM END  -->
     <!-- QUESTIONS  -->
-    <section class="registerplayer-questions">
+    <section class="registerplayer-questions" ng-if="questionList.length>0">
       <div class="registerplayer-questiontitle">
         Questions you may have
       </div>
       <div class="registerplayer-questionlist">
         <ul class="list-unstyled">
-          <li>
-            <div class="registerplayer-questionitem">
-              1.  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum mollitia adipisci officia labore </br>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis inventore iusto doloremque totam error, esse explicabo repudiandae sapiente commodi odit deleniti adipisci, accusamus quas quia fugiat temporibus hic! Minus, ipsum.
-            </div>
-          </li>
-          <li>
-            <div class="registerplayer-questionitem">
-              1.  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum mollitia adipisci officia labore </br>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis inventore iusto doloremque totam error, esse explicabo repudiandae sapiente commodi odit deleniti adipisci, accusamus quas quia fugiat temporibus hic! Minus, ipsum.
-            </div>
-          </li>
-          <li>
-            <div class="registerplayer-questionitem">
-              1.  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum mollitia adipisci officia labore </br>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis inventore iusto doloremque totam error, esse explicabo repudiandae sapiente commodi odit deleniti adipisci, accusamus quas quia fugiat temporibus hic! Minus, ipsum.
-            </div>
+          <li ng-repeat="question in questionList|limitTo:questionLimit.value track by $index">
+            <div class="registerplayer-questionitem" ng-bind-html="question.question"></div>
           </li>
         </ul>
       </div>
-      <div class="registerplayer-questionknowmore text-right" >
+      <div class="registerplayer-questionknowmore text-right" ng-if="questionList.length>2">
         <a ng-click="moreQuestions();" class="btn">View <span ng-if="questionLimit.more">More</span> <span ng-if="!questionLimit.more">Less</span></a>
       </div>
     </section>
     <!-- QUESTIONS END  -->
     <!-- TESTIMONIALS  -->
-    <section class="registerplayer-testimonials">
+    <section class="registerplayer-testimonials" ng-if="testimonials.length>0">
       <div class="registerplayer-introtitle">Testimonials From Past Championships</div>
       <div class="row">
         <div class="col-md-offset-2 col-md-8">
@@ -199,17 +187,15 @@
                 <div class="swiper-slide" ng-repeat="card in testimonials track by $index">
                   <div class="register-testimonialcard">
                     <div class="register-testimonialimg">
-                      <img src="img/m1.jpg" alt="Testimonial | Sports For All" class="img-responsive">
+                      <img ng-src="{{card.image|serverimage2}}" alt="Testimonial | Sports For All" class="img-responsive">
                       <div class="register-testimonialquote">
-                        <img src="img/icon/quote-open.png" alt="" class="img-responsive">
+                        <img src="img/icon/quote-open.png" alt="Sports For All" class="img-responsive">
                       </div>
                     </div>
-                    <div class="register-testimonialcontent">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas consectetur, ipsam eos nostrum sint voluptatem minus quaerat accusantium atque ea error. Nulla explicabo, itaque, consectetur et necessitatibus labore soluta! Ullam?
-                    </div>
+                    <div class="register-testimonialcontent" ng-bind-html="card.content"></div>
                     <div class="register-testimonialauthor text-right">
-                      <p class="register-testimonialname">- <span>Rahi Shah</span></p>
-                      <p class="register-testimonialposition">Digital Team</p>
+                      <p class="register-testimonialname">- <span>{{card.author}}</span></p>
+                      <p class="register-testimonialposition">{{card.designation}}</p>
                     </div>
                   </div>
                 </div>
@@ -225,19 +211,19 @@
     <!-- TESTIMONIALS END  -->
   </div>
     <!-- COUNTS  -->
-    <section class="registerplayer-counts">
+    <section class="registerplayer-counts" ng-if="counts.length>0">
       <div class="container">
         <div class="registercount-flex">
           <div class="registercount-item" ng-repeat = "count in counts track by $index">
-            <div class="registercount-number">{{count.number}}</div>
-            <div class="registercount-label">{{count.label}}</div>
+            <div class="registercount-number">{{count.value}}</div>
+            <div class="registercount-label">{{count.name}}</div>
           </div>
         </div>
       </div>
     </section>
     <!-- COUNTS END  -->
     <!-- PHOTOS  -->
-    <section class="registerplayer-photos">
+    <section class="registerplayer-photos" ng-if="gallery.length>0">
       <div class="container">
         <div class="registerplayer-introtitle">Photos From Past Championships</div>
         <div class="registerplayer-galleryslider">
@@ -249,7 +235,7 @@
                     <div class="col-md-6 registergallery-photoslide" ng-repeat="photoList in slide track by $index">
                       <div class="registergallery-photo">
                         <div class="registergallery-photoholder" ng-repeat="photo in photoList|limitTo:3">
-                          <img ng-src="{{photo.image}}" alt="Sports For All" class="img-responsive">
+                          <img ng-src="{{photo.mediaLink|serverimage2}}" alt="Sports For All" class="img-responsive">
                         </div>
                       </div>
                     </div>

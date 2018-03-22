@@ -1,4 +1,4 @@
-myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, NavigationService, $timeout, $uibModal) {
+myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, NavigationService, $timeout, $uibModal, $sce, $filter, configService) {
   $scope.template = TemplateService.getHTML("content/registration/register-player.html");
   TemplateService.title = "Player Registration"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
@@ -34,8 +34,8 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
           loop: true,
           grabCursor: true,
           spaceBetween: 10,
-          nextButton: '.swiper-button-next',
-          prevButton: '.swiper-button-prev',
+          nextButton: '.registerplayer-testimonialslider .swiper-button-next',
+          prevButton: '.registerplayer-testimonialslider .swiper-button-prev',
           touchEventsTarget: 'container',
           breakpoints: {
               992: {
@@ -145,8 +145,73 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
   }
   // GALLERY END
   // FUNCTIONS END
+  // API CALLS
+  // CONFIG SERVICE
+  configService.getDetail(function(data){
+    console.log(data);
+    $scope.state = data.state;
+    $scope.year = data.year;
+    $scope.eventYear = data.eventYear;
+    $scope.sfaCity = data.sfaCity;
+    $scope.isCollege = data.isCollege;
+    $scope.type = data.type;
+    $scope.sports = data.sports;
+    $scope.sfaDates = data.date;
+    $scope.venue = data.venue;
+  });
+  // CONFIG SERVICE END
+  // GET REGISTERATION CONTENT
+  $scope.getPlayerRegistration = function(){
+    NavigationService.getPlayerRegistration(function(data){
+      console.log("data", data);
+      data = data.data;
+      if(data.value == true){
+        console.log("content success", data.data.results);
+        $scope.banners = data.data.results[0].banner;
+        $scope.content = data.data.results[0].content;
+        $scope.ageEventPdf = $sce.trustAsResourceUrl($filter('uploadpathTwo')(data.data.results[0].ageEventPdf));
+        console.log("pdf", $scope.ageEventPdf);
+        $scope.gallery = data.data.results[0].gallery;
+        $scope.counts = data.data.results[0].eventCount;
+        $scope.getGallerySlides($scope.gallery);
+      } else {
+        console.log("content fail", data);
+      }
+    });
+  }
+  $scope.getPlayerRegistration();
+  // GET REGISTERATION CONTENT END
+  // GET QUESTIONS
+  $scope.getPlayerQuestions = function(){
+    NavigationService.getPlayerQuestions(function(data){
+      console.log("questions",data);
+      data = data.data;
+      if(data.value == true){
+        $scope.questionList = data.data.results;
+        console.log("questions success", $scope.questionList);
+      } else {
+        console.log("questions fail", data);
+      }
+    })
+  }
+  $scope.getPlayerQuestions();
+  // GET QUESTIONS END
+  // GET TESTIMONIALS
+  $scope.getTestimonials = function(){
+    NavigationService.getTestimonials(function(data){
+      data = data.data;
+      if(data.value == true){
+        $scope.testimonials = data.data.results;
+        console.log("testimonials success", $scope.testimonials);
+      } else {
+        console.log("testimonials fail", data);
+      }
+    });
+  }
+  $scope.getTestimonials();
+  // GET TESTIMONIALS END
+  // API CALLS END
   // JSONS
-  // JSONS END
   // BANNERS
   $scope.banners = [{
     image: 'img/About_Web_Hyd.jpg'
@@ -157,47 +222,48 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
   }];
   // BANNERS END
   // TESTIMONIALS
-  $scope.testimonials = [1,2,3,4,5,6];
+  // $scope.testimonials = [1,2,3,4,5,6];
   // TESTIMONIALS END
   // COUNTS
-  $scope.counts = [{
-    number: 2,
-    label: 'Cities'
-  },{
-    number: 3,
-    label: 'Championships'
-  },{
-    number: 25,
-    label: 'Sports'
-  },{
-    number: 1000,
-    label: 'Schools'
-  },{
-    number: 70000,
-    label: 'Athletes'
-  }]
+  // $scope.counts = [{
+  //   number: 2,
+  //   label: 'Cities'
+  // },{
+  //   number: 3,
+  //   label: 'Championships'
+  // },{
+  //   number: 25,
+  //   label: 'Sports'
+  // },{
+  //   number: 1000,
+  //   label: 'Schools'
+  // },{
+  //   number: 70000,
+  //   label: 'Athletes'
+  // }]
   // COUNTS END
-  $scope.gallery = [{
-    image: 'img/featuredthumbnail.jpg'
-  },{
-    image: 'img/featuredthumbnail.jpg'
-  },{
-    image: 'img/featuredthumbnail.jpg'
-  },{
-    image: 'img/featuredthumbnail.jpg'
-  },{
-    image: 'img/featuredthumbnail.jpg'
-  },{
-    image: 'img/featuredthumbnail.jpg'
-  },{
-    image: 'img/featuredthumbnail.jpg'
-  },{
-    image: 'img/featuredthumbnail.jpg'
-  },{
-    image: 'img/featuredthumbnail.jpg'
-  },{
-    image: 'img/featuredthumbnail.jpg'
-  }];
-  $scope.getGallerySlides($scope.gallery);
+  // $scope.gallery = [{
+  //   image: 'img/featuredthumbnail.jpg'
+  // },{
+  //   image: 'img/featuredthumbnail.jpg'
+  // },{
+  //   image: 'img/featuredthumbnail.jpg'
+  // },{
+  //   image: 'img/featuredthumbnail.jpg'
+  // },{
+  //   image: 'img/featuredthumbnail.jpg'
+  // },{
+  //   image: 'img/featuredthumbnail.jpg'
+  // },{
+  //   image: 'img/featuredthumbnail.jpg'
+  // },{
+  //   image: 'img/featuredthumbnail.jpg'
+  // },{
+  //   image: 'img/featuredthumbnail.jpg'
+  // },{
+  //   image: 'img/featuredthumbnail.jpg'
+  // }];
+
   // CODE  END
+  // JSONS END
 });
