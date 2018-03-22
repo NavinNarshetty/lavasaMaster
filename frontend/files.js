@@ -113,5 +113,7 @@ module.exports = [
   'frontend/js/controllers/championshipArchive.js',
   'frontend/js/controllers/media/gallerypost.js',
   // NEW REGISTER
-  'frontend/js/controllers/registration/registerplayer-controller.js'
+  'frontend/js/controllers/registration/registerplayer-controller.js',
+  'frontend/js/controllers/registration/registerformplayer.js',
+  'frontend/js/controllers/registration/registerformschool.js'
 ];

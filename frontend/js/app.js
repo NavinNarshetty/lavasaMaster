@@ -517,6 +517,16 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'RegisterPlayerCtrl'
         })
+        .state('registerformplayer', {
+            url: "/register/player/form",
+            templateUrl: tempateURL,
+            controller: 'RegisterFormPlayerCtrl'
+        })
+        .state('registerformschool', {
+            url: "/register/school/form",
+            templateUrl: tempateURL,
+            controller: 'RegisterFormSchoolCtrl'
+        })
         // NEW REGISTRATION PAGES
         ;
     // if (window.location.origin != "http://testmumbaischool.sfanow.in") {
