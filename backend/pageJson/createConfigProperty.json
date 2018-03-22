@@ -7,8 +7,7 @@
     "urlFields": [
         "ConfigProperty"
     ],
-    "fields": [
-        {
+    "fields": [{
             "name": "Year",
             "type": "text",
             "tableRef": "year",
@@ -59,6 +58,35 @@
                 ""
             ],
             "url": ""
+        }, {
+            "name": "Event Date",
+            "type": "text",
+            "tableRef": "date",
+            "placeholder": "Enter Event Date",
+            "id": "date",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "url": ""
+        },
+        {
+            "name": "Venue",
+            "type": "tags",
+            "tableRef": "venue",
+            "placeholder": "Enter Venue",
+            "id": "city",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "onView": true,
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "multiple",
+            "dropDown": ""
         },
         {
             "name": "Institution Type",
@@ -875,8 +903,7 @@
             "url": ""
         }
     ],
-    "action": [
-        {
+    "action": [{
             "name": "submit",
             "action": "submitConfigProperty",
             "stateName": {

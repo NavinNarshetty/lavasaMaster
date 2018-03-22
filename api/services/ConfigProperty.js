@@ -3,6 +3,10 @@ var schema = new Schema({
     eventYear: String,
     fromMonth: String,
     toMonth: String,
+    date: String,
+    venue: [{
+        type: String,
+    }],
     institutionType: {
         type: String,
     },
@@ -122,6 +126,8 @@ var model = {
                     finalData.goldMedal = property[0].goldMedal;
                     finalData.silverMedal = property[0].silverMedal;
                     finalData.bronzeMedal = property[0].bronzeMedal;
+                    finalData.date = property[0].date;
+                    finalData.venue = property[0].venue;
                     callback(null, finalData);
                 }
             }
