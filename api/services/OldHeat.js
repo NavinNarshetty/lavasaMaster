@@ -519,6 +519,7 @@ var model = {
                             data.matchId = data.matchId + data.incrementalId;
                             callback(null, data);
                         } else {
+                            data.incrementalId = ++match.incrementalId;
                             data.matchId = data.matchId + data.incrementalId;
                             callback(null, data);
                         }

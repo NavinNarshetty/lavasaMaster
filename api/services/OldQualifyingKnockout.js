@@ -166,6 +166,68 @@ var model = {
         });
     },
 
+    getQualifyingAggregate: function (data) {
+        var pipeline = [{
+                $match: {
+                    "participantType": "player",
+                    "year": data.year,
+                    round: "Qualifying Round"
+                }
+            },
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$heats",
+                }
+            },
+        ];
+        return pipeline;
+    },
+
+    getAllPlayer1: function (data, callback) {
+        var individualSport = {};
+        async.waterfall([
+            function (callback) {
+                var pipeLine = OldQualifyingKnockout.getQualifyingAggregate(data);
+                OldQualifyingKnockout.aggregate(pipeLine, function (err, complete) {
+                    if (err) {
+                        callback(err, "error in mongoose");
+                    } else {
+                        if (_.isEmpty(complete)) {
+                            callback(null, complete);
+                        } else {
+                            callback(null, complete);
+                        }
+                    }
+                });
+            },
+            function (complete, callback) {
+                OldKnockout.saveIn(complete, individualSport, function (err, saveData) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(saveData)) {
+                            var err = {
+                                error: "no saveData",
+                                data: saveData
+                            }
+                            callback(null, err);
+                        } else {
+                            callback(null, saveData);
+                        }
+                    }
+                });
+                // callback(null, complete);
+            },
+        ], function (err, data3) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, data3);
+            }
+        });
+    },
+
     //---------------------------------Match Creation--------------------------------
 
     saveQualifyingMatchIndividual: function (data, callback) {
@@ -324,6 +386,7 @@ var model = {
                                 match.scheduleDate = data.date;
                                 match.round = data.roundName;
                                 match.incrementalId = data.matchid;
+                                match.oldMatchId = data.matchid;
                                 match.oldId = data._id;
                                 match.excelType = data.excelType;
                                 match.matchId = "Q.k.";

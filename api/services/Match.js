@@ -13,6 +13,7 @@ autoIncrement.initialize(mongoose);
 var schema = new Schema({
     incrementalId: Number,
     matchId: String,
+    oldMatchId:String,
     sport: {
         type: Schema.Types.ObjectId,
         ref: 'Sport'
