@@ -1085,7 +1085,6 @@ var model = {
                     }
                 });
             },
-
             function (athleteData, callback) {
                 if (athleteData.error) {
                     callback(null, athleteData);

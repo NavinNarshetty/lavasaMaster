@@ -1,5 +1,9 @@
 var schema = new Schema({
-
+    code: String,
+    percent: String,
+    amount: String,
+    fromDate: Date,
+    toDate: Date,
 });
 
 schema.plugin(deepPopulate, {});
