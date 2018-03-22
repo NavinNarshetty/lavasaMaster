@@ -15,8 +15,13 @@ var schema = new Schema({
         ref: 'Package',
         index: true
     },
+    amountToPay: String,
     amountPaid: String,
     paymentMode: String,
+    PayuId: String,
+    accountType: String,
+    paymentMode: String,
+    receiptId: String,
 });
 
 schema.plugin(deepPopulate, {});
@@ -27,7 +32,7 @@ module.exports = mongoose.model('Transaction', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
-    saveTransactionOnline: function (data, callback) {
+    saveTransaction: function (data, callback) {
         async.waterfall([
                 function (callback) {
                     var param = {};
@@ -40,8 +45,12 @@ var model = {
                     }
                     param.dateOfTransaction = new date();
                     param.package = data.package._id;
-                    param.amountPaid = data.package.finalPrice;
-                    param.paymentMode = "onlinePayu";
+                    param.amountToPay = data.package.finalPrice;
+                    param.paymentMode = data.paymentMode;
+                    param.amountPaid = data.amountPaid;
+                    param.PayuId = data.PayuId;
+                    param.receiptId = data.receiptId;
+                    param.accountType = data.accountType;
                     Transaction.saveData(param, function (err, transactData) {
                         if (err || _.isEmpty(transactData)) {
                             callback(null, {
@@ -56,94 +65,24 @@ var model = {
                 function (transactData, callback) {
                     var transaction = [];
                     if (transactData.athlete != undefined) {
-                        Accounts.findOne({
-                            athlete: transactData.athlete
-                        }).lean().exec(function (err, accountsData) {
+                        Transaction.accountsSaveAthleteTransaction(transactData, function (err, vData) {
                             if (err) {
                                 callback(err, null);
-                            } else if (_.isEmpty(accountsData)) {
-                                transaction.push(transactData._id);
-                                var matchObj = {
-                                    $set: {
-                                        athlete: transactData.athlete,
-                                        transaction: transaction,
-                                        totalToPay: transactData.amountPaid,
-                                        totalPaid: 0,
-                                        outstandingAmount: 0,
-                                        paymentMode: transactData.paymentMode,
-                                    }
-                                };
-                                Accounts.update({
-                                    athlete: transactData.athlete
-                                }, matchObj).exec(
-                                    function (err, data3) {
-                                        if (err) {
-                                            callback(err, null);
-                                        } else if (data3) {
-                                            callback(null, transactData);
-                                        }
-                                    });
-
-                            } else {
-                                _.each(accountsData.transaction, function (n) {
-                                    transaction.push(n);
-                                });
-                                transaction.push(transactData._id);
-                                var matchObj = {
-                                    $set: {
-                                        athlete: transactData.athlete,
-                                        transaction: transaction,
-                                        amount: transactData.amountPai,
-                                        paymentMode: transactData.paymentMode,
-                                    }
-                                };
-                                Accounts.update({
-                                    athlete: transactData.athlete
-                                }, matchObj).exec(
-                                    function (err, data3) {
-                                        if (err) {
-                                            callback(err, null);
-                                        } else if (data3) {
-                                            callback(null, transactData);
-                                        }
-                                    });
+                            } else if (vData) {
+                                callback(null, vData);
                             }
                         });
                     } else {
-                        Accounts.findOne({
-                            school: transactData.school
-                        }).lean().exec(function (err, accountsData) {
+                        Transaction.accountsSaveSchoolTransaction(transactData, function (err, vData) {
                             if (err) {
                                 callback(err, null);
-                            } else if (_.isEmpty(accountsData)) {
-                                var param = {};
-                                param.school = transactData.school;
-                                param.transaction = transactData._id;
-                                param.amonnt = transactData.amountPaid;
-                                param.paymentMode = transactData.paymentMode;
-                            } else {
-
+                            } else if (vData) {
+                                callback(null, vData);
                             }
                         });
                     }
 
                 },
-                function (transactData, callback) {
-                    var matchObj = {
-                        $set: {
-                            // transacti
-                        }
-                    }
-                    Accounts.update({
-                        athlete: transactData.athlete
-                    }, matchObj).exec(
-                        function (err, data3) {
-                            if (err) {
-                                console.log(err);
-                                callback(err, null);
-                            } else if (data3) {}
-                        });
-                }
             ],
             function (err, complete) {
                 if (err) {
@@ -151,8 +90,269 @@ var model = {
                 } else {
                     callback(null, complete);
                 }
-            })
-    }
+            });
+    },
 
+    accountsFirstTransaction: function (transactData, callback) {
+        var transaction = [];
+        transaction.push(transactData._id);
+        if (transactData.paymentMode == "cash" && transactData.amountToPay == 0) {
+            var matchObj = {
+                $set: {
+                    athlete: transactData.athlete,
+                    transaction: transaction,
+                    totalToPay: transactData.amountToPay,
+                    totalPaid: transactData.amountPaid,
+                    outstandingAmount: 0,
+                    paymentMode: transactData.paymentMode,
+                }
+            };
+        } else {
+            var matchObj = {
+                $set: {
+                    athlete: transactData.athlete,
+                    transaction: transaction,
+                    totalToPay: transactData.amountToPay,
+                    totalPaid: transactData.amountPaid,
+                    outstandingAmount: 0,
+                    PayuId: transactData.PayuId,
+                    accountType: transactData.accountType,
+                    paymentMode: transactData.paymentMode,
+                    receiptId: transactData.receiptId,
+                }
+            };
+        }
+        Accounts.update({
+            athlete: transactData.athlete
+        }, matchObj).exec(
+            function (err, data3) {
+                if (err) {
+                    callback(err, null);
+                } else if (data3) {
+                    callback(null, transactData);
+                }
+            });
+    },
+
+    accountsFirstTransactionSchool: function (transactData, callback) {
+        var transaction = [];
+        transaction.push(transactData._id);
+        if (transactData.paymentMode == "cash" && transactData.amountToPay == 0) {
+            var matchObj = {
+                $set: {
+                    school: transactData.school,
+                    transaction: transaction,
+                    totalToPay: transactData.amountToPay,
+                    totalPaid: transactData.amountPaid,
+                    outstandingAmount: 0,
+                    paymentMode: transactData.paymentMode,
+                }
+            };
+        } else {
+            var matchObj = {
+                $set: {
+                    school: transactData.school,
+                    transaction: transaction,
+                    totalToPay: transactData.amountToPay,
+                    totalPaid: transactData.amountPaid,
+                    outstandingAmount: 0,
+                    PayuId: transactData.PayuId,
+                    accountType: transactData.accountType,
+                    paymentMode: transactData.paymentMode,
+                    receiptId: transactData.receiptId,
+                }
+            };
+        }
+        Accounts.update({
+            school: transactData.school
+        }, matchObj).exec(
+            function (err, data3) {
+                if (err) {
+                    callback(err, null);
+                } else if (data3) {
+                    callback(null, transactData);
+                }
+            });
+    },
+
+    accountsSaveAthleteTransaction: function (transactData, callback) {
+        async.waterfall([
+            function (callback) {
+                Accounts.findOne({
+                    athlete: transactData.athlete
+                }).lean().exec(function (err, accountsData) {
+                    if (err || _.isEmpty(accountsData)) {
+                        callback(null, {
+                            error: "NO accounts found",
+                            data: transactData
+                        });
+                    } else {
+                        callback(null, accountsData);
+                    }
+                });
+            },
+            function (accountsData, callback) {
+                if (accountsData.error) {
+                    callback(null, accountsData);
+                } else {
+                    if (_.isEmpty(accountsData.transaction) || accountsData.transaction.length == 0) {
+                        Transaction.accountsFirstTransaction(transactData, function (err, vData) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (vData) {
+                                callback(null, vData);
+                            }
+                        });
+                    } else {
+                        var transaction = [];
+                        var toPay;
+                        _.each(accountsData.transaction, function (n) {
+                            transaction.push(n);
+                            toPay = accountsData.totalToPay;
+                        });
+                        transaction.push(transactData._id);
+                        if (toPay > 0) {
+                            toPay = transactData.package.finalPrice - (toPay + transactData.amountToPay);
+                        } else {
+                            toPay = transactData.package.finalPrice - transactData.amountToPay;
+                        }
+                        var amount = transactData.amountPaid + accountsData.totalPaid;
+                        // var outstanding=
+                        if (transactData.paymentMode == "cash") {
+                            var matchObj = {
+                                $set: {
+                                    athlete: transactData.athlete,
+                                    transaction: transaction,
+                                    totalToPay: toPay,
+                                    totalPaid: amount,
+                                    outstandingAmount: 0,
+                                    paymentMode: transactData.paymentMode,
+                                }
+                            };
+                        } else {
+                            var matchObj = {
+                                $set: {
+                                    athlete: transactData.athlete,
+                                    transaction: transaction,
+                                    totalToPay: toPay,
+                                    totalPaid: amount,
+                                    outstandingAmount: 0,
+                                    PayuId: transactData.PayuId,
+                                    accountType: transactData.accountType,
+                                    paymentMode: transactData.paymentMode,
+                                    receiptId: transactData.receiptId,
+                                }
+                            };
+                        }
+                        Accounts.update({
+                            athlete: transactData.athlete
+                        }, matchObj).exec(
+                            function (err, data3) {
+                                if (err) {
+                                    callback(err, null);
+                                } else if (data3) {
+                                    callback(null, transactData);
+                                }
+                            });
+                    }
+                }
+            }
+        ], function (err, complete) {
+
+        });
+
+    },
+
+    accountsSaveSchoolTransaction: function (transactData, callback) {
+        async.waterfall([
+            function (callback) {
+                Accounts.findOne({
+                    school: transactData.school
+                }).lean().exec(function (err, accountsData) {
+                    if (err || _.isEmpty(accountsData)) {
+                        callback(null, {
+                            error: "NO accounts found",
+                            data: transactData
+                        });
+                    } else {
+                        callback(null, accountsData);
+                    }
+                });
+            },
+            function (accountsData, callback) {
+                if (accountsData.error) {
+                    callback(null, accountsData);
+                } else {
+                    if (_.isEmpty(accountsData.transaction) || accountsData.transaction.length == 0) {
+                        Transaction.accountsFirstTransactionSchool(transactData, function (err, vData) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (vData) {
+                                callback(null, vData);
+                            }
+                        });
+                    } else {
+                        var transaction = [];
+                        var toPay;
+                        _.each(accountsData.transaction, function (n) {
+                            transaction.push(n);
+                            toPay = accountsData.totalToPay;
+                        });
+                        transaction.push(transactData._id);
+                        if (toPay > 0) {
+                            toPay = transactData.package.finalPrice - (toPay + transactData.amountToPay);
+                        } else {
+                            toPay = transactData.package.finalPrice - transactData.amountToPay;
+                        }
+                        var amount = transactData.amountPaid + accountsData.totalPaid;
+                        // var outstanding=
+                        if (transactData.paymentMode == "cash") {
+                            var matchObj = {
+                                $set: {
+                                    school: transactData.school,
+                                    transaction: transaction,
+                                    totalToPay: toPay,
+                                    totalPaid: amount,
+                                    outstandingAmount: 0,
+                                    paymentMode: transactData.paymentMode,
+                                }
+                            };
+                        } else {
+                            var matchObj = {
+                                $set: {
+                                    school: transactData.school,
+                                    transaction: transaction,
+                                    totalToPay: toPay,
+                                    totalPaid: amount,
+                                    outstandingAmount: 0,
+                                    PayuId: transactData.PayuId,
+                                    accountType: transactData.accountType,
+                                    paymentMode: transactData.paymentMode,
+                                    receiptId: transactData.receiptId,
+                                }
+                            };
+                        }
+                        Accounts.update({
+                            school: transactData.school
+                        }, matchObj).exec(
+                            function (err, data3) {
+                                if (err) {
+                                    callback(err, null);
+                                } else if (data3) {
+                                    callback(null, transactData);
+                                }
+                            });
+                    }
+                }
+            }
+        ], function (err, complete) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, complete);
+            }
+        });
+
+    },
 };
 module.exports = _.assign(module.exports, exports, model);
