@@ -1,7 +1,13 @@
 var schema = new Schema({
     banner: {
-        desktop: [],
-        mobile: [],
+        desktop: [{
+            image: String,
+            link: String
+        }],
+        mobile: [{
+            image: String,
+            link: String
+        }],
     },
     ageEventPdf: String,
     content: String,

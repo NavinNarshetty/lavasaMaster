@@ -1,0 +1,304 @@
+<div class="heading-sec">
+  <div class="row">
+    <div class="col-md-4 column">
+      <div class="heading-profile">
+        <h2>{{title}} Register Content</h2>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="widget">
+        <div class="form-elements-sec">
+          <form name="detailForm" role="form" class="sec">
+            <!-- GALLERY SECTION -->
+            <section>
+              <div class="text-center bordered mb15">
+                <label for="">Gallery</label>
+              </div>
+              <div class="row">
+                <!-- BANNER HEADER -->
+                <div class="col-md-6 desktop-banner">
+                  <div class="form-group">
+                    <label for="gallerybanners" class="fz12">Gallery Banners - Desktop</label>
+                    <div class="pull-right" ng-click="addRow(formData,'desktop');">
+                      <button class="btn btn-primary" type="submit">Add Row</button>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="registercontent-gallerybanners">
+                      <table class="table table-condensed">
+                        <thead>
+                          <tr>
+                            <th>
+                              <div>
+                                Image
+                              </div>
+                            </th>
+                            <!-- <th class="hide">
+                                      <div>
+                                        Link
+                                      </div>
+                                    </th> -->
+                            <th>
+                              <div>
+                                Action
+                              </div>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="table-imageresponsive" ng-repeat="desktopBanner in formData.banner.desktop track by $index" ng-init="type='desktop'">
+                            <td>
+                              <div class="form-group">
+                                <upload-image ng-model="desktopBanner.image" inobj></upload-image>
+                              </div>
+                            </td>
+                            <!-- <td>
+                                      <div class="form-group hide">
+                                        <input type="text" placeholder="Video Link" class="form-control" ng-model="desktopBanner.link">
+                                      </div>
+                                    </td> -->
+                            <td>
+                              <div ng-click="deleteRow(formData,type,$index);">
+                                <button class="btn btn-danger text-center" type="submit">Delete</button>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <!-- BANNER HEADER END -->
+
+                <!-- MOBILE HEADER -->
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="gallerybanners" class="fz12">Gallery Banners - Mobile</label>
+                    <div class="pull-right" ng-click="addRow(formData,'mobile');">
+                      <button class="btn btn-primary" type="submit">Add Row</button>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="registercontent-gallerybanners">
+                      <table class="table table-condensed">
+                        <thead>
+                          <tr>
+                            <th>
+                              <div>
+                                Image
+                              </div>
+                            </th>
+                            <!-- <th class="hide">
+                                    <div>
+                                      Link
+                                    </div>
+                                  </th> -->
+                            <th>
+                              <div>
+                                Action
+                              </div>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="table-imageresponsive" ng-repeat="mobileBanner in formData.banner.mobile track by $index" ng-init="type='mobile'">
+                            <td>
+                              <div class="form-group">
+                                <upload-image ng-model="mobileBanner.image" inobj></upload-image>
+                              </div>
+                            </td>
+                            <!-- <td>
+                                    <div class="form-group hide">
+                                      <input type="text" placeholder="Video Link" class="form-control" ng-model="mobileBanner.link">
+                                    </div>
+                                  </td> -->
+                            <td>
+                              <div ng-click="deleteRow(formData,type,$index);">
+                                <button class="btn btn-danger text-center" type="submit">Delete</button>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <!-- MOBILE HEADER END -->
+              </div>
+            </section>
+            <!-- GALLERY SECTION END -->
+
+            <!-- EVENT PDF -->
+            <section>
+              <div class="text-center bordered mb15">
+                <label for="">Event Pdf Upload</label>
+              </div>
+              <div class="form-group">
+                <upload-image ng-model="formData.ageEventPdf" type="pdf" ispdf=true></upload-image>
+              </div>
+
+            </section>
+            <!-- EVENT PDF END -->
+
+            <!-- CONTENT -->
+            <section>
+              <div class="text-center bordered mb15">
+                <label for=""> Content</label>
+              </div>
+              <div class="textholder tinymce form-group">
+                <text-angular ng-model="formData.content" name="sponsorcontent"></text-angular>
+                <!-- <div class="error-msg" ng-if="sponsorForm.sponsorcontent.$invalid && sponsorForm.sponsorcontent.$touched">Please Enter Valid Content *</div> -->
+              </div>
+
+            </section>
+            <!-- CONTENT END -->
+
+            <!-- EVENT COUNT -->
+            <section>
+              <div class="text-center bordered mb15">
+                <label for="eventcount">Event Count</label>
+              </div>
+              <div class="row">
+                <!-- EVENT COUNT -->
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <div class="text-right mb15" ng-click="addRowButton(formData,'eventCount');">
+                      <button class="btn btn-primary" type="submit">Add Row</button>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="eventcount-data">
+                      <table class="table table-condensed">
+                        <thead>
+                          <tr>
+                            <th>
+                              <div>
+                                Value
+                              </div>
+                            </th>
+                            <th>
+                              <div>
+                                Name
+                              </div>
+                            </th>
+                            <th>
+                              <div>
+                                Action
+                              </div>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="table-imageresponsive" ng-repeat="eventData in formData.eventCount track by $index" ng-init="type='eventCount'">
+                            <td>
+                              <div class="form-group">
+                                <input type="text" class="form-control" ng-model="eventData.value" placeholder="Enter the Value">
+                              </div>
+                            </td>
+                            <td>
+                              <div class="form-group">
+                                <input type="text" placeholder="Enter the Name" class="form-control" ng-model="eventData.name">
+                              </div>
+                            </td>
+                            <td>
+                              <div ng-click="deleteRowButton(formData,type,$index);">
+                                <button class="btn btn-danger text-center" type="submit">Delete</button>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <!-- EVENT  END -->
+              </div>
+            </section>
+            <!-- EVENT COUNT END -->
+
+            <!-- GALLERY COUNT -->
+            <section>
+              <div class="text-center bordered mb15">
+                <label for="">Gallery Slider</label>
+              </div>
+              <!-- BANNER HEADER -->
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="gallerybanners" class="fz12">Gallery Image Size - 600x400</label>
+                  <div class="pull-right" ng-click="addRowButton(formData,'gallery');">
+                    <button class="btn btn-primary" type="submit">Add Row</button>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="registercontent-gallerybanners">
+                    <table class="table table-condensed">
+                      <thead>
+                        <tr>
+                          <th>
+                            <div>
+                              Image
+                            </div>
+                          </th>
+                          <!-- <th class="hide">
+                            <div>
+                                Link
+                            </div>
+                          </th> -->
+                          <th>
+                            <div>
+                              Action
+                            </div>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="table-imageresponsive" ng-repeat="galleryData in formData.gallery track by $index" ng-init="type='gallery'">
+                          <td>
+                            <div class="form-group">
+                              <upload-image ng-model="galleryData.mediaLink" inobj></upload-image>
+                            </div>
+                          </td>
+                          <!-- <td>
+                            <div class="form-group hide">
+                              <input type="text" placeholder="Video Link" class="form-control" ng-model="galleryData.title">
+                            </div>
+                          </td> -->
+                          <td>
+                            <div ng-click="deleteRowButton(formData,type,$index);">
+                              <button class="btn btn-danger text-center" type="submit">Delete</button>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <!-- BANNER HEADER END -->
+            </section>
+            <!-- GALLERY COUNT END -->
+
+            <!-- BUTTON -->
+            <section>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="text-center mt20 odd-even-button">
+                    <button class="btn btn-default" type="submit" ng-click="saveData(formData)">Save</button>
+                    <button class="btn btn-default" ui-sref='registorcontent'>Cancel</button>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <!-- BUTTON END -->
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

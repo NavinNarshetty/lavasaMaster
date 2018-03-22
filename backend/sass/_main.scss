@@ -1264,6 +1264,7 @@
  .activessColor {
      color: #ea5249;
  }
+
  /* Start writing sass here */
 
  .viewStudent {
@@ -1497,5 +1498,32 @@
          border-top: 2px solid #000;
      }
  } //  ARCHIVE PAGE END
+ .registercontent-gallerybanners,
+ .eventcount-data {
+     .table {
+         border: 1px solid #e1e1e1;
+     }
+     .table>thead>tr>th {
+         font-size: 12px;
+     }
+ }
+
+ .desktop-banner {
+     border-right: 3px solid #e1e1e1;
+ }
+
+ .table-imageresponsive {
+     .img-box {
+         width: 150px;
+         height: 100px;
+         overflow: hidden;
+         margin-bottom: 8px;
+     }
+     img {
+         max-width: 100%;
+         height: auto;
+     }
+ }
+
  @import "fancybox-override";
  @import "other/mobile";

@@ -600,10 +600,21 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'TestimonialCtrl'
         })
         .state('detailtestimonial', {
-            url: "/detailtestimonial",
+            url: "/detailtestimonial/:id",
             templateUrl: "views/template.html",
             controller: 'DetailTestimonialCtrl'
         })
+        .state('playerquestion', {
+            url: "/playerquestion",
+            templateUrl: "views/template.html",
+            controller: 'PlayerQuestionCtrl'
+        })
+        .state('detailplayerquestion', {
+            url: "/detailplayerquestion/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailPlayerQuestionCtrl'
+        })
+
 
         // **********************PLAYER REGISTORION END ********************
 
