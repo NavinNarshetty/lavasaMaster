@@ -7541,7 +7541,7 @@ var model = {
                                             var team2 = {};
                                             var main = {};
                                             var complete = {};
-                                            var resultData = result.score;
+                                            var resultData = result;
 
                                             if (n['TEAM 1 Attendence'] == 'P' || n['TEAM 1 Attendence'] == 'p' || n['PLAYER 1 Attendence'] == 'P' || n['PLAYER 1 Attendence'] == 'p') {
                                                 team1.noShow = false;
