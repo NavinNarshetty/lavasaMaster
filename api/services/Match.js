@@ -7581,7 +7581,7 @@ var model = {
                                             }
                                             main.status = "IsCompleted";
 
-                                            if (resultData.teams) {
+                                            if (resultData.teams.length > 0) {
                                                 if (!_.isEmpty(resultData.teams[0])) {
                                                     if (result.result.resultVar === "resultBasketball") {
                                                         console.log("resultData", resultData.teams[0].teamResults);
@@ -7622,6 +7622,8 @@ var model = {
                                                     } else if (result.result.resultVar === "resultFootball") {
                                                         resultData.teams[0].teamResults.finalPoints = n['SCORE 1'];
                                                         resultData.teams[0].teamResults.penalty = n['PENALTY 1'];
+                                                    } else if (result.result.resultVar === "resultWaterPolo") {
+                                                        resultData.teams[0].teamResults.finalGoalPoints = n['SCORE 1'];
                                                     } else {
                                                         resultData.teams[0].teamResults.finalPoints = n['SCORE 1'];
                                                     }
@@ -7663,6 +7665,8 @@ var model = {
                                                     } else if (result.result.resultVar === "resultFootball") {
                                                         resultData.teams[1].teamResults.finalPoints = n['SCORE 2'];
                                                         resultData.teams[1].teamResults.penalty = n['PENALTY 2'];
+                                                    } else if (result.result.resultVar === "resultWaterPolo") {
+                                                        resultData.teams[1].teamResults.finalGoalPoints = n['SCORE 2'];
                                                     } else {
                                                         resultData.teams[1].teamResults.finalPoints = n['SCORE 2'];
                                                     }
@@ -8001,7 +8005,7 @@ var model = {
                                                     }
                                                 }
                                             }
-                                            if (resultData.teams) {
+                                            if (resultData.teams.length > 0) {
                                                 if (resultData.teams.length == 2) {
                                                     resultData.isDraw = main.isDraw;
                                                     resultData.status = main.status;
