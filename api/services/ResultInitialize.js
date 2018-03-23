@@ -232,6 +232,11 @@ var model = {
                 }];
                 format.teamResults.finalPoints = "";
                 break;
+            case "Kho Kho":
+                format.sets = [{
+                    "point": ''
+                }];
+                break;
             case "Badminton Doubles":
             case "Table Tennis Doubles":
             case "Tennis Doubles":
@@ -376,6 +381,11 @@ var model = {
                     ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultsRacquet, match);
                     return returnResult;
 
+                case "Kho Kho":
+                    returnResult.resultsCombat = format;
+                    ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultsCombat, match);
+                    return returnResult;
+
                 case "Athletics 4x100m Relay":
                 case "Athletics 4x50m Relay":
                 case "Athletics Medley Relay":
@@ -425,10 +435,6 @@ var model = {
                     ResultInitialize.initializePlayers(sportName, returnResult.resultsCombat, match);
                     return returnResult;
                 case "Carrom":
-                    returnResult.resultsCombat = format;
-                    ResultInitialize.initializePlayers(sportName, returnResult.resultsCombat, match);
-                    return returnResult;
-                case "Kho Kho":
                     returnResult.resultsCombat = format;
                     ResultInitialize.initializePlayers(sportName, returnResult.resultsCombat, match);
                     return returnResult;
