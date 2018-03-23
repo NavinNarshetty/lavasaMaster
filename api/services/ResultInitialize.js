@@ -351,11 +351,6 @@ var model = {
                     ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultWaterPolo, match);
                     return returnResult;
 
-                case "Kho Kho":
-                    returnResult.resultsCombat = format;
-                    ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultsCombat, match);
-                    return returnResult;
-
                 case "Badminton Doubles":
                     returnResult.resultsRacquet = format;
                     ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultsRacquet, match);
@@ -430,6 +425,10 @@ var model = {
                     ResultInitialize.initializePlayers(sportName, returnResult.resultsCombat, match);
                     return returnResult;
                 case "Carrom":
+                    returnResult.resultsCombat = format;
+                    ResultInitialize.initializePlayers(sportName, returnResult.resultsCombat, match);
+                    return returnResult;
+                case "Kho Kho":
                     returnResult.resultsCombat = format;
                     ResultInitialize.initializePlayers(sportName, returnResult.resultsCombat, match);
                     return returnResult;
