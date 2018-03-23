@@ -7623,7 +7623,7 @@ var model = {
                                                             }
                                                             resultData.teams[0].teamResults.finalPoints = n['SCORE 1'];
                                                         } else {
-                                                            resultData.teams[0].sets[0].points = n["Score 1"];
+                                                            resultData.teams[0].sets[0].point = n["Score 1"];
                                                         }
 
                                                     } else if (result.result.resultVar === "resultFootball") {
@@ -7671,7 +7671,7 @@ var model = {
                                                         }
                                                         resultData.teams[1].teamResults.finalPoints = n['SCORE 2'];
                                                     } else {
-                                                        resultData.teams[1].sets[0].points = n["Score 2"];
+                                                        resultData.teams[1].sets[0].point = n["Score 2"];
                                                     }
                                                     } else if (result.result.resultVar === "resultFootball") {
                                                         resultData.teams[1].teamResults.finalPoints = n['SCORE 2'];
