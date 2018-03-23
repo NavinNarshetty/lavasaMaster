@@ -98,7 +98,7 @@ module.exports = mongoose.model('OldQualifyingKnockout', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
-    getknockoutPlayer1AggregatePipeLine: function (data) {
+    getQualifyingPlayer1AggregatePipeLine: function (data) {
 
         var pipeline = [{
                 $match: {
@@ -126,7 +126,7 @@ var model = {
         var individualSport = {};
         async.waterfall([
             function (callback) {
-                var pipeLine = OldQualifyingKnockout.getknockoutPlayer1AggregatePipeLine(data);
+                var pipeLine = OldQualifyingKnockout.getQualifyingPlayer1AggregatePipeLine(data);
                 OldQualifyingKnockout.aggregate(pipeLine, function (err, complete) {
                     if (err) {
                         callback(err, "error in mongoose");
@@ -156,7 +156,7 @@ var model = {
                     }
                 });
                 // callback(null, complete);
-            },
+            }
         ], function (err, data3) {
             if (err) {
                 callback(err, null);
@@ -166,38 +166,18 @@ var model = {
         });
     },
 
-    getQualifyingAggregate: function (data) {
-        var pipeline = [{
-                $match: {
-                    "participantType": "player",
-                    "year": data.year,
-                    round: "Qualifying Round"
-                }
-            },
-            // Stage 2
-            {
-                $unwind: {
-                    path: "$heats",
-                }
-            },
-        ];
-        return pipeline;
-    },
-
-    getAllPlayer1: function (data, callback) {
+    getAllPlayerKnockout: function (data, callback) {
         var individualSport = {};
         async.waterfall([
             function (callback) {
-                var pipeLine = OldQualifyingKnockout.getQualifyingAggregate(data);
-                OldQualifyingKnockout.aggregate(pipeLine, function (err, complete) {
+                OldQualifyingKnockout.find({
+                    sport: ObjectId("5a968b56f5594a71e2b68a6d"),
+                    sport: ObjectId("59d382ce72527039ec83d762")
+                }).lean().exec(function (err, complete) {
                     if (err) {
-                        callback(err, "error in mongoose");
+                        callback(err, null);
                     } else {
-                        if (_.isEmpty(complete)) {
-                            callback(null, complete);
-                        } else {
-                            callback(null, complete);
-                        }
+                        callback(null, complete);
                     }
                 });
             },
@@ -226,6 +206,212 @@ var model = {
                 callback(null, data3);
             }
         });
+    },
+    getknockoutPlayer1AggregatePipeLine: function (data) {
+
+        var pipeline = [{
+                $match: {
+                    "participantType": "player",
+                    "year": data.year,
+                    $or: [{
+                        sport: ObjectId("59d32bf872527039ec83c542")
+                    }, {
+                        sport: ObjectId("59d382ce72527039ec83d762")
+                    }]
+                }
+            },
+            // Stage 2
+            {
+                $group: {
+                    _id: "$player1",
+                    sport: {
+                        $addToSet: "$sport"
+                    }
+                }
+            },
+
+
+        ];
+        return pipeline;
+    },
+
+    getknockoutPlayer2AggregatePipeLine: function (data) {
+
+        var pipeline = [{
+                $match: {
+                    "participantType": "player",
+                    "year": data.year,
+                    $or: [{
+                        sport: ObjectId("59d32bf872527039ec83c542")
+                    }, {
+                        sport: ObjectId("59d382ce72527039ec83d762")
+                    }]
+                }
+            },
+            // Stage 2
+            {
+                $group: {
+                    _id: "$player2",
+                    sport: {
+                        $addToSet: "$sport"
+                    }
+                }
+            },
+
+
+        ];
+        return pipeline;
+    },
+
+
+    getAllPlayer1: function (data, callback) {
+        var individualSport = {};
+        async.waterfall([
+            function (callback) {
+                var pipeLine = OldQualifyingKnockout.getknockoutPlayer1AggregatePipeLine(data);
+                OldQualifyingKnockout.aggregate(pipeLine, function (err, complete) {
+                    if (err) {
+                        callback(err, "error in mongoose");
+                    } else {
+                        if (_.isEmpty(complete)) {
+                            callback(null, complete);
+                        } else {
+                            console.log("complete.count", complete.length);
+                            callback(null, complete);
+                        }
+                    }
+                });
+            },
+            function (complete, callback) {
+                OldKnockout.saveIn(complete, individualSport, function (err, saveData) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(saveData)) {
+                            var err = {
+                                error: "no saveData",
+                                data: saveData
+                            }
+                            callback(null, err);
+                        } else {
+                            callback(null, saveData);
+                        }
+                    }
+                });
+            },
+        ], function (err, data3) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, data3);
+            }
+        });
+    },
+
+    getAllPlayer2: function (data, callback) {
+        var individualSport = {};
+        async.waterfall([
+            function (callback) {
+                var pipeLine = OldQualifyingKnockout.getknockoutPlayer2AggregatePipeLine(data);
+                OldQualifyingKnockout.aggregate(pipeLine, function (err, complete) {
+                    if (err) {
+                        callback(err, "error in mongoose");
+                    } else {
+                        if (_.isEmpty(complete)) {
+                            callback(null, complete);
+                        } else {
+                            callback(null, complete);
+                        }
+                    }
+                });
+            },
+            function (complete, callback) {
+                OldKnockout.saveIn(complete, individualSport, function (err, saveData) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(saveData)) {
+                            var err = {
+                                error: "no saveData",
+                                data: saveData
+                            }
+                            callback(null, err);
+                        } else {
+                            callback(null, saveData);
+                        }
+                    }
+                });
+            },
+        ], function (err, data3) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, data3);
+            }
+        });
+    },
+
+    saveKnockoutPLayers: function (data, callback) {
+        console.log("data", data);
+        async.waterfall([
+                // function (callback) {
+                //     OldQualifyingKnockout.getAllPlayer(data, function (err, playerData) {
+                //         if (err) {
+                //             callback(err, null);
+                //         } else {
+                //             if (_.isEmpty(playerData)) {
+                //                 var err = {
+                //                     error: "no athelete",
+                //                     data: athelete
+                //                 }
+                //                 callback(null, err);
+                //             } else {
+                //                 callback(null, playerData);
+                //                 console.log("player", playerData);
+                //             }
+                //         }
+                //     });
+                // },
+                function (callback) {
+                    OldQualifyingKnockout.getAllPlayer1(data, function (err, athelete) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(athelete)) {
+                                var err = {
+                                    error: "no athelete",
+                                    data: athelete
+                                }
+                                callback(null, err);
+                            } else {
+                                console.log("athlete1", athelete);
+                                callback(null, playerData);
+                            }
+                        }
+                    });
+                },
+                function (playerData, callback) {
+                    OldQualifyingKnockout.getAllPlayer2(data, function (err, athelete) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(athelete)) {
+                                var err = {
+                                    error: "no athelete",
+                                    data: athelete
+                                }
+                                callback(null, err);
+                            } else {
+                                console.log("athlete2", athelete);
+                                callback(null, playerData);
+                            }
+                        }
+                    });
+                }
+            ],
+            function (err, found) {
+                callback(null, found);
+            });
     },
 
     //---------------------------------Match Creation--------------------------------
