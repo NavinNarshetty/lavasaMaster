@@ -36,7 +36,7 @@
             <div class="register-accordioncontent">
               <div class="register-contentholder">
                 <label class="display-block">Sports:</label>
-                <span class="register-sportlist" ng-repeat="sport in sports track by $index">{{sport}} <span class="register-seperator">|</span> </span>
+                <span class="register-sportlist" ng-repeat="sport in sports track by $index"> {{sport}} <span class="register-seperator">|</span> </span>
               </div>
               <div class="register-contentholder">
                 <label for="">Dates:</label>
@@ -44,7 +44,7 @@
               </div>
               <div class="register-contentholder">
                 <label for="">Venue:</label>
-                <span class="register-venue" ng-repeat="place in venue track by $index">{{place}} <span class="register-seperator">|</span></span>
+                <span class="register-venue" ng-repeat="place in venue track by $index"> {{place}} <span class="register-seperator">|</span></span>
               </div>
               <div class="register-contentholder">
                 <ul class="list-inline">
@@ -69,7 +69,7 @@
       <!-- ACCORDION END -->
       <!-- INTRO SECTION -->
       <div class="registerplayer-intro">
-        <div class="registerplayer-introtitle">Player Registrations</div>
+        <div class="registerplayer-introtitle"><span ng-if="pageType == 'player'">Player</span><span ng-if="pageType == 'school'">School</span> Registrations</div>
         <div class="registerplayer-introcontent" ng-bind-html="content"></div>
       </div>
       <!-- INTRO SECTION END -->

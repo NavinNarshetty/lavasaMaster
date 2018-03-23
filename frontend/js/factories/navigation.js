@@ -1320,11 +1320,14 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
                 method: 'POST',
             }).then(callback);
         },
-        getPlayerQuestions: function (callback) {
+        getPlayerQuestions: function (request, callback) {
             $http({
                 url: adminUrl2 + 'PlayerQuestions/search',
                 method: 'POST',
-            }).then(callback);
+                data: request
+            }).then(function(data){
+              callback(data.data);
+            });
         }
     };
 });

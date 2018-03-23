@@ -15,11 +15,24 @@
         <div class="form-elements-sec">
           <form name="detailForm" role="form" class="sec">
             <div class="row">
-              <div class="col-md-12">
+              <div class="col-md-6">
                 <div class="form-group">
                   <label>Title</label>
                   <input type="text" ng-model="formData.title" class="form-control" placeholder="Enter Title">
                 </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Type</label>
+                  <select type="text" ng-model="formData.typeQuestion" class="form-control" placeholder="Enter Title">
+                    <option value="player">Player</option>
+                    <option value="school">School</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
                 <div class="form-group">
                   <label>Question</label>
                   <text-angular ng-model="formData.question" name="content"></text-angular>

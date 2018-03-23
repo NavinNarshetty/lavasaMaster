@@ -33,6 +33,7 @@
                 <tr>
                   <th>#</th>
                   <th>Title</th>
+                  <th>Type</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -43,6 +44,7 @@
                   <td>{{($index + 1)+((formData.page-1)*maxRow)}}</td>
                   <!--<td>{{($index + 1)}}</td>-->
                   <td>{{item.title}}</td>
+                  <td>{{item.typeQuestion}}</td>
                   <td>
                     <a class="btn btn-primary" target="_new" ui-sref="detailplayerquestion({id:item._id})">
                       <i class="fa fa-pencil"></i> Edit

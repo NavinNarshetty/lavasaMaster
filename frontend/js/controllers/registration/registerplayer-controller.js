@@ -4,6 +4,7 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
   $scope.navigation = NavigationService.getNavigation();
   // CODE START
   // VARIABLE INITIALISE
+  $scope.pageType = 'school';
   $scope.oneAtATime = true;
   $scope.questionLimit = {
     value: 2,
@@ -168,11 +169,15 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
       if(data.value == true){
         console.log("content success", data.data.results);
         $scope.banners = data.data.results[0].banner;
-        $scope.content = data.data.results[0].content;
         $scope.ageEventPdf = $sce.trustAsResourceUrl($filter('uploadpathTwo')(data.data.results[0].ageEventPdf));
         console.log("pdf", $scope.ageEventPdf);
         $scope.gallery = data.data.results[0].gallery;
         $scope.counts = data.data.results[0].eventCount;
+        if ($scope.pageType == 'player') {
+          $scope.content = data.data.results[0].playerContent;
+        } else if ($scope.pageType == 'school') {
+          $scope.content = data.data.results[0].schoolContent;
+        }
         $scope.getGallerySlides($scope.gallery);
       } else {
         console.log("content fail", data);
@@ -183,9 +188,14 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
   // GET REGISTERATION CONTENT END
   // GET QUESTIONS
   $scope.getPlayerQuestions = function(){
-    NavigationService.getPlayerQuestions(function(data){
+    $scope.questionObj={
+      filter: {
+        typeQuestion: $scope.pageType
+      }
+    };
+    NavigationService.getPlayerQuestions($scope.questionObj, function(data){
       console.log("questions",data);
-      data = data.data;
+      // data = data.data;
       if(data.value == true){
         $scope.questionList = data.data.results;
         console.log("questions success", $scope.questionList);
