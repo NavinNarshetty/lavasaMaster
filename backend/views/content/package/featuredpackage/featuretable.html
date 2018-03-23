@@ -29,7 +29,7 @@
                   <th>
                     Name
                   </th>
-                  <th>
+                  <!-- <th>
                     Price
                   </th>
                   <th>
@@ -40,7 +40,7 @@
                   </th>
                   <th>
                     eventCount
-                  </th>
+                  </th> -->
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -52,10 +52,10 @@
                   <!--<td>{{($index + 1)}}</td>-->
                   <!-- <td>{{item.name}}</td> -->
                   <td>
-                    {{item.name|firstcapitalize}}
+                    {{item.featureName|firstcapitalize}}
                   </td>
 
-                  <td>
+                  <!-- <td>
                     {{item.price}}
                   </td>
                   <td>
@@ -66,11 +66,11 @@
                   </td>
                   <td>
                     {{item.eventCount}}
-                  </td>
+                  </td> -->
 
 
                   <td>
-                    <a class="btn btn-primary" target="_blank" ui-sref="detailpackage({id:item._id})">
+                    <a class="btn btn-primary" target="_blank" ui-sref="detailfeature({id:item._id})">
                     <i class="fa fa-pencil"></i> Edit
                   </a>
                     <a class="btn btn-danger" ng-click="confirmDelete(item._id)">

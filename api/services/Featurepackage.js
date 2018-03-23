@@ -4,7 +4,6 @@ var schema = new Schema({
         packageName: {
             type: Schema.Types.ObjectId,
             ref: 'Package',
-            index: true
         },
         featureType: String,
         featureCheck: Boolean,

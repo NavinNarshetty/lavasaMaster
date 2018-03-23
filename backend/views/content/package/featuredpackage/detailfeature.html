@@ -29,8 +29,8 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label for="packages" class="fz12">Package Selection</label>
-                  <div class="pull-right" ng-click="addRow(formData,'gallery');">
-                    <button class="btn btn-primary" type="submit">Add Row</button>
+                  <div class="pull-right" ng-click="addRow(formData);">
+                    <button class="btn btn-primary" type="button">Add Row</button>
                   </div>
                 </div>
                 <div class="form-group">
@@ -61,12 +61,11 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr class="table-imageresponsive">
+                        <tr class="table-imageresponsive" ng-repeat="feature in formData.featureDetails track by $index">
                           <td>
                             <div class="form-group">
-                              <select name="" id="" class="form-control" ng-model="feature.packageName">
-                                <option value=""></option>
-                              </select>
+                              <select name="" id="" class="form-control" ng-model="feature.packageName" ng-options="{_id:item._id,packageName:item.name} as item.name for item in packages track by item._id">
+                                 </select>
                             </div>
                           </td>
                           <td>
@@ -86,7 +85,7 @@
                             </div>
                           </td>
                           <td>
-                            <div ng-click="deleteRowButton(formData,type,$index);">
+                            <div ng-click="deleteRowButton(formData,$index);">
                               <button class="btn btn-danger text-center" type="submit">Delete</button>
                             </div>
                           </td>
@@ -100,8 +99,8 @@
 
               <div class="col-md-12">
                 <div class="text-center mt20 odd-even-button">
-                  <button class="btn btn-default" type="submit" ng-click="saveData(formData)">Save</button>
-                  <button class="btn btn-default" ng-click="onCancel('package')">Cancel</button>
+                  <button class="btn btn-default" type="submit" ng-click="saveData(formData)" ng-disabled="detailForm.$invalid">Save</button>
+                  <button class="btn btn-default" ng-click="onCancel('featurepackage')">Cancel</button>
                 </div>
               </div>
             </div>

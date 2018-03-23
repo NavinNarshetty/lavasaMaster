@@ -21,7 +21,7 @@ myApp.controller('PackageCtrl', function ($scope, TemplateService, NavigationSer
       $scope.formData.keyword = data;
       $scope.viewTable();
     }
-  }
+  };
 
   // VIEW TABLE
   $scope.viewTable = function () {
@@ -123,7 +123,7 @@ myApp.controller('featurePackageCtrl', function ($scope, TemplateService, Naviga
 
   // VIEW TABLE
   $scope.viewTable = function () {
-    $scope.url = "Package/search";
+    $scope.url = "Featurepackage/search";
     $scope.formData.page = $scope.formData.page++;
     $scope.formData.filter = {};
     // $scope.formData.filter.pageType = '';
@@ -139,16 +139,20 @@ myApp.controller('featurePackageCtrl', function ($scope, TemplateService, Naviga
 
   // DELETE
   $scope.crudService = crudService;
-  var url = "Package/delete";
+  var url = "Featurepackage/delete";
   $scope.confirmDelete = function (data) {
     crudService.confirmDelete(data, url, $scope);
   };
   // DELETE END
 
 
+
+
+
+
 });
 
-// DETAIL GALLERY
+// DETAIL FEATURE PACKAGE
 myApp.controller('detailFeatureCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, crudService, $state, toastr, $uibModal) {
   //Used to name the .html file
   $scope.template = TemplateService.changecontent("package/featuredpackage/detailfeature");
@@ -156,10 +160,34 @@ myApp.controller('detailFeatureCtrl', function ($scope, TemplateService, Navigat
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
   $scope.title = 'Create';
+  $scope.packages = [];
   $scope.formData = {};
+  $scope.formData = {};
+  $scope.formData.featureDetails = [];
   $scope.formData.pageType = ' ';
+  var url = 'Featurepackage';
 
-  var url = 'Package';
+  //GET ALL PACKAGE
+  getAllPackages(function (data) {
+    if (data) {
+      $scope.packages = data.data.results;
+      $scope.totalItems = data.data.total;
+      $scope.maxRow = data.data.options.count;
+    }
+  });
+  function getAllPackages(callback) {
+    $scope.url = "package/search";
+    $scope.getpackageobj = {};
+    NavigationService.apiCall($scope.url, $scope.getpackageobj, function (data) {
+      console.log("data.value", data);
+      if (data.value == true) {
+        callback(data);
+      }
+    });
+
+  }
+  // END OF GET ALL PACKAGE
+
   // GET ONE
   // GET ONE
   if ($stateParams.id) {
@@ -168,6 +196,15 @@ myApp.controller('detailFeatureCtrl', function ($scope, TemplateService, Navigat
     crudService.getOneData(url, id, function (data) {
       if (data) {
         $scope.formData = data;
+        getAllPackages(function (data) {
+          _.each($scope.formData.featureDetails, function (key) {
+            var obj = _.find(data.data.results, ['_id', key.packageName]);
+            key.tempobj = {};
+            key.tempobj._id = key.packageName;
+            key.tempobj.name = obj.name;
+            key.packageName = key.tempobj;
+          });
+        });
       }
     });
   }
@@ -176,8 +213,11 @@ myApp.controller('detailFeatureCtrl', function ($scope, TemplateService, Navigat
 
 
   // SAVE FUNCTION
-  var state = 'package';
+  var state = 'featurepackage';
   $scope.saveData = function (data) {
+    _.each(data.featureDetails, function (key) {
+      key.packageName = key.packageName._id;
+    });
     crudService.saveData(data, url, state);
   };
   // SAVE FUNCTION END
@@ -187,6 +227,37 @@ myApp.controller('detailFeatureCtrl', function ($scope, TemplateService, Navigat
   $scope.onCancel = function (state) {
     $state.go(state);
   };
+
+  //ADD
+
+
+  $scope.formData.featureDetails.push({
+    "packageName": '',
+    "featureType": '',
+    "featureCheck": '',
+    "featureText": ''
+  });
+
+  $scope.addRow = function () {
+    $scope.formData.featureDetails.push({
+      "packageName": '',
+      "featureType": '',
+      "featureCheck": '',
+      "featureText": ''
+    });
+
+  };
+  console.log("$scope.formData", $scope.formData.featureDetails.length);
+  $scope.deleteRowButton = function (formData, index) {
+    console.log("$index", index);
+
+    $scope.formData.featureDetails.splice(index, 1);
+    // $scope.formData.featureDetails
+    console.log("formdata", $scope.formData.featureDetails);
+
+
+  };
+
 
 });
 
