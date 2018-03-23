@@ -138,17 +138,30 @@ var model = {
 
     getTeamTemplate: function (sportName, team) {
         // console.log("getTeamTemplate", team);
-        var format = {
-            teamId: team.teamId,
-            team: team._id,
-            noShow: false,
-            walkover: false,
-            coach: "",
-            schoolName: team.schoolName,
-            teamResults: {},
-            players: [],
-            isDraw: false
-        };
+        if (sportName === 'Kho Kho') {
+            var format = {
+                teamId: team.teamId,
+                team: team._id,
+                noShow: false,
+                walkover: false,
+                coach: "",
+                schoolName: team.schoolName,
+                players: [],
+                isDraw: false
+            };
+        } else {
+            var format = {
+                teamId: team.teamId,
+                team: team._id,
+                noShow: false,
+                walkover: false,
+                coach: "",
+                schoolName: team.schoolName,
+                teamResults: {},
+                players: [],
+                isDraw: false
+            };
+        }
         switch (sportName) {
             case "Basketball":
                 format.teamResults.quarterPoints = [{
