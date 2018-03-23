@@ -10,7 +10,8 @@ var schema = new Schema({
         }],
     },
     ageEventPdf: String,
-    content: String,
+    playerContent: String,
+    schoolContent: String,
     eventCount: [{
         value: String,
         name: String

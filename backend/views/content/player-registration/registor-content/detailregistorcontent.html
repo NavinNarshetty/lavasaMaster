@@ -23,7 +23,7 @@
                 <!-- BANNER HEADER -->
                 <div class="col-md-6 desktop-banner">
                   <div class="form-group">
-                    <label for="gallerybanners" class="fz12">Gallery Banners - Desktop</label>
+                    <label for="gallerybanners" class="fz12">Gallery Banners - Desktop Size-920x600</label>
                     <div class="pull-right" ng-click="addRow(formData,'desktop');">
                       <button class="btn btn-primary" type="submit">Add Row</button>
                     </div>
@@ -78,7 +78,7 @@
                 <!-- MOBILE HEADER -->
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="gallerybanners" class="fz12">Gallery Banners - Mobile</label>
+                    <label for="gallerybanners" class="fz12">Gallery Banners - Mobile size-768x639</label>
                     <div class="pull-right" ng-click="addRow(formData,'mobile');">
                       <button class="btn btn-primary" type="submit">Add Row</button>
                     </div>
@@ -145,18 +145,32 @@
             </section>
             <!-- EVENT PDF END -->
 
-            <!-- CONTENT -->
+            <!-- PLAYER CONTENT -->
             <section>
               <div class="text-center bordered mb15">
-                <label for=""> Content</label>
+                <label for=""> Player Content</label>
               </div>
               <div class="textholder tinymce form-group">
-                <text-angular ng-model="formData.content" name="sponsorcontent"></text-angular>
+                <text-angular ng-model="formData.playerContent" name="sponsorcontent"></text-angular>
                 <!-- <div class="error-msg" ng-if="sponsorForm.sponsorcontent.$invalid && sponsorForm.sponsorcontent.$touched">Please Enter Valid Content *</div> -->
               </div>
 
             </section>
-            <!-- CONTENT END -->
+            <!-- PLAYER CONTENT END -->
+
+            <!-- SCHOOL CONTENT -->
+            <section>
+              <div class="text-center bordered mb15">
+                <label for="">School Content</label>
+              </div>
+              <div class="textholder tinymce form-group">
+                <text-angular ng-model="formData.schoolContent" name="sponsorcontent"></text-angular>
+                <!-- <div class="error-msg" ng-if="sponsorForm.sponsorcontent.$invalid && sponsorForm.sponsorcontent.$touched">Please Enter Valid Content *</div> -->
+              </div>
+
+            </section>
+
+            <!-- SCHOOL CONTENT END -->
 
             <!-- EVENT COUNT -->
             <section>
