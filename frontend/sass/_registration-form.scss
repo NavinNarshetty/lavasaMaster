@@ -87,6 +87,8 @@
 // BUTTON CLASS END
 .registerform-page {
   padding: 50px 0;
+  color: $base;
+  @extend .r-titillium-web-regular;
 }
 
 .registerform-title {
@@ -137,8 +139,15 @@
 }
 
 // LABEL
-.form-registerlabel {
+.formregister-heading {
   color: $sport-primary;
-  font-size: 16px;
+  font-size: 14px;
   @extend .r-titillium-web-semibold;
+}
+.fromregister-label{
+  font-weight: 500;
+}
+
+.formregister-list{
+  list-style-type: circle;
 }
