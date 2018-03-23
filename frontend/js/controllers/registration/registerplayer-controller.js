@@ -1,10 +1,19 @@
-myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, NavigationService, $timeout, $uibModal, $sce, $filter, configService) {
+myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, NavigationService, $timeout, $uibModal, $sce, $filter, configService, $stateParams) {
   $scope.template = TemplateService.getHTML("content/registration/register-player.html");
   TemplateService.title = "Player Registration"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
   // CODE START
   // VARIABLE INITIALISE
-  $scope.pageType = 'school';
+  $scope.flag = $stateParams.type;
+  // SET FLAG
+  if ($scope.flag == 'player') {
+    $scope.pageType = 'player';
+    TemplateService.title = "Player Registration";
+  } else if ($scope.flag = 'school') {
+    $scope.pageType = 'school';
+    TemplateService.title = "School Registration"; 
+  }
+  // SET FLAG END
   $scope.oneAtATime = true;
   $scope.questionLimit = {
     value: 2,

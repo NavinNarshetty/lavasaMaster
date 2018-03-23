@@ -513,7 +513,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
         // NEW REGISTRATION PAGES
         .state('registerplayer', {
-            url: "/register/player",
+            url: "/register/:type",
             templateUrl: tempateURL,
             controller: 'RegisterPlayerCtrl'
         })
