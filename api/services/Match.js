@@ -7583,7 +7583,7 @@ var model = {
                                             }
                                             main.status = "IsCompleted";
 
-                                            if (resultData.teams.length > 0) {
+                                            if (resultData.teams) {
                                                 if (!_.isEmpty(resultData.teams[0])) {
                                                     if (result.result.resultVar === "resultBasketball") {
                                                         console.log("resultData", resultData.teams[0].teamResults);
@@ -8016,7 +8016,7 @@ var model = {
                                                     }
                                                 }
                                             }
-                                            if (resultData.teams.length > 0) {
+                                            if (resultData.teams) {
                                                 if (resultData.teams.length == 2) {
                                                     resultData.isDraw = main.isDraw;
                                                     resultData.status = main.status;
