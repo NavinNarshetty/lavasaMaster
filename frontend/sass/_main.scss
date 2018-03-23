@@ -95,6 +95,24 @@ sans-serif !default;
 
 /* mixing*/
 
+.r-titillium-web-regular {
+    font-family: "Titillium Web Regular";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.r-titillium-web-semibold {
+    font-family: "Titillium Web SemiBold";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.r-titillium-web-bold {
+    font-family: "Titillium Web Bold";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 @mixin placeholder {
     $placeholders: ":-webkit-input" ":-moz" "-moz" "-ms-input";
     @each $placeholder in $placeholders {
@@ -335,8 +353,8 @@ a {
     width: 86px !important;
 }
 
-.v-mid{
-  vertical-align: middle;
+.v-mid {
+    vertical-align: middle;
 }
 
 .navbar-default {
