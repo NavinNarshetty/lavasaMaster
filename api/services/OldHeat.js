@@ -725,7 +725,7 @@ var model = {
                     if (err) {
                         callback(err, null);
                     } else {
-                        match.resultHeat.players = players;
+                        match.resultHeat.teams = players;
                         players = [];
                         callback(null, found);
                     }
