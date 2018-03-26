@@ -7584,6 +7584,7 @@ var model = {
                                             main.status = "IsCompleted";
 
                                             if (resultData.teams) {
+                                                if(resultData.teams.length > 0){
                                                 if (!_.isEmpty(resultData.teams[0])) {
                                                     if (result.result.resultVar === "resultBasketball") {
                                                         console.log("resultData", resultData.teams[0].teamResults);
@@ -7682,6 +7683,7 @@ var model = {
                                                         resultData.teams[1].teamResults.finalPoints = n['SCORE 2'];
                                                     }
                                                 }
+                                            }
                                             } else {
                                                 if (!_.isEmpty(resultData.players[0])) {
                                                     if (result.result.resultVar == "resultsRacquet" && _.isEmpty(resultData.players[0].sets)) {
@@ -7889,71 +7891,74 @@ var model = {
                                                         resultData.players[1].finalPoints = n['SCORE 2'];
                                                     }
                                                 } else {
-                                                    if (_.isEmpty(resultData.players[0].sets)) {
-                                                        if (n['PLAYER 1 SET 1'] != undefined) {
-                                                            var temp = {};
-                                                            temp.point = n['PLAYER 1 SET 1'];
-                                                            resultData.players[0].sets.push(temp);
-                                                        }
-                                                        if (n['PLAYER 1 SET 2'] != undefined) {
-                                                            var temp = {};
-                                                            temp.point = n['PLAYER 1 SET 2'];
-                                                            resultData.players[0].sets.push(temp);
-                                                        }
-                                                        if (n['PLAYER 1 SET 2'] != undefined) {
-                                                            var temp = {};
-                                                            temp.point = n['PLAYER 1 SET 2'];
-                                                            resultData.players[0].sets.push(temp);
-                                                        }
-                                                        if (n['PLAYER 1 SET 3'] != undefined) {
-                                                            var temp = {};
-                                                            temp.point = n['PLAYER 1 SET 3'];
-                                                            resultData.players[0].sets.push(temp);
-                                                        }
-                                                        if (n['PLAYER 1 SET 4'] != undefined) {
-                                                            var temp = {};
-                                                            temp.point = n['PLAYER 1 SET 4'];
-                                                            resultData.players[0].sets.push(temp);
-                                                        }
-                                                        if (n['PLAYER 1 SET 5'] != undefined) {
-                                                            var temp = {};
-                                                            temp.point = n['PLAYER 1 SET 5'];
-                                                            resultData.players[0].sets.push(temp);
-                                                        }
-                                                        if (n['PLAYER 1 SET 6'] != undefined) {
-                                                            var temp = {};
-                                                            temp.point = n['PLAYER 1 SET 6'];
-                                                            resultData.players[0].sets.push(temp);
-                                                        }
-                                                        if (n['PLAYER 1 SET 7'] != undefined) {
-                                                            var temp = {};
-                                                            temp.point = n['PLAYER 1 SET 7'];
-                                                            resultData.players[0].sets.push(temp);
-                                                        }
-                                                    } else {
-                                                        if (n['PLAYER 1 SET 1'] != undefined) {
-                                                            resultData.players[1].sets[0].point = n['PLAYER 1 SET 1'];
-                                                        }
-                                                        if (n['PLAYER 1 SET 2'] != undefined) {
-                                                            resultData.players[1].sets[1].point = n['PLAYER 1 SET 2'];
-                                                        }
-                                                        if (n['PLAYER 1 SET 3'] != undefined) {
-                                                            resultData.players[1].sets[2].point = n['PLAYER 1 SET 3'];
-                                                        }
-                                                        if (n['PLAYER 1 SET 4'] != undefined) {
-                                                            resultData.players[1].sets[3].point = n['PLAYER 1 SET 4'];
-                                                        }
-                                                        if (n['PLAYER 1 SET 5'] != undefined) {
-                                                            resultData.players[1].sets[4].point = n['PLAYER 1 SET 5'];
-                                                        }
-                                                        if (n['PLAYER 1 SET 6'] != undefined) {
-                                                            resultData.players[1].sets[5].point = n['PLAYER 1 SET 6'];
-                                                        }
-                                                        if (n['PLAYER 1 SET 7'] != undefined) {
-                                                            resultData.players[1].sets[6].point = n['PLAYER 1 SET 7'];
+                                                    if(resultData.players.length > 0){
+                                                        if (_.isEmpty(resultData.players[0].sets)) {
+                                                            if (n['PLAYER 1 SET 1'] != undefined) {
+                                                                var temp = {};
+                                                                temp.point = n['PLAYER 1 SET 1'];
+                                                                resultData.players[0].sets.push(temp);
+                                                            }
+                                                            if (n['PLAYER 1 SET 2'] != undefined) {
+                                                                var temp = {};
+                                                                temp.point = n['PLAYER 1 SET 2'];
+                                                                resultData.players[0].sets.push(temp);
+                                                            }
+                                                            if (n['PLAYER 1 SET 2'] != undefined) {
+                                                                var temp = {};
+                                                                temp.point = n['PLAYER 1 SET 2'];
+                                                                resultData.players[0].sets.push(temp);
+                                                            }
+                                                            if (n['PLAYER 1 SET 3'] != undefined) {
+                                                                var temp = {};
+                                                                temp.point = n['PLAYER 1 SET 3'];
+                                                                resultData.players[0].sets.push(temp);
+                                                            }
+                                                            if (n['PLAYER 1 SET 4'] != undefined) {
+                                                                var temp = {};
+                                                                temp.point = n['PLAYER 1 SET 4'];
+                                                                resultData.players[0].sets.push(temp);
+                                                            }
+                                                            if (n['PLAYER 1 SET 5'] != undefined) {
+                                                                var temp = {};
+                                                                temp.point = n['PLAYER 1 SET 5'];
+                                                                resultData.players[0].sets.push(temp);
+                                                            }
+                                                            if (n['PLAYER 1 SET 6'] != undefined) {
+                                                                var temp = {};
+                                                                temp.point = n['PLAYER 1 SET 6'];
+                                                                resultData.players[0].sets.push(temp);
+                                                            }
+                                                            if (n['PLAYER 1 SET 7'] != undefined) {
+                                                                var temp = {};
+                                                                temp.point = n['PLAYER 1 SET 7'];
+                                                                resultData.players[0].sets.push(temp);
+                                                            }
+                                                        } else {
+                                                            if (n['PLAYER 1 SET 1'] != undefined) {
+                                                                resultData.players[1].sets[0].point = n['PLAYER 1 SET 1'];
+                                                            }
+                                                            if (n['PLAYER 1 SET 2'] != undefined) {
+                                                                resultData.players[1].sets[1].point = n['PLAYER 1 SET 2'];
+                                                            }
+                                                            if (n['PLAYER 1 SET 3'] != undefined) {
+                                                                resultData.players[1].sets[2].point = n['PLAYER 1 SET 3'];
+                                                            }
+                                                            if (n['PLAYER 1 SET 4'] != undefined) {
+                                                                resultData.players[1].sets[3].point = n['PLAYER 1 SET 4'];
+                                                            }
+                                                            if (n['PLAYER 1 SET 5'] != undefined) {
+                                                                resultData.players[1].sets[4].point = n['PLAYER 1 SET 5'];
+                                                            }
+                                                            if (n['PLAYER 1 SET 6'] != undefined) {
+                                                                resultData.players[1].sets[5].point = n['PLAYER 1 SET 6'];
+                                                            }
+                                                            if (n['PLAYER 1 SET 7'] != undefined) {
+                                                                resultData.players[1].sets[6].point = n['PLAYER 1 SET 7'];
+                                                            }
                                                         }
                                                     }
                                                 }
+                                                if(resultData.players.length > 0){
                                                 if (!_.isEmpty(resultData.players[1]) && _.isEmpty(resultData.players[1].sets)) {
                                                     if (n['PLAYER 2 SET 1'] != undefined) {
                                                         var temp = {};
@@ -8015,6 +8020,7 @@ var model = {
                                                         resultData.players[1].sets[6].point = n['PLAYER 2 SET 7'];
                                                     }
                                                 }
+                                             }
                                             }
                                             if (resultData.teams) {
                                                 if (resultData.teams.length == 2) {
@@ -8032,7 +8038,7 @@ var model = {
                                                     } else if (n["WINNER ID"] == resultData.teams[1].teamId) {
                                                         resultData.winner.player = resultData.teams[1].team;
                                                     }
-                                                } else {
+                                                } else if (resultData.teams.length == 1) {
                                                     resultData.isDraw = main.isDraw;
                                                     resultData.status = main.status;
                                                     resultData.isNoMatch = main.isNoMatch;
@@ -8041,6 +8047,10 @@ var model = {
                                                     if (n["WINNER ID"] == resultData.teams[0].teamId) {
                                                         resultData.winner.player = resultData.teams[0].team;
                                                     }
+                                                } else if (resultData.teams.length == 0) {
+                                                    resultData.isDraw = main.isDraw;
+                                                    resultData.status = main.status;
+                                                    resultData.isNoMatch = main.isNoMatch;
                                                 }
                                             } else {
                                                 if (resultData.players.length == 2) {
@@ -8059,7 +8069,7 @@ var model = {
                                                         resultData.winner.player = resultData.players[1].player;
                                                         resultData.winner.opponentsSingle = result.opponentsSingle[1];
                                                     }
-                                                } else {
+                                                } else if (resultData.players.length == 1) {
                                                     resultData.isDraw = main.isDraw;
                                                     resultData.status = main.status;
                                                     resultData.isNoMatch = main.isNoMatch;
@@ -8069,6 +8079,10 @@ var model = {
                                                         resultData.winner.player = resultData.players[0].player;
                                                         resultData.winner.opponentsSingle = result.opponentsSingle[0];
                                                     }
+                                                } else if (resultData.players.length == 0) {
+                                                    resultData.isDraw = main.isDraw;
+                                                    resultData.status = main.status;
+                                                    resultData.isNoMatch = main.isNoMatch;
                                                 }
                                             }
                                             var placeholder = {};
