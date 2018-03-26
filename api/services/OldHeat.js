@@ -410,34 +410,48 @@ var model = {
     },
 
     getMatchDetails: function (data, callback) {
+        var listOfSport = ["Triple jump",
+            "Hammer throw",
+            "Discuss throw",
+            "High jump",
+            "Javelin throw",
+            "Long jump",
+            "Shot put (3kg)",
+            "Shot put (4kg)",
+            "Shot put (5kg)"
+        ]
         var match = {};
         match.opponentsSingle = [];
         match.opponentsTeam = [];
         var players = [];
+        var flag = false;
         async.waterfall([
             function (callback) {
                 Sport.find({
                     oldId: data.sport
-                }).lean().exec(function (err, found) {
+                }).lean().deepPopulate("sportslist").exec(function (err, found) {
                     if (err) {
                         callback(err, null);
                     } else if (_.isEmpty(found)) {
                         callback(null, []);
                     } else {
-                        console.log("sport", found);
-                        match.sport = found[0]._id;
-                        match.scheduleDate = data.date;
-                        var round = data.round.toLowerCase();
-                        match.round = data.name;
-                        match.oldId = data._id
-                        // match.heatNo = data.name.lastIndexOf(" " + 1);
-                        match.incrementalId = data.matchid;
-                        match.matchId = "heat";
+                        if (!listOfSport.includes(found[0].sportslist.name)) {
+                            console.log("sport", found);
+                            match.sport = found[0]._id;
+                            match.scheduleDate = data.date;
+                            // var round = data.round.toLowerCase();
+                            match.round = data.name;
+                            match.oldId = data._id
+                            // match.heatNo = data.name.lastIndexOf(" " + 1);
+                            match.incrementalId = data.matchid;
+                            match.matchId = "heat";
+                        }
                         callback(null, found);
                     }
                 });
             },
             function (found, callback) {
+                var i = 0;
                 async.eachSeries(data.heats, function (n, callback) {
                     if (found[0]) {
                         IndividualSport.find({
@@ -447,23 +461,49 @@ var model = {
                             if (err) {
                                 callback(err, null);
                             } else if (_.isEmpty(individualData)) {
+
                                 var player = {};
                                 if (n.laneno) {
                                     player.laneno = n.laneno;
                                 }
-                                players.push(player);
+                                if (!listOfSport.includes(found[0].sportslist.name)) {
+                                    players.push(player);
+                                }
                                 match.resultHeat = {};
                                 callback(null, []);
                             } else {
-                                // console.log("inside push", individualData);
-                                // var players = [];
-                                var player = {};
-                                player.id = individualData[0]._id;
-                                player.laneno = n.laneno;
-                                players.push(player);
-                                match.resultHeat = {};
-                                match.opponentsSingle.push(individualData[0]._id);
-                                callback(null, individualData);
+                                if (listOfSport.includes(found[0].sportslist.name)) {
+                                    flag = true;
+                                    console.log("sport", individualData);
+                                    match = {};
+                                    match.opponentsSingle = [];
+                                    match.sport = found[0]._id;
+                                    match.scheduleDate = data.date;
+                                    // var round = data.round.toLowerCase();
+                                    match.round = data.name;
+                                    match.oldId = data._id
+                                    // match.heatNo = data.name.lastIndexOf(" " + 1);
+
+                                    match.incrementalId = data.matchid + i;
+                                    i++;
+                                    match.matchId = "heatQualifying";
+                                    match.opponentsSingle.push(individualData[0]._id);
+                                    OldHeat.saveMatch(match, function (err, matchData) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            callback(null, matchData);
+                                        }
+                                    });
+                                } else {
+                                    var player = {};
+                                    player.id = individualData[0]._id;
+                                    player.laneno = n.laneno;
+                                    players.push(player);
+                                    match.resultHeat = {};
+                                    match.opponentsSingle.push(individualData[0]._id);
+                                    callback(null, individualData);
+                                }
                             }
                         });
                     } else {
@@ -482,21 +522,27 @@ var model = {
                 });
             },
             function (found, callback) {
-                OldHeat.saveMatch(match, function (err, matchData) {
-                    if (err) {
-                        callback(err, null);
-                    } else {
-                        if (_.isEmpty(matchData)) {
-                            var err = {
-                                error: "no matchData",
-                                data: matchData
-                            }
-                            callback(null, err);
+                console.log("flag", flag);
+                if (flag == false) {
+                    OldHeat.saveMatch(match, function (err, matchData) {
+                        if (err) {
+                            callback(err, null);
                         } else {
-                            callback(null, matchData);
+                            if (_.isEmpty(matchData)) {
+                                var err = {
+                                    error: "no matchData",
+                                    data: matchData
+                                }
+                                callback(null, err);
+                            } else {
+                                callback(null, matchData);
+                            }
                         }
-                    }
-                });
+                    });
+                } else {
+                    flag = false;
+                    callback(null, flag);
+                }
             },
         ], function (err, data3) {
             if (err) {
@@ -508,6 +554,7 @@ var model = {
     },
 
     saveMatch: function (data, callback) {
+        console.log("data", data);
         async.waterfall([
                 function (callback) {
                     Match.findOne().sort({
