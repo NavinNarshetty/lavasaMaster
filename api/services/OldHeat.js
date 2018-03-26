@@ -483,7 +483,7 @@ var model = {
                                     match.round = data.name;
                                     match.oldId = data._id
                                     // match.heatNo = data.name.lastIndexOf(" " + 1);
-
+                                    match.oldMatchId = data.matchid;
                                     match.incrementalId = data.matchid + i;
                                     i++;
                                     match.matchId = "heatQualifying";
