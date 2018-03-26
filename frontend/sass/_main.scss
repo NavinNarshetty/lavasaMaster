@@ -5,6 +5,7 @@ $brand-warning: #9f9f9f !default;
 $brand-danger: #fc483f !default;
 $brand-info: #000072 !default;
 $base: #303030 !default;
+$register-base:#646464 !default;
 $white: #fff !default;
 $dark-grey: #e1e1e1 !default;
 $light-grey: #ebebeb !default;
@@ -4317,6 +4318,11 @@ iframe#twitter-widget-0 {
     display: inline-block;
     width: 19.5%;
     vertical-align: top;
+    [type="checkbox"]:not(:checked),
+    [type="checkbox"]:checked {
+        position: absolute;
+        left: -9999px;
+    }
 }
 
 .step1 {
@@ -4612,12 +4618,6 @@ iframe#twitter-widget-0 {
 
 .padd-r18 {
     padding-right: 34px;
-}
-
-[type="checkbox"]:not(:checked),
-[type="checkbox"]:checked {
-    position: absolute;
-    left: -9999px;
 }
 
 [type="checkbox"]:not(:checked)+label,

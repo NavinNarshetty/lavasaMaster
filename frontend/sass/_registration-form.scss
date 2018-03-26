@@ -1,9 +1,10 @@
 // CUSTOM RADIO BUTTON
 .sfa-radiobox {
   padding-left: 25px;
-  margin-right: 10px;
+  margin: 0px 10px 0px 0px;
   position: relative;
   font-size: 14px;
+  line-height: 27px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -74,6 +75,7 @@
   border: 1px solid $sport-primary;
   background-color: transparent;
   color: $sport-primary;
+  font-size: 14px;
   &:active,
   &:focus,
   &:hover {
@@ -87,8 +89,15 @@
 // BUTTON CLASS END
 .registerform-page {
   padding: 50px 0;
-  color: $base;
+  color: $register-base;
   @extend .r-titillium-web-regular;
+  .dropdown-menu {
+    left: 0;
+  }
+  [type="checkbox"]:not(:checked)+label:after,
+  [type="checkbox"]:checked+label:after {
+    top: 5px;
+  }
 }
 
 .registerform-title {
@@ -101,8 +110,19 @@
 }
 
 .form-card {
+  margin-bottom: 40px;
   padding: 20px;
   box-shadow: 0 0 10px 5px $grey;
+  margin-bottom: 40px;
+  .input-group {
+    margin-bottom: 15px;
+  }
+  .input-group-addon {
+    border: none;
+    border-radius: 0px;
+    background-color: transparent;
+    color: $register-base;
+  }
 }
 
 // TAB
@@ -141,13 +161,48 @@
 // LABEL
 .formregister-heading {
   color: $sport-primary;
-  font-size: 14px;
+  font-size: 16px;
   @extend .r-titillium-web-semibold;
 }
-.fromregister-label{
+
+.fromregister-label {
   font-weight: 500;
 }
 
-.formregister-list{
+.formregister-list {
   list-style-type: circle;
+  padding-left: 20px;
+}
+
+.formregister-mtb20 {
+  margin: 20px 0px;
+}
+
+.registerform-tablepayment {
+  .table {
+    tbody {
+      tr {
+        background-color: transparent;
+      }
+      td {
+        border: 1px solid #d3d3d3;
+      }
+    }
+  }
+}
+
+.register-promobadge {
+  padding: 3px 6px;
+  border-radius: 2px;
+  border: 1px solid $grey;
+  background-color: $grey;
+  color: $sport-dark-grey;
+  font-size: 12px;
+  text-transform: capitalize;
+  @extend .r-titillium-web-semibold;
+  &:active,
+  &:focus,
+  &:hover {
+    border: 1px solid $sport-dark-grey;
+  }
 }

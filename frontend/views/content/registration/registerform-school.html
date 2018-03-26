@@ -1,23 +1,751 @@
 <!-- REGISTER FORM SCHOOL -->
-<div class="registerform-schoolpage">
+<div class="registerform-schoolpage registerform-page ">
   <!-- CONTAINER -->
   <div class="container">
-
-    <div class="section-tab" style="margin-top:60px;">
-      Step:1 school details
+    <!-- HEADER -->
+    <div class="registerform-schoolheader registerform-title ">
+      SCHOOL REGISTRATION form
     </div>
+    <!-- HEADER END -->
 
     <div class="row">
-      <div class="col-md-6">
-        <div class="form-infonote" style="margin:60px 0px;">
-          This Logo will be displayed on your SFA School profile. This Logo will be displayed on your SFA School profile.
+      <div class="col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-10 col-xs-12">
+        <!-- REGISTER GUIDELINES -->
+        <section class="registerform-schoolguidelines">
+          <!-- GUIDELINE CARD -->
+          <div class="form-card">
+            <p>The annual school registration fee for SFA Championship 2018-19, City Name is Rs. 5,000 (Inclusive of all applicable
+              taxes) Click here to view registered school benefits for SFA Championships City 2018-19, City Name. </p>
+            <p class="formregister-heading text-uppercase formregister-mtb20">
+              REGSITRATION FOR SFA CHAMPIONSHIP 2018-19, CITY NAME IS A 2-STEP PROCESS.
+            </p>
+            <p class="formregister-heading text-uppercase formregister-mtb20">
+              STEP 1 OF THE REGISTRATION PROCESS WILL BE CONSIDERED AS COMPLETE ONLY ONCE YOU HAVE RECEIVED A CONFRIMATION EMAIL FROM SFA
+              ON RECEIPT OF PAYMENT.
+            </p>
+            <p class="formregister-heading">
+              We request you to keep the following details ready to ensure a smooth registration process:
+              <ul class="formregister-list">
+                <li>
+                  Mobile Number which you wish to register with SFA
+                </li>
+                <li>
+                  Email ID which you wish to register with SFA
+                </li>
+                <li>
+                  Credit Card/Debit Card/Bank Details (in case of online payment)
+                </li>
+                <li>
+                  Your school's logo in jpeg/PNG format (Optional).
+                </li>
+              </ul>
+            </p>
+            <p class="formregister-heading form-register-mtb20">
+              *The applicant represents that the information provided is true and correct.Sfa will keep confidential and protect your personal
+              information expect where disclosure is required or permitted by law.
+            </p>
+          </div>
+          <!-- GUIDELINE CARD END -->
+        </section>
+        <!-- REGISTER GUIDELINES END -->
+
+
+        <!-- MANDANTORY -->
+        <div class="registerform-mandanatory">
+          Please Note:All fields with * are mandatory
         </div>
+        <!-- MANDANTORY END -->
+
+        <!-- FORM -->
+        <form action="" name="schoolRegisterForm" class="form-horizontal">
+          <!-- SCHOOL DETAILS -->
+          <section class="registorform-schooldetails">
+            <!-- TAB -->
+            <div class="section-tab">
+              Step 1: {{type| firstcapitalize}} Details
+            </div>
+            <!-- TAB END -->
+            <div class="form-card">
+              <!-- <pre>{{schoolRegisterForm | json}}</pre> -->
+              <!-- SCHOOL/COLLEGE NAME -->
+              <div class="form-group">
+                <label class="col-sm-2 control-label"> *{{type| firstcapitalize}} name</label>
+                <div class="col-sm-8">
+                  <input class="form-control" id="schoolName" capitalize ng-model="formData.schoolName" name="schoolName" type="text" placeholder="Enter School Name"
+                    required>
+                  <div class="label label-danger pull-right" ng-show="schoolRegisterForm.schoolName.$invalid && schoolRegisterForm.schoolName.$touched">Please Enter Your {{type| firstcapitalize}} Name *</div>
+                </div>
+              </div>
+              <!-- SCHOOL/COLLEGE NAME END -->
+
+              <!--SCHOOL/COLLEGE TYPE  -->
+              <div class="form-group">
+                <label class="col-sm-2 control-label"> *{{type| firstcapitalize}} Type</label>
+                <div class="col-sm-4">
+                  <select name="schoolType" ng-model="formData.schoolType" class="form-control" title="Select Type" required>
+                  <option>Co-Educational</option>
+                  <option>Boys</option>
+                  <option>Girls</option>
+                  </select>
+                  <div class="label label-danger pull-right " ng-show="schoolRegisterForm.schoolType.$invalid && schoolRegisterForm.schoolType.$touched">Please Enter Your {{type| firstcapitalize}} Type*</div>
+                </div>
+              </div>
+              <!--SCHOOL/COLLEGE TYPE END  -->
+
+              <!-- CATEGORY -->
+              <div class="form-group">
+                <label class="col-sm-2 control-label"> *{{type| firstcapitalize}} Category</label>
+                <div class="col-sm-4">
+                  <select name="schoolCategory" ng-model="formData.schoolCategory" class="form-control" title="Select Category" required>
+                      <option>Un-aided </option>
+                      <option>Government </option>
+                      <option> Aided</option>
+                    </select>
+                  <div class="label label-danger pull-right " ng-show="schoolRegisterForm.schoolCategory.$invalid && schoolRegisterForm.schoolCategory.$touched">Please Enter Your {{type| firstcapitalize}} Category*</div>
+                </div>
+              </div>
+              <!-- CATEGORY END -->
+
+              <!--  BOARD -->
+              <div class="form-group">
+                <label class="col-sm-2 control-label"> *{{type| firstcapitalize}} Category</label>
+                <div class="col-sm-8">
+                  <select name="affiliatedBoard" class="form-control" ng-model="formData.affiliatedBoard" required>
+                        <option style="display:none"></option>
+                        <option>Central Board of Secondary Education (CBSE) </option>
+                        <option>Cambridge & IB</option>
+                        <option>International Baccalaureate (IB)</option>
+                        <option>Indian Certificate of Secondary Education (ICSE)</option>
+                        <option>International General Certificate of Secondary Education (IGCSE)</option>
+                        <option>National Institute of Open Schooling (NIOS)</option>
+                        <option>Secondary School Certificate (SSC)</option>
+                        <option>A Level</option>
+                  </select>
+                  <div class="label label-danger pull-right " ng-show="schoolRegisterForm.affiliatedBoard.$invalid && schoolRegisterForm.affiliatedBoard.$touched">Please Enter Your Affiliated Board*</div>
+                </div>
+              </div>
+              <!--  BOARD END -->
+
+              <!-- UPLOAD -->
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Upload {{type| firstcapitalize}} Logo:</label>
+                <div class="col-sm-5">
+                  <div class="dirctive-op text-left">
+                    <upload-image2 class="up-img schoolLogo ng-isolate-scope" file-types="'image/jpeg,image/png'" ng-disabled="type.disabled"
+                      ng-callback="changeitSchoolLogo" ng-model="formData.schoolLogo" ng-click="show=1" no-view></upload-image2>
+                  </div>
+                  <div class="display-inline">
+                    <div class="register-imageplace" ng-if="show==1 && formData.schoolLogo">
+                      <a fancybox href="{{formData.schoolLogo | serverimage2}}" data-fancybox="group" data-caption="{{gallery.image}}" rel="arcGal"
+                        share="https://sfanow.in">
+                            <img src="{{formData.schoolLogo |serverimage2}}" class="img-responsive">
+                          </a>
+                    </div>
+                  </div>
+                  <div class="hover-img" ng-if="show==1 && formData.schoolLogo">
+                    <img src="img/icon/x.png" alt="logo" class="img-responsive myicon" ng-click="removeImage(formData.schoolLogo, 'schoolLogo')">
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <div class="form-infonote">
+                    This Logo will be displayed on your SFA School profile. Kindly upload only .jpg or .png format. Maximum file size 5MB.
+                  </div>
+                </div>
+              </div>
+              <!-- UPLOAD END -->
+
+              <!-- SET PASSWORD -->
+              <div class="form-group">
+                <!-- PASSWORD -->
+                <div class="col-sm-8">
+                  <!-- SET PASSWORD -->
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">*Set Password</label>
+                    <div class="col-sm-9">
+                      <input class="form-control" id="setPassword" capitalize ng-model="formData.setPassword" name="setPassword" type="password"
+                        placeholder="Enter Password - Minimum 8 Characters" required>
+                      <div class="label label-danger pull-right" ng-show="schoolRegisterForm.setPassword.$invalid && schoolRegisterForm.setPassword.$touched">Please Enter Your Password*</div>
+                    </div>
+                  </div>
+                  <!-- SET PASSWORD END -->
+
+                  <!-- CONFIRM PASSWORD -->
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label"> *Confirm Password</label>
+                    <div class="col-sm-9">
+                      <input class="form-control" id="confirmPassword" capitalize ng-model="confirmPassword" name="confirmPassword" type="password"
+                        placeholder="Enter Confirm Password" required>
+                      <div class="label label-danger pull-right" ng-show="schoolRegisterForm.confirmPassword.$invalid && schoolRegisterForm.confirmPassword.$touched">Please Enter Your Confirm Password *</div>
+                    </div>
+                  </div>
+                  <!-- CONFIRM PASSWORD END -->
+                </div>
+                <!-- PASSWORD END -->
+
+                <!-- INFO NOTE -->
+                <div class="col-sm-4">
+                  <div class="form-infonote">
+                    You will need this password to complete sports registration (STEP 2). This password must be kept confidential.
+                  </div>
+                </div>
+                <!-- INFO NOTE END -->
+              </div>
+              <!-- SET PASSWORD END -->
+
+            </div>
+          </section>
+          <!-- SCHOOL DETAILS END -->
+
+          <!-- CONTACT DETAILS -->
+          <section class="registorform-schoolcontactdetails">
+            <!-- TAB -->
+            <div class="section-tab">
+              <span>Step 2: </span> Contact Details
+            </div>
+            <!-- TAB END -->
+
+            <!-- CONTACT CARD -->
+            <div class="form-card">
+
+              <div class="formregister-heading">
+                School Address
+              </div>
+              <!-- LINE 1 ADDRESS -->
+              <div class="form-group">
+                <label class="col-sm-2 control-label"> *Line 1:</label>
+                <div class="col-sm-10">
+                  <input class="form-control" id="schoolAdd" capitalize ng-model="formData.schoolAdd" name="schoolAdd" type="text" placeholder="Enter School Address"
+                    required>
+                  <div class="label label-danger pull-right" ng-show="schoolRegisterForm.schoolAdd.$invalid && schoolRegisterForm.schoolAdd.$touched">Please Enter Your School Address *</div>
+                </div>
+              </div>
+              <!-- LINE 1 ADDRESS END -->
+
+              <!-- LINE 2 ADDRESS -->
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Line 2:</label>
+                <div class="col-sm-10">
+                  <input class="form-control" id="schoolAddressLine2" capitalize ng-model="formData.schoolAddressLine2" name="schoolAddressLine2"
+                    type="text" placeholder="Enter School Address" required>
+                  <!-- <div class="label label-danger pull-right" ng-show="schoolRegisterForm.schoolAddressLine2.$invalid && schoolRegisterForm.schoolAddressLine2.$touched">Please Enter Your School Address *</div> -->
+                </div>
+              </div>
+              <!-- LINE 2 ADDRESS END -->
+
+              <!-- STATE/DISTRICT -->
+              <div class="form-group">
+                <!-- STATE -->
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label class="col-sm-4 control-label">State:</label>
+                    <div class="col-sm-8">
+                      <input class="form-control" id="focusedInput" capitalize ng-model="formData.state" name="state" type="text" readonly>
+                      <!-- <div class="label label-danger pull-right" ng-show="schoolRegisterForm.city.$invalid && schoolRegisterForm.city.$touched">Please Enter Your City *</div> -->
+                    </div>
+                  </div>
+                </div>
+                <!-- STATE END -->
+                <!-- DISTRICT -->
+                <div class="col-sm-6">
+                  <div class="form-group" ng-if="district.length > 0">
+                    <label class="col-sm-4 control-label">*District:</label>
+                    <div class="col-sm-8">
+                      <input name="district" only-alpha ng-model="formData.district" capitalize type="text" class="form-control" required>
+                      <div class="label label-danger pull-right" ng-show="schoolRegisterForm.district.$invalid && schoolRegisterForm.district.$touched">Please Enter Your District*</div>
+                    </div>
+                  </div>
+                </div>
+                <!-- DISTRICT END -->
+              </div>
+              <!-- STATE/DISTRICT END -->
+
+              <!-- CITY/AREA/ -->
+              <div class="form-group">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label class="col-sm-4 control-label">City:</label>
+                    <div class="col-sm-8">
+                      <select name="city" ng-model="formData.city" class="form-control" ng-options="cities for cities in city" required>
+                      </select>
+                      <div class="label label-danger pull-right" ng-show="schoolRegisterForm.city.$invalid && schoolRegisterForm.city.$touched">Please Enter Your City *</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label class="col-sm-4 control-label">*Area/Locality:</label>
+                    <div class="col-sm-8">
+                      <input name="regislocality" id='locality' only-alpha ng-model="formData.locality" capitalize type="text" class="form-control"
+                        required>
+                      <div class="label label-danger pull-right" ng-show="schoolRegisterForm.regislocality.$invalid && schoolRegisterForm.regislocality.$touched">Please Enter Your Locality *</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- CITY/AREA/ END -->
+
+              <!-- PINCODE -->
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Pincode</label>
+                <div class="col-sm-4">
+                  <input type="text" name="regispincode" ng-model="formData.pinCode" only-Digits class="sfa-drop2 form-control" minlength="6"
+                    maxlength="6" placeholder="Enter Pincode" required>
+                  <div class="label label-danger pull-right" ng-show="schoolRegisterForm.regispincode.$invalid && schoolRegisterForm.regispincode.$touched">Please Enter Your Pincode *</div>
+                </div>
+              </div>
+              <!-- PINCODE END -->
+
+              <!-- CORRESPONDANCE -->
+              <div class="correspondence-schoolholder">
+                <!-- CORRESPONDENCE TEXT -->
+                <div class="registerform-schooldetailcorrespondence">
+                  <div class="formregister-heading">
+                    Details For Correspondence
+                  </div>
+                  <p>All communication regarding SFA {{sfaCity | capitalize}} {{eventYear}} for e.g. last date of registration,
+                    draws & schedules, changes in schedule etc. will be sent on the below mentioned details.</p>
+                </div>
+                <!-- CORRESPONDENCE TEXT END -->
+
+                <!-- DETAILS -->
+                <div class="registerform-schoolcorrespondancecontact">
+                  <!-- CONTACT/DESIGNATION -->
+                  <div class="form-group">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label class="col-sm-4 control-label">*Contact :</label>
+                        <div class="col-sm-8">
+                          <input name="contactPerson" ng-model="formData.contactPerson" capitalize only-alpha type="text" class="form-control" placeholder="Enter Contact Person"
+                            required>
+                          <div class="label label-danger pull-right" ng-show="schoolRegisterForm.contactPerson.$invalid && schoolRegisterForm.contactPerson.$touched">Please Enter Contact Person *</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label class="col-sm-4 control-label">Designation:</label>
+                        <div class="col-sm-8">
+                          <input name="contactDesignation" id='contactDesignation' ng-model="formData.contactDesignation" capitalize only-alpha type="text"
+                            class="form-control" placeholder="Enter the Designation">
+                          <!-- <div class="label label-danger pull-right" ng-show="schoolRegisterForm.contactDesignation.$invalid && schoolRegisterForm.contactDesignation.$touched">Please Enter Your Locality *</div> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--CONTACT/DESIGNATION END -->
+
+                  <!-- LANDLINE /MOBILE -->
+                  <div class="form-group">
+                    <!-- LANDLINE -->
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label class="col-sm-4 control-label">*Landline :</label>
+                        <div class="col-sm-8">
+                          <input ng-model="formData.landline" name="regisLandline" only-Digits type="text" class="form-control" minlength="11" maxlength="11"
+                            required placeholder="Enter the Landline">
+                          <div class="label label-danger pull-right" ng-show="schoolRegisterForm.regisLandline.$invalid && schoolRegisterForm.regisLandline.$touched">Please Enter Landline *</div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- LANDLINE END -->
+
+                    <!-- MOBILE -->
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label class="col-sm-4 control-label">*Mobile :</label>
+                        <div class="col-sm-8">
+                          <input name="mobile" ng-model="formData.mobile" type="text" only-Digits class="form-control" minlength="10" maxlength="10"
+                            required placeholder="Enter the Mobile no">
+                          <div class="label label-danger pull-right" ng-show="schoolRegisterForm.mobile.$invalid && schoolRegisterForm.mobile.$touched">Please Enter Your Mobile No *</div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- MOBILE END -->
+                  </div>
+                  <!-- LANDLINE /MOBILE END -->
+
+                  <!-- WEBSITE -->
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label"> *Website :</label>
+                    <div class="col-sm-10">
+                      <input ng-model="formData.website" name="website" type="text" class="form-control" placeholder="Enter your Website Name"
+                        required>
+                      <div class="label label-danger pull-right" ng-show="schoolRegisterForm.website.$invalid && schoolRegisterForm.website.$touched">Please Enter Your Website Name *</div>
+                    </div>
+                  </div>
+                  <!-- WEBSITE END -->
+
+                  <!-- PAN/GST NO -->
+                  <div class="form-group">
+                    <!-- PAN -->
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label class="col-sm-4 control-label">PAN No :</label>
+                        <div class="col-sm-8">
+                          <input ng-model="formData.panNo" touppercase name="panno" type="text" class="form-control" minlength="10" maxlength="10"
+                            placeholder="Enter PAN No">
+                          <!-- <div class="label label-danger pull-right" ng-show="schoolRegisterForm.panno.$invalid && schoolRegisterForm.panno.$touched">Please Enter Pan No *</div> -->
+                        </div>
+                      </div>
+                    </div>
+                    <!-- PAN END -->
+
+                    <!-- GST NO -->
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label class="col-sm-4 control-label">GST No :</label>
+                        <div class="col-sm-8">
+                          <input name="gstNo" ng-model="formData.gstNo" type="text" class="bor-t form-control" minlength="15" maxlength="15" placeholder="Enter Gst No">
+                          <p>If you do not enter your GSTIN No. it will be considered that you have not registered for GST</p>
+                          <!-- <div class="label label-danger pull-right" ng-show="schoolRegisterForm.gstNo.$invalid && schoolRegisterForm.gstNo.$touched">Please Enter Your Gst No *</div> -->
+                        </div>
+                      </div>
+                    </div>
+                    <!-- GST NO END -->
+                  </div>
+                  <!-- PAN/GSTN NO END -->
+
+                  <!-- EMAIL/OTP -->
+                  <div class="form-group">
+                    <!-- EMAIL -->
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label class="col-sm-4 control-label">*Email :</label>
+                        <div class="col-sm-8">
+                          <div class="input-group">
+                            <input name="email1" placeholder="Gmail ID Preferred" ng-model="formData.email" type="email" class="form-control" required>
+                            <span class="input-group-addon pointer" ng-click="sendOTP(formData.email)"><i class="">Send OTP</i></span>
+                          </div>
+                          <div class="label label-danger pull-right" ng-show="schoolRegisterForm.email1.$invalid && schoolRegisterForm.email1.$touched">Please Enter Your Email*</div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- EMAIL END -->
+
+                    <!-- OTP NO -->
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label class="col-sm-4 control-label">OTP :</label>
+                        <div class="col-sm-8">
+                          <div class="input-group">
+                            <input ng-model="formData.enterOTP" ng-change="checkOTP(formData.enterOTP)" only-Digits type="text" maxlength="4" class="form-control"
+                              required placeholder="Enter OTP Sent to Email ID">
+                            <div class="label label-danger pull-right" ng-if="formRegister.email1.$invalid && formRegister.email1.$touched">Please Enter Your Email Id</div>
+                            <div ng-if="!(formRegister.email1.$invalid && formRegister.email1.$touched)" class="label label-danger pull-right" ng-show="showOtpSuccess">Please Enter Correct Email OTP</div>
+                            <div ng-if="formRegister.email1.$invalid && formRegister.email1.$touched" class="label label-danger pull-right" ng-show="showOtpSuccess">Please Enter Correct Email OTP</div>
+                          </div>
+                          <p>Please enter the OTP which has been sent to your email ID</p>
+                          <!-- <div class="label label-danger pull-right" ng-show="schoolRegisterForm.gstNo.$invalid && schoolRegisterForm.gstNo.$touched">Please Enter Your Gst No *</div> -->
+                        </div>
+                      </div>
+                    </div>
+                    <!-- OTP NO END -->
+                  </div>
+                  <!-- EMAIL/OTP END -->
+
+                </div>
+                <!-- DETAILS END -->
+              </div>
+              <!-- CORRESPONDANCE END -->
+
+
+
+              <!-- SCHOOL/COLLEGE PRINCIPAL -->
+              <div class="registerform-schoolprincipal">
+                <!-- HEADING -->
+                <div class="formregister-heading">
+                  {{type| firstcapitalize}} Principal
+                </div>
+                <!-- HEADING END -->
+
+                <!-- PRINCIPAL NAME -->
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"> Name :</label>
+                  <div class="col-sm-10">
+                    <input ng-model="formData.schoolPrincipalName" capitalize name="schoolPrincipal" only-alpha type="text" class="form-control"
+                      required placeholder="Enter Principal Name">
+                    <div class="label label-danger pull-right" ng-show="schoolRegisterForm.schoolPrincipal.$invalid && schoolRegisterForm.schoolPrincipal.$touched">Please Enter Your {{type| firstcapitalize}} Principal Name *</div>
+                  </div>
+                </div>
+                <!-- PRINCIPAL NAME END -->
+
+                <!-- PRINCIPAL MOBILE / LANDLINE -->
+                <div class="form-group">
+                  <!-- MOBILE -->
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label class="col-sm-4 control-label">*Mobile :</label>
+                      <div class="col-sm-8">
+                        <input ng-model="formData.schoolPrincipalMobile" name="principalmobile" only-Digits type="text" class="form-control" minlength="10"
+                          maxlength="10" placeholder="Enter Principal Mobile No">
+                        <!-- <div class="label label-danger pull-right" ng-show="schoolRegisterForm.principalmobile.$invalid && schoolRegisterForm.principalmobile.$touched">Please Enter Principal Mobile *</div> -->
+                      </div>
+                    </div>
+                  </div>
+                  <!-- MOBILE END -->
+
+                  <!-- LANDLINE -->
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label class="col-sm-4 control-label">*Landline :</label>
+                      <div class="col-sm-8">
+                        <input ng-model="formData.schoolPrincipalLandline" name="principalLandline" only-Digits type="text" class="form-control"
+                          minlength="11" maxlength="11" placeholder="Enter Principal Landline">
+                        <!-- <div class="label label-danger pull-right" ng-show="schoolRegisterForm.principalLandline.$invalid && schoolRegisterForm.principalLandline.$touched">Please Enter Your Principal Landline *</div> -->
+                      </div>
+                    </div>
+                  </div>
+                  <!-- LANDLINE END -->
+                </div>
+                <!-- PRINCIPAL MOBILE / LANDLINE END -->
+
+                <!-- EMAIL -->
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"> *Email :</label>
+                  <div class="col-sm-10">
+                    <input ng-model="formData.schoolPrincipalEmail" name="schoolPrincipalEma" type="email" class="form-control" placeholder="Enter Principal Email Id"
+                      required>
+                    <div class="label label-danger pull-right" ng-show="schoolRegisterForm.schoolPrincipalEma.$invalid && schoolRegisterForm.schoolPrincipalEma.$touched">Please Enter Your {{type| firstcapitalize}} Principal Email *</div>
+                  </div>
+                </div>
+                <!-- EMAIL END -->
+
+              </div>
+              <!-- SCHOOL/COLLEGE PRINCIPAL END -->
+
+              <!-- SCHOOL DEPARTMENT OPTIONAL -->
+              <div class="registerform-schoolsportoptional">
+                <!-- HEADING -->
+                <div class="registerform-schoolsportoptional-heading">
+                  <span class="formregister-heading">Sports Department</span> <span class="formregister-lightheadingschool">( Optional)</span>
+                </div>
+                <!-- HEADING END -->
+                <p>Coaches play an extremely vital role in shaping the future of young athletes. As part of your school’s sporting
+                  profile, SFA would be happy to highlight the efforts of your sports department. Kindly request you to fill
+                  in the following details.</p>
+
+
+                <!--DETAILS  -->
+                <div class="registerform-schooloptionaldetails" ng-repeat="x in formData.sportsDepartment track by $index">
+                  <div class="registerform-schoolclose" ng-click="removeSportForm($index)">
+                    <img src="img/icon/cross.png" alt="crosslogo" class="">
+                  </div>
+                  <!-- DEPARTMENT NAME -->
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label"> Name :</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="sportName" only-alpha capitalize ng-model="x.name" placeholder="Enter Sport Department Name">
+                      <!-- <div class="label label-danger pull-right" ng-show="schoolRegisterForm.sportName.$invalid && schoolRegisterForm.sportName.$touched">Please Enter Name *</div> -->
+                    </div>
+                  </div>
+                  <!-- DEPARTMENT NAME END -->
+
+                  <!-- DEPARTMENT DESIGNATION/MOBILE -->
+                  <div class="form-group">
+                    <!-- DESIGNATION -->
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label class="col-sm-4 control-label"> Designation :</label>
+                        <div class="col-sm-8">
+                          <input type="text" name="designt" alpha-special class="form-control" capitalize ng-model="x.designation" placeholder="Enter Designation">
+                          <!-- <div class="label label-danger pull-right" ng-show="schoolRegisterForm.designt.$invalid && schoolRegisterForm.designt.$touched">Please Enter Designation *</div> -->
+                        </div>
+                      </div>
+                    </div>
+                    <!-- DESIGNATION END -->
+
+                    <!-- MOBILE -->
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label class="col-sm-4 control-label"> Mobile :</label>
+                        <div class="col-sm-8">
+                          <input type="text" only-Digits ng-model="x.mobile" name="deptSch" class="form-control" minlength="10" maxlength="10" placeholder="Enter Department Mobile">
+                          <!-- <div class="label label-danger pull-right" ng-show="schoolRegisterForm.deptSch.$invalid && schoolRegisterForm.deptSch.$touched">Please Enter Your Department Mobile *</div> -->
+                        </div>
+                      </div>
+                    </div>
+                    <!-- MOBILE END -->
+                  </div>
+                  <!-- DEPARTMENT DESIGNATION/MOBILE END -->
+
+                  <!-- EMAIL NAME -->
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label"> Email :</label>
+                    <div class="col-sm-10">
+                      <input name="xEmail" type="email" class="form-control" ng-model="x.email" placeholder="Enter Department Email">
+                      <!-- <div class="label label-danger pull-right" ng-show="schoolRegisterForm.xEmail.$invalid && schoolRegisterForm.xEmail.$touched">Please Enter Department Email *</div> -->
+                    </div>
+                  </div>
+                  <!-- EMAIL  END -->
+
+                  <!-- UPLOAD -->
+                  <!-- UPLOAD -->
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Upload Photograph:</label>
+                    <div class="col-sm-5">
+                      <div class="dirctive-op text-left">
+                        <upload-image2 class="up-img arrayPhoto ng-isolate-scope" file-types="'image/jpeg,image/png'" ng-disabled="type.disabled"
+                          ng-callback="changeitPhotograph" ng-model="x.photograph" ng-click="show=1" no-view></upload-image2>
+                      </div>
+                      <div class="display-inline">
+                        <div class="register-imageplace" ng-if="show==1 && x.photograph">
+                          <a fancybox href="{{x.photograph |serverimage2}}" data-fancybox="group" data-caption="{{gallery.image}}" rel="deptGal" share="https://sfanow.in">
+                              <img ng-src="{{x.photograph |serverimage2}}"class="img-responsive">
+                            </a>
+                        </div>
+                      </div>
+                      <div class="hover-img" ng-if="show==1 && x.photograph">
+                        <img src="img/icon/x.png " alt="logo " class="img-responsive myicon " ng-click="removeArrayImage($index,
+                        'arrayPhoto') ">
+                      </div>
+                    </div>
+                    <div class="col-md-5 ">
+                      <div class="form-infonote ">
+                        Kindly upload only .jpg or .png format. Maximum file size 5MB.
+                      </div>
+                    </div>
+                  </div>
+                  <!-- UPLOAD END -->
+                  <!-- UPLOAD END -->
+
+                  <!-- ADD BUTTON -->
+                  <div class="form-group ">
+                    <div class="text-center">
+                      <img src="img/icon/p.png" alt="Add Button" class="pointer" ng-click="addSportForm()">
+                      <p class="formregister-lightheadingschool">Add Sports Department</p>
+                    </div>
+                  </div>
+                  <!-- ADD BUTTON END -->
+                </div>
+                <!--DETAILS END  -->
+              </div>
+              <!-- SCHOOL DEPARTMENT OPTIONAL END -->
+
+            </div>
+            <!-- CONTACT CARD END -->
+
+          </section>
+          <!-- CONTACT DETAILS END -->
+
+          <!-- SPORTS INTERESTED IN -->
+          <section class="registerform-schoolsportselection">
+            <!-- TAB -->
+            <div class="section-tab">
+              Step 3 :Sports Interested In
+            </div>
+            <!-- TAB END -->
+
+            <div class="form-card">
+              <!-- TEXT DISPLAY -->
+              <div class="registerform-schoolsportselection-text">
+                <p>SELECTION OF ANY/ALL OF THE BELOW MENTIONED SPORTS DOES NOT MEAN THAT YOUR SCHOOL HAS REGISTERED FOR THOSE
+                  SPORTS. IN ORDER TO CONFIRM PARTICIPATION PLAYERS/TEAMS FROM YOUR SCHOOL MUST COMPLETE THE REQUIRED PLAYER
+                  AND SPORT REGISTRATION PROCESS. </p>
+              </div>
+              <!-- TEXT DISPLAY END -->
+
+              <!-- SPORTS DISPLAY -->
+              <div class="registerform-schoolallsportholder">
+                <!-- INDIVIDUAL/TEAM -->
+                <div class="registerform-schoolsportsdisplayindividualandteam" ng-repeat="sportData in schoolRegisterSportsForm track by $index">
+
+                  <!-- HEADING -->
+                  <div class="formregister-heading">
+                    {{sportData.name}}
+                  </div>
+
+                  <!-- HEADING END -->
+                  <!-- SPORT NAMES -->
+                  <div class="form-group">
+                    <div class="col-sm-4 col-xs-6" ng-repeat="item in sportData.sportName track by $index">
+                      <!-- <pre>{{item | json}}</pre> -->
+                      <div class="checkbox" ng-repeat="dataItem in item track by $index">
+                        <label><input type="checkbox" id="{{dataItem.name}}" value="" ng-click="addSportsTest(dataItem.name,dataItem.type)">{{dataItem.name}}</label>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- SPORT NAMES END -->
+                  <div class="validate-col" ng-show="showTeamSports">Please select atleast one sports Type</div>
+                </div>
+
+                <!-- DOUBLES/RELAY -->
+                <div class="register-schoolsportdisplaydoublesandrelay">
+                  <div class="form-group">
+                    <div class="col-sm-4 col-xs-6" ng-repeat="doubleRelayData in schoolRegisterSportForm2 track by $index">
+                      <div class="formregister-heading">
+                        {{doubleRelayData.name}}
+                      </div>
+                      <div class="checkbox" ng-repeat="dataItem in doubleRelayData.sportName track by $index">
+                        <label><input type="checkbox" id="{{dataItem.name}}" value="" ng-click="addSportsTest(dataItem.name,dataItem.type)">{{dataItem.name}}</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- SPORTS DISPLAY END -->
+
+              <!-- TERMS AND CONDITION -->
+              <div class="checkbox">
+                <label><input type="checkbox" value="" ng-checked="termsCheck(formData.termsAndCondition)" ng-model="formData.termsAndCondition">I have carefully read and understood the <a ng-click="termcondition('', type, sfaCity, year)" title="Click here"><strong>terms and conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.</label>
+              </div>
+              <!-- TERMS AND CONDITION END -->
+
+              <!-- KINDILY NOTE -->
+              <div class="termscondition-text">
+                A registration fee of 5,000 /- (inclusive of all applicable taxes) will be payable.*Kindly Note: This is an annual fee that
+                enables your school to send any number of athletes who have registered for SFA Championship 2018-19, City
+                Name across all the above mentioned sports. This fee structure has been devised to encourage schools and
+                athletes to participate in multiple sports and to maintain a high quality of competition.
+              </div>
+              <!-- KINDILY NOTE END -->
+            </div>
+          </section>
+          <!-- SPORTS INTERESTED IN END -->
+
+
+          <!-- REGISTRATION FEE -->
+          <section class="registerform-schoolregistrationfee">
+            <!-- HEADER -->
+            <div class="section-tab">
+              Step 4 :Registration Fee
+            </div>
+            <!-- HEADER END -->
+
+            <!-- CONTENT -->
+            <div class="form-card">
+              <div class="form-group">
+                <div class="col-sm-4">
+                  <label class="sfa-radiobox"><input type="radio" ng-click="show=9" name="optradio" ng-model="formData.registrationFee"> <span class="sfa-radio"></span>Online Payment</label>
+                </div>
+                <div class="col-sm-4">
+                  <label class="sfa-radiobox"><input type="radio" ng-click="show=10" name="optradio" ng-model="formData.registrationFee"> <span class="sfa-radio"></span>Cash/Cheque/Demand Draft</label>
+                </div>
+              </div>
+
+              <div>
+                <p ng-if="show==10">
+                  Cash/Cheque/Demand Draft: Selecting this option will enable you to pay the registration fee of Rs. 12,000 (Inclusive of all
+                  applicable taxes) by Cash/Cheque/Demand Draft in favour of ‘SFA Sporting Services Pvt Ltd’ which is to
+                  be couriered/hand delivered to: 17A, Raviraj House, 6th Floor, Saraswati Road, Off Linking Road, Santacruz
+                  (West) - 400053.
+                </p>
+                <p ng-if="show==9">
+                  Online Payment: Selecting this option will enable you to pay the registration fee of Rs. 12,000 (Inclusive of all applicable
+                  taxes) via one of the following methods: 1) Credit Card 2) Debit Card 3) Net Banking
+                </p>
+              </div>
+            </div>
+            <!-- CONTENT END -->
+          </section>
+          <!-- REGISTRATION FEE END -->
+
+        </form>
+        <!-- FORM END -->
       </div>
     </div>
 
-    <div class="form-registerlabel">
-      School Principal
-    </div>
+
+
 
   </div>
   <!-- CONTAINER END -->

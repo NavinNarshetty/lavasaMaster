@@ -2108,4 +2108,44 @@ $sport-table-grey:#efeeee !default;
   min-height: 100vh;
 }
 
+.register-imageplace {
+  img {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+  }
+}
+
+.registerform-schoolcorrespondancecontact {
+  margin-bottom: 40px;
+  border: 1px solid #e1e1e1;
+  padding: 20px;
+}
+
+.formregister-lightheadingschool {
+  color: $sport-primary;
+  font-size: 16px;
+  @extend .r-titillium-web-regular;
+}
+
+.registerform-schoolprincipal {
+  margin-bottom: 40px;
+}
+
+.registerform-schooloptionaldetails {
+  position: relative;
+  @extend .registerform-schoolcorrespondancecontact;
+}
+
+.registerform-schoolclose {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  cursor: pointer;
+}
+
+.termscondition-text {
+  margin: 20px 0px;
+}
+
 // REGISTER FORM SCHOOL END
