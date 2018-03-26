@@ -12,5 +12,27 @@ schema.plugin(timestamps);
 module.exports = mongoose.model('CouponCode', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
-var model = {};
+var model = {
+
+    validateCode: function (data, callback) {
+        CouponCode.findOne({
+            code: data.code
+        }).lean().exec(function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(found)) {
+                callback(null, "No promocode matched");
+            } else {
+                var date = new date();
+                var check = moment(date).isBetween(found.fromDate, found.toDate);
+                if (check == true) {
+                    callback(null, found);
+                } else {
+                    callback(null, "Not a Valid Code");
+                }
+            }
+        });
+
+    }
+};
 module.exports = _.assign(module.exports, exports, model);

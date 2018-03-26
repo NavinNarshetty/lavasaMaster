@@ -22,9 +22,12 @@ var schema = new Schema({
     accountType: String,
     paymentMode: String,
     receiptId: String,
+    discount: String,
 });
 
-schema.plugin(deepPopulate, {});
+schema.plugin(deepPopulate, {
+
+});
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('Transaction', schema);
@@ -35,6 +38,7 @@ var model = {
     saveTransaction: function (data, callback) {
         async.waterfall([
                 function (callback) {
+
                     var param = {};
                     if (data.athlete) {
                         param.athlete = data.athlete;
@@ -43,9 +47,16 @@ var model = {
                         param.school = data.school;
                         param.athlete = undefined;
                     }
+                    if (data.coupon.amount) {
+                        param.discount = data.coupon.amount;
+                    } else if (data.coupon.percent) {
+                        param.discount = (data.package.finalPrice * data.coupon.percent) / 100;
+                    } else {
+                        param.discount = 0;
+                    }
                     param.dateOfTransaction = new date();
                     param.package = data.package._id;
-                    param.amountToPay = data.package.finalPrice;
+                    param.amountToPay = (data.package.finalPrice - param.discount);
                     param.paymentMode = data.paymentMode;
                     param.amountPaid = data.amountPaid;
                     param.PayuId = data.PayuId;

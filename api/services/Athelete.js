@@ -30,11 +30,11 @@ var schema = new Schema({
         ref: 'Package',
         index: true
     },
-    // transactionDetails: [{
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'Transaction',
-    //     index: true
-    // }],
+    coupon: {
+        type: Schema.Types.ObjectId,
+        ref: 'CouponCode',
+        index: true
+    },
     selectedEvent: Number,
     year: String,
     idProof: String,
@@ -58,6 +58,7 @@ var schema = new Schema({
     sportLevel: [{
         level: String,
         sport: String,
+        certificateImage: String
     }],
 
 
@@ -1471,7 +1472,7 @@ var model = {
                         firstName: data.firstName,
                         surname: data.surname,
                         email: data.email,
-                    }).lean().exec(function (err, found) {
+                    }).lean().deepPopulate("package coupon").exec(function (err, found) {
                         if (err) {
                             callback(err, null);
                         } else if (_.isEmpty(found)) {
@@ -3657,21 +3658,6 @@ var model = {
             });
     },
 
-
-
-    // async.concatSeries(totals, function (n, callback) {
-    //     console.log("n", n);
-    //     var d = new Date(n._id.event);
-    //     n._id.month = monthNames[n._id.month];
-    //     callback(null, n);
-    // }, function (err, complete) {
-    //     if (err) {
-    //         callback(err, null);
-    //     } else {
-    //         callback(null, complete);
-    //     }
-    // })
-
     toTitleCase: function (data) {
         if (data) {
             return data.replace(/\w\S*/g, function (txt) {
@@ -3682,7 +3668,6 @@ var model = {
             return '';
         }
     },
-
 
     updateAthleteName: function (data, callback) {
         Athelete.find({
@@ -3803,6 +3788,7 @@ var model = {
         });
 
     },
+
     getAthletePaymentStatus: function (data, callback) {
         console.log("Confgi", Config);
         console.log("date", data.startDate);
@@ -4195,7 +4181,7 @@ var model = {
                 });
 
         }
-    }
+    },
 
 
 
