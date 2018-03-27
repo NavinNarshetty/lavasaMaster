@@ -144,7 +144,7 @@ var model = {
 
     getTeamTemplate: function (sportName, team) {
         // console.log("getTeamTemplate", team);
-        if (sportName === 'Kho Kho') {
+        if (sportName === 'Kho Kho' || sportName == "Badminton Doubles" || sportName == "Tennis Doubles" || sportName == "Table Tennis Doubles" || sportName == "Tennis Mixed Doubles" || sportName == "Squash Doubles") {
             var format = {
                 teamId: team.teamId,
                 team: team._id,

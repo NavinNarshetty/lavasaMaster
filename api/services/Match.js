@@ -7624,7 +7624,44 @@ var model = {
                                                             }
                                                             resultData.teams[0].teamResults.finalPoints = n['SCORE 1'];
                                                         } else {
-                                                            resultData.teams[0].sets[0].point = n["SCORE 1"];
+                                                            if(n["SCORE 1"]){
+                                                                resultData.teams[0].sets[0].point = n["SCORE 1"];
+                                                            } else {
+                                                                resultData.teams[0].sets[0].point = n["TEAM 1 SET 1"];
+                                                                resultData.teams[0].sets[0].ace = 0;
+                                                                resultData.teams[0].sets[0].winner = 0;
+                                                                resultData.teams[0].sets[0].unforcedError = 0;
+                                                                resultData.teams[0].sets[0].serviceError = 0;
+                                                                resultData.teams[0].sets[0].doubleFaults = 0;
+                                                                
+                                                                if (n['TEAM 1 SET 2'] != undefined) {
+                                                                    temp.point = n['TEAM 1 SET 2'];
+                                                                    temp.ace = 0;
+                                                                temp.winner = 0;
+                                                                temp.unforcedError = 0;
+                                                                temp.serviceError = 0;
+                                                                temp.doubleFaults = 0;
+                                                                    resultData.teams[0].sets.push(temp);
+                                                                }
+                                                                if (n['TEAM 1 SET 3'] != undefined) {
+                                                                    temp.point = n['TEAM 1 SET 3'];
+                                                                    temp.ace = 0;
+                                                                temp.winner = 0;
+                                                                temp.unforcedError = 0;
+                                                                temp.serviceError = 0;
+                                                                temp.doubleFaults = 0;
+                                                                    resultData.teams[0].sets.push(temp);
+                                                                }
+                                                                if (n['TEAM 1 SET 4'] != undefined) {
+                                                                    temp.point = n['TEAM 1 SET 4'];
+                                                                    temp.ace = 0;
+                                                                temp.winner = 0;
+                                                                temp.unforcedError = 0;
+                                                                temp.serviceError = 0;
+                                                                temp.doubleFaults = 0;
+                                                                    resultData.teams[0].sets.push(temp);
+                                                                }
+                                                            }
                                                         }
 
                                                     } else if (result.result.resultVar === "resultFootball") {
@@ -7672,7 +7709,43 @@ var model = {
                                                         }
                                                         resultData.teams[1].teamResults.finalPoints = n['SCORE 2'];
                                                     } else {
-                                                        resultData.teams[1].sets[0].point = n["SCORE 2"];
+                                                        if(n["SCORE 2"]){
+                                                            resultData.teams[1].sets[0].point = n["SCORE 2"];
+                                                        } else {
+                                                            resultData.teams[1].sets[0].point = n["TEAM 2 SET 1"];
+                                                            resultData.teams[1].sets[0].ace = 0;
+                                                                resultData.teams[1].sets[0].winner = 0;
+                                                                resultData.teams[1].sets[0].unforcedError = 0;
+                                                                resultData.teams[1].sets[0].serviceError = 0;
+                                                                resultData.teams[1].sets[0].doubleFaults = 0;
+                                                            if (n['TEAM 2 SET 2'] != undefined) {
+                                                                temp.point = n['TEAM 2 SET 2'];
+                                                                temp.ace = 0;
+                                                                temp.winner = 0;
+                                                                temp.unforcedError = 0;
+                                                                temp.serviceError = 0;
+                                                                temp.doubleFaults = 0;
+                                                                resultData.teams[1].teamResults.sets.push(temp);
+                                                            }
+                                                            if (n['TEAM 2 SET 3'] != undefined) {
+                                                                temp.point = n['TEAM 2 SET 3'];
+                                                                temp.ace = 0;
+                                                                temp.winner = 0;
+                                                                temp.unforcedError = 0;
+                                                                temp.serviceError = 0;
+                                                                temp.doubleFaults = 0;
+                                                                resultData.teams[1].teamResults.sets.push(temp);
+                                                            }
+                                                            if (n['TEAM 2 SET 4'] != undefined) {
+                                                                temp.point = n['TEAM 2 SET 4'];
+                                                                temp.ace = 0;
+                                                                temp.winner = 0;
+                                                                temp.unforcedError = 0;
+                                                                temp.serviceError = 0;
+                                                                temp.doubleFaults = 0;
+                                                                resultData.teams[1].teamResults.sets.push(temp);
+                                                            }
+                                                        }
                                                     }
                                                     } else if (result.result.resultVar === "resultFootball") {
                                                         resultData.teams[1].teamResults.finalPoints = n['SCORE 2'];
