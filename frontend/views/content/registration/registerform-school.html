@@ -4,7 +4,7 @@
   <div class="container">
     <!-- HEADER -->
     <div class="registerform-schoolheader registerform-title ">
-      SCHOOL REGISTRATION form
+      {{type | capitalize}} REGISTRATION form
     </div>
     <!-- HEADER END -->
 
@@ -14,10 +14,10 @@
         <section class="registerform-schoolguidelines">
           <!-- GUIDELINE CARD -->
           <div class="form-card">
-            <p>The annual school registration fee for SFA Championship 2018-19, City Name is Rs. 5,000 (Inclusive of all applicable
-              taxes) Click here to view registered school benefits for SFA Championships City 2018-19, City Name. </p>
+            <p>The annual {{type}} registration fee for SFA Championship {{eventYear}}, {{sfaCity}} is Rs. 5,000 (Inclusive
+              of all applicable taxes) <a ng-click="regisBenModal(type,sfaCity,year,eventYear)"><strong>Click here</strong></a>              to view registered {{type}} benefits for SFA Championships City {{eventYear}}, {{sfaCity}}. </p>
             <p class="formregister-heading text-uppercase formregister-mtb20">
-              REGSITRATION FOR SFA CHAMPIONSHIP 2018-19, CITY NAME IS A 2-STEP PROCESS.
+              REGSITRATION FOR SFA CHAMPIONSHIP {{eventYear}}, {{sfaCity}} IS A 2-STEP PROCESS.
             </p>
             <p class="formregister-heading text-uppercase formregister-mtb20">
               STEP 1 OF THE REGISTRATION PROCESS WILL BE CONSIDERED AS COMPLETE ONLY ONCE YOU HAVE RECEIVED A CONFRIMATION EMAIL FROM SFA
@@ -36,7 +36,7 @@
                   Credit Card/Debit Card/Bank Details (in case of online payment)
                 </li>
                 <li>
-                  Your school's logo in jpeg/PNG format (Optional).
+                  Your {{type}}'s logo in jpeg/PNG format (Optional).
                 </li>
               </ul>
             </p>
@@ -72,7 +72,7 @@
                 <label class="col-sm-2 control-label"> *{{type| firstcapitalize}} Name :</label>
                 <div class="col-sm-10">
                   <input class="form-control" id="schoolName" capitalize ng-model="formData.schoolName" autocomplete="schoolName" name="schoolName"
-                    type="text" placeholder="Enter School Name" required>
+                    type="text" placeholder="Enter {{type | firstcapitalize }} Name" required>
                   <div class="label label-danger pull-right" ng-show="schoolRegisterForm.schoolName.$invalid && schoolRegisterForm.schoolName.$touched">Please Enter Your {{type| firstcapitalize}} Name *</div>
                 </div>
               </div>
@@ -108,8 +108,8 @@
               </div>
               <!-- CATEGORY END -->
 
-              <!--  BOARD -->
-              <div class="form-group">
+              <!-- SCHOOL BOARD -->
+              <div class="form-group" ng-if="isCollege == false">
                 <label class="col-sm-2 control-label"> * Affiliated Board : </label>
                 <div class="col-sm-10">
                   <select name="affiliatedBoard" class="form-control" ng-model="formData.affiliatedBoard" required>
@@ -126,7 +126,35 @@
                   <div class="label label-danger pull-right " ng-show="schoolRegisterForm.affiliatedBoard.$invalid && schoolRegisterForm.affiliatedBoard.$touched">Please Enter Your Affiliated Board*</div>
                 </div>
               </div>
-              <!--  BOARD END -->
+              <!-- SCHOOL BOARD END -->
+
+              <!-- COLLEGE -->
+              <div class="form-group" ng-if="isCollege == true">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label class="col-sm-4 control-label"> * University :</label>
+                    <div class="col-sm-8">
+                      <select name="affiliatedBoardCollege" class="form-control" ng-model="formData.affiliatedBoard" required>
+                            <option style="display:none"></option>
+                            <option>Mumbai University (MU)</option>
+                            <option>Other</option>
+                      </select>
+                      <div class="label label-danger pull-right" ng-show="schoolRegisterForm.affiliatedBoardCollege.$invalid && schoolRegisterForm.affiliatedBoardCollege.$touched">Please Enter Your College Board *</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group" ng-if="formData.affiliatedBoard == 'Other'">
+                    <label class="col-sm-4 control-label"> Other:</label>
+                    <div class="col-sm-8">
+                      <input name="affiliatedBoardOther" placeholder="Enter Other University" ng-model="formData.affiliatedBoards" type="text"
+                        class="form-control" required>
+                      <div class="label label-danger pull-right" ng-show="schoolRegisterForm.affiliatedBoardOther.$invalid && schoolRegisterForm.affiliatedBoardOther.$touched">Please Enter Your Locality *</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- COLLEGE END -->
 
               <!-- UPLOAD -->
               <div class="form-group">
@@ -150,7 +178,8 @@
                 </div>
                 <div class="col-md-5">
                   <div class="form-infonote">
-                    This Logo will be displayed on your SFA School profile. Kindly upload only .jpg or .png format. Maximum file size 5MB.
+                    This Logo will be displayed on your SFA {{type | firstcapitalize}} profile. Kindly upload only .jpg or .png format. Maximum
+                    file size 5MB.
                   </div>
                 </div>
               </div>
@@ -215,15 +244,15 @@
             <div class="form-card">
 
               <div class="formregister-heading">
-                School Address
+                {{type | firstcapitalize}} Address
               </div>
               <!-- LINE 1 ADDRESS -->
               <div class="form-group">
                 <label class="col-sm-2 control-label"> *Line 1:</label>
                 <div class="col-sm-10">
                   <input class="form-control" id="schoolAdd" autocomplete='address-line1' capitalize ng-model="formData.schoolAdd" name="schoolAdd"
-                    type="text" placeholder="Enter School Address" required>
-                  <div class="label label-danger pull-right" ng-show="schoolRegisterForm.schoolAdd.$invalid && schoolRegisterForm.schoolAdd.$touched">Please Enter Your School Address *</div>
+                    type="text" placeholder="Enter {{type | firstcapitalize}} Address" required>
+                  <div class="label label-danger pull-right" ng-show="schoolRegisterForm.schoolAdd.$invalid && schoolRegisterForm.schoolAdd.$touched">Please Enter Your {{type}} Address *</div>
                 </div>
               </div>
               <!-- LINE 1 ADDRESS END -->
@@ -233,7 +262,7 @@
                 <label class="col-sm-2 control-label">Line 2:</label>
                 <div class="col-sm-10">
                   <input class="form-control" id="schoolAddressLine2" autocomplete='address-line2' capitalize ng-model="formData.schoolAddressLine2"
-                    name="schoolAddressLine2" type="text" placeholder="Enter School Address">
+                    name="schoolAddressLine2" type="text" placeholder="Enter {{type | firstcapitalize}} Address">
                   <!-- <div class="label label-danger pull-right" ng-show="schoolRegisterForm.schoolAddressLine2.$invalid && schoolRegisterForm.schoolAddressLine2.$touched">Please Enter Your School Address *</div> -->
                 </div>
               </div>
@@ -531,9 +560,9 @@
                   <span class="formregister-heading">Sports Department</span> <span class="formregister-lightheadingschool">( Optional)</span>
                 </div>
                 <!-- HEADING END -->
-                <p>Coaches play an extremely vital role in shaping the future of young athletes. As part of your school’s sporting
-                  profile, SFA would be happy to highlight the efforts of your sports department. Kindly request you to fill
-                  in the following details.</p>
+                <p>Coaches play an extremely vital role in shaping the future of young athletes. As part of your {{type}}’s
+                  sporting profile, SFA would be happy to highlight the efforts of your sports department. Kindly request
+                  you to fill in the following details.</p>
 
 
                 <!--DETAILS  -->
@@ -650,9 +679,9 @@
             <div class="form-card">
               <!-- TEXT DISPLAY -->
               <div class="registerform-schoolsportselection-text">
-                <p>SELECTION OF ANY/ALL OF THE BELOW MENTIONED SPORTS DOES NOT MEAN THAT YOUR SCHOOL HAS REGISTERED FOR THOSE
-                  SPORTS. IN ORDER TO CONFIRM PARTICIPATION PLAYERS/TEAMS FROM YOUR SCHOOL MUST COMPLETE THE REQUIRED PLAYER
-                  AND SPORT REGISTRATION PROCESS. </p>
+                <p>SELECTION OF ANY/ALL OF THE BELOW MENTIONED SPORTS DOES NOT MEAN THAT YOUR {{type | capitalize}} HAS REGISTERED
+                  FOR THOSE SPORTS. IN ORDER TO CONFIRM PARTICIPATION PLAYERS/TEAMS FROM YOUR {{type | capitalize}} MUST
+                  COMPLETE THE REQUIRED PLAYER AND SPORT REGISTRATION PROCESS. </p>
               </div>
               <!-- TEXT DISPLAY END -->
 
@@ -719,9 +748,9 @@
               <!-- KINDILY NOTE -->
               <div class="termscondition-text">
                 A registration fee of 5,000 /- (inclusive of all applicable taxes) will be payable.*Kindly Note: This is an annual fee that
-                enables your school to send any number of athletes who have registered for SFA Championship 2018-19, City
-                Name across all the above mentioned sports. This fee structure has been devised to encourage schools and
-                athletes to participate in multiple sports and to maintain a high quality of competition.
+                enables your {{type}} to send any number of athletes who have registered for SFA Championship {{eventYear}},
+                {{sfaCity}} across all the above mentioned sports. This fee structure has been devised to encourage {{type}}s
+                and athletes to participate in multiple sports and to maintain a high quality of competition.
               </div>
               <!-- KINDILY NOTE END -->
             </div>

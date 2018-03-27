@@ -2152,7 +2152,8 @@ $sport-table-grey:#efeeee !default;
   margin: 20px 0px;
 }
 
-.registerform-schooltermscondition {
+.registerform-schooltermscondition,
+.registerform-schoolguidelines {
   a {
     @extend .r-titillium-web-bold;
     &:hover {
