@@ -7761,30 +7761,30 @@ var model = {
                                                         resultData.players[0].finalPoints = n['SCORE 1'];
                                                     } else {
                                                         if (n['PLAYER 1 SET 1'] != undefined) {
-                                                            resultData.players[0].sets[0] = n['PLAYER 1 SET 1'];
+                                                            resultData.players[0].sets[0].point = n['PLAYER 1 SET 1'];
                                                         }
                                                         if (n['PLAYER 1 SET 2'] != undefined && resultData.players[0].sets.length >= 2) {
-                                                            resultData.players[0].sets[1] = n['PLAYER 1 SET 2'];
+                                                            resultData.players[0].sets[1].point = n['PLAYER 1 SET 2'];
                                                         }
 
                                                         if (n['PLAYER 1 SET 3'] != undefined && resultData.players[0].sets.length >= 3) {
-                                                            resultData.players[0].sets[2] = n['PLAYER 1 SET 3'];
+                                                            resultData.players[0].sets[2].point = n['PLAYER 1 SET 3'];
                                                         }
 
                                                         if (n['PLAYER 1 SET 4'] != undefined && resultData.players[0].sets.length >= 4) {
-                                                            resultData.players[0].sets[3] = n['PLAYER 1 SET 4'];
+                                                            resultData.players[0].sets[3].point = n['PLAYER 1 SET 4'];
                                                         }
 
                                                         if (n['PLAYER 1 SET 5'] && resultData.players[0].sets.length >= 5) {
-                                                            resultData.players[0].sets[4] = n['PLAYER 1 SET 5'];
+                                                            resultData.players[0].sets[4].point = n['PLAYER 1 SET 5'];
                                                         }
 
                                                         if (n['PLAYER 1 SET 6'] && resultData.players[0].sets.length >= 6) {
-                                                            resultData.players[0].sets[5] = n['PLAYER 1 SET 6'];
+                                                            resultData.players[0].sets[5].point = n['PLAYER 1 SET 6'];
                                                         }
 
                                                         if (n['PLAYER 1 SET 7'] && resultData.players[0].sets.length == 7) {
-                                                            resultData.players[0].sets[6] = n['PLAYER 1 SET 7'];
+                                                            resultData.players[0].sets[6].point = n['PLAYER 1 SET 7'];
                                                         }
 
                                                     }
