@@ -93,6 +93,12 @@ var model = {
                     format.playerPoints.in = [];
                     format.playerPoints.out = [];
                     break;
+                case "Badminton Doubles":
+                case "Table Tennis Doubles":
+                case "Tennis Doubles":
+                case "Tennis Mixed Doubles":
+                case "Squash Doubles":
+                    break;
             };
 
             return format;
@@ -256,7 +262,7 @@ var model = {
             case "Tennis Mixed Doubles":
             case "Squash Doubles":
                 format.sets = [{
-                    "points": '',
+                    "point": '',
                     "ace": '',
                     "winner": '',
                     "unforcedError": '',
