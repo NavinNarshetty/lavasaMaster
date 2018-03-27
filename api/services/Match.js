@@ -7725,7 +7725,7 @@ var model = {
                                                                 temp.unforcedError = 0;
                                                                 temp.serviceError = 0;
                                                                 temp.doubleFaults = 0;
-                                                                resultData.teams[1].teamResults.sets.push(temp);
+                                                                resultData.teams[1].sets.push(temp);
                                                             }
                                                             if (n['TEAM 2 SET 3'] != undefined) {
                                                                 temp.point = n['TEAM 2 SET 3'];
@@ -7734,7 +7734,7 @@ var model = {
                                                                 temp.unforcedError = 0;
                                                                 temp.serviceError = 0;
                                                                 temp.doubleFaults = 0;
-                                                                resultData.teams[1].teamResults.sets.push(temp);
+                                                                resultData.teams[1].sets.push(temp);
                                                             }
                                                             if (n['TEAM 2 SET 4'] != undefined) {
                                                                 temp.point = n['TEAM 2 SET 4'];
@@ -7743,7 +7743,7 @@ var model = {
                                                                 temp.unforcedError = 0;
                                                                 temp.serviceError = 0;
                                                                 temp.doubleFaults = 0;
-                                                                resultData.teams[1].teamResults.sets.push(temp);
+                                                                resultData.teams[1].sets.push(temp);
                                                             }
                                                         }
                                                     }
