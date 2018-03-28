@@ -1,24 +1,22 @@
 var schema = new Schema({
-    featureName: String,
-    featureDetails: [{
-        packageName: {
-            type: Schema.Types.ObjectId,
-            ref: 'Package',
-        },
-        featureOrder: Number,
-        featureType: String,
-        featureCheck: Boolean,
-        featureText: String
-    }]
-
-
-
+  featureName: String,
+  featureDetails: [{
+    packageName: {
+      type: Schema.Types.ObjectId,
+      ref: 'Package',
+    },
+    featureOrder: Number,
+    featureType: String,
+    featureCheck: Boolean,
+    featureText: String
+  }],
+  featureUserType: String
 });
 
 schema.plugin(deepPopulate, {
   populate: {
     'featureDetails.packageName': {
-      select:"_id name order"
+      select: "_id name order"
     }
   }
 });

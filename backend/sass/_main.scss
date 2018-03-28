@@ -1523,7 +1523,31 @@
          max-width: 100%;
          height: auto;
      }
- }
-
+ } // ACCOUNTS HOLDER
+ .athleteaccountsholder {
+     p {
+         font-size: 12px;
+     }
+     .panel-group .panel .panel-heading {
+         padding: 8px 10px;
+     }
+     .panel-group .panel>.panel-collapse .panel-body {
+         padding: 5px;
+     }
+     .athleteaccount-datateam,
+     .athleteaccount-accountteam {
+         th {
+             font-size: 10px;
+             padding: 5px;
+         }
+         td {
+             font-size: 10px;
+         }
+     }
+     .athleteaccount-datateam {
+         margin-bottom: 20px;
+         border-bottom: 2px solid #e1e1e1;
+     }
+ } // ACCOUNTS HOLDER END
  @import "fancybox-override";
  @import "other/mobile";

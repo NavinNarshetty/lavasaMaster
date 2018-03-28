@@ -1,0 +1,57 @@
+<div class="heading-sec">
+  <div class="row">
+    <div class="col-md-4 column">
+      <div class="heading-profile">
+        <h2>{{title}} Coupon Detail</h2>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="widget">
+        <div class="form-elements-sec">
+          <form name="detailForm" role="form" class="sec">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Promo Code*</label>
+                  <input type="text" ng-model="formData.code" name="code" class="form-control" placeholder="Enter Promo Code" required>
+                  <div class="label label-danger pull-right" ng-if="detailForm.code.$invalid && detailForm.code.$touched">Please Enter Valid Promo Code *</div>
+                </div>
+                <div class="form-group">
+                  <label>Percent</label>
+                  <input type="text" ng-model="formData.percent" name="percent" class="form-control" placeholder="Enter Percent" required>
+                  <!-- <div class="label label-danger" ng-if="detailForm.percent.$invalid && detailForm.percent.$touched">Please Enter Percent*</div> -->
+                </div>
+                <div class="form-group">
+                  <label>Amount</label>
+                  <input type="text" ng-model="formData.amount" name="amount" class="form-control" placeholder="Enter Amount" required>
+                  <!-- <div class="label label-danger" ng-if="detailForm.amount.$invalid && detailForm.amount.$touched">Please Enter Amount*</div> -->
+                </div>
+                <div class="form-group">
+                  <label>From Date</label>
+                  <input name="fromDate" ui-date="dateOptions" ng-model="formData.fromDate" class="form-control" ng-required="true" placeholder="Enter From Date"
+                    required>
+                  <div class="label label-danger pull-right" ng-if="detailForm.fromDate.$invalid && detailForm.fromDate.$touched">Please Enter From Date*</div>
+                </div>
+                <div class="form-group">
+                  <label>To Date</label>
+                  <input name="todate" ui-date="dateOptions" ng-model="formData.toDate" class="form-control" ng-required="true" placeholder="Enter To Date"
+                    required>
+                  <div class="label label-danger pull-right" ng-if="detailForm.todate.$invalid && detailForm.todate.$touched">Please Enter To Date*</div>
+                </div>
+                <div class="text-center mt20 odd-even-button">
+                  <button class="btn btn-default" type="submit" ng-click="saveData(formData)">Save</button>
+                  <button class="btn btn-default" ui-sref='couponcode'>Cancel</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

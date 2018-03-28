@@ -25,6 +25,20 @@
               </div>
               <!-- FEATURE NAME END -->
 
+              <!-- FEATURE USER NAME -->
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Feature User</label>
+                  <select name="fetureUsertype" class="form-control" ng-model="formData.featureUserType" ng-change="getAllPackages(formData.featureUserType)"
+                    required>
+                    <option value="athlete">Athlete</option>
+                    <option value="school">School</option>
+                  </select>
+                  <div class="error-msg" ng-if="detailForm.fetureUsertype.$invalid && detailForm.fetureUsertype.$touched">Please Enter Valid Feature User Type *</div>
+                </div>
+              </div>
+              <!-- FEATURE USER NAME END -->
+
               <!-- TABLE -->
               <div class="col-md-12">
                 <div class="form-group">
@@ -64,7 +78,8 @@
                         <tr class="table-imageresponsive" ng-repeat="feature in formData.featureDetails track by $index">
                           <td>
                             <div class="form-group">
-                              <select name="" id="" class="form-control" ng-model="feature.packageName" ng-options="{_id:item._id,packageName:item.name} as item.name for item in packages track by item._id" required>
+                              <select name="" id="" class="form-control" ng-model="feature.packageName" ng-options="{_id:item._id,packageName:item.name} as item.name for item in packages track by item._id"
+                                required>
                                  </select>
                             </div>
                           </td>

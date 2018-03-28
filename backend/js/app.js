@@ -639,7 +639,25 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'detailFeatureCtrl'
         })
+        .state('couponcode', {
+            url: "/couponcode",
+            templateUrl: "views/template.html",
+            controller: 'CouponCtrl'
+        })
+        .state('detailcouponcode', {
+            url: "/detailcouponcode/:id",
+            templateUrl: "views/template.html",
+            controller: 'detailCouponCtrl'
+        })
         // *******************PACKAGE END******************************
+
+        // *******************ACOUNT **********************************
+        .state('athleteaccount', {
+            url: "/athleteaccount",
+            templateUrl: "views/template.html",
+            controller: 'athleteAccountCtrl'
+        })
+        // *******************ACOUNT END********************************** 
         .state('jagz', {
             url: "/jagz",
             templateUrl: "views/jagz.html",

@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-4 column">
       <div class="heading-profile">
-        <h2>Package</h2>
+        <h2 class="text-capitalize">Coupon code</h2>
       </div>
     </div>
   </div>
@@ -14,7 +14,7 @@
       <div class="widget ">
         <div class="table-area ">
           <div class="widget-title ">
-            <h3>List of Packages<span class="tableTotal ">(Total : {{totalItems}}) </span></h3>
+            <h3>List of Coupons<span class="tableTotal ">(Total : {{totalItems}}) </span></h3>
             <div class="row">
               <div class="col-md-5">
                 <div class="form-group">
@@ -24,9 +24,9 @@
               </div>
               <div class="col-md-7">
                 <div class="pull-right">
-                  <a class="btn btn-success" ui-sref="detailpackage">
-                                   Create
-                 </a>
+                  <a class="btn btn-success" ui-sref="detailcouponcode">
+                                     Create
+                   </a>
                 </div>
               </div>
             </div>
@@ -36,67 +36,53 @@
               <thead>
                 <tr>
                   <th>
-                    Sr.no
+                    <div class="text-capitalize">
+                      Promo-Code
+                    </div>
                   </th>
                   <th>
-                    Package User
+                    <div class="text-capitalize">
+                      Percent
+                    </div>
                   </th>
                   <th>
-                    Order
+                    <div class="text-capitalize">
+                      Amount
+                    </div>
                   </th>
                   <th>
-                    Name
+                    <div class="text-capitalize">
+                      FromDate - To Date
+                    </div>
                   </th>
                   <th>
-                    Price
+                    <div class="text-capitalize">
+                      Actions
+                    </div>
                   </th>
-                  <th>
-                    Discount
-                  </th>
-                  <th>
-                    finalPrice
-                  </th>
-                  <th>
-                    eventCount
-                  </th>
-                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 <tr ng-repeat="item in items">
                   <td>
-                    {{$index + 1}}
+                    {{item.code }}
                   </td>
                   <td>
-                    <div class="text-capitalize">
-                      {{item.packageUser}}
-                    </div>
+                    <span ng-if="item.percent">{{item.percent}}ab</span>
                   </td>
                   <td>
-                    {{item.order}}
+                    {{item.amount}}
                   </td>
                   <td>
-                    {{item.name|firstcapitalize}}
+                    {{item.fromDate | date}} - {{item.toDate | date}}
                   </td>
                   <td>
-                    {{item.price}}
-                  </td>
-                  <td>
-                    {{item.discount}}
-                  </td>
-                  <td>
-                    {{item.finalPrice}}
-                  </td>
-                  <td>
-                    {{item.eventCount}}
-                  </td>
-                  <td>
-                    <a class="btn btn-primary" target="_new" ui-sref="detailpackage({id:item._id})">
-                    <i class="fa fa-pencil"></i> Edit
-                  </a>
+                    <a class="btn btn-primary" target="_blank" ui-sref="detailcouponcode({id:item._id})">
+                      <i class="fa fa-pencil"></i> Edit
+                    </a>
                     <a class="btn btn-danger" ng-click="confirmDelete(item._id)">
-                    <i class="fa fa-trash"></i> Delete
-                  </a>
+                      <i class="fa fa-trash"></i> Delete
+                    </a>
                   </td>
                 </tr>
               </tbody>

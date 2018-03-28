@@ -50,6 +50,11 @@ myApp.factory('NavigationService', function ($http) {
                             classis: "",
                             sref: "#/athlete",
                             icon: "phone"
+                        }, {
+                            name: "Accounts",
+                            classis: "",
+                            sref: "#/athleteaccount",
+                            icon: "phone"
                         }]
                     }, {
                         name: "Old School",
@@ -345,6 +350,11 @@ myApp.factory('NavigationService', function ($http) {
                     name: "Features",
                     classis: "activeColor",
                     sref: "#/featurepackage",
+                    icon: "phone",
+                }, {
+                    name: "Coupon Code",
+                    classis: "activeColor",
+                    sref: "#/couponcode",
                     icon: "phone",
                 }]
             }, {

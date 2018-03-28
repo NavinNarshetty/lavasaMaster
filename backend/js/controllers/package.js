@@ -167,21 +167,30 @@ myApp.controller('detailFeatureCtrl', function ($scope, TemplateService, Navigat
   $scope.formData.pageType = ' ';
   var url = 'Featurepackage';
 
+  $scope.formData.featureUserType = ''
+
   //GET ALL PACKAGE
-  getAllPackages(function (data) {
-    if (data) {
-      $scope.packages = data.data.results;
-      $scope.totalItems = data.data.total;
-      $scope.maxRow = data.data.options.count;
-    }
-  });
-  function getAllPackages(callback) {
+  // getAllPackages(function (data) {
+  //   if (data) {
+  //     $scope.packages = data.data.results;
+  //     $scope.totalItems = data.data.total;
+  //     $scope.maxRow = data.data.options.count;
+  //   }
+  // });
+
+  $scope.getAllPackages = function (filterName) {
+    console.log('filter', filterName);
     $scope.url = "package/search";
     $scope.getpackageobj = {};
+    $scope.getpackageobj.filter = {};
+    $scope.getpackageobj.filter.packageUser = filterName;
+
     NavigationService.apiCall($scope.url, $scope.getpackageobj, function (data) {
       console.log("data.value", data);
       if (data.value == true) {
-        callback(data);
+        $scope.packages = data.data.results;
+        $scope.totalItems = data.data.total;
+        $scope.maxRow = data.data.options.count;
       }
     });
 
@@ -196,7 +205,7 @@ myApp.controller('detailFeatureCtrl', function ($scope, TemplateService, Navigat
     crudService.getOneData(url, id, function (data) {
       if (data) {
         $scope.formData = data;
-        getAllPackages(function (data) {
+        $scope.getAllPackages($scope.formData.featureUserType, function (data) {
           _.each($scope.formData.featureDetails, function (key) {
             var obj = _.find(data.data.results, ['_id', key.packageName]);
             key.tempobj = {};
