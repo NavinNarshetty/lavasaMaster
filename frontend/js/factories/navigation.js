@@ -1328,6 +1328,18 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
             }).then(function(data){
               callback(data.data);
             });
+        },
+        getPackages: function (callback) {
+            $http({
+                url: adminUrl2 + 'Package/search',
+                method: 'POST',
+            }).then(callback);
+        },
+        getPackageFeatures: function (callback) {
+            $http({
+                url: adminUrl2 + 'Featurepackage/search',
+                method: 'POST',
+            }).then(callback);
         }
     };
 });

@@ -36,6 +36,9 @@
               <thead>
                 <tr>
                   <th>
+                    Order
+                  </th>
+                  <th>
                     Name
                   </th>
                   <th>
@@ -55,6 +58,9 @@
               </thead>
               <tbody>
                 <tr ng-repeat="item in items">
+                  <td>
+                    {{item.order}}
+                  </td>
                   <td>
                     {{item.name|firstcapitalize}}
                   </td>

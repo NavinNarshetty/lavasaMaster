@@ -110,6 +110,10 @@ $sport-table-grey:#efeeee !default;
   color: $sport-blue-table;
 }
 
+.v-top {
+  vertical-align: top;
+}
+
 .draws-a {
   a {
     color: $sport-primary;
@@ -2148,4 +2152,35 @@ $sport-table-grey:#efeeee !default;
   margin: 20px 0px;
 }
 
+.registerform-schooltermscondition,
+.registerform-schoolguidelines {
+  a {
+    @extend .r-titillium-web-bold;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.registerform-page {
+  .dirctive-op {
+    display: inline-block;
+    vertical-align: top;
+  }
+}
+
+.registerform-uploadimageholder {
+  margin-left: 20px;
+  display: inline-block;
+  vertical-align: top;
+}
+
 // REGISTER FORM SCHOOL END
+// CUSTOM CHECKBOX FOR FORM
+.registerform-schooltermscondition {
+  .checkmark-sfatick {
+    top: 5px;
+  }
+}
+
+// CUSTOM CHECKBOX FOR FORM END

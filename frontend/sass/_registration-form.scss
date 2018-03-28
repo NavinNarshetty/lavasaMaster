@@ -206,3 +206,283 @@
     border: 1px solid $sport-dark-grey;
   }
 }
+
+// CUSTOM CHECKBOX
+.sfa-registercheckbox {
+  display: inline-block;
+  position: relative;
+  padding-left: 16px;
+  line-height: 16px;
+  cursor: pointer;
+  font-size: 14px;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+
+.sfa-registercheckbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom checkbox */
+
+.checkmark-sfatick {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  height: 12px;
+  width: 12px;
+  border: 1px solid #e1e1e1;
+  background-color: #fff;
+}
+
+/* On mouse-over, add a grey background color */
+
+.sfa-registercheckbox:hover input~.checkmark-sfatick {
+  background-color: #e1e1e1;
+}
+
+/* When the checkbox is checked, add a blue background */
+
+.sfa-registercheckbox input:checked~.checkmark-sfatick {
+  background-color: #fff;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+
+.checkmark-sfatick:after {
+  content: '✔';
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+
+.sfa-registercheckbox input:checked~.checkmark-sfatick:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+
+.sfa-registercheckbox .checkmark-sfatick:after {
+  left: 0px;
+  top: -3px;
+  border: solid white;
+  border-width: 0 0px 0px 0;
+  font-size: 12px;
+}
+// UPGRADE PACKAGE SECTION
+.upgradepackage-page{
+  min-height: 100vh;
+  padding: 50px 0;
+  @extend .d-opensans-regular;
+  // .sfa-radiobox{
+  //   line-height: normal;
+  // }
+}
+.upgradepackage-title{
+  margin-bottom: 20px;
+  color: $sport-primary;
+  font-size: 55px;
+  text-transform: uppercase;
+  @extend .d-fjalla-one;
+}
+.upgradepackage-content{
+  margin-bottom: 20px;
+}
+.upgradepackage-selection{
+  padding: 10px 0;
+}
+// UPGRADE RADIO SELECTION
+.upgradepackage-radiocontent{
+  margin: 0px 10px 0 5px;
+  text-align: center;
+}
+.upgradepackage-radioprice{
+  color: #606060;
+  display: block;
+  font-size: 45px;
+  vertical-align: top;
+  @extend .d-teko-semibold;
+}
+.upgradepackage-radioinr{
+  margin-top: -3px;
+  margin-right: 3px;
+  font-size: 21px;
+  line-height: 1;
+  vertical-align: top;
+}
+.upgradepackage-radioname{
+  font-size: 18px;
+  color: $sport-lightblue;
+  text-transform: uppercase;
+  @extend .d-fjalla-one;
+}
+.package-radio-blue{
+  .upgradepackage-radioname{
+    color: tint($sport-lightblue, 15%);;
+  }
+}
+.package-radio-green{
+  .upgradepackage-radioname{
+    color: tint($sport-success, 15%);
+  }
+}
+.package-radio-red{
+  .upgradepackage-radioname{
+    color: tint($sport-danger, 15%);
+  }
+}
+.package-radio-yellow{
+  .upgradepackage-radioname{
+    color: tint($sport-warning, 15%);
+  }
+}
+// UPGRADE RADIO SELECTION END
+// PACKAGE TABLE
+.package-tableholder{
+  padding: 5px;
+  margin: 20px 0;
+  .table{
+    margin-top: 40px;
+    thead{
+      tr{
+        th{
+          padding: 0px 2px;
+          border: none;
+        }
+      }
+    }
+    tbody{
+      box-shadow: 0 4px 5px 0px #a0a0a0;
+      tr{
+        background-color: transparent;
+        td{
+          border: none;
+          border-right: 3px solid #fff;
+          border-left: 3px solid #fff;
+        }
+        .upgradepackage-td{
+          // padding: 8px 15px;
+        }
+        &:nth-child(odd){
+          td{
+            background-color: $package-bggrey;
+          }
+        }
+        &:nth-child(even){
+          td{
+            background-color: #fff;
+          }
+        }
+        // &:first-child{
+        //   .upgradepackage-td{
+        //     margin-top: 10px;
+        //   }
+        // }
+        // &:last-child{
+        //   .upgradepackage-td{
+        //     margin-bottom: 10px;
+        //   }
+        // }
+      }
+    }
+  }
+}
+.packagetable-caption{
+  padding: 5px;
+  box-shadow: 0 4px 5px 0px #a0a0a0;
+  background-color: $package-bggrey;
+  color: $sport-dark-grey;
+  font-style: italic;
+}
+.package-tabheader{
+  padding: 10px;
+  border-radius: 10px 10px 0 0;
+  position: relative;
+  background-color: $sport-table-grey;
+  color: #fff;
+  .upgradepackage-radioprice{
+    color: #fff;
+    line-height: 1;
+  }
+  .upgradepackage-radioinr{
+    margin-top: 4px;
+  }
+}
+.package-headtab{
+  width: 90%;
+  padding: 5px;
+  border-radius: 10px 10px 0 0;
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  font-size: 12px;
+  text-align: center;
+  text-transform: uppercase;
+  @include transform(translateX(-50%));
+}
+.package-tabhead-blue{
+  background-color: tint($sport-lightblue, 15%);
+  .upgradepackage-radioname{
+    color: shade($sport-lightblue, 30%);
+  }
+  .package-headtab{
+    background-color: tint($sport-lightblue, 50%);
+    color: shade($sport-lightblue, 30%);
+  }
+}
+.package-tabhead-green{
+  background-color: tint($sport-success, 15%);
+  .upgradepackage-radioname{
+    color:  shade($sport-success, 30%);
+  }
+  .package-headtab{
+    background-color: tint($sport-success, 50%);
+    color:  shade($sport-success, 30%);
+  }
+}
+.package-tabhead-red{
+  background-color: tint($sport-danger, 15%);
+  .upgradepackage-radioname{
+    color:  shade($sport-danger, 30%);
+  }
+  .package-headtab{
+    background-color: tint($sport-danger, 50%);
+    color:  shade($sport-danger, 30%);
+  }
+}
+.package-tabhead-yellow{
+    background-color: tint($sport-warning, 15%);
+    .upgradepackage-radioname{
+      color:  shade($sport-warning, 30%);
+    }
+    .package-headtab{
+      background-color: tint($sport-warning, 50%);
+      color:  shade($sport-warning, 30%);
+    }
+}
+.upgradepackage-offer{
+  text-transform: uppercase;
+}
+.upgradepackage-offeramount{
+  display: block;
+  text-decoration: line-through;
+  text-transform: uppercase;
+}
+.upgradepackage-tax{
+  margin-top: -10px;
+  display: block;
+  font-size: 10px;
+}
+.package-featurehead{
+  background-color: $sport-dark-grey;
+  font-size: 42px;
+  text-align: center;
+  text-transform: uppercase;
+  @extend .d-fjalla-one;
+}
+// PACKAGE TABLE END
+// UPGRADE PACKAGE SECTION END

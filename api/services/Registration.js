@@ -43,6 +43,7 @@ var schema = new Schema({
     locality: String,
     pinCode: String,
     contactPerson: String,
+    contactDesignation: String,
     landline: String,
     email: String,
     website: String,

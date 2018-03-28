@@ -3,7 +3,22 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, TemplateService, Na
   TemplateService.title = "School Registration Form"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
 
+  // VARIABLE INITALIZE
+
   $scope.formData = {};
+  $scope.formdata = {};
+  $scope.teamSport = [];
+  $scope.aquaticsSports = [];
+  $scope.racquetSports = [];
+  $scope.combatSports = [];
+  $scope.targetSports = [];
+  $scope.individualSports = [];
+  $scope.sfaID = '';
+  $scope.emailOtp = {};
+  $scope.showOtpSuccess = {};
+
+
+  // CONFIG PROPERTY
   configService.getDetail(function (data) {
     $scope.city = data.city;
     $scope.district = data.district;
@@ -15,6 +30,10 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, TemplateService, Na
     $scope.isCollege = data.isCollege;
     $scope.type = data.type;
   });
+  // CONFIG PROPERTY END
+
+
+  // UPLOAD FUNCTION *********DO NOT REMOVE *****
   $scope.changeitSchoolLogo = function (err, data) {
     // console.log(err, data);
     if (err) {
@@ -57,6 +76,7 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, TemplateService, Na
       // $scope.errorMsgpan = "Successfully uploaded";
     }
   };
+  // UPLOAD FUNCTION END
   $scope.formData.sportsDepartment = [];
   $scope.sportDepart = {
     name: "",
@@ -65,23 +85,11 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, TemplateService, Na
     photo: "",
     mobile: ""
   };
-  // $scope.dateOptions = {
-  //     changeYear: true,
-  //     changeMonth: true,
-  //     yearRange: '1900:-0',
-  //     dateFormat: "dd/mm/yy"
-  // };
-  // $scope.menu = "menu-out";
-  // $scope.getMenu = function () {
-  //     if ($scope.menu == "menu-out") {
-  //         $scope.menu = "menu-out";
-  //     } else {
-  //         $scope.menu = "menu-in";
-  //     }
-  // }
 
-  $scope.formdata = {};
 
+
+
+  // THANK YOU MODAL
   $scope.openModal = function () {
     $timeout(function () {
       // fbq('track', 'CompleteRegistration');
@@ -103,7 +111,9 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, TemplateService, Na
   //     GoogleAdWordsService.sendRegisterCustomerConversion();
   //     $state.go('register');
   // };
+  // THANK YOU MODAL END
 
+  // ALL FIELDS ARE MODAL MANDATORY ERROR
   $scope.openErrorModal = function () {
     $scope.modalInstances = $uibModal.open({
       animation: true,
@@ -114,7 +124,10 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, TemplateService, Na
       templateUrl: "views/modal/error.html"
     });
   };
+  // ALL FIELDS ARE MODAL MANDATORY ERROR END
 
+
+  // ERROR WHILE FILLING THE FORM
   $scope.openErrModal = function () {
     $scope.errInstances = $uibModal.open({
       animation: true,
@@ -125,6 +138,9 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, TemplateService, Na
       templateUrl: "views/modal/err.html"
     });
   };
+  // ERROR WHILE FILLING THE FORM END
+
+  // REGISTER MODAL
   $scope.regisBenModal = function (type, sfaCity, year, eventYear) {
     $scope.type = type;
     $scope.sfaCity = sfaCity;
@@ -145,12 +161,16 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, TemplateService, Na
       size: 'lg'
     });
   };
+  // REGISTER MODAL END
 
+
+  // ADD AND REMOVE SPORT DEPARTMENT
   $scope.firstTime = 0;
   if ($scope.firstTime === 0) {
     $scope.formData.sportsDepartment.push($scope.sportDepart);
     $scope.firstTime++;
   }
+
 
   $scope.addSportForm = function () {
     if ($scope.formData.sportsDepartment.length < 3) {
@@ -171,28 +191,14 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, TemplateService, Na
       $scope.formData.sportsDepartment.splice(index, 1);
     }
   };
-  $scope.teamSport = [];
-  $scope.aquaticsSports = [];
-  $scope.racquetSports = [];
-  $scope.combatSports = [];
-  $scope.targetSports = [];
-  $scope.individualSports = [];
-  $scope.sfaID = '';
-  $scope.emailOtp = {};
-  $scope.showOtpSuccess = {};
 
-  // var isSportSelected = function (form) {
-  //     if (formdata.teamSports.length > 0 || formdata.racquetSports.length > 0 || formdata.combatSports.length > 0 || formdata.targetSports.length > 0 || formdata.individualSports.length > 0 || formdata.aquaticsSports.length > 0) {
-  //         $scope.showTeamSports = false;
-  //     } else {
-  //         console.log('enter');
-  //         $scope.showTeamSports = true;
-  //     }
-  // }
+  // ADD AND REMOVE SPORT DEPARTMENT END
 
-  //save registerform to database
+
+  //SAVE FUNCTION 
   $scope.isDisabled = false;
   $scope.saveRegis = function (formdata, formvalid) {
+    console.log(formdata, formvalid, "check");
     formdata.teamSports = $scope.teamSport;
     formdata.racquetSports = $scope.racquetSports;
     formdata.combatSports = $scope.combatSports;
@@ -200,38 +206,7 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, TemplateService, Na
     formdata.individualSports = $scope.individualSports;
     formdata.aquaticsSports = $scope.aquaticsSports;
     formdata.sfaID = $scope.sfaID;
-
     $scope.value = {};
-
-    // if (formdata.teamSports == '' || formdata.racquetSports == '' || formdata.combatSports == '' || formdata.targetSports == '' || formdata.individualSports == '' || formdata.aquaticsSports == '') {
-    //     $scope.showTeamSports = true;
-    // } else {
-    //     $scope.showTeamSports = false;
-    // }
-
-    // if (formdata.teamSports == '') {
-    //     $scope.showTeamSports = true;
-    // } else
-    // if (formdata.racquetSports == '') {
-    //     $scope.showTeamSports = true;
-    // } else if (formdata.combatSports == '') {
-    //     $scope.showTeamSports = true;
-    // } else if (formdata.targetSports == '') {
-    //     $scope.showTeamSports = true;
-    // } else if (formdata.individualSports == '') {
-    //     $scope.showTeamSports = true;
-    // } else if (formdata.aquaticsSports == '') {
-    //     $scope.showTeamSports = true;
-    // } else {
-    //     $scope.showTeamSports = false;
-    // }
-
-    // if (formdata.teamSports != null || formdata.racquetSports != null || formdata.combatSports != null || formdata.targetSports != null || formdata.individualSports != null || formdata.aquaticsSports != null) {
-    //     $scope.showTeamSports = false;
-    // } else {
-    //     console.log(enter);
-    //     $scope.showTeamSports = true;
-    // }
     if (formdata.teamSports.length > 0 || formdata.racquetSports.length > 0 || formdata.combatSports.length > 0 || formdata.targetSports.length > 0 || formdata.individualSports.length > 0 || formdata.aquaticsSports.length > 0) {
       $scope.showTeamSports = false;
     } else {
@@ -299,26 +274,12 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, TemplateService, Na
       }, 3000);
     }
   };
-  // $scope.checkOTP = function (otp) {
-  //     console.log("opt", $scope.emailOtp, otp);
-  //     if ($scope.emailOtp == otp) {
-  //         console.log("email OTP verified");
-  //     } else {
-  //         alert("Incorrect OTP!");
-  //     }
-  // }
 
-  // $scope.checkOTP = function (otp) {
-  //     console.log("opt", $scope.emailOtp, otp);
-  //     if (_.isEqual($scope.emailOtp, otp)) {
-  //         $(' .verify-otp-regis').html('<i class="fa fa-check"></i>').css("color", "green");
-  //         console.log("email OTP verified");
-  //     } else {
-  //         alert("Incorrect OTP!");
-  //         $(' .verify-otp-regis').html('<i class="fa fa-times"></i>').css("color", "red");
-  //     }
-  // }
+  //SAVE FUNCTION END
 
+
+
+  // VALIDATION OF OTP
   $scope.checkOTP = function (otp) {
     // console.log("opt", $scope.emailOtp, otp);
     // console.log(typeof otp, typeof $scope.emailOtp);
@@ -353,9 +314,11 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, TemplateService, Na
     }
 
   };
+  // VALIDATION OF OTP END
 
 
 
+  // SEND OTP FUNCTION
   $scope.sendOTP = function (email) {
     // console.log(" i am in click")
     var formdata = {};
@@ -367,7 +330,10 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, TemplateService, Na
       $scope.emailOtp = data.data;
     });
   };
+  // SEND OTP FUNCTION END
 
+
+  // TERMS AND CONDITION MODAL
   $scope.termcondition = function (size, type, sfaCity, year, eventYear) {
     $scope.type = type;
     $scope.sfaCity = sfaCity;
@@ -387,149 +353,11 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, TemplateService, Na
 
     });
   };
+  // TERMS AND CONDITION MODAL END
 
-  // $scope.addTeamSports = function (formdata) {
-  //         // formdata.serviceRequest = $scope.serviceList;
-  //         console.log("formdata", formdata);
-  //         var frm = {};
-  //         frm.name = formdata;
-  //         //document.getElementById(formdata).checked
-  //         $scope.teamSport.push(frm);
 
-  //     }
 
-  //team sports array
-  $scope.addTeamSports = function (formdata) {
-    var index = _.findIndex($scope.teamSport, function (n) {
-      return n.name == formdata;
-    });
-    if (index >= 0) {
-      _.pullAt($scope.teamSport, index);
-    } else {
-      $scope.teamSport.push({
-        name: formdata
-      });
-    }
-    // console.log($scope.teamSport);
-  };
-
-  //racquet sports array
-  $scope.addRacquetSports = function (formdata) {
-    // $scope.combatSports = [];
-    // $scope.targetSports = [];
-    // $scope.individualSports = [];
-    var index = _.findIndex($scope.racquetSports, function (n) {
-      return n.name == formdata;
-    });
-    if (index >= 0) {
-      _.pullAt($scope.racquetSports, index);
-    } else {
-      $scope.racquetSports.push({
-        name: formdata
-      });
-    }
-  };
-
-  //combatSports array
-  $scope.addCombatSports = function (formdata) {
-    var index = _.findIndex($scope.combatSports, function (n) {
-      return n.name == formdata;
-    });
-    if (index >= 0) {
-      _.pullAt($scope.combatSports, index);
-    } else {
-      $scope.combatSports.push({
-        name: formdata
-      });
-    }
-  };
-
-  //targetSports array
-  $scope.addTargetSports = function (formdata) {
-    var index = _.findIndex($scope.targetSports, function (n) {
-      return n.name == formdata;
-    });
-    if (index >= 0) {
-      _.pullAt($scope.targetSports, index);
-    } else {
-      $scope.targetSports.push({
-        name: formdata
-      });
-    }
-  };
-
-  //individualSports array
-  $scope.addIndividualSports = function (formdata) {
-    var index = _.findIndex($scope.individualSports, function (n) {
-      return n.name == formdata;
-    });
-    if (index >= 0) {
-      _.pullAt($scope.individualSports, index);
-    } else {
-      $scope.individualSports.push({
-        name: formdata
-      });
-    }
-
-  };
-  //aquaticsSports array
-  $scope.addAquaticsSports = function (formdata) {
-    var index = _.findIndex($scope.aquaticsSports, function (n) {
-      return n.name == formdata;
-    });
-    if (index >= 0) {
-      _.pullAt($scope.aquaticsSports, index);
-    } else {
-      $scope.aquaticsSports.push({
-        name: formdata
-      });
-    }
-  };
-
-  //called on refresh
-  $scope.refreshSFA = function (paramData) {
-    NavigationService.getSchoolSFA(paramData, function (data) {
-      // console.log("sfa regis", data);
-      $scope.schoolList = data.data.results;
-      //$scope.schoolList = data.data;
-    });
-  };
-
-  //called on select for taking value
-  $scope.searchSFA = function (paramData) {
-    // console.log("changekeyword", paramData);
-    $scope.sfaID = paramData;
-    // console.log("sfaid", $scope.sfaID);
-  };
-  $scope.searchSFACollege = function (paramData) {
-    // console.log("changekeyword", paramData);
-    $scope.sfaID = paramData.sfaid;
-    // console.log("sfaid", $scope.sfaID);
-  };
-  $scope.searchSFAHyderabad = function (paramData) {
-    // console.log("changekeyword", paramData);
-    $scope.sfaID = paramData.sfaid;
-    // console.log("sfaid", $scope.sfaID);
-  };
-
-  //get school name for binding with dropdown
-  // NavigationService.getSchoolSFA("", function (data) {
-  //     console.log("sfa regis", data);
-  //     $scope.schoolList = data.data.results;
-  //     //$scope.schoolList = data.data;
-  // });
-
-  $scope.test = function (size) {
-    $scope.testModal = $uibModal.open({
-      animation: true,
-      templateUrl: 'views/modal/modsub.html',
-      scope: $scope,
-      size: size,
-      windowClass: "test-modal"
-
-    });
-  };
-
+  // UPLOAD SIZE MODAL
   $scope.openUploadSizeModal = function () {
     $scope.uploadSizeInstances = $uibModal.open({
       animation: true,
@@ -540,7 +368,9 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, TemplateService, Na
       templateUrl: "views/modal/errorUploadSize.html"
     });
   };
+  // UPLOAD SIZE MODAL END
 
+  // ERROR ON UPLOAD
   $scope.openUploadTypeModal = function () {
     $scope.uploadTypeInstances = $uibModal.open({
       animation: true,
@@ -551,6 +381,7 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, TemplateService, Na
       templateUrl: "views/modal/errorUploadType.html"
     });
   };
+  // ERROR ON UPLOAD END
 
   //removes image uploaded
   $scope.removeImage = function (data, className) {
@@ -711,7 +542,7 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, TemplateService, Na
     }
   ]
   $scope.addSportsTest = function (data, sportType) {
-    console.log(data, sportType, "check on sport click");
+    // console.log(data, sportType, "check on sport click");
     var index = _.findIndex($scope[sportType], function (n) {
       return n.name == data;
     });
@@ -722,8 +553,21 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, TemplateService, Na
         name: data
       });
     }
-    console.log($scope[sportType], "final push")
+    // console.log($scope[sportType], "final push")
   }
 
   // SPORTS JSON END
+
+  $scope.validatePassword = function (setPasswordValue, confirmPasswordValue) {
+    // console.log(setPasswordValue, confirmPasswordValue);
+    if (setPasswordValue === confirmPasswordValue) {
+      // console.log("verified");
+      $scope.matchedSuccess = true;
+      $scope.notMatchedError = false;
+    } else if (setPasswordValue !== confirmPasswordValue) {
+      // console.log("not matched")
+      $scope.notMatchedError = true;
+      $scope.matchedSuccess = false;
+    }
+  }
 });

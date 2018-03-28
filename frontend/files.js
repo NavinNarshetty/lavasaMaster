@@ -115,5 +115,6 @@ module.exports = [
   // NEW REGISTER
   'frontend/js/controllers/registration/registerplayer-controller.js',
   'frontend/js/controllers/registration/registerformplayer.js',
-  'frontend/js/controllers/registration/registerformschool.js'
+  'frontend/js/controllers/registration/registerformschool.js',
+  'frontend/js/controllers/registration/upgradepackage.js'
 ];

@@ -64,7 +64,7 @@
                         <tr class="table-imageresponsive" ng-repeat="feature in formData.featureDetails track by $index">
                           <td>
                             <div class="form-group">
-                              <select name="" id="" class="form-control" ng-model="feature.packageName" ng-options="{_id:item._id,packageName:item.name} as item.name for item in packages track by item._id">
+                              <select name="" id="" class="form-control" ng-model="feature.packageName" ng-options="{_id:item._id,packageName:item.name} as item.name for item in packages track by item._id" required>
                                  </select>
                             </div>
                           </td>
