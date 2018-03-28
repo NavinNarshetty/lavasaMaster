@@ -38,7 +38,6 @@ var model = {
     saveTransaction: function (data, callback) {
         async.waterfall([
                 function (callback) {
-
                     var param = {};
                     if (data.athlete) {
                         param.athlete = data.athlete;
@@ -106,7 +105,9 @@ var model = {
 
     accountsFirstTransaction: function (transactData, callback) {
         var transaction = [];
+        var receipt = [];
         transaction.push(transactData._id);
+        receipt.push(transactData.receiptId);
         if (transactData.paymentMode == "cash" && transactData.amountToPay == 0) {
             var matchObj = {
                 $set: {
@@ -116,6 +117,7 @@ var model = {
                     totalPaid: transactData.amountPaid,
                     outstandingAmount: 0,
                     paymentMode: transactData.paymentMode,
+                    receiptId: receipt,
                 }
             };
         } else {
@@ -129,7 +131,7 @@ var model = {
                     PayuId: transactData.PayuId,
                     accountType: transactData.accountType,
                     paymentMode: transactData.paymentMode,
-                    receiptId: transactData.receiptId,
+                    receiptId: receipt,
                 }
             };
         }
@@ -365,5 +367,46 @@ var model = {
         });
 
     },
+
+    saveCashTransaction: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    var param = {};
+                    if (data.athlete) {
+                        param.athlete = data.athlete;
+                        param.school = undefined;
+                    } else {
+                        param.school = data.school;
+                        param.athlete = undefined;
+                    }
+                    param.dateOfTransaction = new date();
+                    param.package = data.package._id;
+                    param.amountToPay = data.package.finalPrice;
+                    param.paymentMode = data.paymentMode;
+                    if (data.amountPaid) {
+                        param.amountPaid = data.amountPaid;
+                    }
+                    param.receiptId = data.receiptId;
+                    Transaction.saveData(param, function (err, transactData) {
+                        if (err || _.isEmpty(transactData)) {
+                            callback(null, {
+                                error: "No Data",
+                                data: found
+                            });
+                        } else {
+                            callback(null, transactData);
+                        }
+                    });
+                },
+
+            ],
+            function (err, complete) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    callback(null, complete);
+                }
+            });
+    }
 };
 module.exports = _.assign(module.exports, exports, model);
