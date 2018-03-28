@@ -873,8 +873,65 @@ myApp.directive('img', function ($compile, $parse) {
                 };
             }
         };
-    });
-// SCROLLDOWN END
+    })
+    // SCROLLDOWN END
+    // PACKAGE CARD
+    .directive('sfaPackageTable',['NavigationService', function (NavigationService) {
+        return {
+            restrict: 'E',
+            scope: {
+                'user': '@user',
+                'caption': '@caption',
+                'cashback': '&cashback'
+            },
+            templateUrl: 'views/directive/packagetable.html',
+            link: function ($scope, attrs) {
+              console.log("attr", attrs);
+              console.log("capt", $scope.caption);
+              if ($scope.cashback) {
+                $scope.showCashback = true;
+              } else {
+                $scope.showCashback = false;
+              }
+              console.log("showCashback",$scope.showCashback);
+              $scope.packages = [];
+              $scope.features = [];
+              console.log("user",$scope.user);
+              $scope.formPackage = {
+                filter: {
+                  packageUser: $scope.user
+                }
+              }
+              $scope.formFeature = {
+                filter: {
+                  featureUserType: $scope.user
+                }
+              }
+              NavigationService.getPackages($scope.formPackage, function(data){
+                data = data.data;
+                console.log("dat",data);
+                if (data.value = true) {
+                  $scope.packages = data.data.results;
+                  console.log("packages", $scope.packages);
+                } else {
+                  console.log("packages search failed", data);
+                }
+              });
+              NavigationService.getPackageFeatures($scope.formfeature,  function(data){
+                data = data.data;
+                console.log("dat",data);
+                if (data.value = true) {
+                  $scope.features = data.data.results;
+                  console.log("features", $scope.features);
+                } else {
+                  console.log("features search failed", data);
+                }
+              });
+            }
+        }
+    }])
+    // PACKAGE CARD END
+    ;
 
 // .directive('onlyDigits', function () {
 //     return {

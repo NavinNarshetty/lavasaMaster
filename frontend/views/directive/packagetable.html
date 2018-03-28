@@ -1,0 +1,64 @@
+<div class="package-tableholder table-responsive">
+  <table class="table">
+    <thead>
+      <th class="package-tabheader package-featurehead">
+        <div class="">
+          Features
+        </div>
+      </th>
+      <th ng-repeat = "package in packages | orderBy:'order' track by $index" >
+        <div class="package-tabheader" ng-class="{'package-tabhead-blue': package.color == 'blue', 'package-tabhead-green': package.color == 'green', 'package-tabhead-red': package.color == 'red', 'package-tabhead-yellow': package.color == 'yellow'}">
+          <div class="package-headtab" ng-if="package.header">
+            <span>{{package.header}}</span>
+          </div>
+          <div class="upgradepackage-radiocontent">
+            <span class="upgradepackage-offer">Early Bird Offer</span>
+            <span class="upgradepackage-offeramount">( <i class="fa fa-inr"></i> {{package.price}})</span>
+            <span class="upgradepackage-radioprice"><span class="upgradepackage-radioinr fa fa-inr"></span>{{package.finalPrice}}</span>
+            <span class="upgradepackage-tax">+taxes</span>
+            <span class="upgradepackage-radioname">{{package.name}}</span>
+          </div>
+          <!-- {{package.name}} -->
+        </div>
+      </th>
+    </thead>
+    <tbody>
+      <tr ng-repeat="feature in features track by $index">
+        <td>
+          <div class="upgradepackage-td text-left ">
+            {{feature.featureName}}
+          </div>
+        </td>
+        <td ng-repeat="detail in feature.featureDetails|orderBy: 'packageName.order' track by $index">
+          <div class="upgradepackage-td">
+              <div class="" ng-if="detail.featureType == 'checkbox'">
+                <span class="fa" ng-class="{'fa-check sport-success': detail.featureCheck == true, 'fa-times sport-danger': detail.featureCheck == false}"></span>
+              </div>
+              <div class="" ng-if="detail.featureType == 'text'">
+                <p class="m-clear">{{detail.featureText}}</p>
+              </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+    <caption align="bottom" class="packagetable-captionholder">
+      <!-- CAPTION TEXT -->
+      <div class="packagetable-caption">
+        <p class="m-clear">*An event category refers to -Sport + age group + gender + event/ weight category (if applicable)</p>
+        <p class="m-clear">E.g. Swimming Male U-10 | 50m Freestyle | Athletics Female U-14 Long Jump. <a href="">Click here to view the list of Event Caregories</a></p>
+      </div>
+      <!-- CAPTION TEXT END -->
+      <!-- CAPTION CASHBACK  -->
+      <div class="package-cashbackholder" ng-if="showCashback">
+        <div class="package-cash30">
+          <img src="img/medal-icon/badge-cash30.png" alt="30 Day Money Back Guarantee" title="30 Day Money Back Guarantee"  class="img-responsive">
+        </div>
+        <span>You can cancel your registration within 30 days of purchasing a offer package</span>
+        <div class="package-cashbadge" >
+          <img src="img/medal-icon/badge-moneyback.png" alt="30 Day Money Back Guarantee" title="30 Day Money Back Guarantee" class="img-responsive">
+        </div>
+      </div>
+      <!-- CAPTION CASHBACK END -->
+    </caption>
+  </table>
+</div>
