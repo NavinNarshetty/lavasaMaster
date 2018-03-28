@@ -1,5 +1,6 @@
 var schema = new Schema({
     name: String,
+    order: Number,
     price: Number,
     discount: Number,
     finalPrice: Number,
@@ -13,7 +14,13 @@ var schema = new Schema({
     cgstAmt: Number,
     sgstAmt: Number,
     eventCount: Number,
-    description: String
+    description: String,
+    color: {
+        type: String,
+        enum: ["blue", "green", "red", "yellow"]
+    },
+    header: String,
+    packageUser: String
 });
 
 schema.plugin(deepPopulate, {});

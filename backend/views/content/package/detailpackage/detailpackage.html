@@ -22,6 +22,11 @@
                   <div class="error-msg" ng-if="detailForm.name.$invalid && detailForm.name.$touched">Please Enter Valid Name *</div>
                 </div>
                 <div class="form-group">
+                  <label>Order*</label>
+                  <input type="number" ng-model="formData.order" name="order" class="form-control" placeholder="Enter Order" min="0" required>
+                  <div class="error-msg" ng-if="detailForm.order.$invalid && detailForm.order.$touched">Please Enter Valid Order Number *</div>
+                </div>
+                <div class="form-group">
                   <label>Price</label>
                   <input type="number" ng-model="formData.price" name="price" class="form-control" placeholder="Enter Price" required>
                   <div class="error-msg" ng-if="detailForm.price.$invalid && detailForm.price.$touched">Please Enter Price*</div>
@@ -39,38 +44,32 @@
                 </div>
                 <div class="form-group">
                   <label>IGST Percent</label>
-                  <input type="number" ng-model="formData.igstPercent" name="igstpercent" class="form-control" placeholder="Enter IGST Percent"
-                    required>
+                  <input type="number" ng-model="formData.igstPercent" name="igstpercent" class="form-control" placeholder="Enter IGST Percent">
                   <div class="error-msg" ng-if="detailForm.igstpercent.$invalid && detailForm.igstpercent.$touched">Please Enter IGST Percent *</div>
                 </div>
                 <div class="form-group">
                   <label>CGST Percent</label>
-                  <input type="number" ng-model="formData.cgstPercent" name="cgstpercent" class="form-control" placeholder="Enter CGST Percent"
-                    required>
+                  <input type="number" ng-model="formData.cgstPercent" name="cgstpercent" class="form-control" placeholder="Enter CGST Percent">
                   <div class="error-msg" ng-if="detailForm.cgstpercent.$invalid && detailForm.cgstpercent.$touched">Please Enter CGST Percent *</div>
                 </div>
                 <div class="form-group">
                   <label>SGST Percent</label>
-                  <input type="number" ng-model="formData.sgstPercent" name="sgstpercent" class="form-control" placeholder="Enter SGST Percent"
-                    required>
+                  <input type="number" ng-model="formData.sgstPercent" name="sgstpercent" class="form-control" placeholder="Enter SGST Percent">
                   <div class="error-msg" ng-if="detailForm.sgstpercent.$invalid && detailForm.sgstpercent.$touched">Please Enter SGST Percent*</div>
                 </div>
                 <div class="form-group">
                   <label>IGST Amount</label>
-                  <input type="number" step="0.01" ng-model="formData.igstAmt" name="igstamt" class="form-control" placeholder="Enter IGST Amount"
-                    required>
+                  <input type="number" step="0.01" ng-model="formData.igstAmt" name="igstamt" class="form-control" placeholder="Enter IGST Amount">
                   <div class="error-msg" ng-if="detailForm.igstamt.$invalid && detailForm.igstamt.$touched">Please Enter IGST Amount*</div>
                 </div>
                 <div class="form-group">
                   <label>CGST Amount</label>
-                  <input type="number" step="0.01" ng-model="formData.cgstAmt" name="cgstamt" class="form-control" placeholder="Enter CGST Amount"
-                    required>
+                  <input type="number" step="0.01" ng-model="formData.cgstAmt" name="cgstamt" class="form-control" placeholder="Enter CGST Amount">
                   <div class="error-msg" ng-if="detailForm.cgstamt.$invalid && detailForm.cgstamt.$touched">Please Enter CGST Amount*</div>
                 </div>
                 <div class="form-group">
                   <label>SGST Amount</label>
-                  <input type="number" step="0.01" ng-model="formData.sgstAmt" name="sgst" class="form-control" placeholder="Enter SGST Amount"
-                    required>
+                  <input type="number" step="0.01" ng-model="formData.sgstAmt" name="sgst" class="form-control" placeholder="Enter SGST Amount">
                   <div class="error-msg" ng-if="detailForm.sgst.$invalid && detailForm.sgst.$touched">Please Enter SGST Amount *</div>
                 </div>
                 <div class="form-group">
@@ -84,6 +83,26 @@
                   <input type="text" ng-model="formData.description" name="description" class="form-control" placeholder="Enter Description"
                     required>
                   <div class="error-msg" ng-if="detailForm.description.$invalid && detailForm.description.$touched">Please Enter Description *</div>
+                </div>
+                <div class="form-group">
+                  <label>Description</label>
+                  <input type="text" ng-model="formData.description" name="description" class="form-control" placeholder="Enter Description"
+                    required>
+                  <div class="error-msg" ng-if="detailForm.description.$invalid && detailForm.description.$touched">Please Enter Description *</div>
+                </div>
+                <div class="form-group">
+                  <label>*Color</label>
+                  <select name="selectcolor" class="form-control" ng-model="formData.color" placeholder="Enter Color" required>
+                        <option value="blue">Blue</option>
+                        <option value="green">Green</option>
+                        <option value="red">Red</option>
+                        <option value="yellow">Yellow</option>
+                      </select>
+                  <div class="error-msg" ng-if="detailForm.color.$invalid && detailForm.color.$touched">Please Enter Color *</div>
+                </div>
+                <div class="form-group">
+                  <label>Header</label>
+                  <input type="text" ng-model="formData.header" name="header" class="form-control" placeholder="Enter Description">
                 </div>
                 <div class="text-center mt20 odd-even-button">
                   <button class="btn btn-default" type="submit" ng-click="saveData(formData)">Save</button>

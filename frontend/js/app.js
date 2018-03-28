@@ -527,6 +527,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'RegisterFormSchoolCtrl'
         })
+        .state('upgradepackage', {
+            url: "/package/upgrade",
+            templateUrl: tempateURL,
+            controller: 'UpgradePackageCtrl'
+        })
         // NEW REGISTRATION PAGES
         ;
     // if (window.location.origin != "http://testmumbaischool.sfanow.in") {

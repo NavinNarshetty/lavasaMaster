@@ -1,0 +1,76 @@
+<div class="upgradepackage-page">
+  <div class="container">
+    <div class="upgradepackage-title">
+      Upgrade Package
+    </div>
+    <div class="upgradepackage-content">
+      <p>You are currently on the <span>599/- PRO Package</span> and can participate in upto <span>2</span> Event Categories.</p>
+      <p>To participate in more events and enjoy a host of other benefits, simply select the package and upgrade.</p>
+    </div>
+    <div class="upgradepackage-selection">
+      <form name="upgradePackage">
+        <!-- UPGRADE RADIO -->
+        <div class="upgradepackage-radioholder">
+          <label for="packageRadio{{$index}}" class="sfa-radiobox" ng-repeat = "package in packages| orderBy:'order' track by $index">
+            <input type="radio" name="packageRadio" id="packageRadio{{$index}}" value="{{package._id}}" class="form-control" ng-model="formData.package" required>
+            <span class="sfa-radio"></span>
+            <div class="upgradepackage-radiocontent" ng-class="{'package-radio-blue': package.color == 'blue', 'package-radio-green': package.color == 'green', 'package-radio-red': package.color == 'red', 'package-radio-yellow': package.color == 'yellow'}">
+              <span class="upgradepackage-radioprice"><span class="upgradepackage-radioinr fa fa-inr"></span>{{package.finalPrice}}</span>
+              <span class="upgradepackage-radioname">{{package.name}}</span>
+            </div>
+          </label>
+        </div>
+        <!-- UPGRADE RADIO END -->
+        <div class="package-tableholder table-responsive">
+          <table class="table">
+            <thead>
+              <th class="package-tabheader package-featurehead">
+                <div class="">
+                  Features
+                </div>
+              </th>
+              <th ng-repeat = "package in packages | orderBy:'order' track by $index" >
+                <div class="package-tabheader" ng-class="{'package-tabhead-blue': package.color == 'blue', 'package-tabhead-green': package.color == 'green', 'package-tabhead-red': package.color == 'red', 'package-tabhead-yellow': package.color == 'yellow'}">
+                  <div class="package-headtab" ng-if="package.header">
+                    <span>{{package.header}}</span>
+                  </div>
+                  <div class="upgradepackage-radiocontent">
+                    <span class="upgradepackage-offer">Early Bird Offer</span>
+                    <span class="upgradepackage-offeramount">( <i class="fa fa-inr"></i> {{package.price}})</span>
+                    <span class="upgradepackage-radioprice"><span class="upgradepackage-radioinr fa fa-inr"></span>{{package.finalPrice}}</span>
+                    <span class="upgradepackage-tax">+taxes</span>
+                    <span class="upgradepackage-radioname">{{package.name}}</span>
+                  </div>
+                  <!-- {{package.name}} -->
+                </div>
+              </th>
+            </thead>
+            <tbody>
+              <tr ng-repeat="feature in features track by $index">
+                <td>
+                  <div class="upgradepackage-td text-left ">
+                    {{feature.featureName}}
+                  </div>
+                </td>
+                <td ng-repeat="detail in feature.featureDetails|orderBy: 'packageName.order' track by $index">
+                  <div class="upgradepackage-td">
+                      <div class="" ng-if="detail.featureType == 'checkbox'">
+                        <span class="fa" ng-class="{'fa-check sport-success': detail.featureCheck == true, 'fa-times sport-danger': detail.featureCheck == false}"></span>
+                      </div>
+                      <div class="" ng-if="detail.featureType == 'text'">
+                        <p class="m-clear">{{detail.featureText}}</p>
+                      </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <caption align="bottom" class="packagetable-caption">
+              <p class="m-clear">*An event category refers to -Sport + age group + gender + event/ weight category (if applicable)</p>
+              <p class="m-clear">E.g. Swimming Male U-10 | 50m Freestyle | Athletics Female U-14 Long Jump. <a href="">Click here to view the list of Event Caregories</a></p>
+            </caption>
+          </table>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
