@@ -762,7 +762,7 @@ var model = {
     },
 
     //on athelete save or submit press 
-    saveAthelete: function (data, callback) {
+    saveAtheleteOld: function (data, callback) {
         if (_.isEmpty(data.school)) {
             data.school = undefined;
         }
@@ -995,7 +995,7 @@ var model = {
 
     },
 
-    saveNewAthlete: function (data, callback) {
+    saveAthelete: function (data, callback) {
         async.waterfall([
             function (callback) {
                 if (_.isEmpty(data.school)) {

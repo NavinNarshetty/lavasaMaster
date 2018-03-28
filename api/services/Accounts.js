@@ -20,7 +20,9 @@ var schema = new Schema({
     PayuId: String,
     accountType: String,
     paymentMode: String,
-    receiptId: String,
+    receiptId: [{
+        type: String,
+    }],
 
 });
 
@@ -30,5 +32,7 @@ schema.plugin(timestamps);
 module.exports = mongoose.model('Accounts', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
-var model = {};
+var model = {
+
+};
 module.exports = _.assign(module.exports, exports, model);
