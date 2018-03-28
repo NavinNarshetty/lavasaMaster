@@ -882,21 +882,12 @@ myApp.directive('img', function ($compile, $parse) {
             scope: {
                 'user': '@user',
                 'caption': '@caption',
-                'cashback': '&cashback'
+                'cashback': '=cashback'
             },
             templateUrl: 'views/directive/packagetable.html',
             link: function ($scope, attrs) {
-              console.log("attr", attrs);
-              console.log("capt", $scope.caption);
-              if ($scope.cashback) {
-                $scope.showCashback = true;
-              } else {
-                $scope.showCashback = false;
-              }
-              console.log("showCashback",$scope.showCashback);
               $scope.packages = [];
               $scope.features = [];
-              console.log("user",$scope.user);
               $scope.formPackage = {
                 filter: {
                   packageUser: $scope.user
@@ -907,6 +898,8 @@ myApp.directive('img', function ($compile, $parse) {
                   featureUserType: $scope.user
                 }
               }
+              console.log("cashback", $scope.cashback);
+
               NavigationService.getPackages($scope.formPackage, function(data){
                 data = data.data;
                 console.log("dat",data);

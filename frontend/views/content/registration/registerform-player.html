@@ -39,24 +39,19 @@
               <div class="form-group">
                 <div class="col-md-12">
                   <div class="">
-                    <label for="radio30" class="sfa-radiobox">
-                      <input type="radio" name="radio30" id="radio30" value="male" class="form-control" ng-model="formData.package" required>
-                      <span class="sfa-radio"></span>
-                      <span class="package-radio">
-                        <span><span class="fa fa-inr"></span>1999</span>
-                        <span></span>
-                      </span>
-                    </label>
-                    <label for="radio31" class="sfa-radiobox">
-                      <input type="radio" name="radio31" id="radio31" value="male" class="form-control" ng-model="formData.package" required>
-                      <span class="sfa-radio"></span>
-                      Male
-                    </label>
-                    <label for="radio32" class="sfa-radiobox">
-                      <input type="radio" name="radio32" id="radio32" value="male" class="form-control" ng-model="formData.package" required>
-                      <span class="sfa-radio"></span>
-                      Male
-                    </label>
+                    <div class="upgradepackage-radioholder">
+                      <label for="packageRadio{{$index}}" class="sfa-radiobox" ng-repeat = "package in packages| orderBy:'order' track by $index">
+                        <input type="radio" name="packageRadio" id="packageRadio{{$index}}" value="{{package._id}}" class="form-control" ng-model="formData.package" required>
+                        <span class="sfa-radio"></span>
+                        <div class="upgradepackage-radiocontent" ng-class="{'package-radio-blue': package.color == 'blue', 'package-radio-green': package.color == 'green', 'package-radio-red': package.color == 'red', 'package-radio-yellow': package.color == 'yellow'}">
+                          <span class="upgradepackage-radioprice"><span class="upgradepackage-radioinr fa fa-inr"></span>{{package.finalPrice}}</span>
+                          <span class="upgradepackage-radioname">{{package.name}}</span>
+                        </div>
+                      </label>
+                    </div>
+                    <div class="registerform-packagetable">
+                      <sfa-package-table user="athlete" caption="hello" cashback="true"></sfa-package-table>
+                    </div>
                   </div>
                 </div>
               </div>
