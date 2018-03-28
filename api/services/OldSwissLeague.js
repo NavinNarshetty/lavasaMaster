@@ -72,7 +72,7 @@ var model = {
         var pipeline = [{
                 $match: {
                     "participantType": "player",
-                    "round": "Round 1",
+                    // "round": "Round 1",
                     "year": data.year
                 }
             },
@@ -96,7 +96,7 @@ var model = {
         var pipeline = [{
                 $match: {
                     "participantType": "player",
-                    "round": "Round 1",
+                    // "round": "Round 1",
                     "year": data.year
                 }
             },
