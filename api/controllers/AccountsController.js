@@ -12,6 +12,39 @@ var controller = {
         }
       }
     )
-  }
+  },
+
+  getAthleteAccount: function (req, res) {
+    Accounts.find({
+      athlete: {
+        $exists: true
+      }
+    }).lean().deepPopulate("athlete athlete.school school transaction").exec(
+      function (err, found) {
+        if (err) {
+          res.callback(err, null);
+        } else {
+          res.callback(null, found);
+        }
+      }
+    )
+  },
+
+  getSchoolAccount: function (req, res) {
+    Accounts.find({
+      school: {
+        $exists: true
+      }
+    }).lean().deepPopulate("athlete athlete.school school transaction").exec(
+      function (err, found) {
+        if (err) {
+          res.callback(err, null);
+        } else {
+          res.callback(null, found);
+        }
+      }
+    )
+  },
+
 };
 module.exports = _.assign(module.exports, controller);
