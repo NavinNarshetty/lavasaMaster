@@ -3,7 +3,7 @@ var controller = {
   getAccount: function (req, res) {
     Accounts.findOne({
       _id: req.body._id
-    }).lean().deepPopulate("athlete athlete.school school").exec(
+    }).lean().deepPopulate("athlete athlete.school school transaction").exec(
       function (err, found) {
         if (err) {
           res.callback(err, null);

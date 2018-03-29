@@ -21,8 +21,12 @@ var schema = new Schema({
     PayuId: String,
     accountType: String,
     paymentMode: String,
-    receiptId: String,
+    receiptId: [{
+        type: String,
+    }],
     discount: String,
+    sgstAmount: String,
+    cgstAmount: String,
 });
 
 schema.plugin(deepPopulate, {
@@ -369,36 +373,183 @@ var model = {
     },
 
     saveCashTransaction: function (data, callback) {
+        data.transaction = [];
+        data.receipt = [];
         async.waterfall([
                 function (callback) {
-                    var param = {};
-                    if (data.athlete) {
-                        param.athlete = data.athlete;
-                        param.school = undefined;
-                    } else {
-                        param.school = data.school;
-                        param.athlete = undefined;
-                    }
-                    param.dateOfTransaction = new date();
-                    param.package = data.package._id;
-                    param.amountToPay = data.package.finalPrice;
-                    param.paymentMode = data.paymentMode;
-                    if (data.amountPaid) {
-                        param.amountPaid = data.amountPaid;
-                    }
-                    param.receiptId = data.receiptId;
-                    Transaction.saveData(param, function (err, transactData) {
-                        if (err || _.isEmpty(transactData)) {
-                            callback(null, {
-                                error: "No Data",
-                                data: found
-                            });
+                    async.each(data.packageData, function (n, callback) {
+                        var param = {};
+                        if (data.athleteId) {
+                            param.athlete = data.athleteId;
+                            param.school = undefined;
                         } else {
-                            callback(null, transactData);
+                            param.school = data.school;
+                            param.athlete = undefined;
                         }
+                        param.dateOfTransaction = new Date();
+                        param.package = n.package_id;
+                        param.amountToPay = n.package.amount;
+                        param.paymentMode = data.modePayment;
+                        if (data.cgst) {
+                            param.cgstAmount = data.cgst;
+                        }
+                        if (data.sgst) {
+                            param.sgstAmount = data.sgst;
+                        }
+                        if (data.discount) {
+                            param.discount = data.discount;
+                        }
+                        var recepit = n.reciptNo.split(",");
+                        param.receiptId = recepit;
+                        data.receipt = _.concat(data.receipt,  recepit);
+                        Transaction.saveData(param, function (err, transactData) {
+                            if (err || _.isEmpty(transactData)) {
+                                callback(null, {
+                                    error: "no data found",
+                                    data: data
+                                });
+                            } else {
+                                data.transaction.push(transactData._id);
+                                callback(null, data);
+                            }
+                        });
+                    }, function (err) {
+                        callback(null, data);
                     });
                 },
-
+                function (data, callback) {
+                    if (data.athleteId) {
+                        Accounts.findOne({
+                            athlete: data.athleteId
+                        }).lean().exec(function (err, accountsData) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (_.isEmpty(accountsData)) {
+                                var param = {};
+                                param.athlete = data.athleteId;
+                                param.school = undefined;
+                                param.transaction = data.transaction;
+                                param.totalToPay = data.netTotal;
+                                param.paymentMode = data.modePayment;
+                                if (data.discount) {
+                                    param.discount = data.discount;
+                                }
+                                if (data.sgst) {
+                                    param.sgst = data.sgst;
+                                }
+                                if (data.cgst) {
+                                    param.cgst = data.cgst;
+                                }
+                                if (data.checkNo) {
+                                    param.checkNo = data.checkNo;
+                                }
+                                if (data.remarks) {
+                                    param.remarks = data.remarks;
+                                }
+                                param.receiptId = data.receipt;
+                                Accounts.saveData(param, function (err, accountsData) {
+                                    if (err || _.isEmpty(accountsData)) {
+                                        callback(null, {
+                                            error: "no data found",
+                                            data: data
+                                        });
+                                    } else {
+                                        callback(null, accountsData);
+                                    }
+                                });
+                            } else {
+                                var matchObj = {
+                                    $set: {
+                                        transaction: data.transaction,
+                                        totalToPay: data.netTotal,
+                                        discount: data.discount,
+                                        receiptId: data.receipt,
+                                        paymentMode: data.modePayment,
+                                        checkNo: data.checkNo,
+                                        cgst: data.cgst,
+                                        sgst: data.sgst,
+                                        remarks: data.remarks
+                                    }
+                                };
+                                Accounts.update({
+                                    athlete: data.athleteId
+                                }, matchObj).exec(
+                                    function (err, data3) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else if (data3) {
+                                            callback(null, data);
+                                        }
+                                    });
+                            }
+                        });
+                    } else {
+                        Accounts.findOne({
+                            school: data.school
+                        }).lean().exec(function (err, accountsData) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (_.isEmpty(accountsData)) {
+                                var param = {};
+                                param.athlete = data.athleteId;
+                                param.school = undefined;
+                                param.transaction = data.transaction;
+                                param.totalToPay = data.netTotal;
+                                param.paymentMode = data.modePayment;
+                                if (data.discount) {
+                                    param.discount = data.discount;
+                                }
+                                if (data.sgst) {
+                                    param.sgst = data.sgst;
+                                }
+                                if (data.cgst) {
+                                    param.cgst = data.cgst;
+                                }
+                                if (data.checkNo) {
+                                    param.checkNo = data.checkNo;
+                                }
+                                if (data.remarks) {
+                                    param.remarks = data.remarks;
+                                }
+                                param.receiptId = data.receipt;
+                                Accounts.saveData(param, function (err, accountsData) {
+                                    if (err || _.isEmpty(accountsData)) {
+                                        callback(null, {
+                                            error: "no data found",
+                                            data: data
+                                        });
+                                    } else {
+                                        callback(null, accountsData);
+                                    }
+                                });
+                            } else {
+                                var matchObj = {
+                                    $set: {
+                                        transaction: data.transaction,
+                                        totalToPay: data.netTotal,
+                                        discount: data.discount,
+                                        receiptId: data.receipt,
+                                        paymentMode: data.modePayment,
+                                        checkNo: data.checkNo,
+                                        cgst: data.cgst,
+                                        sgst: data.sgst,
+                                        remarks: data.remarks
+                                    }
+                                };
+                                Accounts.update({
+                                    school: data.school
+                                }, matchObj).exec(
+                                    function (err, data3) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else if (data3) {
+                                            callback(null, transactData);
+                                        }
+                                    });
+                            }
+                        });
+                    }
+                },
             ],
             function (err, complete) {
                 if (err) {

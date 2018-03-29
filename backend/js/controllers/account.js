@@ -126,5 +126,13 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
     remark: 'check the Receipt',
   }
 
+  $scope.saveTable = function (data) {
+    $scope.url = "Transaction/saveCashTransaction";
+    NavigationService.apiCall($scope.url, data, function (data) {
+      console.log("data saved", data);
+      $scope.modalInstance.close();
+    });
+  }
+
 
 })

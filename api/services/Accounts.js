@@ -23,6 +23,11 @@ var schema = new Schema({
     receiptId: [{
         type: String,
     }],
+    discount: String,
+    sgst: String,
+    cgst: String,
+    checkNo: String,
+    remarks: String,
 
 });
 
