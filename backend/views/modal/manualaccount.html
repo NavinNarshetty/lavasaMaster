@@ -5,7 +5,7 @@
   <div class="modal-container">
 
     <form name="accountForm">
-      <pre>{{formData | json }}</pre>
+      <!-- <pre>{{formData | json }}</pre> -->
       <div class="row">
         <!-- SGST -->
         <div class="col-md-3">
@@ -134,4 +134,5 @@
 </div>
 <div class="modal-footer">
   <button class="btn btn-success btn-outline btn-small" type="button" ng-click="saveTable(formData)">Save</button>
+  <button type="submit" class="btn btn-danger btn-small" ng-click="$dismiss()">Close</button>
 </div>
