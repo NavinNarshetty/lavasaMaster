@@ -316,7 +316,7 @@ myApp.factory('NavigationService', function ($http) {
                     icon: "phone",
                 }]
             }, {
-                name: "Registration",
+                name: "Registration Landing",
                 classis: "activeColor",
                 sref: "",
                 icon: "phone",
