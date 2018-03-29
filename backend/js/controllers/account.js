@@ -16,19 +16,21 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
   // END ACCORDIAN
 
   $scope.formData = {};
+  $scope.athleteformData = {};
   $scope.formData.packageData = [];
-  $scope.formData.page = 1;
+  // $scope.formData.page = 1;
+  $scope.athleteformData.page = 1;
   // $scope.formData.type = '';
-  $scope.formData.keyword = '';
+  $scope.athleteformData.keyword = '';
 
   // SEARCHTABLE
   $scope.searchInTable = function (data) {
-    $scope.formData.page = 1;
+    $scope.athleteformData.page = 1;
     if (data.length >= 2) {
-      $scope.formData.keyword = data;
+      $scope.athleteformData.keyword = data;
       $scope.viewTable();
     } else if (data.length == '') {
-      $scope.formData.keyword = data;
+      $scope.athleteformData.keyword = data;
       $scope.viewTable();
     }
   };
@@ -36,10 +38,10 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
   // VIEW TABLE
   $scope.viewTable = function () {
     $scope.url = "Accounts/search";
-    $scope.formData.page = $scope.formData.page++;
-    $scope.formData.filter = {};
+    $scope.athleteformData.page = $scope.athleteformData.page++;
+    $scope.athleteformData.filter = {};
     // $scope.formData.filter.pageType = '';
-    NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+    NavigationService.apiCall($scope.url, $scope.athleteformData, function (data) {
       console.log("data.value", data);
       $scope.items = data.data.results;
       $scope.totalItems = data.data.total;
@@ -66,9 +68,10 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
   }
 
 
-  $scope.editAccountModal = function (athleteId, accountId) {
+  $scope.editAccountModal = function (athleteId, accountId, transactionData) {
     $scope.formData.athleteId = athleteId;
     $scope.formData._id = accountId;
+    $scope.formData.transaction = transactionData;
     $scope.modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
       templateUrl: 'views/modal/manualaccount.html',
@@ -127,6 +130,7 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
   }
 
   $scope.saveTable = function (data) {
+    console.log(data, "save data");
     $scope.url = "Transaction/saveCashTransaction";
     NavigationService.apiCall($scope.url, data, function (data) {
       console.log("data saved", data);
