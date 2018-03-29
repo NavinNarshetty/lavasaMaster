@@ -3,6 +3,12 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, Na
   TemplateService.title = "Player Registration Form"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
   $scope.formData = {};
+  $scope.packages = [];
+  $scope.formPackage = {
+    filter: {
+      packageUser: 'athlete'
+    }
+  }
   configService.getDetail(function (data) {
       $scope.city = data.city;
       $scope.district = data.district;
@@ -14,6 +20,19 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, Na
       $scope.isCollege = data.isCollege;
       $scope.type = data.type;
   });
+
+  // CALL PACKAGES
+  NavigationService.getPackages($scope.formPackage,function(data){
+    data = data.data;
+    console.log("dat",data);
+    if (data.value = true) {
+      $scope.packages = data.data.results;
+      console.log("packages", $scope.packages);
+    } else {
+      console.log("packages search failed", data);
+    }
+  });
+  // CALL PACKAGES END
   $scope.changeitSchoolId = function (err, data) {
       // console.log(err, data);
       if (err) {

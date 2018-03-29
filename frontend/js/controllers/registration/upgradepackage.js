@@ -3,12 +3,23 @@ myApp.controller('UpgradePackageCtrl', function ($scope, TemplateService, Naviga
   TemplateService.title = "School Registration Form"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
   // START
-  $scope.formData = {
-    package:''
-  }
+  // VARIABLES
   $scope.packages = [];
-  $scope.features = [];
-  NavigationService.getPackages(function(data){
+  // $scope.features = [];
+  $scope.formPackage = {
+    filter: {
+      packageUser: 'athlete'
+    }
+  }
+  // $scope.formFeature = {
+  //   filter: {
+  //     featureUserType: 'athlete'
+  //   }
+  // }
+  // VARIABLES END
+  // API
+  // GET PACKAGES
+  NavigationService.getPackages($scope.formPackage,function(data){
     data = data.data;
     console.log("dat",data);
     if (data.value = true) {
@@ -18,15 +29,19 @@ myApp.controller('UpgradePackageCtrl', function ($scope, TemplateService, Naviga
       console.log("packages search failed", data);
     }
   });
-  NavigationService.getPackageFeatures(function(data){
-    data = data.data;
-    console.log("dat",data);
-    if (data.value = true) {
-      $scope.features = data.data.results;
-      console.log("features", $scope.features);
-    } else {
-      console.log("features search failed", data);
-    }
-  });
+  // GET PACKAGES END
+  // GET FEATURES
+  // NavigationService.getPackageFeatures($scope.formFeature, function(data){
+  //   data = data.data;
+  //   console.log("dat",data);
+  //   if (data.value = true) {
+  //     $scope.features = data.data.results;
+  //     console.log("features", $scope.features);
+  //   } else {
+  //     console.log("features search failed", data);
+  //   }
+  // });
+  // GET FEATURES END
+  // API END
   // END
 });

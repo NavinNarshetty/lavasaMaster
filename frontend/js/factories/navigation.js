@@ -1329,17 +1329,23 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
               callback(data.data);
             });
         },
-        getPackages: function (callback) {
+        getPackages: function (request, callback) {
             $http({
                 url: adminUrl2 + 'Package/search',
                 method: 'POST',
-            }).then(callback);
+                data: request
+            }).then(function(data){
+              callback(data);
+            });
         },
-        getPackageFeatures: function (callback) {
+        getPackageFeatures: function (request, callback) {
             $http({
                 url: adminUrl2 + 'Featurepackage/search',
                 method: 'POST',
-            }).then(callback);
+                data: request
+            }).then(function(data){
+              callback(data);
+            });
         }
     };
 });
