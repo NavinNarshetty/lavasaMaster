@@ -10,16 +10,16 @@
         <!-- SGST -->
         <div class="col-md-3">
           <div class="form-group">
-            <label for="">Sgst</label>
-            <input type="text" name="sgst" class="form-control" ng-model="formData.sgst" id="sgst" placeholder="Enter Sgst">
+            <label for="">Sgst Amt</label>
+            <input type="text" name="sgst" class="form-control" only-digits ng-model="formData.sgst" id="sgst" placeholder="Enter Sgst">
           </div>
         </div>
         <!-- SGST END -->
         <!-- CGST -->
         <div class="col-md-3">
           <div class="form-group">
-            <label for="">Cgst</label>
-            <input type="text" name="cgst" class="form-control" ng-model="formData.cgst" id="cgst" placeholder="Enter Cgst">
+            <label for="">Cgst Amt</label>
+            <input type="text" name="cgst" class="form-control" only-digits ng-model="formData.cgst" id="cgst" placeholder="Enter Cgst">
           </div>
         </div>
         <!-- CGST END -->
@@ -27,8 +27,8 @@
         <!-- DISCOUNT -->
         <div class="col-md-3">
           <div class="form-group">
-            <label for="">Discount</label>
-            <input type="text" name="cgst" class="form-control" ng-model="formData.discount" id="cgst" placeholder="Enter Discount">
+            <label for="">Discount Amt</label>
+            <input type="text" name="cgst" class="form-control" only-digits ng-model="formData.discount" id="cgst" placeholder="Enter Discount">
           </div>
         </div>
         <!-- DISCOUNT END -->
@@ -37,7 +37,7 @@
         <div class="col-md-3">
           <div class="form-group">
             <label for="">Net Total</label>
-            <input type="text" name="cgst" class="form-control" ng-model="formData.netTotal" id="cgst" placeholder="Enter Net Total">
+            <input type="text" name="cgst" class="form-control" only-digits ng-model="formData.netTotal" id="cgst" placeholder="Enter Net Total">
           </div>
         </div>
         <!-- NET  TOTAL END -->
@@ -58,7 +58,7 @@
         <div class="col-md-3">
           <div class="form-group">
             <label for="">Chq No</label>
-            <input type="text" class="form-control" id="checkno" ng-model="formData.checkNo" name="checkno" placeholder="Enter Check No">
+            <input type="text" class="form-control" id="checkno" only-digits ng-model="formData.checkNo" name="checkno" placeholder="Enter Check No">
           </div>
         </div>
         <!-- CHECK NO END -->
@@ -133,5 +133,5 @@
   </div>
 </div>
 <div class="modal-footer">
-  <button class="btn btn-primary btn-outline btn-small" type="button" ng-click="saveTable(formData)">Ok</button>
+  <button class="btn btn-success btn-outline btn-small" type="button" ng-click="saveTable(formData)">Save</button>
 </div>

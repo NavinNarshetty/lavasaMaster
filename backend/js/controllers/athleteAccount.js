@@ -1,6 +1,6 @@
 myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, crudService, $state, toastr, $uibModal) {
   //Used to name the .html file
-  $scope.template = TemplateService.changecontent("accounts/athleteaccount");
+  $scope.template = TemplateService.changecontent("accounts/athlete/athleteaccount");
   $scope.menutitle = NavigationService.makeactive("Athlete Account");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
@@ -15,12 +15,11 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
   };
   // END ACCORDIAN
 
+  // VARIABLE
   $scope.formData = {};
   $scope.athleteformData = {};
   $scope.formData.packageData = [];
-  // $scope.formData.page = 1;
   $scope.athleteformData.page = 1;
-  // $scope.formData.type = '';
   $scope.athleteformData.keyword = '';
 
   // SEARCHTABLE
@@ -55,6 +54,8 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
   $scope.viewTable();
   // VIEW TABLE
 
+
+  // GET ATHLETE DATA
   $scope.getAthleteAccountDetails = function (athleteAccountId) {
     console.log(athleteAccountId, "after function");
     $scope.url = "Accounts/getAccount";
@@ -66,8 +67,11 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
       $scope.athleteData = data.data;
     })
   }
+  // GET ATHLETE DATA END
 
 
+
+  // MODAL
   $scope.editAccountModal = function (athleteId, accountId, transactionData) {
     $scope.formData.athleteId = athleteId;
     $scope.formData._id = accountId;
@@ -75,13 +79,17 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
     $scope.modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
       templateUrl: 'views/modal/manualaccount.html',
-      backdrop: 'static',
+      // backdrop: 'static',
       keyboard: false,
       size: 'lg',
       scope: $scope
 
     });
   }
+  // MODAL END
+
+
+  // ADD ROW FUNCTION
 
   $scope.manualPackageEntry = function (formData) {
     if (!formData) {
@@ -96,13 +104,18 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
       })
     }
   }
+  // ADD ROW FUNCTION END
 
+  // DELETE ROW
   $scope.deleteRow = function (formData, index) {
     console.log(formData, "check this");
     formData.packageData.splice(index, 1);
   }
+  // DELETE ROW END
 
 
+
+  // PACKAGES
   $scope.packageData = function () {
     $scope.url = "Package/getAllPackages";
     $scope.formData.param = 'athlete';
@@ -112,6 +125,18 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
     });
   }
   $scope.packageData();
+  // PACKAGES END
+
+  // SAVE
+  $scope.saveTable = function (data) {
+    console.log(data, "save data");
+    $scope.url = "Transaction/saveCashTransaction";
+    NavigationService.apiCall($scope.url, data, function (data) {
+      console.log("data saved", data);
+      $scope.modalInstance.close();
+    });
+  }
+  // SAVE END
 
   $scope.athleteAccountData = {
     payementMode: 'Online,Cash,Online,Cash',
@@ -129,14 +154,7 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
     remark: 'check the Receipt',
   }
 
-  $scope.saveTable = function (data) {
-    console.log(data, "save data");
-    $scope.url = "Transaction/saveCashTransaction";
-    NavigationService.apiCall($scope.url, data, function (data) {
-      console.log("data saved", data);
-      $scope.modalInstance.close();
-    });
-  }
+
 
 
 })
