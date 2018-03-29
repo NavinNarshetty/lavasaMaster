@@ -26,7 +26,12 @@ var schema = new Schema({
 
 });
 
-schema.plugin(deepPopulate, {});
+schema.plugin(deepPopulate, {
+    "athlete": '',
+    "athlete.school": '',
+    "school": '',
+    "transaction": ''
+});
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('Accounts', schema);

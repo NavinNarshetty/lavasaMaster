@@ -169,15 +169,6 @@ myApp.controller('detailFeatureCtrl', function ($scope, TemplateService, Navigat
 
   $scope.formData.featureUserType = ''
 
-  //GET ALL PACKAGE
-  // getAllPackages(function (data) {
-  //   if (data) {
-  //     $scope.packages = data.data.results;
-  //     $scope.totalItems = data.data.total;
-  //     $scope.maxRow = data.data.options.count;
-  //   }
-  // });
-
   $scope.getAllPackages = function (filterName) {
     console.log('filter', filterName);
     $scope.url = "package/search";
