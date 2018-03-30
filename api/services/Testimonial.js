@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var deepPopulate = require('mongoose-deep-populate')(mongoose);
 var uniqueValidator = require('mongoose-unique-validator');
-var timestamps = require('mongoose-timestamp');
+// var timestamps = require('mongoose-timestamp');
 var validators = require('mongoose-validators');
 var monguurl = require('monguurl');
 require('mongoose-middleware').initialize(mongoose);
