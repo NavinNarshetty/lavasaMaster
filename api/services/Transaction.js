@@ -17,7 +17,6 @@ var schema = new Schema({
     },
     amountToPay: String,
     amountPaid: String,
-    paymentMode: String,
     PayuId: String,
     accountType: String,
     paymentMode: String,
@@ -466,17 +465,17 @@ var model = {
                                     param.package = n.package._id;
                                     param.amountToPay = n.package.amount;
                                     param.paymentMode = data.modePayment;
-                                    // if (data.cgst) {
-                                    //     console.log("in cgst");
-                                    //     param.cgstAmount = data.cgst;
-                                    // }
-                                    // if (data.sgst) {
-                                    //     console.log("in sgst");
-                                    //     param.sgstAmount = data.sgst;
-                                    // }
-                                    // if (data.discount) {
-                                    //     param.discount = data.discount;
-                                    // }
+                                    if (data.cgst) {
+                                        console.log("in cgst");
+                                        param.cgstAmount = data.cgst;
+                                    }
+                                    if (data.sgst) {
+                                        console.log("in sgst");
+                                        param.sgstAmount = data.sgst;
+                                    }
+                                    if (data.discount) {
+                                        param.discount = data.discount;
+                                    }
                                     var receipt = n.reciptNo.split(",");
                                     param.receiptId = receipt;
                                     var mainReceipt = _.concat(data.receipt, receipt);

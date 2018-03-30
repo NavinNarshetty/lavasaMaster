@@ -94,6 +94,9 @@
   .dropdown-menu {
     left: 0;
   }
+  label {
+    text-align: left !important;
+  }
   [type="checkbox"]:not(:checked)+label:after,
   [type="checkbox"]:checked+label:after {
     top: 5px;
@@ -198,8 +201,7 @@
   border: 1px solid $grey;
   background-color: $grey;
   color: $sport-dark-grey;
-  font-size: 12px;
-  // text-transform: capitalize;
+  font-size: 12px; // text-transform: capitalize;
   @extend .r-titillium-web-semibold;
   &:active,
   &:focus,
@@ -274,110 +276,123 @@
   border-width: 0 0px 0px 0;
   font-size: 12px;
 }
+
 // UPGRADE PACKAGE SECTION
-.upgradepackage-page{
+.upgradepackage-page {
   min-height: 100vh;
   padding: 50px 0;
-  @extend .d-opensans-regular;
-  // .sfa-radiobox{
+  @extend .d-opensans-regular; // .sfa-radiobox{
   //   line-height: normal;
   // }
 }
-.upgradepackage-title{
+
+.upgradepackage-title {
   margin-bottom: 20px;
   color: $sport-primary;
   font-size: 55px;
   text-transform: uppercase;
   @extend .d-fjalla-one;
 }
-.upgradepackage-content{
+
+.upgradepackage-content {
   margin-bottom: 20px;
 }
-.upgradepackage-selection{
+
+.upgradepackage-selection {
   padding: 10px 0;
 }
+
 // UPGRADE RADIO SELECTION
-.upgradepackage-radiocontent{
+.upgradepackage-radiocontent {
   margin: 0px 10px 0 5px;
   text-align: center;
 }
-.upgradepackage-radioprice{
+
+.upgradepackage-radioprice {
   color: #606060;
   display: block;
   font-size: 45px;
   vertical-align: top;
   @extend .d-teko-semibold;
 }
-.upgradepackage-radioinr{
+
+.upgradepackage-radioinr {
   margin-top: -3px;
   margin-right: 3px;
   font-size: 21px;
   line-height: 1;
   vertical-align: top;
 }
-.upgradepackage-radioname{
+
+.upgradepackage-radioname {
   font-size: 18px;
   color: $sport-lightblue;
   text-transform: uppercase;
   @extend .d-fjalla-one;
 }
-.package-radio-blue{
-  .upgradepackage-radioname{
-    color: tint($sport-lightblue, 15%);;
+
+.package-radio-blue {
+  .upgradepackage-radioname {
+    color: tint($sport-lightblue, 15%);
+    ;
   }
 }
-.package-radio-green{
-  .upgradepackage-radioname{
+
+.package-radio-green {
+  .upgradepackage-radioname {
     color: tint($sport-success, 15%);
   }
 }
-.package-radio-red{
-  .upgradepackage-radioname{
+
+.package-radio-red {
+  .upgradepackage-radioname {
     color: tint($sport-danger, 15%);
   }
 }
-.package-radio-yellow{
-  .upgradepackage-radioname{
+
+.package-radio-yellow {
+  .upgradepackage-radioname {
     color: tint($sport-warning, 15%);
   }
 }
+
 // UPGRADE RADIO SELECTION END
 // PACKAGE TABLE
-.package-tableholder{
+.package-tableholder {
   padding: 5px;
   margin: 20px 0;
-  .table{
+  .table {
     margin-top: 40px;
-    thead{
-      tr{
-        th{
+    thead {
+      tr {
+        th {
           padding: 0px 2px;
           border: none;
         }
       }
     }
-    tbody{
+    tbody {
       box-shadow: 0 4px 5px 0px #a0a0a0;
-      tr{
+      tr {
         background-color: transparent;
-        td{
+        td {
           border: none;
           border-right: 3px solid #fff;
           border-left: 3px solid #fff;
         }
-        &:nth-child(odd){
-            background-color: $package-bggrey;
+        &:nth-child(odd) {
+          background-color: $package-bggrey;
         }
-        &:nth-child(even){
-            background-color: #fff;
+        &:nth-child(even) {
+          background-color: #fff;
         }
-        &:first-child{
-          td{
+        &:first-child {
+          td {
             margin-top: 10px;
           }
         }
-        &:last-child{
-          td{
+        &:last-child {
+          td {
             margin-bottom: 10px;
           }
         }
@@ -385,18 +400,21 @@
     }
   }
 }
-.packagetable-captionholder{
+
+.packagetable-captionholder {
   padding: 0;
   font-size: 12px;
 }
-.packagetable-caption{
+
+.packagetable-caption {
   padding: 5px 15px;
   box-shadow: 0 4px 5px 0px #a0a0a0;
   background-color: $package-bggrey;
   color: $sport-dark-grey;
   font-style: italic;
 }
-.package-cashbackholder{
+
+.package-cashbackholder {
   width: 95%;
   padding: 5px 15px;
   margin: 0px auto;
@@ -406,33 +424,37 @@
   color: #fff;
   text-align: center;
 }
-.package-cash30{
+
+.package-cash30 {
   width: 25px;
   margin-right: 5px;
   display: inline-block;
   vertical-align: middle;
 }
-.package-cashbadge{
+
+.package-cashbadge {
   width: 65px;
   position: absolute;
   top: -17px;
   right: -5px;
 }
-.package-tabheader{
+
+.package-tabheader {
   padding: 10px;
   border-radius: 10px 10px 0 0;
   position: relative;
   background-color: $sport-table-grey;
   color: #fff;
-  .upgradepackage-radioprice{
+  .upgradepackage-radioprice {
     color: #fff;
     line-height: 1;
   }
-  .upgradepackage-radioinr{
+  .upgradepackage-radioinr {
     margin-top: 4px;
   }
 }
-.package-headtab{
+
+.package-headtab {
   width: 90%;
   padding: 5px;
   border-radius: 10px 10px 0 0;
@@ -444,65 +466,74 @@
   text-transform: uppercase;
   @include transform(translateX(-50%));
 }
-.package-tabhead-blue{
+
+.package-tabhead-blue {
   background-color: tint($sport-lightblue, 15%);
-  .upgradepackage-radioname{
+  .upgradepackage-radioname {
     color: shade($sport-lightblue, 30%);
   }
-  .package-headtab{
+  .package-headtab {
     background-color: tint($sport-lightblue, 50%);
     color: shade($sport-lightblue, 30%);
   }
 }
-.package-tabhead-green{
+
+.package-tabhead-green {
   background-color: tint($sport-success, 15%);
-  .upgradepackage-radioname{
-    color:  shade($sport-success, 30%);
+  .upgradepackage-radioname {
+    color: shade($sport-success, 30%);
   }
-  .package-headtab{
+  .package-headtab {
     background-color: tint($sport-success, 50%);
-    color:  shade($sport-success, 30%);
+    color: shade($sport-success, 30%);
   }
 }
-.package-tabhead-red{
+
+.package-tabhead-red {
   background-color: tint($sport-danger, 15%);
-  .upgradepackage-radioname{
-    color:  shade($sport-danger, 30%);
+  .upgradepackage-radioname {
+    color: shade($sport-danger, 30%);
   }
-  .package-headtab{
+  .package-headtab {
     background-color: tint($sport-danger, 50%);
-    color:  shade($sport-danger, 30%);
+    color: shade($sport-danger, 30%);
   }
 }
-.package-tabhead-yellow{
-    background-color: tint($sport-warning, 15%);
-    .upgradepackage-radioname{
-      color:  shade($sport-warning, 30%);
-    }
-    .package-headtab{
-      background-color: tint($sport-warning, 50%);
-      color:  shade($sport-warning, 30%);
-    }
+
+.package-tabhead-yellow {
+  background-color: tint($sport-warning, 15%);
+  .upgradepackage-radioname {
+    color: shade($sport-warning, 30%);
+  }
+  .package-headtab {
+    background-color: tint($sport-warning, 50%);
+    color: shade($sport-warning, 30%);
+  }
 }
-.upgradepackage-offer{
+
+.upgradepackage-offer {
   text-transform: uppercase;
 }
-.upgradepackage-offeramount{
+
+.upgradepackage-offeramount {
   display: block;
   text-decoration: line-through;
   text-transform: uppercase;
 }
-.upgradepackage-tax{
+
+.upgradepackage-tax {
   margin-top: -10px;
   display: block;
   font-size: 10px;
 }
-.package-featurehead{
+
+.package-featurehead {
   background-color: $sport-dark-grey;
   font-size: 42px;
   text-align: center;
   text-transform: uppercase;
   @extend .d-fjalla-one;
 }
+
 // PACKAGE TABLE END
 // UPGRADE PACKAGE SECTION END

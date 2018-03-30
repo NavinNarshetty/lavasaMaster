@@ -5,7 +5,7 @@
   <div class="modal-container">
 
     <form name="accountForm">
-      <pre>{{formData | json }}</pre>
+      <!-- <pre>{{formData | json }}</pre> -->
       <div class="row">
         <!-- SGST -->
         <div class="col-md-3">
@@ -28,7 +28,7 @@
         <div class="col-md-3">
           <div class="form-group">
             <label for="">Discount Amt</label>
-            <input type="text" name="cgst" class="form-control" only-digits ng-model="formData.discount" id="cgst" placeholder="Enter Discount">
+            <input type="text" name="discount" class="form-control" only-digits ng-model="formData.discount" id="cgst" placeholder="Enter Discount">
           </div>
         </div>
         <!-- DISCOUNT END -->
@@ -37,7 +37,9 @@
         <div class="col-md-3">
           <div class="form-group">
             <label for="">Net Total</label>
-            <input type="text" name="cgst" class="form-control" only-digits ng-model="formData.netTotal" id="cgst" placeholder="Enter Net Total">
+            <input type="text" name="nettotal" class="form-control" only-digits ng-model="formData.netTotal" id="cgst" placeholder="Enter Net Total"
+              required>
+            <div class="label label-danger pull-right" ng-if="accountForm.nettotal.$invalid && accountForm.nettotal.$touched">Please Enter Valid Total *</div>
           </div>
         </div>
         <!-- NET  TOTAL END -->
@@ -46,10 +48,11 @@
         <div class="col-md-3">
           <div class="form-group">
             <label for="">Mode Payment</label>
-            <select name="modepayment" id="modepayment" class="form-control" ng-model="formData.modePayment">
+            <select name="modepayment" id="modepayment" class="form-control" ng-model="formData.modePayment" required>
                   <option value="cash">Cash</option>
                   <option value="sponsor">Sponsered</option>
                 </select>
+            <div class="label label-danger pull-right" ng-if="accountForm.modepayment.$invalid && accountForm.modepayment.$touched">Please Enter Valid Mode Payment *</div>
           </div>
         </div>
         <!--MODE OF PAYMENT END  -->

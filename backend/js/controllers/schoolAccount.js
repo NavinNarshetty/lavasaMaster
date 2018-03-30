@@ -112,6 +112,15 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
 
   // SAVE
   $scope.saveTable = function (data) {
+    if (data.sgst == '' || data.sgst == 0 || !data.sgst) {
+      data.sgst = 0;
+    }
+    if (data.cgst == '' || data.cgst == 0 || !data.cgst) {
+      data.cgst = 0;
+    }
+    if (data.discount == '' || data.discount == 0 || !data.discount) {
+      data.discount = 0;
+    }
     console.log(data, "save data");
     $scope.url = "Transaction/saveCashTransaction";
     NavigationService.apiCall($scope.url, data, function (data) {
