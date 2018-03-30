@@ -24,9 +24,18 @@ var schema = new Schema({
     receiptId: [{
         type: String,
     }],
-    discount: Number,
-    sgstAmount: Number,
-    cgstAmount: Number,
+    discount: {
+        type: Number,
+        default: 0
+    },
+    sgstAmount: {
+        type: Number,
+        default: 0
+    },
+    cgstAmount: {
+        type: Number,
+        default: 0
+    },
 });
 
 schema.plugin(deepPopulate, {
