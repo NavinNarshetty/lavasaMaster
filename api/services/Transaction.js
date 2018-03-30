@@ -35,6 +35,10 @@ var schema = new Schema({
         type: Number,
         default: 0
     },
+    igstAmount: {
+        type: Number,
+        default: 0
+    },
 });
 
 schema.plugin(deepPopulate, {
@@ -47,32 +51,31 @@ module.exports = mongoose.model('Transaction', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
-    saveTransaction: function (data, callback) {
+    saveTransaction: function (data, found, callback) {
         async.waterfall([
                 function (callback) {
                     var param = {};
                     if (data.athlete) {
-                        param.athlete = data.athlete;
+                        param.athlete = found._id;
                         param.school = undefined;
                     } else {
-                        param.school = data.school;
+                        param.school = found._id;
                         param.athlete = undefined;
                     }
-                    if (data.coupon.amount) {
-                        param.discount = data.coupon.amount;
-                    } else if (data.coupon.percent) {
-                        param.discount = (data.package.finalPrice * data.coupon.percent) / 100;
-                    } else {
-                        param.discount = 0;
-                    }
-                    param.dateOfTransaction = new date();
-                    param.package = data.package._id;
-                    param.amountToPay = (data.package.finalPrice - param.discount);
-                    param.paymentMode = data.paymentMode;
-                    param.amountPaid = data.amountPaid;
-                    param.PayuId = data.PayuId;
-                    param.receiptId = data.receiptId;
-                    param.accountType = data.accountType;
+                    param.dateOfTransaction = new Date();
+                    param.package = found.package;
+                    param.amountPaid = found.accounts.totalPaid;
+                    param.amountToPay = found.accounts.totalToPay;
+                    param.paymentMode = "online PAYU";
+                    param.discount = found.accounts.discount;
+                    param.sgstAmount = found.accounts.sgst;
+                    param.cgstAmount = found.accounts.cgst;
+                    param.igstAmount = found.accounts.igst;
+                    param.PayuId = data.transactionid;
+                    var receipt = [];
+                    var temp = "SFA" + found.receiptId;
+                    receipt.push(temp);
+                    param.receiptId = receipt;
                     Transaction.saveData(param, function (err, transactData) {
                         if (err || _.isEmpty(transactData)) {
                             callback(null, {
@@ -85,25 +88,50 @@ var model = {
                     });
                 },
                 function (transactData, callback) {
-                    var transaction = [];
-                    if (transactData.athlete != undefined) {
-                        Transaction.accountsSaveAthleteTransaction(transactData, function (err, vData) {
-                            if (err) {
-                                callback(err, null);
-                            } else if (vData) {
-                                callback(null, vData);
-                            }
-                        });
+                    if (transactData.error) {
+                        callback(null, transactData);
                     } else {
-                        Transaction.accountsSaveSchoolTransaction(transactData, function (err, vData) {
-                            if (err) {
-                                callback(err, null);
-                            } else if (vData) {
-                                callback(null, vData);
-                            }
-                        });
-                    }
+                        var transaction = [];
+                        if (transactData.athlete != undefined) {
+                            transaction.push(transactData._id);
+                            var matchObj = {
+                                $set: {
+                                    transaction: transaction,
+                                    PayuId: transactData.PayuId,
+                                    receiptId: transactData.receiptId,
+                                }
+                            };
+                            Accounts.update({
+                                athlete: transactData.athlete
+                            }, matchObj).exec(
+                                function (err, data3) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else if (data3) {
+                                        callback(null, transactData);
+                                    }
+                                });
 
+                        } else {
+                            var matchObj = {
+                                $set: {
+                                    transaction: transaction,
+                                    PayuId: transactData.PayuId,
+                                    receiptId: transactData.receiptId,
+                                }
+                            };
+                            Accounts.update({
+                                school: transactData.school
+                            }, matchObj).exec(
+                                function (err, data3) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else if (data3) {
+                                        callback(null, transactData);
+                                    }
+                                });
+                        }
+                    }
                 },
             ],
             function (err, complete) {

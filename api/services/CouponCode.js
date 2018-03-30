@@ -21,14 +21,14 @@ var model = {
             if (err) {
                 callback(err, null);
             } else if (_.isEmpty(found)) {
-                callback(null, "No promocode matched");
+                callback("No promocode matched", null);
             } else {
                 var date = new Date();
                 var check = moment(date).isBetween(found.fromDate, found.toDate);
                 if (check == true) {
                     callback(null, found);
                 } else {
-                    callback(null, "Not a Valid Code");
+                    callback("Not a Valid Code", null);
                 }
             }
         });

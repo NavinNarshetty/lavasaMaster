@@ -282,10 +282,42 @@ var model = {
                     });
                 },
                 function (registerData, callback) {
-                    var param = {};
-                    param.athlete = undefined;
-                    param.school = registerData._id;
-                    param.transaction = [];
+                    Registration.findOne({
+                        _id: registerData._id
+                    }).lean().deepPopulate("package").exec(function (err, found) {
+                        if (err) {
+                            console.log("err", err);
+                            callback("No school Found!", null);
+                        } else {
+                            if (_.isEmpty(found)) {
+                                callback(null, []);
+                            } else {
+                                registerData.package = found.package;
+                                callback(null, registerData);
+                            }
+                        }
+                    });
+                },
+                function (registerData, callback) {
+                    console.log("registerData", registerData);
+                    if (registerData.registrationFee == "online PAYU") {
+                        var param = {};
+                        param.athlete = undefined;
+                        param.school = registerData._id;
+                        param.sgst = registerData.package.sgstAmt;
+                        param.cgst = registerData.package.cgstAmt;
+                        param.igst = registerData.package.igstAmt;
+                        param.totalToPay = registerData.package.finalPrice;
+                        param.totalPaid = registerData.package.finalPrice;
+                        // param.discount = data.discount;
+                        param.transaction = [];
+                    } else {
+                        var param = {};
+                        param.athlete = undefined;
+                        param.school = registerData._id;
+                        param.transaction = [];
+
+                    }
                     Accounts.saveData(param, function (err, accountsData) {
                         if (err || _.isEmpty(accountsData)) {
                             callback(null, {
@@ -293,7 +325,7 @@ var model = {
                                 data: registerData
                             });
                         } else {
-                            callback(null, accountsData);
+                            callback(null, registerData);
                         }
                     });
                 },
@@ -866,6 +898,146 @@ var model = {
     },
 
     updatePaymentStatus: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    ConfigProperty.find().lean().exec(function (err, property) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(property)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, property);
+                            }
+                        }
+                    });
+                },
+                function (property, callback) {
+                    console.log("inside update", data);
+                    var matchObj = {
+                        $set: {
+                            paymentStatus: "Paid",
+                            transactionID: data.transactionid
+                        }
+                    };
+                    Registration.findOne({ //finds one with refrence to id
+                        schoolName: data.schoolName
+                    }).exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            callback(null, "Data is empty");
+                        } else {
+                            async.waterfall([
+                                    function (callback) {
+                                        Accounts.findOne({
+                                            school: found._id
+                                        }).lean().exec(function (err, accountsData) {
+                                            if (err || _.isEmpty(accountsData)) {
+                                                callback(null, {
+                                                    error: "no data found",
+                                                    data: found
+                                                });
+                                            } else {
+                                                found.accounts = accountsData;
+                                                callback(null, found);
+                                            }
+                                        });
+                                    },
+                                    function (found, callback) {
+                                        data.school = true;
+                                        Transaction.saveTransaction(data, found, function (err, vData) {
+                                            if (err || _.isEmpty(vData)) {
+                                                callback(null, {
+                                                    error: "no data found",
+                                                    data: found
+                                                });
+                                            } else {
+                                                callback(null, found);
+                                            }
+                                        });
+                                    },
+                                    function (found, callback) {
+                                        if (found.error) {
+                                            callback(null, found);
+                                        } else {
+                                            console.log("found in update", found);
+                                            Registration.update({
+                                                _id: found._id
+                                            }, matchObj).exec(
+                                                function (err, data3) {
+                                                    callback(err, data3);
+                                                    if (err) {
+                                                        callback(err, null);
+                                                    } else {
+                                                        async.parallel([
+                                                                function (callback) {
+                                                                    Registration.onlinePaymentMailSms(found, function (err, mailsms) {
+                                                                        if (err) {
+                                                                            callback(err, null);
+                                                                        } else {
+                                                                            if (_.isEmpty(mailsms)) {
+                                                                                callback(null, "Data not found");
+                                                                            } else {
+                                                                                callback(null, mailsms);
+                                                                            }
+                                                                        }
+                                                                    });
+                                                                },
+                                                                function (callback) {
+                                                                    Registration.receiptMail(found, function (err, mailsms) {
+                                                                        if (err) {
+                                                                            callback(err, null);
+                                                                        } else {
+                                                                            if (_.isEmpty(mailsms)) {
+                                                                                callback(null, "Data not found");
+                                                                            } else {
+                                                                                callback(null, mailsms);
+                                                                            }
+                                                                        }
+
+                                                                    });
+                                                                }
+                                                            ],
+                                                            function (err, data2) {
+                                                                if (err) {
+                                                                    console.log(err);
+                                                                    callback(err, null);
+                                                                } else if (_.isEmpty(data2)) {
+                                                                    callback(null, data2);
+                                                                } else {
+                                                                    callback(null, data2);
+                                                                }
+                                                            });
+                                                    }
+                                                });
+                                        }
+                                    }
+                                ],
+                                function (err, complete) {
+                                    if (err) {
+                                        callback(err, callback);
+                                    } else {
+                                        callback(null, complete);
+                                    }
+                                });
+
+                        }
+                    });
+                }
+            ],
+            function (err, data2) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
+                    callback(null, data2);
+                }
+
+            });
+    },
+
+    updatePaymentStatusOld: function (data, callback) {
         var matchObj = {
             $set: {
                 paymentStatus: "Paid",
@@ -2576,6 +2748,7 @@ var model = {
         });
 
     },
+
     updateSchoolContactDetails: function (data, callback) {
         Registration.find({}).lean().exec(function (err, found) {
             if (err) {

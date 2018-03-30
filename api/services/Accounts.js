@@ -44,6 +44,10 @@ var schema = new Schema({
         type: Number,
         default: 0
     },
+    igst: {
+        type: Number,
+        default: 0
+    },
     checkNo: String,
     remarks: String,
 });
