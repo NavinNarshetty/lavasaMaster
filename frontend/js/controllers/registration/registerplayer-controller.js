@@ -358,7 +358,7 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
         prevButton: '.swiper-button-prev',
         touchEventsTarget: 'container'
       })
-    }, 600);
+    }, 2000);
   }
   $scope.$on('$viewContentLoaded', function (event) {
     $scope.swiperInit();

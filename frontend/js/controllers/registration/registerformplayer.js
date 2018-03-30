@@ -240,7 +240,7 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, Na
   $scope.isDisabled = false;
 
   $scope.saveAthelete = function (formdata, formAthlete) { //formdata is data or body for this url
-      // console.log("Athlete data: ", formdata);
+      console.log("Athlete data: ", formdata);
       // console.log('Value', $scope.isSchoolAdded(formdata));
       // $scope.isSchoolAdded(formdata);
 
