@@ -1,23 +1,23 @@
 myApp.directive('img', function ($compile, $parse) {
-        return {
-            restrict: 'E',
-            replace: false,
-            link: function ($scope, element, attrs) {
-                var $element = $(element);
-                if (!attrs.noloading) {
-                    // $element.after("<img src='img/loading.gif' class='loading' />");
-                    $element.after("<img src='img/noimage.png' class='loading' />");
-                    var $loading = $element.next(".loading");
-                    $element.load(function () {
-                        $loading.remove();
-                        $(this).addClass("doneLoading");
-                    });
-                } else {
-                    $($element).addClass("doneLoading");
-                }
+    return {
+        restrict: 'E',
+        replace: false,
+        link: function ($scope, element, attrs) {
+            var $element = $(element);
+            if (!attrs.noloading) {
+                // $element.after("<img src='img/loading.gif' class='loading' />");
+                $element.after("<img src='img/noimage.png' class='loading' />");
+                var $loading = $element.next(".loading");
+                $element.load(function () {
+                    $loading.remove();
+                    $(this).addClass("doneLoading");
+                });
+            } else {
+                $($element).addClass("doneLoading");
             }
-        };
-    })
+        }
+    };
+})
 
     .directive('hideOnScroll', function ($document) {
         return {
@@ -53,46 +53,46 @@ myApp.directive('img', function ($compile, $parse) {
                     target = element;
                 }
                 if (attr.share) {
-                  console.log("in share");
+                    console.log("in share");
                     shareUrl = attr.share;
                 } else {
-                  shareUrl = '';
+                    shareUrl = '';
                 }
                 // CUSTOM TAGGING
                 $.fancybox.defaults.btnTpl.tag = '<button data-fancybox-fb class="fancybox-button fancybox-button--fb" title="Tag"> <span class="fa fa-tags"></span></button>';
                 // CUSTOM TAGGING END
                 // CUSTOM SHARING
-                $.fancybox.defaults.btnTpl.sharing = '<button data-fancybox-fb class="fancybox-button fancybox-btnshare" title="Share"> <span class="fa fa-share-alt"></span><span class="fancy-sharelist"> <ul class="list-unstyled"> <li> <a target="_blank" title="Share on Facebook | Sports For All" href="https://www.facebook.com/sharer/sharer.php?u='+ shareUrl +'&title=Sports For All" > <div class="photovideo-socialbutton" > <span class="fa fa-facebook"></span> </div> </a> </li> <li> <a target="_blank" title="Share on Twitter | Sports For All" href="https://twitter.com/intent/tweet?url='+ shareUrl +'&title=Sports For All"> <div class="photovideo-socialbutton" > <span class="fa fa-twitter"></span> </div> </a> </li> <li> <a target="_blank" title="Share on Google+ | Sports for All" href="https://plus.google.com/share?url=='+ shareUrl +'&title=Sports For All"> <div class="photovideo-socialbutton"> <span class="fa fa-google-plus"></span> </div> </a> </li> </ul></span> </button>';
+                $.fancybox.defaults.btnTpl.sharing = '<button data-fancybox-fb class="fancybox-button fancybox-btnshare" title="Share"> <span class="fa fa-share-alt"></span><span class="fancy-sharelist"> <ul class="list-unstyled"> <li> <a target="_blank" title="Share on Facebook | Sports For All" href="https://www.facebook.com/sharer/sharer.php?u=' + shareUrl + '&title=Sports For All" > <div class="photovideo-socialbutton" > <span class="fa fa-facebook"></span> </div> </a> </li> <li> <a target="_blank" title="Share on Twitter | Sports For All" href="https://twitter.com/intent/tweet?url=' + shareUrl + '&title=Sports For All"> <div class="photovideo-socialbutton" > <span class="fa fa-twitter"></span> </div> </a> </li> <li> <a target="_blank" title="Share on Google+ | Sports for All" href="https://plus.google.com/share?url==' + shareUrl + '&title=Sports For All"> <div class="photovideo-socialbutton"> <span class="fa fa-google-plus"></span> </div> </a> </li> </ul></span> </button>';
                 // CUSTOM SHARING END
                 target.fancybox({
-                  padding: 0,
-                  openEffect: 'fade',
-                  closeEffect: 'fade',
-                  closeBtn: true,
-                  arrows : true,
-                  keyboard : true,
-                  infobar : false,
-                  protect : true,
-                  helpers: {
-                    media: {
-                      youtube : {
-                        autoplay : 1
-                      }
+                    padding: 0,
+                    openEffect: 'fade',
+                    closeEffect: 'fade',
+                    closeBtn: true,
+                    arrows: true,
+                    keyboard: true,
+                    infobar: false,
+                    protect: true,
+                    helpers: {
+                        media: {
+                            youtube: {
+                                autoplay: 1
+                            }
+                        }
+                    },
+                    buttons: [
+                        // 'fullScreen',
+                        //'download',
+                        // 'thumbs',
+                        'zoom',
+                        // 'tag',
+                        // 'share', //default share
+                        // 'sharing', //custom share
+                        'close',
+                    ],
+                    thumbs: {
+                        axis: 'x'
                     }
-                  },
-                  buttons: [
-                    // 'fullScreen',
-                    //'download',
-                    // 'thumbs',
-                    'zoom',
-                    // 'tag',
-                    // 'share', //default share
-                    // 'sharing', //custom share
-                    'close',
-                  ],
-                  thumbs: {
-                    axis: 'x'
-                  }
                 });
             }
         };
@@ -426,7 +426,7 @@ myApp.directive('img', function ($compile, $parse) {
             },
             link: function ($scope, element, attrs) {
                 // console.log($scope.model);
-                $scope.showImage = function () {};
+                $scope.showImage = function () { };
                 $scope.check = true;
                 if (!$scope.type) {
                     $scope.type = "image";
@@ -615,8 +615,8 @@ myApp.directive('img', function ($compile, $parse) {
                 $scope.upload = function (image) {
                     // console.log(filetype);
                     if (_.findIndex($scope.types, function (key) {
-                            return image.file.type === key;
-                        }) !== -1) {
+                        return image.file.type === key;
+                    }) !== -1) {
                         // console.log('andar hain')
                         // if (image.file.type == "image/png" || image.file.type == "image/jpeg") {
                         // $scope.uploadStatus = "uploading";
@@ -830,7 +830,7 @@ myApp.directive('img', function ($compile, $parse) {
             restrict: 'E',
             scope: {},
             templateUrl: 'views/directive/profileathlete-card.html',
-            link: function () {}
+            link: function () { }
         }
     })
     // end profileathlete-card;
@@ -867,16 +867,46 @@ myApp.directive('img', function ($compile, $parse) {
                     }
                     // console.log(destination, type, 'in dir')
                     $('html,body').animate({
-                            scrollTop: $(destination).offset().top
-                        },
+                        scrollTop: $(destination).offset().top
+                    },
                         'slow');
                 };
             }
         };
     })
+    .directive('restrictField', function () {
+        return {
+            restrict: 'AE',
+            scope: {
+                restrictField: '='
+            },
+            link: function (scope) {
+                // this will match spaces, tabs, line feeds etc
+                // you can change this regex as you want
+                var regex = /\s/g;
+
+                scope.$watch('restrictField', function (newValue, oldValue) {
+                    if (newValue != oldValue && regex.test(newValue)) {
+                        scope.restrictField = newValue.replace(regex, '');
+                    }
+                });
+            }
+        };
+    })
+    .directive('disallowSpaces', function () {
+        return {
+            restrict: 'A',
+
+            link: function ($scope, $element) {
+                $element.bind('input', function () {
+                    $(this).val($(this).val().replace(/ /g, ''));
+                });
+            }
+        };
+    })
     // SCROLLDOWN END
     // PACKAGE CARD
-    .directive('sfaPackageTable',['$compile','NavigationService', function ($compile, NavigationService) {
+    .directive('sfaPackageTable', ['$compile', 'NavigationService', function ($compile, NavigationService) {
         return {
             restrict: 'E',
             scope: {
@@ -886,40 +916,40 @@ myApp.directive('img', function ($compile, $parse) {
             },
             templateUrl: 'views/directive/packagetable.html',
             link: function ($scope, attrs) {
-              $scope.packages = [];
-              $scope.features = [];
-              $scope.formPackage = {
-                filter: {
-                  packageUser: $scope.user
+                $scope.packages = [];
+                $scope.features = [];
+                $scope.formPackage = {
+                    filter: {
+                        packageUser: $scope.user
+                    }
                 }
-              }
-              $scope.formFeature = {
-                filter: {
-                  featureUserType: $scope.user
+                $scope.formFeature = {
+                    filter: {
+                        featureUserType: $scope.user
+                    }
                 }
-              }
-              // console.log("cashback", $scope.cashback);
+                // console.log("cashback", $scope.cashback);
 
-              NavigationService.getPackages($scope.formPackage, function(data){
-                data = data.data;
-                console.log("pack",data);
-                if (data.value = true) {
-                  $scope.packages = data.data.results;
-                  // console.log("packages", $scope.packages);
-                } else {
-                  console.log("packages search failed", data);
-                }
-              });
-              NavigationService.getPackageFeatures($scope.formfeature,  function(data){
-                data = data.data;
-                console.log("feat",data);
-                if (data.value = true) {
-                  $scope.features = data.data.results;
-                  // console.log("features", $scope.features);
-                } else {
-                  console.log("features search failed", data);
-                }
-              });
+                NavigationService.getPackages($scope.formPackage, function (data) {
+                    data = data.data;
+                    console.log("pack", data);
+                    if (data.value = true) {
+                        $scope.packages = data.data.results;
+                        // console.log("packages", $scope.packages);
+                    } else {
+                        console.log("packages search failed", data);
+                    }
+                });
+                NavigationService.getPackageFeatures($scope.formfeature, function (data) {
+                    data = data.data;
+                    console.log("feat", data);
+                    if (data.value = true) {
+                        $scope.features = data.data.results;
+                        // console.log("features", $scope.features);
+                    } else {
+                        console.log("features search failed", data);
+                    }
+                });
             }
         }
     }])

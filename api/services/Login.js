@@ -184,33 +184,33 @@ var model = {
             },
             function (data3, callback) {
                 Athelete.aggregate([{
-                            // Stage 1
+                    // Stage 1
 
-                            $lookup: {
-                                "from": "schools",
-                                "localField": "school",
-                                "foreignField": "_id",
-                                "as": "school"
-                            }
-                        },
+                    $lookup: {
+                        "from": "schools",
+                        "localField": "school",
+                        "foreignField": "_id",
+                        "as": "school"
+                    }
+                },
 
-                        // Stage 2
-                        {
-                            $unwind: {
-                                path: "$school",
-                                preserveNullAndEmptyArrays: true // optional
-                            }
-                        },
+                // Stage 2
+                {
+                    $unwind: {
+                        path: "$school",
+                        preserveNullAndEmptyArrays: true // optional
+                    }
+                },
 
-                        // Stage 3
-                        {
-                            $match: {
-                                "sfaId": data.sfaid,
-                                "status": "Verified",
-                                "password": data.password
-                            }
-                        }
-                    ],
+                // Stage 3
+                {
+                    $match: {
+                        "sfaId": data.sfaid,
+                        "status": "Verified",
+                        "password": data.password
+                    }
+                }
+                ],
                     function (err, found) {
                         console.log('found', found);
                         if (err) {
@@ -374,7 +374,7 @@ var model = {
         var sfatype = data.sfaId.charAt(1);
 
         // async.waterfall([
-            
+
         //     //Get School / Athletes Data
         //     function(callback){
         //         if(data.type == "school" && sfatype == 'S'){
@@ -406,7 +406,7 @@ var model = {
         //     }
         // ],callback);
 
-        if (data.type == "school" && sfatype == 'S') {
+        if (data.type == "school" && sfatype == 'S' || sfatype == 'C') {
             Registration.findOne({
                 sfaID: data.sfaId,
                 status: "Verified"
@@ -430,7 +430,7 @@ var model = {
                         function (callback) {
                             var updateObj = {
                                 "enterOTP": otp
-                            }
+                            };
                             Registration.update({
                                 _id: found._id
                             }, updateObj).exec(callback);
@@ -483,10 +483,12 @@ var model = {
             });
 
         } else if (data.type == "athlete" && sfatype == 'A') {
+            console.log("im in else");
             Athelete.findOne({
-                sfaId: data.sfaid,
+                sfaId: data.sfaId,
                 status: "Verified"
             }).lean().exec(function (err, found) {
+                console.log("found", found);
                 if (err) {
                     callback(err, null);
                 } else if (_.isEmpty(found)) {
@@ -618,18 +620,18 @@ var model = {
                     _id: data._id,
                     password: data.oldPassword
                 }, {
-                    password: data.password
-                }, function (err, data1) {
-                    if (err) {
-                        callback(null, {
-                            error: err
-                        });
-                    } else if (data1) {
-                        callback(null, "Password Successfully Updated");
-                    } else {
-                        callback("Incorrect Old Password", null);
-                    }
-                });
+                        password: data.password
+                    }, function (err, data1) {
+                        if (err) {
+                            callback(null, {
+                                error: err
+                            });
+                        } else if (data1) {
+                            callback(null, "Password Successfully Updated");
+                        } else {
+                            callback("Incorrect Old Password", null);
+                        }
+                    });
             } else {
                 callback("Password match or Same password exist", null);
             }
@@ -645,18 +647,18 @@ var model = {
                     _id: data._id,
                     password: data.oldPassword
                 }, {
-                    password: data.password
-                }, function (err, data1) {
-                    if (err) {
-                        callback(null, {
-                            error: err
-                        });
-                    } else if (data1) {
-                        callback(null, "Password Successfully Updated");
-                    } else {
-                        callback("Incorrect Old Password", null);
-                    }
-                });
+                        password: data.password
+                    }, function (err, data1) {
+                        if (err) {
+                            callback(null, {
+                                error: err
+                            });
+                        } else if (data1) {
+                            callback(null, "Password Successfully Updated");
+                        } else {
+                            callback("Incorrect Old Password", null);
+                        }
+                    });
             } else {
                 callback("Password match or Same password exist", null);
             }
@@ -671,18 +673,18 @@ var model = {
                 Registration.findOneAndUpdate({
                     _id: data._id
                 }, {
-                    password: data.newPassword
-                }, function (err, data1) {
-                    if (err) {
-                        callback(null, {
-                            error: err
-                        });
-                    } else if (data1) {
-                        callback(null, "Password Successfully Updated");
-                    } else {
-                        callback("Error Occured While Updating", null);
-                    }
-                });
+                        password: data.newPassword
+                    }, function (err, data1) {
+                        if (err) {
+                            callback(null, {
+                                error: err
+                            });
+                        } else if (data1) {
+                            callback(null, "Password Successfully Updated");
+                        } else {
+                            callback("Error Occured While Updating", null);
+                        }
+                    });
             } else {
                 callback("MisMatch Password And Confirm Password", null);
             }
@@ -697,18 +699,18 @@ var model = {
                 Athelete.findOneAndUpdate({
                     _id: data._id,
                 }, {
-                    password: data.newPassword
-                }, function (err, data1) {
-                    if (err) {
-                        callback(null, {
-                            error: err
-                        });
-                    } else if (data1) {
-                        callback(null, "Password Successfully Updated");
-                    } else {
-                        callback("Error Occured While Updating", null);
-                    }
-                });
+                        password: data.newPassword
+                    }, function (err, data1) {
+                        if (err) {
+                            callback(null, {
+                                error: err
+                            });
+                        } else if (data1) {
+                            callback(null, "Password Successfully Updated");
+                        } else {
+                            callback("Error Occured While Updating", null);
+                        }
+                    });
             } else {
                 callback("MisMatch Password And Confirm Password", null);
             }
@@ -719,9 +721,9 @@ var model = {
 
     tokenCheck: function (data, callback) {
         var response = {};
-        if (data.schoolToken) {
+        if (data.sfaId && data.type == 'school') {
             Registration.findOne({
-                accessToken: data.schoolToken
+                sfaID: data.sfaId
             }).exec(function (err, found) {
                 if (err) {
                     callback(err, null);
@@ -733,9 +735,9 @@ var model = {
                 }
             });
 
-        } else if (data.athleteToken) {
+        } else if (data.sfaId && data.type == 'athlete') {
             Athelete.findOne({
-                accessToken: data.athleteToken
+                sfaId: data.sfaId
             }).exec(function (err, found) {
                 if (err) {
                     callback(err, null);
@@ -796,29 +798,29 @@ var model = {
     getSchoolPipeLine: function (data) {
 
         var pipeline = [{
-                $match: {
-                    "_id": objectid(data.buf)
-                }
-            },
+            $match: {
+                "_id": objectid(data.buf)
+            }
+        },
 
 
-            // Stage 1
-            {
-                $lookup: {
-                    "from": "schools",
-                    "localField": "school",
-                    "foreignField": "_id",
-                    "as": "school"
-                }
-            },
+        // Stage 1
+        {
+            $lookup: {
+                "from": "schools",
+                "localField": "school",
+                "foreignField": "_id",
+                "as": "school"
+            }
+        },
 
-            // Stage 2
-            {
-                $unwind: {
-                    path: "$school",
-                    preserveNullAndEmptyArrays: true // optional
-                }
-            },
+        // Stage 2
+        {
+            $unwind: {
+                path: "$school",
+                preserveNullAndEmptyArrays: true // optional
+            }
+        },
 
         ];
         return pipeline;

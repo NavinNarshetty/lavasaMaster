@@ -129,10 +129,15 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
 
 
     $scope.logoutCandidate = function () {
+        console.log("iminnn");
         loginService.logoutCandidate(function (data) {
+            console.log("data", data);
             if (data.isLoggedIn === false) {
+                console.log("imiinnnnnnnnnnn");
                 toastr.success('Successfully Logged Out', 'Logout Message');
-                $state.go('sports-registration');
+                $state.go('registerplayer', {
+                    type: data.type
+                });
             } else {
                 toastr.error('Something went wrong', 'Logout Message');
             }
@@ -350,7 +355,9 @@ myApp.controller('SportsRulesCtrl', function ($scope, TemplateService, $state, N
         loginService.logoutCandidate(function (data) {
             if (data.isLoggedIn === false) {
                 toastr.success('Successfully Logged Out', 'Logout Message');
-                $state.go('sports-registration');
+                $state.go('registerplayer', {
+                    type: data.type
+                });
             } else {
                 toastr.error('Something went wrong', 'Logout Message');
             }
@@ -426,7 +433,7 @@ myApp.controller('SportsRulesCtrl', function ($scope, TemplateService, $state, N
 
 });
 
-myApp.controller('SportIndividualCtrl', function ($scope, TemplateService, toastr, NavigationService, $timeout, $state, $stateParams, loginService, errorService, configService) {
+myApp.controller('SportIndividualCtrl', function ($scope, TemplateService, toastr, $filter, NavigationService, $timeout, $state, $stateParams, loginService, errorService, configService) {
     $scope.template = TemplateService.getHTML("content/sport-individualdetail.html");
     TemplateService.title = "Registered Individual Detail";
     $scope.navigation = NavigationService.getNavigation();
@@ -452,7 +459,9 @@ myApp.controller('SportIndividualCtrl', function ($scope, TemplateService, toast
         loginService.logoutCandidate(function (data) {
             if (data.isLoggedIn === false) {
                 toastr.success('Successfully Logged Out', 'Logout Message');
-                $state.go('sports-registration');
+                $state.go('registerplayer', {
+                    type: data.type
+                });
             } else {
                 toastr.error('Something went wrong', 'Logout Message');
             }
@@ -460,8 +469,11 @@ myApp.controller('SportIndividualCtrl', function ($scope, TemplateService, toast
     };
 
     if ($.jStorage.get("userType") === "school") {
+        $scope.userType = $.jStorage.get("userType");
         $scope.constraints.schoolToken = $.jStorage.get("userDetails").accessToken;
     } else {
+        $scope.userType = $filter('firstcapitalize')($.jStorage.get("userType"));
+
         $scope.constraints.athleteToken = $.jStorage.get("userDetails").accessToken;
     }
 
@@ -534,7 +546,9 @@ myApp.controller('SportTeamCtrl', function ($scope, TemplateService, toastr, Nav
         loginService.logoutCandidate(function (data) {
             if (data.isLoggedIn === false) {
                 toastr.success('Successfully Logged Out', 'Logout Message');
-                $state.go('sports-registration');
+                $state.go('registerplayer', {
+                    type: data.type
+                });
             } else {
                 toastr.error('Something went wrong', 'Logout Message');
             }

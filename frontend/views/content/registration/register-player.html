@@ -30,13 +30,13 @@
         <uib-accordion close-others="oneAtATime">
           <div uib-accordion-group class="panel-default" is-open="s.open">
             <uib-accordion-heading class="clearfix">
-              <span class="pull-right register-accordion-view"> View <span ng-if="!s.open">Details</span> <span ng-if='s.open'>Less</span> <i class="fa " ng-class="{'fa-chevron-up': s.open, 'fa-chevron-down': !s.open}"></i></span>
-                <h4 class="d-fjalla-one text-uppercase m-clear">Quick Details About SFA Championship {{eventYear}}</h4>
+              <span class="pull-right register-accordion-view"> View <span ng-if="!s.open">Details</span> <span ng-if='s.open'>Less</span>              <i class="fa " ng-class="{'fa-chevron-up': s.open, 'fa-chevron-down': !s.open}"></i></span>
+              <h4 class="d-fjalla-one text-uppercase m-clear">Quick Details About SFA Championship {{eventYear}}</h4>
             </uib-accordion-heading>
             <div class="register-accordioncontent">
               <div class="register-contentholder">
                 <label class="display-block">Sports:</label>
-                <span class="register-sportlist" ng-repeat="sport in sports track by $index"> {{sport}} <span class="register-seperator">|</span> </span>
+                <span class="register-sportlist" ng-repeat="sport in sports track by $index"> {{sport}} <span class="register-seperator">|</span>                </span>
               </div>
               <div class="register-contentholder">
                 <label for="">Dates:</label>
@@ -88,10 +88,10 @@
         <!-- STEP BUTTONS -->
         <ul class="list-inline">
           <li>
-            <button class="btn btn-registerstep" ng-click="showStep(1)" ng-class="{'active': stepTab == 1}">Step 1: Registration & Verification</button>
+            <button class="btn btn-registerstep" ng-click="showStep(1) ;formData={}" ng-class="{'active': stepTab == 1}">Step 1: Registration & Verification</button>
           </li>
           <li>
-            <button class="btn btn-registerstep" ng-click="showStep(2)" ng-class="{'active': stepTab == 2}">Step 2: Sports Registration</button>
+            <button class="btn btn-registerstep" ng-click="showStep(2);formData={}" ng-class="{'active': stepTab == 2}">Step 2: Sports Registration</button>
           </li>
         </ul>
         <!-- STEP BUTTONS END -->
@@ -100,7 +100,7 @@
           <div class="registerstep-btnholder">
             <ul class="list-unstyled">
               <li>
-                <button class="btn btn-register1" >Participating  for the First Time</button>
+                <button class="btn btn-register1">Participating  for the First Time</button>
               </li>
               <li>
                 <button class="btn btn-register1" ng-click="showStepForm()" ng-class="{'active': stepForm}">Have Participated Before</button>
@@ -136,16 +136,23 @@
         <!-- STEP 2 FORM -->
         <div class="registerform-step2 " ng-show="stepTab == 2" ng-class="{'active': stepTab == 2}">
           <div class="register-step2holder">
-            <p>Kindly Enter</p>
-            <div class="form-group">
-              <input type="text" placeholder="SFA ID" class="form-control  register-stepinput">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control register-stepinput">
-            </div>
-            <div class="form-group">
-              <button class="btn btn-register2">Enter</button>
-            </div>
+            <form name="formsports">
+              <p>Kindly Enter</p>
+              <div class="form-group">
+                <input type="text" placeholder="SFA ID" name="sportsid" class="form-control register-stepinput" touppercase ng-model="formData.sfaid"
+                  required>
+
+                <!-- <div class="validate-col" ng-if="formData.sfaid. ==0  && formsports.sportsid.$dirty && formsports.sportsid.$invalid && formsports.sportsid.$touched">Please Enter Your SFA ID *</div> -->
+              </div>
+              <div class="form-group">
+                <input type="password" placeholder="Password" class="form-control register-stepinput" name="sportspasswrd" ng-model="formData.password"
+                  required>
+                <!-- <div class="validate-col" ng-if="formsports.sportspasswrd.$invalid && formsports.sportspasswrd.$touched">Please Enter password *</div> -->
+              </div>
+              <div class="form-group">
+                <button class="btn btn-register2" type="submit" ng-click="login(formData,formsports)" promise-btn="yourPromise">Enter</button>
+              </div>
+            </form>
             <div class="form-group">
               <a class="btn btn-link" ng-click="showForgotPassword()">Forgot Password</a>
             </div>
@@ -210,33 +217,32 @@
     </section>
     <!-- TESTIMONIALS END  -->
   </div>
-    <!-- COUNTS  -->
-    <section class="registerplayer-counts" ng-if="counts.length>0">
-      <div class="container">
-        <div class="registercount-flex">
-          <div class="registercount-item" ng-repeat = "count in counts track by $index">
-            <div class="registercount-number">{{count.value}}</div>
-            <div class="registercount-label">{{count.name}}</div>
-          </div>
+  <!-- COUNTS  -->
+  <section class="registerplayer-counts" ng-if="counts.length>0">
+    <div class="container">
+      <div class="registercount-flex">
+        <div class="registercount-item" ng-repeat="count in counts track by $index">
+          <div class="registercount-number">{{count.value}}</div>
+          <div class="registercount-label">{{count.name}}</div>
         </div>
       </div>
-    </section>
-    <!-- COUNTS END  -->
-    <!-- PHOTOS  -->
-    <section class="registerplayer-photos" ng-if="gallery.length>0">
-      <div class="container">
-        <div class="registerplayer-introtitle">Photos From Past Championships</div>
-        <div class="registerplayer-galleryslider">
-          <div class="swiper-container">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide" ng-repeat="slide in allGallery.slidePhotos track by $index">
-                <div class="registergallery-slide">
-                  <div class="row">
-                    <div class="col-md-6 registergallery-photoslide" ng-repeat="photoList in slide track by $index">
-                      <div class="registergallery-photo">
-                        <div class="registergallery-photoholder" ng-repeat="photo in photoList|limitTo:3">
-                          <img ng-src="{{photo.mediaLink|serverimage2}}" alt="Sports For All" class="img-responsive">
-                        </div>
+    </div>
+  </section>
+  <!-- COUNTS END  -->
+  <!-- PHOTOS  -->
+  <section class="registerplayer-photos" ng-if="gallery.length>0">
+    <div class="container">
+      <div class="registerplayer-introtitle">Photos From Past Championships</div>
+      <div class="registerplayer-galleryslider">
+        <div class="swiper-container">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide" ng-repeat="slide in allGallery.slidePhotos track by $index">
+              <div class="registergallery-slide">
+                <div class="row">
+                  <div class="col-md-6 registergallery-photoslide" ng-repeat="photoList in slide track by $index">
+                    <div class="registergallery-photo">
+                      <div class="registergallery-photoholder" ng-repeat="photo in photoList|limitTo:3">
+                        <img ng-src="{{photo.mediaLink|serverimage2}}" alt="Sports For All" class="img-responsive">
                       </div>
                     </div>
                   </div>
@@ -244,11 +250,12 @@
               </div>
             </div>
           </div>
-          <div class="swiper-button-next"></div>
-          <div class="swiper-button-prev"></div>
         </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
       </div>
-    </section>
-    <!-- PHOTOS END  -->
+    </div>
+  </section>
+  <!-- PHOTOS END  -->
 
 </div>
