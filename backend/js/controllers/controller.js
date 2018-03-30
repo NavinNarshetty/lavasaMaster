@@ -4428,7 +4428,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 
     .controller('MedalsCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $uibModal, $state, toastr) {
         //Used to name the .html file
-        $scope.template = TemplateService.changecontent("medal/tablemedal");
+        $scope.template = TemplateService.changecontent("tablemedal");
         $scope.menutitle = NavigationService.makeactive("Medal List");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
@@ -4643,7 +4643,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 
     .controller('DetailMedalCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
         //Used to name the .html file
-        $scope.template = TemplateService.changecontent("medal/detailmedal");
+        $scope.template = TemplateService.changecontent("detailmedal");
         $scope.menutitle = NavigationService.makeactive("Medal Detail");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
