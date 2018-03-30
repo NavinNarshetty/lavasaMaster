@@ -128,6 +128,7 @@
 // TAB
 .section-tab {
   padding: 8px 25px 8px 30px;
+  margin-right: 25px;
   background-color: #0a1a72;
   color: #fff;
   display: inline-block;
@@ -198,7 +199,7 @@
   background-color: $grey;
   color: $sport-dark-grey;
   font-size: 12px;
-  text-transform: capitalize;
+  // text-transform: capitalize;
   @extend .r-titillium-web-semibold;
   &:active,
   &:focus,

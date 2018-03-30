@@ -1346,6 +1346,15 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
             }).then(function(data){
               callback(data);
             });
+        },
+        validatePromoCode: function (request, callback) {
+            $http({
+                url: adminUrl2 + 'CouponCode/validateCode',
+                method: 'POST',
+                data: request
+            }).then(function(data){
+              callback(data);
+            });
         }
     };
 });

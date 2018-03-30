@@ -21,10 +21,10 @@ myApp.controller('UpgradePackageCtrl', function ($scope, TemplateService, Naviga
   // GET PACKAGES
   NavigationService.getPackages($scope.formPackage,function(data){
     data = data.data;
-    console.log("dat",data);
+    // console.log("dat",data);
     if (data.value = true) {
       $scope.packages = data.data.results;
-      console.log("packages", $scope.packages);
+      // console.log("packages", $scope.packages);
     } else {
       console.log("packages search failed", data);
     }

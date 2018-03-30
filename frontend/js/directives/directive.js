@@ -876,7 +876,7 @@ myApp.directive('img', function ($compile, $parse) {
     })
     // SCROLLDOWN END
     // PACKAGE CARD
-    .directive('sfaPackageTable',['NavigationService', function (NavigationService) {
+    .directive('sfaPackageTable',['$compile','NavigationService', function ($compile, NavigationService) {
         return {
             restrict: 'E',
             scope: {
@@ -898,24 +898,24 @@ myApp.directive('img', function ($compile, $parse) {
                   featureUserType: $scope.user
                 }
               }
-              console.log("cashback", $scope.cashback);
+              // console.log("cashback", $scope.cashback);
 
               NavigationService.getPackages($scope.formPackage, function(data){
                 data = data.data;
-                console.log("dat",data);
+                console.log("pack",data);
                 if (data.value = true) {
                   $scope.packages = data.data.results;
-                  console.log("packages", $scope.packages);
+                  // console.log("packages", $scope.packages);
                 } else {
                   console.log("packages search failed", data);
                 }
               });
               NavigationService.getPackageFeatures($scope.formfeature,  function(data){
                 data = data.data;
-                console.log("dat",data);
+                console.log("feat",data);
                 if (data.value = true) {
                   $scope.features = data.data.results;
-                  console.log("features", $scope.features);
+                  // console.log("features", $scope.features);
                 } else {
                   console.log("features search failed", data);
                 }

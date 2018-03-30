@@ -1,4 +1,4 @@
-myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, NavigationService, $timeout, $uibModal, $filter, configService, $location) {
+myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, NavigationService, $timeout, $uibModal, $filter, configService, $location, toastr) {
   $scope.template = TemplateService.getHTML("content/registration/registerform-player.html");
   TemplateService.title = "Player Registration Form"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
@@ -9,6 +9,8 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, Na
       packageUser: 'athlete'
     }
   }
+  $scope.showPaymentTab = false;
+  $scope.showPackageDetail = false;
   configService.getDetail(function (data) {
       $scope.city = data.city;
       $scope.district = data.district;
@@ -24,15 +26,106 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, Na
   // CALL PACKAGES
   NavigationService.getPackages($scope.formPackage,function(data){
     data = data.data;
-    console.log("dat",data);
+    // console.log("dat",data);
     if (data.value = true) {
       $scope.packages = data.data.results;
-      console.log("packages", $scope.packages);
+      // console.log("packages", $scope.packages);
     } else {
       console.log("packages search failed", data);
     }
   });
   // CALL PACKAGES END
+  // VIEW PACKAGE TABLE
+  $scope.viewPackage = function(){
+    $scope.showPackageDetail = !$scope.showPackageDetail;
+  }
+  // VIEW PACKAGE TABLE END
+  // SET PAYMENT TABLE
+  $scope.setPackageDetails = function(){
+
+    _.each($scope.packages, function(n){
+      if(n._id == $scope.formData.package){
+        console.log("select", n);
+        $scope.showPaymentTab = true;
+        $scope.promoApplied = false;
+        $scope.formData.packageName = n.name;
+        $scope.formData.amountToPay = n.price;
+        $scope.formData.discount = 0;
+        $scope.formData.amountPaid = n.finalPrice;
+        $scope.promoCode = {
+          code: ''
+        }
+        if (n.igstPercent) {
+          $scope.formData.igstPercent = n.igstPercent;
+          $scope.formData.igstAmt = n.igstAmt;
+          $scope.formData.cgstPercent = '';
+          $scope.formData.cgstAmt = '';
+          $scope.formData.sgstPercent = '';
+          $scope.formData.sgstAmt = '';
+        }
+        if (n.cgstPercent && n.sgstPercent) {
+          $scope.formData.cgstPercent = n.cgstPercent;
+          $scope.formData.cgstAmt = n.cgstAmt;
+          $scope.formData.sgstPercent = n.sgstPercent;
+          $scope.formData.sgstAmt = n.sgstAmt;
+          $scope.formData.igstPercent = '';
+          $scope.formData.igstAmt = '';
+        }
+      }
+    })
+  }
+  // SET PAYMENT TABLE END
+  // CALCULATE TAX
+  $scope.calculateTax = function(){
+    if ($scope.formData.igstPercent) {
+      console.log("bef", $scope.formData.igstAmt, $scope.formData.igstPercent);
+      $scope.formData.igstAmt = _.round(TemplateService.calculatePercentage($scope.formData.amountPaid, $scope.formData.igstPercent));
+      console.log("aft",$scope.formData.igstAmt);
+      $scope.formData.amountPaid = $scope.formData.amountPaid + $scope.formData.igstAmt;
+    } else if ($scope.formData.cgstPercent && $scope.formData.sgstPercent) {
+      $scope.formData.cgstAmt = $scope.formData.sgstAmt = _.round(TemplateService.calculatePercentage($scope.formData.amountPaid, $scope.formData.cgstPercent));
+      console.log("aft",$scope.formData.cgstAmt);
+      $scope.formData.amountPaid = $scope.formData.amountPaid + $scope.formData.cgstAmt + $scope.formData.sgstAmt;
+    }
+    $scope.promoApplied = true;
+  }
+  // CALCULATE TAX END
+  // CALCULATE DISCOUNT
+  $scope.calculateDiscount = function(promoDetail){
+    console.log("in cALC");
+    // promoDetail.amount = 899;
+    if (promoDetail.amount) {
+      if (promoDetail.amount >= $scope.formData.amountToPay) {
+        toastr.error("Sorry. This coupon code is not valid");
+      } else {
+        $scope.formData.amountPaid = $scope.formData.amountToPay - promoDetail.amount;
+        $scope.formData.discount = promoDetail.amount;
+        $scope.calculateTax();
+      }
+    } else if(promoDetail.percent){
+      var a = _.round(TemplateService.calculatePercentage($scope.formData.amountToPay, promoDetail.percent));
+      console.log(a);
+      $scope.formData.discount = a;
+      $scope.formData.amountPaid = $scope.formData.amountToPay - a;
+      $scope.calculateTax();
+    }
+  }
+  // CALCULATE DISCOUNT END
+  // APPLY PROMOCODE
+  $scope.validatePromoCode = function(promo){
+    NavigationService.validatePromoCode(promo, function(data){
+      data = data.data;
+      if (data.value== true) {
+        console.log("promo", data);
+        $scope.promoCode.code = data.data.code;
+        $scope.promoDetails = data.data;
+        $scope.calculateDiscount($scope.promoDetails);
+      } else {
+        console.log("Promo Apply failed", data);
+      }
+    })
+  }
+  // APPLY PROMOCODE
   $scope.changeitSchoolId = function (err, data) {
       // console.log(err, data);
       if (err) {

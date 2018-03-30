@@ -7,7 +7,7 @@
     </div>
     <!-- TITLE END -->
     <div class="row">
-      <div class="col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-10">
+      <div class="col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-10">
         <!-- GUIDELINES SECTION -->
         <section class="form-card">
           <div class="formregister-mtb20">
@@ -41,7 +41,7 @@
                   <div class="">
                     <div class="upgradepackage-radioholder">
                       <label for="packageRadio{{$index}}" class="sfa-radiobox" ng-repeat = "package in packages| orderBy:'order' track by $index">
-                        <input type="radio" name="packageRadio" id="packageRadio{{$index}}" value="{{package._id}}" class="form-control" ng-model="formData.package" required>
+                        <input type="radio" name="packageRadio" id="packageRadio{{$index}}" value="{{package._id}}" class="form-control" ng-model="formData.package" ng-change="setPackageDetails()" required>
                         <span class="sfa-radio"></span>
                         <div class="upgradepackage-radiocontent" ng-class="{'package-radio-blue': package.color == 'blue', 'package-radio-green': package.color == 'green', 'package-radio-red': package.color == 'red', 'package-radio-yellow': package.color == 'yellow'}">
                           <span class="upgradepackage-radioprice"><span class="upgradepackage-radioinr fa fa-inr"></span>{{package.finalPrice}}</span>
@@ -49,7 +49,10 @@
                         </div>
                       </label>
                     </div>
-                    <div class="registerform-packagetable">
+                    <div class="">
+                      <button class="btn formregister-link" ng-click="viewPackage()">Click Here to <span ng-show="!showPackageDetail">View</span><span ng-show="showPackageDetail">Hide</span> Package Details</button>
+                    </div>
+                    <div class="registerform-packagetable" ng-show="showPackageDetail">
                       <sfa-package-table user="athlete" caption="hello" cashback="true"></sfa-package-table>
                     </div>
                   </div>
@@ -60,7 +63,7 @@
           <!-- PACCKAGE SELECTION END -->
           <!-- PERSONAL DETAILS -->
           <div class="section-tab"> Personal Details </div>
-          <section class="form-card">
+          <section class="form-card ">
             <!-- SCHOOL DETAILS -->
             <div class="formplayer-schooldetails formregister-mtb20">
               <!-- SCHOOL NAME -->
@@ -543,8 +546,8 @@
           <!-- PERSONAL DETAILS END -->
 
           <!-- CONTACT DETAILS -->
-          <div class="section-tab">Contact Details</div>
-          <section class="form-card">
+          <div class="section-tab"> Contact Details </div>
+          <section class="form-card ">
             <p>Kindly ensure that the details provided are correct. A OneTime Password (OTP) will be sent to the entered mobile no. & email ID. These contact details will be used for all Championship related communication i.e. draws & scchedules, change in dates, etc.</p>
             <!-- MOBILE/EMAIL -->
             <div class="formregister-contactotp formregister-mtb20">
@@ -736,7 +739,7 @@
           </section>
           <!-- CONTACT DETAILS END -->
           <!-- REGISTRATION FEES -->
-          <div class="section-tab">Registration Fee</div>
+          <div class="section-tab"> Registration Fee </div>
           <section class="form-card">
             <div class="formregister-mtb20">
               <div class="form-group">
@@ -750,11 +753,6 @@
                     <input ng-model="formData.registrationFee" type="radio" id="radio11" name="radio" value="cash">
                     <span class="sfa-radio"></span>
                     Cash/Cheque/Demand Draft
-                  </label>
-                  <label for="radio21" class="sfa-radiobox">
-                    <input ng-model="formData.registrationFee" type="radio" id="radio21" name="radio" value="net banking">
-                    <span class="sfa-radio"></span>
-                    Net Banking
                   </label>
                 </div>
               </div>
@@ -774,7 +772,7 @@
               </div>
             </div>
             <!-- CASH/ CHEQUE INFO END -->
-            <div class="registerform-payment">
+            <div class="registerform-payment" ng-show="showPaymentTab">
               <label for="" class="color-sportprimary">Payment Details</label>
               <div class="form-group">
                 <div class="col-sm-6">
@@ -784,39 +782,55 @@
                         <tr>
                           <td>
                             <div class="text-left">
-                              Registration Fees - <span>Popular Package</span></td>
+                              Registration Fees - <span>{{formData.packageName}}</span></td>
                             </div>
                           <td>
-                            <span>799</span>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td><div class="text-left">
-                            +CST@9%
-                          </div></td>
-                          <td>
-                            <span>000</span>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <div class="text-left">+GST@9%</div></td>
-                          <td>
-                            <span>000</span>
+                            <span>{{formData.amountToPay}}</span>
                           </td>
                         </tr>
                         <tr>
                           <td>
                             <div class="text-left">
                               <label for="" class="display-block">Enter Promo Code:</label>
-                              <input type="text" placeholder="Promo Code" ng-model="pop" class="register-promobadge form-control">
-                              <div class="label label-danger pull-right">
+                              <input type="text" name="promocode" placeholder="Promo Code" ng-model="promoCode.code" class="register-promobadge form-control">
+                              <!-- <div class="label label-danger pull-right" ng-if="formAthlete.promocode.$invalid && formAthlete.promocode.$touched">
                                 Enter Correct Promo Code
-                              </div>
+                              </div> -->
+                              <button class="formregister-link" ng-hide="promoApplied" ng-click="validatePromoCode(promoCode)">Apply</button>
+                              <button class="formregister-link" ng-show="promoApplied" ng-click="setPackageDetails()">Remove</button>
                             </div>
                           </td>
-                          <td>- <span>200</span></td>
+                          <td>- <span>{{formData.discount}}</span></td>
                         </tr>
+                        <!-- IF IGST -->
+                        <tr  ng-if="formData.igstAmt != ''">
+                          <td><div class="text-left">
+                            +IGST@{{formData.igstPercent}}%
+                          </div></td>
+                          <td>
+                            <span>{{formData.igstAmt}}</span>
+                          </td>
+                        </tr>
+                        <!-- IF IGST END -->
+                        <!-- IF CGST  -->
+                        <tr ng-if="formData.cgstAmt != ''">
+                          <td><div class="text-left">
+                            +CST@{{formData.cgstPercent}}%
+                          </div></td>
+                          <td>
+                            <span>{{formData.cgstAmt}}</span>
+                          </td>
+                        </tr>
+                        <!-- IF CGST END  -->
+                        <!-- IF SGST  -->
+                        <tr  ng-if="formData.sgstAmt != ''">
+                          <td>
+                            <div class="text-left">+GST@{{formData.sgstPercent}}%</div></td>
+                          <td>
+                            <span>{{formData.sgstAmt}}</span>
+                          </td>
+                        </tr>
+                        <!-- IF SGST END  -->
                         <tr>
                           <td>
                             <div class="text-left">
@@ -824,7 +838,7 @@
                             </div>
                           </td>
                           <td>
-                            <span>699</span>
+                            <span>{{formData.amountPaid}}</span>
                           </td>
                         </tr>
                       </tbody>
