@@ -926,5 +926,16 @@ var model = {
                 }
             });
     },
+
+
+
+    // var fullName = '';
+    // if (pdfObj.athlete.middleName) {
+    //     fullName = pdfObj.athlete.sfaId + '-' + pdfObj.athlete.firstName + '' + pdfObj.athlete.middleName + '' + pdfObj.athlete.surname;
+    // } else {
+    //     fullName = pdfObj.athlete.sfaId + '-' + pdfObj.athlete.firstName + '' + pdfObj.athlete.surname;
+    // }
+
+
 };
 module.exports = _.assign(module.exports, exports, model);

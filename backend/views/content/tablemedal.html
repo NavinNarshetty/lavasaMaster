@@ -14,20 +14,24 @@
             <div class="widget ">
                 <div class="table-area ">
                     <div class="widget-title ">
-                        <h3>List of Medals<span class="tableTotal ">(Total : {{totalItems}}) </span></h3>
+                        <h3>List of Medals
+                            <span class="tableTotal ">(Total : {{totalItems}}) </span>
+                        </h3>
                         <div class="row">
                             <div class="col-md-5">
                                 <div class="form-group">
                                     <div class="mtp5">
                                         <div class="dropdown">
                                             <button class="btn default btn-md dropdown-toggle" type="button" data-toggle="dropdown">Filter
-                                                    <span class="caret"></span></button>
+                                                <span class="caret"></span>
+                                            </button>
                                             <ul class="dropdown-menu cur">
-                                                <li><input type="radio" id="radio8" ng-model="formData.type" ng-change="changeAll()"
-                                                        value="">
+                                                <li>
+                                                    <input type="radio" id="radio8" ng-model="formData.type" ng-change="changeAll()" value="">
                                                     <label for="radio8">All</label>
                                                 </li>
-                                                <li><input type="radio" id="radio2" ng-model="formData.type" value="Sport" ng-change="changeInput()">
+                                                <li>
+                                                    <input type="radio" id="radio2" ng-model="formData.type" value="Sport" ng-change="changeInput()">
                                                     <label for="radio2">Sport</label>
                                                 </li>
                                             </ul>
@@ -51,8 +55,8 @@
                                                  " ng-model="search" />
                                     </form>
                                     <a class="btn btn-success" ui-sref="detailmedal">
-                                     Create
-                                  </a>
+                                        Create
+                                    </a>
                                     <a class="btn btn-success" ng-click="generateExcel()">Export</a>
                                     <a class="btn btn-success" ng-click="updateTable()">Update Rank</a>
                                 </div>
@@ -110,7 +114,8 @@
                                             {{player.sfaId}} - {{player.firstName}} {{player.middleName}} {{player.surname}}
                                         </div>
                                         <div ng-if="item.player.length > 1" ng-repeat="player in item.player">
-                                            {{player.sfaId}} - {{player.firstName}} {{player.middleName}} {{player.surname}}<br>
+                                            {{player.sfaId}} - {{player.firstName}} {{player.middleName}} {{player.surname}}
+                                            <br>
                                         </div>
                                     </td>
                                     <td ng-if="item.player.length <= 0">
@@ -121,7 +126,8 @@
                                             {{team.teamId}} - {{team.schoolName}}
                                         </div>
                                         <div ng-if="item.team.length > 1" ng-repeat="team in item.team">
-                                            {{team.teamId}} - {{team.schoolName}}<br>
+                                            {{team.teamId}} - {{team.schoolName}}
+                                            <br>
                                         </div>
                                     </td>
                                     <td ng-if="item.team.length <= 0">
@@ -132,7 +138,8 @@
                                             {{school.schoolName}}
                                         </div>
                                         <div ng-if="item.school.length > 1" ng-repeat="school in item.school">
-                                            {{school.schoolName}}<br>
+                                            {{school.schoolName}}
+                                            <br>
                                         </div>
                                     </td>
                                     <td ng-if="item.school.length <= 0">
@@ -140,11 +147,11 @@
                                     </td>
                                     <td>
                                         <a class="btn btn-primary" target="_blank" ui-sref="detailmedal({id:item._id})">
-                      <i class="fa fa-pencil"></i> Edit
-                    </a>
+                                            <i class="fa fa-pencil"></i> Edit
+                                        </a>
                                         <a class="btn btn-danger" ng-click="confDel(item._id)">
-                      <i class="fa fa-trash"></i> Delete
-                    </a>
+                                            <i class="fa fa-trash"></i> Delete
+                                        </a>
                                     </td>
                                     <!--<td ng-repeat="but in json.json.action">
                                         <a class="btn" ng-class="but.buttonClass" ng-click="json.eventAction(but,item) ">
