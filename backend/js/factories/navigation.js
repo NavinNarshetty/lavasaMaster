@@ -34,6 +34,11 @@ myApp.factory('NavigationService', function ($http) {
                             classis: "",
                             sref: "#/school",
                             icon: "phone"
+                        }, {
+                            name: "Accounts",
+                            classis: "",
+                            sref: "#/schoolaccount",
+                            icon: "phone"
                         }]
                     }, {
                         name: "Athlete",

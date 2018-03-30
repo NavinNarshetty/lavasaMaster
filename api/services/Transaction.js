@@ -451,9 +451,10 @@ var model = {
                                 }
                             });
                         } else {
+                            console.log(data, "school data");
                             Transaction.findOne({
                                 school: data.school,
-                                package: n._id
+                                package: n.package._id
                             }).lean().exec(function (err, foundTransact) {
                                 if (err) {
                                     callback(err, null);
@@ -465,15 +466,17 @@ var model = {
                                     param.package = n.package._id;
                                     param.amountToPay = n.package.amount;
                                     param.paymentMode = data.modePayment;
-                                    if (data.cgst) {
-                                        param.cgstAmount = data.cgst;
-                                    }
-                                    if (data.sgst) {
-                                        param.sgstAmount = data.sgst;
-                                    }
-                                    if (data.discount) {
-                                        param.discount = data.discount;
-                                    }
+                                    // if (data.cgst) {
+                                    //     console.log("in cgst");
+                                    //     param.cgstAmount = data.cgst;
+                                    // }
+                                    // if (data.sgst) {
+                                    //     console.log("in sgst");
+                                    //     param.sgstAmount = data.sgst;
+                                    // }
+                                    // if (data.discount) {
+                                    //     param.discount = data.discount;
+                                    // }
                                     var receipt = n.reciptNo.split(",");
                                     param.receiptId = receipt;
                                     var mainReceipt = _.concat(data.receipt, receipt);

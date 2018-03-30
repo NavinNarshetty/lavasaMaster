@@ -81,6 +81,7 @@ module.exports = [
     'backend/js/controllers/playerquestion.js',
     'backend/js/controllers/package.js',
     'backend/js/controllers/couponcode.js',
-    'backend/js/controllers/account.js'
+    'backend/js/controllers/athleteAccount.js',
+    'backend/js/controllers/schoolAccount.js',
 
 ];

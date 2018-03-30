@@ -657,6 +657,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'athleteAccountCtrl'
         })
+        .state('schoolaccount', {
+            url: "/schoolaccount",
+            templateUrl: "views/template.html",
+            controller: 'schoolAccountCtrl'
+        })
         // *******************ACOUNT END********************************** 
         .state('jagz', {
             url: "/jagz",

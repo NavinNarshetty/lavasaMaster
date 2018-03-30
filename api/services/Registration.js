@@ -290,10 +290,10 @@ var model = {
                         if (err || _.isEmpty(accountsData)) {
                             callback(null, {
                                 error: "No data found",
-                                data: athleteData
+                                data: registerData
                             });
                         } else {
-                            callback(null, athleteData);
+                            callback(null, accountsData);
                         }
                     });
                 },
