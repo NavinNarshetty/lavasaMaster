@@ -71,7 +71,9 @@ myApp.controller('IndividualSelectionCtrl', function ($scope, TemplateService, e
         loginService.logoutCandidate(function (data) {
             if (data.isLoggedIn === false) {
                 toastr.success('Successfully Logged Out', 'Logout Message');
-                $state.go('sports-registration');
+                $state.go('registerplayer', {
+                    type: data.type
+                });
             } else {
                 toastr.error('Something went wrong', 'Logout Message');
             }
@@ -223,7 +225,9 @@ myApp.controller('ConfirmFencingCtrl', function ($scope, TemplateService, Naviga
         loginService.logoutCandidate(function (data) {
             if (data.isLoggedIn === false) {
                 toastr.success('Successfully Logged Out', 'Logout Message');
-                $state.go('sports-registration');
+                $state.go('registerplayer', {
+                    type: data.type
+                });
             } else {
                 toastr.error('Something went wrong', 'Logout Message');
             }
@@ -301,9 +305,12 @@ myApp.controller('ConfirmIndividualCtrl', function ($scope, TemplateService, Nav
 
     $scope.logoutCandidate = function () {
         loginService.logoutCandidate(function (data) {
+            console.log("data", data);
             if (data.isLoggedIn === false) {
                 toastr.success('Successfully Logged Out', 'Logout Message');
-                $state.go('sports-registration');
+                $state.go('registerplayer', {
+                    type: data.type
+                });
             } else {
                 toastr.error('Something went wrong', 'Logout Message');
             }
@@ -352,7 +359,9 @@ myApp.controller('ConfirmKarateCtrl', function ($scope, TemplateService, Navigat
         loginService.logoutCandidate(function (data) {
             if (data.isLoggedIn === false) {
                 toastr.success('Successfully Logged Out', 'Logout Message');
-                $state.go('sports-registration');
+                $state.go('registerplayer', {
+                    type: data.type
+                });
             } else {
                 toastr.error('Something went wrong', 'Logout Message');
             }
@@ -398,7 +407,9 @@ myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, Navigat
         loginService.logoutCandidate(function (data) {
             if (data.isLoggedIn === false) {
                 toastr.success('Successfully Logged Out', 'Logout Message');
-                $state.go('sports-registration');
+                $state.go('registerplayer', {
+                    type: data.type
+                });
             } else {
                 toastr.error('Something went wrong', 'Logout Message');
             }
@@ -472,7 +483,9 @@ myApp.controller('IndividualCongratsCtrl', function ($scope, TemplateService, to
         loginService.logoutCandidate(function (data) {
             if (data.isLoggedIn === false) {
                 toastr.success('Successfully Logged Out', 'Logout Message');
-                $state.go('sports-registration');
+                $state.go('registerplayer', {
+                    type: data.type
+                });
             } else {
                 toastr.error('Something went wrong', 'Logout Message');
             }

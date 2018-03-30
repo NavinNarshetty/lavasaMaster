@@ -1,4 +1,4 @@
-myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, loginService, selectService, $rootScope, configService) {
+myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state, $uibModal, NavigationService, $stateParams, toastr, $timeout, errorService, loginService, selectService, $rootScope, configService) {
     $scope.template = TemplateService.getHTML("content/team-selection.html");
     TemplateService.title = "Team Selection"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
@@ -66,7 +66,9 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
         loginService.logoutCandidate(function (data) {
             if (data.isLoggedIn === false) {
                 toastr.success('Successfully Logged Out', 'Logout Message');
-                $state.go('sports-registration');
+                $state.go('registerplayer', {
+                    type: data.type
+                });
             } else {
                 toastr.error('Something went wrong', 'Logout Message');
             }
@@ -378,9 +380,14 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
 
     $scope.sportGet();
 
-    // function pushToTeam
-    $scope.pushToTeam = function (checked, bool, listOfAthelete, objIndex, flag) {
-        // console.log("flag", flag);
+
+
+    //OTP VERIFICATION VARIABLES
+    $scope.validateOtpObj = {};
+    $scope.verifyOtpSfaId = {};
+
+
+    $scope.pushToTeamMain = function (checked, bool, listOfAthelete, objIndex, flag) {
         if ($.jStorage.get("sportTitle") === "Tennis Mixed Doubles") {
             if (flag == 'true') {
                 if ($scope.editablestudentTeam.length > 0) {
@@ -444,8 +451,87 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
             }
             $scope.selectService.team = _.filter($scope.selectService.team, 'checked');
         }
+    };
+
+
+
+
+    // function pushToTeam
+    $scope.pushToTeam = function (checked, bool, listOfAthelete, objIndex, flag) {
+        if ((($.jStorage.get("sportTitle") === 'Tennis Mixed Doubles') || ($.jStorage.get("sportTitle") === 'Badminton Doubles') || ($.jStorage.get("sportTitle") === 'Table Tennis Doubles') || ($.jStorage.get("sportTitle") === 'Tennis Doubles') || ($.jStorage.get("sportTitle") === 'Swimming 4x50m Medley Relay') || ($.jStorage.get("sportTitle") === 'Swimming 4x50m Freestyle Relay')) && (($.jStorage.get("userType") === 'athlete') && (!$scope.detail.mixAccess) && (bool))) {
+            $scope.verifyOtpSfaId.sfaId = checked.sfaId;
+            $scope.verifyOtpSfaId.type = $.jStorage.get("userType");
+            if (($scope.minPlayer === $scope.maxPlayer) && $scope.selectService.team.length === $scope.maxPlayer) {
+                if (objIndex !== undefined) {
+                    $scope.listOfAthelete[objIndex].checked = false;
+                }
+                toastr.error("Maximum Players selected", 'Error Message');
+            } else {
+                $scope.modalInstance = $uibModal.open({
+                    animation: true,
+                    scope: $scope,
+                    backdrop: 'static',
+                    keyboard: false,
+                    templateUrl: 'views/modal/otpverification.html',
+                    windowClass: 'modal-forgotpassword'
+                });
+                //SEND OTP FUNCTION
+
+                $scope.closeOtpModal = function () {
+                    $scope.listOfAthelete[objIndex].checked = false;
+                    $scope.modalInstance.close();
+                }
+                $scope.sendOtp = function (forgotPassword) {
+                    var url = 'login/forgotPassword';
+                    console.log("sfaId", forgotPassword);
+                    if (forgotPassword.sfaId) {
+                        NavigationService.apiCallWithData(url, forgotPassword, function (data) {
+                            if (data.value) {
+                                $scope.hideThis = true;
+                                $scope.mobileNumber = data.data.mobile;
+                                $scope.emailId = data.data.email;
+                            } else {
+                                toastr.error('Incorrect User Details', 'Error Message');
+                            }
+                        });
+                    } else {
+                        toastr.error("Please Enter SfaId", 'Error Message');
+                    }
+
+                };
+                //OTP VALIDATION FUNCTION
+                $scope.validateOtp = function (formData) {
+                    var url = 'login/validateOtp';
+                    console.log("forgotPassword", $scope.verifyOtpSfaId);
+                    formData.type = $scope.verifyOtpSfaId.type;
+                    formData.sfaId = $scope.verifyOtpSfaId.sfaId;
+                    NavigationService.apiCallWithData(url, formData, function (data) {
+                        if (data.value) {
+                            console.log("data", data);
+                            $scope.validateOtpObj = {};
+                            $scope.verifyOtpSfaId = {};
+                            $scope.modalInstance.close();
+                            $scope.pushToTeamMain(checked, bool, listOfAthelete, objIndex, flag);
+                            toastr.success('Player added successfully', 'Success Message');
+
+                        } else {
+                            toastr.error("Incorrect OTP", 'Error Message');
+                        }
+                    });
+                };
+            }
+
+
+        } else {
+            $scope.pushToTeamMain(checked, bool, listOfAthelete, objIndex, flag);
+        }
+
+
 
     };
+
+
+    //END OF PUSH TO TEAM
     // function
     $scope.deselectCheckbx = function () {
         $scope.setDisabled = false;
@@ -561,9 +647,12 @@ myApp.controller('ConfirmTeamCtrl', function ($scope, TemplateService, Navigatio
     });
     $scope.logoutCandidate = function () {
         loginService.logoutCandidate(function (data) {
+            console.log("data", data);
             if (data.isLoggedIn === false) {
                 toastr.success('Successfully Logged Out', 'Logout Message');
-                $state.go('sports-registration');
+                $state.go('registerplayer', {
+                    type: data.type
+                });
             } else {
                 toastr.error('Something went wrong', 'Logout Message');
             }
@@ -706,7 +795,9 @@ myApp.controller('TeamCongratsCtrl', function ($scope, TemplateService, toastr, 
         loginService.logoutCandidate(function (data) {
             if (data.isLoggedIn === false) {
                 toastr.success('Successfully Logged Out', 'Logout Message');
-                $state.go('sports-registration');
+                $state.go('registerplayer', {
+                    type: data.type
+                });
             } else {
                 toastr.error('Something went wrong', 'Logout Message');
             }

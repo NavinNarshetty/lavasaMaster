@@ -1,0 +1,39 @@
+<div class="forgotpassword-modal d-opensans-regular ">
+  <button class="btn" ng-click="closeOtpModal()"> close</button>
+  <div class="forgotmodal-title">Verification</div>
+  <div class="forgotmodal-content">
+    <!-- ENTER SFA ID -->
+    <div class="forgotmodal-input ">
+      <label for="">Kindly Enter</label>
+      <form name="verifyOtpForm" ng-submit="sendOtp(verifyOtpSfaId)">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="SFA ID" name="sfaId" touppercase ng-model="verifyOtpSfaId.sfaId" required>
+          <div class="input-group-btn">
+            <button class="btn m-clear" ng-disabled="verifyOtpForm.$invalid" type="submit">Send OTP</button>
+          </div>
+        </div>
+      </form>
+      <p ng-if="!hideThis">An OTP will be sent to your registered Mobile Number & Email Id</p>
+    </div>
+    <!-- ENTER SFA ID END -->
+    <!-- ENTER OTP -->
+    <div class="forgotmodal-input" ng-if="hideThis">
+      <p>An OTP has been sent to your registered Mobile no: <span>{{mobileNumber}}</span> | Email Id: <span>{{emailId}}</span></p>
+      <form ng-submit="validateOtp(validateOtpObj)" name="validationForm">
+        <div class="input-group forgototp-input">
+          <input type="text" class="form-control" placeholder="OTP" ng-model="validateOtpObj.otp" only-digits required>
+          <div class="input-group-btn">
+            <button type="submit" class="btn m-clear" ng-disabled="validationForm.$invalid"><span class="fa fa-arrow-right"></span></button>
+          </div>
+        </div>
+      </form>
+      <ul class="list-inline">
+        <li ng-click="sendOtp(verifyOtpSfaId)">Resend OTP</li>
+
+      </ul>
+    </div>
+    <!-- ENTER OTP END  -->
+
+
+  </div>
+</div>

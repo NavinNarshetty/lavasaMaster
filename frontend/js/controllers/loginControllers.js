@@ -124,16 +124,16 @@ myApp.controller('SportsRegistrationCtrl', function ($scope, selectService, Temp
     };
 
     // FORGOT PASSWORD POPUP
-    $scope.popForgot = function(){
-      $uibModal.open({
-        animation: true,
-        scope: $scope,
-        // backdrop: 'static',
-        keyboard: false,
-        templateUrl: 'views/modal/forgotpassword.html',
-        // size: 'lg',
-        windowClass: 'modal-forgotpassword'
-      })
+    $scope.popForgot = function () {
+        $uibModal.open({
+            animation: true,
+            scope: $scope,
+            // backdrop: 'static',
+            keyboard: false,
+            templateUrl: 'views/modal/forgotpassword.html',
+            // size: 'lg',
+            windowClass: 'modal-forgotpassword'
+        })
     }
     // FORGOT PASSWORD POPUP END
 });
@@ -224,7 +224,9 @@ myApp.controller('ChangePasswordCtrl', function ($scope, TemplateService, Naviga
         loginService.logoutCandidate(function (data) {
             if (data.isLoggedIn === false) {
                 toastr.success('Successfully Logged Out', 'Logout Message');
-                $state.go('sports-registration');
+                $state.go('registerplayer', {
+                    type: data.type
+                });
             } else {
                 toastr.error('Something went wrong', 'Logout Message');
             }
