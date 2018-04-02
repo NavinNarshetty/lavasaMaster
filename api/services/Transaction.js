@@ -42,7 +42,9 @@ var schema = new Schema({
 });
 
 schema.plugin(deepPopulate, {
-
+    populate: {
+        package: ''
+    }
 });
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);

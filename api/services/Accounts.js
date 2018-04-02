@@ -56,7 +56,8 @@ schema.plugin(deepPopulate, {
     "athlete": '',
     "athlete.school": '',
     "school": '',
-    "transaction": ''
+    "transaction": '',
+    "transaction.package": ''
 });
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
