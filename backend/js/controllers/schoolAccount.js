@@ -31,11 +31,22 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
       console.log("data.value", data);
       $scope.items = data.data.results;
       $scope.totalItems = data.data.total;
-      // $scope.maxRow = data.data.options.count;
+      $scope.maxRow = data.data.options.count;
       _.each($scope.items, function (key) {
+        key.schoolData = {};
         console.log(key._id, "key in array");
         if (key._id) {
-          $scope.getSchoolAccountDetails(key._id)
+          // key.schoolData = $scope.getSchoolAccountDetails(key._id);
+          key.schoolData = {};
+          $scope.getOneUrl = "Accounts/getAccount";
+          $scope.getOneConstraints = {}
+          $scope.getOneConstraints._id = {}
+          $scope.getOneConstraints._id = key._id;
+          NavigationService.apiCall($scope.getOneUrl, $scope.getOneConstraints, function (data) {
+            key.schoolData = data.data;
+            console.log("getOne", key.schoolData);
+          })
+          console.log("key",key.schoolData);
         } else {
           // DO NOTHING
         }
@@ -47,22 +58,46 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
   // GET ATHLETE DATA
   $scope.getSchoolAccountDetails = function (schoolAccountId) {
     console.log(schoolAccountId, "after function");
-    $scope.url = "Accounts/getAccount";
+    $scope.url = "Accounts/getOne";
     $scope.constraints = {}
     $scope.constraints._id = {}
     $scope.constraints._id = schoolAccountId;
     NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
       console.log(data, "new api call")
-      $scope.schoolData = data.data.school;
+      $scope.schoolData = data.data;
     })
   }
   // GET ATHLETE DATA END
 
   // MODAL
-  $scope.editAccountModal = function (schoolId, accountId, transactionData) {
-    $scope.formData.school = schoolId;
-    $scope.formData._id = accountId;
-    $scope.formData.transaction = transactionData;
+  $scope.editAccountModal = function (school) {
+    console.log("school", school);
+    $scope.formData.school = school.school._id;
+    $scope.formData._id = school._id;
+    $scope.formData.cgst = school.schoolData.cgst;
+    $scope.formData.sgst = school.schoolData.sgst;
+    $scope.formData.igst = school.schoolData.igst;
+    $scope.formData.discount = school.schoolData.discount;
+    $scope.formData.netTotal = school.schoolData.totalPaid;
+    $scope.formData.paymentMode = school.schoolData.paymentMode;
+    $scope.formData.checkNo = school.schoolData.checkNo;
+    $scope.formData.remarks = school.schoolData.remarks;
+    $scope.formData.transaction = school.schoolData.transaction;
+    // CONVERT RECEIPT ARRAY TO COMMA SEPERATED STRING
+    _.each($scope.formData.transaction, function(n){
+      n.receiptNo = "";
+      _.each(n.receiptId, function(m){
+        console.log("m", m);
+        if (n.receiptNo == "") {
+          n.receiptNo = m;
+        } else {
+          n.receiptNo = n.receiptNo + ',' + m;
+        }
+      });
+      console.log("n.receiptNo", n.receiptNo);
+    });
+    // CONVERT RECEIPT ARRAY TO COMMA SEPERATED STRING END
+
     $scope.modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
       templateUrl: 'views/modal/manualschool.html',

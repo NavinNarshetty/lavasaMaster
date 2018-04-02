@@ -19,15 +19,15 @@
           </div>
           <div class="athleteaccountsholder">
             <uib-accordion close-others=" oneAtATime ">
-              <div uib-accordion-group class="panel-default " is-open="s.open " ng-repeat="player in items track by $index ">
+              <div uib-accordion-group class="panel-default " is-open="s.open " ng-repeat="school in items track by $index ">
                 <uib-accordion-heading>
-                  <div class="schoolaccount-playerholder ">
+                  <div class="schoolaccount-playerholder">
                     <div class="row ">
                       <div class="col-md-6 ">
-                        <p class="schoolaccount-name text-left m-clear "> <span>1)</span> <span>{{schoolData.sfaID}}</span> <span>{{ schoolData.schoolName}} </span> <span>{{athleteData.athlete.middleName}}</span>                          </p>
+                        <p class="schoolaccount-name text-left m-clear "> <span>{{$index+1}})</span> <span>{{school.school.sfaID}}</span> <span>{{school.school.schoolName}} </span></p>
                       </div>
                       <div class="col-md-3 ">
-                        <p class="schoolacoount-registerdate">{{schoolData.createdAt | date}}</p>
+                        <p class="schoolacoount-registerdate">{{school.createdAt | date}}</p>
                       </div>
                       <div class="col-md-3 ">
                         <p class="schoolaccount-upgraded text-right ">Upgraded:Yes/No</p>
@@ -140,9 +140,10 @@
 
                 <div class="athleteaccount-accountteam ">
                   <div class="text-center ">
-                    <label class=" ">Account Team :</label>
+                    <!-- <pre class="text-left">{{school|json}}</pre> -->
+                    <label class="">Account Team :</label>
                     <div class="pull-right " style="margin-bottom:10px; ">
-                      <button type="submit " class="btn btn-primary" ng-click="editAccountModal(schoolData._id,player._id,player.transaction)">Edit</button>
+                      <button type="submit " class="btn btn-primary" ng-click="editAccountModal(school)">Edit</button>
                     </div>
                     <table class="table table-hover table-bordered ">
                       <thead>
