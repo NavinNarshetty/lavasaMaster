@@ -44,7 +44,7 @@
                         <input type="radio" name="packageRadio" id="packageRadio{{$index}}" value="{{package._id}}" class="form-control" ng-model="formData.package" ng-change="setPackageDetails()" required>
                         <span class="sfa-radio"></span>
                         <div class="upgradepackage-radiocontent" ng-class="{'package-radio-blue': package.color == 'blue', 'package-radio-green': package.color == 'green', 'package-radio-red': package.color == 'red', 'package-radio-yellow': package.color == 'yellow'}">
-                          <span class="upgradepackage-radioprice"><span class="upgradepackage-radioinr fa fa-inr"></span>{{package.finalPrice}}</span>
+                          <span class="upgradepackage-radioprice"><span class="upgradepackage-radioinr fa fa-inr"></span>{{package.price}}</span>
                           <span class="upgradepackage-radioname">{{package.name}}</span>
                         </div>
                       </label>

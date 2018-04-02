@@ -1,3 +1,45 @@
+// OLD PAGES OVERRIDE
+.btn-greenupgrade{
+  border: none;
+  margin-left: 5px;
+  background-color: #00FFAD;
+  color: $sport-dark-grey;
+  font-weight: 700;
+  text-transform: capitalize;
+
+  &:active, &:focus, &:hover, &.active{
+    border: none;
+    background-color: #00FFAD;
+    color: $sport-dark-grey;
+    outline: 0px;
+  }
+}
+// UPGRADE PACKAGE MODAL
+.modal-upgradepackage{
+  .modal-dialog{
+    margin-top: 100px;
+  }
+  .modal-content{
+    border-radius: 0px;
+    box-shadow: none;
+  }
+  .forgotpassword-modal{
+    padding: 20px 30px;
+    text-align: center;
+  }
+  .forgotmodal-title{
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: $brand-primary;
+    text-transform: uppercase;
+  }
+  .upgradepackage-modalcontent{
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+// UPGRADE PACKAGE MODAL END
+// OLD PAGES OVERRIDE END
 // CUSTOM RADIO BUTTON
 .sfa-radiobox {
   padding-left: 25px;
