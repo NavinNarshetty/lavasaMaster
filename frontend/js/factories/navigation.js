@@ -626,6 +626,13 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
             }).success(callback);
         },
 
+        deleteData: function (url, data, callback) {
+            $http({
+                url: adminUrl2 + url,
+                method: 'POST',
+                data: data
+            }).success(callback);
+        },
 
 
         getVideoThumbnail: function (mediaArr) {
@@ -1052,8 +1059,8 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
                                 var match1, match2;
 
                                 if (!($filter('firstcapitalize')(round.name, {
-                                        column1: true
-                                    }) === 'Third Place' && key == 2)) {
+                                    column1: true
+                                }) === 'Third Place' && key == 2)) {
                                     console.log(round.name, "No Third Place");
                                     if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2] && knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar]) {
                                         match1 = knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar];
@@ -1325,8 +1332,8 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
                 url: adminUrl2 + 'PlayerQuestions/search',
                 method: 'POST',
                 data: request
-            }).then(function(data){
-              callback(data.data);
+            }).then(function (data) {
+                callback(data.data);
             });
         },
         getPackages: function (request, callback) {
@@ -1334,8 +1341,8 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
                 url: adminUrl2 + 'Package/search',
                 method: 'POST',
                 data: request
-            }).then(function(data){
-              callback(data);
+            }).then(function (data) {
+                callback(data);
             });
         },
         getPackageFeatures: function (request, callback) {
@@ -1343,8 +1350,8 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
                 url: adminUrl2 + 'Featurepackage/search',
                 method: 'POST',
                 data: request
-            }).then(function(data){
-              callback(data);
+            }).then(function (data) {
+                callback(data);
             });
         },
         validatePromoCode: function (request, callback) {
@@ -1352,8 +1359,8 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
                 url: adminUrl2 + 'CouponCode/validateCode',
                 method: 'POST',
                 data: request
-            }).then(function(data){
-              callback(data);
+            }).then(function (data) {
+                callback(data);
             });
         }
     };

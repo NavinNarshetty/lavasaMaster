@@ -59,18 +59,33 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
     $scope.sfaDates = data.date;
     $scope.venue = data.venue;
   });
-
+  $scope.logoutCandidate = function () {
+    loginService.logoutCandidate(function (data) {
+      if (data.isLoggedIn === false) {
+      } else {
+      }
+    });
+  };
 
   loginService.loginGet(function (data) {
     $scope.detail = data;
   });
-  // CONFIG SERVICE END
 
-  //
-
-  if ($.jStorage.get("userDetails") !== null) {
-    $state.go('sports-selection');
+  if ($scope.formData.type === 'athlete' && $.jStorage.get("userDetails") != null && $.jStorage.get("userDetails").atheleteID) {
+    $scope.showErrorMsg = true;
   }
+  if ($scope.formData.type === 'athlete' && $.jStorage.get("userDetails") != null && !$.jStorage.get("userDetails").atheleteID) {
+    $scope.showErrorMsg = false;
+    $scope.logoutCandidate();
+  }
+  if ($scope.formData.type == "school" && $.jStorage.get("userDetails") != null && !$.jStorage.get("userDetails").atheleteID) {
+    $scope.showErrorMsg = true;
+  }
+  if ($scope.formData.type == "school" && $.jStorage.get("userDetails") != null && $.jStorage.get("userDetails").atheleteID) {
+    $scope.showErrorMsg = false;
+    $scope.logoutCandidate();
+  }
+
   $scope.toChangeMObile = function () {
     $scope.showSec2 = !$scope.showSec2;
   };
@@ -311,13 +326,14 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
   // SWIPER INITIALISE
   $scope.swiperInit = function () {
     $timeout(function () {
-      // TESTIMONIALS
+      // BANNER
       var bannerSlide = new Swiper('.registerplayer-bannerslider .swiper-container', {
-        slidesPerView: 1,
-        paginationClickable: true,
+        slidesPerView: 'auto',
+        preloadImages: true,
         loop: true,
+        speed: 500,
         autoplay: 3000,
-        // grabCursor: true,
+        paginationClickable: true
       });
       // BANNER END
       // TESTIMONIALS
@@ -330,6 +346,7 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
         nextButton: '.registerplayer-testimonialslider .swiper-button-next',
         prevButton: '.registerplayer-testimonialslider .swiper-button-prev',
         touchEventsTarget: 'container',
+        preloadImages: true,
         breakpoints: {
           992: {
             slidesPerView: 2
@@ -356,9 +373,10 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
         spaceBetween: 10,
         nextButton: '.swiper-button-next',
         prevButton: '.swiper-button-prev',
-        touchEventsTarget: 'container'
+        touchEventsTarget: 'container',
+        preloadImages: true
       })
-    }, 2000);
+    }, 3000);
   }
   $scope.$on('$viewContentLoaded', function (event) {
     $scope.swiperInit();

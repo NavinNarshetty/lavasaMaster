@@ -83,7 +83,8 @@
                     <h4 ng-if="isCollege == true && sport.info[0].createdBy != 'School'">Created By: {{sport.info[0].createdBy}}</h4>
 
                   </div>
-                  <div class="pull-right" style="margin-right: 15px;" ng-if="sport.info[0].createdBy  === userType" ng-click="">
+                  <div class="pull-right" style="margin-right: 15px;" ng-if="detail.userType === 'athlete' && sport.info[0].createdBy  == userType"
+                    ng-click="deletePlayer(sport.info[0]._id);">
                     <a class="btn btn-default">Delete</a>
                   </div>
                 </div>
@@ -108,59 +109,65 @@
                         <th ng-if="sport.info[0].weight">
                           <div class="sportdetail-th">Weight</div>
                         </th>
-                        <th ng-if="'athlete' ==='Created By'">
-                          <div class="sportdetail-th">Delete</div>
+                        <th ng-if="detail.userType === 'school' && sport.info[0].createdBy == userType">
+                          <div class="sportdetail-th ">Action</div>
                         </th>
                       </thead>
                       <tbody>
-                        <tr ng-repeat="athlete in sport.info track by $index">
+                        <tr ng-repeat="athlete in sport.info track by $index ">
                           <td>
-                            <div class="mid_cols sportdetail-td">{{$index+1}}</div>
+                            <div class="mid_cols sportdetail-td ">{{$index+1}}</div>
                           </td>
-                          <td ng-if="detail.userType === 'school'">
-                            <div class="sportdetail-td" ng-if="athlete.middlename">{{athlete.sfaid}} - {{athlete.firstname}}&nbsp;{{athlete.middlename}}&nbsp;{{athlete.lastname}}</div>
-                            <div class="sportdetail-td" ng-if="!athlete.middlename">{{athlete.sfaid}} - {{athlete.firstname}}&nbsp;{{athlete.lastname}}</div>
+                          <td ng-if="detail.userType==='school' ">
+                            <div class="sportdetail-td " ng-if="athlete.middlename ">{{athlete.sfaid}} - {{athlete.firstname}}&nbsp;{{athlete.middlename}}&nbsp;{{athlete.lastname}}</div>
+                            <div class="sportdetail-td " ng-if="!athlete.middlename ">{{athlete.sfaid}} - {{athlete.firstname}}&nbsp;{{athlete.lastname}}</div>
                           </td>
-                          <td ng-if="detail.userType === 'school'">
-                            <div class="sportdetail-td">{{athlete.gender | firstcapitalize}}</div>
+                          <td ng-if="detail.userType==='school' ">
+                            <div class="sportdetail-td ">{{athlete.gender | firstcapitalize}}</div>
                           </td>
                           <td>
-                            <div class="sportdetail-td">{{athlete.age}}</div>
+                            <div class="sportdetail-td ">{{athlete.age}}</div>
                           </td>
-                          <td ng-if="athlete.weight">
-                            <div class="sportdetail-td">{{athlete.weight}}</div>
+                          <td ng-if="athlete.weight ">
+                            <div class="sportdetail-td ">{{athlete.weight}}</div>
                           </td>
-                          <div class="" style="margin-right: 15px;" ng-click="" ng-if="'athlete'=== 'Createdby'">
-                            <a class="btn btn-default">Delete</a>
-                          </div>
+                          <td ng-if="detail.userType==='school' && sport.info[0].createdBy==userType ">
+                            <div class=" " style="margin-right: 15px; " ng-click="deletePlayer(athlete._id) ">
+                              <a class=" "> <i class="fa fa-trash "></i></a>
+                            </div>
+                          </td>
                         </tr>
                       </tbody>
                     </table>
-                    <!-- <table class="table table-bordered">
+                    <!-- <table class="table table-bordered ">
                       <thead>
                         <th>
-                          <div class="mid_col sportdetail-th">Sr. No.</div>
+                          <div class="mid_col sportdetail-th ">Sr. No.</div>
                         </th>
                         <th>
-                          <div class="sportdetail-th">SFA ID-Name</div>
+                          <div class="sportdetail-th ">SFA ID-Name</div>
                         </th>
                         <th>
-                          <div class="sportdetail-th">Role</div>
+                          <div class="sportdetail-th ">Role</div>
                         </th>
                       </thead>
                       <tbody>
-                        <tr ng-repeat="athlete in sport.info track by $index">
+                        <tr ng-repeat="athlete in sport.info track by $index ">
                           <td>
-                            <div class="mid_cols sportdetail-td">{{$index+1}}</div>
+                            <div class="mid_cols sportdetail-td ">{{$index+1}}</div>
                           </td>
                           <td>
-                            <div class="sportdetail-td" ng-if="athlete.middlename">{{athlete.sfaid}} - {{athlete.firstname}}&nbsp;{{athlete.middlename}}&nbsp;{{athlete.lastname}}</div>
-                            <div class="sportdetail-td" ng-if="!athlete.middlename">{{athlete.sfaid}} - {{athlete.firstname}}&nbsp;{{athlete.lastname}}</div>
+                            <div class="sportdetail-td " ng-if="athlete.middlename ">{{athlete.sfaid}} - {{athlete.firstname}}&nbsp;{{athlete.middlename}}&nbsp;{{athlete.lastname}}</div>
+                            <div class="sportdetail-td " ng-if="!athlete.middlename ">{{athlete.sfaid}} - {{athlete.firstname}}&nbsp;{{athlete.lastname}}</div>
                           </td>
-                          <td ng-if="sportTitle === 'Basketball' || sportTitle === 'basketball' || sportTitle === 'Football' || sportTitle === 'football' || sportTitle === 'Handball' || sportTitle === 'Hockey' || sportTitle === 'hockey' || sportTitle === 'Kabaddi' || sportTitle === 'kabaddi' || sportTitle === 'Kho Kho' || sportTitle === 'kho kho' || sportTitle === 'Throwball' || sportTitle === 'throwball' || sportTitle === 'Volleyball' || sportTitle === 'volleyball' || sportTitle === 'Water Polo' || sportTitle === 'water polo'">
-                            <div class="sportdetail-td" ng-if="athlete.isCaptain && !athlete.isGoalKeeper">Captain</div>
-                            <div class="sportdetail-td" ng-if="athlete.isCaptain && athlete.isGoalKeeper">Captain , Goalkeeper</div>
-                            <div class="sportdetail-td" ng-if="!athlete.isCaptain">-</div>
+                          <td ng-if="sportTitle==='Basketball' || sportTitle==='basketball' || sportTitle==='Football'
+                          || sportTitle==='football' || sportTitle==='Handball' || sportTitle==='Hockey' || sportTitle==='hockey'
+                          || sportTitle==='Kabaddi' || sportTitle==='kabaddi' || sportTitle==='Kho Kho' || sportTitle==='kho kho'
+                          || sportTitle==='Throwball' || sportTitle==='throwball' || sportTitle==='Volleyball' || sportTitle==='volleyball'
+                          || sportTitle==='Water Polo' || sportTitle==='water polo' ">
+                            <div class="sportdetail-td " ng-if="athlete.isCaptain && !athlete.isGoalKeeper ">Captain</div>
+                            <div class="sportdetail-td " ng-if="athlete.isCaptain && athlete.isGoalKeeper ">Captain , Goalkeeper</div>
+                            <div class="sportdetail-td " ng-if="!athlete.isCaptain ">-</div>
                           </td>
                         </tr>
                       </tbody>

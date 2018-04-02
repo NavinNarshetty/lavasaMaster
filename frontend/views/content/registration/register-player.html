@@ -137,7 +137,7 @@
         <!-- STEP 1 FORM END -->
         <!-- STEP 2 FORM -->
         <div class="registerform-step2 " ng-show="stepTab == 2" ng-class="{'active': stepTab == 2}">
-          <div class="register-step2holder">
+          <div class="register-step2holder" ng-if="!showErrorMsg">
             <form name="formsports">
               <p>Kindly Enter</p>
               <div class="form-group">
@@ -159,6 +159,7 @@
               <a class="btn btn-link" ng-click="showForgotPassword()">Forgot Password</a>
             </div>
           </div>
+          <div ng-if="showErrorMsg" ui-sref="sports-selection">Go to selection page</div>
           <div class="register-step-error">
             <p class="m-clear">You have not completed the Registration & Verification process.</p>
             <p class="m-clear">Kindly complete Step 1 and then proceed to Sports Registration.</p>

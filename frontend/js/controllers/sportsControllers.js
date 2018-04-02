@@ -318,6 +318,19 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
             });
         });
     };
+
+    // SHOW UPGRADE POPUP
+    $scope.showUpgradeModal = function () {
+        $scope.modalInstance = $uibModal.open({
+            animation: true,
+            scope: $scope,
+            // backdrop: 'static',
+            // keyboard: false,
+            templateUrl: 'views/modal/upgradepackage.html',
+            windowClass: 'modal-upgradepackage'
+        });
+    }
+    // SHOW UPGRADE POPUP END
 });
 
 myApp.controller('SportsRulesCtrl', function ($scope, TemplateService, $state, NavigationService, toastr, $timeout, $stateParams, errorService, loginService, selectService, configService) {
@@ -469,12 +482,18 @@ myApp.controller('SportIndividualCtrl', function ($scope, TemplateService, toast
     };
 
     if ($.jStorage.get("userType") === "school") {
-        $scope.userType = $.jStorage.get("userType");
-        $scope.constraints.schoolToken = $.jStorage.get("userDetails").accessToken;
+        $scope.userType = $filter('firstcapitalize')($.jStorage.get("userType"));
+        if ($.jStorage.get("userDetails") != null) {
+            $scope.constraints.schoolToken = $.jStorage.get("userDetails").accessToken;
+        }
+
     } else {
         $scope.userType = $filter('firstcapitalize')($.jStorage.get("userType"));
+        if ($.jStorage.get("userDetails") != null) {
+            $scope.constraints.athleteToken = $.jStorage.get("userDetails").accessToken;
+        }
 
-        $scope.constraints.athleteToken = $.jStorage.get("userDetails").accessToken;
+
     }
 
     if ($stateParams.id) {
@@ -556,9 +575,15 @@ myApp.controller('SportTeamCtrl', function ($scope, TemplateService, toastr, Nav
     };
 
     if ($.jStorage.get("userType") === "school") {
-        $scope.constraints.schoolToken = $.jStorage.get("userDetails").accessToken;
+        if ($.jStorage.get("userDetails") != null) {
+            $scope.constraints.schoolToken = $.jStorage.get("userDetails").accessToken;
+        }
+
     } else {
-        $scope.constraints.athleteToken = $.jStorage.get("userDetails").accessToken;
+        if ($.jStorage.get("userDetails") != null) {
+            $scope.constraints.athleteToken = $.jStorage.get("userDetails").accessToken;
+        }
+
     }
 
     if ($stateParams.id) {
