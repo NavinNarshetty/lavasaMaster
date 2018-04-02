@@ -84,7 +84,7 @@
 
                   </div>
                   <div class="pull-right" style="margin-right: 15px;" ng-if="detail.userType === 'athlete' && sport.info[0].createdBy  == userType"
-                    ng-click="deletePlayer(sport.info[0]._id);">
+                    ng-click="deletePlayer(sport.info[0].mainid);">
                     <a class="btn btn-default">Delete</a>
                   </div>
                 </div>
@@ -132,7 +132,7 @@
                             <div class="sportdetail-td ">{{athlete.weight}}</div>
                           </td>
                           <td ng-if="detail.userType==='school' && sport.info[0].createdBy==userType ">
-                            <div class=" " style="margin-right: 15px; " ng-click="deletePlayer(athlete._id) ">
+                            <div class=" " style="margin-right: 15px; " ng-click="deletePlayer(athlete.mainid)">
                               <a class=" "> <i class="fa fa-trash "></i></a>
                             </div>
                           </td>

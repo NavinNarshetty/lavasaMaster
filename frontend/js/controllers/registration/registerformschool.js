@@ -201,7 +201,7 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, TemplateService, Na
     $scope.fetchPackage = {};
     $scope.fetchPackage = {
       filter: {
-        packageUser: type;
+        packageUser: type
       }
     };
     NavigationService.getPackages($scope.formPackage, function (data) {
@@ -535,41 +535,41 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, TemplateService, Na
 
   // DOUBLES/RELAY
   $scope.schoolRegisterSportForm2 = [{
-      name: "Doubles",
-      sportName: [{
-        name: 'Badminton Doubles',
-        type: 'racquetSports'
-      }, {
-        name: 'Table Tennis Doubles',
-        type: 'racquetSports'
-      }, {
-        name: 'Tennis Doubles',
-        type: 'racquetSports'
-      }, {
-        name: 'Tennis Mixed Doubles',
-        type: 'racquetSports'
-      }]
+    name: "Doubles",
+    sportName: [{
+      name: 'Badminton Doubles',
+      type: 'racquetSports'
+    }, {
+      name: 'Table Tennis Doubles',
+      type: 'racquetSports'
+    }, {
+      name: 'Tennis Doubles',
+      type: 'racquetSports'
+    }, {
+      name: 'Tennis Mixed Doubles',
+      type: 'racquetSports'
+    }]
 
-    },
-    {
-      name: "Relay",
-      sportName: [{
-        name: 'Athletics 4x50m Relay',
-        type: 'individualSports'
-      }, {
-        name: 'Athletics 4x100m Relay',
-        type: 'individualSports'
-      }, {
-        name: 'Athletics Medley Relay',
-        type: 'individualSports'
-      }, {
-        name: 'Swimming 4x50m Freestyle Relay',
-        type: 'aquaticsSports'
-      }, {
-        name: 'Swimming 4x50m Medley Relay',
-        type: 'aquaticsSports'
-      }]
-    }
+  },
+  {
+    name: "Relay",
+    sportName: [{
+      name: 'Athletics 4x50m Relay',
+      type: 'individualSports'
+    }, {
+      name: 'Athletics 4x100m Relay',
+      type: 'individualSports'
+    }, {
+      name: 'Athletics Medley Relay',
+      type: 'individualSports'
+    }, {
+      name: 'Swimming 4x50m Freestyle Relay',
+      type: 'aquaticsSports'
+    }, {
+      name: 'Swimming 4x50m Medley Relay',
+      type: 'aquaticsSports'
+    }]
+  }
   ]
   $scope.addSportsTest = function (data, sportType) {
     // console.log(data, sportType, "check on sport click");

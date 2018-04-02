@@ -521,6 +521,20 @@ myApp.controller('SportIndividualCtrl', function ($scope, TemplateService, toast
     };
     $scope.getDetailRegisteredSport();
 
+
+    $scope.deletePlayer = function (id) {
+        var obj = {};
+        obj._id = id;
+        var url = 'IndividualSport/delete';
+        NavigationService.deleteData(url, obj, function (data) {
+            console.log("data", data);
+            $scope.getDetailRegisteredSport();
+            if ($scope.getIndividualDetails === undefined) {
+                $state.go('sports-selection');
+            }
+        });
+    };
+    $scope.deletePlayer("ihgsh");
     // function for printing..
     $scope.printFunction = function (printSectionId) {
         var innerContents = document.getElementById(printSectionId).innerHTML;

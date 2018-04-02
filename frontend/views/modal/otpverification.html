@@ -7,7 +7,8 @@
       <label for="">Kindly Enter</label>
       <form name="verifyOtpForm" ng-submit="sendOtp(verifyOtpSfaId)">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="SFA ID" name="sfaId" touppercase ng-model="verifyOtpSfaId.sfaId" required>
+          <input type="text" class="form-control" placeholder="SFA ID" name="sfaId" touppercase ng-model="verifyOtpSfaId.sfaId" readonly
+            required>
           <div class="input-group-btn">
             <button class="btn m-clear" ng-disabled="verifyOtpForm.$invalid" type="submit">Send OTP</button>
           </div>

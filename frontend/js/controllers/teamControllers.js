@@ -458,6 +458,7 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
 
     // function pushToTeam
     $scope.pushToTeam = function (checked, bool, listOfAthelete, objIndex, flag) {
+        console.log("imin pushtoteam");
         if ((($.jStorage.get("sportTitle") === 'Tennis Mixed Doubles') || ($.jStorage.get("sportTitle") === 'Badminton Doubles') || ($.jStorage.get("sportTitle") === 'Table Tennis Doubles') || ($.jStorage.get("sportTitle") === 'Tennis Doubles') || ($.jStorage.get("sportTitle") === 'Swimming 4x50m Medley Relay') || ($.jStorage.get("sportTitle") === 'Swimming 4x50m Freestyle Relay')) && (($.jStorage.get("userType") === 'athlete') && (!$scope.detail.mixAccess) && (bool))) {
             $scope.verifyOtpSfaId.sfaId = checked.sfaId;
             $scope.verifyOtpSfaId.type = $.jStorage.get("userType");
@@ -467,6 +468,7 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
                 }
                 toastr.error("Maximum Players selected", 'Error Message');
             } else {
+                $scope.hideThis = false;
                 $scope.modalInstance = $uibModal.open({
                     animation: true,
                     scope: $scope,
@@ -480,8 +482,9 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
                 $scope.closeOtpModal = function () {
                     $scope.listOfAthelete[objIndex].checked = false;
                     $scope.modalInstance.close();
-                }
+                };
                 $scope.sendOtp = function (forgotPassword) {
+                    $scope.validateOtpObj = {};
                     var url = 'login/forgotPassword';
                     console.log("sfaId", forgotPassword);
                     if (forgotPassword.sfaId) {
