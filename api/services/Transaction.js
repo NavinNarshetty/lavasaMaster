@@ -415,7 +415,7 @@ var model = {
         data.receipt = [];
         async.waterfall([
                 function (callback) {
-                    async.each(data.packageData, function (n, callback) {
+                    async.each(data.transaction, function (n, callback) {
                         if (data.athleteId) {
                             Transaction.findOne({
                                 athlete: data.athleteId,
@@ -430,7 +430,7 @@ var model = {
                                     param.dateOfTransaction = new Date();
                                     param.package = n.package._id;
                                     param.amountToPay = n.package.amount;
-                                    param.paymentMode = data.modePayment;
+                                    param.paymentMode = data.paymentMode;
                                     if (data.cgst) {
                                         param.cgstAmount = data.cgst;
                                     }
@@ -440,7 +440,7 @@ var model = {
                                     if (data.discount) {
                                         param.discount = data.discount;
                                     }
-                                    var recepit = n.reciptNo.split(",");
+                                    var recepit = n.receiptId.split(",");
                                     param.receiptId = recepit;
                                     data.receipt = _.concat(data.receipt,  recepit);
                                     Transaction.saveData(param, function (err, transactData) {
@@ -455,14 +455,14 @@ var model = {
                                         }
                                     });
                                 } else {
-                                    var receipt = n.reciptNo.split(",");
+                                    var receipt = n.receiptId.split(",");
                                     data.receipt = _.concat(data.receipt, receipt);
                                     var matchObj = {
                                         $set: {
                                             dateOfTransaction: new Date(),
                                             discount: data.discount,
                                             receiptId: receipt,
-                                            paymentMode: data.modePayment,
+                                            paymentMode: data.paymentMode,
                                             cgstAmount: data.cgst,
                                             sgstAmount: data.sgst,
                                         }
@@ -494,7 +494,7 @@ var model = {
                                     param.dateOfTransaction = new Date();
                                     param.package = n.package._id;
                                     param.amountToPay = n.package.amount;
-                                    param.paymentMode = data.modePayment;
+                                    param.paymentMode = data.paymentMode;
                                     if (data.cgst) {
                                         console.log("in cgst");
                                         param.cgstAmount = data.cgst;
@@ -506,7 +506,7 @@ var model = {
                                     if (data.discount) {
                                         param.discount = data.discount;
                                     }
-                                    var receipt = n.reciptNo.split(",");
+                                    var receipt = n.receiptId.split(",");
                                     param.receiptId = receipt;
                                     var mainReceipt = _.concat(data.receipt, receipt);
                                     data.receipt = _.uniq(mainReceipt);
@@ -522,7 +522,7 @@ var model = {
                                         }
                                     });
                                 } else {
-                                    var receipt = n.reciptNo.split(",");
+                                    var receipt = n.receiptId.split(",");
                                     var mainReceipt = _.concat(data.receipt,  receipt);
                                     data.receipt = _.uniq(mainReceipt);
                                     var matchObj = {
@@ -530,7 +530,7 @@ var model = {
                                             dateOfTransaction: new Date(),
                                             discount: data.discount,
                                             receiptId: receipt,
-                                            paymentMode: data.modePayment,
+                                            paymentMode: data.paymentMode,
                                             cgstAmount: data.cgst,
                                             sgstAmount: data.sgst,
                                         }
@@ -565,7 +565,8 @@ var model = {
                                 param.school = undefined;
                                 param.transaction = data.transaction;
                                 param.totalToPay = data.netTotal;
-                                param.paymentMode = data.modePayment;
+                                param.totalPaid = data.netTotal;
+                                param.paymentMode = data.paymentMode;
                                 if (data.discount) {
                                     param.discount = data.discount;
                                 }
@@ -598,9 +599,10 @@ var model = {
                                     $set: {
                                         transaction: transactionFinal,
                                         totalToPay: data.netTotal,
+                                        totalPaid: data.netTotal,
                                         discount: data.discount,
                                         receiptId: data.receipt,
-                                        paymentMode: data.modePayment,
+                                        paymentMode: data.paymentMode,
                                         checkNo: data.checkNo,
                                         cgst: data.cgst,
                                         sgst: data.sgst,
@@ -631,7 +633,8 @@ var model = {
                                 param.school = undefined;
                                 param.transaction = data.transaction;
                                 param.totalToPay = data.netTotal;
-                                param.paymentMode = data.modePayment;
+                                param.totalPaid = data.netTotal;
+                                param.paymentMode = data.paymentMode;
                                 if (data.discount) {
                                     param.discount = data.discount;
                                 }
@@ -664,9 +667,10 @@ var model = {
                                     $set: {
                                         transaction: transactionFinal,
                                         totalToPay: data.netTotal,
+                                        totalPaid: data.netTotal,
                                         discount: data.discount,
                                         receiptId: data.receipt,
-                                        paymentMode: data.modePayment,
+                                        paymentMode: data.paymentMode,
                                         checkNo: data.checkNo,
                                         cgst: data.cgst,
                                         sgst: data.sgst,
