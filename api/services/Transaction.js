@@ -94,8 +94,8 @@ var model = {
                         callback(null, transactData);
                     } else {
                         var transaction = [];
+                        transaction.push(transactData._id);
                         if (transactData.athlete != undefined) {
-                            transaction.push(transactData._id);
                             var matchObj = {
                                 $set: {
                                     transaction: transaction,

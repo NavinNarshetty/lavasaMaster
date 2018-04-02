@@ -12,7 +12,6 @@ var generator = require('generate-password');
 autoIncrement.initialize(mongoose);
 require('mongoose-middleware').initialize(mongoose);
 
-
 var schema = new Schema({
     registerID: Number,
     institutionType: {
