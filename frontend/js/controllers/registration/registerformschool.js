@@ -195,10 +195,40 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, TemplateService, Na
   // ADD AND REMOVE SPORT DEPARTMENT END
 
 
+  //PACKAGE FETCHING
+
+  $scope.packageFetching = function (type) {
+    $scope.fetchPackage = {};
+    $scope.fetchPackage = {
+      filter: {
+        packageUser: type;
+      }
+    };
+    NavigationService.getPackages($scope.formPackage, function (data) {
+      data = data.data;
+      console.log("pack", data);
+      if (data.value = true) {
+        $scope.packages = data.data.results;
+        console.log("packages", $scope.packages);
+      } else {
+        console.log("packages search failed", data);
+      }
+    });
+
+  }
+  $scope.packageFetching('school');
+  //PACKAGE FETCHING END
+
+  console.log("packages", $scope.packages);
   //SAVE FUNCTION 
   $scope.isDisabled = false;
   $scope.saveRegis = function (formdata, formvalid) {
-    console.log(formdata, formvalid, "check");
+    console.log(formdata, formvalid, "check", $scope.packages);
+    if ($scope.packages.length > 0) {
+      _.each($scope.packages, function (packageList) {
+        formdata.package = packageList._id
+      });
+    }
     formdata.teamSports = $scope.teamSport;
     formdata.racquetSports = $scope.racquetSports;
     formdata.combatSports = $scope.combatSports;
