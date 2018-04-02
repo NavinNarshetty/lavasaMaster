@@ -42,7 +42,9 @@ var schema = new Schema({
 });
 
 schema.plugin(deepPopulate, {
-
+    populate: {
+        package: ''
+    }
 });
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
@@ -92,8 +94,8 @@ var model = {
                         callback(null, transactData);
                     } else {
                         var transaction = [];
+                        transaction.push(transactData._id);
                         if (transactData.athlete != undefined) {
-                            transaction.push(transactData._id);
                             var matchObj = {
                                 $set: {
                                     transaction: transaction,
