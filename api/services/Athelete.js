@@ -113,7 +113,11 @@ var schema = new Schema({
     utm_medium: String,
     utm_source: String,
     utm_campaign: String,
-    isBib: Boolean
+    isBib: Boolean,
+    Document_Status: Boolean,
+    Photo_ID: Boolean,
+    School_Id: Boolean,
+    Age_Proof: Boolean,
 });
 
 schema.plugin(deepPopulate, {

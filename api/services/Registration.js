@@ -119,7 +119,11 @@ var schema = new Schema({
     gstNo: String
 });
 
-schema.plugin(deepPopulate, {});
+schema.plugin(deepPopulate, {
+    populate: {
+        package: ''
+    }
+});
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 schema.plugin(autoIncrement.plugin, {
@@ -267,32 +271,33 @@ var model = {
                     data.institutionType = institutionType;
                     data.year = new Date().getFullYear();
                     console.log("data", data);
-                    Registration.saveData(data, function (err, registerData) {
-                        console.log("registerData", registerData);
+                    Registration.saveData(data, function (err, registerData1) {
+                        // console.log("registerData", registerData);
                         if (err) {
                             console.log("err", err);
                             callback("There was an error while saving data", null);
                         } else {
-                            if (_.isEmpty(registerData)) {
+                            if (_.isEmpty(registerData1)) {
                                 callback("No register data found", null);
                             } else {
-                                callback(null, registerData);
+                                callback(null, registerData1);
                             }
                         }
                     });
                 },
-                function (registerData, callback) {
+                function (registerData1, callback) {
                     Registration.findOne({
-                        _id: registerData._id
-                    }).lean().deepPopulate("package").exec(function (err, found) {
+                        _id: registerData1._id
+                    }).lean().deepPopulate("package").exec(function (err, registerData) {
                         if (err) {
                             console.log("err", err);
                             callback("No school Found!", null);
                         } else {
-                            if (_.isEmpty(found)) {
+                            if (_.isEmpty(registerData)) {
                                 callback(null, []);
                             } else {
-                                registerData.package = found.package;
+                                console.log("package*****", registerData);
+                                // registerData.package = found.package;
                                 callback(null, registerData);
                             }
                         }
@@ -1000,14 +1005,14 @@ var model = {
                                                                 }
                                                             ],
                                                             function (err, data2) {
-                                                                if (err) {
-                                                                    console.log(err);
-                                                                    callback(err, null);
-                                                                } else if (_.isEmpty(data2)) {
-                                                                    callback(null, data2);
-                                                                } else {
-                                                                    callback(null, data2);
-                                                                }
+                                                                // if (err) {
+                                                                //     // console.log(err);
+                                                                //     callback(err, null);
+                                                                // } else if (_.isEmpty(data2)) {
+                                                                //     callback(null, data2);
+                                                                // } else {
+                                                                //     callback(null, data2);
+                                                                // }
                                                             });
                                                     }
                                                 });
