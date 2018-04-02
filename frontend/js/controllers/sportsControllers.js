@@ -11,7 +11,7 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
         $scope.type = data.type;
     });
     selectService.reset();
-    $scope.sportsschool = true;
+    $scope.sportsschool = false;
     $scope.sportsregistered = false;
     $scope.classactive = 'blue-active';
     $scope.classinactive = '';
