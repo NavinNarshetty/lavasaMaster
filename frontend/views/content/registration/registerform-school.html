@@ -14,7 +14,7 @@
         <section class="registerform-schoolguidelines">
           <!-- GUIDELINE CARD -->
           <div class="form-card">
-            <p>The annual {{type}} registration fee for SFA Championship {{eventYear}}, {{sfaCity}} is Rs. 5,000 (Inclusive
+            <p>The annual {{type}} registration fee for SFA Championship {{eventYear}}, {{sfaCity}} is Rs. 2,500 (Inclusive
               of all applicable taxes) <a ng-click="regisBenModal(type,sfaCity,year,eventYear)"><strong>Click here</strong></a>              to view registered {{type}} benefits for SFA Championships City {{eventYear}}, {{sfaCity}}. </p>
             <p class="formregister-heading text-uppercase formregister-mtb20">
               REGSITRATION FOR SFA CHAMPIONSHIP {{eventYear}}, {{sfaCity}} IS A 2-STEP PROCESS.
@@ -450,7 +450,7 @@
                         <label class="col-sm-4 control-label">*Email :</label>
                         <div class="col-sm-8">
                           <div class="input-group">
-                            <input name="email1" placeholder="Enter Email ID" autocomplete='email' ng-model="formData.email" type="email" class="form-control"
+                            <input name="email1" placeholder="Email ID" autocomplete='email' ng-model="formData.email" type="email" class="form-control"
                               required>
                             <div class="input-group-btn">
                               <button class="formregister-btn" ng-click="sendOTP(formData.email)"><i class="">Send OTP</i></button>
@@ -541,10 +541,10 @@
 
                 <!-- EMAIL -->
                 <div class="form-group">
-                  <label class="col-sm-2 control-label"> *Email :</label>
+                  <label class="col-sm-2 control-label"> Email :</label>
                   <div class="col-sm-10">
                     <input ng-model="formData.schoolPrincipalEmail" name="schoolPrincipalEma" autocomplete='schoolPrincipal' type="email" class="form-control"
-                      placeholder="Enter Principal Email Id" required>
+                      placeholder="Enter Principal Email Id">
                     <div class="label label-danger pull-right" ng-show="schoolRegisterForm.schoolPrincipalEma.$invalid && schoolRegisterForm.schoolPrincipalEma.$touched">Please Enter Your {{type| firstcapitalize}} Principal Email *</div>
                   </div>
                 </div>
@@ -747,7 +747,7 @@
 
               <!-- KINDILY NOTE -->
               <div class="termscondition-text">
-                A registration fee of 5,000 /- (inclusive of all applicable taxes) will be payable.*Kindly Note: This is an annual fee that
+                A registration fee of 2,500 /- (inclusive of all applicable taxes) will be payable.*Kindly Note: This is an annual fee that
                 enables your {{type}} to send any number of athletes who have registered for SFA Championship {{eventYear}},
                 {{sfaCity}} across all the above mentioned sports. This fee structure has been devised to encourage {{type}}s
                 and athletes to participate in multiple sports and to maintain a high quality of competition.
