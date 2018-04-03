@@ -423,7 +423,7 @@ var model = {
         data.checkNo = [];
         async.waterfall([
                 function (callback) {
-                    async.each(data.transaction, function (n, callback) {
+                    async.each(data.transactions, function (n, callback) {
                         if (data.athleteId) {
                             Transaction.findOne({
                                 athlete: data.athleteId,
