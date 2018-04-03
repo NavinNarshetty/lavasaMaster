@@ -214,6 +214,130 @@ var model = {
                     callback(null, found);
                 }
             });
+    },
+
+    upgradeAccount: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    var param = {};
+                    if (data.athlete) {
+                        param.athlete = data.athlete;
+                        param.school = undefined;
+
+                    } else {
+                        param.school = data.athlete;
+                        param.athlete = undefined;
+                    }
+                    param.dateOfTransaction = new Date();
+                    param.package = data.package;
+                    param.amountToPay = data.amountToPay;
+                    param.amountPaid = data.amountPaid;
+                    param.paymentMode = data.registrationFee;
+                    if (data.cgstAmt) {
+                        param.cgstAmount = data.cgstAmt;
+                    }
+                    if (data.sgstAmt) {
+                        param.sgstAmount = data.sgstAmt;
+                    }
+
+                    if (data.igstAmt) {
+                        param.sgstAmount = data.igstAmt;
+                    }
+                    if (data.discount) {
+                        param.discount = data.discount;
+                    }
+                    Transaction.saveData(param, function (err, transactData) {
+                        if (err || _.isEmpty(transactData)) {
+                            callback(null, {
+                                error: "no data found",
+                                data: data
+                            });
+                        } else {
+                            callback(null, transactData);
+                        }
+                    });
+                },
+                function (transactData, callback) {
+                    if (data.athlete) {
+                        Accounts.findOne({
+                            athlete: data.athlete
+                        }).lean().exec(function (err, accountsData) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (_.isEmpty(accountsData)) {
+                                var transaction = [];
+                                transaction.push(transactData._id);
+                                transaction = _.concat(transaction, accountsData.transaction);
+
+                                var matchObj = {
+                                    $set: {
+                                        sgst: data.sgstAmt,
+                                        cgst: data.cgstAmt,
+                                        igst: data.igstAmt,
+                                        totalToPay: data.amountToPay,
+                                        totalPaid: data.amountPaid,
+                                        discount: data.discount,
+                                        outstandingAmount: data.outstanding,
+                                        transaction: transaction,
+                                    }
+                                };
+                                Accounts.update({
+                                    athlete: data.athlete
+                                }, matchObj).exec(
+                                    function (err, data3) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else if (data3) {
+                                            callback(null, accountsData);
+                                        }
+                                    });
+                            }
+                        });
+                    } else {
+                        Accounts.findOne({
+                            school: data.school
+                        }).lean().exec(function (err, accountsData) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (_.isEmpty(accountsData)) {
+                                var transaction = [];
+                                transaction.push(transactData._id);
+                                transaction = _.concat(transaction, accountsData.transaction);
+
+                                var matchObj = {
+                                    $set: {
+                                        sgst: data.sgstAmt,
+                                        cgst: data.cgstAmt,
+                                        igst: data.igstAmt,
+                                        totalToPay: data.amountToPay,
+                                        totalPaid: data.amountPaid,
+                                        discount: data.discount,
+                                        outstandingAmount: data.outstanding,
+                                        transaction: transaction,
+                                    }
+                                };
+                                Accounts.update({
+                                    school: data.school
+                                }, matchObj).exec(
+                                    function (err, data3) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else if (data3) {
+                                            callback(null, accountsData);
+                                        }
+                                    });
+                            }
+                        });
+                    }
+                }
+            ],
+            function (err, complete) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    callback(null, complete);
+                }
+            });
     }
 
 };

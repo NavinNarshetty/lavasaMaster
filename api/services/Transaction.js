@@ -475,41 +475,55 @@ var model = {
                                         }
                                     });
                                 } else {
-                                    // var receipt = n.receiptId.split(",");
-                                    var receipt = n.receiptId;
-                                    var mainReceipt = _.concat(data.receipt,  receipt);
-                                    data.receipt = _.uniq(mainReceipt);
-                                    if (n.checkNo) {
-                                        // var checkNo = n.checkNo.split(",");
-                                        var checkNo = n.checkNo;
-                                        var mainCheckNo = _.concat(data.checkNo, checkNo);
-                                        data.checkNo = _.uniq(mainCheckNo);
+                                    if (n.isDelete == true) {
+                                        Transaction.remove({
+                                            _id: n._id
+                                        }).exec(
+                                            function (err, data3) {
+                                                if (err) {
+                                                    callback(err, null);
+                                                } else if (data3) {
+                                                    callback(null, data);
+                                                }
+                                            });
                                     } else {
-                                        var checkNo = [];
-                                    }
-                                    var matchObj = {
-                                        $set: {
-                                            dateOfTransaction: new Date(),
-                                            discount: data.discount,
-                                            amountPaid: n.package.amount,
-                                            receiptId: receipt,
-                                            amountToPay: n.package.amount,
-                                            checkNo: checkNo,
-                                            paymentMode: data.paymentMode,
-                                            cgstAmount: data.cgst,
-                                            sgstAmount: data.sgst,
+                                        // var receipt = n.receiptId.split(",");
+                                        var receipt = n.receiptId;
+                                        var mainReceipt = _.concat(data.receipt,  receipt);
+                                        data.receipt = _.uniq(mainReceipt);
+                                        if (n.checkNo) {
+                                            // var checkNo = n.checkNo.split(",");
+                                            var checkNo = n.checkNo;
+                                            var mainCheckNo = _.concat(data.checkNo, checkNo);
+                                            data.checkNo = _.uniq(mainCheckNo);
+                                        } else {
+                                            var checkNo = [];
                                         }
-                                    };
-                                    Transaction.update({
-                                        athlete: data.athleteId
-                                    }, matchObj).exec(
-                                        function (err, data3) {
-                                            if (err) {
-                                                callback(err, null);
-                                            } else if (data3) {
-                                                callback(null, data);
+                                        var matchObj = {
+                                            $set: {
+                                                dateOfTransaction: new Date(),
+                                                discount: data.discount,
+                                                amountPaid: n.package.amount,
+                                                receiptId: receipt,
+                                                amountToPay: n.package.amount,
+                                                checkNo: checkNo,
+                                                paymentMode: data.paymentMode,
+                                                cgstAmount: data.cgst,
+                                                sgstAmount: data.sgst,
                                             }
-                                        });
+                                        };
+                                        Transaction.update({
+                                            athlete: data.athleteId
+                                        }, matchObj).exec(
+                                            function (err, data3) {
+                                                if (err) {
+                                                    callback(err, null);
+                                                } else if (data3) {
+                                                    callback(null, data);
+                                                }
+                                            });
+                                    }
+
                                 }
                             });
                         } else {
@@ -652,7 +666,15 @@ var model = {
                                     }
                                 });
                             } else {
-                                var transactionFinal = _.concat(accountsData.transaction, data.transaction);
+                                if (data.transactions.length >= accountsData.transaction) {
+                                    var transactionFinal = _.concat(accountsData.transaction, data.transaction);
+                                } else {
+                                    _.each(data.transactions, function (n) {
+                                        var transactionFinal = [];
+                                        // data.receipt=[];
+                                        transactionFinal.push(n._id);
+                                    });
+                                }
                                 //    if(accounts)
                                 var matchObj = {
                                     $set: {

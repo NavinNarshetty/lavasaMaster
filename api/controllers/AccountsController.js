@@ -22,6 +22,17 @@ var controller = {
     }
   },
 
+  upgradeAccount: function (req, res) {
+    if (req.body) {
+      Accounts.upgradeAccount(req.body, res.callback);
+    } else {
+      res.json({
+        "data": "Body not Found",
+        "value": false
+      });
+    }
+  },
+
   getAthleteAccount: function (req, res) {
     if (req.body) {
       Accounts.getAthleteAccount(req.body, res.callback);
