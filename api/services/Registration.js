@@ -308,19 +308,42 @@ var model = {
                         var param = {};
                         param.athlete = undefined;
                         param.school = registerData._id;
-                        param.sgst = registerData.package.sgstAmt;
-                        param.cgst = registerData.package.cgstAmt;
-                        param.igst = registerData.package.igstAmt;
-                        param.totalToPay = registerData.package.finalPrice;
-                        param.totalPaid = registerData.package.finalPrice;
+                        var finalAmount = 0;
+                        if (registerData.package.sgstAmt) {
+                            param.sgst = registerData.package.sgstAmt;
+                            finalAmount = finalAmount + registerData.package.sgstAmt;
+                        }
+                        if (registerData.package.cgstAmt) {
+                            param.cgst = registerData.package.cgstAmt;
+                            finalAmount = finalAmount + registerData.package.cgstAmt;
+                        }
+                        if (registerData.package.igstAmt != null && registerData.package.igstAmt > 0) {
+                            param.igst = registerData.package.igstAmt;
+                            finalAmount = registerData.package.igstAmt;
+                        }
+                        param.totalToPay = registerData.package.finalPrice + finalAmount;
+                        param.totalPaid = registerData.package.finalPrice + finalAmount;
                         // param.discount = data.discount;
                         param.transaction = [];
                     } else {
                         var param = {};
+                        var finalAmount = 0;
+                        if (registerData.package.sgstAmt) {
+                            param.sgst = registerData.package.sgstAmt;
+                            finalAmount = finalAmount + registerData.package.sgstAmt;
+                        }
+                        if (registerData.package.cgstAmt) {
+                            param.cgst = registerData.package.cgstAmt;
+                            finalAmount = finalAmount + registerData.package.cgstAmt;
+                        }
+                        if (registerData.package.igstAmt != null && registerData.package.igstAmt > 0) {
+                            param.igst = registerData.package.igstAmt;
+                            finalAmount = registerData.package.igstAmt;
+                        }
                         param.athlete = undefined;
                         param.school = registerData._id;
                         param.transaction = [];
-
+                        param.outstandingAmount = registerData.package.finalPrice + finalAmount;
                     }
                     Accounts.saveData(param, function (err, accountsData) {
                         if (err || _.isEmpty(accountsData)) {

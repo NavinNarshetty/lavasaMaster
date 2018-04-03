@@ -59,7 +59,7 @@ var schema = new Schema({
 schema.plugin(deepPopulate, {
     populate: {
         "athlete": {
-            select: '_id sfaId status year registrationFee firstName middleName surname school paymentStatus'
+            select: '_id sfaId status year registrationFee firstName middleName surname school paymentStatus package'
         },
         "athlete.school": {
             select: ''
@@ -192,6 +192,25 @@ var model = {
                         i++;
                     });
 
+                    callback(null, found);
+                }
+            });
+    },
+
+    getStatuts: function (data, callback) {
+        Accounts.findOne({
+            $or: [{
+                athlete: data._id
+            }, {
+                school: data._id
+            }]
+        }, 'outstandingAmount totalPaid totalToPay igst cgst sgst athlete').lean().deepPopulate("athlete").exec(
+            function (err, found) {
+                if (err) {
+                    callback(err, null);
+                } else if (_.isEmpty(found)) {
+                    callback("Empty Data", null);
+                } else {
                     callback(null, found);
                 }
             });
