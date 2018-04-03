@@ -1104,9 +1104,11 @@ var model = {
                     param.discount = data.discount;
                     param.transaction = [];
                 } else {
+
                     var param = {};
                     param.athlete = athleteData._id;
                     param.school = undefined;
+                    param.outstandingAmount = data.amountPaid;
                     param.transaction = [];
 
                 }

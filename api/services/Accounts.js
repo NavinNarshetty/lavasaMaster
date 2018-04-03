@@ -191,6 +191,7 @@ var model = {
                         found.display["package " + i].amount = n.package.finalPrice;
                         i++;
                     });
+
                     callback(null, found);
                 }
             });
