@@ -26,7 +26,9 @@ var schema = new Schema({
         type: Number,
         default: 0
     },
-    PayuId: String,
+    PayuId: [{
+        type: String
+    }],
     accountType: String,
     paymentMode: String,
     receiptId: [{
@@ -48,16 +50,30 @@ var schema = new Schema({
         type: Number,
         default: 0
     },
-    checkNo: String,
+    checkNo: [{
+        type: String,
+    }],
     remarks: String,
 });
 
 schema.plugin(deepPopulate, {
-    "athlete": '',
-    "athlete.school": '',
-    "school": '',
-    "transaction": '',
-    "transaction.package": ''
+    populate: {
+        "athlete": {
+            select: '_id sfaId status year registrationFee firstName middleName surname school paymentStatus'
+        },
+        "athlete.school": {
+            select: ''
+        },
+        "school": {
+            select: '_id schoolName schoolType schoolCategory year paymentStatus status sfaID'
+        },
+        "transaction": {
+            select: ''
+        },
+        "transaction.package": {
+            select: ''
+        }
+    }
 });
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
@@ -137,6 +153,47 @@ var model = {
             .keyword(options)
             .page(options, callback);
     },
+
+    getAccount: function (data, callback) {
+        Accounts.findOne({
+            _id: data._id
+        }).lean().deepPopulate('athlete school athlete.school transaction transaction.package').exec(
+            function (err, found) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    found.display = {};
+                    found.display.paymentMode = found.paymentMode;
+                    found.display.payuId = found.PayuId;
+                    found.display.AmountPaid = found.totalPaid;
+                    found.display.AmountToPay = found.totalToPay;
+                    found.display.outstandingAmount = found.outstandingAmount;
+                    found.display.sgst = found.sgst;
+                    found.display.cgst = found.cgst;
+                    found.display.discount = found.discount;
+                    found.display.receiptId = found.receiptId;
+                    if (found.checkNo) {
+                        found.display.checkNo = found.checkNo;
+                    }
+                    if (found.school) {
+                        found.display.verified = found.school.status;
+                    } else {
+                        found.display.verified = found.athlete.status;
+                    }
+                    var i = 1;
+                    _.each(found.transaction, function (n) {
+                        found.display["package " + i] = {};
+                        found.display["package " + i].name = n.package.name;
+                        found.display["package " + i].date = n.createdAt;
+                        found.display["package " + i].user = n.package.packageUser;
+                        found.display["package " + i].amount = n.package.finalPrice;
+                        i++;
+                    })
+
+                    callback(null, found);
+                }
+            });
+    }
 
 };
 module.exports = _.assign(module.exports, exports, model);

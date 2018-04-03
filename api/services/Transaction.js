@@ -23,6 +23,9 @@ var schema = new Schema({
     receiptId: [{
         type: String,
     }],
+    checkNo: [{
+        type: String,
+    }],
     discount: {
         type: Number,
         default: 0
@@ -94,13 +97,16 @@ var model = {
                         callback(null, transactData);
                     } else {
                         var transaction = [];
+                        var payu = [];
                         transaction.push(transactData._id);
+                        payu.push(transactData.PayuId);
                         if (transactData.athlete != undefined) {
                             var matchObj = {
                                 $set: {
                                     transaction: transaction,
-                                    PayuId: transactData.PayuId,
+                                    PayuId: payu,
                                     receiptId: transactData.receiptId,
+                                    paymentMode: transactData.paymentMode,
                                 }
                             };
                             Accounts.update({
@@ -118,8 +124,9 @@ var model = {
                             var matchObj = {
                                 $set: {
                                     transaction: transaction,
-                                    PayuId: transactData.PayuId,
+                                    PayuId: payu,
                                     receiptId: transactData.receiptId,
+                                    paymentMode: transactData.paymentMode,
                                 }
                             };
                             Accounts.update({
@@ -413,6 +420,7 @@ var model = {
     saveCashTransaction: function (data, callback) {
         data.transaction = [];
         data.receipt = [];
+        data.checkNo = [];
         async.waterfall([
                 function (callback) {
                     async.each(data.transaction, function (n, callback) {
@@ -442,7 +450,16 @@ var model = {
                                     }
                                     var recepit = n.receiptId.split(",");
                                     param.receiptId = recepit;
-                                    data.receipt = _.concat(data.receipt,  recepit);
+                                    var mainReceipt = _.concat(data.receipt,  recepit);
+                                    data.recepit = _.uniq(mainReceipt);
+                                    if (n.checkNo) {
+                                        var checkNo = n.checkNo.split(",");
+                                        param.checkNo = checkNo;
+                                        var mainCheckNo = _.concat(data.checkNo, checkNo);
+                                        data.checkNo = _.uniq(mainCheckNo);
+                                    } else {
+                                        var checkNo = [];
+                                    }
                                     Transaction.saveData(param, function (err, transactData) {
                                         if (err || _.isEmpty(transactData)) {
                                             callback(null, {
@@ -456,12 +473,21 @@ var model = {
                                     });
                                 } else {
                                     var receipt = n.receiptId.split(",");
-                                    data.receipt = _.concat(data.receipt, receipt);
+                                    var mainReceipt = _.concat(data.receipt,  receipt);
+                                    data.receipt = _.uniq(mainReceipt);
+                                    if (n.checkNo) {
+                                        var checkNo = n.checkNo.split(",");
+                                        var mainCheckNo = _.concat(data.checkNo, checkNo);
+                                        data.checkNo = _.uniq(mainCheckNo);
+                                    } else {
+                                        var checkNo = [];
+                                    }
                                     var matchObj = {
                                         $set: {
                                             dateOfTransaction: new Date(),
                                             discount: data.discount,
                                             receiptId: receipt,
+                                            checkNo: checkNo,
                                             paymentMode: data.paymentMode,
                                             cgstAmount: data.cgst,
                                             sgstAmount: data.sgst,
@@ -510,6 +536,15 @@ var model = {
                                     param.receiptId = receipt;
                                     var mainReceipt = _.concat(data.receipt, receipt);
                                     data.receipt = _.uniq(mainReceipt);
+                                    if (n.checkNo) {
+                                        var checkNo = n.checkNo.split(",");
+                                        param.checkNo = checkNo;
+                                        var mainCheckNo = _.concat(data.checkNo, checkNo);
+                                        data.checkNo = _.uniq(mainCheckNo);
+                                    } else {
+                                        var checkNo = [];
+                                    }
+
                                     Transaction.saveData(param, function (err, transactData) {
                                         if (err || _.isEmpty(transactData)) {
                                             callback(null, {
@@ -525,11 +560,19 @@ var model = {
                                     var receipt = n.receiptId.split(",");
                                     var mainReceipt = _.concat(data.receipt,  receipt);
                                     data.receipt = _.uniq(mainReceipt);
+                                    if (n.checkNo) {
+                                        var checkNo = n.checkNo.split(",");
+                                        var mainCheckNo = _.concat(data.checkNo, checkNo);
+                                        data.checkNo = _.uniq(mainCheckNo);
+                                    } else {
+                                        var checkNo = [];
+                                    }
                                     var matchObj = {
                                         $set: {
                                             dateOfTransaction: new Date(),
                                             discount: data.discount,
                                             receiptId: receipt,
+                                            checkNo: checkNo,
                                             paymentMode: data.paymentMode,
                                             cgstAmount: data.cgst,
                                             sgstAmount: data.sgst,
@@ -583,6 +626,7 @@ var model = {
                                     param.remarks = data.remarks;
                                 }
                                 param.receiptId = data.receipt;
+                                param.checkNo = data.checkNo;
                                 Accounts.saveData(param, function (err, accountsDataNew) {
                                     if (err || _.isEmpty(accountsDataNew)) {
                                         callback(null, {
@@ -602,6 +646,7 @@ var model = {
                                         totalPaid: data.netTotal,
                                         discount: data.discount,
                                         receiptId: data.receipt,
+                                        checkNo: data.checkNo,
                                         paymentMode: data.paymentMode,
                                         checkNo: data.checkNo,
                                         cgst: data.cgst,
@@ -651,6 +696,7 @@ var model = {
                                     param.remarks = data.remarks;
                                 }
                                 param.receiptId = data.receipt;
+                                param.checkNo = data.checkNo;
                                 Accounts.saveData(param, function (err, accountsDataNew) {
                                     if (err || _.isEmpty(accountsDataNew)) {
                                         callback(null, {

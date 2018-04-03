@@ -402,10 +402,11 @@ var model = {
                                 if (schoolData.verifyCount === 0) {
                                     if (data.status == "Verified") {
                                         data.verifyCount = 1;
-                                        data.password = generator.generate({
-                                            length: 8,
-                                            numbers: true
-                                        });
+                                        data.password = schoolData.password;
+                                        // data.password = generator.generate({
+                                        //     length: 8,
+                                        //     numbers: true
+                                        // });
                                         if (_.isEmpty(data.sfaID)) {
                                             var year = new Date().getFullYear().toString().substr(2, 2);
                                             console.log("City", city);

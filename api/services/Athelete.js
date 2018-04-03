@@ -1174,10 +1174,11 @@ var model = {
 
                                     if (data.status == "Verified") {
                                         data.verifyCount = 1;
-                                        data.password = generator.generate({
-                                            length: 8,
-                                            numbers: true
-                                        });
+                                        data.password = found.password;
+                                        // data.password = generator.generate({
+                                        //     length: 8,
+                                        //     numbers: true
+                                        // });
                                         if (_.isEmpty(data.sfaId)) {
                                             var year = new Date().getFullYear().toString().substr(2, 2);
                                             if (_.isEmpty(complete[0].city)) {
