@@ -194,7 +194,6 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
     NavigationService.setUserType('school');
   }
 
-
   $scope.forgotPassFunction = function (url, forgotPassword) {
     if (forgotPassword.sfaId) {
       NavigationService.apiCallWithData(url, forgotPassword, function (data) {

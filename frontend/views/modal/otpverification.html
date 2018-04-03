@@ -19,7 +19,8 @@
     <!-- ENTER SFA ID END -->
     <!-- ENTER OTP -->
     <div class="forgotmodal-input" ng-if="hideThis">
-      <p>An OTP has been sent to your registered Mobile no: <span>{{mobileNumber}}</span> | Email Id: <span>{{emailId}}</span></p>
+      <p>An OTP has been sent to your registered Mobile no: <span>{{mobileNumber|securedEmailmobile:'mobile'}}</span> | Email
+        Id: <span>{{emailId|securedEmailmobile:'email'}}</span></p>
       <form ng-submit="validateOtp(validateOtpObj)" name="validationForm">
         <div class="input-group forgototp-input">
           <input type="text" class="form-control" placeholder="OTP" ng-model="validateOtpObj.otp" only-digits required>
