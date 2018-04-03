@@ -16,7 +16,17 @@ var controller = {
                 value:false
             });
         }
-    }
+    },
 
+    getTotalMatchesSchool:function(req,res){
+        if(req.body.school){
+            Reportcard.getTotalMatchesSchool(req.body,res.callback);
+        }else{
+            res.json({
+                data:"Invalid Params",
+                value:false
+            });
+        }
+    }
 };
 module.exports = _.assign(module.exports, controller);

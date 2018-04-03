@@ -1,3 +1,70 @@
+var selectPicker = function(team,toastr,sT,sN,$filter){
+    var howMuchSelectPicker;
+    var id; 
+    switch (sT) {
+        case "K":
+
+            break;
+        case "FA":
+            if (sN == 'Fencing') {
+                howMuchSelectPicker=1;
+                id="#selectpicker_";
+            } else if (sN == 'Archery') {
+                howMuchSelectPicker=2;
+                id="#selectpicker_";
+            }
+            break;
+        case "AAS":
+            if (sN == "Athletics" || sN == "Swimming") {
+                howMuchSelectPicker=1;
+                id="#selectpicker_";
+            } else if (sN == "Shooting") {
+                howMuchSelectPicker=3;
+                id="#selectpicker_";
+            }
+
+            break;
+        case "I":
+
+            break;
+        case "CT":
+            break;
+    }
+
+    console.log("howMuchSelectPicker,id",howMuchSelectPicker,id);
+
+    setTimeout(function () {
+        for(i=1;i<=howMuchSelectPicker;i++){
+            _.each(team,function(n,k){
+                var tp = id+i+"_"+k;
+                console.log(tp);
+                $(tp).on('changed.bs.select', function (e) {
+                    console.log("hit");
+                    if ((team[k].packageCount - team[k].registeredSportCount) < e.target.selectedOptions.length) {
+                        toastr.error("Max Reached", "Error Messege");
+                    }
+                    // if(team[k].selectLimit==1 && e.target.selectedOptions.length==1){
+                    //     if($.jStorage.get('userType')=="school"){
+                    //         toastr.info("Sfa Id " + team[k].sfaId +" Can Only Participate In One Event. As per "+ $filter('getPronoun')(team[k].gender)+" Package", "Upgrade Package");
+                    //     }else{
+                    //         toastr.info("You Can Only Participate in One Event");                    
+                    //     }
+                    // }
+
+                    if(team[k].selectLimit == e.target.selectedOptions.length){
+                        if($.jStorage.get('userType')=="school"){
+                            toastr.info("Sfa Id " + team[k].sfaId +" Can Only Participate In "+ team[k].selectLimit +" Event. As per Selected Package", "Upgrade Package");
+                        }else{
+                            toastr.info("You Can Only Participate in One Event");                    
+                        }
+                    }
+                });
+            })
+        }
+        
+    }, 200);
+}
+
 myApp.controller('IndividualSelectionCtrl', function ($scope, TemplateService, errorService, $state, NavigationService, $stateParams, toastr, $timeout, loginService, selectService, configService) {
     $scope.template = TemplateService.getHTML("content/individual-selection.html");
     TemplateService.title = "Individual Selection";
@@ -237,10 +304,60 @@ myApp.controller('ConfirmFencingCtrl', function ($scope, TemplateService, Naviga
     $scope.tp = function (event) {
         // console.log(event);
     };
+    // $timeout(function () {
+    //     $('.selectpicker').selectpicker()
+    //     $('.bs-searchbox input[type="text"]').attr('placeholder', 'Search Event');
+    // }, 200);
+
     $timeout(function () {
-        $('.selectpicker').selectpicker()
-        $('.bs-searchbox input[type="text"]').attr('placeholder', 'Search Event');
+        $('.table-responsive').on('show.bs.dropdown', function () {
+            $('.table-responsive').css( "overflow", "inherit" );
+       });
+       
+       $('.table-responsive').on('hide.bs.dropdown', function () {
+            $('.table-responsive').css( "overflow", "auto" );
+       })
     }, 200);
+
+    $scope.selectEvent = function(ath,whichSelectTag,justClicked){
+        console.log("justClicked",justClicked);
+        if($scope.selectLimit==1){
+            if(whichSelectTag == "Fen1" && (ath.fen1flag==false && ath.fen2flag==false)){
+                ath.fen1flag=true; 
+            } else if(whichSelectTag == "Fen2" && (ath.fen1flag==false && ath.fen2flag==false)){
+                ath.fen2flag=true; 
+            }
+            if(ath.fen1flag && (whichSelectTag == "Fen1")){
+                console.log("1");                
+                ath.sport[1]="";
+            }else if(ath.fen2flag && (whichSelectTag == "Fen2")){
+                console.log("2");
+                ath.sport[0]="";                
+            }else if(ath.fen1flag && (whichSelectTag == "Fen2")){
+                console.log("3");
+                ath.sport[1]="";
+                toastr.error("Max Reached","Error Messege");
+            }else if(ath.fen2flag && (whichSelectTag == "Fen1")){
+                console.log("4");
+                if(justClicked.eventName=="Indian Bow"){
+                    toastr.error("Only 1 Event Is Left As Per Your Package");
+                    ath.sport[1]="";
+                }else{
+                    ath.sport[0]="";
+                    toastr.error("Max Reached","Error Messege");
+                }
+                
+            }
+            ath.disableEvent2=true;
+        }
+       
+    }
+
+    var selectPickerClone = selectPicker(selectService.team,toastr,selectService.sportType,selectService.sportName,$filter);
+   
+    $('selectpicker').on('hidden.bs.select', function (e) {
+        console.log("hidden",e);
+    });
 });
 
 //Confirm-Individual
@@ -388,11 +505,6 @@ myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, Navigat
     });
     $scope.selectService = selectService;
 
-    if ($stateParams.name == "Athletics") {
-        $scope.selectLimit = 2;
-    } else {
-        $scope.selectLimit = 0;
-    }
     $scope.formData = {};
     loginService.loginGet(function (data) {
         $scope.detail = data;
@@ -441,10 +553,10 @@ myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, Navigat
         }
 
     };
-    $timeout(function () {
-        $('.selectpicker').selectpicker()
-        $('.bs-searchbox input[type="text"]').attr('placeholder', 'Search Event');
-    }, 200);
+    // $timeout(function () {
+    //     $('.selectpicker').selectpicker()
+    //     $('.bs-searchbox input[type="text"]').attr('placeholder', 'Search Event');
+    // }, 200);
     $scope.obj = {
         "qwerty": true
     }
@@ -455,6 +567,8 @@ myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, Navigat
             $('.bs-searchbox input[type="text"]').attr('placeholder', 'Search Event');
         }, 200);
     }
+
+    var selectPickerClone = selectPicker(selectService.team,toastr,selectService.sportType,selectService.sportName,$filter);
 });
 
 
@@ -491,4 +605,7 @@ myApp.controller('IndividualCongratsCtrl', function ($scope, TemplateService, to
             }
         });
     };
+
+    NavigationService.updateUserDetailsJstorage();
+
 });

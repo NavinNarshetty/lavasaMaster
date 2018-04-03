@@ -201,8 +201,23 @@ var model = {
                         preserveNullAndEmptyArrays: true // optional
                     }
                 },
-
                 // Stage 3
+                {
+                    $lookup: {
+                        "from": "packages",
+                        "localField": "package",
+                        "foreignField": "_id",
+                        "as": "package"
+                    }
+                },
+
+                // Stage 4
+                {
+                    $unwind: {
+                        path: "$package",
+                        preserveNullAndEmptyArrays: true // optional
+                    }
+                },
                 {
                     $match: {
                         "sfaId": data.sfaid,

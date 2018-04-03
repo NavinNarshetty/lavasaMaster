@@ -79,6 +79,23 @@ schema.plugin(autoIncrement.plugin, {
     startAt: 1,
     incrementBy: 1
 });
+
+
+// schema.post('remove', function (removedTeam,next) {
+//     console.log("Post Remove",removedTeam);
+//     next();
+// });
+
+// schema.post('save', function (savedTeam,next) {
+//     console.log("Post Save",savedTeam);
+//     next();
+// });
+
+// schema.pre('save', function (next) {
+//     console.log("Pre Save");
+//     next();
+// });
+
 module.exports = mongoose.model('TeamSport', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
@@ -91,6 +108,7 @@ var model = {
         var indexNext = tempName.indexOf("-");
         data.linkSportName = tempName.slice(0, indexNext);
         async.waterfall([
+
                 function (callback) {
                     ConfigProperty.find().lean().exec(function (err, property) {
                         if (err) {
@@ -104,6 +122,7 @@ var model = {
                         }
                     });
                 },
+
                 function (property, callback) {
                     var team = {};
                     team.name = data.name;
@@ -128,9 +147,10 @@ var model = {
                         team.isVideoAnalysis = data.isVideoAnalysis;
                     }
                     data.property = property[0];
-                    console.log("data", data);
+                    // console.log("data", data);
                     callback(null, team);
                 },
+
                 function (team, callback) {
                     TeamSport.saveInTeam(team, data, function (err, complete) {
                         if (err) {
@@ -144,6 +164,7 @@ var model = {
                         }
                     });
                 },
+
                 function (complete, callback) {
                     TeamSport.createStudentTeam(complete, data, function (err, complete1) {
                         if (err) {
@@ -160,6 +181,7 @@ var model = {
                         }
                     });
                 },
+
                 function (total, callback) {
                     if (data.schoolToken) {
                         TeamSport.schoolTeamMailers(data, total, function (err, final) {
@@ -187,11 +209,11 @@ var model = {
                         });
 
                     }
+                    
                 }
             ],
             function (err, data2) {
                 if (err) {
-                    console.log(err);
                     callback(null, []);
                 } else if (data2) {
                     if (_.isEmpty(data2)) {
@@ -280,7 +302,7 @@ var model = {
     },
 
     saveInTeam: function (data, mainData, callback) {
-        console.log("mainData", mainData);
+        // console.log("mainData", mainData);
         async.waterfall([
                 function (callback) {
                     TeamSport.findOne().sort({
@@ -305,23 +327,23 @@ var model = {
                             }
                         } else {
                             if (mainData.property.sfaCity == 'Mumbai') {
-                                console.log("autoID", team.autoID);
+                                // console.log("autoID", team.autoID);
                                 var year = new Date().getFullYear().toString().substr(2, 2);
                                 var teamid = "M" + "T" + year + ++team.autoID;
-                                console.log("teamid", teamid);
+                                // console.log("teamid", teamid);
                                 callback(null, teamid);
                             } else if (mainData.property.sfaCity == "Hyderabad") {
-                                console.log("autoID", team.autoID);
+                                // console.log("autoID", team.autoID);
                                 var year = new Date().getFullYear().toString().substr(2, 2);
                                 var teamid = "H" + "T" + year + ++team.autoID;
-                                console.log("teamid", teamid);
+                                // console.log("teamid", teamid);
                                 callback(null, teamid);
                             } else {
-                                console.log("autoID", team.autoID);
+                                // console.log("autoID", team.autoID);
                                 var city = mainData.property.sfaCity.substr(0, 1);
                                 var year = new Date().getFullYear().toString().substr(2, 2);
                                 var teamid = city + "T" + year + ++team.autoID;
-                                console.log("teamid", teamid);
+                                // console.log("teamid", teamid);
                                 callback(null, teamid);
                             }
                         }
@@ -331,7 +353,7 @@ var model = {
                     data.teamId = teamid;
                     TeamSport.saveData(data, function (err, teamData) {
                         if (err) {
-                            console.log("err", err);
+                            // console.log("err", err);
                             callback("There was an error ", null);
                         } else {
                             if (_.isEmpty(teamData)) {
@@ -345,7 +367,7 @@ var model = {
             ],
             function (err, data2) {
                 if (err) {
-                    console.log(err);
+                    // console.log(err);
                     callback(null, []);
                 } else if (data2) {
                     if (_.isEmpty(data2)) {
@@ -392,7 +414,7 @@ var model = {
                             } else if (_.isEmpty(found)) {
                                 callback(null, "Data is empty");
                             } else {
-                                console.log(" found athlete");
+                                // console.log(" found athlete");
                                 var athleteInfo = {};
                                 athleteInfo.srno = ++i;
                                 if (found.middleName) {
@@ -413,7 +435,7 @@ var model = {
                 ],
                 function (err, atheleteName) {
                     if (err) {
-                        console.log(err);
+                        // console.log(err);
                         callback(null, []);
                     } else if (atheleteName) {
                         if (_.isEmpty(atheleteName)) {
@@ -425,10 +447,10 @@ var model = {
                 });
         }, function (err) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err, null);
             } else {
-                console.log("array", atheleteName);
+                // console.log("array", atheleteName);
                 callback(null, atheleteName);
             }
         });
@@ -446,7 +468,7 @@ var model = {
                 async.parallel([
                     //school email
                     function (callback) {
-                        console.log("total", total);
+                        // console.log("total", total);
                         var emailData = {};
                         emailData.schoolName = found.schoolName;
                         emailData.sportName = data.name;
@@ -474,11 +496,11 @@ var model = {
                         emailData.students = total.studentTeam;
                         emailData.linkSportName = data.linkSportName;
                         emailData.subject = "SFA: Successful Team Sport Registered";
-                        console.log("emaildata", emailData);
+                        // console.log("emaildata", emailData);
 
                         Config.email(emailData, function (err, emailRespo) {
                             if (err) {
-                                console.log(err);
+                                // console.log(err);
                                 callback(null, err);
                             } else if (emailRespo) {
                                 callback(null, emailRespo);
@@ -493,13 +515,13 @@ var model = {
                         var smsData = {};
                         smsData.mobile = found.mobile;
                         smsData.content = "SFA: Thank you for registering for Team Sports at SFA " + data.property.eventYear + ". For Further details Please check your registered email ID.";
-                        console.log("smsdata", smsData);
+                        // console.log("smsdata", smsData);
                         Config.sendSms(smsData, function (err, smsRespo) {
                             if (err) {
-                                console.log(err);
+                                // console.log(err);
                                 callback(err, null);
                             } else if (smsRespo) {
-                                console.log(smsRespo, "sms sent");
+                                // console.log(smsRespo, "sms sent");
                                 callback(null, smsRespo);
                             } else {
                                 callback(null, "Invalid data");
@@ -526,7 +548,7 @@ var model = {
                     },
                 ], function (err, data3) {
                     if (err) {
-                        console.log(err);
+                        // console.log(err);
                         callback(err, null);
                     } else {
                         if (_.isEmpty(data3)) {
@@ -635,7 +657,7 @@ var model = {
             ],
             function (err, data2) {
                 if (err) {
-                    console.log(err);
+                    // console.log(err);
                     callback(null, []);
                 } else if (data2) {
                     if (_.isEmpty(data2)) {
@@ -735,6 +757,7 @@ var model = {
 
     rejectionTeam: function (data, callback) {
         async.waterfall([
+
                 function (callback) {
                     TeamSport.findOne({
                         teamId: data.teamId
@@ -750,6 +773,7 @@ var model = {
                         }
                     });
                 },
+
                 function (complete, callback) {
                     TeamSport.athleteRelease(complete, function (err, complete1) {
                         if (err) {
@@ -758,16 +782,15 @@ var model = {
                             if (_.isEmpty(complete1)) {
                                 callback(null, []);
                             } else {
-                                callback(null, complete1);
+                                callback(null, complete1,complete);
                             }
                         }
                     });
                 },
-                function (complete1, callback) {
+
+                function (complete1,complete, callback) {
                     if (complete1 == "deleted") {
-                        TeamSport.remove({
-                            teamId: data.teamId
-                        }).exec(function (err, complete2) {
+                        TeamSport.deleteData(complete,function (err, complete2) {
                             if (err) {
                                 callback(err, null);
                             } else {
@@ -779,12 +802,11 @@ var model = {
                             }
                         });
                     }
-
                 }
             ],
             function (err, data2) {
                 if (err) {
-                    console.log(err);
+                    // console.log(err);
                     callback(null, []);
                 } else if (data2) {
                     if (_.isEmpty(data2)) {
@@ -878,7 +900,7 @@ var model = {
                         });
                     },
                     function (totals, callback) {
-                        console.log("totals", totals);
+                        // console.log("totals", totals);
                         var emailData = {};
                         var index = totals[0].teamId.name.indexOf("-");
                         emailData.sportName = totals[0].teamId.name.slice(++index, totals[0].teamId.name.length);
@@ -897,7 +919,7 @@ var model = {
                         emailData.filename = "rejectionTeam.ejs";
                         emailData.teamId = totals[0].teamId.teamId;
                         emailData.subject = "SFA: Team Rejected";
-                        console.log("emaildata", emailData);
+                        // console.log("emaildata", emailData);
                         Config.email(emailData, function (err, emailRespo) {
                             if (err) {
                                 console.log(err);
@@ -911,9 +933,22 @@ var model = {
                         });
                     },
                     function (emailRespo, callback) {
-                        StudentTeam.remove({
+                        // StudentTeam.remove({
+                        //     _id: n
+                        // }).exec(function (err, found) {
+                        //     if (err) {
+                        //         callback(err, null);
+                        //     } else {
+                        //         if (_.isEmpty(found)) {
+                        //             callback(null, []);
+                        //         } else {
+                        //             callback(null, found);
+                        //         }
+                        //     }
+                        // });
+                        StudentTeam.deleteData({
                             _id: n
-                        }).exec(function (err, found) {
+                        },function (err, found) {
                             if (err) {
                                 callback(err, null);
                             } else {
@@ -1713,10 +1748,10 @@ var model = {
                 },
                 function (totals, callback) {
                     totals.count = 0;
-                    console.log("length", param.athleteTeam.length);
+                    // console.log("length", param.athleteTeam.length);
                     var length1 = param.athleteTeam.length;
-                    console.log("length1", length1);
-                    console.log("totals", totals);
+                    // console.log("length1", length1);
+                    // console.log("totals", totals);
                     _.each(param.athleteTeam, function (m) {
 
                         console.log("id", totals[0].studentId._id);
@@ -1733,7 +1768,7 @@ var model = {
                     callback(null, totals);
                 },
                 function (totals, callback) {
-                    console.log("totals", totals);
+                    // console.log("totals", totals);
                     if (totals.count == 0) {
                         var emailData = {};
                         var index = totals[0].teamId.name.indexOf("-");
@@ -1919,7 +1954,7 @@ var model = {
                         emailData.students = total.studentTeam;
                         emailData.linkSportName = data.linkSportName;
                         emailData.subject = "SFA: Successful Team Sport Registered";
-                        console.log("emaildata", emailData);
+                        // console.log("emaildata", emailData);
 
                         Config.email(emailData, function (err, emailRespo) {
                             if (err) {
@@ -2289,7 +2324,7 @@ var model = {
                             emailData.students = total.studentTeam;
                             emailData.linkSportName = data.linkSportName;
                             emailData.subject = n.subject;
-                            console.log("emailData....", emailData);
+                            // console.log("emailData....", emailData);
                             Config.email(emailData, function (err, emailRespo) {
                                 if (err) {
                                     console.log(err);

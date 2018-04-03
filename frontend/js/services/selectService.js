@@ -38,55 +38,66 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
 
     //make .checked to true if already selected
     this.isAtheleteSelected = function (listOfAthlete, team) {
+        console.log("Yes! it is.");
         var temp = _.intersectionBy(listOfAthlete, this.team, '_id');
         _.each(temp, function (n) {
             n.checked = true;
         });
+        listOfAthlete = _.map(listOfAthlete, function (n) {
+            // console.log("n.package && n.selectedEvent && !n.isIndividualSelected", n.package, n.selectedEvent, !n.isIndividualSelected);
+            if (n.package && n.selectedEvent && !n.isIndividualSelected) {
+                // console.log("n.selectedEvent==n.package.eventCount", n.selectedEvent, n.package.eventCount);
+                if (n.selectedEvent == n.package.eventCount) {
+                    n.maxReached = true;
+                    console.log("got", n.sfaId);
+                }
+                return n;
+            } else {
+                return n;
+            }
+        });
         return listOfAthlete;
     };
 
-
-
-    // push to Team
-    this.pushToTeam = function (obj, bool, listOfAthlete, events) {
-        // console.log(obj, bool, listOfAthlete, events);
+    // push to Team (all validations objects are made here-For School As well as for Athlete Login)
+    this.pushToTeam = function (ath, bool, listOfAthlete, events) {
 
         function checkIfApplicable(sT, sN) {
             var isApplicable = true;
             switch (sT) {
                 case "K":
-                    if (obj.eventKata.length <= 1 && obj.eventKumite.length <= 1) {
-                        obj.checked = false;
+                    if (ath.eventKata.length <= 1 && ath.eventKumite.length <= 1) {
+                        ath.checked = false;
                         toastr.error("Not Applicable");
                         isApplicable = false;
                     }
                     break;
                 case "FA":
-                    // console.log(obj);
+                    // console.log(ath);
                     if (sN == 'Fencing') {
-                        if (obj.eventEpee.length <= 1 && obj.eventSabre.length <= 1 && obj.eventFoil.length <= 1) {
-                            obj.checked = false;
+                        if (ath.eventEpee.length <= 1 && ath.eventSabre.length <= 1 && ath.eventFoil.length <= 1) {
+                            ath.checked = false;
                             toastr.error("Not Applicable");
                             isApplicable = false;
                         }
                     } else if (sN == 'Archery') {
-                        if (obj.ageGroups.length == 0) {
-                            obj.checked = false;
+                        if (ath.ageGroups.length == 0) {
+                            ath.checked = false;
                             toastr.error("Not Applicable");
                             isApplicable = false;
                         }
                     }
                     break;
                 case "AAS":
-                    if (obj.ageGroups.length == 0) {
-                        obj.checked = false;
+                    if (ath.ageGroups.length == 0) {
+                        ath.checked = false;
                         toastr.error("Not Applicable");
                         isApplicable = false;
                     }
                     break;
                 case "I":
-                    if (obj.ageGroups.length == 0) {
-                        obj.checked = false;
+                    if (ath.ageGroups.length == 0) {
+                        ath.checked = false;
                         toastr.error("Not Applicable");
                         isApplicable = false;
                     }
@@ -99,17 +110,20 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
 
         var confirmPageKey = $.jStorage.get("confirmPageKey");
         //check if added or not and do it accordingly
+
+        //add athelete In Team if checkbox is checked else remove From Team
         if (bool) {
-            //add athelete
-            if (obj.isTeamSelected) {
+            if (ath.isTeamSelected) {
                 toastr.error('This Player has already been Selected');
-            } else if (obj.isIndividualSelected) {
+            } else if (ath.isIndividualSelected) {
                 toastr.error('This Player has already been Registered');
             } else {
-                //get Data for columns accordingly eg:ageGroup
-                obj = this.getAgeGroupByAthelete(obj, confirmPageKey, events);
+
+                ath = this.getAgeGroupByAthelete(ath, confirmPageKey, events);
+
                 if (checkIfApplicable(this.sportType, this.sportName)) {
-                    this.team.push(obj);
+                    ath = this.checkPackageLimit(ath, this.sportType, this.sportName);
+                    this.team.push(ath);
                     this.team = _.uniqBy(this.team, '_id');
                 } else {
                     if ($.jStorage.get('userType') == 'athlete') {
@@ -119,13 +133,74 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                 }
             }
         } else {
-            //remove athelete
             _.remove(this.team, function (n) {
-                return n._id == obj._id;
+                return n._id == ath._id;
             });
-            var temp = _.find(listOfAthlete, ['_id', obj._id]);
+            var temp = _.find(listOfAthlete, ['_id', ath._id]);
             temp.checked = false;
         }
+    };
+
+    this.checkPackageLimit = function (ath, sT, sN) {
+        if (sN == "Athletics") {
+            ath.selectLimit = 2;
+            ath.maxOptionsText = "Limit reached ( " + ath.selectLimit + " events max)"
+        }
+        if (ath.selectedEvent != null && ath.selectedEvent != undefined && ath.package) {
+            ath.registeredSportCount = ath.selectedEvent;
+            ath.packageCount = ath.package.eventCount;
+
+            switch (sT) {
+                case "K":
+
+                    break;
+                case "FA":
+                    // console.log(ath);
+                    if (sN == 'Fencing') {
+                        ath.selectLimit = ath.packageCount - ath.registeredSportCount;
+                        ath.maxOptionsText = "Upgrade Your Package";
+                    } else if (sN == 'Archery') {
+                        ath.fen1flag = false;
+                        ath.fen2flag = false;
+                        ath.informTitle = "Select Event"
+                        ath.selectLimit = ath.packageCount - ath.registeredSportCount;
+                        ath.maxOptionsText = "Upgrade Your Package";
+                    }
+                    break;
+                case "AAS":
+                    if (sN == "Athletics") {
+                        if (ath.registeredSportCount + 2 > ath.packageCount) {
+                            ath.selectLimit = ath.packageCount - ath.registeredSportCount;
+                            if (ath.selectLimit >= 2) {
+                                ath.selectLimit = 2;
+                                ath.maxOptionsText = "Limit reached ( " + ath.selectLimit + " events max)";
+                            } else {
+                                ath.maxOptionsText = "Upgrade Your Package";
+                            }
+                        } else {
+                            ath.selectLimit = 2;
+                            ath.maxOptionsText = "Limit reached ( " + ath.selectLimit + " events max)"
+                        }
+                    } else if (sN == "Swimming") {
+                        ath.selectLimit = ath.packageCount - ath.registeredSportCount;
+                        ath.maxOptionsText = "Upgrade Your Package"
+                    } else if (sN == "Shooting") {
+                        ath.selectLimit = ath.packageCount - ath.registeredSportCount;
+                        ath.maxOptionsText = "Upgrade Your Package";
+                    }
+
+                    break;
+                case "I":
+
+                    break;
+                case "CT":
+                    break;
+            }
+            return ath;
+        } else {
+            return ath;
+        }
+
     };
 
     this.getAgeGroupByAthelete = function (athelete, confirmPageKey, events) {
@@ -216,7 +291,6 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
             athelete.open = [];
             return athelete;
         }
-
 
         // for kata and kumite
         function filterEventWise(events) {
@@ -547,10 +621,15 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                 formData[i] = _.pick(n, ['sport', 'sportsListSubCategory', 'athleteId']);
             });
             console.log("finalData", formData);
+            console.log("savedData", formData);
             this.saveData(formData, data);
         } else {
             // console.log("Some Fields are Missing");
         }
+    };
+
+    this.setJstorageProfile = function () {
+        console.log($.jStorage.get("userDetails"));
     };
 
     this.saveData = function (formData, data) {
@@ -589,24 +668,25 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
         }).then(function (data) {
             ref.isDisabled = false;
             errorService.errorCode(data, function (allData) {
-                if (!allData.message) {
-                    if (allData.value) {
-                        toastr.success("Successfully Confirmed", 'Success Message');
-                        $state.go("individual-congrats");
-                    }
+                console.log("allData", allData);
+                if (allData.value) {
+                    toastr.success("Successfully Confirmed", 'Success Message');
+
+                    $state.go("individual-congrats");
                 } else {
-                    toastr.error(allData.message, 'Error Message');
+                    toastr.error(allData.message || allData.error, 'Error Message');
                 }
             });
         });
     };
 
-    this.isValidSelection = function (athelete) {
+    this.isValidSelection = function (athelete, whichSelectTag) {
         switch (this.sportType) {
+
             case "K":
+
                 var arr = athelete.sport;
                 var weights = _.cloneDeep(athelete.event2Weights);
-                console.log("athelete", athelete);
                 if (athelete.event2Weights) {
                     var obj = _.find(weights.data, function (n) {
                         if (!n.weight) {
@@ -614,41 +694,50 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                             return n
                         }
                     });
-
                     if (obj) {
                         arr[1] = obj;
                     } else {
                         arr[1] = {};
                     }
                 }
-                console.log("arr", arr);
-                // athelete.isValidSelection = (arr.length == 0 || ((arr[0] && arr[0].data && arr[0].data[0].sport == null) && ((arr[1] && !arr[1].sport) || (arr[1] && arr[1].sport == null)))) ? false : ((arr.length >= 1 && arr[0] && arr[0].data && arr[0].data[0] && arr[0].data[0].sport != null) || ((arr.length >= 1 && arr[0] && arr[0].data[0].sport == null) && (arr.length >= 1 && arr[1] && arr[1].sport != null)) || ((arr.length >= 1 && arr[0] && arr[0].data[0] && arr[0].data[0].sport != null) && (arr.length >= 1 && arr[1] && arr[1].sport != null))) ? true : false;
-
-                console.log("(arr.length >= 1 && arr[0] && arr[0].data && arr[0].data[0] && arr[0].data[0].sport != null)", (arr.length >= 1 && arr[0] && arr[0].data && arr[0].data[0] && arr[0].data[0].sport != null));
-                console.log("((arr.length >= 1 && (!arr[0] || arr[0] && arr[0].data[0].sport == null)) && (arr.length >= 1 && arr[1] && arr[1].sport != null))", ((arr.length >= 1 && (!arr[0] || arr[0] && arr[0].data[0].sport == null)) && (arr.length >= 1 && arr[1] && arr[1].sport != null)));
-                console.log("((arr.length >= 1 && arr[0] && arr[0].data[0] && arr[0].data[0].sport != null) && (arr.length >= 1 && arr[1] && arr[1].sport != null)", ((arr.length >= 1 && arr[0] && arr[0].data[0] && arr[0].data[0].sport != null) && (arr.length >= 1 && arr[1] && arr[1].sport != null)));
-
-
                 athelete.isValidSelection = (arr.length == 0 || ((!arr[0] || arr[0] && arr[0].data && arr[0].data[0].sport == null) && ((arr[1] && !arr[1].sport) || (arr[1] && arr[1].sport == null)))) ? false : ((arr.length >= 1 && arr[0] && arr[0].data && arr[0].data[0] && arr[0].data[0].sport != null) || ((arr.length >= 1 && (!arr[0] || arr[0] && arr[0].data[0].sport == null)) && (arr.length >= 1 && arr[1] && arr[1].sport != null)) || ((arr.length >= 1 && arr[0] && arr[0].data[0] && arr[0].data[0].sport != null) && (arr.length >= 1 && arr[1] && arr[1].sport != null))) ? true : false;
-                console.log("athelete.isValidSelection", athelete.isValidSelection);
                 break;
+
             case "FA":
+
                 if (this.sportName == 'Fencing') {
                     var arr = _.compact(athelete.sport);
                     athelete.isValidSelection = arr.length > 0;
                 } else if (this.sportName == 'Archery') {
-                    athelete.disableEvent2 = (athelete && athelete.sport && athelete.sport[0] && athelete.sport[0].eventName != 'Indian Bow') ? true : false;
+                    console.log("event from Service");
+
+                    var allowedAsPerPackage = (((athelete.package.eventCount - athelete.selectedEvent) - _.compact(athelete.sport).length) <= 0) ? true : false;
+                    if (allowedAsPerPackage) {
+                        athelete.disableEvent2 = true;
+                        athelete.informTitle = "Upgrade Package To Add More";
+                        if (whichSelectTag == 'Fen2') {
+                            athelete.sport[1]={};
+                            toastr.info("Sfa Id " + athelete.sfaId +" Can Only Participate In "+ athelete.selectLimit +" Event. As per Selected Package", "Select From Event 1");
+                        }
+                    }
+
+                    var disableIfNotIndianBow = (athelete && athelete.sport && athelete.sport[0] && athelete.sport[0].eventName != 'Indian Bow')?true:false;
+                    if (disableIfNotIndianBow) {
+                        athelete.disableEvent2 = true;
+                        athelete.informTitle = "Not Allowed";
+                    }
+                    athelete.disableEvent2 = (allowedAsPerPackage || disableIfNotIndianBow) ? true : false;
+                    
                     athelete.isValidSelection = ((athelete.sport && athelete.sport[0]) || (athelete.sport && athelete.sport[1])) ? true : false
-                    if (athelete.sport && athelete.sport[1] && athelete.sport[1] != '' && athelete.sport[0].eventName != 'Indian Bow') {
+                    if (athelete.sport && athelete.sport[1] && athelete.sport[1] != '' && athelete.sport[0] && athelete.sport[0].eventName != 'Indian Bow') {
                         athelete.sport[1] = {};
                     }
                 }
                 break;
+
             case "AAS":
-                // console.log("athlete", athelete);
 
                 if (this.sportName == 'Shooting') {
-                    // console.log("im ASS", this.sportName);
                     if (athelete.peep.length >= 1 || athelete.open.length >= 1 || athelete.pistol.length >= 1) {
                         if (athelete.peep.length >= 1) {
                             athelete.sport = _.cloneDeep(athelete.peep);
@@ -665,7 +754,6 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                             var arr = _.compact(athelete.sport);
                             athelete.isValidSelection = (arr.length >= 1);
                         }
-
                     } else {
                         athelete.isValidSelection = false;
                     }
@@ -673,30 +761,20 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                 } else {
                     var arr = _.compact(athelete.sport);
                     athelete.isValidSelection = (arr.length >= 1);
-
-                    // scope.$on('$viewContentLoaded', function (event) {
-                    //     $timeout(function () {
-                    //         console.log("hua kya");
-                    //         $('.selectpicker').selectpicker()
-                    //     }, 200);
-                    // })
-
-
                 }
                 break;
-            case "I":
-                var st = this.sportName;
-                console.log("athelete", athelete);
-                if (st == 'Judo' || st == 'Boxing' || st == 'Taekwondo' || st == 'Sport MMA' || st == 'Wrestling') {
-                    // athelete.isValidSelection = (athelete.sport && athelete.sport[1] && athelete.sport[1] != '') ? true : false;
-                    athelete.isValidSelection = (athelete.sport && athelete.sport[0] && athelete.sport[0] != '') ? true : false;
 
+            case "I":
+
+                var st = this.sportName;
+                if (st == 'Judo' || st == 'Boxing' || st == 'Taekwondo' || st == 'Sport MMA' || st == 'Wrestling') {
+                    athelete.isValidSelection = (athelete.sport && athelete.sport[0] && athelete.sport[0] != '') ? true : false;
                 } else {
                     var arr = _.compact(athelete.sport);
                     athelete.isValidSelection = arr.length > 0;
                 }
-
                 break;
+
             case "CT":
 
                 break;
@@ -722,6 +800,5 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
         this.showMissingFields = false;
         this.initialFun();
     };
-
 
 });

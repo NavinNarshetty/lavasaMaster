@@ -5,7 +5,7 @@ var imgPath2 = adminUrl2 + "upload/readFile";
 var uploadUrl2 = adminUrl2 + "upload/";
 
 // var currentYears = ["2015", "2016"];
-myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeout, $log, ResultSportInitialization) {
+myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeout, $log, ResultSportInitialization,$state) {
     var standardDelay = 1000;
     var navigation = [{
         name: "Home",
@@ -1362,6 +1362,26 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
             }).then(function (data) {
                 callback(data);
             });
+        },
+        updateUserDetailsJstorage: function(){
+            if($.jStorage.get("userDetails")){
+                if($.jStorage.get("userType") == "school"){
+
+                }else{
+                    $http({
+                        url: adminUrl2 + 'Athelete/getOne',
+                        method: 'POST',
+                        data: {
+                            "_id":$.jStorage.get("userDetails")._id
+                        }
+                    }).then(function (data) {
+                        console.log("data",data.data.data);
+                        $.jStorage.set("userDetails",data.data.data);
+                    });
+                }
+            }else{
+                $state.go('sports-registration');
+            }
         }
     };
 });

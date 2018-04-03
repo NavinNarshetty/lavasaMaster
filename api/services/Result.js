@@ -185,14 +185,12 @@ var model = {
                 },
                 function (result, callback) {
                     async.concatSeries(result, function (mainData, callback) {
-                        console.log("mainData", mainData);
                         data.school = mainData.name;
                         var pipeLine = Result.getAggregatePipeline(data);
                         Match.aggregate(pipeLine, function (err, matchData) {
                             if (err) {
                                 callback(err, "error in mongoose");
                             } else {
-                                console.log("matchData", matchData);
                                 mainData.totalMatch = matchData[0].count;
                                 callback(null, mainData);
                             }
@@ -320,8 +318,6 @@ var model = {
             function (callback) {
                 var individualMatches = [];
                 Match.aggregate(oppSingPipeline, function (err, result1) {
-                    console.log("oppSingle", result1.length);
-
                     if (err) {
                         callback(err, null);
                     } else if (!_.isEmpty(result1)) {
@@ -347,7 +343,6 @@ var model = {
             function (individualMatches, callback) {
                 var teamMatches = [];
                 Match.aggregate(oppTeamPipeline, function (err, result1) {
-                    console.log("oppTeam", result1.length);
                     if (err) {
                         callback(err, null);
                     } else if (!_.isEmpty(result1)) {
@@ -356,7 +351,6 @@ var model = {
                             obj.matchId = n.matchId;
                             obj.name = n.opponentsTeam.schoolName;
                             teamMatches.push(obj);
-                            console.log("teamMatches", teamMatches.length);
                             if (k == result1.length - 1) {
                                 callback(null, individualMatches, teamMatches);
                             }
@@ -370,14 +364,11 @@ var model = {
             }
 
         ], function (err, arr1, arr2) {
-            console.log("arr1,arr2", arr1.length, arr2.length);
             if (err) {
                 callback(err, null)
             } else if (!_.isEmpty(arr1) || !_.isEmpty(arr2)) {
                 finalArr = _.concat(arr1, arr2);
-                console.log("finalArr before uniqueBy", finalArr.length)
                 finalArr = _.uniqBy(finalArr, 'matchId');
-                console.log("finalArr after uniqueBy", finalArr.length);
                 finalArr = _(finalArr)
                     .groupBy('name')
                     .map(function (schoolMatches, schoolName) {
@@ -395,7 +386,7 @@ var model = {
         })
     },
 
-    getSchool: function (data, callback) {
+    getSchool: function (data,fcallback) {
         //get all medals deepPopulate sport->sportslist->sportsListSubCategory
         //for each school get schoolname,sport,and all medaldata
         async.waterfall([
@@ -403,7 +394,6 @@ var model = {
             //calculate medals won ,group by school
             function (callback) {
                 Result.getMedalsSchool({}, function (err, totalMedals) {
-                    console.log("totalMedals", totalMedals);
                     if (err) {
                         callback(err, null);
                     } else if (!_.isEmpty(totalMedals)) {
@@ -419,9 +409,8 @@ var model = {
 
             // calculate totalMatches group by school
             function (medalRank, medals, callback) {
-                console.log("--------------------");
                 Result.getMatchesBySchool(function (err, totalMatches) {
-                    console.log("totalMatches", totalMatches);
+                    fcallback(null, totalMatches);
                     if (err) {
                         callback(err, null);
                     } else {
@@ -497,13 +486,11 @@ var model = {
             if (err) {
                 callback(err, null);
             } else {
-                console.log("result", result);
                 async.concatSeries(result, function (singleData, callback) {
                     var matchObj = {
                         "name": singleData.name
                     }
                     Rank.findOne(matchObj).lean().exec(function (err, result) {
-                        console.log(err, result);
                         if (err) {
                             callback(err, null);
                         } else if (!_.isEmpty(result)) {

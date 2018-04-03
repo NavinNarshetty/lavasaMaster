@@ -39,8 +39,8 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
                             tempObj.tempArr = _.cloneDeep(key);
                             _.each(tempObj.tempArr, function (sport) {
                                 // console.log("athlete", $scope.detail);
-                                if ($scope.detail.userType === "athlete" && !$scope.detail.mixAccess && $.jStorage.get("IsColg") === 'school' &&
-                                    sport.name === 'Water Polo') {
+                                if ($scope.detail.userType === "athlete" && !$scope.detail.mixAccess && $.jStorage.get("IsColg") === 'school' && (
+                                    sport.name === 'Water Polo' || sport.name === 'Athletics 4x100m Relay' || sport.name === 'Athletics 4x50m Relay' || sport.name === 'Athletics Medley Relay')) {
                                     sport.isVisibleSport = true;
                                 } else {
                                     sport.isVisibleSport = false;
@@ -156,88 +156,103 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
     };
     // ===========removeThis========
     $scope.redirectTo = function (val) {
-        // console.log(val);
-        $scope.currentDate = new Date();
-        // console.log($scope.currentDate, " $scope.currentDate ");
-        $scope.currentDate = $scope.currentDate.setHours(0, 0, 0, 0);
-        $scope.endDate = new Date(val.endDate);
-        // console.log("$scope.endDate ", $scope.endDate);
-        $scope.endDate = $scope.endDate.setHours(0, 0, 0, 0);
-        if ($scope.currentDate && $scope.endDate) {
-            if ($scope.currentDate <= $scope.endDate) {
-                // console.log("eligible for registering sport");
-                $.jStorage.set("confirmPageKey", val.sportType);
-                selectService.redirectTo = val.sportType;
-                // console.log(selectService.redirectTo);
-                if ($.jStorage.get('userType') == 'athlete') {
-                    NavigationService.getIndividualAthlete({
-                        'athleteToken': $.jStorage.get('userDetails').accessToken,
-                        '_id': val._id,
-                        'age': '',
-                        'gender': '',
-                        'page': 1
-                    }, function (data) {
-                        // console.log(data);
-                        if (data.data.data._id) {
-                            $state.go('sports-rules', {
-                                id: val._id
-                            });
-                        } else {
-                            toastr.error("You are already selected for this sport");
-                        }
-                    });
-                } else {
-                    $state.go('sports-rules', {
-                        id: val._id
-                    });
-                }
-            } else {
-                // console.log("Not eligible for registering sport");
-                var tempData = $.jStorage.get('userDetails');
-                if (!tempData.mixAccess) {
-                    $scope.particularSport = val.name;
-                    $scope.registrationEnd = $uibModal.open({
-                        animation: true,
-                        scope: $scope,
-                        backdrop: 'static',
-                        keyboard: false,
-                        // size: 'sm',
-                        templateUrl: "views/modal/registrationend.html"
-                    });
-                    $timeout(function () {
-                        $scope.registrationEnd.close();
-                    }, 8000);
-                } else {
-                    // console.log("eligible for registering sport");
-                    $.jStorage.set("confirmPageKey", val.sportType);
-                    selectService.redirectTo = val.sportType;
-                    // console.log(selectService.redirectTo);
-                    if ($.jStorage.get('userType') == 'athlete') {
-                        NavigationService.getIndividualAthlete({
-                            'athleteToken': $.jStorage.get('userDetails').accessToken,
-                            '_id': val._id,
-                            'age': '',
-                            'gender': '',
-                            'page': 1
-                        }, function (data) {
-                            // console.log(data);
-                            if (data.data.data._id) {
+        
+                function redirect() {
+                    // console.log(val);
+                    $scope.currentDate = new Date();
+                    // console.log($scope.currentDate, " $scope.currentDate ");
+                    $scope.currentDate = $scope.currentDate.setHours(0, 0, 0, 0);
+                    $scope.endDate = new Date(val.endDate);
+                    // console.log("$scope.endDate ", $scope.endDate);
+                    $scope.endDate = $scope.endDate.setHours(0, 0, 0, 0);
+                    if ($scope.currentDate && $scope.endDate) {
+                        if ($scope.currentDate <= $scope.endDate) {
+                            // console.log("eligible for registering sport");
+                            $.jStorage.set("confirmPageKey", val.sportType);
+                            selectService.redirectTo = val.sportType;
+                            // console.log(selectService.redirectTo);
+                            if ($.jStorage.get('userType') == 'athlete') {
+                                NavigationService.getIndividualAthlete({
+                                    'athleteToken': $.jStorage.get('userDetails').accessToken,
+                                    '_id': val._id,
+                                    'age': '',
+                                    'gender': '',
+                                    'page': 1
+                                }, function (data) {
+                                    // console.log(data);
+                                    if (data.data.data._id) {
+                                        $state.go('sports-rules', {
+                                            id: val._id
+                                        });
+                                    } else {
+                                        toastr.error("You are already selected for this sport");
+                                    }
+                                });
+                            } else {
                                 $state.go('sports-rules', {
                                     id: val._id
                                 });
-                            } else {
-                                toastr.error("You are already selected for this sport");
                             }
-                        });
-                    } else {
-                        $state.go('sports-rules', {
-                            id: val._id
-                        });
+                        } else {
+                            // console.log("Not eligible for registering sport");
+                            var tempData = $.jStorage.get('userDetails');
+                            if (!tempData.mixAccess) {
+                                $scope.particularSport = val.name;
+                                $scope.registrationEnd = $uibModal.open({
+                                    animation: true,
+                                    scope: $scope,
+                                    backdrop: 'static',
+                                    keyboard: false,
+                                    // size: 'sm',
+                                    templateUrl: "views/modal/registrationend.html"
+                                });
+                                $timeout(function () {
+                                    $scope.registrationEnd.close();
+                                }, 8000);
+                            } else {
+                                // console.log("eligible for registering sport");
+                                $.jStorage.set("confirmPageKey", val.sportType);
+                                selectService.redirectTo = val.sportType;
+                                // console.log(selectService.redirectTo);
+                                if ($.jStorage.get('userType') == 'athlete') {
+                                    NavigationService.getIndividualAthlete({
+                                        'athleteToken': $.jStorage.get('userDetails').accessToken,
+                                        '_id': val._id,
+                                        'age': '',
+                                        'gender': '',
+                                        'page': 1
+                                    }, function (data) {
+                                        // console.log(data);
+                                        if (data.data.data._id) {
+                                            $state.go('sports-rules', {
+                                                id: val._id
+                                            });
+                                        } else {
+                                            toastr.error("You are already selected for this sport");
+                                        }
+                                    });
+                                } else {
+                                    $state.go('sports-rules', {
+                                        id: val._id
+                                    });
+                                }
+                            }
+                        }
                     }
                 }
-            }
-        }
-    };
+        
+                if ($scope.detail.userType === 'athlete') {
+                    console.log("package",$scope.detail);
+                    if($.jStorage.get("userDetails").selectedEvent< $.jStorage.get("userDetails").package.eventCount){
+                        redirect()
+                    }else{
+                       toastr.error("Upgrade Your Package To Register Additional Sports","Maximum Sport Selected");
+                    }
+                } else {
+                    redirect();
+                }
+        
+            };
     //for Tennis Mixed Doubles
     $scope.redirectForTennis = function (val) {
         if (val) {
