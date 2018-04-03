@@ -1047,7 +1047,25 @@ var model = {
                         }
                     });
                 } else {
-                    callback("Athlete Already Exist", null);
+                    if (found[0].registrationFee == 'online PAYU' && found[0].paymentStatus == 'Pending') {
+                        Athelete.remove({ //finds one with refrence to id
+                            _id: found[0]._id
+                        }).exec(function (err, removed) {
+                            data.year = new Date().getFullYear();
+                            data.verifyCount = 0;
+                            data.atheleteID = 0;
+                            Athelete.saveAthleteData(data, function (err, vData) {
+                                if (err) {
+                                    callback(err, null);
+                                } else if (vData) {
+                                    callback(null, vData);
+                                }
+                            });
+                        });
+                    } else {
+                        callback("Athlete Already Exist", null);
+                    }
+
                 }
             }
         ], function (err, complete) {

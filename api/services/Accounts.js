@@ -161,6 +161,8 @@ var model = {
             function (err, found) {
                 if (err) {
                     callback(err, null);
+                } else if (_.isEmpty(found)) {
+                    callback("Empty Data", null);
                 } else {
                     found.display = {};
                     found.display.paymentMode = found.paymentMode;
@@ -188,8 +190,7 @@ var model = {
                         found.display["package " + i].user = n.package.packageUser;
                         found.display["package " + i].amount = n.package.finalPrice;
                         i++;
-                    })
-
+                    });
                     callback(null, found);
                 }
             });

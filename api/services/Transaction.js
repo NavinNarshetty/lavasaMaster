@@ -448,14 +448,16 @@ var model = {
                                     if (data.discount) {
                                         param.discount = data.discount;
                                     }
-                                    var recepit = n.receiptId.split(",");
-                                    param.receiptId = recepit;
-                                    var mainReceipt = _.concat(data.receipt,  recepit);
+                                    // var recepit = n.receiptId.split(",");
+                                    // param.receiptId = recepit;
+                                    param.receiptId = n.receiptId;
+                                    var mainReceipt = _.concat(data.receipt, param.receiptId);
                                     data.recepit = _.uniq(mainReceipt);
                                     if (n.checkNo) {
-                                        var checkNo = n.checkNo.split(",");
-                                        param.checkNo = checkNo;
-                                        var mainCheckNo = _.concat(data.checkNo, checkNo);
+                                        // var checkNo = n.checkNo.split(",");
+                                        // param.checkNo = checkNo;
+                                        param.checkNo = n.checkNo;
+                                        var mainCheckNo = _.concat(data.checkNo, param.checkNo);
                                         data.checkNo = _.uniq(mainCheckNo);
                                     } else {
                                         var checkNo = [];
@@ -472,11 +474,13 @@ var model = {
                                         }
                                     });
                                 } else {
-                                    var receipt = n.receiptId.split(",");
+                                    // var receipt = n.receiptId.split(",");
+                                    var receipt = n.receiptId;
                                     var mainReceipt = _.concat(data.receipt,  receipt);
                                     data.receipt = _.uniq(mainReceipt);
                                     if (n.checkNo) {
-                                        var checkNo = n.checkNo.split(",");
+                                        // var checkNo = n.checkNo.split(",");
+                                        var checkNo = n.checkNo;
                                         var mainCheckNo = _.concat(data.checkNo, checkNo);
                                         data.checkNo = _.uniq(mainCheckNo);
                                     } else {
@@ -532,13 +536,15 @@ var model = {
                                     if (data.discount) {
                                         param.discount = data.discount;
                                     }
-                                    var receipt = n.receiptId.split(",");
+                                    // var receipt = n.receiptId.split(",");
+                                    var receipt = n.receiptId;
                                     param.receiptId = receipt;
                                     var mainReceipt = _.concat(data.receipt, receipt);
                                     data.receipt = _.uniq(mainReceipt);
                                     if (n.checkNo) {
-                                        var checkNo = n.checkNo.split(",");
-                                        param.checkNo = checkNo;
+                                        // var checkNo = n.checkNo.split(",");
+                                        var checkNo = n.checkNo;
+                                        param.checkNo = n.checkNo;
                                         var mainCheckNo = _.concat(data.checkNo, checkNo);
                                         data.checkNo = _.uniq(mainCheckNo);
                                     } else {
@@ -557,11 +563,13 @@ var model = {
                                         }
                                     });
                                 } else {
-                                    var receipt = n.receiptId.split(",");
+                                    // var receipt = n.receiptId.split(",");
+                                    var receipt = n.receiptId;
                                     var mainReceipt = _.concat(data.receipt,  receipt);
                                     data.receipt = _.uniq(mainReceipt);
                                     if (n.checkNo) {
-                                        var checkNo = n.checkNo.split(",");
+                                        // var checkNo = n.checkNo.split(",");
+                                        var checkNo = n.checkNo;
                                         var mainCheckNo = _.concat(data.checkNo, checkNo);
                                         data.checkNo = _.uniq(mainCheckNo);
                                     } else {
