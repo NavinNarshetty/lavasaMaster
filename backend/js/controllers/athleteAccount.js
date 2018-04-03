@@ -47,7 +47,16 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
       // $scope.maxRow = data.data.options.count;
       _.each($scope.items, function (key) {
         console.log(key._id, "key in array");
-        $scope.getAthleteAccountDetails(key._id)
+        key.athleteData = {};
+        // key.athleteData = $scope.getAthleteAccountDetails(key._id)
+        $scope.getOneUrl = "Accounts/getAccount";
+        $scope.getOneConstraints = {}
+        $scope.getOneConstraints._id = {}
+        $scope.getOneConstraints._id = key._id;
+        NavigationService.apiCall($scope.getOneUrl, $scope.getOneConstraints, function (data) {
+          console.log(data, "new api call")
+          key.athleteData = data.data;
+        });
       })
     });
   }
@@ -65,17 +74,40 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
     NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
       console.log(data, "new api call")
       $scope.athleteData = data.data;
-    })
+    });
   }
   // GET ATHLETE DATA END
 
 
 
   // MODAL
-  $scope.editAccountModal = function (athleteId, accountId, transactionData) {
-    $scope.formData.athleteId = athleteId;
-    $scope.formData._id = accountId;
-    $scope.formData.transaction = transactionData;
+  $scope.editAccountModal = function (player) {
+    console.log("athlete", player);
+    $scope.formData.athleteId = player.athlete._id;
+    $scope.formData._id = player._id;
+    $scope.formData.cgst = player.athleteData.cgst;
+    $scope.formData.sgst = player.athleteData.sgst;
+    $scope.formData.igst = player.athleteData.igst;
+    $scope.formData.discount = player.athleteData.discount;
+    $scope.formData.netTotal = player.athleteData.totalPaid;
+    $scope.formData.paymentMode = player.athleteData.paymentMode;
+    $scope.formData.checkNo = player.athleteData.checkNo;
+    $scope.formData.remarks = player.athleteData.remarks;
+    $scope.formData.transaction = player.athleteData.transaction;
+    // CONVERT RECEIPT ARRAY TO COMMA SEPERATED STRING
+    _.each($scope.formData.transaction, function (n) {
+      n.receiptNo = "";
+      _.each(n.receiptId, function (m) {
+        console.log("m", m);
+        if (n.receiptNo == "") {
+          n.receiptNo = m;
+        } else {
+          n.receiptNo = n.receiptNo + ',' + m;
+        }
+      });
+      console.log("n.receiptNo", n.receiptNo);
+    });
+    // CONVERT RECEIPT ARRAY TO COMMA SEPERATED STRING END
     $scope.modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
       templateUrl: 'views/modal/manualaccount.html',
@@ -83,7 +115,6 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
       keyboard: false,
       size: 'lg',
       scope: $scope
-
     });
   }
   // MODAL END

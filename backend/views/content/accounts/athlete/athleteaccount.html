@@ -23,9 +23,9 @@
                 <uib-accordion-heading>
                   <div class="athleteaccount-playerholder ">
                     <div class="row ">
-                      <div class="col-md-6 ">
-                        <p class="athleteaccount-name text-left m-clear "> <span>1)</span> <span>{{athleteData.sfaId}}</span> <span>{{ athleteData.athlete.firstName}} </span>                          <span>{{athleteData.athlete.middleName}}</span> <span>{{athleteData.athlete.surname}}</span> </p>
-                        <p class="athleteaccount-school text-left ">{{athleteData.athlete.school.name }} </p>
+                      <div class="col-md-6">
+                        <p class="athleteaccount-name text-left m-clear "> <span>1)</span> <span>{{player.sfaId}}</span> <span>{{ player.athlete.firstName}} </span> <span>{{player.athlete.middleName}}</span>                          <span>{{player.athlete.surname}}</span> </p>
+                        <p class="athleteaccount-school text-left ">{{player.athlete.school.name }} </p>
                       </div>
                       <div class="col-md-3 ">
 
@@ -172,8 +172,8 @@
                 <div class="athleteaccount-accountteam ">
                   <div class="text-center ">
                     <label class=" ">Account Team :</label>
-                    <div class="pull-right " style="margin-bottom:10px; ">
-                      <button type="submit " class="btn btn-primary" ng-click="editAccountModal(athleteData.athlete._id,player._id,player.transaction)">Edit</button>
+                    <div class="pull-right " style="margin-bottom:10px; ">{{player.athlete._id}}---{{player._id}}
+                      <button type="submit " class="btn btn-primary" ng-click="editAccountModal(player)">Edit</button>
                     </div>
                     <table class="table table-hover table-bordered ">
                       <thead>

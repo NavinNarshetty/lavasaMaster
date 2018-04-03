@@ -1,56 +1,116 @@
 <div class="login-modal" ng-if="type == 'school'">
     <div class="cross-close-term pull-right">
         <button type="button" aria-label="Close" ng-click="$dismiss()" class="float-right close-btn">X</button>
-        <!--<i class="fa fa-2x fa-times-circle-o" aria-hidden="true"></i>-->
-        <!--<i class="fa  fa-times" aria-hidden="true"></i>-->
         </a>
     </div>
     <h5 class="modsub text-center">
-        <u>{{type | capitalize}} REGISTRATION FORM DISCLAIMER</u>
+        <strong><u>{{type | capitalize}} REGISTRATION FORM DISCLAIMER</u></strong>
     </h5>
-    <p>I as the Principal/Head of the Institution/ {{type | firstcapitalize}}/ Sports Department, hereby consent to the students
-        (“Athlete(s)”) to participate in the Event being organized by SFA Events Pvt. Ltd (“SFA”). </p>
-    <p>I undertake that the Institution/{{type | firstcapitalize}} would be represented by the Athlete/s and the Athlete/s would
-        abide by the rules and regulations of the Event.</p>
-    <p>
-        I understand that the annual registration fees mentioned as a part of the online form, which shall be payable by the Institution/{{type
-        | firstcapitalize}} irrespective of the number of Athletes a {{type}} wishes to send; will be valid for the Event
-        for the year 2017 only. In the event no Athlete is eligible (Basis SFA’s eligibility criteria mentioned in the individual
-        sports registration forms) to participate from the Institution/{{type | firstcapitalize}}, SFA shall refund the registration
-        fee within thirty (30) days from the last day of registration.
-    </p>
-    <p>(Payment will be accepted by Demand Draft, Cheque, Cash, Online Payment Options, Credit Card, Debit Card and Online Bank
-        Transfer. The Demand Draft/Cheque must be drawn in favor of SFA Events Pvt. Ltd. Demand Draft to be payable at the
-        address mentioned on the online entry form. A Payment receipt shall be provided by SFA.)</p>
-    <p>I understand and acknowledge that by registering for this Event and paying the registration fees, the Athletes of our
-        Institution/{{type | firstcapitalize}} are not guaranteed to qualify for any event category. Only the Athletes chosen
-        by the Tournament Organising Committee by way of a draw and eligibility criteria shall be eligible to play and participate
-        in the Event. Further, in the event that no Athlete of the Institution/{{type | firstcapitalize}} qualifies to participate
-        in the Event, SFA shall refund the registration fees within thirty (30) working days from the last day of registration.</p>
-    <p>I have read and understood the Eligibility Criteria of every sport and the Event rules and regulations available on the
-        website <a href="https://sfanow.in">www.sfanow.in</a>.</p>
-    <p>I further understand and acknowledge that the logo of the Institution/{{type | firstcapitalize}} shall be utilized by
-        SFA and a Institution/{{type | firstcapitalize}} Profile shall be created and displayed on the official website of
-        SFA. I hereby, on behalf of the Institution/{{type | firstcapitalize}}, give consent to SFA to use the Institution/{{type
-        | firstcapitalize}} emblem.
-    </p>
-    <p>I also understand and agree that the Athletes shall be photographed and video-graphed (collectively referred to as “Content”)
-        during the Event and all intellectual property in the Content shall belong to SFA for perpetuity. Furthermore, I
-        authorize SFA to use the Content and also share the Content with sponsors/third parties, in the manner SFA deems
-        appropriate, in the best interest of the Athletes and the Institution/{{type | firstcapitalize}}.
-    </p>
-    <p>I hereby understand that the Institution/{{type | firstcapitalize}} shall be responsible for the transportation of the
-        qualified Athletes to the venue at the cost and expense of the Institution/{{type | firstcapitalize}}/Athletes.</p>
-    <p>The facts and information given in the application form, along with the information furnished by the {{type | firstcapitalize}},
-        have been verified by me, and I assure you that the same are true and correct to the best of my knowledge.</p>
-    <p>I hereby agree that no claims shall accrue in favour of the Institution/{{type | firstcapitalize}} against SFA Events
-        Pvt. Ltd., and I hereby waive, release, and discharge any and all claims which may accrue to the Institute/{{type
-        | firstcapitalize}} and/or to any Athlete who is a participant at the Event.
-    </p>
-    <p>I hereby agree that the Institution/{{type | firstcapitalize}} shall assume all responsibility for any damage to property,
-        or any injury caused to any person by an Athlete who is a student of the Institution/{{type | firstcapitalize}}.</p>
-    <p>I have carefully read and understood the terms and conditions of this form / disclaimer / waiver and as described in
-        this form / disclaimer / waiver and consent to all of them.</p>
+    DISCLAIMER
+    <div class="disclaimer-form">
+        <p>I as the Principal/Head of the Institution/ {{type | firstcapitalize}}/ Sports Department, hereby consent to the
+            students (“Athlete(s)”) to participate in the Event being organized by SFA Events Pvt. Ltd (“SFA”). </p>
+        <p>I undertake that the Institution/{{type | firstcapitalize}} would be represented by the Athlete/s and the Athlete/s
+            would abide by the rules and regulations of the Event.</p>
+        <p>
+            I understand that there is an annual Registration Fees mentioned as a part of the online registration form, which shall be
+            payable by the Institution/School irrespective of the number of Athletes a school wishes to send, and such fee
+            shall be valid for only the Championship and any ancillary benefits if SFA so decides to offer, at its sole discretion,
+            for that particular calendar year, only.
+        </p>
+        <p>(Payment will be accepted by Demand Draft, Cheque, Cash, Online Payment Options, Credit Card, Debit Card and Online
+            Bank Transfer. The Demand Draft/Cheque must be drawn in favor of SFA Events Pvt. Ltd. Demand Draft to be payable
+            at the address mentioned on the online entry form. A Payment receipt shall be provided by SFA.)</p>
+
+        <p>I understand and acknowledge that by registering for the Championship and paying the Registration Fees, the Athletes
+            of our Institution/{{type | firstcapitalize}} are not guaranteed to qualify for any event category. Only the
+            Athletes chosen by the SFA authorities by way of a draw and eligibility criteria shall be eligible to play and
+            participate in the Championship. I have read and understood the Eligibility Criteria of every sport and the Championship
+            rules and regulations available on the website <a href="https://sfanow.in">www.sfanow.in</a></p>
+
+        <p>I understand and acknowledge that in the event that no Athlete of the Institution/{{type | firstcapitalize}} qualifies
+            to participate in the Championship, SFA shall refund the school Registration Fees within thirty (30) working
+            days from the last day of registration..</p>
+
+        <p>I further understand that in the event that SFA re-schedules, postpones and/or cancels the Championship because of
+            substantial damage or destruction to the venue or organization due to any cause, a natural disaster, or action
+            or decree of governmental body with appropriate jurisdiction (hereinafter referred to as a “Force Majeure Event”),
+            SFA shall immediately give notice to the {{type | firstcapitalize}}/Institution and shall do everything possible
+            to reschedule the Championship and use the registration fee towards such re-scheduled / postponed Championship.
+            No refund shall be issued in case of re-scheduling, postponement or cancellation due to a Force Majeure Event.
+        </p>
+        <p>I further understand and acknowledge that the logo of the Institution/{{type | firstcapitalize}} shall be utilized
+            by SFA and a Institution/{{type | firstcapitalize}} Profile shall be created and displayed on the official website
+            of SFA. I hereby, on behalf of the Institution/{{type | firstcapitalize}}, give consent to SFA to use the Institution/{{type
+            | firstcapitalize}} emblem..
+        </p>
+        <p>I also understand and agree that the Athletes shall be photographed and video-graphed (collectively referred to as
+            “Content”) during the Championship and all intellectual property in the Content shall belong to SFA for perpetuity.
+            Furthermore, I authorise SFA to use the Content and also share the Content with sponsors/third parties, in the
+            manner SFA deems appropriate and in accordance with the prevalent laws, in the best interest of the Athletes
+            and the Institution/{{type | firstcapitalize}}.</p>
+
+        <p>I hereby understand that the Institution/{{type | firstcapitalize}} shall be responsible for the transportation of
+            the qualified Athletes to the venue at the cost and expense of the Institution/{{type | firstcapitalize}}/Athletes.</p>
+
+        <p>The facts and information given in the Registration Form, along with the information furnished by the Institution/{{type
+            | firstcapitalize}}, have been verified by me, and I assure you that the same are true and correct to the best
+            of my knowledge.
+        </p>
+        <p>I hereby agree that no claims shall accrue in favour of the Institution/{{type | firstcapitalize}} against SFA, and
+            I hereby waive, release, and discharge any and all claims which may accrue to the Institute/{{type | firstcapitalize}}
+            and/or to any Athlete who is a participant at the Championship.</p>
+        <p>
+            I hereby agree that the Institution/{{type | firstcapitalize}} shall assume all responsibility for any damage to property,
+            or any injury caused to any person by an Athlete who is a student of the Institution/{{type | firstcapitalize}}.
+        </p>
+        <p>I hereby confirm that I have read and understood all the Terms and Conditions attached to the Registration Form and
+            this Disclaimer.
+        </p>
+    </div>
+    <div class="terms-condition">
+        <div class="text-center text-uppercase">
+            <strong> <u> Terms and condition</u> </strong>
+        </div>
+        <div class="terms-conditionholder">
+            <ul style="list-style-type:decimal">
+                <li>
+                    The procedure mentioned for the purpose of filling and submitting the registration form must be strictly adhered to and in
+                    the event of any error / default in following such procedure may result in cancellation of the registration.
+                </li>
+                <li>
+                    The registration of an Athlete shall be cancelled in the event all requisite documents are not submitted.
+                </li>
+                <li>
+                    The payment in the form of Registration Fee must be made before the deadline mentioned in the form / SFA website.
+                </li>
+                <li>
+                    Any payment not received before the deadline i.e. within 4 (four) days of submitting the Registration Form shall result in
+                    cancellation of the registration.
+                </li>
+                <li>
+                    It is the School/Institution and/or the Athlete’s responsibility to check the list of draws and the final set of rules and
+                    regulations, which shall be uploaded on SFA’s official website 5 (five) days prior to the event such
+                    athlete is participating in.
+                </li>
+                <li>
+                    Any conflict with regard to the rules shall be addressed by the Sport Committee and such Sport Committee’s decision shall
+                    be final and binding on all participants.
+                </li>
+                <li>
+                    Any Athlete who does not use appropriate equipment while participating in an event may suffer the risk of disqualification
+                    and such disqualification shall be at the sole discretion of the Sport Committee.
+                </li>
+                <li>
+                    There shall be no addition and/or replacement to any team and/or individual Athlete that represents the School/Institution
+                    in an event after the Registration deadline.
+                </li>
+                <li>
+
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
 
 <div class="login-modal" ng-if="type == 'college'">

@@ -10,7 +10,7 @@
         <!-- SGST -->
         <div class="col-md-3">
           <div class="form-group">
-            <label for="">Sgst Amt</label>
+            <label for="">Sgst</label>
             <input type="text" name="sgst" class="form-control" only-digits ng-model="formData.sgst" id="sgst" placeholder="Enter Sgst">
           </div>
         </div>
@@ -18,7 +18,7 @@
         <!-- CGST -->
         <div class="col-md-3">
           <div class="form-group">
-            <label for="">Cgst Amt</label>
+            <label for="">Cgst</label>
             <input type="text" name="cgst" class="form-control" only-digits ng-model="formData.cgst" id="cgst" placeholder="Enter Cgst">
           </div>
         </div>
@@ -27,7 +27,7 @@
         <!-- DISCOUNT -->
         <div class="col-md-3">
           <div class="form-group">
-            <label for="">Discount Amt</label>
+            <label for="">Discount</label>
             <input type="text" name="cgst" class="form-control" only-digits ng-model="formData.discount" id="cgst" placeholder="Enter Discount">
           </div>
         </div>
@@ -46,7 +46,7 @@
         <div class="col-md-3">
           <div class="form-group">
             <label for="">Mode Payment</label>
-            <select name="modepayment" id="modepayment" class="form-control" ng-model="formData.modePayment">
+            <select name="modepayment" id="modepayment" class="form-control" ng-model="formData.paymentMode">
                 <option value="cash">Cash</option>
                 <option value="sponsor">Sponsered</option>
               </select>
@@ -100,7 +100,7 @@
               </thead>
               <tbody>
                 <!-- {{reciptnoData| json}} -->
-                <tr ng-repeat="packageDetail in formData.packageData track by $index">
+                <tr ng-repeat="packageDetail in formData.transaction track by $index">
                   <!-- PACKAGE SELECTION -->
                   <td>
                     <select name="packageName" id="packagename" class="form-control" ng-model="packageDetail.package" ng-options="{_id:data._id,name:data.name,amount:data.price} as data.name for data in packageNameData track by data._id"
@@ -112,7 +112,8 @@
 
                   <!-- RECIPT NO -->
                   <td>
-                    <input type="text" placeholder="Enter Recipt no" name="reciptno" class="form-control" ng-model="packageDetail.reciptNo" required>
+                    <input type="text" placeholder="Enter Recipt no" name="reciptno" class="form-control" ng-model="packageDetail.receiptNo"
+                      required>
                     <div class="label label-danger pull-right" ng-if="accountForm.reciptno.$invalid && accountForm.reciptno.$touched">Please Enter Valid Recipt No *</div>
                   </td>
                   <!-- RECIPT NO END -->
