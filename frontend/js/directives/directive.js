@@ -940,7 +940,7 @@ myApp.directive('img', function ($compile, $parse) {
                         console.log("packages search failed", data);
                     }
                 });
-                NavigationService.getPackageFeatures($scope.formfeature, function (data) {
+                NavigationService.getPackageFeatures($scope.formFeature, function (data) {
                     data = data.data;
                     console.log("feat", data);
                     if (data.value = true) {
