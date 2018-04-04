@@ -8,12 +8,13 @@
       <p>To participate in more events and enjoy a host of other benefits, simply select the package and upgrade.</p>
     </div>
     <div class="upgradepackage-selection">
-      <form name="upgradePackage">
+      <form name="upgradePackage" ng-submit="packageUpgrade(formData)">
         <!-- UPGRADE RADIO -->
         <div class="upgradepackage-radioholder">
           <label for="packageRadio{{$index}}" class="sfa-radiobox" ng-repeat = "package in packages| orderBy:'order' track by $index">
-            <input type="radio" name="packageRadio" id="packageRadio{{$index}}" value="{{package._id}}" class="form-control" ng-model="formData.package" required>
+            <input type="radio" name="packageRadio" id="packageRadio{{$index}}" value="{{package._id}}" class="form-control" ng-model="formData.package" ng-change="setPackageDetails(package._id, 'click')" ng-disabled="package.order >= currentPackage.order" required>
             <span class="sfa-radio"></span>
+            <span class="sfa-radio-disabled"></span>
             <div class="upgradepackage-radiocontent" ng-class="{'package-radio-blue': package.color == 'blue', 'package-radio-green': package.color == 'green', 'package-radio-red': package.color == 'red', 'package-radio-yellow': package.color == 'yellow'}">
               <span class="upgradepackage-radioprice"><span class="upgradepackage-radioinr fa fa-inr"></span>{{package.finalPrice}}</span>
               <span class="upgradepackage-radioname">{{package.name}}</span>
@@ -27,9 +28,12 @@
         </div>
         <!-- UPGRADE TABLE END -->
         <!-- UPGRADE PAYMENT TABLE -->
-        <div class="upgradepackage-payment">
+        <div class="upgradepackage-payment" ng-show="showPaymentTab">
           <div class="row">
             <div class="col-md-6">
+              <div class="upgradepackage-header">
+                Payment Details
+              </div>
               <div class="registerform-tablepayment">
                 <table class="table">
                   <tbody>
@@ -40,6 +44,16 @@
                         </div>
                       <td>
                         <span>{{formData.amountToPay}}</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td >
+                        <div class="text-left">
+                          Amount Paid
+                        </div>
+                      </td>
+                      <td>
+                        - <span>{{formData.totalPaid}}</span>
                       </td>
                     </tr>
                     <!-- PROMO CODE -->
@@ -58,7 +72,7 @@
                     <!-- IF IGST -->
                     <tr ng-if="formData.igstAmt != ''">
                       <td><div class="text-left">
-                        +IGST@{{formData.igstPercent}}%
+                        +IGST @ {{formData.igstPercent}}%
                       </div></td>
                       <td>
                         <span>{{formData.igstAmt}}</span>
@@ -68,7 +82,7 @@
                     <!-- IF CGST  -->
                     <tr ng-if="formData.cgstAmt != ''">
                       <td><div class="text-left">
-                        +CST@{{formData.cgstPercent}}%
+                        +CST @ {{formData.cgstPercent}}%
                       </div></td>
                       <td>
                         <span>{{formData.cgstAmt}}</span>
@@ -78,19 +92,19 @@
                     <!-- IF SGST  -->
                     <tr  ng-if="formData.sgstAmt != ''">
                       <td>
-                        <div class="text-left">+GST@{{formData.sgstPercent}}%</div></td>
+                        <div class="text-left">+GST @ {{formData.sgstPercent}}%</div></td>
                       <td>
                         <span>{{formData.sgstAmt}}</span>
                       </td>
                     </tr>
                     <!-- IF SGST END  -->
                     <tr>
-                      <td>
+                      <td class="upgrade-payment-blue">
                         <div class="text-left">
                           <span class="r-titillium-web-semibold">Total Amount Payable</span>
                         </div>
                       </td>
-                      <td>
+                      <td class="upgrade-payment-blue">
                         <span>{{formData.amountPaid}}</span>
                       </td>
                     </tr>
@@ -101,6 +115,50 @@
           </div>
         </div>
         <!-- UPGRADE PAYMENT TABLE END -->
+        <div class="upgradepackage-paymentmode" ng-show="showPaymentTab">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="upgradepackage-header">
+                Please Select Mode of Payment
+              </div>
+              <div class="upgradepackage-paymentradio">
+                <label for="radio31" class="sfa-radiobox">
+                  <input ng-model="formData.registrationFee" type="radio" id="radio31" name="radio" value="online PAYU" required>
+                  <span class="sfa-radio"></span>
+                  Online Payment
+                </label>
+                <label for="radio32" class="sfa-radiobox">
+                  <input ng-model="formData.registrationFee" type="radio" id="radio32" name="radio" value="cash" required>
+                  <span class="sfa-radio"></span>
+                  Cash/ Cheque/ Demand Draft
+                </label>
+              </div>
+            </div>
+              <div class="col-md-8">
+                <!-- PAYU -->
+                <div class="formregister-mtb20" ng-if="formData.registrationFee == 'online PAYU'">
+                  Selecting this option will enable you to pay the registration fee of 399/ 899/ 899/ 1999 (+GST) via one of the following methods: 1) Credit Card 2) Debit Card 3) Net Banking
+                </div>
+                <!-- PAYU END -->
+                <!-- CASH/ CHEQUE INFO -->
+                <div class="formregister-mtb20" ng-if="formData.registrationFee == 'cash'">
+                  <div class="formregister-mtb20">
+                    <p>Selecting this option will enable you to pay the registration fee of Rs 599/ 899/ 1999 (+GST) by Cash/ Cheque/ Demand Draft in favour of <span class="r-titillium-web-semibold">'SFA Sporting Services Pvt Ltd'</span> which is to be couriered/ hand delivered <span class="r-titillium-web-semibold">WITHIN 4 WORKING DAYS</span> to:</p>
+                  </div>
+                  <div class="formregister-mtb20">
+                    <p class="r-titillium-web-semibold">17A, Raviraj House, 6th Floor, Saraswati Road, Off Linking Road, Santacruz (West) - 400053</p>
+                  </div>
+                </div>
+                <!-- CASH/ CHEQUE INFO END -->
+              </div>
+              <div class="col-md-8">
+                <div class="formregister-mtb20">
+                  <button class="btn formregister-btn text-uppercase" type="submit">Proceed To Sports Registrations</button>
+                </div>
+              </div>
+
+          </div>
+        </div>
       </form>
     </div>
   </div>

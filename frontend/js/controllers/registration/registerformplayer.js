@@ -49,27 +49,29 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, Na
                 $scope.showPaymentTab = true;
                 $scope.promoApplied = false;
                 $scope.formData.packageName = n.name;
-                $scope.formData.amountToPay = n.price;
+                $scope.formData.amountToPay = n.finalPrice;
                 $scope.formData.discount = 0;
-                $scope.formData.amountPaid = n.finalPrice;
+                $scope.formData.cgstPercent = '';
+                $scope.formData.cgstAmt = '';
+                $scope.formData.sgstPercent = '';
+                $scope.formData.sgstAmt = '';
+                $scope.formData.igstPercent = '';
+                $scope.formData.igstAmt = '';
                 $scope.promoCode = {
                     code: ''
                 }
                 if (n.igstPercent) {
                     $scope.formData.igstPercent = n.igstPercent;
                     $scope.formData.igstAmt = n.igstAmt;
-                    $scope.formData.cgstPercent = '';
-                    $scope.formData.cgstAmt = '';
-                    $scope.formData.sgstPercent = '';
-                    $scope.formData.sgstAmt = '';
+                    $scope.formData.amountPaid = $scope.formData.amountToPay + $scope.formData.igstAmt;
                 }
                 if (n.cgstPercent && n.sgstPercent) {
                     $scope.formData.cgstPercent = n.cgstPercent;
                     $scope.formData.cgstAmt = n.cgstAmt;
                     $scope.formData.sgstPercent = n.sgstPercent;
                     $scope.formData.sgstAmt = n.sgstAmt;
-                    $scope.formData.igstPercent = '';
-                    $scope.formData.igstAmt = '';
+                    $scope.formData.amountPaid = $scope.formData.amountToPay + $scope.formData.cgstAmt + $scope.formData.sgstAmt;
+                    console.log($scope.formData.amountPaid, $scope.formData.amountToPay);
                 }
             }
         })

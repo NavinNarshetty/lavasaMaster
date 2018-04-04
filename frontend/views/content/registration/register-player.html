@@ -86,7 +86,7 @@
         <button class="btn btn-mainregister" ng-click="registerOpen();" ng-class="{'active': showForm}">Register For SFA Mumbai 2018-19</button>
       </div>
       <div class="registerform-holder" ng-show="showForm">
-        <p class="registerform-intro">All players must complete the following two step registration process</p>
+        <p class="registerform-intro">All <span ng-if="pageType == 'player'">players</span><span ng-if="pageType == 'school'">schools</span> must complete the following two step registration process</p>
         <!-- STEP BUTTONS -->
         <ul class="list-inline">
           <li>

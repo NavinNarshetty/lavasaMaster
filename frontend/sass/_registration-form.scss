@@ -61,6 +61,7 @@
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 3;
     &:after {
       content: '';
       width: 100%;
@@ -75,18 +76,37 @@
       @include transform(translate(-50%, -50%));
     }
   }
+  .sfa-radio-disabled{
+    display: none;
+    position: absolute;
+    top: -5px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(255,255,255,0.6);
+    cursor: not-allowed;
+    z-index: 5;
+  }
   input[type='radio'] {
     position: absolute;
     top: 0;
     left: 0;
     cursor: pointer;
     opacity: 0;
-  } // HIGHLIGHT ON HOVER
+    z-index: 1;
+  }
+  // HIGHLIGHT ON HOVER
   &:hover {
     input~.sfa-radio {
       background-color: #f5f5f5;
     }
   }
+  // HIGHLIGHT ON HOVER END
+  // DISABLED
+  input:disabled~.sfa-radio-disabled{
+    display: block;
+  }
+  // DISABLED END
   input:checked~.sfa-radio:after {
     display: block;
   }
@@ -321,7 +341,7 @@
   font-size: 12px;
 }
 
-// UPGRADE PACKAGE SECTION
+// UPGRADE PACKAGE PAGE
 .upgradepackage-page {
   min-height: 100vh;
   padding: 50px 0;
@@ -484,8 +504,10 @@
 }
 
 .package-tabheader {
-  padding: 10px;
+  padding: 10px !important;
   border-radius: 10px 10px 0 0;
+  border-left: 2px solid #fff !important;
+  border-right: 2px solid #fff !important;
   position: relative;
   background-color: $sport-table-grey;
   color: #fff;
@@ -580,4 +602,18 @@
 }
 
 // PACKAGE TABLE END
-// UPGRADE PACKAGE SECTION END
+.upgradepackage-header{
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: $sport-primary;
+  @extend .r-titillium-web-semibold;
+}
+.upgradepackage-payment, .upgradepackage-paymentmode{
+  margin: 40px 0;
+}
+.upgrade-payment-blue{
+  background-color: $sport-primary;
+  color: #fff;
+  border: none !important;
+}
+// UPGRADE PACKAGE PAGE END

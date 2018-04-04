@@ -1382,6 +1382,24 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
             }else{
                 $state.go('sports-registration');
             }
+        },
+        getStatusUpgrade: function(request, callback) {
+          $http({
+            url: adminUrl2 + 'Accounts/getStatus',
+            method: 'POST',
+            data: request
+          }).then(function(data){
+            callback(data);
+          });
+        },
+        upgradeAccount: function(request, callback) {
+          $http({
+            url: adminUrl2 + 'Accounts/upgradeAccount',
+            method: 'POST',
+            data: request
+          }).then(function(data){
+            callback(data);
+          });
         }
     };
 });

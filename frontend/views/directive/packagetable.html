@@ -6,14 +6,14 @@
           Features
         </div>
       </th>
-      <th ng-repeat = "package in packages | orderBy:'order' track by $index" >
-        <div class="package-tabheader" ng-class="{'package-tabhead-blue': package.color == 'blue', 'package-tabhead-green': package.color == 'green', 'package-tabhead-red': package.color == 'red', 'package-tabhead-yellow': package.color == 'yellow'}">
+      <th class="package-tabheader" ng-class="{'package-tabhead-blue': package.color == 'blue', 'package-tabhead-green': package.color == 'green', 'package-tabhead-red': package.color == 'red', 'package-tabhead-yellow': package.color == 'yellow'}" ng-repeat = "package in packages | orderBy:'order' track by $index" >
+        <div >
           <div class="package-headtab" ng-if="package.header">
             <span>{{package.header}}</span>
           </div>
           <div class="upgradepackage-radiocontent">
-            <span class="upgradepackage-offer">Early Bird Offer</span>
-            <span class="upgradepackage-offeramount">( <i class="fa fa-inr"></i> {{package.price}})</span>
+            <span class="upgradepackage-offer" ng-if="package.price != ''">Early Bird Offer</span>
+            <span class="upgradepackage-offeramount" ng-if="package.price != ''">( <i class="fa fa-inr"></i> {{package.price}})</span>
             <span class="upgradepackage-radioprice"><span class="upgradepackage-radioinr fa fa-inr"></span>{{package.finalPrice}}</span>
             <span class="upgradepackage-tax">+taxes</span>
             <span class="upgradepackage-radioname">{{package.name}}</span>
