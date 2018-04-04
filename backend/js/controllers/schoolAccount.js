@@ -121,21 +121,24 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
         "package": '',
         "receiptId": '',
         "checkNo": '',
+        "isDelete": false
       })
     } else {
       formData.transactions.push({
         "package": '',
         "receiptId": '',
         "checkNo": '',
+        "isDelete": false
       })
     }
   }
   // ADD ROW FUNCTION END
 
   // DELETE ROW
-  $scope.deleteRow = function (formData, index) {
-    console.log(formData, "check this");
+  $scope.deleteRow = function (formData, index, status) {
+    formData.transactions[index].isDelete = !status;
     formData.transactions.splice(index, 1);
+    console.log(formData, "check this");
   }
   // DELETE ROW END
 
