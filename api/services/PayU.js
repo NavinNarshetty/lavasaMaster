@@ -277,7 +277,192 @@ var models = {
                 city: city
             }
         }, callback);
-    }
+    },
+
+    //------------------------------------  PACKAGE UPGRADE PAYMENT --------------------------------
+
+    atheleteUpgradePayment: function (found, callback) {
+        console.log("found", found);
+        Accounts.findOne({
+            athlete: found._id
+        }).lean().exec(function (err, accountsData) {
+            if (err) {
+                callback(null, {
+                    error: err,
+                    data: found
+                });
+            } else {
+                found.accounts = accountsData;
+                var txnid = generator.generate({
+                    length: 8,
+                    numbers: true
+                });
+
+                var amount = found.accounts.outstandingAmount;
+                var firstname = found.firstName;
+                var lastname = found.surname;
+                var pincode = found.pinCode;
+                var city = found.city;
+                var country = "India";
+                var state = found.state;
+                var athleteAddress1 = found.address;
+                var athleteAddress2 = found.addressLine2;
+                var email = found.email;
+                var phone = found.mobile;
+                var productinfo = "package";
+                var hash = sha512(payukey + "|" + txnid + "|" + amount + "|" + productinfo + "|" + firstname + "|" + email + "|||||||||||" + payusalt);
+                var hashtext = hash.toString('hex');
+                request.post({
+                    url: payuurl,
+                    form: {
+                        key: payukey,
+                        txnid: txnid,
+                        amount: amount,
+                        productinfo: productinfo,
+                        firstname: firstname,
+                        lastname: lastname,
+                        email: email,
+                        // surl: 'http://mumbaischool.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        // furl: 'http://mumbaischool.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        // surl: 'http://mumbaicollege.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        // furl: 'http://mumbaicollege.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        // surl: 'http://hyderabadschool.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        // furl: 'http://hyderabadschool.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        // surl: 'http://hyderabadcollege.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        // furl: 'http://hyderabadcollege.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        // surl: 'http://ahmedabadschool.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        // furl: 'http://ahmedabadschool.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        // surl: 'http://ahmedabadcollege.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        // furl: 'http://ahmedabadcollege.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        phone: phone,
+                        // surl: 'http://sfa2.wohlig.co.in/api/payU/successUpgradeErrorAthelete',
+                        // furl: 'http://sfa2.wohlig.co.in/api/payU/successUpgradeErrorAthelete',
+                        // surl: 'https://sfa.wohlig.co.in/api/payU/successUpgradeErrorAthelete',
+                        // furl: 'https://sfa.wohlig.co.in/api/payU/successUpgradeErrorAthelete',
+                        // surl: 'http://testmumbai2015.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        // furl: 'http://testmumbai2015.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        // surl: 'http://testmumbai2016.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        // furl: 'http://testmumbai2016.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        // surl: 'http://testmumbaischool.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        // furl: 'http://testmumbaischool.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        // surl: 'http://testmumbaicollege.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        // furl: 'http://testmumbaicollege.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        // surl: 'http://testhyderabadschool.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        // furl: 'http://testhyderabadschool.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        // surl: 'http://testhyderabadcollege.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        // furl: 'http://testhyderabadcollege.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        // surl: 'http://testahmedabadschool.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        // furl: 'http://testahmedabadschool.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        // surl: 'http://testahmedabadcollege.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        // furl: 'http://testahmedabadcollege.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        surl: 'http://wohlig.io:1337/api/payU/successUpgradeErrorAthelete',
+                        furl: 'http://wohlig.io:1337/api/payU/successUpgradeErrorAthelete',
+                        hash: hashtext,
+                        address1: athleteAddress1,
+                        address2: athleteAddress2,
+                        state: state,
+                        country: country,
+                        zipcode: pincode,
+                        city: city
+                    }
+                }, callback);
+            }
+        });
+    },
+
+    schoolUpgradePayment: function (data, callback) {
+        Accounts.findOne({
+            school: data._id
+        }).lean().exec(function (err, accountsData) {
+            if (err) {
+                callback(null, {
+                    error: err,
+                    data: found
+                });
+            } else {
+                data.accounts = accountsData;
+                var txnid = generator.generate({
+                    length: 8,
+                    numbers: true
+                });
+                //var txnid = data.;
+                var amount = data.accounts.outstandingAmount;
+                var firstname = data.schoolName;
+                var pincode = data.pinCode;
+                var city = data.city;
+                var country = "India";
+                var state = data.state;
+                var schoolAddress1 = data.schoolAddress;
+                var schoolAddress2 = data.schoolAddressLine2;
+                var email = data.email;
+                var phone = data.mobile;
+                console.log(data);
+                // var pg = found.paymentMethod;
+                if (data.property.institutionType == "school") {
+                    var productinfo = "School Registration to SFA";
+                } else {
+                    var productinfo = "College Registration to SFA";
+                }
+                var hash = sha512(payukey + "|" + txnid + "|" + amount + "|" + productinfo + "|" + firstname + "|" + email + "|||||||||||" + payusalt);
+                var hashtext = hash.toString('hex');
+                request.post({
+                    url: payuurl,
+                    form: {
+                        key: payukey,
+                        txnid: txnid,
+                        amount: amount,
+                        productinfo: productinfo,
+                        firstname: firstname,
+                        // surl: 'http://mumbaischool.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        // furl: 'http://mumbaischool.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        // surl: 'http://mumbaicollege.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        // furl: 'http://mumbaicollege.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        // surl: 'http://hyderabadschool.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        // furl: 'http://hyderabadschool.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        // surl: 'http://hyderabadcollege.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        // furl: 'http://hyderabadcollege.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        // surl: 'http://ahmedabadschool.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        // furl: 'http://ahmedabadschool.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        // surl: 'http://ahmedabadcollege.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        // furl: 'http://ahmedabadcollege.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        email: email,
+                        phone: phone,
+                        // surl: 'http://sfa2.wohlig.co.in/api/payU/successUpgradeErrorSchool',
+                        // furl: 'http://sfa2.wohlig.co.in/api/payU/successUpgradeErrorSchool',
+                        // surl: 'https://sfa.wohlig.co.in/api/payU/successUpgradeErrorSchool',
+                        // furl: 'https://sfa.wohlig.co.in/api/payU/successUpgradeErrorSchool',
+                        // surl: 'http://testmumbai2015.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        // furl: 'http://testmumbai2015.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        // surl: 'http://testmumbai2016.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        // furl: 'http://testmumbai2016.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        // surl: 'http://testmumbaischool.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        // furl: 'http://testmumbaischool.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        // surl: 'http://testmumbaicollege.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        // furl: 'http://testmumbaicollege.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        // surl: 'http://testhyderabadschool.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        // furl: 'http://testhyderabadschool.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        // surl: 'http://testhyderabadcollege.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        // furl: 'http://testhyderabadcollege.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        // surl: 'http://testahmedabadschool.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        // furl: 'http://testahmedabadschool.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        // surl: 'http://testahmedabadcollege.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        // furl: 'http://testahmedabadcollege.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        surl: 'http://wohlig.io:1337/api/payU/successUpgradeErrorSchool',
+                        furl: 'http://wohlig.io:1337/api/payU/successUpgradeErrorSchool',
+                        hash: hashtext,
+                        // pg: pg,
+                        address1: schoolAddress1,
+                        address2: schoolAddress2,
+                        state: state,
+                        country: country,
+                        zipcode: pincode,
+                        city: city
+                    }
+                }, callback);
+            }
+        });
+    },
+
 };
 
 module.exports = _.assign(module.exports, models);

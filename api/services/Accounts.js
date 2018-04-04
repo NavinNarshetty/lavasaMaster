@@ -54,6 +54,9 @@ var schema = new Schema({
         type: String,
     }],
     remarks: String,
+    upgrade: Boolean,
+    upgradePaymentStatus: String,
+
 });
 
 schema.plugin(deepPopulate, {
@@ -200,14 +203,14 @@ var model = {
             });
     },
 
-    getStatuts: function (data, callback) {
+    getStatus: function (data, callback) {
         Accounts.findOne({
             $or: [{
                 athlete: data._id
             }, {
                 school: data._id
             }]
-        }, 'outstandingAmount totalPaid totalToPay igst cgst sgst athlete').lean().deepPopulate("athlete").exec(
+        }, 'outstandingAmount upgradePaymentStatus totalPaid totalToPay igst cgst sgst athlete').lean().deepPopulate("athlete").exec(
             function (err, found) {
                 if (err) {
                     callback(err, null);
@@ -219,48 +222,132 @@ var model = {
             });
     },
 
+    upgradeAccount1: function (data, callback) {
+        if (data.athlete) {
+            Accounts.findOne({
+                athlete: data.athlete
+            }).lean().exec(function (err, accountsData) {
+                if (err) {
+                    callback(err, null);
+                } else if (_.isEmpty(accountsData)) {
+                    callback(null, accountsData);
+                } else {
+
+                    var matchObj = {
+                        $set: {
+                            sgst: data.sgstAmt,
+                            cgst: data.cgstAmt,
+                            igst: data.igstAmt,
+                            discount: data.discount,
+                            outstandingAmount: data.amountPaid,
+                            upgradePackage: data.package
+                        }
+                    };
+                    Accounts.update({
+                        athlete: data.athlete
+                    }, matchObj).exec(
+                        function (err, data3) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (data3) {
+                                callback(null, data);
+                            }
+                        });
+                }
+            });
+        } else {
+            Accounts.findOne({
+                school: data.school
+            }).lean().exec(function (err, accountsData) {
+                if (err) {
+                    callback(err, null);
+                } else if (_.isEmpty(accountsData)) {
+                    var matchObj = {
+                        $set: {
+                            sgst: data.sgstAmt,
+                            cgst: data.cgstAmt,
+                            igst: data.igstAmt,
+                            discount: data.discount,
+                            outstandingAmount: data.amountPaid,
+                            upgradePackage: data.package
+                        }
+                    };
+                    Accounts.update({
+                        school: data.school
+                    }, matchObj).exec(
+                        function (err, data3) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (data3) {
+                                callback(null, data);
+                            }
+                        });
+                }
+            });
+        }
+    },
+
     upgradeAccount: function (data, callback) {
+        console.log("data", data);
         async.waterfall([
                 function (callback) {
-                    var param = {};
-                    if (data.athlete) {
-                        param.athlete = data.athlete;
-                        param.school = undefined;
+                    Transaction.findOne({
+                        $or: [{
+                            athlete: data.athlete
+                        }, {
+                            school: data.school
+                        }],
+                        package: data.package
+                    }).lean().exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            var param = {};
+                            if (data.athlete) {
+                                param.athlete = data.athlete;
+                                param.school = undefined;
 
-                    } else {
-                        param.school = data.athlete;
-                        param.athlete = undefined;
-                    }
-                    param.dateOfTransaction = new Date();
-                    param.package = data.package;
-                    param.amountToPay = data.amountToPay;
-                    param.amountPaid = data.amountPaid;
-                    param.paymentMode = data.registrationFee;
-                    if (data.cgstAmt) {
-                        param.cgstAmount = data.cgstAmt;
-                    }
-                    if (data.sgstAmt) {
-                        param.sgstAmount = data.sgstAmt;
-                    }
+                            } else {
+                                param.school = data.athlete;
+                                param.athlete = undefined;
+                            }
+                            param.dateOfTransaction = new Date();
+                            param.package = data.package;
+                            param.outstandingAmount = data.amountPaid;
+                            param.paymentMode = data.registrationFee;
+                            if (data.cgstAmt) {
+                                param.cgstAmount = data.cgstAmt;
+                            }
+                            if (data.sgstAmt) {
+                                param.sgstAmount = data.sgstAmt;
+                            }
 
-                    if (data.igstAmt) {
-                        param.sgstAmount = data.igstAmt;
-                    }
-                    if (data.discount) {
-                        param.discount = data.discount;
-                    }
-                    Transaction.saveData(param, function (err, transactData) {
-                        if (err || _.isEmpty(transactData)) {
-                            callback(null, {
-                                error: "no data found",
-                                data: data
+                            if (data.igstAmt) {
+                                param.sgstAmount = data.igstAmt;
+                            }
+                            if (data.discount) {
+                                param.discount = data.discount;
+                            }
+                            param.paymentStatus = "pending";
+
+                            Transaction.saveData(param, function (err, transactData) {
+                                if (err || _.isEmpty(transactData)) {
+                                    callback(null, {
+                                        error: "no data found",
+                                        data: data
+                                    });
+                                } else {
+                                    callback(null, transactData);
+                                }
                             });
                         } else {
-                            callback(null, transactData);
+                            callback(null, found);
                         }
                     });
+
                 },
                 function (transactData, callback) {
+                    // console.log("transactData", transactData);
                     if (data.athlete) {
                         Accounts.findOne({
                             athlete: data.athlete
@@ -268,20 +355,29 @@ var model = {
                             if (err) {
                                 callback(err, null);
                             } else if (_.isEmpty(accountsData)) {
+                                callback(null, accountsData);
+                            } else {
+                                var check = false;
+                                _.each(accountsData.transaction, function (n) {
+                                    if (n.equals(transactData._id)) {
+                                        check = true;
+                                    }
+                                })
                                 var transaction = [];
-                                transaction.push(transactData._id);
+                                if (check == false) {
+                                    transaction.push(transactData._id);
+                                }
                                 transaction = _.concat(transaction, accountsData.transaction);
-
                                 var matchObj = {
                                     $set: {
                                         sgst: data.sgstAmt,
                                         cgst: data.cgstAmt,
                                         igst: data.igstAmt,
-                                        totalToPay: data.amountToPay,
-                                        totalPaid: data.amountPaid,
                                         discount: data.discount,
-                                        outstandingAmount: data.outstanding,
+                                        outstandingAmount: data.amountPaid,
                                         transaction: transaction,
+                                        upgradePaymentStatus: "pending",
+                                        upgrade: true
                                     }
                                 };
                                 Accounts.update({
@@ -303,8 +399,16 @@ var model = {
                             if (err) {
                                 callback(err, null);
                             } else if (_.isEmpty(accountsData)) {
+                                var check = false;
+                                _.each(accountsData.transaction, function (n) {
+                                    if (n.equals(transactData._id)) {
+                                        check = true;
+                                    }
+                                })
                                 var transaction = [];
-                                transaction.push(transactData._id);
+                                if (check == false) {
+                                    transaction.push(transactData._id);
+                                }
                                 transaction = _.concat(transaction, accountsData.transaction);
 
                                 var matchObj = {
@@ -312,11 +416,13 @@ var model = {
                                         sgst: data.sgstAmt,
                                         cgst: data.cgstAmt,
                                         igst: data.igstAmt,
-                                        totalToPay: data.amountToPay,
-                                        totalPaid: data.amountPaid,
+                                        // totalToPay: data.amountToPay,
+                                        // totalPaid: data.amountPaid,
                                         discount: data.discount,
-                                        outstandingAmount: data.outstanding,
+                                        outstandingAmount: data.amountPaid,
                                         transaction: transaction,
+                                        upgradePaymentStatus: "pending",
+                                        upgrade: true
                                     }
                                 };
                                 Accounts.update({
@@ -341,7 +447,199 @@ var model = {
                     callback(null, complete);
                 }
             });
-    }
+    },
+
+    updateAthletePaymentStatus: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    Athelete.findOne({ //finds one with refrence to id
+                        firstName: data.firstName,
+                        surname: data.surname,
+                        email: data.email,
+                    }).lean().exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            console.log("empty in Athelete found");
+                            callback(null, "Data is empty");
+                        } else {
+                            async.waterfall([
+                                    function (callback) {
+                                        Accounts.findOne({
+                                            athlete: found._id
+                                        }).lean().exec(function (err, accountsData) {
+                                            if (err || _.isEmpty(accountsData)) {
+                                                callback(null, {
+                                                    error: "no data found",
+                                                    data: found
+                                                });
+                                            } else {
+                                                found.accounts = accountsData;
+                                                callback(null, found);
+                                            }
+                                        });
+                                    },
+                                    function (found, callback) {
+                                        data.athlete = true;
+                                        Transaction.saveUpdateTransaction(data, found, function (err, vData) {
+                                            if (err || _.isEmpty(vData)) {
+                                                callback(null, {
+                                                    error: "no data found",
+                                                    data: found
+                                                });
+                                            } else {
+                                                found.packageNew = vData.package;
+                                                callback(null, found);
+                                            }
+                                        });
+                                    },
+                                ],
+                                function (err, complete) {
+                                    if (err) {
+                                        callback(err, callback);
+                                    } else {
+                                        callback(null, complete);
+                                    }
+                                });
+                        }
+                    });
+                },
+                function (found, callback) {
+                    if (found.error) {
+                        callback(null, found);
+                    } else {
+                        console.log("found in update", found);
+
+                        var matchObj = {
+                            $set: {
+                                package: found.packageNew
+                            }
+                        };
+                        Athelete.update({
+                            _id: found._id
+                        }, matchObj).exec(
+                            function (err, data3) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(err, null);
+                                } else if (data3) {
+                                    callback(null, data3)
+                                }
+                            });
+                    }
+                },
+            ],
+            function (err, data2) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
+                    callback(null, data2);
+                }
+
+            });
+    },
+    updateSchoolPaymentStatus: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    ConfigProperty.find().lean().exec(function (err, property) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(property)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, property);
+                            }
+                        }
+                    });
+                },
+                function (property, callback) {
+                    console.log("inside update", data);
+                    Registration.findOne({ //finds one with refrence to id
+                        schoolName: data.schoolName
+                    }).exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            callback(null, "Data is empty");
+                        } else {
+                            async.waterfall([
+                                    function (callback) {
+                                        Accounts.findOne({
+                                            school: found._id
+                                        }).lean().exec(function (err, accountsData) {
+                                            if (err || _.isEmpty(accountsData)) {
+                                                callback(null, {
+                                                    error: "no data found",
+                                                    data: found
+                                                });
+                                            } else {
+                                                found.accounts = accountsData;
+                                                callback(null, found);
+                                            }
+                                        });
+                                    },
+                                    function (found, callback) {
+                                        data.school = true;
+                                        Transaction.saveUpdateTransaction(data, found, function (err, vData) {
+                                            if (err || _.isEmpty(vData)) {
+                                                callback(null, {
+                                                    error: "no data found",
+                                                    data: found
+                                                });
+                                            } else {
+                                                found.packageNew = vData.package;
+                                                callback(null, found);
+                                            }
+                                        });
+                                    },
+                                    function (found, callback) {
+                                        if (found.error) {
+                                            callback(null, found);
+                                        } else {
+                                            var matchObj = {
+                                                $set: {
+                                                    package: found.packageNew
+                                                }
+                                            };
+                                            console.log("found in update", found);
+                                            Registration.update({
+                                                _id: found._id
+                                            }, matchObj).exec(
+                                                function (err, data3) {
+                                                    callback(err, data3);
+                                                    if (err) {
+                                                        callback(err, null);
+                                                    } else {
+                                                        callback(null, data3);
+                                                    }
+                                                });
+                                        }
+                                    }
+                                ],
+                                function (err, complete) {
+                                    if (err) {
+                                        callback(err, callback);
+                                    } else {
+                                        callback(null, complete);
+                                    }
+                                });
+
+                        }
+                    });
+                }
+            ],
+            function (err, data2) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
+                    callback(null, data2);
+                }
+
+            });
+    },
 
 };
 module.exports = _.assign(module.exports, exports, model);

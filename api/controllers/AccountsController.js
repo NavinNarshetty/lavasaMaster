@@ -11,9 +11,9 @@ var controller = {
       });
     }
   },
-  getStatuts: function (req, res) {
+  getStatus: function (req, res) {
     if (req.body) {
-      Accounts.getStatuts(req.body, res.callback);
+      Accounts.getStatus(req.body, res.callback);
     } else {
       res.json({
         "data": "Body not Found",

@@ -487,5 +487,279 @@ var controller = {
             });
         }
     },
+
+    // ------------------------UPGRADE PACKAGE PAYMENT ---------------------------------------------
+
+    upgradeAthletePayment: function (req, res) {
+        if (req) {
+            ConfigProperty.find().lean().exec(function (err, property) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    if (_.isEmpty(property)) {
+                        callback(null, []);
+                    } else {
+                        var id = (req.query.id);
+                        Athelete.findOne({
+                            _id: id
+                        }).lean().deepPopulate("package").exec(function (err, data) {
+                            data.property = property[0];
+                            PayU.atheleteUpgradePayment(data, function (err, httpResponse) {
+                                if (httpResponse.statusCode == 302) {
+                                    res.redirect(httpResponse.headers.location);
+                                } else {
+                                    res.send(data);
+                                }
+                            });
+                        });
+                    }
+                }
+            });
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
+
+    successUpgradeErrorAthelete: function (req, res) {
+        var data = req.allParams();
+        var param = {};
+
+        param.firstName = data.firstname;
+        param.surname = data.lastname;
+        param.email = data.email;
+        param.transactionid = data.mihpayid;
+        var status = data.status;
+
+        console.log('Inside SuccesssErrorrr', data);
+        console.log(data.status != "success");
+        if (req) {
+            if (data.status == "success") {
+                console.log('yes success');
+                Accounts.updateAthletePaymentStatus(param, function (err, data) {
+                    if (err) {
+                        console.log('amount not match issue');
+                        res.json({
+                            value: false,
+                            data: "Invalid Request"
+                        });
+                    } else {
+                        // res.redirect("http://mumbaischool.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://mumbaicollege.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://hyderabadschool.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://hyderabadcollege.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://ahmedabadschool.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://ahmedabadcollege.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://testmumbai2015.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://testmumbai2016.sfanow.in/paymentSuccess");
+
+                        res.redirect("http://testmumbaischool.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://testmumbaicollege.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://testhyderabadschool.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://testhyderabadcollege.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://testahmedabadschool.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://testahmedabadcollege.sfanow.in/paymentSuccess");
+
+                        // res.redirect("https://sfanow.in/paymentSuccess");
+                    }
+                });
+
+            } else {
+
+                // res.redirect("http://mumbaischool.sfanow.in/sorryAthelete");
+
+                // res.redirect("http://mumbaicollege.sfanow.in/sorryAthelete");
+
+                // res.redirect("http://hyderabadschool.sfanow.in/sorryAthelete");
+
+                // res.redirect("http://hyderabadcollege.sfanow.in/sorryAthelete");
+
+                // res.redirect("http://ahmedabadschool.sfanow.in/sorryAthelete");
+
+                // res.redirect("http://ahmedabadcollege.sfanow.in/sorryAthelete");
+
+                // res.redirect("http://testhyderabadcollege.sfanow.in/sorryAthelete");
+
+                // res.redirect("http://testhyderabadschool.sfanow.in/sorryAthelete");
+
+                // res.redirect("http://testahmedabadcollege.sfanow.in/sorryAthelete");
+
+                // res.redirect("http://testahmedabadschool.sfanow.in/sorryAthelete");
+
+                // res.redirect("http://testmumbaicollege.sfanow.in/sorryAthelete");
+
+                res.redirect("http://testmumbaischool.sfanow.in/sorryAthelete");
+
+                // res.redirect("http://testmumbai2016.sfanow.in/sorryAthelete");
+
+                // res.redirect("http://testmumbai2015.sfanow.in/sorryAthelete");
+
+                // res.redirect("https://sfanow.in/sorryAthelete");
+            }
+        } else {
+            res.json({
+                value: false,
+                data: "User Not logged in"
+            });
+        }
+    },
+
+    upgradeSchoolPayment: function (req, res) {
+        if (req) {
+            ConfigProperty.find().lean().exec(function (err, property) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    if (_.isEmpty(property)) {
+                        callback(null, []);
+                    } else {
+                        var id = (req.query.id);
+                        Registration.findOne({
+                            _id: id
+                        }).lean().exec(function (err, data) {
+                            console.log("property", property[0]);
+                            data.property = property[0];
+                            PayU.schoolUpgradePayment(data, function (err, httpResponse) {
+                                if (httpResponse.statusCode == 302) {
+                                    res.redirect(httpResponse.headers.location);
+                                } else {
+                                    res.send(data);
+                                }
+                            });
+                        });
+                    }
+                }
+            });
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
+
+    successUpgradeErrorSchool: function (req, res) {
+        var data = req.allParams();
+        var param = {};
+
+        param.schoolName = data.firstname;
+        param.transactionid = data.mihpayid;
+        var status = data.status;
+
+        console.log('Inside SuccesssErrorrr', data);
+        console.log(data.status != "success");
+        if (req) {
+            if (data.status == "success") {
+                console.log('yes success');
+                Accounts.updateSchoolPaymentStatus(param, function (err, data) {
+                    if (err) {
+                        console.log('amoutn not match issue');
+                        res.json({
+                            value: false,
+                            data: "Invalid Request"
+                        });
+                    } else {
+
+                        // res.redirect("http://testmumbai2015.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://testmumbai2016.sfanow.in/paymentSuccess");
+
+                        res.redirect("http://testmumbaischool.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://testmumbaicollege.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://testhyderabadschool.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://testhyderabadcollege.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://testahmedabadschool.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://testahmedabadcollege.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://mumbaischool.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://mumbaicollege.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://hyderabadschool.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://hyderabadcollege.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://ahmedabadschool.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://ahmedabadcollege.sfanow.in/paymentSuccess");
+
+                        // res.redirect("https://sfanow.in/paymentSuccess");
+                    }
+                });
+
+            } else {
+                var id = (req.query.id);
+                console.log('some errror');
+                Registration.remove({
+                    $or: [{
+                        schoolName: param.schoolName
+                    }, {
+                        _id: id
+                    }]
+                }).exec(function (err, data) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(data)) {
+                        callback(null, "Data is empty");
+                    } else {
+                        // res.redirect("http://mumbaischool.sfanow.in/paymentFailure");
+
+                        // res.redirect("http://mumbaicollege.sfanow.in/paymentFailure");
+
+                        // res.redirect("http://hyderabadschool.sfanow.in/paymentFailure");
+
+                        // res.redirect("http://hyderabadcollege.sfanow.in/paymentFailure");
+
+                        // res.redirect("http://ahmedabadschool.sfanow.in/paymentFailure");
+
+                        // res.redirect("http://ahmedabadcollege.sfanow.in/paymentFailure");
+
+                        // res.redirect("http://testmumbai2015.sfanow.in/paymentFailure");
+
+                        // res.redirect("http://testmumbai2016.sfanow.in/paymentFailure");
+
+                        res.redirect("http://testmumbaischool.sfanow.in/paymentFailure");
+
+                        // res.redirect("http://testmumbaicollege.sfanow.in/paymentFailure");
+
+                        // res.redirect("http://testhyderabadschool.sfanow.in/paymentFailure");
+
+                        // res.redirect("http://testhyderabadcollege.sfanow.in/paymentFailure");
+
+                        // res.redirect("http://testahmedabadschool.sfanow.in/paymentFailure");
+
+                        // res.redirect("http://testahmedabadcollege.sfanow.in/paymentFailure");
+
+                        // res.redirect("https://sfanow.in/paymentFailure");
+                    }
+
+                });
+            }
+        } else {
+            res.json({
+                value: false,
+                data: "User Not logged in"
+            });
+        }
+    },
 };
 module.exports = _.assign(module.exports, controller);

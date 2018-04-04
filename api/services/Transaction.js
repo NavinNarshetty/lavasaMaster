@@ -1,3 +1,15 @@
+var mongoose = require('mongoose');
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
+var uniqueValidator = require('mongoose-unique-validator');
+// var timestamps = require('mongoose-timestamp');
+var validators = require('mongoose-validators');
+var monguurl = require('monguurl');
+var autoIncrement = require('mongoose-auto-increment');
+var objectid = require("mongodb").ObjectID;
+var moment = require('moment');
+var request = require("request");
+var generator = require('generate-password');
+autoIncrement.initialize(mongoose);
 var schema = new Schema({
     athlete: {
         type: Schema.Types.ObjectId,
@@ -42,6 +54,13 @@ var schema = new Schema({
         type: Number,
         default: 0
     },
+    outstandingAmount: {
+        type: Number,
+        default: 0
+    },
+    paymentStatus: String,
+    receiptKeyId: Number,
+
 });
 
 schema.plugin(deepPopulate, {
@@ -50,6 +69,12 @@ schema.plugin(deepPopulate, {
     }
 });
 schema.plugin(uniqueValidator);
+schema.plugin(autoIncrement.plugin, {
+    model: 'Transaction',
+    field: 'receiptKeyId',
+    startAt: 1,
+    incrementBy: 1
+});
 schema.plugin(timestamps);
 module.exports = mongoose.model('Transaction', schema);
 
@@ -127,6 +152,132 @@ var model = {
                                     PayuId: payu,
                                     receiptId: transactData.receiptId,
                                     paymentMode: transactData.paymentMode,
+                                }
+                            };
+                            Accounts.update({
+                                school: transactData.school
+                            }, matchObj).exec(
+                                function (err, data3) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else if (data3) {
+                                        callback(null, transactData);
+                                    }
+                                });
+                        }
+                    }
+                },
+            ],
+            function (err, complete) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    callback(null, complete);
+                }
+            });
+    },
+
+    saveUpdateTransaction: function (data, found, callback) {
+        console.log("data***", data, "found****", found);
+        async.waterfall([
+                function (callback) {
+                    var len = found.accounts.transaction.length;
+                    len--;
+                    Transaction.findOne({
+                        _id: found.accounts.transaction[len]
+                    }).lean().exec(function (err, transactData) {
+                        if (err || _.isEmpty(transactData)) {
+                            callback(null, {
+                                error: "no data found",
+                                data: found
+                            });
+                        } else {
+                            callback(null, transactData);
+                        }
+                    });
+                },
+                function (transactData, callback) {
+                    if (transactData.error) {
+                        callback(null, transactData);
+                    } else {
+
+                        var receipt = [];
+                        var temp = "SFA-UP-" + transactData.receiptKeyId;
+                        receipt.push(temp);
+                        var PayuId = [];
+                        PayuId.push(data.transactionid);
+
+                        var matchObj = {
+                            $set: {
+                                receiptId: receipt,
+                                amountToPay: found.accounts.outstandingAmount,
+                                amountPaid: found.accounts.outstandingAmount,
+                                outstandingAmount: 0,
+                                paymentStatus: "paid",
+                                PayuId: PayuId,
+                            }
+                        };
+                        Transaction.update({
+                            _id: transactData._id
+                        }, matchObj).exec(
+                            function (err, data3) {
+                                if (err || _.isEmpty(data3)) {
+                                    callback(null, {
+                                        error: "no data found",
+                                        data: transactData
+                                    });
+                                } else {
+                                    callback(null, transactData);
+                                }
+                            });
+                    }
+                },
+                function (transactData, callback) {
+                    console.log("transactData--------", transactData);
+                    if (transactData.error) {
+                        callback(null, transactData);
+                    } else {
+                        var receipt = [];
+                        var temp = "SFA-UP-" + transactData.receiptKeyId;
+                        receipt.push(temp);
+                        var receiptId = _.concat(found.accounts.receiptId, receipt);
+                        var payu = [];
+                        payu.push(data.transactionid);
+                        var PayuId = _.concat(found.accounts.PayuId, payu);
+                        if (transactData.athlete != undefined) {
+                            var matchObj = {
+                                $set: {
+                                    // transaction: transaction,
+                                    PayuId: PayuId,
+                                    receiptId: receiptId,
+                                    totalPaid: found.accounts.outstandingAmount,
+                                    totalToPay: found.accounts.outstandingAmount,
+                                    outstandingAmount: 0,
+                                    upgradePaymentStatus: "paid",
+
+                                }
+                            };
+                            Accounts.update({
+                                athlete: transactData.athlete
+                            }, matchObj).exec(
+                                function (err, data3) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else if (data3) {
+                                        callback(null, transactData);
+                                    }
+                                });
+
+                        } else {
+                            var matchObj = {
+                                $set: {
+                                    // transaction: transaction,
+                                    PayuId: PayuId,
+                                    receiptId: receiptId,
+                                    upgradePaymentStatus: "paid",
+                                    totalPaid: found.accounts.outstandingAmount,
+                                    totalToPay: found.accounts.outstandingAmount,
+                                    outstandingAmount: 0
                                 }
                             };
                             Accounts.update({

@@ -7,7 +7,7 @@ myApp.controller('UpgradePackageCtrl', function ($scope, TemplateService, Naviga
   $scope.showPaymentTab = false;
   $scope.packages = [];
   $scope.formData = {
-    package:""
+    package: ""
   }
   // $scope.features = [];
   $scope.formPackage = {
@@ -21,51 +21,66 @@ myApp.controller('UpgradePackageCtrl', function ($scope, TemplateService, Naviga
   };
   // VARIABLES END
   // FUNCTIONS
-  $scope.setPackageDetails = function(id, type){
+  $scope.setPackageDetails = function (id, type) {
     var selectedPackage = _.find($scope.packages, ['_id', id]);
     console.log("select", selectedPackage);
-      $scope.formData.package= selectedPackage._id;
-      $scope.formData.packageName= selectedPackage.name;
-      $scope.formData.order= selectedPackage.order;
-      $scope.formData.amountToPay= selectedPackage.finalPrice + $scope.formData.outstandingAmount - $scope.formData.totalPaid;
-      $scope.formData.cgstAmt= '';
-      $scope.formData.cgstPercent= '';
-      $scope.formData.sgstAmt= '';
-      $scope.formData.sgstPercent= '';
-      $scope.formData.igstAmt= '';
-      $scope.formData.igstPercent= '';
-    $scope.formData.discount= selectedPackage.discount || 0;
+    $scope.formData.package = selectedPackage._id;
+    $scope.formData.packageName = selectedPackage.name;
+    $scope.formData.order = selectedPackage.order;
+    $scope.formData.amountToPay = selectedPackage.finalPrice + $scope.formData.outstandingAmount - $scope.formData.totalPaid;
+    $scope.formData.cgstAmt = '';
+    $scope.formData.cgstPercent = '';
+    $scope.formData.sgstAmt = '';
+    $scope.formData.sgstPercent = '';
+    $scope.formData.igstAmt = '';
+    $scope.formData.igstPercent = '';
+    $scope.formData.discount = selectedPackage.discount || 0;
     if (selectedPackage.cgstPercent && selectedPackage.sgstPercent) {
       $scope.formData.cgstAmt = selectedPackage.cgstAmt;
       $scope.formData.cgstPercent = selectedPackage.cgstPercent;
       $scope.formData.sgstAmt = selectedPackage.sgstAmt;
       $scope.formData.sgstPercent = selectedPackage.sgstPercent;
-      $scope.formData.amountPaid =  $scope.formData.amountToPay + $scope.formData.cgstAmt + $scope.formData.sgstAmt;
+      $scope.formData.amountPaid = $scope.formData.amountToPay + $scope.formData.cgstAmt + $scope.formData.sgstAmt;
     } else if (selectedPackage.igstPercent) {
       $scope.formData.igstAmt = selectedPackage.igstAmt;
       $scope.formData.igstPercent = selectedPackage.igstPercent;
-      $scope.formData.amountPaid =  $scope.formData.amountToPay + $scope.formData.igstAmt;
+      $scope.formData.amountPaid = $scope.formData.amountToPay + $scope.formData.igstAmt;
     }
     if (type == 'click') {
       $scope.showPaymentTab = true;
     }
   }
   // UPGRADE PACKAGE
-  $scope.packageUpgrade = function(formData){
-    console.log("upgrade", formData);
+  $scope.packageUpgrade = function (formData) {
     $scope.formData.upgrade = true;
-    // if (formData.registrationFee == 'online PAYU') {
-    //   formData.outstandingAmount = 0;
-    // }
-    NavigationService.upgradeAccount(formData, function(data){
-      console.log("upgrade ret", data);
+    // console.log("upgrade", formData);
+    NavigationService.upgradeAccount(formData, function (data) {
+      console.log("upgrade return", data);
+      if (formData.registrationFee == "online PAYU") {
+        if (formData.athlete) {
+          var id = formData.athlete;
+          console.log("id**", id);
+          var url = "payU/upgradeAthletePayment?id=" + id;
+          window.location.href = adminUrl2 + url;
+        } else {
+          var id = formData.school;
+          console.log("id**", id);
+          var url = "payU/upgradeSchoolPayment?id=" + id;
+          window.location.href = adminUrl2 + url;
+        }
+      } else {
+        $scope.openModal();
+      }
+
     });
+
+
   }
   // UPGRADE PACKAGE END
   // FUNCTIONS END
   // API
   // GET PACKAGES
-  NavigationService.getPackages($scope.formPackage,function(data){
+  NavigationService.getPackages($scope.formPackage, function (data) {
     data = data.data;
     // console.log("dat",data);
     if (data.value = true) {
@@ -77,15 +92,16 @@ myApp.controller('UpgradePackageCtrl', function ($scope, TemplateService, Naviga
   });
   // GET PACKAGES END
   // GET ATHLETE DATA
-  NavigationService.getStatusUpgrade($scope.athleteData, function(data){
+  NavigationService.getStatusUpgrade($scope.athleteData, function (data) {
     data = data.data;
     if (data.value == true) {
       $scope.athleteDetail = data.data;
       console.log("ath", $scope.athleteDetail);
       $scope.formData.athlete = $scope.athleteDetail.athlete._id;
-      $scope.formData.outstandingAmount= $scope.athleteDetail.outstandingAmount;
-      $scope.formData.totalPaid= $scope.athleteDetail.totalPaid;
-      $scope.formData.totalToPay= $scope.athleteDetail.totalToPay;
+      $scope.formData.outstandingAmount = $scope.athleteDetail.outstandingAmount;
+      $scope.formData.totalPaid = $scope.athleteDetail.totalPaid;
+      $scope.formData.totalToPay = $scope.athleteDetail.totalToPay;
+      $scope.formData.upgradePaymentStatus = $scope.athleteDetail.upgradePaymentStatus;
       $scope.currentPackage = _.find($scope.packages, ['_id', $scope.athleteDetail.athlete.package]);
       $scope.setPackageDetails($scope.athleteDetail.athlete.package, 'load');
       console.log("athlete", $scope.athleteDetail);
