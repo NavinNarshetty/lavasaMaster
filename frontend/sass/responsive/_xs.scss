@@ -395,5 +395,28 @@
    .table-flip th:last-child,
    .table-flip td:last-child {
      border-bottom: 1px solid #babcbf;
-   } // TABLE FLIP END
+   }
+   // TABLE FLIP END
+  //  UPGRADE PAGE
+  .sfa-radiobox{
+    line-height: normal;
+  }
+  .upgradepackage-radiocontent{
+    margin-bottom: 10px;
+  }
+  .upgradepackage-radioprice{
+    font-size: 36px;
+    line-height: 1;
+  }
+  .upgradepackage-radioinr{
+    margin-top: 0;
+    font-size: 15px;
+  }
+  .upgradepackage-radioname{
+    font-size: 14px;
+  }
+  .package-featurehead{
+    font-size: 30px !important;
+  }
+  //  UPGRADE PAGE END
  }

@@ -7,7 +7,7 @@
     </div>
     <!-- TITLE END -->
     <div class="row">
-      <div class="col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-10">
+      <div class="col-md-offset-1 col-md-10 col-sm-12">
         <!-- GUIDELINES SECTION -->
         <section class="form-card">
           <div class="formregister-mtb20">
@@ -19,13 +19,16 @@
             <ul class="formregister-list">
               <li>Mobile Number which you wish to register with SFA</li>
               <li>Email ID which you wish to register with SFA</li>
-              <li>Scanned copy of your Aadhar Card (with your full date of birth)/ Pan Card/ Birth Certificate</li>
+              <li>Scanned copy of your Aadhar Card (with your full Date of Birth)/ Pan Card/ Birth Certificate</li>
               <li>Scanned copy of your most recent School ID Card/ Report Card</li>
               <li>Credit Card/ Debit Card/ Bank Details (in case of online payment)</li>
             </ul>
           </div>
           <div class="formregister-mtb20">
-            <p class="formregister-heading">* The applicant represents that the information provided is true and correct. SFA will keep confidential and protect your personal information except where disclosure is required or permitted by law.</p>
+            <p class="formregister-heading">* The applicant represents that the information provided is true and correct. SFA will keep confidential and protect your personal information except where disclosure is required or permitted by law. </p>
+            <p class="formregister-heading">
+              All your data is safe and secured.
+            </p>
           </div>
         </section>
         <!-- GUIDELINES SECTION END -->
@@ -350,9 +353,11 @@
                       </select>
                       <div class="dirctive-op upload5 Upload-Age" ng-init="showBirthImg = 0;showPhotoImg = 0">
                           <upload-image2 class="up-img birthImg ng-isolate-scope" ng-model="formData.birthImage" no-view file-types=" 'image/jpeg,image/png'" ng-click="showBirthImg=1" ng-disabled="type.disabled" ng-callback="changeitBirthImage"></upload-image2>
+                          <div class=" label-info">Pic 1</div>
                       </div>
                       <div class="dirctive-op upload7 Upload-Age" ng-show="formData.ageProof=='aadharAge' || formData.ageProof=='birthCert'">
                           <upload-image2 class="up-img photoImg ng-isolate-scope " file-types="'image/jpeg,image/png'" ng-disabled="type.disabled" ng-callback="changeitPhotoImage" no-view ng-click="showPhotoImg=1" ng-model="formData.photoImage"></upload-image2>
+                          <div class=" label-info" ng-show="formData.ageProof=='aadharAge' || formData.ageProof=='birthCert'">Pic 2</div>
                       </div>
                       <div class="hover-img " ng-if="formData.ageProof!='aadharAge' && formData.ageProof!='birthCert' && formData.birthImage">
                         <div class="registerform-uploadimageholder ">
@@ -362,6 +367,7 @@
                               </a>
                             </div>
                         </div>
+                        <div class="label label-info">Pic 1</div>
                         <div class="hover-img " style="margin-left:18px ">
                             <img src="img/icon/x.png " alt="logo" ng-click="removeProof(formData.birthImage, 'birthImg') " class="img-responsive myicon ">
                         </div>
@@ -378,6 +384,7 @@
                                     <img ng-src="{{formData.photoImage |serverimage2}} " class="img-responsive">
                                   </a>
                                 </div>
+                                <div class="label label-info">Pic 2</div>
                             </div>
                             <div class="display-block float-r " ng-if=" showBirthImg == 1 && formData.birthImage!=''">
                                 <div class="w150 ">
@@ -388,6 +395,7 @@
                                     <img ng-src="{{formData.birthImage |serverimage2}} " class="img-responsive">
                                   </a>
                                 </div>
+                                <div class="label label-info" ng-if=" showBirthImg == 1 && formData.birthImage!=''">Pic 1</div>
                             </div>
                         </div>
 
@@ -548,7 +556,7 @@
           <!-- CONTACT DETAILS -->
           <div class="section-tab"> Contact Details </div>
           <section class="form-card ">
-            <p>Kindly ensure that the details provided are correct. A OneTime Password (OTP) will be sent to the entered mobile no. & email ID. These contact details will be used for all Championship related communication i.e. draws & scchedules, change in dates, etc.</p>
+            <p>Kindly ensure that the details provided are correct. A OneTime Password (OTP) will be sent to the entered mobile no. & email ID. These contact details will be used for all Championship related communication i.e. draws & schedules, change in dates, etc.</p>
             <!-- MOBILE/EMAIL -->
             <div class="formregister-contactotp formregister-mtb20">
               <!-- MOBILE -->
@@ -668,7 +676,7 @@
               <div class="box2" ng-repeat="x in formData.parentDetails track by $index">
                   <div class="d-padd pl13">
                       <div class="x-img3" ng-if="isCollege == false">
-                          <div class="x-img" ng-click="removeSportForm($index)">
+                          <div class="x-img" ng-click="removeSportForm($index)" ng-if="$index != 0">
                               <img src="img/icon/x.png" alt="logo" class="img-responsive  pull-right">
                           </div>
                       </div>
@@ -729,7 +737,7 @@
                   <div class="sub-padd text-center" ng-if="isCollege == false">
                       <img src="img/icon/p.png" alt="logo" class="img-responsive display-inline" ng-click="addSportForm(m)">
                       <div class="inline-block">
-                          <p class="display-inline">Add Parent/ Guardian</p>
+                          <p class="display-inline">Add Guardian</p>
                       </div>
                   </div>
               </div>
@@ -759,13 +767,13 @@
             </div>
             <!-- PAYU -->
             <div class="" ng-if="formData.registrationFee == 'online PAYU'">
-              Selecting this option will enable you to pay the registration fee of 399/ 899/ 899/ 1999 (+GST) via one of the following methods: 1) Credit Card 2) Debit Card 3) Net Banking
+              Selecting this option will enable you to pay the registration fee of 399/ 599/ 899/ 1999 (+GST) via one of the following methods: 1) Credit Card 2) Debit Card 3) Net Banking
             </div>
             <!-- PAYU END -->
             <!-- CASH/ CHEQUE INFO -->
             <div class="" ng-if="formData.registrationFee == 'cash'">
               <div class="formregister-mtb20">
-                <p>Selecting this option will enable you to pay the registration fee of Rs 599/ 899/ 1999 (+GST) by Cash/ Cheque/ Demand Draft in favour of <span class="r-titillium-web-semibold">'SFA Sporting Services Pvt Ltd'</span> which is to be couriered/ hand delivered <span class="r-titillium-web-semibold">WITHIN 4 WORKING DAYS</span> to:</p>
+                <p>Selecting this option will enable you to pay the registration fee of Rs 399/ 599/ 899/ 1999 (+GST) by Cash/ Cheque/ Demand Draft in favour of <span class="r-titillium-web-semibold">'SFA Sporting Services Pvt Ltd'</span> which is to be couriered/ hand delivered <span class="r-titillium-web-semibold">WITHIN 4 WORKING DAYS</span> to:</p>
               </div>
               <div class="formregister-mtb20">
                 <p class="r-titillium-web-semibold">17A, Raviraj House, 6th Floor, Saraswati Road, Off Linking Road, Santacruz (West) - 400053</p>

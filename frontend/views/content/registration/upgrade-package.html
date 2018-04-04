@@ -30,7 +30,7 @@
         <!-- UPGRADE PAYMENT TABLE -->
         <div class="upgradepackage-payment" ng-show="showPaymentTab">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 col-sm-8">
               <div class="upgradepackage-header">
                 Payment Details
               </div>
@@ -49,7 +49,7 @@
                     <tr>
                       <td >
                         <div class="text-left">
-                          Amount Paid
+                          - Amount Paid
                         </div>
                       </td>
                       <td>
@@ -72,7 +72,7 @@
                     <!-- IF IGST -->
                     <tr ng-if="formData.igstAmt != ''">
                       <td><div class="text-left">
-                        +IGST @ {{formData.igstPercent}}%
+                        + IGST @ {{formData.igstPercent}}%
                       </div></td>
                       <td>
                         <span>{{formData.igstAmt}}</span>
@@ -81,9 +81,11 @@
                     <!-- IF IGST END -->
                     <!-- IF CGST  -->
                     <tr ng-if="formData.cgstAmt != ''">
-                      <td><div class="text-left">
-                        +CST @ {{formData.cgstPercent}}%
-                      </div></td>
+                      <td>
+                        <div class="text-left">
+                          + CST @ {{formData.cgstPercent}}%
+                        </div>
+                      </td>
                       <td>
                         <span>{{formData.cgstAmt}}</span>
                       </td>
@@ -92,7 +94,7 @@
                     <!-- IF SGST  -->
                     <tr  ng-if="formData.sgstAmt != ''">
                       <td>
-                        <div class="text-left">+GST @ {{formData.sgstPercent}}%</div></td>
+                        <div class="text-left">+ GST @ {{formData.sgstPercent}}%</div></td>
                       <td>
                         <span>{{formData.sgstAmt}}</span>
                       </td>
@@ -134,16 +136,16 @@
                 </label>
               </div>
             </div>
-              <div class="col-md-8">
+              <div class="col-md-8 col-sm-8">
                 <!-- PAYU -->
                 <div class="formregister-mtb20" ng-if="formData.registrationFee == 'online PAYU'">
-                  Selecting this option will enable you to pay the registration fee of 399/ 899/ 899/ 1999 (+GST) via one of the following methods: 1) Credit Card 2) Debit Card 3) Net Banking
+                  Selecting this option will enable you to pay the registration fee of 399/ 599/ 899/ 1999 (+GST) via one of the following methods: 1) Credit Card 2) Debit Card 3) Net Banking
                 </div>
                 <!-- PAYU END -->
                 <!-- CASH/ CHEQUE INFO -->
                 <div class="formregister-mtb20" ng-if="formData.registrationFee == 'cash'">
                   <div class="formregister-mtb20">
-                    <p>Selecting this option will enable you to pay the registration fee of Rs 599/ 899/ 1999 (+GST) by Cash/ Cheque/ Demand Draft in favour of <span class="r-titillium-web-semibold">'SFA Sporting Services Pvt Ltd'</span> which is to be couriered/ hand delivered <span class="r-titillium-web-semibold">WITHIN 4 WORKING DAYS</span> to:</p>
+                    <p>Selecting this option will enable you to pay the registration fee of Rs 399/ 599/ 899/ 1999 (+GST) by Cash/ Cheque/ Demand Draft in favour of <span class="r-titillium-web-semibold">'SFA Sporting Services Pvt Ltd'</span> which is to be couriered/ hand delivered <span class="r-titillium-web-semibold">WITHIN 4 WORKING DAYS</span> to:</p>
                   </div>
                   <div class="formregister-mtb20">
                     <p class="r-titillium-web-semibold">17A, Raviraj House, 6th Floor, Saraswati Road, Off Linking Road, Santacruz (West) - 400053</p>
@@ -151,7 +153,7 @@
                 </div>
                 <!-- CASH/ CHEQUE INFO END -->
               </div>
-              <div class="col-md-8">
+              <div class="col-md-8 col-sm-8">
                 <div class="formregister-mtb20">
                   <button class="btn formregister-btn text-uppercase" type="submit">Proceed To Sports Registrations</button>
                 </div>
