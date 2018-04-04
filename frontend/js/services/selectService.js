@@ -38,7 +38,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
 
     //make .checked to true if already selected
     this.isAtheleteSelected = function (listOfAthlete, team) {
-        console.log("Yes! it is.");
+        // console.log("Yes! it is.");
         var temp = _.intersectionBy(listOfAthlete, this.team, '_id');
         _.each(temp, function (n) {
             n.checked = true;
@@ -204,8 +204,8 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
     };
 
     this.getAgeGroupByAthelete = function (athelete, confirmPageKey, events) {
-        console.log("confirmPageKey", confirmPageKey);
-        console.log("events", events);
+        // console.log("confirmPageKey", confirmPageKey);
+        // console.log("events", events);
 
         var birthdate = moment(athelete.dob);
         var st = this.sportName;

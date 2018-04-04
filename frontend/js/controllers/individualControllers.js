@@ -606,6 +606,4 @@ myApp.controller('IndividualCongratsCtrl', function ($scope, TemplateService, to
         });
     };
 
-    NavigationService.updateUserDetailsJstorage();
-
 });

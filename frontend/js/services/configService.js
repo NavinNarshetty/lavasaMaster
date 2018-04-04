@@ -20,11 +20,12 @@ myApp.service('configService', function ($http, TemplateService, $state, toastr,
                         if (allData.data.type == 'school') {
                             all.isCollege = false;
                             all.type = allData.data.type;
+                             // set Jstorage:IsColg
                             NavigationService.setIsColg(all.type);
-                            // callback(allData.data);
                         } else {
                             all.isCollege = true;
                             all.type = allData.data.type;
+                             // set Jstorage:IsColg
                             NavigationService.setIsColg(all.type);
                         }
                     }

@@ -3,10 +3,8 @@ myApp.service('loginService', function ($http, TemplateService, $state, toastr, 
         var getJ = $.jStorage.get("userDetails");
         var getData = {};
         if (getJ !== null) {
-            //   console.log(getJ);
             getData.isLoggedIn = true;
             if ($.jStorage.get("userType") == "school") {
-                //   console.log(getJ);
                 getData.userType = 'school';
                 getData.sfaIdObj = getJ.sfaID;
                 getData.schoolName = getJ.schoolName;
@@ -14,9 +12,9 @@ myApp.service('loginService', function ($http, TemplateService, $state, toastr, 
                 if (getJ.mixAccess) {
                     getData.mixAccess = getJ.mixAccess;
                 }
+                // set Jstorage:schoolName
                 NavigationService.setUserSchool(getData.schoolName);
             } else {
-                //   console.log(getJ);
                 getData.userType = 'athlete';
                 getData.firstName = getJ.firstName;
                 getData.surname = getJ.surname;
@@ -28,10 +26,12 @@ myApp.service('loginService', function ($http, TemplateService, $state, toastr, 
                 }
                 if (getJ.atheleteSchoolName) {
                     getData.schoolName = getJ.atheleteSchoolName;
+                    // set Jstorage:schoolName
                     NavigationService.setUserSchool(getData.schoolName);
                 } else {
                     if (getJ.school) {
                         getData.schoolName = getJ.school.name;
+                        // set Jstorage:schoolName
                         NavigationService.setUserSchool(getData.schoolName);
                     }
                 }
