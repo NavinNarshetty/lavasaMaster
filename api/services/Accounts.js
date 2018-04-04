@@ -187,11 +187,11 @@ var model = {
                     }
                     var i = 1;
                     _.each(found.transaction, function (n) {
-                        found.display["package " + i] = {};
-                        found.display["package " + i].name = n.package.name;
-                        found.display["package " + i].date = n.createdAt;
-                        found.display["package " + i].user = n.package.packageUser;
-                        found.display["package " + i].amount = n.package.finalPrice;
+                        found.display["package" + i] = {};
+                        found.display["package" + i].name = n.package.name;
+                        found.display["package" + i].date = n.createdAt;
+                        found.display["package" + i].user = n.package.packageUser;
+                        found.display["package" + i].amount = n.package.finalPrice;
                         i++;
                     });
 
