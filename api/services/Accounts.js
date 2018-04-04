@@ -291,59 +291,59 @@ var model = {
         console.log("data", data);
         async.waterfall([
                 function (callback) {
-                    Transaction.findOne({
-                        $or: [{
-                            athlete: data.athlete
-                        }, {
-                            school: data.school
-                        }],
-                        package: data.package
-                    }).lean().exec(function (err, found) {
-                        if (err) {
-                            callback(err, null);
-                        } else if (_.isEmpty(found)) {
-                            var param = {};
-                            if (data.athlete) {
-                                param.athlete = data.athlete;
-                                param.school = undefined;
+                    // Transaction.findOne({
+                    //     $or: [{
+                    //         athlete: data.athlete
+                    //     }, {
+                    //         school: data.school
+                    //     }],
+                    //     package: data.package
+                    // }).lean().exec(function (err, found) {
+                    //     if (err) {
+                    //         callback(err, null);
+                    //     } else if (_.isEmpty(found)) {
+                    var param = {};
+                    if (data.athlete) {
+                        param.athlete = data.athlete;
+                        param.school = undefined;
 
-                            } else {
-                                param.school = data.athlete;
-                                param.athlete = undefined;
-                            }
-                            param.dateOfTransaction = new Date();
-                            param.package = data.package;
-                            param.outstandingAmount = data.amountPaid;
-                            param.paymentMode = data.registrationFee;
-                            if (data.cgstAmt) {
-                                param.cgstAmount = data.cgstAmt;
-                            }
-                            if (data.sgstAmt) {
-                                param.sgstAmount = data.sgstAmt;
-                            }
+                    } else {
+                        param.school = data.athlete;
+                        param.athlete = undefined;
+                    }
+                    param.dateOfTransaction = new Date();
+                    param.package = data.package;
+                    param.outstandingAmount = data.amountPaid;
+                    param.paymentMode = data.registrationFee;
+                    if (data.cgstAmt) {
+                        param.cgstAmount = data.cgstAmt;
+                    }
+                    if (data.sgstAmt) {
+                        param.sgstAmount = data.sgstAmt;
+                    }
 
-                            if (data.igstAmt) {
-                                param.sgstAmount = data.igstAmt;
-                            }
-                            if (data.discount) {
-                                param.discount = data.discount;
-                            }
-                            param.paymentStatus = "pending";
+                    if (data.igstAmt) {
+                        param.sgstAmount = data.igstAmt;
+                    }
+                    if (data.discount) {
+                        param.discount = data.discount;
+                    }
+                    param.paymentStatus = "pending";
 
-                            Transaction.saveData(param, function (err, transactData) {
-                                if (err || _.isEmpty(transactData)) {
-                                    callback(null, {
-                                        error: "no data found",
-                                        data: data
-                                    });
-                                } else {
-                                    callback(null, transactData);
-                                }
+                    Transaction.saveData(param, function (err, transactData) {
+                        if (err || _.isEmpty(transactData)) {
+                            callback(null, {
+                                error: "no data found",
+                                data: data
                             });
                         } else {
-                            callback(null, found);
+                            callback(null, transactData);
                         }
                     });
+                    //     } else {
+                    //         callback(null, found);
+                    //     }
+                    // });
 
                 },
                 function (transactData, callback) {
