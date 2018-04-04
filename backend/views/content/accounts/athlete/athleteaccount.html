@@ -8,6 +8,7 @@
   </div>
 </div>
 
+<pre>{{test | json}}</pre>
 
 <div class=" panel-content ">
   <div class="row ">
@@ -28,7 +29,7 @@
                         <p class="athleteaccount-school text-left ">{{player.athlete.school.name }} </p>
                       </div>
                       <div class="col-md-3 ">
-
+                        <p> {{ player.athleteData.createdAt | date}} </p>
                       </div>
                       <div class="col-md-3 ">
                         <p class="athleteaccount-upgraded text-right ">Upgraded:Yes/No</p>
@@ -48,24 +49,24 @@
                           System Mode
                         </div>
                       </th>
-                      <th>
-                        <div class="text-capitalize ">
-                          Package-A
+                      <th ng-if="player.displayData.package1.name">
+                        <div class="text-capitalize">
+                          Package- {{ player.displayData.package1.name }}
                         </div>
                       </th>
-                      <th>
+                      <th ng-if="player.displayData.package2.name">
                         <div class="text-capitalize ">
-                          Package-B
+                          Package- {{ player.displayData.package2.name }}
                         </div>
                       </th>
-                      <th>
+                      <th ng-if="player.displayData.package3.name">
                         <div class="text-capitalize ">
-                          Package-C
+                          Package- {{ player.displayData.package3.name }}
                         </div>
                       </th>
-                      <th>
+                      <th ng-if="player.displayData.package4.name">
                         <div class="text-capitalize ">
-                          Package-D
+                          Package- {{ player.displayData.package4.name }}
                         </div>
                       </th>
                       <th>
@@ -107,62 +108,62 @@
                     <tbody>
                       <td>
                         <div>
-                          Online,Cash,Online,Cash
+                          <span>{{player.displayData.paymentMode}}</span>
+                        </div>
+                      </td>
+                      <td ng-if="player.displayData.package1.date">
+                        <div>
+                          {{ player.displayData.package1.date | date }}
+                        </div>
+                      </td>
+                      <td ng-if="player.displayData.package2.date">
+                        <div>
+                          {{ player.displayData.package2.date | date }}
+                        </div>
+                      </td>
+                      <td ng-if="player.displayData.package3.date">
+                        <div>
+                          {{ player.displayData.package3.date | date }}
+                        </div>
+                      </td>
+                      <td ng-if="player.displayData.package4.date">
+                        <div>
+                          {{ player.displayData.package4.date | date }}
                         </div>
                       </td>
                       <td>
                         <div>
-                          1st Apr 2018
+                          {{player.displayData.AmountToPay}}
                         </div>
                       </td>
                       <td>
                         <div>
-                          30 Nov 2018
+                          {{player.displayData.cgst + player.displayData.sgst}}
                         </div>
                       </td>
                       <td>
                         <div>
-                          30 Nov 2018
+                          {{ player.displayData.discount }}
                         </div>
                       </td>
                       <td>
                         <div>
-                          30 Nov 2018
+                          {{player.displayData.AmountToPay}}
                         </div>
                       </td>
                       <td>
                         <div>
-                          50,000
+                          {{player.displayData.outstandingAmount}}
                         </div>
                       </td>
                       <td>
                         <div>
-                          5000
+                          {{player.displayData.verified}}
                         </div>
                       </td>
                       <td>
                         <div>
-                          30 %
-                        </div>
-                      </td>
-                      <td>
-                        <div>
-                          5000
-                        </div>
-                      </td>
-                      <td>
-                        <div>
-                          5000
-                        </div>
-                      </td>
-                      <td>
-                        <div>
-                          5000
-                        </div>
-                      </td>
-                      <td>
-                        <div>
-                          12345678912, 12345678912, 12345678912, 12345678912
+                          <span ng-repeat="idData in player.displayData.payuId track by $index"> {{idData}}</span>
                         </div>
                       </td>
                     </tbody>
@@ -172,7 +173,7 @@
                 <div class="athleteaccount-accountteam ">
                   <div class="text-center ">
                     <label class=" ">Account Team :</label>
-                    <div class="pull-right " style="margin-bottom:10px; ">{{player.athlete._id}}---{{player._id}}
+                    <div class="pull-right " style="margin-bottom:10px;">
                       <button type="submit " class="btn btn-primary" ng-click="editAccountModal(player)">Edit</button>
                     </div>
                     <table class="table table-hover table-bordered ">
@@ -182,24 +183,24 @@
                             Payment received Date
                           </div>
                         </th>
-                        <th>
-                          <div class="text-capitalize ">
-                            Package-A
+                        <th ng-if="player.displayData.package1.name">
+                          <div class="text-capitalize">
+                            Package- {{player.displayData.package1.name}}
                           </div>
                         </th>
-                        <th>
-                          <div class="text-capitalize ">
-                            Package-B
+                        <th ng-if="player.displayData.package2.name">
+                          <div class="text-capitalize">
+                            Package- {{player.displayData.package2.name}}
                           </div>
                         </th>
-                        <th>
-                          <div class="text-capitalize ">
-                            Package-C
+                        <th ng-if="player.displayData.package3.name">
+                          <div class="text-capitalize">
+                            Package- {{player.displayData.package3.name}}
                           </div>
                         </th>
-                        <th>
-                          <div class="text-capitalize ">
-                            Package-D
+                        <th ng-if="player.displayData.package4.name">
+                          <div class="text-capitalize">
+                            Package- {{player.displayData.package4.date}}
                           </div>
                         </th>
                         <th>
@@ -246,67 +247,67 @@
                       <tbody>
                         <td>
                           <div>
-                            Online,Cash,Online,Cash
+                            {{player.displayData.paymentMode}}
+                          </div>
+                        </td>
+                        <td ng-if="player.displayData.package1.amount">
+                          <div>
+                            {{player.displayData.package1.amount}}
+                          </div>
+                        </td>
+                        <td ng-if="player.displayData.package2.amount">
+                          <div>
+                            {{player.displayData.package2.amount}}
+                          </div>
+                        </td>
+                        <td ng-if="player.displayData.package3.amount">
+                          <div>
+                            {{player.displayData.package3.amount }}
+                          </div>
+                        </td>
+                        <td ng-if="player.displayData.package4.amount">
+                          <div>
+                            {{player.displayData.package4.amount}}
                           </div>
                         </td>
                         <td>
                           <div>
-                            1st Apr 2018
+                            {{player.displayData.sgst}}
                           </div>
                         </td>
                         <td>
                           <div>
-                            30 Nov 2018
+                            {{player.displayData.cgst}}
                           </div>
                         </td>
                         <td>
                           <div>
-                            30 Nov 2018
+                            {{player.displayData.discount}}
                           </div>
                         </td>
                         <td>
                           <div>
-                            30 Nov 2018
+                            {{player.displayData.AmountToPay}}
                           </div>
                         </td>
                         <td>
                           <div>
-                            50,000
+                            {{player.displayData.paymentMode}}
                           </div>
                         </td>
                         <td>
                           <div>
-                            5000
+                            <span ng-repeat="chq in player.displayData.checkNo track by $index"> {{chq}}, </span>
                           </div>
                         </td>
                         <td>
                           <div>
-                            30 %
+                            <span ng-repeat="rcpt in player.displayData.receiptId track by $index"> {{rcpt}}, </span>
                           </div>
                         </td>
                         <td>
                           <div>
-                            5000
-                          </div>
-                        </td>
-                        <td>
-                          <div>
-                            5000
-                          </div>
-                        </td>
-                        <td>
-                          <div>
-                            5000
-                          </div>
-                        </td>
-                        <td>
-                          <div>
-                            12345678912, 12345678912, 12345678912, 12345678912
-                          </div>
-                        </td>
-                        <td>
-                          <div>
-                            need to check transaction
+                            {{player.displayData.remarks}}
                           </div>
                         </td>
                       </tbody>

@@ -47,9 +47,9 @@
                           System Mode
                         </div>
                       </th>
-                      <th>
-                        <div class="text-capitalize ">
-                          Package-Premium
+                      <th ng-if="school.displayData.package1.name">
+                        <div class="text-capitalize">
+                          Package-{{school.displayData.package1.name}}
                         </div>
                       </th>
                       <th>
@@ -90,48 +90,48 @@
                     </thead>
                     <tbody>
                       <td>
+                        <div class="text-capitalize">
+                          {{school.displayData.paymentMode}}
+                        </div>
+                      </td>
+                      <td ng-if="school.displayData.package1.date">
                         <div>
-                          Online,Cash,Online,Cash
+                          {{school.displayData.package1.date | date}}
                         </div>
                       </td>
                       <td>
                         <div>
-                          30 Nov 2018
+                          {{school.displayData.AmountPaid}}
                         </div>
                       </td>
                       <td>
                         <div>
-                          50,000
+                          {{school.displayData.sgst + school.displayData.cgst}}
                         </div>
                       </td>
                       <td>
                         <div>
-                          5000
+                          {{school.displayData.discount}}
                         </div>
                       </td>
                       <td>
                         <div>
-                          30 %
+                          {{school.displayData.AmountToPay}}
                         </div>
                       </td>
                       <td>
                         <div>
-                          5000
+                          {{school.displayData.outstandingAmount}}
                         </div>
                       </td>
                       <td>
                         <div>
-                          5000
+                          {{school.displayData.verified}}
                         </div>
                       </td>
                       <td>
                         <div>
-                          5000
-                        </div>
-                      </td>
-                      <td>
-                        <div>
-                          12345678912, 12345678912, 12345678912, 12345678912
+                          <span ng-repeat="payid in school.displayData.payuId track by $index">{{payid}},</span>
                         </div>
                       </td>
                     </tbody>
@@ -149,12 +149,12 @@
                       <thead>
                         <th>
                           <div class="text-capitalize ">
-                            Payment received Date
+                            Payment mode date
                           </div>
                         </th>
-                        <th>
-                          <div class="text-capitalize ">
-                            Package-Team Sport
+                        <th ng-if="school.displayData.package1.name">
+                          <div class="text-capitalize">
+                            Package- {{school.displayData.package1.name}}
                           </div>
                         </th>
                         <th>
@@ -201,52 +201,52 @@
                       <tbody>
                         <td>
                           <div>
-                            Online,Cash,Online,Cash
+                            {{school.displayData.paymentMode}}
+                          </div>
+                        </td>
+                        <td ng-if="school.displayData.package1.amount">
+                          <div>
+                            {{school.displayData.package1.amount}}
                           </div>
                         </td>
                         <td>
                           <div>
-                            30 Nov 2018
+                            {{school.displayData.sgst}}
                           </div>
                         </td>
                         <td>
                           <div>
-                            50,000
+                            {{school.displayData.cgst}}
                           </div>
                         </td>
                         <td>
                           <div>
-                            5000
+                            {{school.displayData.discount}}
                           </div>
                         </td>
                         <td>
                           <div>
-                            30 %
+                            {{school.displayData.AmountToPay}}
                           </div>
                         </td>
                         <td>
                           <div>
-                            5000
+                            {{school.displayData.paymentMode}}
                           </div>
                         </td>
                         <td>
                           <div>
-                            Cash
+                            <span ng-repeat="chq in school.displayData.checkNo track by $index"> {{chq}} ,</span>
                           </div>
                         </td>
                         <td>
                           <div>
-                            5000
+                            <span ng-repeat="rcpt in school.displayData.receiptId track by $index"> {{rcpt}} ,</span>
                           </div>
                         </td>
                         <td>
                           <div>
-                            12345678912, 12345678912, 12345678912, 12345678912
-                          </div>
-                        </td>
-                        <td>
-                          <div>
-                            need to check transaction
+                            {{school.displayData.remarks}}
                           </div>
                         </td>
                       </tbody>

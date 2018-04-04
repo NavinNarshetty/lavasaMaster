@@ -19,6 +19,7 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
   $scope.formData = {};
   $scope.schoolformData = {};
   $scope.formData.packageData = [];
+  $scope.formData.transaction = [];
   $scope.schoolformData.page = 1;
   $scope.schoolformData.keyword = '';
 
@@ -44,9 +45,12 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
           $scope.getOneConstraints._id = key._id;
           NavigationService.apiCall($scope.getOneUrl, $scope.getOneConstraints, function (data) {
             key.schoolData = data.data;
-            console.log("getOne", key.schoolData);
+            if (data.data.display) {
+              key.displayData = data.data.display;
+            }
+            // console.log("getOne", key.schoolData);
           })
-          console.log("key",key.schoolData);
+          console.log("key", key.schoolData);
         } else {
           // DO NOTHING
         }
@@ -80,22 +84,22 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
     $scope.formData.discount = school.schoolData.discount;
     $scope.formData.netTotal = school.schoolData.totalPaid;
     $scope.formData.paymentMode = school.schoolData.paymentMode;
-    $scope.formData.checkNo = school.schoolData.checkNo;
+    // $scope.formData.checkNo = school.schoolData.checkNo;
     $scope.formData.remarks = school.schoolData.remarks;
-    $scope.formData.transaction = school.schoolData.transaction;
+    $scope.formData.transactions = school.schoolData.transaction;
     // CONVERT RECEIPT ARRAY TO COMMA SEPERATED STRING
-    _.each($scope.formData.transaction, function(n){
-      n.receiptNo = "";
-      _.each(n.receiptId, function(m){
-        console.log("m", m);
-        if (n.receiptNo == "") {
-          n.receiptNo = m;
-        } else {
-          n.receiptNo = n.receiptNo + ',' + m;
-        }
-      });
-      console.log("n.receiptNo", n.receiptNo);
-    });
+    // _.each($scope.formData.transaction, function(n){
+    //   n.receiptNo = "";
+    //   _.each(n.receiptId, function(m){
+    //     console.log("m", m);
+    //     if (n.receiptNo == "") {
+    //       n.receiptNo = m;
+    //     } else {
+    //       n.receiptNo = n.receiptNo + ',' + m;
+    //     }
+    //   });
+    //   console.log("n.receiptNo", n.receiptNo);
+    // });
     // CONVERT RECEIPT ARRAY TO COMMA SEPERATED STRING END
 
     $scope.modalInstance = $uibModal.open({
@@ -113,14 +117,16 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
   // ADD ROW
   $scope.manualPackageEntry = function (formData) {
     if (!formData) {
-      $scope.formData.packageData.push({
+      $scope.formData.transactions.push({
         "package": '',
-        "reciptNo": ''
+        "receiptId": '',
+        "checkNo": '',
       })
     } else {
-      formData.packageData.push({
+      formData.transactions.push({
         "package": '',
-        "reciptNo": ''
+        "receiptId": '',
+        "checkNo": '',
       })
     }
   }
@@ -129,7 +135,7 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
   // DELETE ROW
   $scope.deleteRow = function (formData, index) {
     console.log(formData, "check this");
-    formData.packageData.splice(index, 1);
+    formData.transactions.splice(index, 1);
   }
   // DELETE ROW END
 
@@ -155,6 +161,9 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
     }
     if (data.discount == '' || data.discount == 0 || !data.discount) {
       data.discount = 0;
+    }
+    if (data.outstandingAmount == '' || data.outstandingAmount == 0 || !data.outstandingAmount) {
+      data.outstandingAmount = 0;
     }
     console.log(data, "save data");
     $scope.url = "Transaction/saveCashTransaction";

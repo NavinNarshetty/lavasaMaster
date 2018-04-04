@@ -5,10 +5,10 @@
   <div class="modal-container">
 
     <form name="accountForm">
-      <!-- <pre>{{formData | json }}</pre> -->
+      <pre>{{formData | json }}</pre>
       <div class="row">
         <!-- SGST -->
-        <div class="col-md-3">
+        <div class="col-md-2">
           <div class="form-group">
             <label for="">Sgst Amt</label>
             <input type="text" name="sgst" class="form-control" only-digits ng-model="formData.sgst" id="sgst" placeholder="Enter Sgst">
@@ -16,7 +16,7 @@
         </div>
         <!-- SGST END -->
         <!-- CGST -->
-        <div class="col-md-3">
+        <div class="col-md-2">
           <div class="form-group">
             <label for="">Cgst Amt</label>
             <input type="text" name="cgst" class="form-control" only-digits ng-model="formData.cgst" id="cgst" placeholder="Enter Cgst">
@@ -25,7 +25,7 @@
         <!-- CGST END -->
 
         <!-- DISCOUNT -->
-        <div class="col-md-3">
+        <div class="col-md-2">
           <div class="form-group">
             <label for="">Discount Amt</label>
             <input type="text" name="discount" class="form-control" only-digits ng-model="formData.discount" id="cgst" placeholder="Enter Discount">
@@ -34,7 +34,7 @@
         <!-- DISCOUNT END -->
 
         <!-- NET TOTAL -->
-        <div class="col-md-3">
+        <div class="col-md-2">
           <div class="form-group">
             <label for="">Net Total</label>
             <input type="text" name="nettotal" class="form-control" only-digits ng-model="formData.netTotal" id="cgst" placeholder="Enter Net Total"
@@ -44,8 +44,18 @@
         </div>
         <!-- NET  TOTAL END -->
 
+        <!-- OUTSTANDING -->
+        <div class="col-md-2">
+          <div class="form-group">
+            <label> Outstanding</label>
+            <input type="text" name="outstanding" class="form-control" only-digits ng-model="formData.outstandingAmount" id="outstandingAmount"
+              placeholder="Enter Outstanding Amount">
+          </div>
+        </div>
+        <!-- OUTSTANDING END -->
+
         <!--MODE OF PAYMENT  -->
-        <div class="col-md-3">
+        <div class="col-md-2">
           <div class="form-group">
             <label for="">Mode Payment</label>
             <select name="modepayment" id="modepayment" class="form-control" ng-model="formData.paymentMode" required>
@@ -58,15 +68,15 @@
         <!--MODE OF PAYMENT END  -->
 
         <!-- CHECK NO -->
-        <div class="col-md-3">
+        <!-- <div class="col-md-3">
           <div class="form-group">
             <label for="">Chq No</label>
             <input type="text" class="form-control" id="checkno" only-digits ng-model="formData.checkNo" name="checkno" placeholder="Enter Check No">
           </div>
-        </div>
+        </div> -->
         <!-- CHECK NO END -->
 
-        <div class="col-md-6">
+        <div class="col-md-12">
           <div class="form-group">
             <label for="">Remarks</label>
             <input type="text" class="form-control" id="remarks" ng-model="formData.remarks" name="remarks" placeholder="Enter Remarks">
@@ -97,13 +107,18 @@
                 </th>
                 <th>
                   <div class="text-capitalize">
+                    Chq No
+                  </div>
+                </th>
+                <th>
+                  <div class="text-capitalize">
                     Action
                   </div>
                 </th>
               </thead>
               <tbody>
                 <!-- {{reciptnoData| json}} -->
-                <tr ng-repeat="packageDetail in formData.transaction track by $index">
+                <tr ng-repeat="packageDetail in formData.transactions track by $index">
                   <!-- PACKAGE SELECTION -->
                   <td>
                     <select name="packageName" id="packagename" class="form-control" ng-model="packageDetail.package" ng-options="{_id:data._id,name:data.name,amount:data.price} as data.name for data in packageNameData track by data._id"
@@ -115,10 +130,19 @@
 
                   <!-- RECIPT NO -->
                   <td>
-                    <input type="text" placeholder="Enter Recipt no" name="reciptno" class="form-control" ng-model="packageDetail.receiptNo" required>
+                    <input type="text" placeholder="Enter Recipt no" name="reciptno" class="form-control" ng-model="packageDetail.receiptId"
+                      ng-list required>
                     <div class="label label-danger pull-right" ng-if="accountForm.reciptno.$invalid && accountForm.reciptno.$touched">Please Enter Valid Recipt No *</div>
                   </td>
                   <!-- RECIPT NO END -->
+
+                  <!-- CHQ NO -->
+                  <td>
+                    <input type="text" placeholder="Enter Chq No" name="cheqno" class="form-control" ng-model="packageDetail.checkNo" ng-list
+                      required>
+                    <div class="label label-danger pull-right" ng-if="accountForm.cheqno.$invalid && accountForm.cheqno.$touched">Please Enter Valid Recipt No *</div>
+                  </td>
+                  <!-- CHQ NO END -->
                   <td>
                     <span class="text-center" ng-click="deleteRow(formData,$index)"><i class="fa btn btn-danger fa-trash" aria-hidden="true"></i></span>
                   </td>

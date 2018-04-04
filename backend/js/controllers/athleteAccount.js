@@ -18,7 +18,9 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
   // VARIABLE
   $scope.formData = {};
   $scope.athleteformData = {};
-  $scope.formData.packageData = [];
+  // $scope.formData.packageData = [];
+  $scope.formData.transactions = [];
+  $scope.formData.transaction = [];
   $scope.athleteformData.page = 1;
   $scope.athleteformData.keyword = '';
 
@@ -56,6 +58,9 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
         NavigationService.apiCall($scope.getOneUrl, $scope.getOneConstraints, function (data) {
           console.log(data, "new api call")
           key.athleteData = data.data;
+          if (data.data.display) {
+            key.displayData = data.data.display;
+          }
         });
       })
     });
@@ -79,34 +84,36 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
   // GET ATHLETE DATA END
 
 
-
   // MODAL
   $scope.editAccountModal = function (player) {
     console.log("athlete", player);
+
+    // ASSIGN VALUE IN MODAL
     $scope.formData.athleteId = player.athlete._id;
     $scope.formData._id = player._id;
     $scope.formData.cgst = player.athleteData.cgst;
     $scope.formData.sgst = player.athleteData.sgst;
     $scope.formData.igst = player.athleteData.igst;
+    $scope.formData.outstandingAmount = player.athleteData.outstandingAmount;
     $scope.formData.discount = player.athleteData.discount;
     $scope.formData.netTotal = player.athleteData.totalPaid;
     $scope.formData.paymentMode = player.athleteData.paymentMode;
-    $scope.formData.checkNo = player.athleteData.checkNo;
     $scope.formData.remarks = player.athleteData.remarks;
-    $scope.formData.transaction = player.athleteData.transaction;
+    $scope.formData.transactions = player.athleteData.transaction;
+
     // CONVERT RECEIPT ARRAY TO COMMA SEPERATED STRING
-    _.each($scope.formData.transaction, function (n) {
-      n.receiptNo = "";
-      _.each(n.receiptId, function (m) {
-        console.log("m", m);
-        if (n.receiptNo == "") {
-          n.receiptNo = m;
-        } else {
-          n.receiptNo = n.receiptNo + ',' + m;
-        }
-      });
-      console.log("n.receiptNo", n.receiptNo);
-    });
+    // _.each($scope.formData.transaction, function (n) {
+    //   n.receiptNo = "";
+    //   _.each(n.receiptId, function (m) {
+    //     console.log("m", m);
+    //     if (n.receiptNo == "") {
+    //       n.receiptNo = m;
+    //     } else {
+    //       n.receiptNo = n.receiptNo + ',' + m;
+    //     }
+    //   });
+    //   console.log("n.receiptNo", n.receiptNo);
+    // });
     // CONVERT RECEIPT ARRAY TO COMMA SEPERATED STRING END
     $scope.modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
@@ -124,23 +131,28 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
 
   $scope.manualPackageEntry = function (formData) {
     if (!formData) {
-      $scope.formData.packageData.push({
+      $scope.formData.transactions.push({
         "package": '',
-        "reciptNo": ''
+        "receiptId": '',
+        "checkNo": '',
+        "isDelete": false
       })
     } else {
-      formData.packageData.push({
+      formData.transactions.push({
         "package": '',
-        "reciptNo": ''
+        "receiptId": '',
+        "checkNo": '',
+        "isDelete": false
       })
     }
   }
   // ADD ROW FUNCTION END
 
   // DELETE ROW
-  $scope.deleteRow = function (formData, index) {
-    console.log(formData, "check this");
-    formData.packageData.splice(index, 1);
+  $scope.deleteRow = function (formData, index, status) {
+    formData.transactions[index].isDelete = !status;
+    formData.transactions.splice(index, 1);
+    // formData.transactions.push(isDelete = status)
   }
   // DELETE ROW END
 
@@ -151,7 +163,7 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
     $scope.url = "Package/getAllPackages";
     $scope.formData.param = 'athlete';
     NavigationService.apiCall($scope.url, $scope.formData, function (data) {
-      console.log("packageNameData", data);
+      // console.log("packageNameData", data);
       $scope.packageNameData = data.data;
     });
   }
@@ -168,6 +180,9 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
     }
     if (data.discount == '' || data.discount == 0 || !data.discount) {
       data.discount = 0;
+    }
+    if (data.outstandingAmount == '' || data.outstandingAmount == 0 || !data.outstandingAmount) {
+      data.outstandingAmount = 0;
     }
     console.log(data, "save data");
     $scope.url = "Transaction/saveCashTransaction";

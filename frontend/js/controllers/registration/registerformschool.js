@@ -33,6 +33,10 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, Template
   // CONFIG PROPERTY END
 
 
+
+
+
+
   // UPLOAD FUNCTION *********DO NOT REMOVE *****
   $scope.changeitSchoolLogo = function (err, data) {
     // console.log(err, data);
@@ -104,6 +108,7 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, Template
       // size: 'sm',
       templateUrl: "views/modal/thankyou.html"
     });
+    console.log($scope, 'inside modal');
   };
   // $scope.redirectTo = function () {
   //     $scope.isDisabled1 = true;
@@ -111,6 +116,10 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, Template
   //     GoogleAdWordsService.sendRegisterCustomerConversion();
   //     $state.go('register');
   // };
+
+  $scope.closeModal = function () {
+
+  }
   // THANK YOU MODAL END
 
   // ALL FIELDS ARE MODAL MANDATORY ERROR
@@ -535,41 +544,41 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, Template
 
   // DOUBLES/RELAY
   $scope.schoolRegisterSportForm2 = [{
-    name: "Doubles",
-    sportName: [{
-      name: 'Badminton Doubles',
-      type: 'racquetSports'
-    }, {
-      name: 'Table Tennis Doubles',
-      type: 'racquetSports'
-    }, {
-      name: 'Tennis Doubles',
-      type: 'racquetSports'
-    }, {
-      name: 'Tennis Mixed Doubles',
-      type: 'racquetSports'
-    }]
+      name: "Doubles",
+      sportName: [{
+        name: 'Badminton Doubles',
+        type: 'racquetSports'
+      }, {
+        name: 'Table Tennis Doubles',
+        type: 'racquetSports'
+      }, {
+        name: 'Tennis Doubles',
+        type: 'racquetSports'
+      }, {
+        name: 'Tennis Mixed Doubles',
+        type: 'racquetSports'
+      }]
 
-  },
-  {
-    name: "Relay",
-    sportName: [{
-      name: 'Athletics 4x50m Relay',
-      type: 'individualSports'
-    }, {
-      name: 'Athletics 4x100m Relay',
-      type: 'individualSports'
-    }, {
-      name: 'Athletics Medley Relay',
-      type: 'individualSports'
-    }, {
-      name: 'Swimming 4x50m Freestyle Relay',
-      type: 'aquaticsSports'
-    }, {
-      name: 'Swimming 4x50m Medley Relay',
-      type: 'aquaticsSports'
-    }]
-  }
+    },
+    {
+      name: "Relay",
+      sportName: [{
+        name: 'Athletics 4x50m Relay',
+        type: 'individualSports'
+      }, {
+        name: 'Athletics 4x100m Relay',
+        type: 'individualSports'
+      }, {
+        name: 'Athletics Medley Relay',
+        type: 'individualSports'
+      }, {
+        name: 'Swimming 4x50m Freestyle Relay',
+        type: 'aquaticsSports'
+      }, {
+        name: 'Swimming 4x50m Medley Relay',
+        type: 'aquaticsSports'
+      }]
+    }
   ]
   $scope.addSportsTest = function (data, sportType) {
     // console.log(data, sportType, "check on sport click");
