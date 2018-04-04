@@ -114,7 +114,7 @@ var schema = new Schema({
     utm_source: String,
     utm_campaign: String,
     isBib: Boolean,
-    Document_Status: Boolean,
+    Document_Status: String,
     Photo_ID: Boolean,
     School_Id: Boolean,
     Age_Proof: Boolean,
@@ -136,7 +136,7 @@ schema.plugin(autoIncrement.plugin, {
 schema.plugin(timestamps);
 module.exports = mongoose.model('Athelete', schema);
 
-var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "school", "school"));
+var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "school package", "school"));
 var model = {
 
     searchByFilter: exports.search,

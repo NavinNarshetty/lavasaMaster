@@ -1379,8 +1379,6 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
                         $.jStorage.set("userDetails",data.data.data);
                     });
                 }
-            }else{
-                $state.go('sports-registration');
             }
         },
         getStatusUpgrade: function(request, callback) {
