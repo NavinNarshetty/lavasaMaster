@@ -22,6 +22,10 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
         NavigationService.editTeamId(null);
     };
 
+    if($.jStorage.get("userDetails")){
+        $scope.userDetails = $.jStorage.get("userDetails");
+    }
+
     // ==========getAllSportsListSubCategory==============
     // $scope.allSportsListSubCatArr = [];
     var tempObj = {};
@@ -243,8 +247,17 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
 
         if ($scope.detail.userType === 'athlete') {
             console.log("package", $scope.detail);
-            if ($.jStorage.get("userDetails").selectedEvent < $.jStorage.get("userDetails").package.eventCount) {
-                redirect()
+            
+            if(($.jStorage.get("userDetails").selectedEvent< $.jStorage.get("userDetails").package.eventCount)){
+                if($.jStorage.get("userDetails").package.order!=4){
+                    redirect();
+                }else{
+                    if(val.isTeam){
+                        redirect();
+                    }else{
+                        toastr.error("Only Team Sports Can be Selected As Per Your Package");
+                    }
+                }
             } else {
                 toastr.error("Upgrade Your Package To Register Additional Sports", "Maximum Sport Selected");
             }
@@ -341,7 +354,7 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
             scope: $scope,
             // backdrop: 'static',
             // keyboard: false,
-            templateUrl: 'views/modal/upgradepackage.html',
+            templateUrl: 'views/modal/upgradepackage-modal.html',
             windowClass: 'modal-upgradepackage'
         });
     }

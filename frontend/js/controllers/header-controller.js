@@ -291,6 +291,8 @@ myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, Na
     $scope.linkForAll = globalLinkForAll;
     $scope.linkForAllSports = globalLinkForAll + "sport/";
     $scope.eventYear = eventYear;
+    NavigationService.updateUserDetailsJstorage();
+
 });
 
 myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, NavigationService, errorService, toastr, $state, $uibModal) {

@@ -60,6 +60,7 @@ var model = {
                     sfaID: data.sfaid,
                     status: "Verified"
                 }).exec(function (err, found) {
+                    console.log("err,found",err,found);
                     if (err) {
                         console.log(err);
                         callback(err, null);
@@ -73,6 +74,8 @@ var model = {
                             callback(null, data);
                         }
 
+                    }else{
+                        callback("Invalid SfaId",null);
                     }
                 });
             },
