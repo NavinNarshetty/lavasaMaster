@@ -25,7 +25,17 @@
   }
   .forgotpassword-modal{
     padding: 20px 30px;
+    position: relative;
     text-align: center;
+  }
+  .forgotpassword-modalclose{
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    cursor: pointer;
   }
   .forgotmodal-title{
     margin-bottom: 20px;
@@ -43,7 +53,7 @@
 // CUSTOM RADIO BUTTON
 .sfa-radiobox {
   padding-left: 25px;
-  margin: 0px 10px 0px 0px;
+  margin: 0px 10px 10px 0px;
   position: relative;
   font-size: 14px;
   line-height: 27px;
@@ -517,6 +527,9 @@
   }
   .upgradepackage-radioinr {
     margin-top: 4px;
+  }
+  .upgradepackage-radiocontent{
+    margin: 0;
   }
 }
 

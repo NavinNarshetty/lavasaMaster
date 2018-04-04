@@ -181,6 +181,22 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
 
   //END LOGIN FUNCTION
 
+  // LOGOUT FUNCTION
+  $scope.logoutCandidate = function () {
+      console.log("iminnn");
+      loginService.logoutCandidate(function (data) {
+          console.log("data", data);
+          if (data.isLoggedIn === false) {
+            $scope.showErrorMsg = false;
+              console.log("imiinnnnnnnnnnn");
+              toastr.success('Successfully Logged Out', 'Logout Message');
+          } else {
+              toastr.error('Something went wrong', 'Logout Message');
+          }
+      });
+  };
+  // LOGOUT FUNCTION END
+
 
   //FORGOT PASSWORD FUNCTIONALITY
 

@@ -159,7 +159,17 @@
               <a class="btn btn-link" ng-click="showForgotPassword()">Forgot Password</a>
             </div>
           </div>
-          <div ng-if="showErrorMsg" ui-sref="sports-selection">Go to selection page</div>
+          <div class="text-center" ng-if="showErrorMsg" >
+            <ul class="list-inline">
+              <li>
+                <a ui-sref="sports-selection">Go to selection page</a>
+              </li>
+              <li>|</li>
+              <li>
+                <a ng-click="logoutCandidate()">Logout</a>
+              </li>
+            </ul>
+          </div>
           <div class="register-step-error">
             <p class="m-clear">You have not completed the Registration & Verification process.</p>
             <p class="m-clear">Kindly complete Step 1 and then proceed to Sports Registration.</p>

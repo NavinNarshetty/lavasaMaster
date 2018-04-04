@@ -528,7 +528,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'RegisterFormSchoolCtrl'
         })
         .state('upgradepackage', {
-            url: "/package/upgrade",
+            url: "/package/upgrade/:type/:id",
             templateUrl: tempateURL,
             controller: 'UpgradePackageCtrl'
         })

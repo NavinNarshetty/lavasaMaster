@@ -1,4 +1,4 @@
-myApp.controller('UpgradePackageCtrl', function ($scope, TemplateService, NavigationService, $timeout, $uibModal, $filter, configService) {
+myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateService, NavigationService, $timeout, $uibModal, $filter, configService) {
   $scope.template = TemplateService.getHTML("content/registration/upgrade-package.html");
   TemplateService.title = "School Registration Form"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
@@ -6,18 +6,25 @@ myApp.controller('UpgradePackageCtrl', function ($scope, TemplateService, Naviga
   // VARIABLES
   $scope.showPaymentTab = false;
   $scope.packages = [];
+  $scope.flag = $stateParams.type;
+  // SET FLAGS
+  if ($scope.flag == 'player') {
+    $scope.pageType = 'athlete';
+  } else if ($scope.flag == 'school' || $scope.flag == 'college') {
+    $scope.pageType = 'school';
+  }
+  // SET FLAGS END
   $scope.formData = {
     package: ""
   }
-  // $scope.features = [];
   $scope.formPackage = {
     filter: {
-      packageUser: 'athlete'
+      packageUser: $scope.pageType
     }
   };
-  $scope.athleteData = {
-    // _id: "5ac25bacfb4c255959bcba32"
-    _id: "5ac374ad4a0b3006e5a7b97d"
+  $scope.pageData = {
+    // _id: "5ac374ad4a0b3006e5a7b97d"
+    _id: $stateParams.id
   };
   // VARIABLES END
   // FUNCTIONS
@@ -92,19 +99,25 @@ myApp.controller('UpgradePackageCtrl', function ($scope, TemplateService, Naviga
   });
   // GET PACKAGES END
   // GET ATHLETE DATA
-  NavigationService.getStatusUpgrade($scope.athleteData, function (data) {
+  NavigationService.getStatusUpgrade($scope.pageData, function (data) {
     data = data.data;
     if (data.value == true) {
-      $scope.athleteDetail = data.data;
-      console.log("ath", $scope.athleteDetail);
-      $scope.formData.athlete = $scope.athleteDetail.athlete._id;
-      $scope.formData.outstandingAmount = $scope.athleteDetail.outstandingAmount;
-      $scope.formData.totalPaid = $scope.athleteDetail.totalPaid;
-      $scope.formData.totalToPay = $scope.athleteDetail.totalToPay;
-      $scope.formData.upgradePaymentStatus = $scope.athleteDetail.upgradePaymentStatus;
-      $scope.currentPackage = _.find($scope.packages, ['_id', $scope.athleteDetail.athlete.package]);
-      $scope.setPackageDetails($scope.athleteDetail.athlete.package, 'load');
-      console.log("athlete", $scope.athleteDetail);
+      $scope.detail = data.data;
+      if ($scope.pageType == 'athlete') {
+        $scope.formData.athlete = $scope.detail.athlete._id;
+        $scope.currentPackage = _.find($scope.packages, ['_id', $scope.detail.athlete.package]);
+        $scope.setPackageDetails($scope.detail.athlete.package, 'load');
+      } else if ($scope.pageType == 'school') {
+        $scope.formData.school = $scope.detail.school._id;
+        $scope.currentPackage = _.find($scope.packages, ['_id', $scope.detail.school.package]);
+        $scope.setPackageDetails($scope.detail.school.package, 'load');
+      }
+      console.log("ath", $scope.detail);
+      $scope.formData.outstandingAmount = $scope.detail.outstandingAmount;
+      $scope.formData.totalPaid = $scope.detail.totalPaid;
+      $scope.formData.totalToPay = $scope.detail.totalToPay;
+      $scope.formData.upgradePaymentStatus = $scope.detail.upgradePaymentStatus;
+      console.log("athlete", $scope.detail);
     } else {
       console.log("Error in getOne athlete", data);
     }
