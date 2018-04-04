@@ -174,6 +174,9 @@ var model = {
                     found.display.cgst = found.cgst;
                     found.display.discount = found.discount;
                     found.display.receiptId = found.receiptId;
+                    if (found.remarks) {
+                        found.display.remarks = found.remarks;
+                    }
                     if (found.checkNo) {
                         found.display.checkNo = found.checkNo;
                     }
