@@ -35,7 +35,11 @@ var schema = new Schema({
         ref: 'CouponCode',
         index: true
     },
-    selectedEvent: Number,
+    selectedEvent: {
+        type: Number,
+        min: 0,
+        default: 0
+    },
     year: String,
     idProof: String,
     surname: String,
