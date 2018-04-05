@@ -1549,5 +1549,26 @@
          border-bottom: 2px solid #e1e1e1;
      }
  } // ACCOUNTS HOLDER END
+ //  ACCOUNT MODAL
+ .tablepackageholder {
+     table>thead>th {
+         font-size: 13px;
+         border-bottom: none;
+     }
+ }
+
+ .highligh-tablerow {
+     border: 2px solid #0a1a72;
+ }
+
+ .accounts-modal {
+     .modal-lg {
+         width: 95%;
+     }
+     .custom-select {
+         font-size: 13px;
+         padding: 3px;
+     }
+ } //  ACCOUNT MODAL EEND
  @import "fancybox-override";
  @import "other/mobile";

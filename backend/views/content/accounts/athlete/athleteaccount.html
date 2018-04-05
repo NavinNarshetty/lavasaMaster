@@ -25,14 +25,14 @@
                   <div class="athleteaccount-playerholder ">
                     <div class="row ">
                       <div class="col-md-6">
-                        <p class="athleteaccount-name text-left m-clear "> <span>1)</span> <span>{{player.sfaId}}</span> <span>{{ player.athlete.firstName}} </span> <span>{{player.athlete.middleName}}</span>                          <span>{{player.athlete.surname}}</span> </p>
-                        <p class="athleteaccount-school text-left ">{{player.athlete.school.name }} </p>
+                        <p class="athleteaccount-name text-left text-capitalize m-clear "> <span>1)</span> <span>{{player.sfaId}}</span> <span>{{ player.athlete.firstName}} </span> <span>{{player.athlete.middleName}}</span>                          <span>{{player.athlete.surname}}</span> </p>
+                        <p class="athleteaccount-school text-left text-capitalize m-clear">{{player.athlete.school.name }} </p>
                       </div>
                       <div class="col-md-3 ">
-                        <p> {{ player.athleteData.createdAt | date}} </p>
+                        <p class="m-clear"> <span> Registration Date:</span> <span>{{ player.athleteData.createdAt | date}}</span> </p>
                       </div>
                       <div class="col-md-3 ">
-                        <p class="athleteaccount-upgraded text-right ">Upgraded:Yes/No</p>
+                        <span class="athleteaccount-upgraded pull-right label label-success text-right" ng-if="player.upgrade">Upgraded</span>
                       </div>
                     </div>
 
@@ -108,7 +108,8 @@
                     <tbody>
                       <td>
                         <div>
-                          <span>{{player.displayData.paymentMode}}</span>
+                          <!-- <span>{{player.displayData.paymentMode}}</span> -->
+                          <span ng-repeat="paymentmode in player.transaction track by $index">{{paymentmode.paymentMode}} <span ng-if="player.transaction.length>1" ng-hide="player.transaction.length==$index">,</span>                          </span>
                         </div>
                       </td>
                       <td ng-if="player.displayData.package1.date">
@@ -246,8 +247,8 @@
                       </thead>
                       <tbody>
                         <td>
-                          <div>
-                            {{player.displayData.paymentMode}}
+                          <div class="text-left">
+                            <span ng-repeat="paymentmode in player.transaction track by $index">{{paymentmode.paymentMode}} <span ng-if="player.transaction.length>1" ng-hide="player.transaction.length==$index">,</span>                            </span>
                           </div>
                         </td>
                         <td ng-if="player.displayData.package1.amount">
