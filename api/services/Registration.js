@@ -271,7 +271,6 @@ var model = {
                     data.year = new Date().getFullYear();
                     console.log("data", data);
                     Registration.saveData(data, function (err, registerData1) {
-                        // console.log("registerData", registerData);
                         if (err) {
                             console.log("err", err);
                             callback("There was an error while saving data", null);
@@ -303,7 +302,47 @@ var model = {
                     });
                 },
                 function (registerData, callback) {
+                    data.transaction = [];
                     console.log("registerData", registerData);
+                    if (registerData.registrationFee == "cash") {
+                        var param = {};
+                        param.athlete = undefined;
+                        param.school = registerData._id;
+                        var finalAmount = 0;
+                        param.package = registerData.package._id;
+                        if (registerData.package.sgstAmt) {
+                            param.sgstAmount = registerData.package.sgstAmt;
+                            finalAmount = finalAmount + registerData.package.sgstAmt;
+                        }
+                        if (registerData.package.cgstAmt) {
+                            param.cgstAmount = registerData.package.cgstAmt;
+                            finalAmount = finalAmount + registerData.package.cgstAmt;
+                        }
+                        if (registerData.package.igstAmt != null && registerData.package.igstAmt > 0) {
+                            param.igstAmout = registerData.package.igstAmt;
+                            finalAmount = registerData.package.igstAmt;
+                        }
+                        param.outstandingAmount = registerData.package.finalPrice + finalAmount;
+                        param.paymentMode = registerData.registrationFee;
+                        param.paymentStatus = registerData.paymentStatus;
+                        param.receiptId = [];
+                        param.checkNo = [];
+                        Transaction.saveData(param, function (err, transactData) {
+                            if (err || _.isEmpty(transactData)) {
+                                callback(null, {
+                                    error: "no data found",
+                                    data: data
+                                });
+                            } else {
+                                data.transaction.push(transactData._id);
+                                callback(null, registerData);
+                            }
+                        });
+                    } else {
+                        callback(null, registerData);
+                    }
+                },
+                function (registerData, callback) {
                     if (registerData.registrationFee == "online PAYU") {
                         var param = {};
                         param.athlete = undefined;
@@ -323,7 +362,7 @@ var model = {
                         }
                         param.totalToPay = registerData.package.finalPrice + finalAmount;
                         param.totalPaid = registerData.package.finalPrice + finalAmount;
-                        // param.discount = data.discount;
+                        param.upgrade = false;
                         param.transaction = [];
                     } else {
                         var param = {};
@@ -342,8 +381,9 @@ var model = {
                         }
                         param.athlete = undefined;
                         param.school = registerData._id;
-                        param.transaction = [];
+                        param.transaction = data.transactData;
                         param.outstandingAmount = registerData.package.finalPrice + finalAmount;
+                        param.upgrade = false;
                     }
                     Accounts.saveData(param, function (err, accountsData) {
                         if (err || _.isEmpty(accountsData)) {

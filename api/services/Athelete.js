@@ -1109,7 +1109,7 @@ var model = {
                         param.outstandingAmount = data.amountPaid;
                         param.paymentMode = athleteData.registrationFee;
                         param.paymentStatus = athleteData.paymentStatus;
-                        param.upgrade = false;
+
                         param.receiptId = [];
                         param.checkNo = [];
                         Transaction.saveData(param, function (err, transactData) {
@@ -1139,6 +1139,7 @@ var model = {
                         param.totalToPay = data.amountToPay;
                         param.totalPaid = data.amountPaid;
                         param.discount = data.discount;
+                        param.upgrade = false;
                         param.paymentMode = athleteData.registrationFee;
                         param.transaction = [];
                     } else {
@@ -1147,6 +1148,7 @@ var model = {
                         param.school = undefined;
                         param.outstandingAmount = data.amountPaid;
                         param.paymentMode = athleteData.registrationFee;
+                        param.upgrade = false;
                         param.transaction = data.transaction;
                     }
                     Accounts.saveData(param, function (err, accountsData) {
