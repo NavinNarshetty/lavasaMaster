@@ -139,7 +139,8 @@ myApp.controller('IndividualSelectionCtrl', function ($scope, TemplateService, e
             type: data.type
         });
     }else{
-        $state.go('sports-selection');
+        $scope.userDetails = $.jStorage.get("userDetails");
+        $scope.hideLogout=true;
     }
 
     $scope.logoutCandidate = function () {
@@ -282,7 +283,11 @@ myApp.controller('ConfirmFencingCtrl', function ($scope, TemplateService, Naviga
         $state.go('registerplayer', {
             type: data.type
         });
+    }else{
+        $scope.userDetails = $.jStorage.get("userDetails");
+        $scope.hideLogout=true;
     }
+
     $scope.config = {};
 
     function configureVariables() {
@@ -442,6 +447,9 @@ myApp.controller('ConfirmIndividualCtrl', function ($scope, TemplateService, Nav
         $state.go('registerplayer', {
             type: data.type
         });
+    }else{
+        $scope.userDetails = $.jStorage.get("userDetails");
+        $scope.hideLogout=true;
     }
 
     $scope.logoutCandidate = function () {
@@ -502,6 +510,9 @@ myApp.controller('ConfirmKarateCtrl', function ($scope, TemplateService, Navigat
         $state.go('registerplayer', {
             type: data.type
         });
+    }else{
+        $scope.userDetails = $.jStorage.get("userDetails");
+        $scope.hideLogout=true;
     }
 
     $scope.logoutCandidate = function () {
@@ -553,6 +564,9 @@ myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, Navigat
         $state.go('registerplayer', {
             type: data.type
         });
+    }else{
+        $scope.userDetails = $.jStorage.get("userDetails");
+        $scope.hideLogout=true;
     }
 
     $scope.logoutCandidate = function () {
@@ -639,6 +653,9 @@ myApp.controller('IndividualCongratsCtrl', function ($scope, TemplateService, to
         $state.go('registerplayer', {
             type: data.type
         });
+    }else{
+        $scope.userDetails = $.jStorage.get("userDetails");
+        $scope.hideLogout=true;
     }
 
     $scope.logoutCandidate = function () {

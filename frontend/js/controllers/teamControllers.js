@@ -16,6 +16,9 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
         $state.go('registerplayer', {
             type: data.type
         });
+    }else{
+        $scope.userDetails = $.jStorage.get("userDetails");
+        $scope.hideLogout=true;
     }
 
     // see if user is login / this page has stateParams then redirect accordingly
@@ -664,6 +667,9 @@ myApp.controller('ConfirmTeamCtrl', function ($scope, TemplateService, Navigatio
         $state.go('registerplayer', {
             type: data.type
         });
+    }else{
+        $scope.userDetails = $.jStorage.get("userDetails");
+        $scope.hideLogout=true;
     }
     loginService.loginGet(function (data) {
         $scope.detail = data;
@@ -817,6 +823,9 @@ myApp.controller('TeamCongratsCtrl', function ($scope, TemplateService, toastr, 
         $state.go('registerplayer', {
             type: data.type
         });
+    }else{
+        $scope.userDetails = $.jStorage.get("userDetails");
+        $scope.hideLogout=true;
     }
 
     $scope.logoutCandidate = function () {
