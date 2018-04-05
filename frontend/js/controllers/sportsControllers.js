@@ -424,7 +424,7 @@ myApp.controller('SportsRulesCtrl', function ($scope, TemplateService, $state, N
 
     if($.jStorage.get("userDetails")){
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout=false;
+        $scope.hideLogout=true;
     }
 
     $scope.logoutCandidate = function () {
@@ -535,7 +535,7 @@ myApp.controller('SportIndividualCtrl', function ($scope, TemplateService, toast
 
     if($.jStorage.get("userDetails")){
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout=false;
+        $scope.hideLogout=true;
     }
 
     $scope.logoutCandidate = function () {
@@ -648,7 +648,7 @@ myApp.controller('SportTeamCtrl', function ($scope, TemplateService, toastr, Nav
 
     if($.jStorage.get("userDetails")){
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout=false;
+        $scope.hideLogout=true;
     }
 
     $scope.logoutCandidate = function () {

@@ -16,8 +16,6 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
         $state.go('registerplayer', {
             type: data.type
         });
-    }else{
-        $state.go('sports-selection');
     }
 
     // see if user is login / this page has stateParams then redirect accordingly
@@ -83,7 +81,7 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
 
     if($.jStorage.get("userDetails")){
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout=false;
+        $scope.hideLogout=true;
     }
 
     // set jStorage:"flag" to true
