@@ -46,7 +46,7 @@
                 <!-- PRICE -->
                 <div class="form-group">
                   <label>Price</label>
-                  <input type="number" ng-model="formData.price" name="price" class="form-control" placeholder="Enter Price" required>
+                  <input type="number" ng-model="formData.price" name="price" class="form-control" placeholder="Enter Price" >
                   <div class="error-msg" ng-if="detailForm.price.$invalid && detailForm.price.$touched">Please Enter Price*</div>
                 </div>
                 <!-- PRICE END -->
@@ -124,15 +124,6 @@
                   <div class="error-msg" ng-if="detailForm.eventcount.$invalid && detailForm.eventcount.$touched">Please Enter Event Count *</div>
                 </div>
                 <!-- EVENT COUNT END -->
-
-                <!-- DESCRIPTION -->
-                <div class="form-group">
-                  <label>Description</label>
-                  <input type="text" ng-model="formData.description" name="description" class="form-control" placeholder="Enter Description"
-                    required>
-                  <div class="error-msg" ng-if="detailForm.description.$invalid && detailForm.description.$touched">Please Enter Description *</div>
-                </div>
-                <!-- DESCRIPTION END -->
 
                 <!-- DESCRIPTION -->
                 <div class="form-group">
