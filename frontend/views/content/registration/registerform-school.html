@@ -101,7 +101,7 @@
                 <label class="col-sm-2 control-label"> *{{type| firstcapitalize}} Category : </label>
                 <div class="col-sm-10">
                   <select name="schoolCategory" ng-model="formData.schoolCategory" class="form-control" title="Select Category" required>
-                      <option style="display:none"></option>  
+                      <option style="display:none"></option>
                     <option>Un-aided </option>
                       <option>Government </option>
                       <option> Aided</option>
@@ -354,7 +354,7 @@
                   <div class="form-group">
                     <div class="col-sm-6">
                       <div class="form-group">
-                        <label class="col-sm-4 control-label">*Contact :</label>
+                        <label class="col-sm-4 control-label">*Contact Person:</label>
                         <div class="col-sm-8">
                           <input name="contactPerson" ng-model="formData.contactPerson" capitalize only-alpha type="text" class="form-control" placeholder="Enter Contact Person"
                             required>
@@ -705,7 +705,7 @@
                       <!-- <pre>{{item | json}}</pre> -->
                       <div class="checkbox" ng-repeat="dataItem in item track by $index">
                         <label class="sfa-registercheckbox">
-                          <span>{{dataItem.name}}</span> 
+                          <span>{{dataItem.name}}</span>
                           <input type="checkbox" id="{{dataItem.name}}" value="" ng-click="addSportsTest(dataItem.name,dataItem.type)">
                           <span class="checkmark-sfatick"></span>
                         </label>
@@ -725,7 +725,7 @@
                       </div>
                       <div class="checkbox" ng-repeat="dataItem in doubleRelayData.sportName track by $index">
                         <label class="sfa-registercheckbox">
-                         <span>{{dataItem.name}}</span> 
+                         <span>{{dataItem.name}}</span>
                         <input type="checkbox" id="{{dataItem.name}}" value="" ng-click="addSportsTest(dataItem.name,dataItem.type)">
                         <span class="checkmark-sfatick"></span>
                       </label>

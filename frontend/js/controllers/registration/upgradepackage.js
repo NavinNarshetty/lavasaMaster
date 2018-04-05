@@ -1,4 +1,4 @@
-myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateService, NavigationService, $timeout, $uibModal, $filter, configService) {
+myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateService, NavigationService, $timeout, $uibModal, $filter, configService, toastr, $state) {
   $scope.template = TemplateService.getHTML("content/registration/upgrade-package.html");
   TemplateService.title = "School Registration Form"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
@@ -28,6 +28,7 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
   };
   // VARIABLES END
   // FUNCTIONS
+  // SET PACKAGE DETAILS
   $scope.setPackageDetails = function (id, type) {
     var selectedPackage = _.find($scope.packages, ['_id', id]);
     console.log("select", selectedPackage);
@@ -57,29 +58,52 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
       $scope.showPaymentTab = true;
     }
   }
+  // SET PACKAGE DETAILS
+  // THANKYOU MODAL
+  $scope.openModal = function () {
+      $timeout(function () {
+          // fbq('track', 'CompleteRegistration');
+          fbq('track', 'CompleteRegistration');
+          // GoogleAdWordsService.sendRegisterCustomerConversion();
+      });
+      var modalInstance = $uibModal.open({
+          animation: true,
+          scope: $scope,
+          backdrop: 'static',
+          keyboard: false,
+          // size: 'sm',
+          templateUrl: "views/modal/thankyou.html"
+      });
+  };
+  // THANKYOU MODAL END
   // UPGRADE PACKAGE
   $scope.packageUpgrade = function (formData) {
     $scope.formData.upgrade = true;
     // console.log("upgrade", formData);
-    NavigationService.upgradeAccount(formData, function (data) {
-      console.log("upgrade return", data);
-      if (formData.registrationFee == "online PAYU") {
-        if (formData.athlete) {
-          var id = formData.athlete;
-          console.log("id**", id);
-          var url = "payU/upgradeAthletePayment?id=" + id;
-          window.location.href = adminUrl2 + url;
+    if (formData.registrationFee != '') {
+      NavigationService.upgradeAccount(formData, function (data) {
+        console.log("upgrade return", data);
+        if (formData.registrationFee == "online PAYU") {
+          if (formData.athlete) {
+            var id = formData.athlete;
+            console.log("id**", id);
+            var url = "payU/upgradeAthletePayment?id=" + id;
+            window.location.href = adminUrl2 + url;
+          } else {
+            var id = formData.school;
+            console.log("id**", id);
+            var url = "payU/upgradeSchoolPayment?id=" + id;
+            window.location.href = adminUrl2 + url;
+          }
         } else {
-          var id = formData.school;
-          console.log("id**", id);
-          var url = "payU/upgradeSchoolPayment?id=" + id;
-          window.location.href = adminUrl2 + url;
+          toastr.success("Package upgraded Successfully");
+          $state.go("sports-selection");
         }
-      } else {
-        $scope.openModal();
-      }
+      });
+    } else {
+      toastr.error("Please select Mode of Payment");
+    }
 
-    });
 
 
   }

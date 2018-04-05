@@ -77,7 +77,7 @@
     <!-- HEADER END -->
     <!-- PACKAGE TABLE -->
     <section class="registerplayer-package">
-      <sfa-package-table user="{{formData.type}}" caption="hello" cashback="true"></sfa-package-table>
+        <sfa-package-table user="{{formData.type}}" caption="hello" cashback="true"></sfa-package-table>
     </section>
     <!-- PACKAGE TABLE END -->
     <!-- REGISTER FORM  -->
@@ -102,7 +102,8 @@
           <div class="registerstep-btnholder">
             <ul class="list-unstyled">
               <li>
-                <button class="btn btn-register1">Participating  for the First Time</button>
+                <button class="btn btn-register1" ui-sref="registerformplayer({flag: 'create'})" ng-if="pageType == 'player'">Participating  for the First Time</button>
+                <button class="btn btn-register1" ui-sref="registerformschool({flag: 'create'})" ng-if="pageType == 'school'">Participating  for the First Time</button>
               </li>
               <li>
                 <button class="btn btn-register1" ng-click="showStepForm()" ng-class="{'active': stepForm}">Have Participated Before</button>
