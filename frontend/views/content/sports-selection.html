@@ -20,7 +20,7 @@
                         <p class="mb0" ng-if="detail.userType === 'athlete'">&nbsp;{{detail.firstName}}&nbsp&nbsp{{detail.surname}}</p>
                         <p class="mb0" ng-if="detail.userType === 'athlete'">{{userDetails.selectedEvent}}/{{userDetails.package.eventCount}}</p>
                     </div>
-                    
+
                 </div>
                 <ul class="list-inline">
                     <li ui-sref="change-password"><a>Change Password</a></li>
@@ -83,9 +83,9 @@
 
                     </ul>
                 </div>
-                <div class="formregister-mtb20 text-right">
+                <div class="formregister-mtb20 text-right" ng-if="userDetails.package.order > 1">
                   To participate in more events and   enjoy a host of other benefits
-                  <button class="btn btn-greenupgrade" ng-click="showUpgradeModal()">Upgrade Package</button>
+                  <button class="btn btn-greenupgrade" ui-sref="upgradepackage({type: upgrade.userType , id: upgrade.id})">Upgrade Package</button>
                 </div>
             </div>
             <!-- REGISTERED SPORTS TAB -->

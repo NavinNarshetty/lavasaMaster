@@ -124,12 +124,36 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
         }
     } else {
         if ($.jStorage.get("userDetails") === null) {
-            $state.go('sports-registration');
+          $state.go('registerplayer', {
+              type: data.type
+          });
         }
         $scope.callLogin();
     }
 
-
+    // SHOW UPGRADE POPUP
+    $scope.upgrade = {};
+    $scope.upgrade.id= $scope.userDetails._id;
+    if ($scope.detail.userType == 'athlete') {
+      $scope.upgrade.userType = 'player';
+    } else if ($scope.detail.userType == 'school') {
+      if ($scope.userDetails.institutionType == 'school') {
+        $scope.upgrade.userType = 'school';
+      } else if ($scope.userDetails.institutionType == 'college') {
+        $scope.upgrade.userType = 'college';
+      }
+    }
+    $scope.showUpgradeModal = function () {
+        $scope.modalInstance = $uibModal.open({
+            animation: true,
+            scope: $scope,
+            // backdrop: 'static',
+            // keyboard: false,
+            templateUrl: 'views/modal/upgradepackage-modal.html',
+            windowClass: 'modal-upgradepackage'
+        });
+    }
+    // SHOW UPGRADE POPUP END
 
 
     $scope.logoutCandidate = function () {
@@ -247,7 +271,7 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
 
         if ($scope.detail.userType === 'athlete') {
             console.log("package", $scope.detail);
-            
+
             if(($.jStorage.get("userDetails").selectedEvent< $.jStorage.get("userDetails").package.eventCount)){
                 if($.jStorage.get("userDetails").package.order!=4){
                     redirect();
@@ -259,7 +283,12 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
                     }
                 }
             } else {
-                toastr.error("Upgrade Your Package To Register Additional Sports", "Maximum Sport Selected");
+              if ($scope.userDetails.package.order == 1) {
+                toastr.error("Maximum Sport Selected");
+              } else {
+                $scope.showUpgradeModal();
+              }
+                // toastr.error("Upgrade Your Package To Register Additional Sports", "Maximum Sport Selected");
             }
         } else {
             redirect();
@@ -347,18 +376,6 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
         });
     };
 
-    // SHOW UPGRADE POPUP
-    $scope.showUpgradeModal = function () {
-        $scope.modalInstance = $uibModal.open({
-            animation: true,
-            scope: $scope,
-            // backdrop: 'static',
-            // keyboard: false,
-            templateUrl: 'views/modal/upgradepackage-modal.html',
-            windowClass: 'modal-upgradepackage'
-        });
-    }
-    // SHOW UPGRADE POPUP END
 });
 
 myApp.controller('SportsRulesCtrl', function ($scope, TemplateService, $state, NavigationService, toastr, $timeout, $stateParams, errorService, loginService, selectService, configService) {
@@ -389,7 +406,9 @@ myApp.controller('SportsRulesCtrl', function ($scope, TemplateService, $state, N
     });
 
     if ($.jStorage.get("userDetails") === null) {
-        $state.go('sports-registration');
+      $state.go('registerplayer', {
+          type: data.type
+      });
     }
 
     $scope.logoutCandidate = function () {
@@ -493,7 +512,9 @@ myApp.controller('SportIndividualCtrl', function ($scope, TemplateService, toast
     });
 
     if ($.jStorage.get("userDetails") === null) {
-        $state.go('sports-registration');
+      $state.go('registerplayer', {
+          type: data.type
+      });
     }
 
     $scope.logoutCandidate = function () {
@@ -599,7 +620,9 @@ myApp.controller('SportTeamCtrl', function ($scope, TemplateService, toastr, Nav
     };
 
     if ($.jStorage.get("userDetails") === null) {
-        $state.go('sports-registration');
+      $state.go('registerplayer', {
+          type: data.type
+      });
     }
 
     $scope.logoutCandidate = function () {

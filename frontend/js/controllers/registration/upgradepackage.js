@@ -84,6 +84,34 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
 
   }
   // UPGRADE PACKAGE END
+  // GET ATHLETE DATA
+  $scope.getStatusUpgrade = function(){
+    NavigationService.getStatusUpgrade($scope.pageData, function (data) {
+      data = data.data;
+      if (data.value == true) {
+        $scope.detail = data.data;
+        if ($scope.pageType == 'athlete') {
+          $scope.formData.athlete = $scope.detail.athlete._id;
+          $scope.currentPackage = _.find($scope.packages, ['_id', $scope.detail.athlete.package]);
+          $scope.setPackageDetails($scope.detail.athlete.package, 'load');
+        } else if ($scope.pageType == 'school') {
+          $scope.formData.school = $scope.detail.school._id;
+          $scope.currentPackage = _.find($scope.packages, ['_id', $scope.detail.school.package]);
+          $scope.setPackageDetails($scope.detail.school.package, 'load');
+        }
+        console.log("ath", $scope.detail);
+        $scope.formData.outstandingAmount = $scope.detail.outstandingAmount;
+        $scope.formData.totalPaid = $scope.detail.totalPaid;
+        $scope.formData.totalToPay = $scope.detail.totalToPay;
+        $scope.formData.upgradePaymentStatus = $scope.detail.upgradePaymentStatus;
+        console.log("athlete", $scope.detail);
+      } else {
+        console.log("Error in getOne athlete", data);
+      }
+    });
+  }
+
+  // GET ATHLETE DATA END
   // FUNCTIONS END
   // API
   // GET PACKAGES
@@ -92,37 +120,13 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
     // console.log("dat",data);
     if (data.value = true) {
       $scope.packages = data.data.results;
+      $scope.getStatusUpgrade();
       // console.log("packages", $scope.packages);
     } else {
       console.log("packages search failed", data);
     }
   });
   // GET PACKAGES END
-  // GET ATHLETE DATA
-  NavigationService.getStatusUpgrade($scope.pageData, function (data) {
-    data = data.data;
-    if (data.value == true) {
-      $scope.detail = data.data;
-      if ($scope.pageType == 'athlete') {
-        $scope.formData.athlete = $scope.detail.athlete._id;
-        $scope.currentPackage = _.find($scope.packages, ['_id', $scope.detail.athlete.package]);
-        $scope.setPackageDetails($scope.detail.athlete.package, 'load');
-      } else if ($scope.pageType == 'school') {
-        $scope.formData.school = $scope.detail.school._id;
-        $scope.currentPackage = _.find($scope.packages, ['_id', $scope.detail.school.package]);
-        $scope.setPackageDetails($scope.detail.school.package, 'load');
-      }
-      console.log("ath", $scope.detail);
-      $scope.formData.outstandingAmount = $scope.detail.outstandingAmount;
-      $scope.formData.totalPaid = $scope.detail.totalPaid;
-      $scope.formData.totalToPay = $scope.detail.totalToPay;
-      $scope.formData.upgradePaymentStatus = $scope.detail.upgradePaymentStatus;
-      console.log("athlete", $scope.detail);
-    } else {
-      console.log("Error in getOne athlete", data);
-    }
-  });
-  // GET ATHLETE DATA END
   // API END
   // END
 });
