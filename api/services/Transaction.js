@@ -586,7 +586,7 @@ var model = {
                                     var param = {};
                                     param.athlete = data.athleteId;
                                     param.school = undefined;
-                                    param.dateOfTransaction = new Date();
+                                    param.dateOfTransaction = n.dateOfTransaction;
                                     param.package = n.package._id;
                                     param.amountToPay = n.package.amount;
                                     param.amountPaid = n.package.amount;
@@ -652,7 +652,7 @@ var model = {
                                     }
                                     var matchObj = {
                                         $set: {
-                                            dateOfTransaction: new Date(),
+                                            dateOfTransaction: n.dateOfTransaction,
                                             discount: data.discount,
                                             amountPaid: n.package.amount,
                                             receiptId: receipt,
@@ -689,7 +689,7 @@ var model = {
                                     var param = {};
                                     param.school = data.school;
                                     param.athlete = undefined;
-                                    param.dateOfTransaction = new Date();
+                                    param.dateOfTransaction = n.dateOfTransaction;
                                     param.package = n.package._id;
                                     param.amountToPay = n.package.amount;
                                     param.amountPaid = n.package.amount;
@@ -746,7 +746,7 @@ var model = {
                                     }
                                     var matchObj = {
                                         $set: {
-                                            dateOfTransaction: new Date(),
+                                            dateOfTransaction: n.dateOfTransaction,
                                             discount: data.discount,
                                             receiptId: receipt,
                                             checkNo: checkNo,
