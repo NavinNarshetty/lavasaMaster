@@ -343,12 +343,13 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
     $timeout(function () {
       // BANNER
       var bannerSlide = new Swiper('.registerplayer-bannerslider .swiper-container', {
-        slidesPerView: 'auto',
+        slidesPerView: 1,
         preloadImages: true,
-        loop: true,
         speed: 500,
         autoplay: 3000,
-        paginationClickable: true
+        reverseDirection: false,
+        paginationClickable: true,
+        // loop: true,
       });
       // BANNER END
       // TESTIMONIALS
