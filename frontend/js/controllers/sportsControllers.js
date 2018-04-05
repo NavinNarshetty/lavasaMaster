@@ -134,6 +134,7 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
     // SHOW UPGRADE POPUP
     $scope.upgrade = {};
     $scope.upgrade.id= $scope.userDetails._id;
+    $scope.upgrade.package = $scope.userDetails.package;
     if ($scope.detail.userType == 'athlete') {
       $scope.upgrade.userType = 'player';
     } else if ($scope.detail.userType == 'school') {
@@ -279,7 +280,8 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
                     if(val.isTeam){
                         redirect();
                     }else{
-                        toastr.error("Only Team Sports Can be Selected As Per Your Package");
+                      $scope.showUpgradeModal();
+                        // toastr.error("Only Team Sports Can be Selected As Per Your Package");
                     }
                 }
             } else {
