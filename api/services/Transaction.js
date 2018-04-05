@@ -591,16 +591,18 @@ var model = {
                                             data: data
                                         });
                                     } else {
-                                        if (data.transactions[len].package._id.equals(foundTransact.package)) {
+                                        console.log("foundTransact", foundTransact);
+                                        console.log("package", data.transactions[len].package._id, "package", foundTransact.package);
+                                        if (data.transactions[len].package._id === foundTransact.package) {
                                             data.netTotal = ((n.package.finalPrice + data.cgst + data + sgst + data.igst) - data.discount);
                                         }
                                         var outstanding = foundTransact.outstandingAmount - n.amountPaid;
                                         data.outstanding = data.outstanding + outstanding;
+                                        console.log("outstanding", outstanding, "data.outstanding", data.outstanding);
                                         var receipt = n.receiptId;
                                         var mainReceipt = _.concat(data.receipt,  receipt);
                                         data.receipt = _.uniq(mainReceipt);
                                         if (n.checkNo) {
-                                            // var checkNo = n.checkNo.split(",");
                                             var checkNo = n.checkNo;
                                             var mainCheckNo = _.concat(data.checkNo, checkNo);
                                             data.checkNo = _.uniq(mainCheckNo);
@@ -645,7 +647,8 @@ var model = {
                                             data: data
                                         });
                                     } else {
-                                        if (data.transactions[len].package._id.equals(foundTransact.package)) {
+                                        console.log("package", data.transactions[len].package._id);
+                                        if (data.transactions[len].package._id === foundTransact.package) {
                                             data.netTotal = ((n.package.finalPrice + data.cgst + data + sgst + data.igst) - data.discount);
                                         }
                                         var outstanding = foundTransact.outstandingAmount - n.amountPaid;
