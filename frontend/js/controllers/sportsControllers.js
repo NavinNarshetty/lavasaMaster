@@ -17,6 +17,12 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
     $scope.classinactive = '';
     $scope.constraints = {};
     $scope.userBySfa = {};
+
+    if($.jStorage.get("userDetails")){
+        $scope.userDetails = $.jStorage.get("userDetails");
+        $scope.hideLogout=false;
+    }
+
     $scope.setTeamIdNull = function () {
         $.jStorage.set("teamId", null);
         NavigationService.editTeamId(null);
@@ -394,6 +400,9 @@ myApp.controller('SportsRulesCtrl', function ($scope, TemplateService, $state, N
     });
     $scope.selectService = selectService;
     $scope.basicSportDetails = {};
+
+   
+
     $scope.selectService.setBasicSportDetails({
         '_id': $stateParams.id
     }, function (obj) {
@@ -411,6 +420,11 @@ myApp.controller('SportsRulesCtrl', function ($scope, TemplateService, $state, N
       $state.go('registerplayer', {
           type: data.type
       });
+    }
+
+    if($.jStorage.get("userDetails")){
+        $scope.userDetails = $.jStorage.get("userDetails");
+        $scope.hideLogout=false;
     }
 
     $scope.logoutCandidate = function () {
@@ -519,6 +533,11 @@ myApp.controller('SportIndividualCtrl', function ($scope, TemplateService, toast
       });
     }
 
+    if($.jStorage.get("userDetails")){
+        $scope.userDetails = $.jStorage.get("userDetails");
+        $scope.hideLogout=false;
+    }
+
     $scope.logoutCandidate = function () {
         loginService.logoutCandidate(function (data) {
             if (data.isLoggedIn === false) {
@@ -625,6 +644,11 @@ myApp.controller('SportTeamCtrl', function ($scope, TemplateService, toastr, Nav
       $state.go('registerplayer', {
           type: data.type
       });
+    }
+
+    if($.jStorage.get("userDetails")){
+        $scope.userDetails = $.jStorage.get("userDetails");
+        $scope.hideLogout=false;
     }
 
     $scope.logoutCandidate = function () {

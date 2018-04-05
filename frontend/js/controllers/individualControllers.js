@@ -128,9 +128,17 @@ myApp.controller('IndividualSelectionCtrl', function ($scope, TemplateService, e
         $.jStorage.set("confirmPageKey", data.data.sportType);
     });
 
-    if ($.jStorage.get("userDetails") === null) {
-        $state.go('sports-registration');
-    } else if ($stateParams.id === '') {
+    var data={};
+    if($.jStorage.get("userDetails") === null){
+        if ($.jStorage.get("userType") == "school") {
+            data.type = "school";
+        }else{
+            data.type = "player";
+        }
+        $state.go('registerplayer', {
+            type: data.type
+        });
+    }else{
         $state.go('sports-selection');
     }
 
@@ -264,8 +272,16 @@ myApp.controller('ConfirmFencingCtrl', function ($scope, TemplateService, Naviga
         $scope.formData.schoolName = $scope.detail.schoolName;
     });
 
-    if ($.jStorage.get("userDetails") === null) {
-        $state.go('sports-registration');
+    var data={};
+    if($.jStorage.get("userDetails") === null){
+        if ($.jStorage.get("userType") == "school") {
+            data.type = "school";
+        }else{
+            data.type = "player";
+        }
+        $state.go('registerplayer', {
+            type: data.type
+        });
     }
     $scope.config = {};
 
@@ -416,8 +432,16 @@ myApp.controller('ConfirmIndividualCtrl', function ($scope, TemplateService, Nav
         $scope.formData.schoolName = $scope.detail.schoolName;
     });
 
-    if ($.jStorage.get("userDetails") === null) {
-        $state.go('sports-registration');
+    var data={};
+    if($.jStorage.get("userDetails") === null){
+        if ($.jStorage.get("userType") == "school") {
+            data.type = "school";
+        }else{
+            data.type = "player";
+        }
+        $state.go('registerplayer', {
+            type: data.type
+        });
     }
 
     $scope.logoutCandidate = function () {
@@ -468,8 +492,16 @@ myApp.controller('ConfirmKarateCtrl', function ($scope, TemplateService, Navigat
         $scope.formData.schoolName = $scope.detail.schoolName;
     });
 
-    if ($.jStorage.get("userDetails") === null) {
-        $state.go('sports-registration');
+    var data={};
+    if($.jStorage.get("userDetails") === null){
+        if ($.jStorage.get("userType") == "school") {
+            data.type = "school";
+        }else{
+            data.type = "player";
+        }
+        $state.go('registerplayer', {
+            type: data.type
+        });
     }
 
     $scope.logoutCandidate = function () {
@@ -511,8 +543,16 @@ myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, Navigat
         $scope.formData.schoolName = $scope.detail.schoolName;
     });
 
-    if ($.jStorage.get("userDetails") === null) {
-        $state.go('sports-registration');
+    var data={};
+    if($.jStorage.get("userDetails") === null){
+        if ($.jStorage.get("userType") == "school") {
+            data.type = "school";
+        }else{
+            data.type = "player";
+        }
+        $state.go('registerplayer', {
+            type: data.type
+        });
     }
 
     $scope.logoutCandidate = function () {
@@ -589,8 +629,16 @@ myApp.controller('IndividualCongratsCtrl', function ($scope, TemplateService, to
         $scope.detail = data;
     });
 
-    if ($.jStorage.get("userDetails") === null) {
-        $state.go('sports-registration');
+    var data={};
+    if($.jStorage.get("userDetails") === null){
+        if ($.jStorage.get("userType") == "school") {
+            data.type = "school";
+        }else{
+            data.type = "player";
+        }
+        $state.go('registerplayer', {
+            type: data.type
+        });
     }
 
     $scope.logoutCandidate = function () {

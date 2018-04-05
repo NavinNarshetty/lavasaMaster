@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-10 col-xs-12">
+      <!-- <div class="col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-10 col-xs-12">
         <div class="pull-right sp-tab-right">
           <div class="">
             <div class="display-inline">
@@ -28,7 +28,8 @@
             <li ng-click="logoutCandidate();" ng-if="detail.isLoggedIn"><a>Logout</a></li>
           </ul>
         </div>
-      </div>
+      </div> -->
+      <div ng-include="'views/content/profile-details.html'"></div>
     </div>
     <div class="row">
       <div class="col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-10 col-xs-12">

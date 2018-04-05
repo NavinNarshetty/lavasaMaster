@@ -212,8 +212,16 @@ myApp.controller('ChangePasswordCtrl', function ($scope, TemplateService, Naviga
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;
     });
-    if ($.jStorage.get("userDetails") === null) {
-        $state.go('sports-registration');
+    var data={};
+    if($.jStorage.get("userDetails") === null){
+        if ($.jStorage.get("userType") == "school") {
+            data.type = "school";
+        }else{
+            data.type = "player";
+        }
+        $state.go('registerplayer', {
+            type: data.type
+        });
     }
 
     loginService.loginGet(function (data) {
