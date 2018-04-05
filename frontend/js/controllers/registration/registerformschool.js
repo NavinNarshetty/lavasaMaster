@@ -1,4 +1,4 @@
-myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, TemplateService, NavigationService, $timeout, $uibModal, $filter, configService) {
+myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout, TemplateService, NavigationService, $timeout, $uibModal, $filter, configService) {
   $scope.template = TemplateService.getHTML("content/registration/registerform-school.html");
   TemplateService.title = "School Registration Form"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
@@ -33,6 +33,17 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, Template
   // CONFIG PROPERTY END
 
 
+  // FANCYBOX BUTTON CUSTOM
+  $timeout(function () {
+    console.log("in********")
+    $("[fancybox]").fancybox({
+      iframe: {
+        preload: false
+      },
+      buttons: ['close']
+    });
+  }, 100);
+  // FANCYBOX BUTTON CUSTOM END
 
 
 

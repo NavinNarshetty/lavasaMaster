@@ -5,7 +5,7 @@
   <div class="modal-container">
 
     <form name="accountForm">
-      <pre>{{formData | json }}</pre>
+      <!-- <pre>{{formData | json }}</pre> -->
       <div class="row">
         <!-- SGST -->
         <div class="col-md-2">
@@ -47,7 +47,7 @@
           <div class="form-group">
             <label> Out Standing </label>
             <input type="text" name="outstanding" class="form-control" only-digits ng-model="formData.outstandingAmount" id="outstanding"
-              placeholder="Enter Outstanding amount">
+              placeholder="Enter Outstanding amount" readonly>
           </div>
         </div>
         <!-- OUTSTANDING END -->
@@ -94,8 +94,16 @@
             <table class="table table-condensed">
               <thead>
                 <th>
+                  Payment Date
+                </th>
+                <th>
                   <div class="text-capitalize">
                     Package Name
+                  </div>
+                </th>
+                <th>
+                  <div class="text-capitalize">
+                    Amount
                   </div>
                 </th>
                 <th>
@@ -108,7 +116,7 @@
                     Chq No
                   </div>
                 </th>
-                <th>
+                <th class="hide">
                   <div class="text-capitalize">
                     Action
                   </div>
@@ -117,15 +125,28 @@
               <tbody>
                 <!-- {{reciptnoData| json}} -->
                 <tr ng-repeat="packageDetail in formData.transactions track by $index">
+
+                  <!-- DATE  -->
+                  <td>
+                    <input name="datefield" ui-date="dateOptions" ng-model="packageDetail.dateOfTransaction" class="form-control" ng-required="true"
+                      placeholder="Enter Event Date" required>
+                    <div class="label label-danger pull-right" ng-if="accountForm.datefield.$invalid && accountForm.datefield.$touched">Please Enter End Date *</div>
+                  </td>
+                  <!-- DATE  END -->
                   <!-- PACKAGE SELECTION -->
                   <td>
-                    <select name="packageName" id="packagename" class="form-control" ng-model="packageDetail.package" ng-options="{_id:data._id,name:data.name,amount:data.price} as data.name for data in packageNameData track by data._id"
+                    <select name="packageName" id="packagename" class="form-control" ng-model="packageDetail.package" ng-options="{_id:data._id,name:data.name,finalPrice:data.finalPrice} as data.name for data in packageNameData track by data._id"
                       required>
                     </select>
                     <div class="label label-danger pull-right" ng-if="accountForm.packageName.$invalid && accountForm.packageName.$touched">Please Enter Valid Package Name *</div>
                   </td>
                   <!-- PACKAGE SELECTION END -->
 
+                  <!-- FINAL PRICE -->
+                  <td>
+                    <input type="text" ng-model="packageDetail.package.finalPrice" class="form-control" readonly>
+                  </td>
+                  <!-- FINAL PRICE END -->
                   <!-- RECIPT NO -->
                   <td>
                     <input type="text" placeholder="Enter Recipt no" name="reciptno" class="form-control" ng-model="packageDetail.receiptId"
@@ -138,7 +159,7 @@
                       required>
                     <div class="label label-danger pull-right" ng-if="accountForm.reciptno.$invalid && accountForm.reciptno.$touched">Please Enter Valid Recipt No *</div>
                   </td>
-                  <td>
+                  <td class="hide">
                     <span class="text-center" ng-click="deleteRow(formData,$index,isDelete)"><i class="fa btn btn-danger fa-trash" aria-hidden="true"></i></span>
                   </td>
                 </tr>

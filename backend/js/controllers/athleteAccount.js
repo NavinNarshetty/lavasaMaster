@@ -132,6 +132,8 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
   $scope.manualPackageEntry = function (formData) {
     if (!formData) {
       $scope.formData.transactions.push({
+        "dateOfTransaction": '',
+        "finalPrice": '',
         "package": '',
         "receiptId": '',
         "checkNo": '',
@@ -139,6 +141,8 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
       })
     } else {
       formData.transactions.push({
+        "dateOfTransaction": '',
+        "finalPrice": '',
         "package": '',
         "receiptId": '',
         "checkNo": '',
@@ -150,7 +154,7 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
 
   // DELETE ROW
   $scope.deleteRow = function (formData, index, status) {
-    formData.transactions[index].isDelete = !status;
+    // formData.transactions[index].isDelete = !status;
     formData.transactions.splice(index, 1);
     // formData.transactions.push(isDelete = status)
   }
@@ -189,7 +193,9 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
     NavigationService.apiCall($scope.url, data, function (data) {
       console.log("data saved", data);
       $scope.modalInstance.close();
+
     });
+    $scope.viewTable();
   }
   // SAVE END
 

@@ -14,9 +14,9 @@
         <section class="registerform-schoolguidelines">
           <!-- GUIDELINE CARD -->
           <div class="form-card">
-            <a class="fancybox.iframe" fancybox href="img/pdf/sfa_agegroup_event.pdf">
+            <!-- <a class="fancybox.iframe" fancybox href="img/pdf/sfa_agegroup_event.pdf#toolbar=0">
                   demo click
-              </a>
+              </a> -->
             <p>The annual {{type}} registration fee for SFA Championship {{eventYear}}, {{sfaCity}} is Rs. 2,500 (Inclusive
               of all applicable taxes) <a ng-click="regisBenModal(type,sfaCity,year,eventYear)"><strong>Click here</strong></a>              to view registered {{type}} benefits for SFA Championships City {{eventYear}}, {{sfaCity}}. </p>
             <p class="formregister-heading text-uppercase formregister-mtb20">
@@ -740,7 +740,8 @@
               <!-- TERMS AND CONDITION -->
               <div class="registerform-schooltermscondition">
                 <label class="sfa-registercheckbox">
-                  I have carefully read and understood the <a ng-click="termcondition('', type, sfaCity, year)" title="Click here"><strong>terms and conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.
+                    <!-- <a ng-click="termcondition('', type, sfaCity, year)" title="Click here"><strong>terms and conditions</strong></a> -->
+                  I have carefully read and understood the <a href="https://storage.googleapis.com/sportsforall/termschool.pdf#toolbar=0" fancybox class="fancybox.iframe" title="Click here"><strong>terms and conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.
                   <input type="checkbox"   ng-checked="termsCheck(formData.termsAndCondition)" ng-model="formData.termsAndCondition">
                   <span class="checkmark-sfatick"></span>
                 </label>

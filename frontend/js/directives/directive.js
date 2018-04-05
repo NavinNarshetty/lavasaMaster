@@ -1,23 +1,23 @@
 myApp.directive('img', function ($compile, $parse) {
-    return {
-        restrict: 'E',
-        replace: false,
-        link: function ($scope, element, attrs) {
-            var $element = $(element);
-            if (!attrs.noloading) {
-                // $element.after("<img src='img/loading.gif' class='loading' />");
-                $element.after("<img src='img/noimage.png' class='loading' />");
-                var $loading = $element.next(".loading");
-                $element.load(function () {
-                    $loading.remove();
-                    $(this).addClass("doneLoading");
-                });
-            } else {
-                $($element).addClass("doneLoading");
+        return {
+            restrict: 'E',
+            replace: false,
+            link: function ($scope, element, attrs) {
+                var $element = $(element);
+                if (!attrs.noloading) {
+                    // $element.after("<img src='img/loading.gif' class='loading' />");
+                    $element.after("<img src='img/noimage.png' class='loading' />");
+                    var $loading = $element.next(".loading");
+                    $element.load(function () {
+                        $loading.remove();
+                        $(this).addClass("doneLoading");
+                    });
+                } else {
+                    $($element).addClass("doneLoading");
+                }
             }
-        }
-    };
-})
+        };
+    })
 
     .directive('hideOnScroll', function ($document) {
         return {
@@ -426,7 +426,7 @@ myApp.directive('img', function ($compile, $parse) {
             },
             link: function ($scope, element, attrs) {
                 // console.log($scope.model);
-                $scope.showImage = function () { };
+                $scope.showImage = function () {};
                 $scope.check = true;
                 if (!$scope.type) {
                     $scope.type = "image";
@@ -615,8 +615,8 @@ myApp.directive('img', function ($compile, $parse) {
                 $scope.upload = function (image) {
                     // console.log(filetype);
                     if (_.findIndex($scope.types, function (key) {
-                        return image.file.type === key;
-                    }) !== -1) {
+                            return image.file.type === key;
+                        }) !== -1) {
                         // console.log('andar hain')
                         // if (image.file.type == "image/png" || image.file.type == "image/jpeg") {
                         // $scope.uploadStatus = "uploading";
@@ -830,7 +830,7 @@ myApp.directive('img', function ($compile, $parse) {
             restrict: 'E',
             scope: {},
             templateUrl: 'views/directive/profileathlete-card.html',
-            link: function () { }
+            link: function () {}
         }
     })
     // end profileathlete-card;
@@ -867,8 +867,8 @@ myApp.directive('img', function ($compile, $parse) {
                     }
                     // console.log(destination, type, 'in dir')
                     $('html,body').animate({
-                        scrollTop: $(destination).offset().top
-                    },
+                            scrollTop: $(destination).offset().top
+                        },
                         'slow');
                 };
             }
@@ -953,8 +953,8 @@ myApp.directive('img', function ($compile, $parse) {
             }
         }
     }])
-    // PACKAGE CARD END
-    ;
+// PACKAGE CARD END
+;
 
 // .directive('onlyDigits', function () {
 //     return {

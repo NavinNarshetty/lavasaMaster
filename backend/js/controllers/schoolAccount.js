@@ -118,6 +118,8 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
   $scope.manualPackageEntry = function (formData) {
     if (!formData) {
       $scope.formData.transactions.push({
+        "dateOfTransaction": '',
+        "finalPrice": '',
         "package": '',
         "receiptId": '',
         "checkNo": '',
@@ -125,6 +127,8 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
       })
     } else {
       formData.transactions.push({
+        "dateOfTransaction": '',
+        "finalPrice": '',
         "package": '',
         "receiptId": '',
         "checkNo": '',
@@ -174,6 +178,7 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
       console.log("data saved", data);
       $scope.modalInstance.close();
     });
+    $scope.viewTable();
   }
   // SAVE END
 })
