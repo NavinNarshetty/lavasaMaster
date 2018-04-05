@@ -193,6 +193,7 @@ var model = {
                         found.display["package" + i] = {};
                         found.display["package" + i].name = n.package.name;
                         found.display["package" + i].date = n.createdAt;
+                        found.display["package" + i].dateOfTransaction = n.dateOfTransaction;
                         found.display["package" + i].user = n.package.packageUser;
                         found.display["package" + i].amount = n.package.finalPrice;
                         i++;
