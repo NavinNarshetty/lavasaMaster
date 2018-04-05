@@ -92,7 +92,7 @@ var model = {
                         param.school = found._id;
                         param.athlete = undefined;
                     }
-                    param.dateOfTransaction = new Date();
+                    // param.dateOfTransaction = new Date();
                     param.package = found.package;
                     param.amountPaid = found.accounts.totalPaid;
                     param.amountToPay = found.accounts.totalToPay;
@@ -102,6 +102,7 @@ var model = {
                     param.cgstAmount = found.accounts.cgst;
                     param.igstAmount = found.accounts.igst;
                     param.PayuId = data.transactionid;
+                    param.paymentStatus = "Paid";
                     var receipt = [];
                     var temp = "SFA" + found.receiptId;
                     receipt.push(temp);
@@ -302,6 +303,7 @@ var model = {
                 }
             });
     },
+
 
     accountsFirstTransaction: function (transactData, callback) {
         var transaction = [];
@@ -580,65 +582,12 @@ var model = {
                                 athlete: data.athleteId,
                                 package: n.package._id
                             }).lean().exec(function (err, foundTransact) {
-                                if (err) {
-                                    callback(err, null);
-                                } else if (_.isEmpty(foundTransact)) {
-                                    var param = {};
-                                    param.athlete = data.athleteId;
-                                    param.school = undefined;
-                                    param.dateOfTransaction = n.dateOfTransaction;
-                                    param.package = n.package._id;
-                                    param.amountToPay = n.package.amount;
-                                    param.amountPaid = n.package.amount;
-                                    param.paymentMode = data.paymentMode;
-                                    if (data.cgst) {
-                                        param.cgstAmount = data.cgst;
-                                    }
-                                    if (data.sgst) {
-                                        param.sgstAmount = data.sgst;
-                                    }
-                                    if (data.discount) {
-                                        param.discount = data.discount;
-                                    }
-                                    // var recepit = n.receiptId.split(",");
-                                    // param.receiptId = recepit;
-                                    param.receiptId = n.receiptId;
-                                    var mainReceipt = _.concat(data.receipt, param.receiptId);
-                                    data.receipt = _.uniq(mainReceipt);
-                                    if (n.checkNo) {
-                                        // var checkNo = n.checkNo.split(",");
-                                        // param.checkNo = checkNo;
-                                        param.checkNo = n.checkNo;
-                                        var mainCheckNo = _.concat(data.checkNo, param.checkNo);
-                                        data.checkNo = _.uniq(mainCheckNo);
-                                    } else {
-                                        var checkNo = [];
-                                    }
-                                    Transaction.saveData(param, function (err, transactData) {
-                                        if (err || _.isEmpty(transactData)) {
-                                            callback(null, {
-                                                error: "no data found",
-                                                data: data
-                                            });
-                                        } else {
-                                            data.transaction.push(transactData._id);
-                                            callback(null, data);
-                                        }
+                                if (err || _.isEmpty(foundTransact)) {
+                                    callback(null, {
+                                        error: "data not found",
+                                        data: data
                                     });
                                 } else {
-                                    // if (n.isDelete == true) {
-                                    //     Transaction.remove({
-                                    //         _id: n._id
-                                    //     }).exec(
-                                    //         function (err, data3) {
-                                    //             if (err) {
-                                    //                 callback(err, null);
-                                    //             } else if (data3) {
-                                    //                 callback(null, data);
-                                    //             }
-                                    //         });
-                                    // } else {
-                                    // var receipt = n.receiptId.split(",");
                                     var receipt = n.receiptId;
                                     var mainReceipt = _.concat(data.receipt,  receipt);
                                     data.receipt = _.uniq(mainReceipt);
@@ -674,8 +623,6 @@ var model = {
                                             }
                                         });
                                 }
-
-                                // }
                             });
                         } else {
                             console.log(data, "school data");
@@ -775,154 +722,158 @@ var model = {
                     });
                 },
                 function (data, callback) {
-                    if (data.athleteId) {
-                        Accounts.findOne({
-                            athlete: data.athleteId
-                        }).lean().exec(function (err, accountsData) {
-                            if (err) {
-                                callback(err, null);
-                            } else if (_.isEmpty(accountsData)) {
-                                var param = {};
-                                param.athlete = data.athleteId;
-                                param.school = undefined;
-                                param.transaction = data.transaction;
-                                param.totalToPay = data.netTotal;
-                                param.totalPaid = data.netTotal;
-                                param.paymentMode = data.paymentMode;
-                                if (data.discount) {
-                                    param.discount = data.discount;
-                                }
-                                if (data.sgst) {
-                                    param.sgst = data.sgst;
-                                }
-                                if (data.cgst) {
-                                    param.cgst = data.cgst;
-                                }
-                                if (data.checkNo) {
-                                    param.checkNo = data.checkNo;
-                                }
-                                if (data.remarks) {
-                                    param.remarks = data.remarks;
-                                }
-                                param.receiptId = data.receipt;
-                                param.checkNo = data.checkNo;
-                                Accounts.saveData(param, function (err, accountsDataNew) {
-                                    if (err || _.isEmpty(accountsDataNew)) {
-                                        callback(null, {
-                                            error: "no data found",
-                                            data: data
-                                        });
-                                    } else {
-                                        callback(null, accountsDataNew);
-                                    }
-                                });
-                            } else {
-                                // if (data.transactions.length >= accountsData.transaction) {
-                                var transactionFinal = _.concat(accountsData.transaction, data.transaction);
-                                // } else {
-                                //     _.each(data.transactions, function (n) {
-                                //         var transactionFinal = [];
-                                //         // data.receipt=[];
-                                //         transactionFinal.push(n._id);
-                                //     });
-                                // }
-                                //    if(accounts)
-                                var matchObj = {
-                                    $set: {
-                                        transaction: transactionFinal,
-                                        totalToPay: data.netTotal,
-                                        totalPaid: data.netTotal,
-                                        discount: data.discount,
-                                        receiptId: data.receipt,
-                                        checkNo: data.checkNo,
-                                        paymentMode: data.paymentMode,
-                                        checkNo: data.checkNo,
-                                        cgst: data.cgst,
-                                        sgst: data.sgst,
-                                        remarks: data.remarks
-                                    }
-                                };
-                                Accounts.update({
-                                    athlete: data.athleteId
-                                }, matchObj).exec(
-                                    function (err, data3) {
-                                        if (err) {
-                                            callback(err, null);
-                                        } else if (data3) {
-                                            callback(null, accountsData);
-                                        }
-                                    });
-                            }
-                        });
+                    if (data.error) {
+                        callback(null, data);
                     } else {
-                        Accounts.findOne({
-                            school: data.school
-                        }).lean().exec(function (err, accountsData) {
-                            if (err) {
-                                callback(err, null);
-                            } else if (_.isEmpty(accountsData)) {
-                                var param = {};
-                                param.athlete = data.athleteId;
-                                param.school = undefined;
-                                param.transaction = data.transaction;
-                                param.totalToPay = data.netTotal;
-                                param.totalPaid = data.netTotal;
-                                param.paymentMode = data.paymentMode;
-                                if (data.discount) {
-                                    param.discount = data.discount;
-                                }
-                                if (data.sgst) {
-                                    param.sgst = data.sgst;
-                                }
-                                if (data.cgst) {
-                                    param.cgst = data.cgst;
-                                }
-                                if (data.checkNo) {
+                        if (data.athleteId) {
+                            Accounts.findOne({
+                                athlete: data.athleteId
+                            }).lean().exec(function (err, accountsData) {
+                                if (err) {
+                                    callback(err, null);
+                                } else if (_.isEmpty(accountsData)) {
+                                    var param = {};
+                                    param.athlete = data.athleteId;
+                                    param.school = undefined;
+                                    param.transaction = data.transaction;
+                                    param.totalToPay = data.netTotal;
+                                    param.totalPaid = data.netTotal;
+                                    param.paymentMode = data.paymentMode;
+                                    if (data.discount) {
+                                        param.discount = data.discount;
+                                    }
+                                    if (data.sgst) {
+                                        param.sgst = data.sgst;
+                                    }
+                                    if (data.cgst) {
+                                        param.cgst = data.cgst;
+                                    }
+                                    if (data.checkNo) {
+                                        param.checkNo = data.checkNo;
+                                    }
+                                    if (data.remarks) {
+                                        param.remarks = data.remarks;
+                                    }
+                                    param.receiptId = data.receipt;
                                     param.checkNo = data.checkNo;
-                                }
-                                if (data.remarks) {
-                                    param.remarks = data.remarks;
-                                }
-                                param.receiptId = data.receipt;
-                                param.checkNo = data.checkNo;
-                                Accounts.saveData(param, function (err, accountsDataNew) {
-                                    if (err || _.isEmpty(accountsDataNew)) {
-                                        callback(null, {
-                                            error: "no data found",
-                                            data: data
+                                    Accounts.saveData(param, function (err, accountsDataNew) {
+                                        if (err || _.isEmpty(accountsDataNew)) {
+                                            callback(null, {
+                                                error: "no data found",
+                                                data: data
+                                            });
+                                        } else {
+                                            callback(null, accountsDataNew);
+                                        }
+                                    });
+                                } else {
+                                    // if (data.transactions.length >= accountsData.transaction) {
+                                    var transactionFinal = _.concat(accountsData.transaction, data.transaction);
+                                    // } else {
+                                    //     _.each(data.transactions, function (n) {
+                                    //         var transactionFinal = [];
+                                    //         // data.receipt=[];
+                                    //         transactionFinal.push(n._id);
+                                    //     });
+                                    // }
+                                    //    if(accounts)
+                                    var matchObj = {
+                                        $set: {
+                                            transaction: transactionFinal,
+                                            totalToPay: data.netTotal,
+                                            totalPaid: data.netTotal,
+                                            discount: data.discount,
+                                            receiptId: data.receipt,
+                                            checkNo: data.checkNo,
+                                            paymentMode: data.paymentMode,
+                                            checkNo: data.checkNo,
+                                            cgst: data.cgst,
+                                            sgst: data.sgst,
+                                            remarks: data.remarks
+                                        }
+                                    };
+                                    Accounts.update({
+                                        athlete: data.athleteId
+                                    }, matchObj).exec(
+                                        function (err, data3) {
+                                            if (err) {
+                                                callback(err, null);
+                                            } else if (data3) {
+                                                callback(null, accountsData);
+                                            }
                                         });
-                                    } else {
-                                        callback(null, accountsData);
+                                }
+                            });
+                        } else {
+                            Accounts.findOne({
+                                school: data.school
+                            }).lean().exec(function (err, accountsData) {
+                                if (err) {
+                                    callback(err, null);
+                                } else if (_.isEmpty(accountsData)) {
+                                    var param = {};
+                                    param.athlete = data.athleteId;
+                                    param.school = undefined;
+                                    param.transaction = data.transaction;
+                                    param.totalToPay = data.netTotal;
+                                    param.totalPaid = data.netTotal;
+                                    param.paymentMode = data.paymentMode;
+                                    if (data.discount) {
+                                        param.discount = data.discount;
                                     }
-                                });
-                            } else {
-                                var transactionFinal = _.concat(accountsData.transaction, data.transaction);
-                                var matchObj = {
-                                    $set: {
-                                        transaction: transactionFinal,
-                                        totalToPay: data.netTotal,
-                                        totalPaid: data.netTotal,
-                                        discount: data.discount,
-                                        receiptId: data.receipt,
-                                        paymentMode: data.paymentMode,
-                                        checkNo: data.checkNo,
-                                        cgst: data.cgst,
-                                        sgst: data.sgst,
-                                        remarks: data.remarks
+                                    if (data.sgst) {
+                                        param.sgst = data.sgst;
                                     }
-                                };
-                                Accounts.update({
-                                    school: data.school
-                                }, matchObj).exec(
-                                    function (err, data3) {
-                                        if (err) {
-                                            callback(err, null);
-                                        } else if (data3) {
+                                    if (data.cgst) {
+                                        param.cgst = data.cgst;
+                                    }
+                                    if (data.checkNo) {
+                                        param.checkNo = data.checkNo;
+                                    }
+                                    if (data.remarks) {
+                                        param.remarks = data.remarks;
+                                    }
+                                    param.receiptId = data.receipt;
+                                    param.checkNo = data.checkNo;
+                                    Accounts.saveData(param, function (err, accountsDataNew) {
+                                        if (err || _.isEmpty(accountsDataNew)) {
+                                            callback(null, {
+                                                error: "no data found",
+                                                data: data
+                                            });
+                                        } else {
                                             callback(null, accountsData);
                                         }
                                     });
-                            }
-                        });
+                                } else {
+                                    var transactionFinal = _.concat(accountsData.transaction, data.transaction);
+                                    var matchObj = {
+                                        $set: {
+                                            transaction: transactionFinal,
+                                            totalToPay: data.netTotal,
+                                            totalPaid: data.netTotal,
+                                            discount: data.discount,
+                                            receiptId: data.receipt,
+                                            paymentMode: data.paymentMode,
+                                            checkNo: data.checkNo,
+                                            cgst: data.cgst,
+                                            sgst: data.sgst,
+                                            remarks: data.remarks
+                                        }
+                                    };
+                                    Accounts.update({
+                                        school: data.school
+                                    }, matchObj).exec(
+                                        function (err, data3) {
+                                            if (err) {
+                                                callback(err, null);
+                                            } else if (data3) {
+                                                callback(null, accountsData);
+                                            }
+                                        });
+                                }
+                            });
+                        }
                     }
                 },
             ],

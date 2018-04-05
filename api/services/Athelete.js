@@ -1079,75 +1079,109 @@ var model = {
 
     saveAthleteData: function (data, callback) {
         async.waterfall([
-            function (callback) {
-                Athelete.saveData(data, function (err, athleteData) {
-                    if (err || _.isEmpty(athleteData)) {
-                        callback(null, {
-                            error: "No data found",
-                            data: data
-                        });
-                    } else {
-                        callback(null, athleteData);
-                    }
-                });
-            },
-            function (athleteData, callback) {
-                if (athleteData.registrationFee == "online PAYU") {
-                    var param = {};
-                    param.athlete = athleteData._id;
-                    param.school = undefined;
-                    param.sgst = data.sgstAmt;
-                    param.cgst = data.cgstAmt;
-                    param.igst = data.igstAmt;
-                    param.totalToPay = data.amountToPay;
-                    param.totalPaid = data.amountPaid;
-                    param.discount = data.discount;
-                    param.transaction = [];
-                } else {
-
-                    var param = {};
-                    param.athlete = athleteData._id;
-                    param.school = undefined;
-                    param.outstandingAmount = data.amountPaid;
-                    param.transaction = [];
-
-                }
-                Accounts.saveData(param, function (err, accountsData) {
-                    if (err || _.isEmpty(accountsData)) {
-                        callback(null, {
-                            error: "No data found",
-                            data: athleteData
-                        });
-                    } else {
-                        console.log("athelete accounts created", accountsData);
-                        callback(null, athleteData);
-                    }
-                });
-            },
-            function (athleteData, callback) {
-                if (athleteData.error) {
-                    callback(null, athleteData);
-                } else {
+                function (callback) {
+                    Athelete.saveData(data, function (err, athleteData) {
+                        if (err || _.isEmpty(athleteData)) {
+                            callback(null, {
+                                error: "No data found",
+                                data: data
+                            });
+                        } else {
+                            callback(null, athleteData);
+                        }
+                    });
+                },
+                function (athleteData, callback) {
+                    data.transaction = [];
                     if (athleteData.registrationFee == "cash") {
-                        Athelete.atheletePaymentMail(athleteData, function (err, vData) {
-                            if (err) {
-                                callback(err, null);
-                            } else if (vData) {
-                                callback(null, vData);
+                        var param = {};
+                        param.athlete = athleteData._id;
+                        param.school = undefined;
+                        param.package = athleteData.package;
+                        param.sgstAmount = data.sgstAmt;
+                        param.cgstAmount = data.cgstAmt;
+                        param.igstAmout = data.igstAmt;
+                        param.discount = data.discount;
+                        param.outstandingAmount = data.amountPaid;
+                        param.paymentMode = athleteData.registrationFee;
+                        param.paymentStatus = athleteData.paymentStatus;
+                        param.upgrade = false;
+                        param.receiptId = [];
+                        param.checkNo = [];
+                        Transaction.saveData(param, function (err, transactData) {
+                            if (err || _.isEmpty(transactData)) {
+                                callback(null, {
+                                    error: "no data found",
+                                    data: data
+                                });
+                            } else {
+                                data.transaction.push(transactData._id);
+                                callback(null, athleteData);
                             }
                         });
                     } else {
                         callback(null, athleteData);
                     }
+
+                },
+                function (athleteData, callback) {
+                    if (athleteData.registrationFee == "online PAYU") {
+                        var param = {};
+                        param.athlete = athleteData._id;
+                        param.school = undefined;
+                        param.sgst = data.sgstAmt;
+                        param.cgst = data.cgstAmt;
+                        param.igst = data.igstAmt;
+                        param.totalToPay = data.amountToPay;
+                        param.totalPaid = data.amountPaid;
+                        param.discount = data.discount;
+                        param.paymentMode = athleteData.registrationFee;
+                        param.transaction = [];
+                    } else {
+                        var param = {};
+                        param.athlete = athleteData._id;
+                        param.school = undefined;
+                        param.outstandingAmount = data.amountPaid;
+                        param.paymentMode = athleteData.registrationFee;
+                        param.transaction = data.transaction;
+                    }
+                    Accounts.saveData(param, function (err, accountsData) {
+                        if (err || _.isEmpty(accountsData)) {
+                            callback(null, {
+                                error: "No data found",
+                                data: athleteData
+                            });
+                        } else {
+                            console.log("athelete accounts created", accountsData);
+                            callback(null, athleteData);
+                        }
+                    });
+                },
+                function (athleteData, callback) {
+                    if (athleteData.error) {
+                        callback(null, athleteData);
+                    } else {
+                        if (athleteData.registrationFee == "cash") {
+                            Athelete.atheletePaymentMail(athleteData, function (err, vData) {
+                                if (err) {
+                                    callback(err, null);
+                                } else if (vData) {
+                                    callback(null, vData);
+                                }
+                            });
+                        } else {
+                            callback(null, athleteData);
+                        }
+                    }
                 }
-            }
-        ], function (err, complete) {
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, complete);
-            }
-        });
+            ],
+            function (err, complete) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    callback(null, complete);
+                }
+            });
     },
     //genarate sfa when status changes to verified and sfaid is blank
     generateAtheleteSfaID: function (data, callback) {
