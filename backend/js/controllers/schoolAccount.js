@@ -84,18 +84,21 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
     $scope.formData.discount = school.schoolData.discount;
     $scope.formData.netTotal = school.schoolData.totalPaid;
     $scope.formData.paymentMode = school.schoolData.paymentMode;
+    $scope.formData.outstandingAmount = school.schoolData.outstandingAmount;
     // $scope.formData.checkNo = school.schoolData.checkNo;
     $scope.formData.remarks = school.schoolData.remarks;
     $scope.formData.transactions = school.schoolData.transaction;
-    // var upgradePackage = player.athlete.package;
-    // console.log(upgradePackage, "check for package");
-    // if (school.transaction.length) {
-    //   _.each(player.transaction, function (key) {
-    //     if (key.package == upgradePackage) {
-    //       key.currentAthletePackage = true;
-    //     }
-    //   })
-    // }
+    var upgradePackage = school.school.package;
+    console.log(upgradePackage, "check for package");
+
+    if (school.schoolData.transaction.length > 1) {
+      _.each(school.schoolData.transaction, function (key) {
+        if (key.package._id == upgradePackage) {
+          console.log("key i am in value")
+          key.currentAthletePackage = true;
+        }
+      })
+    }
 
     $scope.modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,

@@ -91,7 +91,7 @@
                     <tbody>
                       <td>
                         <div class="text-capitalize">
-                          {{school.displayData.paymentMode}}
+                          <span ng-repeat="paymentmode in school.transaction track by $index">{{paymentmode.paymentMode}} <span ng-if="school.transaction.length>1" ng-hide="school.transaction.length==$index">,</span>                          </span>
                         </div>
                       </td>
                       <td ng-if="school.displayData.package1.date">
@@ -200,8 +200,8 @@
                       </thead>
                       <tbody>
                         <td>
-                          <div>
-                            {{school.displayData.paymentMode}}
+                          <div class="text-capitalize text-left">
+                            <span ng-repeat="paymentdate in school.transaction track by $index">{{paymentdate.dateOfTransaction}} <span ng-if="school.transaction.length>1" ng-hide="school.transaction.length==$index">,</span>                            </span>
                           </div>
                         </td>
                         <td ng-if="school.displayData.package1.amount">
@@ -231,17 +231,18 @@
                         </td>
                         <td>
                           <div>
-                            {{school.displayData.paymentMode}}
+                            <span ng-repeat="paymentmode in school.transaction track by $index">{{paymentmode.paymentMode}} <span ng-if="school.transaction.length>1" ng-hide="school.transaction.length==$index">,</span>                            </span>
                           </div>
                         </td>
                         <td>
                           <div>
-                            <span ng-repeat="chq in school.displayData.checkNo track by $index"> {{chq}} ,</span>
+                            <span ng-repeat="chq in school.displayData.checkNo track by $index"> {{chq}} <span ng-if="school.displayData.checkNo.length > 1" ng-hide="school.displayData.checkNo.length ==$index">,</span>                            </span>
                           </div>
                         </td>
                         <td>
                           <div>
-                            <span ng-repeat="rcpt in school.displayData.receiptId track by $index"> {{rcpt}} ,</span>
+                            <span ng-repeat="rcpt in school.displayData.receiptId track by $index"> {{rcpt}} <span ng-if="school.displayData.receiptId.length > 1" ng-hide="school.displayData.receiptId.length ==$index">,</span>                            </span>
+                            </span>
                           </div>
                         </td>
                         <td>

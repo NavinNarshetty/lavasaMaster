@@ -103,9 +103,11 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
 
     var upgradePackage = player.athlete.package;
     console.log(upgradePackage, "check for package");
-    if (player.transaction.length) {
-      _.each(player.transaction, function (key) {
-        if (key.package == upgradePackage) {
+
+    if (player.athleteData.transaction.length) {
+      _.each(player.athleteData.transaction, function (key) {
+        if (key.package._id == upgradePackage) {
+          console.log("key i am in value")
           key.currentAthletePackage = true;
         }
       })

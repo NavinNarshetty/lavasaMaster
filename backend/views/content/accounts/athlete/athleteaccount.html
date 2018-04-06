@@ -248,7 +248,8 @@
                       <tbody>
                         <td>
                           <div class="text-left">
-                            <span ng-repeat="paymentmode in player.transaction track by $index">{{paymentmode.paymentMode}} <span ng-if="player.transaction.length>1" ng-hide="player.transaction.length==$index">,</span>                            </span>
+                            <!-- <span ng-repeat="paymentdate in school.transaction track by $index">{{paymentdate.dateOfTransaction}} <span ng-if="school.transaction.length>1" ng-hide="school.transaction.length==$index">,</span>                            </span> -->
+                            <span ng-repeat="paymentdate in player.transaction track by $index">{{paymentdate.dateOfTransaction | date}} <span ng-if="player.transaction.length>1" ng-hide="player.transaction.length==$index">,</span>                            </span>
                           </div>
                         </td>
                         <td ng-if="player.displayData.package1.amount">
