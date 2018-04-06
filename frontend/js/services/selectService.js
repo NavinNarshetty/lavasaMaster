@@ -38,22 +38,20 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
 
     //make .checked to true if already selected
     this.isAtheleteSelected = function (listOfAthlete) {
-        console.log("Yes! it is.",listOfAthlete);
         var editTeam = _.intersectionBy(listOfAthlete, this.team, '_id');
         var remTeam = _.differenceBy(listOfAthlete, this.team, '_id');
-        console.log("editTeam remTeam",editTeam, remTeam);
         _.each(editTeam, function (n) {
             n.checked = true;
         });
+        console.log("editTeam,remTeam",editTeam,remTeam);
         remTeam = _.map(remTeam, function (n) {
-            // console.log("n.package && n.selectedEvent && !n.isIndividualSelected", n.package, n.selectedEvent, !n.isIndividualSelected);
-            if (n.package && n.selectedEvent && !n.isIndividualSelected) {
-                // console.log("n.selectedEvent==n.package.eventCount", n.selectedEvent, n.package.eventCount);
+            if ((_.has(n,'package','selectedEvent')) && !n.isIndividualSelected) {
                 if (n.selectedEvent == n.package.eventCount) {
                     n.maxReached = true;
-                    if(n.sfaId=="HA17198"){
-                        console.log("got", n.sfaId);
-                    }
+                }
+                if(n.package.order==4){
+                    console.log("SfaId onlyTeamSports,this.sportType",n.sfaId);
+                    n.onlyTeamSports=true;
                 }
                 return n;
             } else {

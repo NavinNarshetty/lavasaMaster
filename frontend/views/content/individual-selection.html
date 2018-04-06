@@ -9,7 +9,7 @@
                         <h1 class="text-center school-sports spt-m">Sports Registration Form</h1>
                     </div>
                 </div>
-
+                <!-- <pre>{{listOfAthelete|json}}</pre> -->
                 <!-- School/User Basic Details On Top Right -->
                 <div class="row">
                     <!-- <div class="col-md-12 col-sm-12 col-xs-12">
@@ -146,6 +146,9 @@
                                                         </div>
                                                         <div class="selectedPlayer" ng-if="ath.maxReached === true">
                                                             <h4 class="">Max Sport Registration Reached</h4>
+                                                        </div>
+                                                        <div class="selectedPlayer" ng-if="ath.maxReached?false:ath.onlyTeamSports">
+                                                                <h4 class="">Can Participate Only For One Team Sport</h4>
                                                         </div>
                                                         <div class="stu-img">
                                                             <img ng-src="{{ath.photograph | serverimage2:70:70:'cover' }}" class="img-responsive" alt="">

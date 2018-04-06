@@ -8,6 +8,7 @@
                     </div>
 
                 </div>
+                <pre>{{listOfAthelete|json}}</pre>
                 <div class="row">
                     <!-- <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="pull-right mb25 sp-tab-right ">
@@ -175,6 +176,8 @@
                                                 </div>
                                             </div>
                                         </form>
+                                      
+                                        
 
                                         <form class="visible-xs">
                                             <div class="form-group">
@@ -223,6 +226,9 @@
                                                                 </div>
                                                                 <div class="selectedPlayer" ng-if="checked.maxReached === true && checked.isTeamSelected === false">
                                                                     <h4 class="">Max Sport Registration Reached</h4>
+                                                                </div>
+                                                                <div class="selectedPlayer" ng-if="checked.maxReached?false:checked.onlyTeamSports">
+                                                                        <h4 class="">Can Participate Only For One Team Sport</h4>
                                                                 </div>
                                                                 <div class="selectedPlayer" ng-if="checked.disableGender === true && checked.gender=== 'male' && setDisabled === false">
                                                                     <h4 class="">Male Player is already Selected</h4>
