@@ -8,7 +8,7 @@
   </div>
 </div>
 
-<pre>{{test | json}}</pre>
+<!-- <pre>{{test | json}}</pre> -->
 
 <div class=" panel-content ">
   <div class="row ">
@@ -22,22 +22,27 @@
             <uib-accordion close-others=" oneAtATime ">
               <div uib-accordion-group class="panel-default " is-open="s.open " ng-repeat="player in items track by $index ">
                 <uib-accordion-heading>
+                  <!-- HEADER HOLDER -->
                   <div class="athleteaccount-playerholder ">
                     <div class="row ">
                       <div class="col-md-6">
-                        <p class="athleteaccount-name text-left text-capitalize m-clear "> <span>1)</span> <span>{{player.sfaId}}</span> <span>{{ player.athlete.firstName}} </span> <span>{{player.athlete.middleName}}</span>                          <span>{{player.athlete.surname}}</span> </p>
+                        <h4 class="athleteaccount-name text-left text-capitalize m-clear  r-titillium-web-regular"> <span>{{$index + 1}}) </span> <span>{{player.sfaId}}</span> <span>{{ player.athlete.firstName}} </span>                          <span>{{player.athlete.middleName}}</span> <span>{{player.athlete.surname}}</span> </h4>
                         <p class="athleteaccount-school text-left text-capitalize m-clear">{{player.athlete.school.name }} </p>
                       </div>
-                      <div class="col-md-3 ">
+                      <div class="col-md-4">
                         <p class="m-clear"> <span> Registration Date:</span> <span>{{ player.athleteData.createdAt | date}}</span> </p>
+                        <p class="m-clear"><span class="fz12">Payment Mode :</span><span class="fz12" ng-repeat="paymentmode in player.transaction track by $index">{{paymentmode.paymentMode}} <span ng-if="player.transaction.length!=1 && player.transaction.length !=0 && $index !=player.transaction.length-1" >,</span>                          </span>
+                        </p>
                       </div>
-                      <div class="col-md-3 ">
+                      <div class="col-md-2">
                         <span class="athleteaccount-upgraded pull-right label label-success text-right" ng-if="player.upgrade">Upgraded</span>
                       </div>
                     </div>
 
                   </div>
+                  <!-- HEADER HOLDER END -->
                 </uib-accordion-heading>
+                <!-- DATA TEAM -->
                 <div class="athleteaccount-datateam ">
                   <div class="text-center ">
                     <label class=" ">Data Team :</label>
@@ -96,6 +101,11 @@
                       </th>
                       <th>
                         <div class="text-capitalize ">
+                          Payment Status
+                        </div>
+                      </th>
+                      <th>
+                        <div class="text-capitalize">
                           Verified
                         </div>
                       </th>
@@ -109,7 +119,7 @@
                       <td>
                         <div>
                           <!-- <span>{{player.displayData.paymentMode}}</span> -->
-                          <span ng-repeat="paymentmode in player.transaction track by $index">{{paymentmode.paymentMode}} <span ng-if="player.transaction.length>1" ng-hide="player.transaction.length==$index">,</span>                          </span>
+                          <span ng-repeat="paymentmode in player.transaction track by $index">{{paymentmode.paymentMode}} <span ng-if="player.transaction.length !=1 && player.transaction.length !=0 && $index != player.transaction.length-1">,</span>                          </span>
                         </div>
                       </td>
                       <td ng-if="player.displayData.package1.date">
@@ -163,18 +173,25 @@
                       </td>
                       <td>
                         <div>
-                          <span ng-repeat="verfieddata in player.transaction track by $index">{{verfieddata.paymentStatus}} <span ng-if="player.transaction.length>1" ng-hide="player.transaction.length==$index">,</span>                          </span>
+                          <span ng-repeat="verfieddata in player.transaction track by $index">{{verfieddata.paymentStatus}} <span ng-if="$index<player.transaction.length-1" >,</span>                          </span>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="text-capitalize">
+                          {{player.athlete.status}}
                         </div>
                       </td>
                       <td>
                         <div>
-                          <span ng-repeat="idData in player.displayData.payuId track by $index"> {{idData}}</span>
+                          <span ng-repeat="idData in player.displayData.payuId track by $index"> {{idData}}  <span ng-if=" $index<player.displayData.payuId.length-1"> , </span>                          </span>
                         </div>
                       </td>
                     </tbody>
                   </table>
                 </div>
+                <!-- DATA TEAM END -->
 
+                <!-- ACCOUNT TEAM -->
                 <div class="athleteaccount-accountteam ">
                   <div class="text-center ">
                     <label class=" ">Account Team :</label>
@@ -258,7 +275,7 @@
                         <td>
                           <div class="text-left">
                             <!-- <span ng-repeat="paymentdate in school.transaction track by $index">{{paymentdate.dateOfTransaction}} <span ng-if="school.transaction.length>1" ng-hide="school.transaction.length==$index">,</span>                            </span> -->
-                            <span ng-repeat="paymentdate in player.transaction track by $index">{{paymentdate.dateOfTransaction | date}} <span ng-if="player.transaction.length>1" ng-hide="player.transaction.length==$index">,</span>                            </span>
+                            <span ng-repeat="paymentdate in player.transaction track by $index">{{paymentdate.dateOfTransaction | date}} <span ng-if="player.transaction.length !=1 &&  player.transaction.length !=0 &&  $index !=player.transaction.length-1 " > | </span>                            </span>
                           </div>
                         </td>
                         <td ng-if="player.displayData.package1.amount">
@@ -313,12 +330,13 @@
                         </td>
                         <td>
                           <div>
-                            <span ng-repeat="chq in player.displayData.checkNo track by $index"> {{chq}}, </span>
+
+                            <span ng-repeat="chq in player.displayData.checkNo track by $index"> {{chq}} <span ng-if="$index<player.displayData.checkNo.length-1"> ,</span>                            </span>
                           </div>
                         </td>
                         <td>
                           <div>
-                            <span ng-repeat="rcpt in player.displayData.receiptId track by $index"> {{rcpt}}, </span>
+                            <span ng-repeat="rcpt in player.displayData.receiptId track by $index"> {{rcpt}} <span ng-if="$index<player.displayData.receiptId.length-1" > ,</span>                            </span>
                           </div>
                         </td>
                         <td>
@@ -330,6 +348,7 @@
                     </table>
                   </div>
                 </div>
+                <!-- ACCOUNT TEAM END -->
             </uib-accordion>
             </div>
             <div class="tableData " ng-show="totalItems===0 ">

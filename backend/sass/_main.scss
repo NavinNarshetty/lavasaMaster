@@ -22,6 +22,30 @@
      src: url("../fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("../fonts/glyphicons-halflings-regular.woff2") format("woff2"), url("../fonts/glyphicons-halflings-regular.woff") format("woff"), url("../fonts/glyphicons-halflings-regular.ttf") format("truetype"), url("../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg");
  }
 
+ @font-face {
+     font-family: 'Titillium Web SemiBold';
+     src: url("../fonts/titillium-web.semibold.ttf");
+     font-weight: 600;
+ }
+
+ @font-face {
+     font-family: 'Titillium Web Regular';
+     src: url("../fonts/titillium-web.regular.ttf");
+     font-weight: 600;
+ }
+
+ .r-titillium-web-semibold {
+     font-family: "Titillium Web SemiBold";
+     -webkit-font-smoothing: antialiased;
+     -moz-osx-font-smoothing: grayscale;
+ }
+
+ .r-titillium-web-regular {
+     font-family: "Titillium Web Regular";
+     -webkit-font-smoothing: antialiased;
+     -moz-osx-font-smoothing: grayscale;
+ }
+
  button,
  div,
  input {
@@ -1558,7 +1582,7 @@
  }
 
  .highligh-tablerow {
-     background-color: #e1e1e1;
+     background-color: #e1e1e1; //  border: 1px solid #000;
  }
 
  .accounts-modal {

@@ -24,10 +24,12 @@
                   <div class="schoolaccount-playerholder">
                     <div class="row ">
                       <div class="col-md-6 ">
-                        <p class="schoolaccount-name text-left m-clear "> <span>{{$index+1}})</span> <span>{{school.school.sfaID}}</span> <span>{{school.school.schoolName}} </span></p>
+                        <h4 class="schoolaccount-name text-left m-clear r-titillium-web-regular"> <span>{{$index+1}})</span> <span>{{school.school.sfaID}}</span> <span>{{school.school.schoolName}} </span></h4>
+
                       </div>
                       <div class="col-md-3 ">
-                        <p class="schoolacoount-registerdate">{{school.createdAt | date}}</p>
+                        <p class="schoolacoount-registerdate m-clear">{{school.createdAt | date}}</p>
+                        <p class="m-clear"><span class="fz12">Payment Mode :</span><span class="fz12" ng-repeat="paymentmode in school.transaction track by $index">{{paymentmode.paymentMode}} <span ng-if="school.transaction.length!=1 && school.transaction.length !=0 && $index !=school.transaction.length-1" >,</span>                          </span>
                       </div>
                       <div class="col-md-3 ">
                         <span class="athleteaccount-upgraded pull-right label label-success text-right" ng-if="school.upgrade">Upgraded</span>
@@ -80,6 +82,11 @@
                       </th>
                       <th>
                         <div class="text-capitalize ">
+                          Payment Status
+                        </div>
+                      </th>
+                      <th>
+                        <div class="text-capitalize">
                           Verified
                         </div>
                       </th>
@@ -92,7 +99,7 @@
                     <tbody>
                       <td>
                         <div class="text-capitalize">
-                          <span ng-repeat="paymentmode in school.transaction track by $index">{{paymentmode.paymentMode}} <span ng-if="school.transaction.length>1" ng-hide="school.transaction.length==$index">,</span>                          </span>
+                          <span ng-repeat="paymentmode in school.transaction track by $index">{{paymentmode.paymentMode}} <span ng-if="$index<school.transaction.length-1">,</span>                          </span>
                         </div>
                       </td>
                       <td ng-if="school.displayData.package1.date">
@@ -128,12 +135,17 @@
                       </td>
                       <td>
                         <div>
-                          <span ng-repeat="verfieddata in school.transaction track by $index">{{verfieddata.paymentStatus}} <span ng-if="school.transaction.length>1" ng-hide="school.transaction.length==$index">,</span>                          </span>
+                          <span ng-repeat="verfieddata in school.transaction track by $index">{{verfieddata.paymentStatus}} <span ng-if="$index<school.transaction.length-1">,</span>                          </span>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="text-capitalize">
+                          {{ school.school.status }}
                         </div>
                       </td>
                       <td>
                         <div>
-                          <span ng-repeat="payid in school.displayData.payuId track by $index">{{payid}},</span>
+                          <span ng-repeat="payid in school.displayData.payuId track by $index">{{payid}}  <span ng-if="$index<school.displayData.payuId-1">,</span>                          </span>
                         </div>
                       </td>
                     </tbody>
@@ -208,7 +220,7 @@
                       <tbody>
                         <td>
                           <div class="text-capitalize text-left">
-                            <span ng-repeat="paymentdate in school.transaction track by $index">{{paymentdate.dateOfTransaction | date}} <span ng-if="school.transaction.length>1" ng-hide="school.transaction.length==$index">,</span>                            </span>
+                            <span ng-repeat="paymentdate in school.transaction track by $index">{{paymentdate.dateOfTransaction | date}} <span ng-if="$index <school.transaction.length - 1">|</span>                            </span>
                           </div>
                         </td>
                         <td ng-if="school.displayData.package1.amount">
@@ -243,17 +255,17 @@
                         </td>
                         <td>
                           <div>
-                            <span ng-repeat="paymentmode in school.transaction track by $index">{{paymentmode.paymentMode}} <span ng-if="school.transaction.length>1" ng-hide="school.transaction.length==$index">,</span>                            </span>
+                            <span ng-repeat="paymentmode in school.transaction track by $index">{{paymentmode.paymentMode}} <span ng-if="$index < school.transaction.length-1">,</span>                            </span>
                           </div>
                         </td>
                         <td>
                           <div>
-                            <span ng-repeat="chq in school.displayData.checkNo track by $index"> {{chq}} <span ng-if="school.displayData.checkNo.length > 1" ng-hide="school.displayData.checkNo.length ==$index">,</span>                            </span>
+                            <span ng-repeat="chq in school.displayData.checkNo track by $index"> {{chq}} <span ng-if="$index < school.displayData.checkNo.length-1">,</span>                            </span>
                           </div>
                         </td>
                         <td>
                           <div>
-                            <span ng-repeat="rcpt in school.displayData.receiptId track by $index"> {{rcpt}} <span ng-if="school.displayData.receiptId.length > 1" ng-hide="school.displayData.receiptId.length ==$index">,</span>                            </span>
+                            <span ng-repeat="rcpt in school.displayData.receiptId track by $index"> {{rcpt}} <span ng-if="$index < school.displayData.receiptId.length-1">,</span>                            </span>
                             </span>
                           </div>
                         </td>

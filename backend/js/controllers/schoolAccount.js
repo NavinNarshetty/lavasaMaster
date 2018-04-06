@@ -29,13 +29,13 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
     $scope.schoolformData.page = $scope.schoolformData.page++;
     $scope.schoolformData.filter = {};
     NavigationService.apiCall($scope.url, $scope.schoolformData, function (data) {
-      console.log("data.value", data);
+      // console.log("data.value", data);
       $scope.items = data.data.results;
       $scope.totalItems = data.data.total;
       $scope.maxRow = data.data.options.count;
       _.each($scope.items, function (key) {
         key.schoolData = {};
-        console.log(key._id, "key in array");
+        // console.log(key._id, "key in array");
         if (key._id) {
           // key.schoolData = $scope.getSchoolAccountDetails(key._id);
           key.schoolData = {};
@@ -50,7 +50,7 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
             }
             // console.log("getOne", key.schoolData);
           })
-          console.log("key", key.schoolData);
+          // console.log("key", key.schoolData);
         } else {
           // DO NOTHING
         }
@@ -59,7 +59,8 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
   }
   $scope.viewTable();
   // VIEW TABLE
-  // GET ATHLETE DATA
+
+  // GET SCHOOL DATA
   $scope.getSchoolAccountDetails = function (schoolAccountId) {
     console.log(schoolAccountId, "after function");
     $scope.url = "Accounts/getOne";
@@ -67,15 +68,16 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
     $scope.constraints._id = {}
     $scope.constraints._id = schoolAccountId;
     NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
-      console.log(data, "new api call")
+      // console.log(data, "new api call")
       $scope.schoolData = data.data;
     })
   }
-  // GET ATHLETE DATA END
+  // GET SCHOOL DATA END
 
   // MODAL
   $scope.editAccountModal = function (school) {
-    console.log("school", school);
+    // console.log("school", school);
+    // ASSIGN VALUES IN MODAL
     $scope.formData.school = school.school._id;
     $scope.formData._id = school._id;
     $scope.formData.cgst = school.schoolData.cgst;
@@ -89,16 +91,18 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
     $scope.formData.remarks = school.schoolData.remarks;
     $scope.formData.transactions = school.schoolData.transaction;
     var upgradePackage = school.school.package;
-    console.log(upgradePackage, "check for package");
+    // console.log(upgradePackage, "check for package");
 
+    // HIGHLIGHT PACKAGE 
     if (school.schoolData.transaction.length) {
       _.each(school.schoolData.transaction, function (key) {
         if (key.package._id == upgradePackage) {
-          console.log("key i am in value")
+          // console.log("key i am in value")
           key.currentSchoolPackage = true;
         }
       })
     }
+    // HIGHLIGHT PACKAGE
 
     $scope.modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
@@ -141,7 +145,7 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
   $scope.deleteRow = function (formData, index, status) {
     formData.transactions[index].isDelete = !status;
     formData.transactions.splice(index, 1);
-    console.log(formData, "check this");
+    // console.log(formData, "check this");
   }
   // DELETE ROW END
 
@@ -150,7 +154,7 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
     $scope.url = "Package/getAllPackages";
     $scope.formData.param = 'school';
     NavigationService.apiCall($scope.url, $scope.formData, function (data) {
-      console.log("packageNameData", data);
+      // console.log("packageNameData", data);
       $scope.packageNameData = data.data;
     });
   }
@@ -180,7 +184,7 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
     console.log(data, "save data");
     $scope.url = "Transaction/saveCashTransaction";
     NavigationService.apiCall($scope.url, data, function (data) {
-      console.log("data saved", data);
+      // console.log("data saved", data);
       $scope.modalInstance.close();
     });
     $scope.viewTable();
