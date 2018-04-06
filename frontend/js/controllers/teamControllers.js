@@ -182,7 +182,7 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
 
                                                     value.isTeamSelected = false;
 
-                                                    if (value.sfaId == "HA17209") {
+                                                    if (value.sfaId == "HA17198") {
                                                         value.maxReached = false;
                                                         console.log("im intrue", value.maxReached);
                                                     }
@@ -249,6 +249,8 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
         } else {
             getOneSportUrl = 'SportsListSubCategory/getOneSport';
         }
+
+        // get Max and Min count Of Athlete Allowed to Participate For that Sport 
         NavigationService.getOneSportForRegistration(constraints, getOneSportUrl, function (data) {
             errorService.errorCode(data, function (allData) {
                 if (!allData.message) {
@@ -337,13 +339,14 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
 
     };
    
+    // set gender in select service
     if ($scope.detail.userType === 'athlete') {
         if ($.jStorage.get("userDetails").gender !== null) {
             $scope.selectService.gender = $.jStorage.get("userDetails").gender;
         }
     }
 
-    //  *****getting all age group *****
+    //  getting all age group 
     $scope.sportGet = function (ageGroup) {
         if ($stateParams.id) {
             NavigationService.getSports($scope.constraints, function (data) {
@@ -544,9 +547,6 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
         } else {
             $scope.pushToTeamMain(checked, bool, listOfAthelete, objIndex, flag);
         }
-
-
-
     };
 
 
@@ -584,6 +584,8 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
             $scope.isEdit = true;
             $scope.teamIdObj = {};
             $scope.teamIdObj.teamid = $.jStorage.get("teamId");
+
+            // get One Team Data
             NavigationService.editTeam($scope.teamIdObj, function (data) {
                 errorService.errorCode(data, function (allData) {
                     if (!allData.message) {

@@ -37,26 +37,30 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
     };
 
     //make .checked to true if already selected
-    this.isAtheleteSelected = function (listOfAthlete, team) {
-        // console.log("Yes! it is.");
-        var temp = _.intersectionBy(listOfAthlete, this.team, '_id');
-        _.each(temp, function (n) {
+    this.isAtheleteSelected = function (listOfAthlete) {
+        console.log("Yes! it is.",listOfAthlete);
+        var editTeam = _.intersectionBy(listOfAthlete, this.team, '_id');
+        var remTeam = _.differenceBy(listOfAthlete, this.team, '_id');
+        console.log("editTeam remTeam",editTeam, remTeam);
+        _.each(editTeam, function (n) {
             n.checked = true;
         });
-        listOfAthlete = _.map(listOfAthlete, function (n) {
+        remTeam = _.map(remTeam, function (n) {
             // console.log("n.package && n.selectedEvent && !n.isIndividualSelected", n.package, n.selectedEvent, !n.isIndividualSelected);
             if (n.package && n.selectedEvent && !n.isIndividualSelected) {
                 // console.log("n.selectedEvent==n.package.eventCount", n.selectedEvent, n.package.eventCount);
                 if (n.selectedEvent == n.package.eventCount) {
                     n.maxReached = true;
-                    console.log("got", n.sfaId);
+                    if(n.sfaId=="HA17198"){
+                        console.log("got", n.sfaId);
+                    }
                 }
                 return n;
             } else {
                 return n;
             }
         });
-        return listOfAthlete;
+        return _.concat(editTeam,remTeam);
     };
 
     // push to Team (all validations objects are made here-For School As well as for Athlete Login)
