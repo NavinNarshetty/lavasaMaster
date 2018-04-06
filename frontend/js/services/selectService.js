@@ -7,6 +7,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
     this.redirectTo = null; // not in used now
     this.sportName = null; // for biforcating columns based on sportName
     this.sportType = null; // eg:F,K,AAS,ST,I
+    this.categoryType = null;
     this.isValidForm = true;
     this.showMissingFields = false;
     this.disableNextOnRules = false;
@@ -40,6 +41,8 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
     this.isAtheleteSelected = function (listOfAthlete) {
         var editTeam = _.intersectionBy(listOfAthlete, this.team, '_id');
         var remTeam = _.differenceBy(listOfAthlete, this.team, '_id');
+        var sN = this.sportName;
+        var cT = this.categoryType;
         _.each(editTeam, function (n) {
             n.checked = true;
         });
@@ -49,8 +52,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                 if (n.selectedEvent == n.package.eventCount) {
                     n.maxReached = true;
                 }
-                if(n.package.order==4){
-                    console.log("SfaId onlyTeamSports,this.sportType",n.sfaId);
+                if(n.package.order==4 && cT!="Team Sports" && sN!="Water Polo"){
                     n.onlyTeamSports=true;
                 }
                 return n;
