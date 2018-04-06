@@ -10,7 +10,8 @@ var schema = new Schema({
     featureCheck: Boolean,
     featureText: String
   }],
-  featureUserType: String
+  featureUserType: String,
+  featureLogo: String
 });
 
 schema.plugin(deepPopulate, {
