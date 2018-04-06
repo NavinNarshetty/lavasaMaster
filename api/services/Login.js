@@ -478,9 +478,19 @@ var model = {
                                 "content": "OTP Athlete: Your Email OTP (One time Password) for SFA registration is ",
                                 "from": "info@sfanow.in",
                                 "filename": "emailOtp.ejs",
-                                "subject": "SFA: Your Email OTP (One time Password) for SFA registration is"
-                            }
+                                "subject": "SFA: Your Email OTP (One time Password) for SFA registration is",
 
+                            }
+                            emailObj.from = data.property.infoId;
+                            emailObj.sfaid = found.sfaID;
+                            emailObj.email = found.email;
+                            emailObj.city = data.property.sfaCity;
+                            emailObj.year = data.property.year;
+                            emailObj.eventYear = data.property.eventYear;
+                            emailObj.infoId = data.property.infoId;
+                            emailObj.infoNo = data.property.infoNo;
+                            emailObj.cityAddress = data.property.cityAddress;
+                            emailObj.ddFavour = data.property.ddFavour;
                             Config.email(emailObj,callback);
                             // callback(null, "Next");
                         },
@@ -559,7 +569,16 @@ var model = {
                                 "filename": "emailOtp.ejs",
                                 "subject": "SFA: Your Email OTP (One time Password) for SFA registration is"
                             }
-
+                            emailObj.from = data.property.infoId;
+                            emailObj.sfaid = found.sfaID;
+                            emailObj.email = found.email;
+                            emailObj.city = data.property.sfaCity;
+                            emailObj.year = data.property.year;
+                            emailObj.eventYear = data.property.eventYear;
+                            emailObj.infoId = data.property.infoId;
+                            emailObj.infoNo = data.property.infoNo;
+                            emailObj.cityAddress = data.property.cityAddress;
+                            emailObj.ddFavour = data.property.ddFavour;
                             Config.email(emailObj,callback);
                             // callback(null, "Next");
                         },
