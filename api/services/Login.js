@@ -473,7 +473,7 @@ var model = {
                         function (resp, callback) {
                             console.log("OTP Sent On Email");
                             var emailObj = {
-                                "emailOtp": otp,
+                                "otp": otp,
                                 "mobile": found.mobile,
                                 "content": "OTP Athlete: Your Email OTP (One time Password) for SFA registration is ",
                                 "from": "info@sfanow.in",
@@ -560,7 +560,7 @@ var model = {
                         function (resp, callback) {
                             console.log("OTP Sent On Email");
                             var emailObj = {
-                                "emailOtp": otp,
+                                "otp": otp,
                                 "mobile": found.mobile,
                                 "content": "OTP Athlete: Your Email OTP (One time Password) for SFA registration is ",
                                 "from": "info@sfanow.in",
