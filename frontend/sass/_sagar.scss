@@ -2750,6 +2750,12 @@ $tickerDuration: 60s;
   .register-accordion-view{
     font-size: 14px;
   }
+  .panel-title{
+    cursor: default;
+    .text-muted{
+      color: #fff;
+    }
+  }
   .panel-default{
     border: none;
     border-radius: 0;

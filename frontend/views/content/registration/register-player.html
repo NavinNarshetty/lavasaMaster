@@ -28,9 +28,9 @@
       <!-- ACCORDION -->
       <div class="registerplayer-accordion">
         <uib-accordion close-others="oneAtATime">
-          <div uib-accordion-group class="panel-default" is-open="s.open">
+          <div uib-accordion-group class="panel-default" is-open="true" is-disabled="true">
             <uib-accordion-heading class="clearfix">
-              <span class="pull-right register-accordion-view"> View <span ng-if="!s.open">Details</span> <span ng-if='s.open'>Less</span>              <i class="fa " ng-class="{'fa-chevron-up': s.open, 'fa-chevron-down': !s.open}"></i></span>
+              <span class="hide pull-right register-accordion-view"> View <span ng-if="!s.open">Details</span> <span ng-if='s.open'>Less</span>              <i class="fa " ng-class="{'fa-chevron-up': s.open, 'fa-chevron-down': !s.open}"></i></span>
               <h4 class="d-fjalla-one text-uppercase m-clear">Quick Details About SFA Championship {{eventYear}}</h4>
             </uib-accordion-heading>
             <div class="register-accordioncontent">

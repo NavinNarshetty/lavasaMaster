@@ -4,6 +4,8 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
   $scope.navigation = NavigationService.getNavigation();
   // CODE START
   // VARIABLE INITIALISE
+  $scope.oneAtATime = true
+  // $scope.s.open = true;
   $scope.formData = {};
   $scope.validateOtpObj = {};
   $scope.resetPassObj = {};
