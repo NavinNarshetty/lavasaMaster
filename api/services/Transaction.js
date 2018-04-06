@@ -593,11 +593,10 @@ var model = {
                                     } else {
                                         console.log("foundTransact", foundTransact);
                                         console.log("package", data.transactions[len].package._id, "package", foundTransact.package);
-                                        if (data.transactions[len].package._id === foundTransact.package) {
-                                            data.netTotal = ((n.package.finalPrice + data.cgst + data + sgst + data.igst) - data.discount);
-                                        }
                                         var outstanding = foundTransact.outstandingAmount - n.amountPaid;
-                                        data.outstanding = data.outstanding + outstanding;
+                                        if (data.transactions[len].package._id.toString() === foundTransact.package.toString()) {
+                                            data.outstanding = data.outstanding + outstanding;
+                                        }
                                         console.log("outstanding", outstanding, "data.outstanding", data.outstanding);
                                         var receipt = n.receiptId;
                                         var mainReceipt = _.concat(data.receipt,  receipt);
