@@ -120,7 +120,9 @@ var schema = new Schema({
 
 schema.plugin(deepPopulate, {
     populate: {
-        package: ''
+        package: {
+            select: ''
+        }
     }
 });
 schema.plugin(uniqueValidator);
@@ -381,7 +383,8 @@ var model = {
                         }
                         param.athlete = undefined;
                         param.school = registerData._id;
-                        param.transaction = data.transactData;
+                        console.log("Transaction-----", data.transaction);
+                        param.transaction = data.transaction;
                         param.outstandingAmount = registerData.package.finalPrice + finalAmount;
                         param.upgrade = false;
                     }

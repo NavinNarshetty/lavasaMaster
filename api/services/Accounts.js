@@ -211,7 +211,7 @@ var model = {
             }, {
                 school: data._id
             }]
-        }, 'outstandingAmount upgradePaymentStatus totalPaid totalToPay igst cgst sgst athlete school').lean().deepPopulate("athlete school").exec(
+        }, 'outstandingAmount upgradePaymentStatus totalPaid totalToPay igst cgst sgst athlete school transaction').lean().deepPopulate("athlete school transaction").exec(
             function (err, found) {
                 if (err) {
                     callback(err, null);
@@ -329,7 +329,7 @@ var model = {
                     if (data.discount) {
                         param.discount = data.discount;
                     }
-                    param.paymentStatus = "pending";
+                    param.paymentStatus = "Pending";
 
                     Transaction.saveData(param, function (err, transactData) {
                         if (err || _.isEmpty(transactData)) {
@@ -377,7 +377,7 @@ var model = {
                                         discount: data.discount,
                                         outstandingAmount: data.amountPaid,
                                         transaction: transaction,
-                                        upgradePaymentStatus: "pending",
+                                        upgradePaymentStatus: "Pending",
                                         upgrade: true
                                     }
                                 };
@@ -422,7 +422,7 @@ var model = {
                                         discount: data.discount,
                                         outstandingAmount: data.amountPaid,
                                         transaction: transaction,
-                                        upgradePaymentStatus: "pending",
+                                        upgradePaymentStatus: "Pending",
                                         upgrade: true
                                     }
                                 };

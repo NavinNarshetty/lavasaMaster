@@ -214,7 +214,7 @@ var model = {
                                 amountToPay: found.accounts.outstandingAmount,
                                 amountPaid: found.accounts.outstandingAmount,
                                 outstandingAmount: 0,
-                                paymentStatus: "paid",
+                                paymentStatus: "Paid",
                                 PayuId: PayuId,
                             }
                         };
@@ -304,274 +304,9 @@ var model = {
             });
     },
 
-
-    accountsFirstTransaction: function (transactData, callback) {
-        var transaction = [];
-        var receipt = [];
-        transaction.push(transactData._id);
-        receipt.push(transactData.receiptId);
-        if (transactData.paymentMode == "cash" && transactData.amountToPay == 0) {
-            var matchObj = {
-                $set: {
-                    athlete: transactData.athlete,
-                    transaction: transaction,
-                    totalToPay: transactData.amountToPay,
-                    totalPaid: transactData.amountPaid,
-                    outstandingAmount: 0,
-                    paymentMode: transactData.paymentMode,
-                    receiptId: receipt,
-                }
-            };
-        } else {
-            var matchObj = {
-                $set: {
-                    athlete: transactData.athlete,
-                    transaction: transaction,
-                    totalToPay: transactData.amountToPay,
-                    totalPaid: transactData.amountPaid,
-                    outstandingAmount: 0,
-                    PayuId: transactData.PayuId,
-                    accountType: transactData.accountType,
-                    paymentMode: transactData.paymentMode,
-                    receiptId: receipt,
-                }
-            };
-        }
-        Accounts.update({
-            athlete: transactData.athlete
-        }, matchObj).exec(
-            function (err, data3) {
-                if (err) {
-                    callback(err, null);
-                } else if (data3) {
-                    callback(null, transactData);
-                }
-            });
-    },
-
-    accountsFirstTransactionSchool: function (transactData, callback) {
-        var transaction = [];
-        transaction.push(transactData._id);
-        if (transactData.paymentMode == "cash" && transactData.amountToPay == 0) {
-            var matchObj = {
-                $set: {
-                    school: transactData.school,
-                    transaction: transaction,
-                    totalToPay: transactData.amountToPay,
-                    totalPaid: transactData.amountPaid,
-                    outstandingAmount: 0,
-                    paymentMode: transactData.paymentMode,
-                }
-            };
-        } else {
-            var matchObj = {
-                $set: {
-                    school: transactData.school,
-                    transaction: transaction,
-                    totalToPay: transactData.amountToPay,
-                    totalPaid: transactData.amountPaid,
-                    outstandingAmount: 0,
-                    PayuId: transactData.PayuId,
-                    accountType: transactData.accountType,
-                    paymentMode: transactData.paymentMode,
-                    receiptId: transactData.receiptId,
-                }
-            };
-        }
-        Accounts.update({
-            school: transactData.school
-        }, matchObj).exec(
-            function (err, data3) {
-                if (err) {
-                    callback(err, null);
-                } else if (data3) {
-                    callback(null, transactData);
-                }
-            });
-    },
-
-    accountsSaveAthleteTransaction: function (transactData, callback) {
-        async.waterfall([
-            function (callback) {
-                Accounts.findOne({
-                    athlete: transactData.athlete
-                }).lean().exec(function (err, accountsData) {
-                    if (err || _.isEmpty(accountsData)) {
-                        callback(null, {
-                            error: "NO accounts found",
-                            data: transactData
-                        });
-                    } else {
-                        callback(null, accountsData);
-                    }
-                });
-            },
-            function (accountsData, callback) {
-                if (accountsData.error) {
-                    callback(null, accountsData);
-                } else {
-                    if (_.isEmpty(accountsData.transaction) || accountsData.transaction.length == 0) {
-                        Transaction.accountsFirstTransaction(transactData, function (err, vData) {
-                            if (err) {
-                                callback(err, null);
-                            } else if (vData) {
-                                callback(null, vData);
-                            }
-                        });
-                    } else {
-                        var transaction = [];
-                        var toPay;
-                        _.each(accountsData.transaction, function (n) {
-                            transaction.push(n);
-                            toPay = accountsData.totalToPay;
-                        });
-                        transaction.push(transactData._id);
-                        if (toPay > 0) {
-                            toPay = transactData.package.finalPrice - (toPay + transactData.amountToPay);
-                        } else {
-                            toPay = transactData.package.finalPrice - transactData.amountToPay;
-                        }
-                        var amount = transactData.amountPaid + accountsData.totalPaid;
-                        // var outstanding=
-                        if (transactData.paymentMode == "cash") {
-                            var matchObj = {
-                                $set: {
-                                    athlete: transactData.athlete,
-                                    transaction: transaction,
-                                    totalToPay: toPay,
-                                    totalPaid: amount,
-                                    outstandingAmount: 0,
-                                    paymentMode: transactData.paymentMode,
-                                }
-                            };
-                        } else {
-                            var matchObj = {
-                                $set: {
-                                    athlete: transactData.athlete,
-                                    transaction: transaction,
-                                    totalToPay: toPay,
-                                    totalPaid: amount,
-                                    outstandingAmount: 0,
-                                    PayuId: transactData.PayuId,
-                                    accountType: transactData.accountType,
-                                    paymentMode: transactData.paymentMode,
-                                    receiptId: transactData.receiptId,
-                                }
-                            };
-                        }
-                        Accounts.update({
-                            athlete: transactData.athlete
-                        }, matchObj).exec(
-                            function (err, data3) {
-                                if (err) {
-                                    callback(err, null);
-                                } else if (data3) {
-                                    callback(null, transactData);
-                                }
-                            });
-                    }
-                }
-            }
-        ], function (err, complete) {
-
-        });
-
-    },
-
-    accountsSaveSchoolTransaction: function (transactData, callback) {
-        async.waterfall([
-            function (callback) {
-                Accounts.findOne({
-                    school: transactData.school
-                }).lean().exec(function (err, accountsData) {
-                    if (err || _.isEmpty(accountsData)) {
-                        callback(null, {
-                            error: "NO accounts found",
-                            data: transactData
-                        });
-                    } else {
-                        callback(null, accountsData);
-                    }
-                });
-            },
-            function (accountsData, callback) {
-                if (accountsData.error) {
-                    callback(null, accountsData);
-                } else {
-                    if (_.isEmpty(accountsData.transaction) || accountsData.transaction.length == 0) {
-                        Transaction.accountsFirstTransactionSchool(transactData, function (err, vData) {
-                            if (err) {
-                                callback(err, null);
-                            } else if (vData) {
-                                callback(null, vData);
-                            }
-                        });
-                    } else {
-                        var transaction = [];
-                        var toPay;
-                        _.each(accountsData.transaction, function (n) {
-                            transaction.push(n);
-                            toPay = accountsData.totalToPay;
-                        });
-                        transaction.push(transactData._id);
-                        if (toPay > 0) {
-                            toPay = transactData.package.finalPrice - (toPay + transactData.amountToPay);
-                        } else {
-                            toPay = transactData.package.finalPrice - transactData.amountToPay;
-                        }
-                        var amount = transactData.amountPaid + accountsData.totalPaid;
-                        // var outstanding=
-                        if (transactData.paymentMode == "cash") {
-                            var matchObj = {
-                                $set: {
-                                    school: transactData.school,
-                                    transaction: transaction,
-                                    totalToPay: toPay,
-                                    totalPaid: amount,
-                                    outstandingAmount: 0,
-                                    paymentMode: transactData.paymentMode,
-                                }
-                            };
-                        } else {
-                            var matchObj = {
-                                $set: {
-                                    school: transactData.school,
-                                    transaction: transaction,
-                                    totalToPay: toPay,
-                                    totalPaid: amount,
-                                    outstandingAmount: 0,
-                                    PayuId: transactData.PayuId,
-                                    accountType: transactData.accountType,
-                                    paymentMode: transactData.paymentMode,
-                                    receiptId: transactData.receiptId,
-                                }
-                            };
-                        }
-                        Accounts.update({
-                            school: transactData.school
-                        }, matchObj).exec(
-                            function (err, data3) {
-                                if (err) {
-                                    callback(err, null);
-                                } else if (data3) {
-                                    callback(null, transactData);
-                                }
-                            });
-                    }
-                }
-            }
-        ], function (err, complete) {
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, complete);
-            }
-        });
-
-    },
-
     saveCashTransaction: function (data, callback) {
         var finaloutstanding = 0;
+        var finalPay = 0;
         data.transaction = [];
         data.receipt = [];
         data.checkNo = [];
@@ -591,10 +326,15 @@ var model = {
                                             data: data
                                         });
                                     } else {
-                                        var outstanding = foundTransact.outstandingAmount - n.amountPaid;
+                                        if (n.amountPaid < foundTransact.outstandingAmount) {
+                                            var outstanding = foundTransact.outstandingAmount - n.amountPaid;
+                                        } else {
+                                            var outstanding = 0;
+                                        }
                                         if (data.transactions[len].package._id.toString() === foundTransact.package.toString()) {
                                             finaloutstanding = finaloutstanding + outstanding;
                                         }
+                                        finalPay = finalPay + n.amountPaid;
                                         console.log("outstanding", outstanding, "data.outstanding", data.outstanding);
                                         var receipt = n.receiptId;
                                         var mainReceipt = _.concat(data.receipt,  receipt);
@@ -612,12 +352,13 @@ var model = {
                                                 discount: data.discount,
                                                 amountPaid: n.amountPaid,
                                                 receiptId: receipt,
-                                                amountToPay: n.amountPaid,
+                                                amountToPay: foundTransact.outstandingAmount,
                                                 checkNo: checkNo,
-                                                paymentMode: data.paymentMode,
+                                                // paymentMode: n.paymentMode,
                                                 cgstAmount: data.cgst,
                                                 sgstAmount: data.sgst,
                                                 outstandingAmount: outstanding,
+                                                paymentStatus: n.paymentStatus,
                                             }
                                         };
                                         Transaction.update({
@@ -643,10 +384,17 @@ var model = {
                                             data: data
                                         });
                                     } else {
+                                        console.log("package", data.transactions[len].package._id, "package", foundTransact.package);
+                                        if (n.amountPaid < foundTransact.outstandingAmount) {
+                                            var outstanding = foundTransact.outstandingAmount - n.amountPaid;
+                                        } else {
+                                            var outstanding = 0;
+                                        }
                                         if (data.transactions[len].package._id.toString() === foundTransact.package.toString()) {
+                                            console.log("inside");
                                             finaloutstanding = finaloutstanding + outstanding;
                                         }
-                                        var outstanding = foundTransact.outstandingAmount - n.amountPaid;
+                                        finalPay = finalPay + n.amountPaid;
                                         var receipt = n.receiptId;
                                         var mainReceipt = _.concat(data.receipt,  receipt);
                                         data.receipt = _.uniq(mainReceipt);
@@ -665,10 +413,11 @@ var model = {
                                                 checkNo: checkNo,
                                                 amountToPay: n.amountPaid,
                                                 amountPaid: n.amountPaid,
-                                                paymentMode: data.paymentMode,
+                                                // paymentMode: n.paymentMode,
                                                 cgstAmount: data.cgst,
                                                 sgstAmount: data.sgst,
                                                 outstandingAmount: outstanding,
+                                                paymentStatus: n.paymentStatus,
                                             }
                                         };
                                         Transaction.update({
@@ -700,16 +449,17 @@ var model = {
                                 if (err || _.isEmpty(accountsData)) {
                                     callback(null, data);
                                 } else {
+                                    // var finalPaid = accountsData.totalPaid + (accountsData.outstandingAmount - finaloutstanding);
                                     var transactionFinal = _.concat(accountsData.transaction, data.transaction);
                                     var matchObj = {
                                         $set: {
                                             transaction: transactionFinal,
-                                            totalToPay: data.netTotal,
-                                            totalPaid: data.netTotal,
+                                            totalToPay: finalPay,
+                                            totalPaid: finalPay,
                                             discount: data.discount,
                                             receiptId: data.receipt,
                                             checkNo: data.checkNo,
-                                            paymentMode: data.paymentMode,
+                                            // paymentMode: n.paymentMode,
                                             checkNo: data.checkNo,
                                             cgst: data.cgst,
                                             sgst: data.sgst,
@@ -736,15 +486,16 @@ var model = {
                                 if (err || _.isEmpty(accountsData)) {
                                     callback(null, data);
                                 } else {
+                                    // var finalPaid = accountsData.totalPaid + (accountsData.outstandingAmount - finaloutstanding);
                                     var transactionFinal = _.concat(accountsData.transaction, data.transaction);
                                     var matchObj = {
                                         $set: {
                                             transaction: transactionFinal,
-                                            totalToPay: data.netTotal,
-                                            totalPaid: data.netTotal,
+                                            totalToPay: finalPay,
+                                            totalPaid: finalPay,
                                             discount: data.discount,
                                             receiptId: data.receipt,
-                                            paymentMode: data.paymentMode,
+                                            // paymentMode: n.paymentMode,
                                             checkNo: data.checkNo,
                                             cgst: data.cgst,
                                             sgst: data.sgst,
