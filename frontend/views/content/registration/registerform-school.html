@@ -44,7 +44,7 @@
               </ul>
             </p>
             <p class="formregister-heading form-register-mtb20">
-              *The applicant represents that the information provided is true and correct.Sfa will keep confidential and protect your personal
+              *The applicant represents that the information provided is true and correct. SFA will keep confidential and protect your personal
               information expect where disclosure is required or permitted by law.
             </p>
           </div>
@@ -290,7 +290,10 @@
                   <div class="form-group" ng-if="district.length > 0">
                     <label class="col-sm-4 control-label">*District:</label>
                     <div class="col-sm-8">
-                      <input name="district" only-alpha ng-model="formData.district" capitalize type="text" class="form-control" required>
+                      <!-- <input name="district" only-alpha ng-model="formData.district" capitalize type="text" class="form-control" required> -->
+                      <select class="sfa-drop2 form-control sf-list" name="district" ng-model="formData.district" ng-options="districts for districts in district"
+                        required>
+                      </select>
                       <div class="label label-danger pull-right" ng-show="schoolRegisterForm.district.$invalid && schoolRegisterForm.district.$touched">Please Enter Your District*</div>
                     </div>
                   </div>
@@ -577,7 +580,7 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label"> Name :</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" name="sportName" only-alpha capitalize ng-model="x.name" placeholder="Enter Sport Department Name">
+                      <input type="text" class="form-control" name="sportName" only-alpha capitalize ng-model="x.name" placeholder="Enter Coach/Teachers Name">
                       <!-- <div class="label label-danger pull-right" ng-show="schoolRegisterForm.sportName.$invalid && schoolRegisterForm.sportName.$touched">Please Enter Name *</div> -->
                     </div>
                   </div>
@@ -603,7 +606,7 @@
                         <label class="col-sm-4 control-label"> Mobile :</label>
                         <div class="col-sm-8">
                           <input type="text" only-Digits ng-model="x.mobile" name="deptSch" autocomplete='tel' class="form-control" minlength="10"
-                            maxlength="10" placeholder="Enter Department Mobile">
+                            maxlength="10" placeholder="Enter Mobile">
                           <!-- <div class="label label-danger pull-right" ng-show="schoolRegisterForm.deptSch.$invalid && schoolRegisterForm.deptSch.$touched">Please Enter Your Department Mobile *</div> -->
                         </div>
                       </div>
@@ -616,7 +619,7 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label"> Email :</label>
                     <div class="col-sm-10">
-                      <input name="xEmail" type="email" class="form-control" ng-model="x.email" autocomplete="departmentEmail" placeholder="Enter Department Email">
+                      <input name="xEmail" type="email" class="form-control" ng-model="x.email" autocomplete="departmentEmail" placeholder="Enter Email">
                       <!-- <div class="label label-danger pull-right" ng-show="schoolRegisterForm.xEmail.$invalid && schoolRegisterForm.xEmail.$touched">Please Enter Department Email *</div> -->
                     </div>
                   </div>
