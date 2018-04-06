@@ -68,7 +68,7 @@ schema.plugin(deepPopulate, {
             select: ''
         },
         "school": {
-            select: '_id schoolName schoolType schoolCategory year paymentStatus status sfaID'
+            select: '_id schoolName schoolType schoolCategory year paymentStatus status sfaID package'
         },
         "transaction": {
             select: ''
