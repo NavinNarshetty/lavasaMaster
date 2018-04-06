@@ -482,7 +482,7 @@ var model = {
                             }
 
                             Config.email(emailObj,callback);
-                            callback(null, "Next");
+                            // callback(null, "Next");
                         },
 
                         // send final Obj
@@ -561,7 +561,7 @@ var model = {
                             }
 
                             Config.email(emailObj,callback);
-                            callback(null, "Next");
+                            // callback(null, "Next");
                         },
 
                         // send final Obj
