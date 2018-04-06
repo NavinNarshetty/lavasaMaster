@@ -14,7 +14,7 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
     $scope.pageType = 'school';
   } else {
     $state.go('registerplayer', {
-        type: 'player'
+      type: 'player'
     });
   }
   // SET FLAGS END
@@ -25,7 +25,7 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
     };
   } else {
     $state.go('registerplayer', {
-        type: data.type
+      type: data.type
     });
   }
   $scope.formData = {
@@ -53,13 +53,13 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
     // }
     $scope.formData.amountToPay = selectedPackage.finalPrice;
     var paidPrice = $scope.formData.amountToPay - $scope.formData.totalPaid;
-    $scope.formData.cgstAmt = '';
-    $scope.formData.cgstPercent = '';
-    $scope.formData.sgstAmt = '';
-    $scope.formData.sgstPercent = '';
-    $scope.formData.igstAmt = '';
-    $scope.formData.igstPercent = '';
-    $scope.formData.discount = selectedPackage.discount || 0;
+    $scope.formData.cgstAmt = 0;
+    $scope.formData.cgstPercent = 0;
+    $scope.formData.sgstAmt = 0;
+    $scope.formData.sgstPercent = 0;
+    $scope.formData.igstAmt = 0;
+    $scope.formData.igstPercent = 0;
+    $scope.formData.discount = 0;
     if (selectedPackage.cgstPercent && selectedPackage.sgstPercent) {
       $scope.formData.cgstPercent = selectedPackage.cgstPercent;
       $scope.formData.cgstAmt = _.round(TemplateService.calculatePercentage(paidPrice, $scope.formData.cgstPercent));
@@ -78,19 +78,19 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
   // SET PACKAGE DETAILS
   // THANKYOU MODAL
   $scope.openModal = function () {
-      $timeout(function () {
-          // fbq('track', 'CompleteRegistration');
-          fbq('track', 'CompleteRegistration');
-          // GoogleAdWordsService.sendRegisterCustomerConversion();
-      });
-      var modalInstance = $uibModal.open({
-          animation: true,
-          scope: $scope,
-          backdrop: 'static',
-          keyboard: false,
-          // size: 'sm',
-          templateUrl: "views/modal/thankyou.html"
-      });
+    $timeout(function () {
+      // fbq('track', 'CompleteRegistration');
+      fbq('track', 'CompleteRegistration');
+      // GoogleAdWordsService.sendRegisterCustomerConversion();
+    });
+    var modalInstance = $uibModal.open({
+      animation: true,
+      scope: $scope,
+      backdrop: 'static',
+      keyboard: false,
+      // size: 'sm',
+      templateUrl: "views/modal/thankyou.html"
+    });
   };
   // THANKYOU MODAL END
   // UPGRADE PACKAGE
@@ -114,7 +114,7 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
           }
         } else {
           toastr.success("Package upgraded Successfully");
-          $state.go("sports-selection");
+          // $state.go("sports-selection");
         }
       });
     } else {
@@ -123,7 +123,7 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
   }
   // UPGRADE PACKAGE END
   // GET ATHLETE DATA
-  $scope.getStatusUpgrade = function(){
+  $scope.getStatusUpgrade = function () {
     NavigationService.getStatusUpgrade($scope.pageData, function (data) {
       data = data.data;
       if (data.value == true) {
@@ -142,8 +142,8 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
         $scope.formData.totalPaid = $scope.detail.totalPaid;
         $scope.formData.totalToPay = $scope.detail.totalToPay;
         var len = $scope.detail.transaction.length;
-        if(len > 0){
-          $scope.formData.paymentStatus = $scope.detail.transaction[len-1].paymentStatus;
+        if (len > 0) {
+          $scope.formData.paymentStatus = $scope.detail.transaction[len - 1].paymentStatus;
           console.log($scope.formData.paymentStatus, "pay");
         }
         console.log("athlete", $scope.detail);

@@ -310,26 +310,32 @@ var model = {
                         param.school = undefined;
 
                     } else {
-                        param.school = data.athlete;
+                        param.school = data.school;
                         param.athlete = undefined;
                     }
                     param.dateOfTransaction = new Date();
                     param.package = data.package;
                     param.outstandingAmount = data.amountPaid;
                     param.paymentMode = data.registrationFee;
-                    if (data.cgstAmt) {
-                        param.cgstAmount = data.cgstAmt;
-                    }
-                    if (data.sgstAmt) {
-                        param.sgstAmount = data.sgstAmt;
-                    }
+                    // if (data.cgstAmt != null) {
+                    param.cgstAmount = data.cgstAmt;
+                    // } else {
+                    //     param.cgstAmount = 0;
+                    // }
+                    // if (data.sgstAmt != null) {
+                    param.sgstAmount = data.sgstAmt;
+                    // } else {
+                    //     param.sgstAmount = 0;
+                    // }
 
-                    if (data.igstAmt) {
-                        param.sgstAmount = data.igstAmt;
-                    }
-                    if (data.discount) {
-                        param.discount = data.discount;
-                    }
+                    // if (data.igstAmt != null) {
+                    param.igstAmount = data.igstAmt;
+                    // } else {
+                    //     param.igstAmount = 0;
+                    // }
+                    // if (data.discount != null) {
+                    //     param.discount = data.discount;
+                    // }
                     param.paymentStatus = "Pending";
 
                     Transaction.saveData(param, function (err, transactData) {
@@ -339,6 +345,7 @@ var model = {
                                 data: data
                             });
                         } else {
+
                             callback(null, transactData);
                         }
                     });
@@ -349,7 +356,6 @@ var model = {
 
                 },
                 function (transactData, callback) {
-                    // console.log("transactData", transactData);
                     if (data.athlete) {
                         Accounts.findOne({
                             athlete: data.athlete
@@ -369,13 +375,12 @@ var model = {
                                 if (check == false) {
                                     transaction.push(transactData._id);
                                 }
-                                transaction = _.concat(transaction, accountsData.transaction);
+                                transaction = _.concat(accountsData.transaction, transaction);
                                 var matchObj = {
                                     $set: {
                                         sgst: data.sgstAmt,
                                         cgst: data.cgstAmt,
                                         igst: data.igstAmt,
-                                        discount: data.discount,
                                         outstandingAmount: data.amountPaid,
                                         transaction: transaction,
                                         upgradePaymentStatus: "Pending",
@@ -418,9 +423,6 @@ var model = {
                                         sgst: data.sgstAmt,
                                         cgst: data.cgstAmt,
                                         igst: data.igstAmt,
-                                        // totalToPay: data.amountToPay,
-                                        // totalPaid: data.amountPaid,
-                                        discount: data.discount,
                                         outstandingAmount: data.amountPaid,
                                         transaction: transaction,
                                         upgradePaymentStatus: "Pending",
@@ -439,6 +441,43 @@ var model = {
                                     });
                             }
                         });
+                    }
+                },
+                function (accountsData, callback) {
+                    if (data.athlete) {
+                        var matchObj = {
+                            $set: {
+                                package: data.package
+                            }
+                        };
+                        Athelete.update({
+                            _id: data.athlete
+                        }, matchObj).exec(
+                            function (err, data3) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(err, null);
+                                } else if (data3) {
+                                    callback(null, data3)
+                                }
+                            });
+                    } else {
+                        var matchObj = {
+                            $set: {
+                                package: data.package
+                            }
+                        };
+                        Registration.update({
+                            _id: data.school
+                        }, matchObj).exec(
+                            function (err, data3) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(err, null);
+                                } else if (data3) {
+                                    callback(null, data3)
+                                }
+                            });
                     }
                 }
             ],
@@ -490,6 +529,7 @@ var model = {
                                                     data: found
                                                 });
                                             } else {
+                                                console.log("vData", vData.package);
                                                 found.packageNew = vData.package;
                                                 callback(null, found);
                                             }

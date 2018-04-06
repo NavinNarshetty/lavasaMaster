@@ -27,8 +27,14 @@ var schema = new Schema({
         ref: 'Package',
         index: true
     },
-    amountToPay: String,
-    amountPaid: String,
+    amountToPay: {
+        type: Number,
+        default: 0
+    },
+    amountPaid: {
+        type: Number,
+        default: 0
+    },
     PayuId: String,
     accountType: String,
     paymentMode: String,
@@ -254,7 +260,7 @@ var model = {
                                     totalPaid: found.accounts.outstandingAmount,
                                     totalToPay: found.accounts.outstandingAmount,
                                     outstandingAmount: 0,
-                                    upgradePaymentStatus: "paid",
+                                    upgradePaymentStatus: "Paid",
 
                                 }
                             };
@@ -275,7 +281,7 @@ var model = {
                                     // transaction: transaction,
                                     PayuId: PayuId,
                                     receiptId: receiptId,
-                                    upgradePaymentStatus: "paid",
+                                    upgradePaymentStatus: "Paid",
                                     totalPaid: found.accounts.outstandingAmount,
                                     totalToPay: found.accounts.outstandingAmount,
                                     outstandingAmount: 0
