@@ -822,6 +822,7 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
             }).then(callback);
         },
 
+        // get ageGroup based on sportname
         getSports: function (id, callback) {
             $http({
                 url: adminUrl2 + 'SportsListSubCategory/getSports',
@@ -830,6 +831,7 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
             }).then(callback);
         },
 
+        // get Max and Min count Of Athlete Allowed to Participate For that Sport
         getOneSportForRegistration: function (data, url, callback) {
             $http({
                 url: adminUrl2 + url,
@@ -1097,6 +1099,8 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
                 data: id
             }).then(callback);
         },
+
+        // get One Team data
         editTeam: function (id, callback) {
             $http({
                 url: adminUrl2 + 'teamsport/editTeam',
