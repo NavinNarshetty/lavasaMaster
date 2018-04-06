@@ -91,11 +91,11 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
     var upgradePackage = school.school.package;
     console.log(upgradePackage, "check for package");
 
-    if (school.schoolData.transaction.length > 1) {
+    if (school.schoolData.transaction.length) {
       _.each(school.schoolData.transaction, function (key) {
         if (key.package._id == upgradePackage) {
           console.log("key i am in value")
-          key.currentAthletePackage = true;
+          key.currentSchoolPackage = true;
         }
       })
     }

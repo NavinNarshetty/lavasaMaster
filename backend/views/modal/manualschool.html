@@ -88,6 +88,9 @@
             <div class="text-center">
               Package Details
             </div>
+            <div class="pull-right">
+              <label for="note" class="label label-danger">Note: Cheq no and receipt no should be comma seprated</label>
+            </div>
           </div>
           <div class="tablepackageholder table-responsive">
             <table class="table table-condensed">
@@ -136,7 +139,7 @@
               </thead>
               <tbody>
                 <!-- {{formData.transactions| json}} -->
-                <tr ng-repeat="packageDetail in formData.transactions track by $index">
+                <tr ng-repeat="packageDetail in formData.transactions track by $index" ng-class="{'highligh-tablerow':packageDetail.currentSchoolPackage===true}">
 
                   <!-- DATE  -->
                   <td>
