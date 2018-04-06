@@ -613,7 +613,30 @@
   text-transform: uppercase;
   @extend .d-fjalla-one;
 }
-
+// PACKAGE FEATURE LOGO
+.upgradepackage-featuretext{
+  width: calc(100% - 65px);
+  display: inline-block;
+  vertical-align: middle;
+}
+.upgradepackage-featurelogo{
+  width: 60px;
+  height: auto;
+  display: inline-block;
+  vertical-align: middle;
+}
+// PACKAGE FEATURE LOGO END
+.btn-goodie{
+  padding: 5px 30px;
+  border-radius: 5px;
+  background-color: $sport-primary;
+  color: #fff;
+  font-style: normal;
+  text-transform: uppercase;
+  &:active, &:focus, &:hover{
+    color: #fff;
+  }
+}
 // PACKAGE TABLE END
 .upgradepackage-header{
   margin-bottom: 10px;
