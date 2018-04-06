@@ -26,7 +26,10 @@
       <tr ng-repeat="feature in features track by $index">
         <td>
           <div class="upgradepackage-td text-left ">
-            {{feature.featureName}}
+            <div class="" ng-class="{'upgradepackage-featuretext': feature.featureLogo}">{{feature.featureName}}</div>
+            <div class="upgradepackage-featurelogo" ng-if="feature.featureLogo">
+              <img ng-src="{{feature.featureLogo|serverimage2}}" alt="Feature Sponsor | Sports For All" title="Feature Sponsor" class="img-responsive">
+            </div>
           </div>
         </td>
         <td ng-repeat="detail in feature.featureDetails|orderBy: 'packageName.order' track by $index">
@@ -44,6 +47,9 @@
     <caption align="bottom" class="packagetable-captionholder">
       <!-- CAPTION TEXT -->
       <div class="packagetable-caption">
+        <div class="text-center">
+          <a href="https://storage.googleapis.com/sportsforall/googiebags.pdf" target="_new"><button class="btn btn-goodie">View Goodie Bag And Other Package Details</button></a>
+        </div>
         <p class="m-clear">*An event category refers to -Sport + age group + gender + event/ weight category (if applicable)</p>
         <p class="m-clear">E.g. Swimming Male U-10 | 50m Freestyle | Athletics Female U-14 Long Jump. <a href="">Click here to view the list of Event Caregories</a></p>
       </div>
