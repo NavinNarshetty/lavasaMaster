@@ -1696,12 +1696,24 @@ myApp.controller('AdditionalPaymentFormCtrl', function ($scope, TemplateService,
 });
 
 
-myApp.controller('PaymentSuccessCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, GoogleAdWordsService) {
+myApp.controller('PaymentSuccessCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, GoogleAdWordsService, configService) {
     //Used to name the .html file
 
     $scope.template = TemplateService.getHTML("content/paymentSuccess.html");
     TemplateService.title = "Payment Success";
     $scope.navigation = NavigationService.getNavigation();
+    configService.getDetail(function (data) {
+        $scope.city = data.city;
+        $scope.district = data.district;
+        $scope.state = data.state;
+        $scope.formData.state = data.state;
+        $scope.year = data.year;
+        $scope.eventYear = data.eventYear;
+        $scope.sfaCity = data.sfaCity;
+        $scope.isCollege = data.isCollege;
+        $scope.type = data.type;
+    });
+
     // fbq('track', 'CompleteRegistration');
     // GoogleAdWordsService.sendRegisterCustomerConversion();
     // $scope.redirectTo = function () {
