@@ -571,7 +571,7 @@ var model = {
     },
 
     saveCashTransaction: function (data, callback) {
-        data.outstanding = 0;
+        var finaloutstanding = 0;
         data.transaction = [];
         data.receipt = [];
         data.checkNo = [];
@@ -591,11 +591,9 @@ var model = {
                                             data: data
                                         });
                                     } else {
-                                        console.log("foundTransact", foundTransact);
-                                        console.log("package", data.transactions[len].package._id, "package", foundTransact.package);
                                         var outstanding = foundTransact.outstandingAmount - n.amountPaid;
                                         if (data.transactions[len].package._id.toString() === foundTransact.package.toString()) {
-                                            data.outstanding = data.outstanding + outstanding;
+                                            finaloutstanding = finaloutstanding + outstanding;
                                         }
                                         console.log("outstanding", outstanding, "data.outstanding", data.outstanding);
                                         var receipt = n.receiptId;
@@ -635,7 +633,6 @@ var model = {
                                     }
                                 });
                             } else {
-                                console.log(data, "school data");
                                 Transaction.findOne({
                                     school: data.school,
                                     package: n.package._id
@@ -646,12 +643,10 @@ var model = {
                                             data: data
                                         });
                                     } else {
-                                        console.log("package", data.transactions[len].package._id);
-                                        if (data.transactions[len].package._id === foundTransact.package) {
-                                            data.netTotal = ((n.package.finalPrice + data.cgst + data + sgst + data.igst) - data.discount);
+                                        if (data.transactions[len].package._id.toString() === foundTransact.package.toString()) {
+                                            finaloutstanding = finaloutstanding + outstanding;
                                         }
                                         var outstanding = foundTransact.outstandingAmount - n.amountPaid;
-                                        data.outstanding = data.outstanding + outstanding;
                                         var receipt = n.receiptId;
                                         var mainReceipt = _.concat(data.receipt,  receipt);
                                         data.receipt = _.uniq(mainReceipt);
@@ -719,7 +714,7 @@ var model = {
                                             cgst: data.cgst,
                                             sgst: data.sgst,
                                             remarks: data.remarks,
-                                            outstandingAmount: data.outstandingAmount
+                                            outstandingAmount: finaloutstanding
                                         }
                                     };
                                     Accounts.update({
@@ -754,7 +749,7 @@ var model = {
                                             cgst: data.cgst,
                                             sgst: data.sgst,
                                             remarks: data.remarks,
-                                            outstandingAmount: data.outstandingAmount
+                                            outstandingAmount: finaloutstanding
                                         }
                                     };
                                     Accounts.update({
