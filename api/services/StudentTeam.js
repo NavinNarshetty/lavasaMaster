@@ -57,16 +57,22 @@ schema.post('remove', function (removedAth,next) {
 
 schema.post('save', function (saved,next) {
     console.log("Post Save",saved);
-    Athelete.findOne({_id: saved.studentId}).exec(function(err,ath){
-        Athelete.saveData({"_id": saved.studentId,"selectedEvent":(ath.selectedEvent + 1)},function(err,data){
-            next();
-        })
-    });
+    // if(this.wasNew){
+        console.log("if");
+        Athelete.findOne({_id: saved.studentId}).exec(function(err,ath){
+            Athelete.saveData({"_id": saved.studentId,"selectedEvent":(ath.selectedEvent + 1)},function(err,data){
+                next();
+            })
+        });
+    // }else{
+    //     console.log("else");
+    // }
     next();
 });
 
 schema.pre('save', function (next) {
-    console.log("Pre Save");
+    console.log("Pre Save",this.isNew);
+    // this.wasNew = this.isNew;
     next();
 });
 

@@ -191,7 +191,6 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
     };
     // ===========removeThis========
     $scope.redirectTo = function (val) {
-
         function redirect() {
             // console.log(val);
             $scope.currentDate = new Date();
@@ -283,7 +282,7 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
                 if($.jStorage.get("userDetails").package.order!=4){
                     redirect();
                 }else{
-                    if(val.isTeam){
+                    if(val.isTeam && (val.sportsListCategory.name == "Team Sports" || val.name == "Water Polo")){
                         redirect();
                     }else{
                       $scope.showUpgradeModal();

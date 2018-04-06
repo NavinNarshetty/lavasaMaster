@@ -80,22 +80,6 @@ schema.plugin(autoIncrement.plugin, {
     incrementBy: 1
 });
 
-
-// schema.post('remove', function (removedTeam,next) {
-//     console.log("Post Remove",removedTeam);
-//     next();
-// });
-
-// schema.post('save', function (savedTeam,next) {
-//     console.log("Post Save",savedTeam);
-//     next();
-// });
-
-// schema.pre('save', function (next) {
-//     console.log("Pre Save");
-//     next();
-// });
-
 module.exports = mongoose.model('TeamSport', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
@@ -1602,9 +1586,23 @@ var model = {
 
                                 function (complete1, callback) {
                                     console.log("complete1", complete1);
-                                    StudentTeam.remove({
+                                    // StudentTeam.remove({
+                                    //     _id: n._id
+                                    // }).exec(function (err, found) {
+                                    //     if (err) {
+                                    //         callback(err, null);
+                                    //     } else {
+                                    //         if (_.isEmpty(found)) {
+                                    //             callback(null, []);
+                                    //         } else {
+                                    //             callback(null, found);
+                                    //         }
+                                    //     }
+                                    // });
+
+                                    StudentTeam.deleteData({
                                         _id: n._id
-                                    }).exec(function (err, found) {
+                                    },function (err, found) {
                                         if (err) {
                                             callback(err, null);
                                         } else {
@@ -1748,27 +1746,18 @@ var model = {
                 },
                 function (totals, callback) {
                     totals.count = 0;
-                    // console.log("length", param.athleteTeam.length);
                     var length1 = param.athleteTeam.length;
-                    // console.log("length1", length1);
-                    // console.log("totals", totals);
                     _.each(param.athleteTeam, function (m) {
-
-                        console.log("id", totals[0].studentId._id);
-                        console.log("edit", m.studentId);
                         if (totals[0].studentId._id.equals(m.studentId)) {
                             totals.count++;
-                            // param.countEdit++;
                         }
                     });
-                    console.log("params", param.countEdit);
                     if (totals.count == 0) {
                         param.countEdit++;
                     }
                     callback(null, totals);
                 },
                 function (totals, callback) {
-                    // console.log("totals", totals);
                     if (totals.count == 0) {
                         var emailData = {};
                         var index = totals[0].teamId.name.indexOf("-");
