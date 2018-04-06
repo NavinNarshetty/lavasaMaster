@@ -481,7 +481,7 @@ var model = {
                                 "subject": "SFA: Your Email OTP (One time Password) for SFA registration is"
                             }
 
-                            // Config.email(emailObj,callback);
+                            Config.email(emailObj,callback);
                             callback(null, "Next");
                         },
 
@@ -560,7 +560,7 @@ var model = {
                                 "subject": "SFA: Your Email OTP (One time Password) for SFA registration is"
                             }
 
-                            // Config.email(emailObj,callback);
+                            Config.email(emailObj,callback);
                             callback(null, "Next");
                         },
 
