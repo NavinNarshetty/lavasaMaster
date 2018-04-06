@@ -173,6 +173,7 @@ var model = {
                     found.display.AmountPaid = found.totalPaid;
                     found.display.AmountToPay = found.totalToPay;
                     found.display.outstandingAmount = found.outstandingAmount;
+                    found.display.igst = found.igst;
                     found.display.sgst = found.sgst;
                     found.display.cgst = found.cgst;
                     found.display.discount = found.discount;
