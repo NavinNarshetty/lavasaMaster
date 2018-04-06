@@ -12,8 +12,22 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
     $scope.pageType = 'athlete';
   } else if ($scope.flag == 'school' || $scope.flag == 'college') {
     $scope.pageType = 'school';
+  } else {
+    $state.go('registerplayer', {
+        type: 'player'
+    });
   }
   // SET FLAGS END
+  if ($stateParams.id) {
+    $scope.pageData = {
+      // _id: "5ac374ad4a0b3006e5a7b97d"
+      _id: $stateParams.id
+    };
+  } else {
+    $state.go('registerplayer', {
+        type: data.type
+    });
+  }
   $scope.formData = {
     package: ""
   }
@@ -21,10 +35,6 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
     filter: {
       packageUser: $scope.pageType
     }
-  };
-  $scope.pageData = {
-    // _id: "5ac374ad4a0b3006e5a7b97d"
-    _id: $stateParams.id
   };
   // VARIABLES END
   // FUNCTIONS
@@ -35,7 +45,13 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
     $scope.formData.package = selectedPackage._id;
     $scope.formData.packageName = selectedPackage.name;
     $scope.formData.order = selectedPackage.order;
-    $scope.formData.amountToPay = selectedPackage.finalPrice + $scope.formData.outstandingAmount - $scope.formData.totalPaid;
+    // if ($scope.formData.paymentStatus == 'Pending') {
+    //   $scope.formData.amountToPay = selectedPackage.finalPrice + $scope.formData.outstandingAmount;
+    //   console.log($scope.formData.amountToPay , selectedPackage.finalPrice , $scope.formData.outstandingAmount , $scope.formData.totalPaid);
+    // } else{
+    //   $scope.formData.amountToPay = selectedPackage.finalPrice;
+    // }
+    $scope.formData.amountToPay = selectedPackage.finalPrice;
     $scope.formData.cgstAmt = '';
     $scope.formData.cgstPercent = '';
     $scope.formData.sgstAmt = '';
@@ -48,11 +64,11 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
       $scope.formData.cgstPercent = selectedPackage.cgstPercent;
       $scope.formData.sgstAmt = selectedPackage.sgstAmt;
       $scope.formData.sgstPercent = selectedPackage.sgstPercent;
-      $scope.formData.amountPaid = $scope.formData.amountToPay + $scope.formData.cgstAmt + $scope.formData.sgstAmt;
+      $scope.formData.amountPaid = $scope.formData.amountToPay - $scope.formData.totalPaid + $scope.formData.cgstAmt + $scope.formData.sgstAmt;
     } else if (selectedPackage.igstPercent) {
       $scope.formData.igstAmt = selectedPackage.igstAmt;
       $scope.formData.igstPercent = selectedPackage.igstPercent;
-      $scope.formData.amountPaid = $scope.formData.amountToPay + $scope.formData.igstAmt;
+      $scope.formData.amountPaid = $scope.formData.amountToPay - $scope.formData.totalPaid + $scope.formData.igstAmt;
     }
     if (type == 'click') {
       $scope.showPaymentTab = true;
@@ -103,9 +119,6 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
     } else {
       toastr.error("Please select Mode of Payment");
     }
-
-
-
   }
   // UPGRADE PACKAGE END
   // GET ATHLETE DATA
@@ -127,7 +140,11 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
         $scope.formData.outstandingAmount = $scope.detail.outstandingAmount;
         $scope.formData.totalPaid = $scope.detail.totalPaid;
         $scope.formData.totalToPay = $scope.detail.totalToPay;
-        $scope.formData.upgradePaymentStatus = $scope.detail.upgradePaymentStatus;
+        var len = $scope.detail.transaction.length;
+        if(len > 0){
+          $scope.formData.paymentStatus = $scope.detail.transaction[len-1].paymentStatus;
+          console.log($scope.formData.paymentStatus, "pay");
+        }
         console.log("athlete", $scope.detail);
       } else {
         console.log("Error in getOne athlete", data);

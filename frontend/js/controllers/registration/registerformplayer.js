@@ -1,4 +1,4 @@
-myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, NavigationService, $timeout, $uibModal, $filter, configService, $location, toastr) {
+myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $element, NavigationService, $timeout, $uibModal, GoogleAdWordsService, $location, $state, errorService, toastr, $filter, configService) {
     $scope.template = TemplateService.getHTML("content/registration/registerform-player.html");
     TemplateService.title = "Player Registration Form"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
@@ -600,6 +600,14 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, Na
         delete $scope.formData.atheleteSchoolIdImage;
         $scope.show = 0;
     };
+
+    $scope.deleteCertificate = function (data, className){
+      console.log("cert", className, data);
+      $("." + className + " input").val("");
+      delete data;
+      $scope.show = 0;
+      console.log(data, className, $scope.show);
+    }
 
     $scope.addSportForm = function () {
         if ($scope.formData.parentDetails.length < 3) {

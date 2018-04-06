@@ -12,8 +12,7 @@
         <section class="form-card">
           <div class="formregister-mtb20">
             <p class="formregister-heading text-uppercase">Registration for SFA Championship <span>2018-2019</span> <span>Mumbai</span> is a 2-Step Process</p>
-            <p class="text-uppercase">Step 1 of the registration process will be considered as complete only once you have received a confirmation
-              email from SFA on receipt of payment & successful verification of documents.</p>
+            <p class="text-uppercase">Step 1 of the registration process will be considered as complete only once you have received a confirmation email from SFA on receipt of payment & successful verification of documents.</p>
           </div>
           <div class="formregister-mtb20">
             <p class="formregister-heading">We request you to keep the following details ready to ensure a smooth registration process:</p>
@@ -129,20 +128,20 @@
               <!-- SCHOOL ID /REPORT CARD -->
               <div class="form-group">
                 <label for="" class="control-label col-sm-3">*Upload School ID Card or Report Card:</label>
-                <div class="col-sm-5">
+                <div class="col-sm-5" ng-init="show=0">
                   <div class="dirctive-op pl13">
                     <upload-image2 class="up-img schoolId ng-isolate-scope" ng-model="formData.atheleteSchoolIdImage" file-types="'image/jpeg,image/png'"
                       ng-disabled="type.disabled" ng-click="show=1" ng-callback="changeitSchoolId" no-view></upload-image2>
                   </div>
                   <div class="registerform-uploadimageholder">
-                    <div class="register-imageplace" ng-if="show==1 && formData.atheleteSchoolIdImage != ''">
+                    <div class="register-imageplace" ng-if="show==1 && formData.atheleteSchoolIdImage">
                       <a fancybox href="{{formData.atheleteSchoolIdImage |serverimage2}}">
                           <img ng-src="{{formData.atheleteSchoolIdImage |serverimage2}}" class="img-responsive">
                         </a>
                     </div>
                   </div>
-                  <div class="hover-img" ng-if="show==1 && formData.atheleteSchoolIdImage != ''">
-                    <img src="img/icon/x.png" alt="logo" ng-click="removeImage(formData.atheleteSchoolIdImage, 'schoolId')" class="img-responsive myicon">
+                  <div class="hover-img" ng-if="show==1 && formData.atheleteSchoolIdImage" ng-click="removeImage(formData.atheleteSchoolIdImage, 'schoolId')">
+                    <img src="img/icon/x.png" alt="logo"  class="img-responsive myicon">
                   </div>
                 </div>
                 <div class="col-sm-4">
@@ -297,7 +296,7 @@
               <!-- PHOTOGRAPH -->
               <div class="form-group">
                 <label class="control-label col-sm-2">*Upload Photograph:</label>
-                <div class="col-sm-5">
+                <div class="col-sm-5" ng-init="show=0">
                   <div class="dirctive-op pl13">
                     <upload-image2 class="up-img photoGraph ng-isolate-scope" ng-model="formData.photograph" file-types="'image/jpeg,image/png'"
                       ng-disabled="type.disabled" ng-click="show=1 " ng-callback="changeitPhotograph" no-view></upload-image2>
@@ -355,7 +354,7 @@
                 <div class="col-sm-9">
                   <div class="form-group">
                     <label for="" class="control-label col-sm-4">*Upload Age Proof:</label>
-                    <div class="col-sm-8">
+                    <div class="col-sm-8" ng-init="show=0">
                       <select class="sfa-drop2 sf-list sfa-mob2 label-two form-control" name="ageProof " ng-model="formData.ageProof" required>
                           <option style="display:none "></option>
                           <option>Aadhar with DD/MM/YYYY format</option>
@@ -367,14 +366,14 @@
                       <div class="dirctive-op upload5 Upload-Age" ng-init="showBirthImg = 0;showPhotoImg = 0">
                         <upload-image2 class="up-img birthImg ng-isolate-scope" ng-model="formData.birthImage" no-view file-types=" 'image/jpeg,image/png'"
                           ng-click="showBirthImg=1" ng-disabled="type.disabled" ng-callback="changeitBirthImage"></upload-image2>
-                        <div class=" label-info">Pic 1</div>
+                        <div class=""><div class="label label-info text-uppercase">Pic 1</div></div>
                       </div>
                       <div class="dirctive-op upload7 Upload-Age" ng-show="formData.ageProof=='aadharAge' || formData.ageProof=='birthCert'">
                         <upload-image2 class="up-img photoImg ng-isolate-scope " file-types="'image/jpeg,image/png'" ng-disabled="type.disabled"
                           ng-callback="changeitPhotoImage" no-view ng-click="showPhotoImg=1" ng-model="formData.photoImage"></upload-image2>
-                        <div class=" label-info" ng-show="formData.ageProof=='aadharAge' || formData.ageProof=='birthCert'">Pic 2</div>
+                        <div class=""><div class="label label-info text-uppercase" ng-show="formData.ageProof=='aadharAge' || formData.ageProof=='birthCert'">Pic 2</div></div>
                       </div>
-                      <div class="hover-img " ng-if="formData.ageProof!='aadharAge' && formData.ageProof!='birthCert' && formData.birthImage">
+                      <div class="hover-img " ng-if="formData.ageProof!='aadharAge' && formData.ageProof!='birthCert' && formData.birthImage && showBirthImg == 1">
                         <div class="registerform-uploadimageholder ">
                           <div class="register-imageplace ">
                             <a fancybox href="{{formData.birthImage |serverimage2}}">
@@ -382,14 +381,14 @@
                               </a>
                           </div>
                         </div>
-                        <div class="label label-info">Pic 1</div>
+                        <div class="label label-info text-uppercase">Pic 1</div>
                         <div class="hover-img " style="margin-left:18px ">
-                          <img src="img/icon/x.png " alt="logo" ng-click="removeProof(formData.birthImage, 'birthImg') " class="img-responsive myicon ">
+                          <img src="img/icon/x.png " alt="logo" ng-click="removeProof(formData.birthImage, 'birthImage') " class="img-responsive myicon ">
                         </div>
                         <div class="label label-danger pull-right " ng-if="formAthlete.ageProof.$invalid && formAthlete.ageProof.$touched ">Select Age Proof</div>
                       </div>
                       <div ng-if="formData.ageProof=='aadharAge' || formData.ageProof=='birthCert' ">
-                        <div class="display-block float-r " ng-if="showPhotoImg == 1 && formData.photoImage!=''">
+                        <div class="display-block " ng-if="showPhotoImg == 1 && formData.photoImage">
                           <!--ng-if="formData.birthImage && formData.photoImage "-->
                           <div class="w150 ">
                             <img src="img/icon/x.png " alt="logo" ng-click="removeProof1(formData.photoImage,'photoImg') " class="img-responsive myicon cross-icon ">
@@ -399,21 +398,20 @@
                                     <img ng-src="{{formData.photoImage |serverimage2}} " class="img-responsive">
                                   </a>
                           </div>
-                          <div class="label label-info">Pic 2</div>
+                          <div class="label label-info text-uppercase">Pic 2</div>
                         </div>
-                        <div class="display-block float-r " ng-if=" showBirthImg == 1 && formData.birthImage!=''">
+                        <div class="display-block  " ng-if=" showBirthImg == 1 && formData.birthImage">
                           <div class="w150 ">
-                            <img src="img/icon/x.png " alt="logo" ng-click="removeProof(formData.birthImage, 'birthImg') " class="img-responsive myicon cross-icon ">
+                            <img src="img/icon/x.png " alt="logo" ng-click="removeProof(formData.birthImage, 'birthImage') " class="img-responsive myicon cross-icon ">
                           </div>
                           <div class="register-imageplace ">
                             <a fancybox href="{{formData.birthImage |serverimage2}}">
                                     <img ng-src="{{formData.birthImage |serverimage2}} " class="img-responsive">
                                   </a>
                           </div>
-                          <div class="label label-info" ng-if=" showBirthImg == 1 && formData.birthImage!=''">Pic 1</div>
+                          <div class="label label-info text-uppercase" ng-if=" showBirthImg == 1 && formData.birthImage">Pic 1</div>
                         </div>
                       </div>
-
                     </div>
                   </div>
                 </div>
@@ -539,12 +537,12 @@
                     </div> -->
                   <div class="certi-card">
                     <label for="" class="control-label">Upload Certificate</label>
-                    <div class="">
+                    <div class="" ng-init="show=0">
                       <div class="dirctive-op pl13">
-                        <upload-image2 class="up-img photoGraph ng-isolate-scope" ng-model="sportLevel.certificateImage" file-types="'image/jpeg,image/png'"
-                          ng-disabled="type.disabled" ng-click="show=1 " ng-callback="changeitPhotograph" no-view></upload-image2>
+                        <upload-image2 class="up-img levelCertificate ng-isolate-scope" ng-model="sportLevel.certificateImage" file-types="'image/jpeg,image/png'"
+                          ng-disabled="type.disabled" ng-click="show=1" ng-callback="changeitPhotograph" no-view></upload-image2>
                       </div>
-                      <div class="registerform-uploadimageholder" ng-if="show==1 && sportLevel.certificateImage != ''">
+                      <div class="registerform-uploadimageholder" ng-if="show==1 && sportLevel.certificateImage">
                         <div class="register-imageplace ">
                           <a fancybox href="{{sportLevel.certificateImage |serverimage2}}">
                                 <img ng-src="{{sportLevel.certificateImage |serverimage2}} " class="img-responsive">
@@ -552,8 +550,7 @@
                         </div>
                       </div>
                       <div class="hover-img " ng-if="show==1 && sportLevel.certificateImage">
-                        <img src="img/icon/x.png " alt="logo" ng-click="removePhoto(formData.photograph,
-                        'photoGraph') " class="img-responsive myicon ">
+                        <img src="img/icon/x.png " alt="logo" ng-click="deleteCertificate(sportLevel.certificateImage, 'levelCertificate') " class="img-responsive myicon ">
                       </div>
                     </div>
                   </div>
