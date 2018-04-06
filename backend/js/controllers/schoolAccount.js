@@ -87,20 +87,15 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
     // $scope.formData.checkNo = school.schoolData.checkNo;
     $scope.formData.remarks = school.schoolData.remarks;
     $scope.formData.transactions = school.schoolData.transaction;
-    // CONVERT RECEIPT ARRAY TO COMMA SEPERATED STRING
-    // _.each($scope.formData.transaction, function(n){
-    //   n.receiptNo = "";
-    //   _.each(n.receiptId, function(m){
-    //     console.log("m", m);
-    //     if (n.receiptNo == "") {
-    //       n.receiptNo = m;
-    //     } else {
-    //       n.receiptNo = n.receiptNo + ',' + m;
+    // var upgradePackage = player.athlete.package;
+    // console.log(upgradePackage, "check for package");
+    // if (school.transaction.length) {
+    //   _.each(player.transaction, function (key) {
+    //     if (key.package == upgradePackage) {
+    //       key.currentAthletePackage = true;
     //     }
-    //   });
-    //   console.log("n.receiptNo", n.receiptNo);
-    // });
-    // CONVERT RECEIPT ARRAY TO COMMA SEPERATED STRING END
+    //   })
+    // }
 
     $scope.modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
@@ -108,7 +103,8 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
       // backdrop: 'static',
       keyboard: false,
       size: 'lg',
-      scope: $scope
+      scope: $scope,
+      windowClass: 'accounts-modal'
 
     });
   }
@@ -163,6 +159,9 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
     if (data.sgst == '' || data.sgst == 0 || !data.sgst) {
       data.sgst = 0;
     }
+    if (data.igst == '' || data.isgt == 0 || !data.igst) {
+      data.igst = 0;
+    }
     if (data.cgst == '' || data.cgst == 0 || !data.cgst) {
       data.cgst = 0;
     }
@@ -171,6 +170,9 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
     }
     if (data.outstandingAmount == '' || data.outstandingAmount == 0 || !data.outstandingAmount) {
       data.outstandingAmount = 0;
+    }
+    if (data.netTotal == '' || data.netTotal == 0 || !data.netTotal) {
+      data.netTotal = 0;
     }
     console.log(data, "save data");
     $scope.url = "Transaction/saveCashTransaction";

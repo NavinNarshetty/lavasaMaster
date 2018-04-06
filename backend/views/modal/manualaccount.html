@@ -43,7 +43,7 @@
         <!-- DISCOUNT END -->
 
         <!-- NET TOTAL -->
-        <div class="col-md-2">
+        <div class="col-md-2 hide">
           <div class="form-group">
             <label for="">Net Total</label>
             <input type="text" name="cgst" class="form-control" only-digits ng-model="formData.netTotal" id="cgst" placeholder="Enter Net Total"
@@ -141,7 +141,7 @@
                   <!-- DATE  -->
                   <td>
                     <input name="datefield" ui-date="dateOptions" ng-model="packageDetail.dateOfTransaction" class="form-control" ng-required="true"
-                      placeholder="Enter Event Date" readonly>
+                      placeholder="Enter Event Date" required>
                     <div class="label label-danger pull-right" ng-if="accountForm.datefield.$invalid && accountForm.datefield.$touched">Please Enter End Date *</div>
                   </td>
                   <!-- DATE  END -->

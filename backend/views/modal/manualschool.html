@@ -24,6 +24,15 @@
         </div>
         <!-- CGST END -->
 
+        <!-- IGST -->
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="">Igst</label>
+            <input type="text" name="igst" class="form-control" only-digits ng-model="formData.igst" id="igst" placeholder="Enter Igst">
+          </div>
+        </div>
+        <!-- IGST END -->
+
         <!-- DISCOUNT -->
         <div class="col-md-2">
           <div class="form-group">
@@ -34,11 +43,11 @@
         <!-- DISCOUNT END -->
 
         <!-- NET TOTAL -->
-        <div class="col-md-2">
+        <div class="col-md-2 hide">
           <div class="form-group">
             <label for="">Net Total</label>
             <input type="text" name="nettotal" class="form-control" only-digits ng-model="formData.netTotal" id="cgst" placeholder="Enter Net Total"
-              required>
+              readonly>
             <div class="label label-danger pull-right" ng-if="accountForm.nettotal.$invalid && accountForm.nettotal.$touched">Please Enter Valid Total *</div>
           </div>
         </div>
@@ -54,18 +63,6 @@
         </div>
         <!-- OUTSTANDING END -->
 
-        <!--MODE OF PAYMENT  -->
-        <div class="col-md-2">
-          <div class="form-group">
-            <label for="">Mode Payment</label>
-            <select name="modepayment" id="modepayment" class="form-control" ng-model="formData.paymentMode" required>
-                  <option value="cash">Cash</option>
-                  <option value="sponsor">Sponsered</option>
-                </select>
-            <div class="label label-danger pull-right" ng-if="accountForm.modepayment.$invalid && accountForm.modepayment.$touched">Please Enter Valid Mode Payment *</div>
-          </div>
-        </div>
-        <!--MODE OF PAYMENT END  -->
 
         <!-- CHECK NO -->
         <!-- <div class="col-md-3">
@@ -85,46 +82,57 @@
 
         <div class="col-md-12">
           <div class="form-group">
-            <div class="pull-right">
+            <!-- <div class="pull-right">
               <span><i class="btn btn-primary" aria-hidden="true" ng-click="manualPackageEntry(formData)">Add</i></span>
-            </div>
+            </div> -->
             <div class="text-center">
-              Enter the Packages
+              Package Details
             </div>
           </div>
-          <div class="tablepackageholder">
+          <div class="tablepackageholder table-responsive">
             <table class="table table-condensed">
               <thead>
                 <th>
-                  <div class="text-capitalize">
+                  <div class="fz12 text-capitalize">
                     Payment Date
                   </div>
                 </th>
                 <th>
-                  <div class="text-capitalize">
+                  <div class="text-capitalize fz12">
+                    Payment Mode
+                  </div>
+                </th>
+                <th>
+                  <div class="text-capitalize fz12">
                     Package Name
                   </div>
                 </th>
                 <th>
-                  <div class="text-capitalize">
-                    Amount
+                  <div class="text-capitalize fz12">
+                    Package Amount
                   </div>
                 </th>
                 <th>
-                  <div class="text-capitalize">
+                  <div class="text-capitalize fz12">
+                    Amount Paid
+                  </div>
+                </th>
+                <th>
+                  <div class="text-capitalize fz12">
                     Recipt No
                   </div>
                 </th>
                 <th>
-                  <div class="text-capitalize">
+                  <div class="text-capitalize fz12">
                     Chq No
                   </div>
                 </th>
-                <th class="hide">
+                <th>
                   <div class="text-capitalize">
-                    Action
+                    Status
                   </div>
                 </th>
+
               </thead>
               <tbody>
                 <!-- {{reciptnoData| json}} -->
@@ -137,20 +145,47 @@
                     <div class="label label-danger pull-right" ng-if="accountForm.datefield.$invalid && accountForm.datefield.$touched">Please Enter End Date *</div>
                   </td>
                   <!-- DATE  END -->
+                  <!--MODE OF PAYMENT  -->
+                  <td>
+                    <div class="form-group">
+                      <!-- <select name="modepayment" id="modepayment" class="form-control custom-select" ng-model="formData.paymentMode" readonly>
+                            <option value="onlinePAYU">Online</option>
+                            <option value="cash">Cash</option>
+                            <option value="sponsor">Sponsered</option>
+                      </select> -->
+                      <input type="text" class="form-control" name="modepayment" id="modepayment" ng-model="formData.paymentMode" readonly>
+                      <div class="label label-danger pull-right" ng-if="accountForm.modepayment.$invalid && accountForm.modepayment.$touched">Please Enter Mode *</div>
+                    </div>
+                  </td>
+                  <!--MODE OF PAYMENT END  -->
                   <!-- PACKAGE SELECTION -->
                   <td>
-                    <select name="packageName" id="packagename" class="form-control" ng-model="packageDetail.package" ng-options="{_id:data._id,name:data.name,finalPrice:data.finalPrice} as data.name for data in packageNameData track by data._id"
-                      required>
-                      </select>
+                    <div>
+                      <select name="packageName" id="packagename" class="form-control custom-select" ng-model="packageDetail.package" ng-options="{_id:data._id,name:data.name,finalPrice:data.finalPrice} as data.name for data in packageNameData track by data._id"
+                        readonly>
+                        </select>
+                    </div>
+
+
                     <div class="label label-danger pull-right" ng-if="accountForm.packageName.$invalid && accountForm.packageName.$touched">Please Enter Valid Package Name *</div>
                   </td>
                   <!-- PACKAGE SELECTION END -->
 
-                  <!-- FINAL PRICE -->
+                  <!-- PACKAGE  PRICE -->
                   <td>
-                    <input type="text" ng-model="packageDetail.package.finalPrice" class="form-control" readonly>
+                    <div class="form-group">
+                      <input type="text" ng-model="packageDetail.package.finalPrice" class="form-control" readonly>
+                    </div>
                   </td>
-                  <!-- FINAL PRICE END -->
+                  <!-- PACKAGE PRICE END -->
+
+                  <!-- AMOUNT PAID -->
+                  <td>
+                    <div class="form-group">
+                      <input type="text" ng-model="packageDetail.amountPaid" class="form-control" placeholder="Amount Paid">
+                    </div>
+                  </td>
+                  <!-- AMOUNT PAID -->
 
                   <!-- RECIPT NO -->
                   <td>
@@ -162,11 +197,27 @@
 
                   <!-- CHQ NO -->
                   <td>
-                    <input type="text" placeholder="Enter Chq No" name="cheqno" class="form-control" ng-model="packageDetail.checkNo" ng-list
-                      required>
-                    <div class="label label-danger pull-right" ng-if="accountForm.cheqno.$invalid && accountForm.cheqno.$touched">Please Enter Valid Recipt No *</div>
+                    <div class="form-group">
+                      <input type="text" placeholder="Enter checkNo" name="checkNo" class="form-control" ng-model="packageDetail.checkNo" ng-list
+                        required>
+                      <div class="label label-danger pull-right" ng-if="accountForm.reciptno.$invalid && accountForm.reciptno.$touched">Please Enter Valid Recipt No *</div>
+                    </div>
+
                   </td>
                   <!-- CHQ NO END -->
+
+                  <!-- STATUS -->
+                  <td>
+                    <div class="form-group">
+                      <select name="status" id="status" class="form-control custom-select" ng-model="packageDetail.paymentStatus">
+                              <option value="Paid">Paid</option>
+                              <option value="Pending">Pending</option>
+                        </select>
+                    </div>
+                  </td>
+                  <!-- STATUS END -->
+
+
                   <td class="hide">
                     <span class="text-center" ng-click="deleteRow(formData,$index,isDelete)"><i class="fa btn btn-danger fa-trash" aria-hidden="true"></i></span>
                   </td>
