@@ -17,8 +17,8 @@
           <div class="formregister-mtb20">
             <p class="formregister-heading">We request you to keep the following details ready to ensure a smooth registration process:</p>
             <ul class="formregister-list">
-              <li>Mobile Number which you wish to register with SFA</li>
-              <li>Email ID which you wish to register with SFA</li>
+              <li>Mobile Number which you wish to register with SFA (OTP will be sent)</li>
+              <li>Email ID which you wish to register with SFA (OTP will be sent)</li>
               <li>Scanned copy of your Aadhar Card (with your full Date of Birth)/ Pan Card/ Birth Certificate</li>
               <li>Scanned copy of your most recent School ID Card/ Report Card</li>
               <li>Credit Card/ Debit Card/ Bank Details (in case of online payment)</li>
@@ -187,16 +187,6 @@
             <!-- ATHLETE DETAILS -->
             <div class="formplayer-playerdetails formregister-mtb20">
               <div class="formregister-heading">Player Details</div>
-              <!-- SURNAME -->
-              <div class="form-group">
-                <label for="surname" class="control-label col-sm-2">*Surname:</label>
-                <div class="col-sm-10">
-                  <input type="text" name="surname" placeholder="Enter Your Surname" class="form-control" ng-model="formData.surname" capitalize
-                    only-alpha required>
-                  <div class="label label-danger pull-right" ng-if="formAthlete.surname.$invalid && formAthlete.surname.$touched">Please Enter Your Surname</div>
-                </div>
-              </div>
-              <!-- SURNAME END -->
               <!-- FIRST NAME  -->
               <div class="form-group">
                 <label for="firstName" class="control-label col-sm-2">*First Name:</label>
@@ -216,6 +206,16 @@
                 </div>
               </div>
               <!-- MIDDLE NAME END -->
+              <!-- SURNAME -->
+              <div class="form-group">
+                <label for="surname" class="control-label col-sm-2">*Surname:</label>
+                <div class="col-sm-10">
+                  <input type="text" name="surname" placeholder="Enter Your Surname" class="form-control" ng-model="formData.surname" capitalize
+                    only-alpha required>
+                  <div class="label label-danger pull-right" ng-if="formAthlete.surname.$invalid && formAthlete.surname.$touched">Please Enter Your Surname</div>
+                </div>
+              </div>
+              <!-- SURNAME END -->
               <!-- GENDER -->
               <div class="form-group">
                 <label for="radio04" class="control-label col-sm-2">*Gender:</label>
