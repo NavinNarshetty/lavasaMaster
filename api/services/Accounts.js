@@ -290,54 +290,24 @@ var model = {
     },
 
     upgradeAccount: function (data, callback) {
-        console.log("data", data);
+        // console.log("data", data);
         async.waterfall([
                 function (callback) {
-                    // Transaction.findOne({
-                    //     $or: [{
-                    //         athlete: data.athlete
-                    //     }, {
-                    //         school: data.school
-                    //     }],
-                    //     package: data.package
-                    // }).lean().exec(function (err, found) {
-                    //     if (err) {
-                    //         callback(err, null);
-                    //     } else if (_.isEmpty(found)) {
                     var param = {};
                     if (data.athlete) {
                         param.athlete = data.athlete;
                         param.school = undefined;
-
                     } else {
                         param.school = data.school;
                         param.athlete = undefined;
                     }
-                    param.dateOfTransaction = new Date();
                     param.package = data.package;
                     param.outstandingAmount = data.amountPaid;
                     param.paymentMode = data.registrationFee;
-                    // if (data.cgstAmt != null) {
                     param.cgstAmount = data.cgstAmt;
-                    // } else {
-                    //     param.cgstAmount = 0;
-                    // }
-                    // if (data.sgstAmt != null) {
                     param.sgstAmount = data.sgstAmt;
-                    // } else {
-                    //     param.sgstAmount = 0;
-                    // }
-
-                    // if (data.igstAmt != null) {
                     param.igstAmount = data.igstAmt;
-                    // } else {
-                    //     param.igstAmount = 0;
-                    // }
-                    // if (data.discount != null) {
-                    //     param.discount = data.discount;
-                    // }
                     param.paymentStatus = "Pending";
-
                     Transaction.saveData(param, function (err, transactData) {
                         if (err || _.isEmpty(transactData)) {
                             callback(null, {
@@ -345,17 +315,13 @@ var model = {
                                 data: data
                             });
                         } else {
-
                             callback(null, transactData);
                         }
                     });
-                    //     } else {
-                    //         callback(null, found);
-                    //     }
-                    // });
 
                 },
                 function (transactData, callback) {
+                    console.log("transactData", transactData, "data", data);
                     if (data.athlete) {
                         Accounts.findOne({
                             athlete: data.athlete
@@ -400,12 +366,16 @@ var model = {
                             }
                         });
                     } else {
+                        console.log("inside");
                         Accounts.findOne({
-                            school: data.school
+                            school: transactData.school
                         }).lean().exec(function (err, accountsData) {
-                            if (err) {
-                                callback(err, null);
-                            } else if (_.isEmpty(accountsData)) {
+                            if (err || _.isEmpty(accountsData)) {
+                                callback(null, {
+                                    error: "no data",
+                                    data: transactData
+                                });
+                            } else {
                                 var check = false;
                                 _.each(accountsData.transaction, function (n) {
                                     if (n.equals(transactData._id)) {
@@ -444,40 +414,44 @@ var model = {
                     }
                 },
                 function (accountsData, callback) {
-                    if (data.athlete) {
-                        var matchObj = {
-                            $set: {
-                                package: data.package
-                            }
-                        };
-                        Athelete.update({
-                            _id: data.athlete
-                        }, matchObj).exec(
-                            function (err, data3) {
-                                if (err) {
-                                    console.log(err);
-                                    callback(err, null);
-                                } else if (data3) {
-                                    callback(null, data3)
-                                }
-                            });
+                    if (accountsData.error) {
+                        callback(null, accountsData);
                     } else {
-                        var matchObj = {
-                            $set: {
-                                package: data.package
-                            }
-                        };
-                        Registration.update({
-                            _id: data.school
-                        }, matchObj).exec(
-                            function (err, data3) {
-                                if (err) {
-                                    console.log(err);
-                                    callback(err, null);
-                                } else if (data3) {
-                                    callback(null, data3)
+                        if (data.athlete) {
+                            var matchObj = {
+                                $set: {
+                                    package: data.package
                                 }
-                            });
+                            };
+                            Athelete.update({
+                                _id: data.athlete
+                            }, matchObj).exec(
+                                function (err, data3) {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(err, null);
+                                    } else if (data3) {
+                                        callback(null, data3)
+                                    }
+                                });
+                        } else {
+                            var matchObj = {
+                                $set: {
+                                    package: data.package
+                                }
+                            };
+                            Registration.update({
+                                _id: data.school
+                            }, matchObj).exec(
+                                function (err, data3) {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(err, null);
+                                    } else if (data3) {
+                                        callback(null, data3)
+                                    }
+                                });
+                        }
                     }
                 }
             ],
