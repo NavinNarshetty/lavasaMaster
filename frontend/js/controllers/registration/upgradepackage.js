@@ -98,25 +98,29 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
     $scope.formData.upgrade = true;
     // console.log("upgrade", formData);
     if (formData.registrationFee != '') {
-      NavigationService.upgradeAccount(formData, function (data) {
-        console.log("upgrade return", data);
-        if (formData.registrationFee == "online PAYU") {
-          if (formData.athlete) {
-            var id = formData.athlete;
-            console.log("id**", id);
-            var url = "payU/upgradeAthletePayment?id=" + id;
-            window.location.href = adminUrl2 + url;
+      if ($scope.formData.package != $scope.currentPackage._id) {
+        NavigationService.upgradeAccount(formData, function (data) {
+          console.log("upgrade return", data);
+          if (formData.registrationFee == "online PAYU") {
+            if (formData.athlete) {
+              var id = formData.athlete;
+              console.log("id**", id);
+              var url = "payU/upgradeAthletePayment?id=" + id;
+              window.location.href = adminUrl2 + url;
+            } else {
+              var id = formData.school;
+              console.log("id**", id);
+              var url = "payU/upgradeSchoolPayment?id=" + id;
+              window.location.href = adminUrl2 + url;
+            }
           } else {
-            var id = formData.school;
-            console.log("id**", id);
-            var url = "payU/upgradeSchoolPayment?id=" + id;
-            window.location.href = adminUrl2 + url;
+            toastr.success("Package upgraded Successfully");
+            $state.go("sports-selection");
           }
-        } else {
-          toastr.success("Package upgraded Successfully");
-          $state.go("sports-selection");
-        }
-      });
+        });
+      } else {
+        toatr.warning("Cannot upgrade to the current package. Please select a different package to upgrade");
+      }
     } else {
       toastr.error("Please select Mode of Payment");
     }
