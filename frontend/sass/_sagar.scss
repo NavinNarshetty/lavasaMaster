@@ -2825,6 +2825,9 @@ $tickerDuration: 60s;
 }
 .registerplayer-questionitem{
   margin-bottom: 20px;
+  h4, h5, h6{
+    color: $sport-primary;
+  }
 }
 .registerplayer-testimonialslider{
   .swiper-button-next, .swiper-button-prev{
