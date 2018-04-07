@@ -26,7 +26,7 @@
                   <div class="athleteaccount-playerholder ">
                     <div class="row ">
                       <div class="col-md-6">
-                        <h4 class="athleteaccount-name text-left text-capitalize m-clear  r-titillium-web-regular"> <span>{{$index + 1}}) </span> <span>{{player.athlete.sfaId}}</span>-<span>{{ player.athlete.firstName}} </span>                          <span>{{player.athlete.middleName}}</span> <span>{{player.athlete.surname}}</span> </h4>
+                        <h4 class="athleteaccount-name text-left text-capitalize m-clear  r-titillium-web-regular"> <span>{{$index + 1}}) </span> <span ng-if="player.athlete.sfaId">{{player.athlete.sfaId}} -</span><span>{{ player.athlete.firstName}} </span>                          <span>{{player.athlete.middleName}}</span> <span>{{player.athlete.surname}}</span> </h4>
                         <p class="athleteaccount-school text-left text-capitalize m-clear">{{player.athlete.school.name }} </p>
                       </div>
                       <div class="col-md-4">
