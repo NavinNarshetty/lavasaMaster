@@ -115,17 +115,26 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
     // CALCULATE DISCOUNT END
     // APPLY PROMOCODE
     $scope.validatePromoCode = function (promo) {
+      if (promo.code !="") {
         NavigationService.validatePromoCode(promo, function (data) {
             data = data.data;
+            console.log("dta", data);
             if (data.value == true) {
                 console.log("promo", data);
                 $scope.promoCode.code = data.data.code;
                 $scope.promoDetails = data.data;
                 $scope.calculateDiscount($scope.promoDetails);
             } else {
+              if (data.error) {
+                toastr.error(data.error, "Error");
+              } else {
                 console.log("Promo Apply failed", data);
+              }
             }
         })
+      } else {
+        toastr.error("Please enter code.");
+      }
     }
     // APPLY PROMOCODE
     $scope.changeitSchoolId = function (err, data) {
@@ -731,6 +740,12 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
             templateUrl: "views/modal/error.html"
         });
     };
+    $scope.closeModal = function(){
+      $state.go('registerplayer',{
+        type: 'player'
+      });
+      $scope.modalInstances.$disiss();
+    }
 
     $scope.openErrModal = function () {
         $scope.errInstances = $uibModal.open({
