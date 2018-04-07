@@ -114,7 +114,7 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
           }
         } else {
           toastr.success("Package upgraded Successfully");
-          // $state.go("sports-selection");
+          $state.go("sports-selection");
         }
       });
     } else {
