@@ -278,7 +278,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
 
         .state('paymentSuccess', {
-            url: "/paymentSuccess",
+            url: "/paymentSuccess/:form/:type",
             templateUrl: tempateURL,
             controller: 'PaymentSuccessCtrl'
         })

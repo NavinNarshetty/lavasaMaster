@@ -249,7 +249,7 @@ var controller = {
 
                         // res.redirect("http://testmumbai2016.sfanow.in/paymentSuccess");
 
-                        res.redirect("http://testmumbaischool.sfanow.in/paymentSuccess/register/athlete");
+                        res.redirect("http://testmumbaischool.sfanow.in/paymentSuccess/register/player");
 
                         // res.redirect("http://testmumbaicollege.sfanow.in/paymentSuccess");
 
@@ -562,7 +562,7 @@ var controller = {
 
                         // res.redirect("http://testmumbai2016.sfanow.in/paymentSuccess");
 
-                        res.redirect("http://testmumbaischool.sfanow.in/paymentSuccess/upgrade/athlete");
+                        res.redirect("http://testmumbaischool.sfanow.in/paymentSuccess/upgrade/player");
 
                         // res.redirect("http://testmumbaicollege.sfanow.in/paymentSuccess");
 

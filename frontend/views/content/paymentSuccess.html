@@ -9,7 +9,8 @@
             <p>Kindly Note: In case SFA does not receive the payment within 4 working days your registration will stand CANCELLED.</p>
             <p>For any further queries kindly call us on 7045684365/66/67 or email us at <a href="mailto:info@sfanow.in">info@sfanow.in</a></p>
             <!-- <button class="btn btn-primary" ng-disabled="isDisabled1 == true" ng-click="redirectTo()">OK</button> -->
-            <button class="btn btn-primary" ui-sref="registerplayer({type: 'school'})">Go To Register</button>
+            <button class="btn btn-primary" ui-sref="registerplayer({type: pageType})" ng-if="form == 'register'">Go To Register</button>
+            <button class="btn btn-primary" ui-sref="sports-selection" ng-if="form == 'upgrade'">Go To Sport Selection</button>
         </div>
     </div>
 

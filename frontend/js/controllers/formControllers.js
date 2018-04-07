@@ -1696,12 +1696,13 @@ myApp.controller('AdditionalPaymentFormCtrl', function ($scope, TemplateService,
 });
 
 
-myApp.controller('PaymentSuccessCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, GoogleAdWordsService, configService) {
+myApp.controller('PaymentSuccessCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, GoogleAdWordsService, configService, $stateParams) {
     //Used to name the .html file
 
     $scope.template = TemplateService.getHTML("content/paymentSuccess.html");
     TemplateService.title = "Payment Success";
     $scope.navigation = NavigationService.getNavigation();
+    $scope.formData = {}
     configService.getDetail(function (data) {
         $scope.city = data.city;
         $scope.district = data.district;
@@ -1713,6 +1714,22 @@ myApp.controller('PaymentSuccessCtrl', function ($scope, TemplateService, Naviga
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;
     });
+
+    if ($stateParams.type == 'player') {
+      $scope.pageType = 'player';
+    } else if ($stateParams.type == 'school') {
+      $scope.pageType = 'school';
+    } else {
+      $state.go('registerplayer', {
+        type: 'school'
+      })
+    }
+
+    if ($stateParams.form == 'register') {
+      $scope.form = 'register';
+    } else if ($stateParams.form == 'upgrade') {
+      $scope.form = 'upgrade';
+    }
 
     // fbq('track', 'CompleteRegistration');
     // GoogleAdWordsService.sendRegisterCustomerConversion();
