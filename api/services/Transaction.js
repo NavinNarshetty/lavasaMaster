@@ -207,7 +207,6 @@ var model = {
                     if (transactData.error) {
                         callback(null, transactData);
                     } else {
-
                         var receipt = [];
                         var temp = "SFA-UP-" + transactData.receiptKeyId;
                         receipt.push(temp);
@@ -312,6 +311,7 @@ var model = {
 
     saveCashTransaction: function (data, callback) {
         var finaloutstanding = 0;
+        var paymentStatusFinal;
         var finalPay = 0;
         data.transaction = [];
         data.receipt = [];
@@ -320,6 +320,7 @@ var model = {
                 function (callback) {
                     var len = data.transactions.length;
                     len--;
+                    paymentStatusFinal = data.transactions[len].paymentStatus;
                     async.each(data.transactions, function (n, callback) {
                             if (data.athleteId) {
                                 Transaction.findOne({
@@ -524,6 +525,44 @@ var model = {
                         }
                     }
                 },
+                function (accountsData, callback) {
+                    if (data.athlete) {
+                        var matchObj = {
+                            $set: {
+                                paymentStatus: paymentStatusFinal
+                            }
+                        };
+                        Athelete.update({
+                            _id: data.athlete
+                        }, matchObj).exec(
+                            function (err, data3) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(err, null);
+                                } else if (data3) {
+                                    callback(null, data3)
+                                }
+                            });
+                    } else {
+                        var matchObj = {
+                            $set: {
+                                paymentStatus: paymentStatusFinal
+                            }
+                        };
+                        Registration.update({
+                            _id: data.school
+                        }, matchObj).exec(
+                            function (err, data3) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(err, null);
+                                } else if (data3) {
+                                    callback(null, data3)
+                                }
+                            });
+                    }
+
+                }
             ],
             function (err, complete) {
                 if (err) {

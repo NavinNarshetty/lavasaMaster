@@ -555,6 +555,7 @@ var model = {
 
             });
     },
+
     updateSchoolPaymentStatus: function (data, callback) {
         async.waterfall([
                 function (callback) {
