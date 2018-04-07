@@ -44,8 +44,8 @@
               </ul>
             </p>
             <p class="formregister-heading form-register-mtb20">
-              *The applicant represents that the information provided is true and correct. SFA will keep confidential and protect your personal
-              information expect where disclosure is required or permitted by law.
+              *The applicant represents that the information provided is true and correct. SFA will keep confidential and protect your
+              personal information expect where disclosure is required or permitted by law.
             </p>
           </div>
           <!-- GUIDELINE CARD END -->
@@ -740,8 +740,8 @@
               </div>
               <!-- SPORTS DISPLAY END -->
 
-              <!-- TERMS AND CONDITION -->
-              <div class="registerform-schooltermscondition">
+              <!-- TERMS AND CONDITION  DESKTOP-->
+              <div class="registerform-schooltermscondition hidden-xs">
                 <label class="sfa-registercheckbox">
                     <!-- <a ng-click="termcondition('', type, sfaCity, year)" title="Click here"><strong>terms and conditions</strong></a> -->
                   I have carefully read and understood the <a href="https://storage.googleapis.com/sportsforall/termschool.pdf#toolbar=0" fancybox class="fancybox.iframe" title="Click here"><strong>terms and conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.
@@ -750,7 +750,19 @@
                 </label>
                 <div class="label label-danger pull-right" ng-show="showTerm">Please accept terms and condition</div>
               </div>
-              <!-- TERMS AND CONDITION END -->
+              <!-- TERMS AND CONDITION DESKTOP END -->
+
+              <!-- TERMS AND CONDITION MOBILE -->
+              <div class="registerform-schooltermscondition visible-xs">
+                <label class="sfa-registercheckbox">
+                    <!-- <a ng-click="termcondition('', type, sfaCity, year)" title="Click here"><strong>terms and conditions</strong></a> -->
+                  I have carefully read and understood the <a href="https://storage.googleapis.com/sportsforall/termschool.pdf#toolbar=0"  class="" target="_new" title="Click here"><strong>terms and conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.
+                  <input type="checkbox"   ng-checked="termsCheck(formData.termsAndCondition)" ng-model="formData.termsAndCondition">
+                  <span class="checkmark-sfatick"></span>
+                </label>
+                <div class="label label-danger pull-right" ng-show="showTerm">Please accept terms and condition</div>
+              </div>
+              <!-- TERMS AND CONDITION MOBILE END -->
 
               <!-- KINDILY NOTE -->
               <div class="termscondition-text">

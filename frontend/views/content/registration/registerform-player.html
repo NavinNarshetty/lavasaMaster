@@ -12,7 +12,8 @@
         <section class="form-card">
           <div class="formregister-mtb20">
             <p class="formregister-heading text-uppercase">Registration for SFA Championship <span>2018-2019</span> <span>Mumbai</span> is a 2-Step Process</p>
-            <p class="text-uppercase">Step 1 of the registration process will be considered as complete only once you have received a confirmation email from SFA on receipt of payment & successful verification of documents.</p>
+            <p class="text-uppercase">Step 1 of the registration process will be considered as complete only once you have received a confirmation
+              email from SFA on receipt of payment & successful verification of documents.</p>
           </div>
           <div class="formregister-mtb20">
             <p class="formregister-heading">We request you to keep the following details ready to ensure a smooth registration process:</p>
@@ -141,7 +142,7 @@
                     </div>
                   </div>
                   <div class="hover-img" ng-if="show==1 && formData.atheleteSchoolIdImage" ng-click="removeImage(formData.atheleteSchoolIdImage, 'schoolId')">
-                    <img src="img/icon/x.png" alt="logo"  class="img-responsive myicon">
+                    <img src="img/icon/x.png" alt="logo" class="img-responsive myicon">
                   </div>
                 </div>
                 <div class="col-sm-4">
@@ -366,12 +367,16 @@
                       <div class="dirctive-op upload5 Upload-Age" ng-init="showBirthImg = 0;showPhotoImg = 0">
                         <upload-image2 class="up-img birthImg ng-isolate-scope" ng-model="formData.birthImage" no-view file-types=" 'image/jpeg,image/png'"
                           ng-click="showBirthImg=1" ng-disabled="type.disabled" ng-callback="changeitBirthImage"></upload-image2>
-                        <div class=""><div class="label label-info text-uppercase">Pic 1</div></div>
+                        <div class="">
+                          <div class="label label-info text-uppercase">Pic 1</div>
+                        </div>
                       </div>
                       <div class="dirctive-op upload7 Upload-Age" ng-show="formData.ageProof=='aadharAge' || formData.ageProof=='birthCert'">
                         <upload-image2 class="up-img photoImg ng-isolate-scope " file-types="'image/jpeg,image/png'" ng-disabled="type.disabled"
                           ng-callback="changeitPhotoImage" no-view ng-click="showPhotoImg=1" ng-model="formData.photoImage"></upload-image2>
-                        <div class=""><div class="label label-info text-uppercase" ng-show="formData.ageProof=='aadharAge' || formData.ageProof=='birthCert'">Pic 2</div></div>
+                        <div class="">
+                          <div class="label label-info text-uppercase" ng-show="formData.ageProof=='aadharAge' || formData.ageProof=='birthCert'">Pic 2</div>
+                        </div>
                       </div>
                       <div class="hover-img " ng-if="formData.ageProof!='aadharAge' && formData.ageProof!='birthCert' && formData.birthImage && showBirthImg == 1">
                         <div class="registerform-uploadimageholder ">
@@ -683,14 +688,31 @@
             <!-- PARENTS DETAILS -->
             <div class="formregister-parents formregister-mtb20">
               <div class="formregister-heading">Parent/Guardian Details</div>
-              <!-- CHECKBOX -->
-              <div class="checkbox-custom">
+              <!-- CHECKBOX DESKTOP -->
+              <div class="checkbox-custom hidden-xs">
                 <input type="checkbox" name="checkIhav" ng-checked="termsCheck(formData.termsAndCondition)" ng-model="formData.termsAndCondition"
                   id="test5" />
-                <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span>*Tick the box to accept all <a href="https://storage.googleapis.com/sportsforall/termplayer.pdf#toolbar=0" fancybox class="fancybox.iframe" title="Click here"><strong>Terms & Conditions</strong></a></label>
+                <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span>*Tick the box to accept all <a href="https://storage.googleapis.com/sportsforall/termplayer.pdf#toolbar=0" fancybox class="fancybox.iframe " title="Click here"><strong>Terms & Conditions</strong></a>
+                    </label>
+
+                <div class="visible-xs">
+                  <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span>*Tick the box to accept all <a href="https://storage.googleapis.com/sportsforall/termplayer.pdf#toolbar=0" target="_new" class="" title="Click here"><strong>Terms & Conditions</strong></a>
+                  </label>
+                </div>
+
                 <div class="label label-danger pull-right" ng-show="showTerm">Please accept terms and condition</div>
               </div>
-              <!-- CHECKBOX END -->
+              <!-- CHECKBOX DESKTOP END -->
+
+              <!-- CHECKBOX MOBILE -->
+              <div class="checkbox-custom visible-xs">
+                <input type="checkbox" name="checkIhav" ng-checked="termsCheck(formData.termsAndCondition)" ng-model="formData.termsAndCondition"
+                  id="test5" />
+                <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span>*Tick the box to accept all <a href="https://storage.googleapis.com/sportsforall/termplayer.pdf#toolbar=0" target="_new" class="" title="Click here"><strong>Terms & Conditions</strong></a>
+                  </label>
+                <div class="label label-danger pull-right" ng-show="showTerm">Please accept terms and condition</div>
+              </div>
+              <!-- CHECKBOX MOBILE END -->
               <!-- PARENT DETAILS CARD -->
               <div class="box2" ng-repeat="x in formData.parentDetails track by $index">
                 <div class="d-padd pl13">
