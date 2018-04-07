@@ -1149,6 +1149,7 @@ var model = {
                         param.sgst = data.sgstAmt;
                         param.cgst = data.cgstAmt;
                         param.igst = data.igstAmt;
+                        param.discount = data.discount;
                         param.outstandingAmount = data.amountPaid;
                         param.paymentMode = athleteData.registrationFee;
                         param.upgrade = false;
