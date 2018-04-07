@@ -106,8 +106,12 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
         NavigationService.getSportDetails($scope.constraints,
             function (data) {
                 $scope.basicSportDetails = data.data;
+                // selectService.sportName = data.data.sportName;
                 $scope.selectService.sportName = data.data.sportName;
                 $scope.selectService.sportType = data.data.sportType;
+                $scope.selectService.categoryType = data.data.categoryType;
+                
+                console.log("$scope.selectService",$scope.selectService);
             });
     };
     $scope.getSportDetails();
