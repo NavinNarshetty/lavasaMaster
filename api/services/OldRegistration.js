@@ -144,7 +144,8 @@ var model = {
             async.waterfall([
                 function (callback) {
                     Registration.findOne({
-                        sfaID: singleData.sfaID
+                        sfaID: singleData.sfaID,
+                        status: "Verified"
                     }).lean().exec(function (err, found) {
                         if (err) {
                             callback(err, null);
@@ -159,6 +160,8 @@ var model = {
                             arr.push(singleData.year);
                             singleData.year = arr;
                             formData.year = singleData.year;
+                            formData.mobile = singleData.mobile;
+                            formData.email = singleData.email;
                             formData.schoolName = singleData.schoolName;
                             formData.state = singleData.state;
                             formData.city = singleData.city;
