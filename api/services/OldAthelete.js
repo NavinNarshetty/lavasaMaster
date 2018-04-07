@@ -172,6 +172,8 @@ var model = {
                             formData.gender = singleData.gender;
                             formData.dob = singleData.dob;
                             formData.age = singleData.age;
+                            formData.mobile = singleData.mobile;
+                            formData.email = singleData.email;
                             formData.address = singleData.address;
                             formData.state = singleData.state;
                             formData.city = singleData.city;
@@ -241,10 +243,10 @@ var model = {
                                 if (singleData.playedTournaments) {
                                     formData.playedTournaments = singleData.playedTournaments;
                                 }
-                                if (formData.sportLevel) {
+                                if (singleData.sportLevel) {
                                     formData.sportLevel = singleData.sportLevel;
                                 }
-                                if (formData.mobile) {
+                                if (singleData.mobile) {
                                     formData.mobile = singleData.mobile;
                                 }
                                 if (singleData.smsOTP) {
@@ -384,10 +386,10 @@ var model = {
                                 if (found.playedTournaments) {
                                     formData.playedTournaments = found.playedTournaments;
                                 }
-                                if (formData.sportLevel) {
+                                if (found.sportLevel) {
                                     formData.sportLevel = found.sportLevel;
                                 }
-                                if (formData.mobile) {
+                                if (found.mobile) {
                                     formData.mobile = found.mobile;
                                 }
                                 if (found.smsOTP) {
