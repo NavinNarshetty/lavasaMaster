@@ -1,0 +1,14 @@
+<div class="modal-header" ng-if="userType == 'Athlete'">
+  <h4 class="modal-title" ng-if="sportNameLists.length>0">If you wish to delete {{sportName}} ,then along with it <span ng-repeat="sport in sportNameLists track by $index">{{sport}} <span ng-if="$index<sportNameLists.length-1"> ,</span>    </span> will be deleted. </br>
+    Are you sure you want to delete?</h4>
+  <h4 ng-if="sportNameLists.length===0"> Are you sure you want to delete?</h4>
+</div>
+<div class="modal-header" ng-if="userType == 'School'">
+  <h4 class="modal-title" ng-if="sportNameLists.length>0">If you wish to delete {{sportName}} for {{sportInfo.athleteName}} ,then along with it <span ng-repeat="sport in sportNameLists track by $index">{{sport}} <span ng-if="$index<sportNameLists.length-1"> ,</span>    </span> will be deleted. </br>
+    Are you sure you want to delete?</h4>
+  <h4 ng-if="sportNameLists.length===0"> Are you sure you want to delete?</h4>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary btn-outline btn-small" type="button" ng-click="confirmDelete()">Yes</button>
+  <button class="btn btn-primary btn-outline btn-small" type="button" ng-click="$dismiss()">No</button>
+</div>

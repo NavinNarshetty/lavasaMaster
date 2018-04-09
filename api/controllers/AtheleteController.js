@@ -281,6 +281,16 @@ var controller = {
                 value: false
             });
         }
+    },
+    getOneAthlete: function (req, res) {
+        if (req.body && req.body._id) {
+            Athelete.getOneAthlete(req.body, res.callback);
+        } else {
+            res.json({
+                data: "Please provide parameters",
+                value: false
+            });
+        }
     }
 
 };

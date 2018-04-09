@@ -18,9 +18,9 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
     $scope.constraints = {};
     $scope.userBySfa = {};
 
-    if($.jStorage.get("userDetails")){
+    if ($.jStorage.get("userDetails")) {
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout=false;
+        $scope.hideLogout = false;
     }
 
     $scope.setTeamIdNull = function () {
@@ -28,7 +28,7 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
         NavigationService.editTeamId(null);
     };
 
-    if($.jStorage.get("userDetails")){
+    if ($.jStorage.get("userDetails")) {
         $scope.userDetails = $.jStorage.get("userDetails");
     }
 
@@ -130,25 +130,25 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
         }
     } else {
         if ($.jStorage.get("userDetails") === null) {
-          $state.go('registerplayer', {
-              type: data.type
-          });
+            $state.go('registerplayer', {
+                type: data.type
+            });
         }
         $scope.callLogin();
     }
 
     // SHOW UPGRADE POPUP
     $scope.upgrade = {};
-    $scope.upgrade.id= $scope.userDetails._id;
+    $scope.upgrade.id = $scope.userDetails._id;
     $scope.upgrade.package = $scope.userDetails.package;
     if ($scope.detail.userType == 'athlete') {
-      $scope.upgrade.userType = 'player';
+        $scope.upgrade.userType = 'player';
     } else if ($scope.detail.userType == 'school') {
-      if ($scope.userDetails.institutionType == 'school') {
-        $scope.upgrade.userType = 'school';
-      } else if ($scope.userDetails.institutionType == 'college') {
-        $scope.upgrade.userType = 'college';
-      }
+        if ($scope.userDetails.institutionType == 'school') {
+            $scope.upgrade.userType = 'school';
+        } else if ($scope.userDetails.institutionType == 'college') {
+            $scope.upgrade.userType = 'college';
+        }
     }
     $scope.showUpgradeModal = function () {
         $scope.modalInstance = $uibModal.open({
@@ -278,23 +278,23 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
         if ($scope.detail.userType === 'athlete') {
             console.log("package", $scope.detail);
 
-            if(($.jStorage.get("userDetails").selectedEvent< $.jStorage.get("userDetails").package.eventCount)){
-                if($.jStorage.get("userDetails").package.order!=4){
+            if (($.jStorage.get("userDetails").selectedEvent < $.jStorage.get("userDetails").package.eventCount)) {
+                if ($.jStorage.get("userDetails").package.order != 4) {
                     redirect();
-                }else{
-                    if(val.isTeam && (val.sportsListCategory.name == "Team Sports" || val.name == "Water Polo")){
+                } else {
+                    if (val.isTeam && (val.sportsListCategory.name == "Team Sports" || val.name == "Water Polo")) {
                         redirect();
-                    }else{
-                      $scope.showUpgradeModal();
+                    } else {
+                        $scope.showUpgradeModal();
                         // toastr.error("Only Team Sports Can be Selected As Per Your Package");
                     }
                 }
             } else {
-              if ($scope.userDetails.package.order == 1) {
-                toastr.error("Maximum Sport Selected");
-              } else {
-                $scope.showUpgradeModal();
-              }
+                if ($scope.userDetails.package.order == 1) {
+                    toastr.error("Maximum Sport Selected");
+                } else {
+                    $scope.showUpgradeModal();
+                }
                 // toastr.error("Upgrade Your Package To Register Additional Sports", "Maximum Sport Selected");
             }
         } else {
@@ -400,7 +400,7 @@ myApp.controller('SportsRulesCtrl', function ($scope, TemplateService, $state, N
     $scope.selectService = selectService;
     $scope.basicSportDetails = {};
 
-   
+
 
     $scope.selectService.setBasicSportDetails({
         '_id': $stateParams.id
@@ -416,14 +416,14 @@ myApp.controller('SportsRulesCtrl', function ($scope, TemplateService, $state, N
     });
 
     if ($.jStorage.get("userDetails") === null) {
-      $state.go('registerplayer', {
-          type: data.type
-      });
+        $state.go('registerplayer', {
+            type: data.type
+        });
     }
 
-    if($.jStorage.get("userDetails")){
+    if ($.jStorage.get("userDetails")) {
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout=true;
+        $scope.hideLogout = true;
     }
 
     $scope.logoutCandidate = function () {
@@ -527,14 +527,14 @@ myApp.controller('SportIndividualCtrl', function ($scope, TemplateService, toast
     });
 
     if ($.jStorage.get("userDetails") === null) {
-      $state.go('registerplayer', {
-          type: data.type
-      });
+        $state.go('registerplayer', {
+            type: data.type
+        });
     }
 
-    if($.jStorage.get("userDetails")){
+    if ($.jStorage.get("userDetails")) {
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout=true;
+        $scope.hideLogout = true;
     }
 
     $scope.logoutCandidate = function () {
@@ -640,14 +640,14 @@ myApp.controller('SportTeamCtrl', function ($scope, TemplateService, toastr, Nav
     };
 
     if ($.jStorage.get("userDetails") === null) {
-      $state.go('registerplayer', {
-          type: data.type
-      });
+        $state.go('registerplayer', {
+            type: data.type
+        });
     }
 
-    if($.jStorage.get("userDetails")){
+    if ($.jStorage.get("userDetails")) {
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout=true;
+        $scope.hideLogout = true;
     }
 
     $scope.logoutCandidate = function () {
@@ -699,6 +699,58 @@ myApp.controller('SportTeamCtrl', function ($scope, TemplateService, toastr, Nav
         });
     };
     $scope.getDetailRegisteredSport();
+
+    $scope.deletePlayer = function (sportInfo) {
+        $scope.sportNameLists = [];
+        $scope.sportInfo = sportInfo;
+        $scope.sportName = sportInfo.name;
+        _.each($scope.getIndividualDetails, function (value) {
+            _.each(value.info, function (key) {
+                if (key.mainid == sportInfo.mainid && key.name !== sportInfo.name) {
+                    $scope.sportNameLists.push(key.name);
+                }
+            });
+        });
+        if ($.jStorage.get("userType") == 'school') {
+            if (sportInfo.middlename) {
+                $scope.sportInfo.athleteName = sportInfo.firstname + ' ' + sportInfo.middlename + ' ' + sportInfo.lastname + ' - ' + sportInfo.sfaid;
+            } else {
+                $scope.sportInfo.athleteName = sportInfo.firstname + ' ' + sportInfo.lastname + ' - ' + sportInfo.sfaid;
+            }
+        }
+        $scope.modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: 'views/modal/deleteSport.html',
+            // backdrop: 'static',
+            keyboard: false,
+            size: 'sm',
+            scope: $scope
+
+        });
+
+    };
+
+    $scope.confirmDelete = function () {
+        var obj = {};
+        obj._id = $scope.sportInfo.mainid;
+        var url = 'IndividualSport/delete';
+        console.log("id", obj._id);
+        NavigationService.deleteData(url, obj, function (data) {
+            $scope.getDetailRegisteredSport();
+            if (data.value == true) {
+                if (($.jStorage.get("userType") == 'school')) {
+                    toastr.success($scope.sportInfo.athleteName + ' ' + 'registration for' + ' ' + $scope.sportInfo.sportName + ' ' + 'has been deleted successfully');
+                } else {
+                    toastr.success('Your registration for' + ' ' + $scope.sportInfo.sportName + ' ' + 'has been deleted successfully');
+                }
+
+            }
+            if ($scope.getIndividualDetails === undefined) {
+                $state.go('sports-selection');
+            }
+        });
+    };
+
 
     // function for printing..
     $scope.printFunction = function (printSectionId) {

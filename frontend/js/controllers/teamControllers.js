@@ -3,22 +3,22 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
     $scope.template = TemplateService.getHTML("content/team-selection.html");
     TemplateService.title = "Team Selection"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
-    var data={
-        "type":""
+    var data = {
+        "type": ""
     }
 
-    if($.jStorage.get("userDetails") === null){
+    if ($.jStorage.get("userDetails") === null) {
         if ($.jStorage.get("userType") == "school") {
             data.type = "school";
-        }else{
+        } else {
             data.type = "player";
         }
         $state.go('registerplayer', {
             type: data.type
         });
-    }else{
+    } else {
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout=true;
+        $scope.hideLogout = true;
     }
 
     // see if user is login / this page has stateParams then redirect accordingly
@@ -54,7 +54,7 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
     $scope.selectService = selectService;
     $scope.selectService.sportsId = $stateParams.id;
 
-    $scope.detail={} // holds user Profile i.e Either Athelete or School
+    $scope.detail = {} // holds user Profile i.e Either Athelete or School
     $scope.ageGroup = [];
     $scope.formData = {};
     $scope.selectAthlete = [];
@@ -82,9 +82,9 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
         $scope.detail = data;
     });
 
-    if($.jStorage.get("userDetails")){
+    if ($.jStorage.get("userDetails")) {
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout=true;
+        $scope.hideLogout = true;
     }
 
     // set jStorage:"flag" to true
@@ -110,8 +110,8 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
                 $scope.selectService.sportName = data.data.sportName;
                 $scope.selectService.sportType = data.data.sportType;
                 $scope.selectService.categoryType = data.data.categoryType;
-                
-                console.log("$scope.selectService",$scope.selectService);
+
+                console.log("$scope.selectService", $scope.selectService);
             });
     };
     $scope.getSportDetails();
@@ -164,6 +164,7 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
                                 });
                                 $scope.selectAthlete = _.uniqBy($scope.selectAthlete, 'sfaId');
                                 if ($.jStorage.get("flag") === true) {
+                                    $scope.selectService.team = [];
                                     if ($scope.editablestudentTeam) {
                                         _.each($scope.selectService.team, function (j) {
                                             _.each($scope.editablestudentTeam, function (k, index) {
@@ -342,7 +343,7 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
         }
 
     };
-   
+
     // set gender in select service
     if ($scope.detail.userType === 'athlete') {
         if ($.jStorage.get("userDetails").gender !== null) {
@@ -441,8 +442,8 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
                     if (findIndex >= 0) {
                         $scope.listOfAthelete[findIndex].disableGender = true;
                         $scope.listOfAthelete[findIndex].checked = false;
-                    } else {}
-                } else {}
+                    } else { }
+                } else { }
             }
 
             if ($scope.selectService.team.length === 2) {
@@ -663,19 +664,19 @@ myApp.controller('ConfirmTeamCtrl', function ($scope, TemplateService, Navigatio
         n.studentId = n._id;
     });
     $scope.sportTitle = $.jStorage.get("sportTitle");
-    var data={};
-    if($.jStorage.get("userDetails") === null){
+    var data = {};
+    if ($.jStorage.get("userDetails") === null) {
         if ($.jStorage.get("userType") == "school") {
             data.type = "school";
-        }else{
+        } else {
             data.type = "player";
         }
         $state.go('registerplayer', {
             type: data.type
         });
-    }else{
+    } else {
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout=true;
+        $scope.hideLogout = true;
     }
     loginService.loginGet(function (data) {
         $scope.detail = data;
@@ -817,21 +818,21 @@ myApp.controller('TeamCongratsCtrl', function ($scope, TemplateService, toastr, 
     loginService.loginGet(function (data) {
         $scope.detail = data;
     });
-    
-    var data={};
 
-    if($.jStorage.get("userDetails") === null){
+    var data = {};
+
+    if ($.jStorage.get("userDetails") === null) {
         if ($.jStorage.get("userType") == "school") {
             data.type = "school";
-        }else{
+        } else {
             data.type = "player";
         }
         $state.go('registerplayer', {
             type: data.type
         });
-    }else{
+    } else {
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout=true;
+        $scope.hideLogout = true;
     }
 
     $scope.logoutCandidate = function () {
