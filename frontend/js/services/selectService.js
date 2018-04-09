@@ -713,10 +713,12 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                     var arr = _.compact(athelete.sport);
                     athelete.isValidSelection = arr.length > 0;
                 } else if (this.sportName == 'Archery') {
-                    console.log("event from Service");
+                    console.log("athelete.sport",athelete.sport);
 
-                    var allowedAsPerPackage = (((athelete.package.eventCount - athelete.selectedEvent) - _.compact(athelete.sport).length) <= 0) ? true : false;
+                    var allowedAsPerPackage = (((athelete.package.eventCount - athelete.selectedEvent) - _.compact(athelete.sport).length) < 0) ? true : false;
+                    console.log("allowedAsPerPackage",allowedAsPerPackage,((athelete.package.eventCount - athelete.selectedEvent) - _.compact(athelete.sport).length));
                     if (allowedAsPerPackage) {
+                        athelete.sport[1] = {}; //last added
                         athelete.disableEvent2 = true;
                         athelete.informTitle = "Upgrade Package To Add More";
                         if (whichSelectTag == 'Fen2') {

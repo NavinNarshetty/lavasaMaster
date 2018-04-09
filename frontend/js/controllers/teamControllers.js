@@ -831,8 +831,12 @@ myApp.controller('TeamCongratsCtrl', function ($scope, TemplateService, toastr, 
             type: data.type
         });
     } else {
-        $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout = true;
+        $timeout(function(){
+            if($.jStorage.get("userDetails")){
+                $scope.userDetails = $.jStorage.get("userDetails");
+                $scope.hideLogout=true;
+            }
+        },500);
     }
 
     $scope.logoutCandidate = function () {

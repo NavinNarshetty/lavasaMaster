@@ -55,7 +55,7 @@ var selectPicker = function(team,toastr,sT,sN,$filter){
                         if($.jStorage.get('userType')=="school"){
                             toastr.info("Sfa Id " + team[k].sfaId +" Can Only Participate In "+ team[k].selectLimit +" Event. As per Selected Package", "Upgrade Package");
                         }else{
-                            toastr.info("You Can Only Participate in One Event");                    
+                            toastr.info("You Can Only Participate in "+team[k].selectLimit+" Event");                    
                         }
                     }
                 });
@@ -322,13 +322,10 @@ myApp.controller('ConfirmFencingCtrl', function ($scope, TemplateService, Naviga
         });
     };
 
-    $scope.tp = function (event) {
-        // console.log(event);
-    };
-    // $timeout(function () {
-    //     $('.selectpicker').selectpicker()
-    //     $('.bs-searchbox input[type="text"]').attr('placeholder', 'Search Event');
-    // }, 200);
+    $timeout(function () {
+        $('.selectpicker').selectpicker()
+        $('.bs-searchbox input[type="text"]').attr('placeholder', 'Search Event');
+    }, 200);
 
     $timeout(function () {
         $('.table-responsive').on('show.bs.dropdown', function () {
@@ -341,7 +338,6 @@ myApp.controller('ConfirmFencingCtrl', function ($scope, TemplateService, Naviga
     }, 200);
 
     $scope.selectEvent = function(ath,whichSelectTag,justClicked){
-        console.log("justClicked",justClicked);
         if($scope.selectLimit==1){
             if(whichSelectTag == "Fen1" && (ath.fen1flag==false && ath.fen2flag==false)){
                 ath.fen1flag=true; 
@@ -654,8 +650,12 @@ myApp.controller('IndividualCongratsCtrl', function ($scope, TemplateService, to
             type: data.type
         });
     }else{
-        $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout=true;
+        $timeout(function(){
+            if($.jStorage.get("userDetails")){
+                $scope.userDetails = $.jStorage.get("userDetails");
+                $scope.hideLogout=true;
+            }
+        },500);
     }
 
     $scope.logoutCandidate = function () {

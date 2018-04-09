@@ -40,7 +40,7 @@ schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 schema.post('remove', function (removed,next) {
     Athelete.findOne({"_id": removed.athleteId}).exec(function(err,ath){
-        var finalCount = ath.selectedEvent - removed.sport.length;
+        var finalCount = ath.selectedEvent - _.compact(removed.sport).length;
         if(finalCount<0){
             finalCount = 0;
         }
@@ -52,7 +52,7 @@ schema.post('remove', function (removed,next) {
 
 schema.post('save', function (saved,next) {
     Athelete.findOne({_id: saved.athleteId}).exec(function(err,ath){
-        Athelete.saveData({"_id": saved.athleteId,"selectedEvent":(ath.selectedEvent + saved.sport.length)},function(err,data){
+        Athelete.saveData({"_id": saved.athleteId,"selectedEvent":(ath.selectedEvent + _.compact(saved.sport).length)},function(err,data){
             next();
         })
     });

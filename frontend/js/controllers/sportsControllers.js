@@ -28,9 +28,11 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
         NavigationService.editTeamId(null);
     };
 
-    if ($.jStorage.get("userDetails")) {
-        $scope.userDetails = $.jStorage.get("userDetails");
-    }
+    $timeout(function(){
+        if($.jStorage.get("userDetails")){
+            $scope.userDetails = $.jStorage.get("userDetails");
+        }
+    },500);
 
     // ==========getAllSportsListSubCategory==============
     // $scope.allSportsListSubCatArr = [];
