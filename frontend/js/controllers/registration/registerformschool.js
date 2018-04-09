@@ -245,9 +245,10 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
   $scope.saveRegis = function (formdata, formvalid) {
     console.log(formdata, formvalid, "check", $scope.packages);
     if ($scope.packages.length > 0) {
-      _.each($scope.packages, function (packageList) {
-        formdata.package = packageList._id
-      });
+      // _.each($scope.packages, function (packageList) {
+      //   formdata.package = packageList._id
+      // });
+      formdata.package = $scope.packages[0]._id
     }
     formdata.teamSports = $scope.teamSport;
     formdata.racquetSports = $scope.racquetSports;
