@@ -212,7 +212,8 @@ myApp.controller('detailFeatureCtrl', function ($scope, TemplateService, Navigat
     console.log("in", $scope.formData.featureLogo);
     if ($scope.formData.featureLogo) {
       console.log("bef", $scope.formData.featureLogo);
-      delete $scope.formData.featureLogo
+      delete $scope.formData.featureLogo;
+      $scope.formData.featureLogo = '';
       console.log("aft", $scope.formData.featureLogo);
     }
   }
