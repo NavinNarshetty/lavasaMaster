@@ -610,12 +610,12 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
         $scope.show = 0;
     };
 
-    $scope.deleteCertificate = function (data, className){
-      console.log("cert", className, data);
+    $scope.deleteCertificate = function (data, className, index){
+      console.log("cert", className, data, index);
       $("." + className + " input").val("");
-      delete data;
+      delete $scope.formData.sportLevel[index].certificateImage;
       $scope.show = 0;
-      console.log(data, className, $scope.show);
+      console.log("del", $scope.formData.sportLevel[index].certificateImage, className, $scope.show);
     }
 
     $scope.addSportForm = function () {

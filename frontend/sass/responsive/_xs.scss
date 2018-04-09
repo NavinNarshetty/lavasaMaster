@@ -419,4 +419,91 @@
     font-size: 30px !important;
   }
   //  UPGRADE PAGE END
+  // REGISTER LANDING
+  .registerplayer-accordion{
+    .panel-default > .panel-heading{
+      padding: 10px;
+      h4{
+        line-height: 1.4;
+      }
+    }
+    .panel-body{
+      padding: 10px;
+    }
+  }
+  .btn-mainregister{
+    margin: 0 auto;
+    display: block;
+    font-size: 11px;
+  }
+  .registerplayer-title{
+    line-height: 1;
+  }
+  .registerplayer-introtitle{
+    font-size: 24px;
+  }
+  .registerplayer-testimonialslider{
+    .swiper-button-next, .swiper-button-prev{
+      width: 25px;
+      height: 25px;
+    }
+    .swiper-button-next, .swiper-container-rtl .swiper-button-prev{
+      right: -20px;
+    }
+    .swiper-button-prev, .swiper-container-rtl .swiper-button-next{
+      left: -20px;
+    }
+  }
+  .register-testimonialcard{
+    width: 100%;
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+  .registerplayer-galleryslider {
+    .swiper-button-next, .swiper-button-prev{
+      width: 15px;
+      height: 15px;
+    }
+    .swiper-button-next, .swiper-container-rtl .swiper-button-prev{
+      right: -15px;
+    }
+    .swiper-button-prev, .swiper-container-rtl .swiper-button-next{
+      left: -15px;
+    }
+  }
+  .registerform-holder{
+    padding: 10px;
+    .registerform-intro{
+      font-size: 14px;
+    }
+    .list-inline > li{
+      width: 100%;
+    }
+    .formoption-li > li{
+      width: auto;
+      padding-left: 0;
+    }
+  }
+  .btn-registerstep{
+    width: 100%;
+  }
+  .registerstep-btnholder{
+    width: 90%;
+  }
+  .registerform-step1{
+    padding: 10px 0;
+    .input-group{
+      width: 90%;
+    }
+  }
+  .registerform-step2{
+    padding: 10px 15px;
+  }
+  .register-step2holder{
+    width: 100%;
+  }
+  .regiterplayer-titlesmall{
+    display: block;
+  }
+  // REGISTER LANDING END
  }

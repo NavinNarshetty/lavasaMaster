@@ -12,8 +12,7 @@
         <section class="form-card">
           <div class="formregister-mtb20">
             <p class="formregister-heading text-uppercase">Registration for SFA Championship <span>2018-2019</span> <span>Mumbai</span> is a 2-Step Process</p>
-            <p class="text-uppercase">Step 1 of the registration process will be considered as complete only once you have received a confirmation
-              email from SFA on receipt of payment & successful verification of documents.</p>
+            <p class="text-uppercase">Step 1 of THE REGISTRATION PROCESS WILL BE SUBJECT TO SFA SUCCESSFULLY RECEIVING THE PAYMENT AND SUBMITTED DOCUMENTS BEING VERIFIED. A CONFIRMATION EMAIL & RECEIPT WILL BE SENT TO YOU.</p>
           </div>
           <div class="formregister-mtb20">
             <p class="formregister-heading">We request you to keep the following details ready to ensure a smooth registration process:</p>
@@ -358,8 +357,8 @@
                     <div class="col-sm-8" ng-init="show=0">
                       <select class="sfa-drop2 sf-list sfa-mob2 label-two form-control" name="ageProof " ng-model="formData.ageProof" required>
                           <option style="display:none "></option>
-                          <option>Aadhar with DD/MM/YYYY format</option>
-                          <option value="aadharAge">Aadhar with only Year + Age proof with DD/MM/YYYY format</option>
+                          <option>Aadhar Card with DD/MM/YYYY format preferred</option>
+                          <option value="aadharAge">Aadhar with only Year + Aadhar Card with DD/MM/YYYY format preferred</option>
                           <option value="birthCert">Birth Certificate + Photo ID</option>
                           <option>PAN Card</option>
                           <option>Passport</option>
@@ -555,7 +554,7 @@
                         </div>
                       </div>
                       <div class="hover-img " ng-if="show==1 && sportLevel.certificateImage">
-                        <img src="img/icon/x.png " alt="logo" ng-click="deleteCertificate(sportLevel.certificateImage, 'levelCertificate') " class="img-responsive myicon ">
+                        <img src="img/icon/x.png " alt="logo" ng-click="deleteCertificate(sportLevel.certificateImage, 'levelCertificate', $index) " class="img-responsive myicon ">
                       </div>
                     </div>
                   </div>
@@ -731,14 +730,19 @@
                                   Mother
                                 </label>
                         <label for="{{'radio09'+$index}}" class="sfa-radiobox">
-                                  <input ng-model="x.relation" type="radio" id="{{'radio09'+$index}}" name="{{'radio02'+$index}}" value="father" required>
+                                  <input ng-model="x.relation" type="radio" id="{{'radio09'+$index}}" name="{{'radio09'+$index}}" value="father" required>
                                   <span class="sfa-radio"></span>
                                   Father
                                 </label>
                         <label for="{{'radio10'+$index}}" class="sfa-radiobox">
-                                  <input ng-model="x.relation" type="radio" id="{{'radio10'+$index}}" name="{{'radio02'+$index}}" value="guardian" required>
+                                  <input ng-model="x.relation" type="radio" id="{{'radio10'+$index}}" name="{{'radio10'+$index}}" value="guardian" required>
                                   <span class="sfa-radio"></span>
                                   Guardian
+                                </label>
+                        <label for="{{'radio41'+$index}}" class="sfa-radiobox">
+                                  <input ng-model="x.relation" type="radio" id="{{'radio41'+$index}}" name="{{'radio41'+$index}}" value="coach" required>
+                                  <span class="sfa-radio"></span>
+                                  Coach
                                 </label>
                       </div>
                     </div>

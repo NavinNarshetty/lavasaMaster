@@ -2958,9 +2958,10 @@ $tickerDuration: 60s;
   text-align: center;
 }
 .btn-mainregister{
-  width: 50%;
+  // width: 50%;
   border: 1px solid $sport-darkgrey;
   box-shadow: 4px 4px 0 0 $sport-darkgrey;
+  display: inline-block;
   background-color: transparent;
   color: $sport-darkgrey;
   font-size: 18px;

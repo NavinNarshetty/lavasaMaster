@@ -4,6 +4,7 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
   $scope.navigation = NavigationService.getNavigation();
   // START
   // VARIABLES
+  $scope.disableUpgrade = false;
   $scope.showPaymentTab = false;
   $scope.packages = [];
   $scope.flag = $stateParams.type;
@@ -52,7 +53,7 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
     //   $scope.formData.amountToPay = selectedPackage.finalPrice;
     // }
     $scope.formData.amountToPay = selectedPackage.finalPrice;
-    var paidPrice = $scope.formData.amountToPay - $scope.formData.totalPaid;
+    // var paidPrice = $scope.formData.amountToPay - $scope.formData.totalPaid;
     $scope.formData.cgstAmt = 0;
     $scope.formData.cgstPercent = 0;
     $scope.formData.sgstAmt = 0;
@@ -62,14 +63,14 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
     $scope.formData.discount = 0;
     if (selectedPackage.cgstPercent && selectedPackage.sgstPercent) {
       $scope.formData.cgstPercent = selectedPackage.cgstPercent;
-      $scope.formData.cgstAmt = _.round(TemplateService.calculatePercentage(paidPrice, $scope.formData.cgstPercent));
+      $scope.formData.cgstAmt = _.round(TemplateService.calculatePercentage($scope.formData.amountToPay, $scope.formData.cgstPercent));
       $scope.formData.sgstPercent = selectedPackage.sgstPercent;
-      $scope.formData.sgstAmt = _.round(TemplateService.calculatePercentage(paidPrice, $scope.formData.sgstPercent));
-      $scope.formData.amountPaid = paidPrice + $scope.formData.cgstAmt + $scope.formData.sgstAmt;
+      $scope.formData.sgstAmt = _.round(TemplateService.calculatePercentage($scope.formData.amountToPay, $scope.formData.sgstPercent));
+      $scope.formData.amountPaid = $scope.formData.amountToPay + $scope.formData.cgstAmt + $scope.formData.sgstAmt - $scope.formData.totalPaid;
     } else if (selectedPackage.igstPercent) {
       $scope.formData.igstPercent = selectedPackage.igstPercent;
-      $scope.formData.igstAmt = _.round(TemplateService.calculatePercentage(paidPrice, $scope.formData.igstPercent));
-      $scope.formData.amountPaid = paidPrice + $scope.formData.igstAmt;
+      $scope.formData.igstAmt = _.round(TemplateService.calculatePercentage($scope.formData.amountToPay, $scope.formData.igstPercent));
+      $scope.formData.amountPaid = $scope.formData.amountToPay + $scope.formData.igstAmt - $scope.formData.totalPaid;
     }
     if (type == 'click') {
       $scope.showPaymentTab = true;
@@ -107,15 +108,18 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
               console.log("id**", id);
               var url = "payU/upgradeAthletePayment?id=" + id;
               window.location.href = adminUrl2 + url;
+              $scope.disableUpgrade = true;
             } else {
               var id = formData.school;
               console.log("id**", id);
               var url = "payU/upgradeSchoolPayment?id=" + id;
               window.location.href = adminUrl2 + url;
+              $scope.disableUpgrade = true;
             }
           } else {
             toastr.success("Package upgraded Successfully");
             $state.go("sports-selection");
+            $scope.disableUpgrade = true;
           }
         });
       } else {
@@ -143,8 +147,8 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
         }
         console.log("ath", $scope.detail);
         $scope.formData.outstandingAmount = $scope.detail.outstandingAmount;
-        $scope.formData.totalPaid = $scope.detail.totalPaid;
-        $scope.formData.totalToPay = $scope.detail.totalToPay;
+        $scope.formData.totalPaid = $scope.detail.totalPaid || 0;
+        $scope.formData.totalToPay = $scope.detail.totalToPay || 0;
         var len = $scope.detail.transaction.length;
         if (len > 0) {
           $scope.formData.paymentStatus = $scope.detail.transaction[len - 1].paymentStatus;
