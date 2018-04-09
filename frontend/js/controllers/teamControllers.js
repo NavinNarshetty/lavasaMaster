@@ -187,10 +187,10 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
 
                                                     value.isTeamSelected = false;
 
-                                                    if (value.sfaId == "HA17198") {
-                                                        value.maxReached = false;
-                                                        console.log("im intrue", value.maxReached);
-                                                    }
+                                                    // if (value.sfaId == "HA17198") {
+                                                    //     value.maxReached = false;
+                                                    //     console.log("im intrue", value.maxReached);
+                                                    // }
                                                     value.checked = true;
                                                     $scope.selectService.team = _.filter($scope.selectService.team, 'checked');
                                                     $scope.pushToTeam(value, value.checked, $scope.selectAthlete);
