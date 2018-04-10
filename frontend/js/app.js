@@ -532,6 +532,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'RegisterFormSchoolCtrl'
         })
+        .state('registerformschooledit', {
+            url: "/register/school/form/:flag/:id",
+            templateUrl: tempateURL,
+            controller: 'RegisterFormSchoolCtrl'
+        })
         .state('upgradepackage', {
             url: "/package/upgrade/:type/:id",
             templateUrl: tempateURL,
