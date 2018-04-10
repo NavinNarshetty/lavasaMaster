@@ -18,21 +18,36 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
     $scope.constraints = {};
     $scope.userBySfa = {};
 
-    if ($.jStorage.get("userDetails")) {
-        $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout = false;
-    }
+    // if ($.jStorage.get("userDetails")) {
+    //     $scope.userDetails = $.jStorage.get("userDetails");
+    //     $scope.hideLogout = false;
+    // }
 
     $scope.setTeamIdNull = function () {
         $.jStorage.set("teamId", null);
         NavigationService.editTeamId(null);
     };
 
-    $timeout(function(){
-        if($.jStorage.get("userDetails")){
+    $timeout(function () {
+        if ($.jStorage.get("userDetails")) {
             $scope.userDetails = $.jStorage.get("userDetails");
+            $scope.hideLogout = false;
+            //Initialise For Upgrade
+            $scope.upgrade = {};
+            $scope.upgrade.id = $scope.userDetails._id;
+            $scope.upgrade.package = $scope.userDetails.package;
+            if ($scope.detail.userType == 'athlete') {
+                $scope.upgrade.userType = 'player';
+            } else if ($scope.detail.userType == 'school') {
+                if ($scope.userDetails.institutionType == 'school') {
+                    $scope.upgrade.userType = 'school';
+                } else if ($scope.userDetails.institutionType == 'college') {
+                    $scope.upgrade.userType = 'college';
+                }
+            }
+            //Initialise For Upgrade End
         }
-    },500);
+    }, 500);
 
     // ==========getAllSportsListSubCategory==============
     // $scope.allSportsListSubCatArr = [];
@@ -52,7 +67,7 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
                             _.each(tempObj.tempArr, function (sport) {
                                 // console.log("athlete", $scope.detail);
                                 if ($scope.detail.userType === "athlete" && !$scope.detail.mixAccess && $.jStorage.get("IsColg") === 'school' && (
-                                    sport.name === 'Water Polo' || sport.name === 'Athletics 4x100m Relay' || sport.name === 'Athletics 4x50m Relay' || sport.name === 'Athletics Medley Relay')) {
+                                        sport.name === 'Water Polo' || sport.name === 'Athletics 4x100m Relay' || sport.name === 'Athletics 4x50m Relay' || sport.name === 'Athletics Medley Relay')) {
                                     sport.isVisibleSport = true;
                                 } else {
                                     sport.isVisibleSport = false;
@@ -140,18 +155,6 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
     }
 
     // SHOW UPGRADE POPUP
-    $scope.upgrade = {};
-    $scope.upgrade.id = $scope.userDetails._id;
-    $scope.upgrade.package = $scope.userDetails.package;
-    if ($scope.detail.userType == 'athlete') {
-        $scope.upgrade.userType = 'player';
-    } else if ($scope.detail.userType == 'school') {
-        if ($scope.userDetails.institutionType == 'school') {
-            $scope.upgrade.userType = 'school';
-        } else if ($scope.userDetails.institutionType == 'college') {
-            $scope.upgrade.userType = 'college';
-        }
-    }
     $scope.showUpgradeModal = function () {
         $scope.modalInstance = $uibModal.open({
             animation: true,
