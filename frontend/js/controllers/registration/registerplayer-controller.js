@@ -389,8 +389,8 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
         loop: true,
         grabCursor: true,
         spaceBetween: 10,
-        nextButton: '.swiper-button-next',
-        prevButton: '.swiper-button-prev',
+        nextButton: '.registerplayer-galleryslider .swiper-button-next',
+        prevButton: '.registerplayer-galleryslider .swiper-button-prev',
         touchEventsTarget: 'container',
         preloadImages: true
       })
