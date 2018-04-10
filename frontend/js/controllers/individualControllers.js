@@ -140,7 +140,7 @@ myApp.controller('IndividualSelectionCtrl', function ($scope, TemplateService, e
         });
     }else{
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout=true;
+        $scope.hideChangePassword=true;
     }
 
     $scope.logoutCandidate = function () {
@@ -285,7 +285,7 @@ myApp.controller('ConfirmFencingCtrl', function ($scope, TemplateService, Naviga
         });
     }else{
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout=true;
+        $scope.hideChangePassword=true;
     }
 
     $scope.config = {};
@@ -445,7 +445,7 @@ myApp.controller('ConfirmIndividualCtrl', function ($scope, TemplateService, Nav
         });
     }else{
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout=true;
+        $scope.hideChangePassword=true;
     }
 
     $scope.logoutCandidate = function () {
@@ -508,7 +508,7 @@ myApp.controller('ConfirmKarateCtrl', function ($scope, TemplateService, Navigat
         });
     }else{
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout=true;
+        $scope.hideChangePassword=true;
     }
 
     $scope.logoutCandidate = function () {
@@ -562,7 +562,7 @@ myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, Navigat
         });
     }else{
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout=true;
+        $scope.hideChangePassword=true;
     }
 
     $scope.logoutCandidate = function () {
@@ -653,7 +653,7 @@ myApp.controller('IndividualCongratsCtrl', function ($scope, TemplateService, to
         $timeout(function(){
             if($.jStorage.get("userDetails")){
                 $scope.userDetails = $.jStorage.get("userDetails");
-                $scope.hideLogout=true;
+                $scope.hideChangePassword=true;
             }
         },500);
     }

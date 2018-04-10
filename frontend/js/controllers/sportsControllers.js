@@ -20,7 +20,7 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
 
     // if ($.jStorage.get("userDetails")) {
     //     $scope.userDetails = $.jStorage.get("userDetails");
-    //     $scope.hideLogout = false;
+    //     $scope.hideChangePassword = false;
     // }
 
     $scope.setTeamIdNull = function () {
@@ -31,7 +31,7 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
     $timeout(function () {
         if ($.jStorage.get("userDetails")) {
             $scope.userDetails = $.jStorage.get("userDetails");
-            $scope.hideLogout = false;
+            $scope.hideChangePassword = false;
             //Initialise For Upgrade
             $scope.upgrade = {};
             $scope.upgrade.id = $scope.userDetails._id;
@@ -428,7 +428,7 @@ myApp.controller('SportsRulesCtrl', function ($scope, TemplateService, $state, N
 
     if ($.jStorage.get("userDetails")) {
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout = true;
+        $scope.hideChangePassword = true;
     }
 
     $scope.logoutCandidate = function () {
@@ -539,7 +539,7 @@ myApp.controller('SportIndividualCtrl', function ($scope, TemplateService, toast
 
     if ($.jStorage.get("userDetails")) {
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout = true;
+        $scope.hideChangePassword = true;
     }
 
     $scope.logoutCandidate = function () {
@@ -652,7 +652,7 @@ myApp.controller('SportTeamCtrl', function ($scope, TemplateService, toastr, Nav
 
     if ($.jStorage.get("userDetails")) {
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout = true;
+        $scope.hideChangePassword = true;
     }
 
     $scope.logoutCandidate = function () {

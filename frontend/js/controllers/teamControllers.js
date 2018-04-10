@@ -18,7 +18,7 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
         });
     } else {
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout = true;
+        $scope.hideChangePassword = true;
     }
 
     // see if user is login / this page has stateParams then redirect accordingly
@@ -84,7 +84,7 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
 
     if ($.jStorage.get("userDetails")) {
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout = true;
+        $scope.hideChangePassword = true;
     }
 
     // set jStorage:"flag" to true
@@ -676,7 +676,7 @@ myApp.controller('ConfirmTeamCtrl', function ($scope, TemplateService, Navigatio
         });
     } else {
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout = true;
+        $scope.hideChangePassword = true;
     }
     loginService.loginGet(function (data) {
         $scope.detail = data;
@@ -834,7 +834,7 @@ myApp.controller('TeamCongratsCtrl', function ($scope, TemplateService, toastr, 
         $timeout(function(){
             if($.jStorage.get("userDetails")){
                 $scope.userDetails = $.jStorage.get("userDetails");
-                $scope.hideLogout=true;
+                $scope.hideChangePassword=true;
             }
         },500);
     }
