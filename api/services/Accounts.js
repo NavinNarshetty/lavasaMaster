@@ -86,11 +86,6 @@ var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
     getAthleteAccount: function (data, callback) {
-        var matchObj = {
-            athlete: {
-                $exists: true
-            }
-        };
         var Model = this;
         var Const = this(data);
         var maxRow = Config.maxRow;
@@ -114,19 +109,104 @@ var model = {
             start: (page - 1) * maxRow,
             count: maxRow
         };
-        var Search = Model.find(matchObj)
-            .order(options)
-            .deepPopulate("athlete athlete.school school transaction")
-            .keyword(options)
-            .page(options, callback);
+        if (data.keyword == "") {
+            var matchObj = {
+                athlete: {
+                    $exists: true
+                }
+            };
+            var Search = Model.find(matchObj)
+                .order(options)
+                .deepPopulate("athlete athlete.school transaction")
+                .keyword(options)
+                .page(options, callback);
+        } else {
+            Accounts.aggregate(
+                [{
+                        $lookup: {
+                            "from": "atheletes",
+                            "localField": "athlete",
+                            "foreignField": "_id",
+                            "as": "athlete"
+                        }
+                    },
+                    // Stage 2
+                    {
+                        $unwind: {
+                            path: "$athlete",
+                        }
+                    },
+                    // Stage 3
+                    {
+                        $match: {
+
+                            $or: [{
+                                "athlete.firstName": {
+                                    $regex: data.keyword,
+                                    $options: "i"
+                                }
+                            }, {
+                                "athlete.middleName": {
+                                    $regex: data.keyword,
+                                    $options: "i"
+                                }
+                            }, {
+                                "athlete.surname": {
+                                    $regex: data.keyword,
+                                    $options: "i"
+                                }
+                            }, {
+                                "athlete.sfaID": {
+                                    $regex: data.keyword,
+                                    $options: "i"
+                                }
+                            }]
+
+                        }
+                    },
+                    {
+                        $sort: {
+                            "createdAt": -1
+
+                        }
+                    },
+                ],
+                function (err, returnReq) {
+                    console.log("returnReq : ", returnReq);
+                    if (err) {
+                        console.log(err);
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(returnReq)) {
+                            var count = returnReq.length;
+                            console.log("count", count);
+
+                            var data = {};
+                            data.options = options;
+
+                            data.results = returnReq;
+                            data.total = count;
+                            callback(null, data);
+                        } else {
+                            var count = returnReq.length;
+                            console.log("count", count);
+
+                            var data = {};
+                            data.options = options;
+
+                            data.results = returnReq;
+                            data.total = count;
+                            callback(null, data);
+
+                        }
+                    }
+                });
+
+        }
     },
 
     getSchoolAccount: function (data, callback) {
-        var matchObj = {
-            school: {
-                $exists: true
-            }
-        };
+
         var Model = this;
         var Const = this(data);
         var maxRow = Config.maxRow;
@@ -150,11 +230,87 @@ var model = {
             start: (page - 1) * maxRow,
             count: maxRow
         };
-        var Search = Model.find(matchObj)
-            .order(options)
-            .deepPopulate("athlete athlete.school school transaction")
-            .keyword(options)
-            .page(options, callback);
+        if (data.keyword == "") {
+            var matchObj = {
+                school: {
+                    $exists: true
+                }
+            };
+
+            var Search = Model.find(matchObj)
+                .order(options)
+                .deepPopulate("school transaction")
+                .keyword(options)
+                .page(options, callback);
+        } else {
+            Accounts.aggregate(
+                [{
+                        $lookup: {
+                            "from": "registrations",
+                            "localField": "school",
+                            "foreignField": "_id",
+                            "as": "school"
+                        }
+                    },
+                    // Stage 2
+                    {
+                        $unwind: {
+                            path: "$school",
+                        }
+                    },
+                    // Stage 3
+                    {
+                        $match: {
+                            $or: [{
+                                "school.schoolName": {
+                                    $regex: data.keyword,
+                                    $options: "i"
+                                }
+                            }, {
+                                "school.sfaID": {
+                                    $regex: data.keyword,
+                                    $options: "i"
+                                }
+                            }]
+                        }
+                    },
+                    {
+                        $sort: {
+                            "createdAt": -1
+                        }
+                    },
+                ],
+                function (err, returnReq) {
+                    console.log("returnReq : ", returnReq);
+                    if (err) {
+                        console.log(err);
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(returnReq)) {
+                            var count = returnReq.length;
+                            console.log("count", count);
+
+                            var data = {};
+                            data.options = options;
+
+                            data.results = returnReq;
+                            data.total = count;
+                            callback(null, data);
+                        } else {
+                            var count = returnReq.length;
+                            console.log("count", count);
+
+                            var data = {};
+                            data.options = options;
+
+                            data.results = returnReq;
+                            data.total = count;
+                            callback(null, data);
+
+                        }
+                    }
+                });
+        }
     },
 
     getAccount: function (data, callback) {
