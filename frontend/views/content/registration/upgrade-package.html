@@ -46,16 +46,6 @@
                         <span>{{formData.amountToPay}}</span>
                       </td>
                     </tr>
-                    <tr>
-                      <td >
-                        <div class="text-left">
-                          - Amount Paid
-                        </div>
-                      </td>
-                      <td>
-                        - <span>{{formData.totalPaid}}</span>
-                      </td>
-                    </tr>
                     <!-- PROMO CODE -->
                     <!-- <tr>
                       <td>
@@ -72,7 +62,7 @@
                     <!-- IF IGST -->
                     <tr ng-if="formData.igstAmt != ''">
                       <td><div class="text-left">
-                        + IGST @ {{formData.igstPercent}}%
+                        + IGST @ {{formData.igstPercent}}% on {{formData.amountToPay}}/-
                       </div></td>
                       <td>
                         <span>{{formData.igstAmt}}</span>
@@ -83,7 +73,7 @@
                     <tr ng-if="formData.cgstAmt != ''">
                       <td>
                         <div class="text-left">
-                          + CGST @ {{formData.cgstPercent}}%
+                          + CGST @ {{formData.cgstPercent}}% on {{formData.amountToPay}}/-
                         </div>
                       </td>
                       <td>
@@ -94,12 +84,24 @@
                     <!-- IF SGST  -->
                     <tr  ng-if="formData.sgstAmt != ''">
                       <td>
-                        <div class="text-left">+ SGST @ {{formData.sgstPercent}}%</div></td>
+                        <div class="text-left">+ SGST @ {{formData.sgstPercent}}% on {{formData.amountToPay}}/-</div></td>
                       <td>
                         <span>{{formData.sgstAmt}}</span>
                       </td>
                     </tr>
                     <!-- IF SGST END  -->
+                    <!-- AMOUNT ALREADY PAID -->
+                    <tr>
+                      <td >
+                        <div class="text-left">
+                          - Amount Paid
+                        </div>
+                      </td>
+                      <td>
+                        - <span>{{formData.totalPaid}}</span>
+                      </td>
+                    </tr>
+                    <!-- AMOUNT ALREADY PAID END -->
                     <tr>
                       <td class="upgrade-payment-blue">
                         <div class="text-left">
