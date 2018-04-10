@@ -129,7 +129,7 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
   // };
 
   $scope.closeModal = function () {
-    $state.go('registerplayer',{
+    $state.go('registerplayer', {
       type: 'player'
     });
     $scope.modalInstances.$disiss();
@@ -227,7 +227,7 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
         packageUser: type
       }
     };
-    NavigationService.getPackages($scope.formPackage, function (data) {
+    NavigationService.getPackages($scope.fetchPackage, function (data) {
       data = data.data;
       console.log("pack", data);
       if (data.value = true) {
