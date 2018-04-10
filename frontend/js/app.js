@@ -522,6 +522,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'RegisterFormPlayerCtrl'
         })
+        .state('registerformplayeredit', {
+            url: "/register/player/form/:flag/:id",
+            templateUrl: tempateURL,
+            controller: 'RegisterFormPlayerCtrl'
+        })
         .state('registerformschool', {
             url: "/register/school/form/:flag",
             templateUrl: tempateURL,

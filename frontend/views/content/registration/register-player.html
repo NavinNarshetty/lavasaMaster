@@ -38,7 +38,7 @@
                 <label class="display-block">Sports:</label>
                 <span class="register-sportlist" ng-repeat="sport in sports track by $index"> {{sport}} <span class="register-seperator">|</span>                </span>
               </div>
-              <div class="register-contentholder">
+              <div class="register-contentholder register-contentdate">
                 <label for="">Dates:</label>
                 <span>{{sfaDates}}</span>
               </div>
@@ -102,11 +102,11 @@
           <div class="registerstep-btnholder">
             <ul class="list-unstyled">
               <li>
-                <button class="btn btn-register1" ui-sref="registerformplayer({flag: 'create'})" ng-if="pageType == 'player'">Participating  for the First Time</button>
-                <button class="btn btn-register1" ui-sref="registerformschool({flag: 'create'})" ng-if="pageType == 'school'">Participating  for the First Time</button>
+                <button class="btn btn-register1 text-capitalize" ui-sref="registerformplayer({flag: 'create'})" ng-if="pageType == 'player'">I am Participating  for the First Time</button>
+                <button class="btn btn-register1 text-capitalize" ui-sref="registerformschool({flag: 'create'})" ng-if="pageType == 'school'">Participating  for the First Time</button>
               </li>
               <li>
-                <button class="btn btn-register1" ng-click="showStepForm()" ng-class="{'active': stepForm}">Have Participated Before</button>
+                <button class="btn btn-register1 text-capitalize" ng-click="showStepForm()" ng-class="{'active': stepForm}">I Have Participated Before</button>
               </li>
             </ul>
           </div>
@@ -232,7 +232,7 @@
     <!-- TESTIMONIALS END  -->
   </div>
   <!-- COUNTS  -->
-  <section class="registerplayer-counts hide" ng-if="counts.length>0">
+  <section class="registerplayer-counts " ng-if="counts.length>0">
     <div class="container">
       <div class="registercount-flex">
         <div class="registercount-item" ng-repeat="count in counts track by $index">

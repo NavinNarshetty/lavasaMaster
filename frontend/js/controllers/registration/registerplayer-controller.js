@@ -424,7 +424,7 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
       animation: true,
       scope: $scope,
       templateUrl: 'views/modal/changecontact.html',
-      size: 'sm',
+      size: 'md',
       windowClass: 'modal-changedetails'
     })
   }

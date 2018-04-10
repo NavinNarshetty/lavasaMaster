@@ -443,7 +443,7 @@
     line-height: 1;
   }
   .registerplayer-introtitle{
-    font-size: 24px;
+    font-size: 21px;
   }
   .registerplayer-testimonialslider{
     .swiper-button-next, .swiper-button-prev{
@@ -507,6 +507,14 @@
   }
   .regiterplayer-titlesmall{
     display: block;
+  }
+  .registercount-flex{
+    display: block;
+    overflow-y: auto;
+    white-space: nowrap;
+  }
+  .registercount-item{
+    display: inline-block;
   }
   // REGISTER LANDING END.
   // FORGOT PASSWORD MODAL
