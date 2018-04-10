@@ -129,7 +129,10 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
   // };
 
   $scope.closeModal = function () {
-
+    $state.go('registerplayer',{
+      type: 'player'
+    });
+    $scope.modalInstances.$disiss();
   }
   // THANK YOU MODAL END
 
@@ -240,7 +243,7 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
   //PACKAGE FETCHING END
 
   console.log("packages", $scope.packages);
-  //SAVE FUNCTION 
+  //SAVE FUNCTION
   $scope.isDisabled = false;
   $scope.saveRegis = function (formdata, formvalid) {
     console.log(formdata, formvalid, "check", $scope.packages);

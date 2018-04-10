@@ -718,7 +718,7 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
     $scope.openModal = function () {
         $timeout(function () {
             // fbq('track', 'CompleteRegistration');
-            fbq('track', 'CompleteRegistration');
+            // fbq('track', 'CompleteRegistration');
             // GoogleAdWordsService.sendRegisterCustomerConversion();
         });
         var modalInstance = $uibModal.open({
