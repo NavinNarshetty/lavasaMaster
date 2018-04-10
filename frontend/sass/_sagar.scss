@@ -2959,23 +2959,16 @@ $tickerDuration: 60s;
 }
 .btn-mainregister{
   // width: 50%;
-  border: 1px solid $sport-darkgrey;
-  box-shadow: 4px 4px 0 0 $sport-darkgrey;
+  border: none;
+  box-shadow: 4px 4px 5px 0 $sport-darkgrey;
   display: inline-block;
-  background-color: transparent;
-  color: $sport-darkgrey;
+  background-color: $sport-primary;
+  color: #fff;
   font-size: 18px;
   text-transform: uppercase;
-  &:hover, &:focus{
-    border: 1px solid $sport-darkgrey;
-    box-shadow: 4px 4px 0 0 $sport-darkgrey;
-    background-color: transparent;
-    color: $sport-darkgrey;
-  }
-  &:active, &.active{
-    border: 1px solid $sport-primary;
-    box-shadow: 4px 4px 0 0 $sport-primary;
-    color: $sport-primary;
+  &:active, &.active, &:hover, &:focus{
+    box-shadow: 4px 4px 5px 0 $sport-darkgrey;
+    color: #fff;
   }
 }
 .registerform-holder {
