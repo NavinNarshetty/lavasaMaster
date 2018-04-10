@@ -164,7 +164,7 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
                                 });
                                 $scope.selectAthlete = _.uniqBy($scope.selectAthlete, 'sfaId');
                                 if ($.jStorage.get("flag") === true) {
-                                    $scope.selectService.team = [];
+                                    // $scope.selectService.team = [];
                                     if ($scope.editablestudentTeam) {
                                         _.each($scope.selectService.team, function (j) {
                                             _.each($scope.editablestudentTeam, function (k, index) {
