@@ -312,7 +312,18 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
             _.each(kumite, function (n, i) {
                 n.data = _.filter(n.data, ['eventName', 'Kumite']);
             });
-            athelete.eventKumite = getAgeGroups(kumite);
+            // athelete.eventKumite = getAgeGroups(kumite);
+            athelete.eventKumite = _.compact(_.map(getAgeGroups(kumite),function(n){
+                n.data=_.compact(_.map(n.data,function(m){
+                    if(!(m && m.weight && m.weight!="")){
+                        return m;
+                    }
+                }));
+                // console.log("data",_.compact(n.data));
+                if(!_.isEmpty(_.compact(n.data))){
+                    return n;
+                }
+            }));
             console.log("eventKumite", athelete.eventKumite);
 
             athelete.sport = [];
@@ -664,7 +675,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                     if (obj) {
                         arr[1] = obj;
                     } else {
-                        arr[1] = {};
+                        arr[1] = null;
                     }
                 }
                 athelete.isValidSelection = (arr.length == 0 || ((!arr[0] || arr[0] && arr[0].data && arr[0].data[0].sport == null) && ((arr[1] && !arr[1].sport) || (arr[1] && arr[1].sport == null)))) ? false : ((arr.length >= 1 && arr[0] && arr[0].data && arr[0].data[0] && arr[0].data[0].sport != null) || ((arr.length >= 1 && (!arr[0] || arr[0] && arr[0].data[0].sport == null)) && (arr.length >= 1 && arr[1] && arr[1].sport != null)) || ((arr.length >= 1 && arr[0] && arr[0].data[0] && arr[0].data[0].sport != null) && (arr.length >= 1 && arr[1] && arr[1].sport != null))) ? true : false;
