@@ -25,10 +25,22 @@ var schema = new Schema({
         ref: 'School',
         index: true
     },
-    year: [{
-        type: String
-    }],
-    currentYear: String,
+    package: {
+        type: Schema.Types.ObjectId,
+        ref: 'Package',
+        index: true
+    },
+    coupon: {
+        type: Schema.Types.ObjectId,
+        ref: 'CouponCode',
+        index: true
+    },
+    selectedEvent: {
+        type: Number,
+        min: 0,
+        default: 0
+    },
+    year: String,
     idProof: String,
     surname: String,
     password: String,
@@ -50,6 +62,7 @@ var schema = new Schema({
     sportLevel: [{
         level: String,
         sport: String,
+        certificateImage: String
     }],
 
 
@@ -105,16 +118,22 @@ var schema = new Schema({
     utm_source: String,
     utm_campaign: String,
     isBib: Boolean,
-    oldId: {
-        type: Schema.Types.ObjectId,
-        ref: 'OldAthelete',
-        index: true
-    }
+    Document_Status: String,
+    Photo_ID: Boolean,
+    School_Id: Boolean,
+    Age_Proof: Boolean,
 });
 
 schema.plugin(deepPopulate, {
     populate: {
-        school: "_id name"
+        // school: "_id name",
+        // package: ''
+        'school': {
+            select: '_id name'
+        },
+        'package': {
+            select: ''
+        }
     }
 });
 schema.plugin(uniqueValidator);
