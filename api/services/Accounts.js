@@ -598,7 +598,7 @@ var model = {
                                         console.log(err);
                                         callback(err, null);
                                     } else if (data3) {
-                                        callback(null, data3)
+                                        callback(null, data)
                                     }
                                 });
                         } else {
@@ -615,10 +615,32 @@ var model = {
                                         console.log(err);
                                         callback(err, null);
                                     } else if (data3) {
-                                        callback(null, data3)
+                                        callback(null, data)
                                     }
                                 });
                         }
+                    }
+                },
+                function (data, callback) {
+                    if (data.athlete) {
+                        var found = {};
+                        found._id = data.athlete;
+                        Accounts.updateAthleteMailAndSms(found, function (err, mailData) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                callback(null, mailData);
+                            }
+                        });
+                    } else {
+                        found._id = data.school;
+                        Accounts.updateScoolMailAndSms(found, function (err, mailData) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                callback(null, mailData);
+                            }
+                        });
                     }
                 }
             ],
@@ -906,125 +928,13 @@ var model = {
                     }
                 },
                 function (found, callback) {
-                    async.waterfall([
-                            function (callback) {
-                                ConfigProperty.find().lean().exec(function (err, property) {
-                                    if (err) {
-                                        callback(err, null);
-                                    } else {
-                                        if (_.isEmpty(property)) {
-                                            callback(null, []);
-                                        } else {
-                                            callback(null, property);
-                                        }
-                                    }
-                                });
-                            },
-                            function (property, callback) {
-                                Athelete.find({
-                                    _id: found._id
-                                }).lean().deepPopulate("package").exec(
-                                    function (err, athleteData) {
-                                        if (err) {
-                                            console.log(err);
-                                            callback(err, null);
-                                        } else if (athleteData) {
-                                            callback(null, athleteData);
-                                        }
-                                    });
-                            },
-                            function (property, athleteData, callback) {
-                                var packageId = {};
-                                packageId._id = found.packageNew;
-                                Featurepackage.featureDetailByPackage(packageId, function (err, features) {
-                                    if (err) {
-                                        callback(err, null);
-                                    } else {
-                                        if (_.isEmpty(features)) {
-                                            callback(null, []);
-                                        } else {
-                                            var finalData = {};
-                                            finalData.property = property;
-                                            finalData.athleteData = athleteData;
-                                            finalData.features = features;
-                                            callback(null, finalData);
-                                        }
-                                    }
-                                });
-                            },
-                            function (finalData, callback) {
-                                var property = finalData.property;
-                                var athleteData = finalData.athleteData;
-                                var features = finalData.features;
-                                async.parallel([
-                                        function (callback) {
-                                            var emailData = {};
-                                            // emailData.from = "info@sfanow.in";
-                                            emailData.from = property[0].infoId;
-                                            emailData.email = athleteData.email;
-                                            emailData.infoId = property[0].infoId;
-                                            emailData.infoNo = property[0].infoNo;
-                                            emailData.cityAddress = property[0].cityAddress;
-                                            emailData.ddFavour = property[0].ddFavour;
-                                            emailData.city = property[0].sfaCity;
-                                            emailData.year = property[0].year;
-                                            emailData.eventYear = property[0].eventYear;
-                                            emailData.type = property[0].institutionType;
-                                            emailData.packageName = athleteData.package.name;
-                                            emailData.packageOrder = athleteData.package.order;
-                                            emailData.featureDetail = features;
-                                            emailData.flag = emailData.type;
-                                            emailData.filename = "player-school/upgrade.ejs";
-                                            emailData.subject = "SFA: Thank you for upgrading your package for SFA " + emailData.city + " " + emailData.eventYear;
-                                            console.log("emaildata", emailData);
-                                            Config.email(emailData, function (err, emailRespo) {
-                                                if (err) {
-                                                    console.log(err);
-                                                    callback(null, err);
-                                                } else if (emailRespo) {
-                                                    callback(null, emailRespo);
-                                                } else {
-                                                    callback(null, "Invalid data");
-                                                }
-                                            });
-                                        },
-                                        function (callback) {
-                                            var smsData = {};
-                                            smsData.mobile = athleteData.mobile;
-                                            smsData.content = "Thank you for upgrading your package for SFA " + property[0].sfaCity + " " + property[0].eventYear + ". For further details please check your registered email ID.";
-                                            console.log("smsdata", smsData);
-                                            Config.sendSms(smsData, function (err, smsRespo) {
-                                                if (err) {
-                                                    console.log(err);
-                                                    callback(err, null);
-                                                } else if (smsRespo) {
-                                                    console.log(smsRespo, "sms sent");
-                                                    callback(null, smsRespo);
-                                                } else {
-                                                    callback(null, "Invalid data");
-                                                }
-                                            });
-                                        }
-                                    ],
-                                    function (err, final) {
-                                        if (err) {
-                                            callback(err, null);
-                                        } else {
-                                            callback(null, final);
-                                        }
-
-                                    });
-                            }
-                        ],
-                        function (err, data2) {
-                            if (err) {
-                                console.log(err);
-                                callback(err, null);
-                            } else {
-                                callback(null, data2);
-                            }
-
-                        });
+                    Accounts.updateAthleteMailAndSms(found, function (err, mailData) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            callback(null, mailData);
+                        }
+                    });
                 }
             ],
             function (err, data2) {
@@ -1117,125 +1027,13 @@ var model = {
                                         }
                                     },
                                     function (found, callback) {
-                                        async.waterfall([
-                                                function (callback) {
-                                                    ConfigProperty.find().lean().exec(function (err, property) {
-                                                        if (err) {
-                                                            callback(err, null);
-                                                        } else {
-                                                            if (_.isEmpty(property)) {
-                                                                callback(null, []);
-                                                            } else {
-                                                                callback(null, property);
-                                                            }
-                                                        }
-                                                    });
-                                                },
-                                                function (property, callback) {
-                                                    Registration.find({
-                                                        _id: found._id
-                                                    }).lean().deepPopulate("package").exec(
-                                                        function (err, schoolData) {
-                                                            if (err) {
-                                                                console.log(err);
-                                                                callback(err, null);
-                                                            } else if (schoolData) {
-                                                                callback(null, schoolData);
-                                                            }
-                                                        });
-                                                },
-                                                function (property, schoolData, callback) {
-                                                    var packageId = {};
-                                                    packageId._id = found.packageNew;
-                                                    Featurepackage.featureDetailByPackage(packageId, function (err, features) {
-                                                        if (err) {
-                                                            callback(err, null);
-                                                        } else {
-                                                            if (_.isEmpty(features)) {
-                                                                callback(null, []);
-                                                            } else {
-                                                                var finalData = {};
-                                                                finalData.property = property;
-                                                                finalData.schoolData = schoolData;
-                                                                finalData.features = features;
-                                                                callback(null, finalData);
-                                                            }
-                                                        }
-                                                    });
-                                                },
-                                                function (finalData, callback) {
-                                                    var property = finalData.property;
-                                                    var schoolData = finalData.schoolData;
-                                                    var features = finalData.features;
-                                                    async.parallel([
-                                                            function (callback) {
-                                                                var emailData = {};
-                                                                // emailData.from = "info@sfanow.in";
-                                                                emailData.from = property[0].infoId;
-                                                                emailData.email = schoolData.email;
-                                                                emailData.infoId = property[0].infoId;
-                                                                emailData.infoNo = property[0].infoNo;
-                                                                emailData.cityAddress = property[0].cityAddress;
-                                                                emailData.ddFavour = property[0].ddFavour;
-                                                                emailData.city = property[0].sfaCity;
-                                                                emailData.year = property[0].year;
-                                                                emailData.eventYear = property[0].eventYear;
-                                                                emailData.type = property[0].institutionType;
-                                                                emailData.packageName = schoolData.package.name;
-                                                                emailData.packageOrder = schoolData.package.order;
-                                                                emailData.featureDetail = features;
-                                                                emailData.flag = emailData.type;
-                                                                emailData.filename = "player-school/upgrade.ejs";
-                                                                emailData.subject = "SFA: Thank you for upgrading your package for SFA " + emailData.city + " " + emailData.eventYear;
-                                                                console.log("emaildata", emailData);
-                                                                Config.email(emailData, function (err, emailRespo) {
-                                                                    if (err) {
-                                                                        console.log(err);
-                                                                        callback(null, err);
-                                                                    } else if (emailRespo) {
-                                                                        callback(null, emailRespo);
-                                                                    } else {
-                                                                        callback(null, "Invalid data");
-                                                                    }
-                                                                });
-                                                            },
-                                                            function (callback) {
-                                                                var smsData = {};
-                                                                smsData.mobile = schoolData.mobile;
-                                                                smsData.content = "Thank you for upgrading your package for SFA " + property[0].sfaCity + " " + property[0].eventYear + ". For further details please check your registered email ID.";
-                                                                console.log("smsdata", smsData);
-                                                                Config.sendSms(smsData, function (err, smsRespo) {
-                                                                    if (err) {
-                                                                        console.log(err);
-                                                                        callback(err, null);
-                                                                    } else if (smsRespo) {
-                                                                        console.log(smsRespo, "sms sent");
-                                                                        callback(null, smsRespo);
-                                                                    } else {
-                                                                        callback(null, "Invalid data");
-                                                                    }
-                                                                });
-                                                            }
-                                                        ],
-                                                        function (err, final) {
-                                                            if (err) {
-                                                                callback(err, null);
-                                                            } else {
-                                                                callback(null, final);
-                                                            }
-
-                                                        });
-                                                }
-                                            ],
-                                            function (err, data2) {
-                                                if (err) {
-                                                    console.log(err);
-                                                    callback(err, null);
-                                                } else {
-                                                    callback(null, data2);
-                                                }
-
-                                            });
+                                        Accounts.updateScoolMailAndSms(found, function (err, mailData) {
+                                            if (err) {
+                                                callback(err, null);
+                                            } else {
+                                                callback(null, mailData);
+                                            }
+                                        });
                                     }
                                 ],
                                 function (err, complete) {
@@ -1245,7 +1043,6 @@ var model = {
                                         callback(null, complete);
                                     }
                                 });
-
                         }
                     });
                 }
@@ -1461,12 +1258,15 @@ var model = {
                         if (mainData.school) {
                             obj["SFA ID"] = mainData.school.sfaID;
                             obj["SCHOOL NAME"] = mainData.school.schoolName;
-                            currentPackName = mainData.athlete.package.name;
-                            packPrice = mainData.athlete.package.finalPrice;
-                            cgstPercent = mainData.athlete.package.cgstPercent;
-                            sgstPercent = mainData.athlete.package.sgstPercent;
-                            igstPercent = mainData.athlete.package.igstPercent;
-                            finalPrice = mainData.athlete.package.finalPrice;
+                            if (mainData.school.package == undefined) {
+                                currentPackName = mainData.school.package.name;
+                                packPrice = mainData.school.package.finalPrice;
+                                cgstPercent = mainData.school.package.cgstPercent;
+                                sgstPercent = mainData.school.package.sgstPercent;
+                                igstPercent = mainData.school.package.igstPercent;
+                                finalPrice = mainData.school.package.finalPrice;
+                            }
+
                         } else {
                             obj["SFA ID"] = "";
                             obj["SCHOOL NAME"] = "";
@@ -1485,14 +1285,13 @@ var model = {
                                 paymentMode = paymentMode + "," + n.paymentMode;
                                 payu = payu + "," + n.PayuId
                             }
-
                             i++;
                         });
 
                         obj["PACKAGE"] = currentPackName;
                         obj["PACKAGE AMOUNT"] = finalPrice;
                         if (cgstPercent) {
-                            obj["CGST PERCENT"] = mainData.athlete.package.cgstPercent;
+                            obj["CGST PERCENT"] = cgstPercent;
                         } else {
                             obj["CGST PERCENT"] = 0;
                         }
@@ -1572,6 +1371,250 @@ var model = {
                 Config.generateExcel("KnockoutIndividual", complete, res);
             }
         })
+    },
+
+    updateScoolMailAndSms: function (found, callback) {
+        async.waterfall([
+                function (callback) {
+                    ConfigProperty.find().lean().exec(function (err, property) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(property)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, property);
+                            }
+                        }
+                    });
+                },
+                function (property, callback) {
+                    Registration.find({
+                        _id: found._id
+                    }).lean().deepPopulate("package").exec(
+                        function (err, schoolData) {
+                            if (err) {
+                                console.log(err);
+                                callback(err, null);
+                            } else if (schoolData) {
+                                callback(null, schoolData);
+                            }
+                        });
+                },
+                function (property, schoolData, callback) {
+                    var packageId = {};
+                    packageId._id = found.packageNew;
+                    Featurepackage.featureDetailByPackage(packageId, function (err, features) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(features)) {
+                                callback(null, []);
+                            } else {
+                                var finalData = {};
+                                finalData.property = property;
+                                finalData.schoolData = schoolData;
+                                finalData.features = features;
+                                callback(null, finalData);
+                            }
+                        }
+                    });
+                },
+                function (finalData, callback) {
+                    var property = finalData.property;
+                    var schoolData = finalData.schoolData;
+                    var features = finalData.features;
+                    async.parallel([
+                            function (callback) {
+                                var emailData = {};
+                                // emailData.from = "info@sfanow.in";
+                                emailData.from = property[0].infoId;
+                                emailData.email = schoolData.email;
+                                emailData.infoId = property[0].infoId;
+                                emailData.infoNo = property[0].infoNo;
+                                emailData.cityAddress = property[0].cityAddress;
+                                emailData.ddFavour = property[0].ddFavour;
+                                emailData.city = property[0].sfaCity;
+                                emailData.year = property[0].year;
+                                emailData.eventYear = property[0].eventYear;
+                                emailData.type = property[0].institutionType;
+                                emailData.packageName = schoolData.package.name;
+                                emailData.packageOrder = schoolData.package.order;
+                                emailData.featureDetail = features;
+                                emailData.flag = emailData.type;
+                                emailData.filename = "player-school/upgrade.ejs";
+                                emailData.subject = "SFA: Thank you for upgrading your package for SFA " + emailData.city + " " + emailData.eventYear;
+                                console.log("emaildata", emailData);
+                                Config.email(emailData, function (err, emailRespo) {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(null, err);
+                                    } else if (emailRespo) {
+                                        callback(null, emailRespo);
+                                    } else {
+                                        callback(null, "Invalid data");
+                                    }
+                                });
+                            },
+                            function (callback) {
+                                var smsData = {};
+                                smsData.mobile = schoolData.mobile;
+                                smsData.content = "Thank you for upgrading your package for SFA " + property[0].sfaCity + " " + property[0].eventYear + ". For further details please check your registered email ID.";
+                                console.log("smsdata", smsData);
+                                Config.sendSms(smsData, function (err, smsRespo) {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(err, null);
+                                    } else if (smsRespo) {
+                                        console.log(smsRespo, "sms sent");
+                                        callback(null, smsRespo);
+                                    } else {
+                                        callback(null, "Invalid data");
+                                    }
+                                });
+                            }
+                        ],
+                        function (err, final) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                callback(null, final);
+                            }
+
+                        });
+                }
+            ],
+            function (err, data2) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
+                    callback(null, data2);
+                }
+
+            });
+    },
+
+    updateAthleteMailAndSms: function (found, callback) {
+        async.waterfall([
+                function (callback) {
+                    ConfigProperty.find().lean().exec(function (err, property) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(property)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, property);
+                            }
+                        }
+                    });
+                },
+                function (property, callback) {
+                    Athelete.find({
+                        _id: found._id
+                    }).lean().deepPopulate("package").exec(
+                        function (err, athleteData) {
+                            if (err) {
+                                console.log(err);
+                                callback(err, null);
+                            } else if (athleteData) {
+                                callback(null, athleteData);
+                            }
+                        });
+                },
+                function (property, athleteData, callback) {
+                    var packageId = {};
+                    packageId._id = found.packageNew;
+                    Featurepackage.featureDetailByPackage(packageId, function (err, features) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(features)) {
+                                callback(null, []);
+                            } else {
+                                var finalData = {};
+                                finalData.property = property;
+                                finalData.athleteData = athleteData;
+                                finalData.features = features;
+                                callback(null, finalData);
+                            }
+                        }
+                    });
+                },
+                function (finalData, callback) {
+                    var property = finalData.property;
+                    var athleteData = finalData.athleteData;
+                    var features = finalData.features;
+                    async.parallel([
+                            function (callback) {
+                                var emailData = {};
+                                // emailData.from = "info@sfanow.in";
+                                emailData.from = property[0].infoId;
+                                emailData.email = athleteData.email;
+                                emailData.infoId = property[0].infoId;
+                                emailData.infoNo = property[0].infoNo;
+                                emailData.cityAddress = property[0].cityAddress;
+                                emailData.ddFavour = property[0].ddFavour;
+                                emailData.city = property[0].sfaCity;
+                                emailData.year = property[0].year;
+                                emailData.eventYear = property[0].eventYear;
+                                emailData.type = property[0].institutionType;
+                                emailData.packageName = athleteData.package.name;
+                                emailData.packageOrder = athleteData.package.order;
+                                emailData.featureDetail = features;
+                                emailData.flag = emailData.type;
+                                emailData.filename = "player-school/upgrade.ejs";
+                                emailData.subject = "SFA: Thank you for upgrading your package for SFA " + emailData.city + " " + emailData.eventYear;
+                                console.log("emaildata", emailData);
+                                Config.email(emailData, function (err, emailRespo) {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(null, err);
+                                    } else if (emailRespo) {
+                                        callback(null, emailRespo);
+                                    } else {
+                                        callback(null, "Invalid data");
+                                    }
+                                });
+                            },
+                            function (callback) {
+                                var smsData = {};
+                                smsData.mobile = athleteData.mobile;
+                                smsData.content = "Thank you for upgrading your package for SFA " + property[0].sfaCity + " " + property[0].eventYear + ". For further details please check your registered email ID.";
+                                console.log("smsdata", smsData);
+                                Config.sendSms(smsData, function (err, smsRespo) {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(err, null);
+                                    } else if (smsRespo) {
+                                        console.log(smsRespo, "sms sent");
+                                        callback(null, smsRespo);
+                                    } else {
+                                        callback(null, "Invalid data");
+                                    }
+                                });
+                            }
+                        ],
+                        function (err, final) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                callback(null, final);
+                            }
+
+                        });
+                }
+            ],
+            function (err, data2) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
+                    callback(null, data2);
+                }
+
+            });
     }
 
 
