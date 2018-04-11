@@ -176,7 +176,15 @@ var model = {
                             formData.email = singleData.email;
                             formData.address = singleData.address;
                             formData.state = singleData.state;
+                            formData.district = singleData.district;
                             formData.city = singleData.city;
+                            formData.pinCode = singleData.pinCode;
+                            if (singleData.standard) {
+                                formData.standard = singleData.standard;
+                            }
+                            if (singleData.bloodGroup) {
+                                formData.bloodGroup = singleData.bloodGroup;
+                            }
                             formData.registrationFee = singleData.registrationFee;
                             formData.verifyCount = singleData.verifyCount;
                             formData.paymentStatus = singleData.paymentStatus;

@@ -163,8 +163,56 @@ var model = {
                             formData.mobile = singleData.mobile;
                             formData.email = singleData.email;
                             formData.schoolName = singleData.schoolName;
+                            if (singleData.schoolType) {
+                                formData.schoolType = singleData.schoolType;
+                            }
+                            if (singleData.schoolLogo) {
+                                formData.schoolLogo = singleData.schoolLogo;
+                            }
+                            if (singleData.schoolCategory) {
+                                formData.schoolCategory = singleData.schoolCategory;
+                            }
+                            if (singleData.affiliatedBoard) {
+                                formData.affiliatedBoard = singleData.affiliatedBoard;
+                            }
+                            if (singleData.schoolAddress) {
+                                formData.schoolAddress = singleData.schoolAddress;
+                            }
+                            if (singleData.schoolAddressLine2) {
+                                formData.schoolAddressLine2 = singleData.schoolAddressLine2;
+                            }
                             formData.state = singleData.state;
+                            if (singleData.district) {
+                                formData.district = singleData.district;
+                            }
                             formData.city = singleData.city;
+                            if (singleData.locality) {
+                                formData.locality = singleData.locality;
+                            }
+                            if (singleData.pinCode) {
+                                formData.pinCode = singleData.pinCode;
+                            }
+                            if (singleData.contactPerson) {
+                                formData.contactPerson = singleData.contactPerson;
+                            }
+                            if (singleData.landline) {
+                                formData.landline = singleData.landline;
+                            }
+                            if (singleData.email) {
+                                formData.email = singleData.email;
+                            }
+                            if (singleData.schoolPrincipalEmail) {
+                                formData.schoolPrincipalEmail = singleData.schoolPrincipalEmail;
+                            }
+                            if (singleData.schoolPrincipalLandline) {
+                                formData.schoolPrincipalLandline = singleData.schoolPrincipalLandline;
+                            }
+                            if (singleData.schoolPrincipalMobile) {
+                                formData.schoolPrincipalMobile = singleData.schoolPrincipalMobile;
+                            }
+                            if (singleData.schoolPrincipalName) {
+                                formData.schoolPrincipalName = singleData.schoolPrincipalName;
+                            }
                             formData.registrationFee = singleData.registrationFee;
                             formData.verifyCount = singleData.verifyCount;
                             formData.paymentStatus = singleData.paymentStatus;
