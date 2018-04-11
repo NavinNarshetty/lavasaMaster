@@ -1027,7 +1027,7 @@ var model = {
                                         }
                                     },
                                     function (found, callback) {
-                                        Accounts.updateScoolMailAndSms(found, function (err, mailData) {
+                                        Accounts.updateSchoolMailAndSms(found, function (err, mailData) {
                                             if (err) {
                                                 callback(err, null);
                                             } else {
@@ -1373,7 +1373,7 @@ var model = {
         })
     },
 
-    updateScoolMailAndSms: function (found, callback) {
+    updateSchoolMailAndSms: function (found, callback) {
         async.waterfall([
                 function (callback) {
                     ConfigProperty.find().lean().exec(function (err, property) {
@@ -1389,7 +1389,7 @@ var model = {
                     });
                 },
                 function (property, callback) {
-                    Registration.find({
+                    Registration.findOne({
                         _id: found._id
                     }).lean().deepPopulate("package").exec(
                         function (err, schoolData) {
@@ -1397,13 +1397,13 @@ var model = {
                                 console.log(err);
                                 callback(err, null);
                             } else if (schoolData) {
-                                callback(null, schoolData);
+                                callback(null, property, schoolData);
                             }
                         });
                 },
                 function (property, schoolData, callback) {
                     var packageId = {};
-                    packageId._id = found.packageNew;
+                    packageId._id = schoolData.package._id;
                     Featurepackage.featureDetailByPackage(packageId, function (err, features) {
                         if (err) {
                             callback(err, null);
@@ -1444,7 +1444,7 @@ var model = {
                                 emailData.flag = emailData.type;
                                 emailData.filename = "player-school/upgrade.ejs";
                                 emailData.subject = "SFA: Thank you for upgrading your package for SFA " + emailData.city + " " + emailData.eventYear;
-                                console.log("emaildata", emailData);
+                                // console.log("emaildata", emailData);
                                 Config.email(emailData, function (err, emailRespo) {
                                     if (err) {
                                         console.log(err);
@@ -1460,7 +1460,7 @@ var model = {
                                 var smsData = {};
                                 smsData.mobile = schoolData.mobile;
                                 smsData.content = "Thank you for upgrading your package for SFA " + property[0].sfaCity + " " + property[0].eventYear + ". For further details please check your registered email ID.";
-                                console.log("smsdata", smsData);
+                                // console.log("smsdata", smsData);
                                 Config.sendSms(smsData, function (err, smsRespo) {
                                     if (err) {
                                         console.log(err);
@@ -1511,7 +1511,7 @@ var model = {
                     });
                 },
                 function (property, callback) {
-                    Athelete.find({
+                    Athelete.findOne({
                         _id: found._id
                     }).lean().deepPopulate("package").exec(
                         function (err, athleteData) {
@@ -1519,13 +1519,13 @@ var model = {
                                 console.log(err);
                                 callback(err, null);
                             } else if (athleteData) {
-                                callback(null, athleteData);
+                                callback(null, property, athleteData);
                             }
                         });
                 },
                 function (property, athleteData, callback) {
                     var packageId = {};
-                    packageId._id = found.packageNew;
+                    packageId._id = athleteData.package._id;
                     Featurepackage.featureDetailByPackage(packageId, function (err, features) {
                         if (err) {
                             callback(err, null);
@@ -1566,7 +1566,7 @@ var model = {
                                 emailData.flag = emailData.type;
                                 emailData.filename = "player-school/upgrade.ejs";
                                 emailData.subject = "SFA: Thank you for upgrading your package for SFA " + emailData.city + " " + emailData.eventYear;
-                                console.log("emaildata", emailData);
+                                // console.log("emaildata", emailData);
                                 Config.email(emailData, function (err, emailRespo) {
                                     if (err) {
                                         console.log(err);
@@ -1582,7 +1582,7 @@ var model = {
                                 var smsData = {};
                                 smsData.mobile = athleteData.mobile;
                                 smsData.content = "Thank you for upgrading your package for SFA " + property[0].sfaCity + " " + property[0].eventYear + ". For further details please check your registered email ID.";
-                                console.log("smsdata", smsData);
+                                // console.log("smsdata", smsData);
                                 Config.sendSms(smsData, function (err, smsRespo) {
                                     if (err) {
                                         console.log(err);
@@ -1615,6 +1615,74 @@ var model = {
                 }
 
             });
+    },
+
+    upgradeInvoiceAthlete: function (data, callback) {
+        async.waterfall([
+            function (callback) {
+                ConfigProperty.find().lean().exec(function (err, property) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(property)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, property);
+                        }
+                    }
+                });
+            },
+            function (property, callback) {
+                Accounts.findOne({
+                        athlete: data.athlete
+                    }).lean()
+                    .deepPopulate("athlete athlete.school athlete.package transaction transaction.package")
+                    .exec(function (err, accountsData) {
+                        if (err || _.isEmpty(accountsData)) {
+                            callback(null, {
+                                error: "no accounts found",
+                                data: data
+                            });
+                        } else {
+                            var final = {};
+                            final.accounts = accountsData;
+                            final.property = property[0];
+                            callback(null, final);
+                        }
+                    });
+            },
+            function (final, callback) {
+                var len = final.accounts.transaction.length;
+                var temp = len;
+                len--;
+                var emailData = {};
+                emailData.city = final.property.sfaCity;
+
+                emailData.packageName = final.accounts.transaction[len].package.name;
+                emailData.packagePrice = final.accounts.transaction[len].package.finalPrice;
+                emailData.cgstPercent = final.accounts.transaction[len].package.cgstPercent;
+                emailData.sgstPercent = final.accounts.transaction[len].package.sgstPercent;
+                emailData.igstPercent = final.accounts.transaction[len].package.igstPercent;
+                emailData.cgstAmount = final.accounts.transaction[len].cgstAmount;
+                emailData.sgstAmount = final.accounts.transaction[len].sgstAmount;
+                emailData.igstAmount = final.accounts.transaction[len].igstAmount;
+                emailData.eventYear = final.property.eventYear;
+                if (temp > 1 || temp > 0) {
+                    temp = temp - 2;
+                } else {
+                    temp = temp - 1;
+                }
+                emailData.prevPaidAmount = final.
+                callback(null, emailData);
+            }
+
+        ], function (err, complete) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, complete);
+            }
+        })
     }
 
 
