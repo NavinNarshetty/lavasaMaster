@@ -399,6 +399,7 @@ var model = {
                     });
                 },
                 function (registerData, callback) {
+                    data.package = registerData.package;
                     if (registerData.registrationFee == "cash") {
                         Registration.cashPaymentMailSms(data, function (err, mailsms) {
                             if (err) {
@@ -986,7 +987,7 @@ var model = {
                     console.log("inside update", data);
                     Registration.findOne({ //finds one with refrence to id
                         schoolName: data.schoolName
-                    }).exec(function (err, found) {
+                    }).lean().deepPopulate("package").exec(function (err, found) {
                         if (err) {
                             callback(err, null);
                         } else if (_.isEmpty(found)) {
@@ -1116,7 +1117,7 @@ var model = {
         };
         Registration.findOne({ //finds one with refrence to id
             schoolName: data.schoolName
-        }).exec(function (err, found) {
+        }).lean().deepPopulate("package").exec(function (err, found) {
             if (err) {
                 callback(err, null);
             } else if (_.isEmpty(found)) {
@@ -1208,7 +1209,10 @@ var model = {
                                 emailData.city = property[0].sfaCity;
                                 emailData.year = property[0].year;
                                 emailData.eventYear = property[0].eventYear;
-                                emailData.filename = "schoolOnlinePayment.ejs";
+                                emailData.type = property[0].institutionType;
+                                emailData.amount = data.package.finalPrice;
+                                emailData.registrationFee = data.registrationFee;
+                                emailData.filename = "school/schoolRegistration.ejs";
                                 emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.eventYear;
                                 Config.email(emailData, function (err, emailRespo) {
                                     if (err) {
@@ -1283,6 +1287,8 @@ var model = {
                 function (property, callback) {
                     async.parallel([
                             function (callback) {
+                                // console.log('Package', package);
+                                console.log('data', data);
                                 var emailData = {};
                                 // emailData.from = "info@sfanow.in";
                                 emailData.from = property[0].infoId;
@@ -1295,8 +1301,9 @@ var model = {
                                 emailData.year = property[0].year;
                                 emailData.eventYear = property[0].eventYear;
                                 emailData.type = property[0].institutionType;
-                                emailData.amount = property[0].totalAmountType;
-                                emailData.filename = "schoolCashPayment.ejs";
+                                emailData.amount = data.package.finalPrice;
+                                emailData.registrationFee = data.registrationFee;
+                                emailData.filename = "school/schoolRegistration.ejs";
                                 emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.eventYear;
                                 Config.email(emailData, function (err, emailRespo) {
                                     if (err) {
@@ -1377,9 +1384,10 @@ var model = {
                                 emailData.infoNo = property[0].infoNo;
                                 emailData.cityAddress = property[0].cityAddress;
                                 emailData.ddFavour = property[0].ddFavour;
-                                emailData.sfaID = data.sfaID;
+                                emailData.sfaId = data.sfaID;
                                 emailData.password = data.password;
-                                emailData.filename = "successVerification.ejs";
+                                emailData.flag = emailData.type;
+                                emailData.filename = "player-school/verification.ejs";
                                 emailData.subject = "SFA: You are now a verified " + emailData.type + " for SFA " + emailData.city + " " + emailData.eventYear + ".";
                                 console.log("emaildata", emailData);
 
@@ -1461,13 +1469,13 @@ var model = {
                                 emailData.cityAddress = property[0].cityAddress;
                                 emailData.ddFavour = property[0].ddFavour;
                                 emailData.email = data.email;
-                                emailData.sfaID = data.sfaID;
+                                emailData.sfaId = data.sfaID;
                                 emailData.city = property[0].sfaCity;
                                 emailData.year = property[0].year;
                                 emailData.eventYear = property[0].eventYear;
                                 emailData.type = property[0].institutionType;
                                 emailData.password = data.password;
-                                emailData.filename = "rejection.ejs";
+                                emailData.filename = "player-school/rejection.ejs";
                                 emailData.subject = "SFA: Rejection of Your Application for SFA " + emailData.city + " " + emailData.eventYear;
                                 console.log("emaildata", emailData);
 
@@ -1556,16 +1564,16 @@ var model = {
                                 emailData.subject = "SFA: Your " + emailData.type + " has officially registered for SFA " + emailData.city + " " + emailData.eventYear;
                                 console.log("emaildata", emailData);
 
-                                Config.email(emailData, function (err, emailRespo) {
-                                    if (err) {
-                                        console.log(err);
-                                        callback(null, err);
-                                    } else if (emailRespo) {
-                                        callback(null, emailRespo);
-                                    } else {
-                                        callback(null, "Invalid data");
-                                    }
-                                });
+                                // Config.email(emailData, function (err, emailRespo) {
+                                //     if (err) {
+                                //         console.log(err);
+                                //         callback(null, err);
+                                //     } else if (emailRespo) {
+                                //         callback(null, emailRespo);
+                                //     } else {
+                                //         callback(null, "Invalid data");
+                                //     }
+                                // });
                             },
                             function (callback) {
 
@@ -1573,17 +1581,17 @@ var model = {
                                 smsData.mobile = data.mobile;
                                 smsData.content = "Congratulations! Your school has officially registered for SFA " + property[0].sfaCity + " " + property[0].eventYear + ".";
                                 console.log("smsdata", smsData);
-                                Config.sendSms(smsData, function (err, smsRespo) {
-                                    if (err) {
-                                        console.log(err);
-                                        callback(err, null);
-                                    } else if (smsRespo) {
-                                        console.log(smsRespo, "sms sent");
-                                        callback(null, smsRespo);
-                                    } else {
-                                        callback(null, "Invalid data");
-                                    }
-                                });
+                                // Config.sendSms(smsData, function (err, smsRespo) {
+                                //     if (err) {
+                                //         console.log(err);
+                                //         callback(err, null);
+                                //     } else if (smsRespo) {
+                                //         console.log(smsRespo, "sms sent");
+                                //         callback(null, smsRespo);
+                                //     } else {
+                                //         callback(null, "Invalid data");
+                                //     }
+                                // });
                             }
                         ],
                         function (err, final) {
