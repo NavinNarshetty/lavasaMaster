@@ -17,6 +17,7 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
   $scope.emailOtp = {};
   $scope.showOtpSuccess = {};
   $scope.formFlag = $stateParams.flag;
+  $scope.pageType = 'school';
 
 
   // CONFIG PROPERTY

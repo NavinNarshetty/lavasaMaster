@@ -3,6 +3,7 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
     TemplateService.title = "Player Registration Form"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
     $scope.formData = {};
+    $scope.pageType = 'player';
     $scope.packages = [];
     $scope.formPackage = {
         filter: {
@@ -34,6 +35,7 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
         console.log("getAth", data);
         if (data.value == true) {
           $scope.formData = data.data;
+          $scope.formData.password = "";
         } else {
           console.log("Error in ath get", data);
         }

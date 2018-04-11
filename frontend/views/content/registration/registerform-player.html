@@ -118,7 +118,7 @@
                 <div class="form-group">
                   <label for="" class="control-label col-sm-2">*{{type|firstcapitalize}} Landline No:</label>
                   <div class="col-sm-9">
-                    <input type="text" name="schoolContact" placeholder="Enter Landline" class="form-control" minlength="11" maxlength="11" ng-model="formData.atheleteSchoolContact"
+                    <input type="text" name="schoolContact" placeholder="Enter Landline Number" class="form-control" minlength="11" maxlength="11" ng-model="formData.atheleteSchoolContact"
                       only-Digits required>
                     <div class="label label-danger pull-right" ng-if="formAthlete.schoolContact.$invalid && formAthlete.schoolContact.$touched">Please Enter Your {{type | firstcapitalize}} Contact</div>
                   </div>
@@ -167,7 +167,7 @@
                   <div class="form-group has-feedback" ng-class="{'has-success': passwordMatch}">
                     <label class="control-label col-sm-4">*Confirm Password:</label>
                     <div class="col-sm-8">
-                      <input type="password" name="athletePasswordConfirm" minlength="8" class="form-control" ng-model="formData.confirmPassword"
+                      <input type="password" name="athletePasswordConfirm" minlength="8" class="form-control" ng-model="formData.confirmPassword" placeholder="Re-enter Password to Confirm Password"
                         ng-change="checkPassword(formData.confirmPassword);" required>
                       <span class="fa fa-check form-control-feedback" ng-show="passwordMatch"></span>
                       <!-- <div class="label label-success pull-right" ng-if="!showConfirm && formData.confirmPassword.length>0"><i class="fa fa-check"></i> Passwords matched</div> -->
@@ -328,6 +328,7 @@
                   <div class="form-group">
                     <label for="" class="control-label col-sm-4">*Date Of Birth</label>
                     <div class="col-sm-8">
+                      <pre>{{formData.dob}}</pre>
                       <input-date class="bor-t date-month sf-list " ng-model="formData.dob "></input-date>
                       <div class="label label-danger pull-right " ng-if="formAthlete.dob.$invalid && formAthlete.dob.$touched ">Please Enter Date of birth</div>
                     </div>
@@ -823,7 +824,7 @@
                   Cheque/ Demand Draft in favour of <span class="r-titillium-web-semibold">'SFA Sporting Services Pvt Ltd'</span>                  which is to be couriered/ hand delivered <span class="r-titillium-web-semibold">WITHIN 4 WORKING DAYS</span>                  to:</p>
               </div>
               <div class="formregister-mtb20">
-                <p class="r-titillium-web-semibold">17A, Raviraj House, 6th Floor, Saraswati Road, Off Linking Road, Santacruz (West) - 400053</p>
+                <p class="r-titillium-web-semibold">17A, Raviraj House, 6th Floor, Saraswati Road, Off Linking Road, Santacruz (West) - 400054</p>
               </div>
             </div>
             <!-- CASH/ CHEQUE INFO END -->

@@ -34,15 +34,15 @@
               <h4 class="d-fjalla-one text-uppercase m-clear">Quick Details About SFA Championship {{eventYear}}</h4>
             </uib-accordion-heading>
             <div class="register-accordioncontent">
-              <div class="register-contentholder">
+              <div class="register-contentholder" ng-if="sports.length>0">
                 <label class="display-block">Sports:</label>
                 <span class="register-sportlist" ng-repeat="sport in sports track by $index"> {{sport}} <span class="register-seperator">|</span>                </span>
               </div>
-              <div class="register-contentholder register-contentdate">
+              <div class="register-contentholder register-contentdate" ng-if="sfaDates">
                 <label for="">Dates:</label>
                 <span>{{sfaDates}}</span>
               </div>
-              <div class="register-contentholder">
+              <div class="register-contentholder" ng-if="venue.length>0">
                 <label for="">Venue:</label>
                 <span class="register-venue" ng-repeat="place in venue track by $index"> {{place}} <span class="register-seperator">|</span></span>
               </div>
