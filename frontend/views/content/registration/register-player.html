@@ -127,8 +127,8 @@
               </ui-select>
 
               <!-- <input type="text" class="form-control" placeholder="SFA ID" ng-model="formData.keyword" ng-change="getMasterData(formData)"> -->
-              <div class="input-group-btn" ng-click="generateOtp(searchSfaObj)">
-                <button class="btn m-clear">Send OTP</button>
+              <div class="input-group-btn">
+                <button class="btn m-clear" ng-click="generateOtp(searchSfaObj)" 7>Send OTP</button>
               </div>
               <!-- <div class="input-group-btn">
                 <button class="btn m-clear">Send OTP</button>
@@ -138,13 +138,13 @@
             <div class="" ng-if="showRegisteredCredentials">
               <p>An OTP has been sent to your registered Mobile no: <span>{{registeredMobileNo|securedEmailmobile:'mobile'}}</span>                | Email Id: <span>{{registeredEmail|securedEmailmobile:'email'}}</span></p>
               <div class="input-group forgototp-input">
-                <input type="number" class="form-control" placeholder="OTP">
+                <input type="text" class="form-control" ng-model="verifyOtpObj.otp" placeholder="OTP">
                 <div class="input-group-btn">
-                  <button class="btn m-clear"><span class="fa fa-arrow-right"></span></button>
+                  <button class="btn m-clear" ng-disabled="!verifyOtpObj.otp" ng-click="verifyOTP(verifyOtpObj)"><span class="fa fa-arrow-right"></span></button>
                 </div>
               </div>
               <ul class="list-inline formoption-li">
-                <li><a href="">Resend OTP</a></li>
+                <li ng-click="generateOtp(searchSfaObj)"><a href="">Resend OTP</a></li>
                 <li>|</li>
                 <li><a ng-click="changeDetails();">Change Registered Email/Mobile</a></li>
               </ul>

@@ -8,6 +8,7 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
   // $scope.s.open = true;
   $scope.formData = {};
   $scope.searchSfaObj = {};
+  $scope.verifyOtpObj = {};
   $scope.validateOtpObj = {};
   $scope.resetPassObj = {};
   $scope.forgotPassword = {};
@@ -458,10 +459,10 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
       };
     }
     console.log("$scope.questionLimit", $scope.questionLimit);
-  }
+  };
   // QUESTIONS SECTION END
   // GALLERY
-  $scope.gallerySlides = []
+  $scope.gallerySlides = [];
   $scope.allGallery = {
     'photoSlide': [],
     'slidePhotos': []
@@ -470,9 +471,9 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
     $scope.gallerySlides = _.chunk(gallery, 6);
     _.each($scope.gallerySlides, function (n, nkey) {
       $scope.allGallery.slidePhotos[nkey] = _.chunk(n, 3);
-    })
+    });
     // console.log("picslide",$scope.allGallery);
-  }
+  };
   // GALLERY END
   // FUNCTIONS END
   // API CALLS
@@ -538,8 +539,8 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
     });
   }
   $scope.getTestimonials();
-  //GET MASTER DATA
-
+  // GET TESTIMONIALS END
+  // START OF GENERATE OTP FOR PARTICIPATED BEFORE
   $scope.searchSfaObj.page = 1;
   $scope.searchSfaObj.keyword = '';
   $scope.masterSearchSFA = function (formData) {
@@ -573,7 +574,7 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
 
   };
 
-  //generateOtp
+
 
   $scope.generateOtp = function (otpObj) {
     var obj = {};
@@ -586,17 +587,41 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
     obj.sfaId = otpObj.sfaId.sfaId;
     obj.mobile = otpObj.sfaId.mobile;
     obj.email = otpObj.sfaId.email;
+    $scope.verifyOtpObj.id = otpObj.sfaId._id;
     $scope.showRegisteredCredentials = true;
     $scope.registeredMobileNo = otpObj.sfaId.mobile;
     $scope.registeredEmail = otpObj.sfaId.email;
-    console.log("obj", obj);
     NavigationService.getOTP(obj, url, function (data) {
-      if (data) {
-        console.log("data", data);
+      if (data.data.value) {
+        $scope.verifyOtpObj.validOtp = data.data.data.otp;
       }
     });
   };
-  // GET TESTIMONIALS END
+
+
+  $scope.verifyOTP = function (otpObj) {
+    if (otpObj.otp === otpObj.validOtp) {
+      toastr.success('Successful OTP validation', 'Success Message');
+      if ($scope.formData.type == 'school') {
+        $state.go('registerformschooledit', {
+          flag: 'edit',
+          id: otpObj.id
+        });
+      } else {
+        $state.go('registerformplayeredit', {
+          flag: 'edit',
+          id: otpObj.id
+        });
+      }
+    } else {
+      toastr.error('Please enter valid Otp', 'Success Message');
+    }
+
+
+  };
+  // END OF GENERATE OTP FOR PARTICIPATED BEFORE
+
+
   // API CALLS END
   // JSONS
   // BANNERS

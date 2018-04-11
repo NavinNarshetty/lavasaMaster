@@ -291,6 +291,16 @@ var controller = {
                 value: false
             });
         }
+    },
+    getOTP: function (req, res) {
+        if (req.body && req.body.mobile && req.body.sfaId && req.body.email) {
+            Athelete.getOTP(req.body, res.callback);
+        } else {
+            res.json({
+                data: "Please provide parameters",
+                value: false
+            });
+        }
     }
 
 };
