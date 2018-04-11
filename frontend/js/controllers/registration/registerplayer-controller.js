@@ -7,6 +7,7 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
   $scope.oneAtATime = true
   // $scope.s.open = true;
   $scope.formData = {};
+  $scope.searchSfaObj = {};
   $scope.validateOtpObj = {};
   $scope.resetPassObj = {};
   $scope.forgotPassword = {};
