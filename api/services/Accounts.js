@@ -62,7 +62,7 @@ var schema = new Schema({
 schema.plugin(deepPopulate, {
     populate: {
         "athlete": {
-            select: '_id sfaId status year registrationFee firstName middleName surname school paymentStatus package'
+            select: '_id sfaId status year registrationFee firstName middleName surname school paymentStatus package atheleteSchoolName'
         },
         "athlete.school": {
             select: ''
@@ -156,7 +156,7 @@ var model = {
                                     $options: "i"
                                 }
                             }, {
-                                "athlete.sfaID": {
+                                "athlete.sfaId": {
                                     $regex: data.keyword,
                                     $options: "i"
                                 }
@@ -169,7 +169,12 @@ var model = {
                             "createdAt": -1
 
                         }
+                    }, {
+                        $skip: options.start
                     },
+                    {
+                        $limit: options.count
+                    }
                 ],
                 function (err, returnReq) {
                     console.log("returnReq : ", returnReq);
@@ -279,6 +284,12 @@ var model = {
                             "createdAt": -1
                         }
                     },
+                    {
+                        $skip: options.start
+                    },
+                    {
+                        $limit: options.count
+                    }
                 ],
                 function (err, returnReq) {
                     console.log("returnReq : ", returnReq);
@@ -814,145 +825,175 @@ var model = {
             });
     },
 
-    generateAthleteExcel: function (data, callback) {
+    generateAthleteExcel: function (data, res) {
         async.waterfall([
-            function (callback) {
-                Accounts.find({
-                        athlete: {
-                            $exists: true
-                        }
-                    }).lean()
-                    .deepPopulate("athlete athlete.school athlete.package transaction transaction.package")
-                    .exec(function (err, found) {
-                        if (err || _.isEmpty(found)) {
-                            callback(null, {
-                                error: "no data found",
-                                data: data
-                            });
-                        } else {
-                            callback(null, found);
-                        }
-                    });
-            },
-            function (found, callback) {
-                async.concatSeries(found, function (mainData, callback) {
-                        var obj = {};
-                        obj["SFA ID"] = mainData.athlete.sfaId;
-                        if (mainData.athlete.middleName) {
-                            obj["ATHLETE NAME"] = mainData.athlete.firstName + " " + mainData.athlete.middleName + " " + mainData.athlete.surname;
-                        } else {
-                            obj["ATHLETE NAME"] = mainData.athlete.firstName + " " + mainData.athlete.surname;
-                        }
-                        if (mainData.athlete.atheleteSchoolName) {
-                            obj["ATHLETE SCHOOL NAME"] = mainData.athlete.atheleteSchoolName;
-                        } else {
-                            obj["ATHLETE SCHOOL NAME"] = mainData.athlete.school.name;
-                        }
-
-                        var i = 0;
-                        var paymentMode;
-                        var payu;
-
-                        _.each(mainData.transaction, function (n) {
-                            if (i == 0) {
-                                obj["SELECTED PACKAGES"] = n.package.name;
-                                paymentMode = n.paymentMode;
-                                payu = n.PayuId;
+                function (callback) {
+                    Accounts.find({
+                            athlete: {
+                                $exists: true
+                            }
+                        }).lean().sort({
+                            createdAt: -1
+                        })
+                        .deepPopulate("athlete athlete.school athlete.package transaction transaction.package")
+                        .exec(function (err, found) {
+                            if (err || _.isEmpty(found)) {
+                                callback(null, {
+                                    error: "no data found",
+                                    data: data
+                                });
                             } else {
-                                obj["SELECTED PACKAGES"] = obj["SELECTED PACKAGES"] + "," + n.package.name;
-                                paymentMode = paymentMode + "," + n.paymentMode;
-                                payu = payu + "," + n.PayuId
+                                callback(null, found);
+                            }
+                        });
+                },
+                function (found, callback) {
+                    async.concatSeries(found, function (mainData, callback) {
+                            var obj = {};
+                            var currentPackName;
+                            var packPrice;
+                            var cgstPercent;
+                            var sgstPercent;
+                            var igstPercent;
+                            var finalPrice = 0;
+                            if (mainData.athlete) {
+                                if (mainData.athlete.sfaId) {
+                                    obj["SFA ID"] = mainData.athlete.sfaId;
+                                } else {
+                                    obj["SFA ID"] = " ";
+                                }
+                                if (mainData.athlete.middleName) {
+                                    obj["ATHLETE NAME"] = mainData.athlete.firstName + " " + mainData.athlete.middleName + " " + mainData.athlete.surname;
+                                } else {
+                                    obj["ATHLETE NAME"] = mainData.athlete.firstName + " " + mainData.athlete.surname;
+                                }
+                                if (mainData.athlete.atheleteSchoolName) {
+                                    obj["ATHLETE SCHOOL NAME"] = mainData.athlete.atheleteSchoolName;
+                                } else if (mainData.athlete.school) {
+                                    obj["ATHLETE SCHOOL NAME"] = mainData.athlete.school.name;
+                                } else {
+                                    obj["ATHLETE SCHOOL NAME"] = "";
+                                }
+                                currentPackName = mainData.athlete.package.name;
+                                packPrice = mainData.athlete.package.finalPrice;
+                                cgstPercent = mainData.athlete.package.cgstPercent;
+                                sgstPercent = mainData.athlete.package.sgstPercent;
+                                igstPercent = mainData.athlete.package.igstPercent;
+                                finalPrice = mainData.athlete.package.finalPrice;
+
+                            } else {
+                                obj["SFA ID"] = " ";
+                                obj["ATHLETE NAME"] = "";
+                                obj["ATHLETE SCHOOL NAME"] = "";
                             }
 
-                            i++;
-                        });
+                            var i = 0;
+                            var paymentMode;
+                            var payu;
 
-                        obj["CURRENT PACKAGE"] = mainData.athlete.package.name;
-                        obj["CURRENT PACKAGE AMOUNT"] = mainData.athlete.package.finalPrice;
-                        if (mainData.athlete.package.cgstPercent != null) {
-                            obj["CGST PERCENT"] = mainData.athlete.package.cgstPercent;
-                        } else {
-                            mainData.athlete.package.cgstPercent = 0;
-                        }
-                        if (mainData.cgst != null) {
-                            obj["CGST AMOUNT"] = mainData.cgst;
-                        } else {
-                            obj["CGST AMOUNT"] = 0;
-                        }
-                        if (mainData.athlete.package.sgstPercent != null) {
-                            obj["SGST PERCENT"] = mainData.athlete.package.sgstPercent;
-                        } else {
-                            mainData.athlete.package.sgstPercent = 0;
-                        }
-                        if (mainData.athlete.package.sgstAmt != null) {
-                            obj["SGST AMOUNT"] = mainData.sgst;
-                        } else {
-                            obj["SGST AMOUNT"] = 0;
-                        }
-                        if (mainData.igst != null) {
-                            obj["IGST PERCENT"] = mainData.igst;
-                        } else {
-                            mainData.athlete.package.igstPercent = 0;
-                        }
-                        if (mainData.igst != null) {
-                            obj["IGST AMOUNT"] = mainData.igst;
-                        } else {
-                            obj["IGST AMOUNT"] = 0;
-                        }
-                        obj["DISCOUNT"] = mainData.discount;
-                        if (obj["IGST AMOUNT"] > 0) {
-                            obj["TOTAL TO PAY"] = (mainData.athlete.package.finalPrice + obj["IGST AMOUNT"]) - mainData.discount;
-                        } else {
-                            obj["TOTAL TO PAY"] = (mainData.athlete.package.finalPrice + obj["CGST AMOUNT"] + obj["SGST AMOUNT"]) - mainData.discount;
-                        }
-                        obj["TOTAL PAID"] = mainData.totalPaid;
-                        obj["OUTSTANDING AMOUNT"] = mainData.outstandingAmount;
-                        if (mainData.upgrade == true) {
-                            obj["UPGRADED"] = "YES";
-                        } else {
-                            obj["UPGRADED"] = "NO";
-                        }
-                        if (mainData.transaction) {
-                            var len = mainData.transaction.length;
-                            if (len > 0) {
-                                len--;
-                                obj["LAST PAYMENT DATE"] = mainData.transaction[len].dateOfTransaction;
+                            _.each(mainData.transaction, function (n) {
+                                if (i == 0) {
+                                    obj["SELECTED PACKAGES"] = n.package.name;
+                                    paymentMode = n.paymentMode;
+                                    payu = n.PayuId;
+                                } else {
+                                    obj["SELECTED PACKAGES"] = obj["SELECTED PACKAGES"] + "," + n.package.name;
+                                    paymentMode = paymentMode + "," + n.paymentMode;
+                                    payu = payu + "," + n.PayuId
+                                }
+
+                                i++;
+                            });
+
+                            obj["CURRENT PACKAGE"] = currentPackName;
+                            obj["CURRENT PACKAGE AMOUNT"] = finalPrice;
+                            if (cgstPercent) {
+                                obj["CGST PERCENT"] = mainData.athlete.package.cgstPercent;
+                            } else {
+                                obj["CGST PERCENT"] = 0;
+                            }
+                            if (mainData.cgst != null) {
+                                obj["CGST AMOUNT"] = mainData.cgst;
+                            } else {
+                                obj["CGST AMOUNT"] = 0;
+                            }
+                            if (sgstPercent) {
+                                obj["SGST PERCENT"] = mainData.athlete.package.sgstPercent;
+                            } else {
+                                obj["SGST PERCENT"] = 0;
+                            }
+                            if (mainData.sgst != null) {
+                                obj["SGST AMOUNT"] = mainData.sgst;
+                            } else {
+                                obj["SGST AMOUNT"] = 0;
+                            }
+                            if (igstPercent) {
+                                obj["IGST PERCENT"] = igstPercent;
+                            } else {
+                                obj["IGST PERCENT"] = 0;
+                            }
+                            if (mainData.igst != null) {
+                                obj["IGST AMOUNT"] = mainData.igst;
+                            } else {
+                                obj["IGST AMOUNT"] = 0;
+                            }
+                            obj["DISCOUNT"] = mainData.discount;
+                            if (obj["IGST AMOUNT"] > 0) {
+                                obj["TOTAL TO PAY"] = (finalPrice + obj["IGST AMOUNT"]) - mainData.discount;
+                            } else {
+                                obj["TOTAL TO PAY"] = (finalPrice + obj["CGST AMOUNT"] + obj["SGST AMOUNT"]) - mainData.discount;
+                            }
+                            obj["TOTAL PAID"] = mainData.totalPaid;
+                            obj["OUTSTANDING AMOUNT"] = mainData.outstandingAmount;
+                            if (mainData.upgrade == true) {
+                                obj["UPGRADED"] = "YES";
+                            } else {
+                                obj["UPGRADED"] = "NO";
+                            }
+                            if (mainData.transaction) {
+                                var len = mainData.transaction.length;
+                                if (len > 0) {
+                                    len--;
+                                    obj["LAST PAYMENT DATE"] = mainData.transaction[len].dateOfTransaction;
+                                } else {
+                                    obj["LAST PAYMENT DATE"] = "";
+                                }
                             } else {
                                 obj["LAST PAYMENT DATE"] = "";
                             }
-                        } else {
-                            obj["LAST PAYMENT DATE"] = "";
-                        }
-                        obj["PAYMENT MODE"] = paymentMode;
+                            obj["PAYMENT MODE"] = paymentMode;
 
-                        obj["PAYU ID"] = payu;
-                        var j = 0;
-                        _.each(mainData.receiptId, function (n) {
-                            if (j == 0) {
-                                obj["RECEIPT NO"] = n;
-                            } else {
-                                obj["RECEIPT NO"] = obj["RECEIPT NO"] + "," + n
-                            }
-                            j++;
+                            obj["PAYU ID"] = payu;
+                            var j = 0;
+                            _.each(mainData.receiptId, function (n) {
+                                if (j == 0) {
+                                    obj["RECEIPT NO"] = n;
+                                } else {
+                                    obj["RECEIPT NO"] = obj["RECEIPT NO"] + "," + n
+                                }
+                                j++;
+                            });
+
+                            callback(null, obj);
+                        },
+                        function (err, singleData) {
+                            // Config.generateExcel("KnockoutIndividual", singleData, res);
+                            callback(null, singleData);
                         });
-                        callback(null, obj);
-                    },
-                    function (err, singleData) {
-                        // Config.generateExcel("KnockoutIndividual", singleData, res);
-                        callback(null, singleData);
-                    });
-            }
-        ], function (err, complete) {
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, complete);
-                // Config.generateExcel("KnockoutIndividual", complete, res);
-            }
-        })
+                }
+
+            ],
+            function (err, complete) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    // callback(null, complete);
+                    Config.generateExcel("KnockoutIndividual", complete, res);
+                }
+            })
     },
 
-    generateSchoolExcel: function (data, callback) {
+    generateSchoolExcel: function (data, res) {
         async.waterfall([
             function (callback) {
                 Accounts.find({
@@ -975,8 +1016,25 @@ var model = {
             function (found, callback) {
                 async.concatSeries(found, function (mainData, callback) {
                         var obj = {};
-                        obj["SFA ID"] = mainData.school.sfaID;
-                        obj["SCHOOL NAME"] = mainData.school.schoolName;
+                        var currentPackName;
+                        var packPrice;
+                        var cgstPercent;
+                        var sgstPercent;
+                        var igstPercent;
+                        var finalPrice = 0;
+                        if (mainData.school) {
+                            obj["SFA ID"] = mainData.school.sfaID;
+                            obj["SCHOOL NAME"] = mainData.school.schoolName;
+                            currentPackName = mainData.athlete.package.name;
+                            packPrice = mainData.athlete.package.finalPrice;
+                            cgstPercent = mainData.athlete.package.cgstPercent;
+                            sgstPercent = mainData.athlete.package.sgstPercent;
+                            igstPercent = mainData.athlete.package.igstPercent;
+                            finalPrice = mainData.athlete.package.finalPrice;
+                        } else {
+                            obj["SFA ID"] = "";
+                            obj["SCHOOL NAME"] = "";
+                        }
                         var i = 0;
                         var paymentMode;
                         var payu;
@@ -995,43 +1053,43 @@ var model = {
                             i++;
                         });
 
-                        obj["PACKAGE"] = mainData.athlete.package.name;
-                        obj["PACKAGE AMOUNT"] = mainData.athlete.package.finalPrice;
-                        if (mainData.athlete.package.cgstPercent != null) {
+                        obj["PACKAGE"] = currentPackName;
+                        obj["PACKAGE AMOUNT"] = finalPrice;
+                        if (cgstPercent) {
                             obj["CGST PERCENT"] = mainData.athlete.package.cgstPercent;
                         } else {
-                            mainData.athlete.package.cgstPercent = 0;
+                            obj["CGST PERCENT"] = 0;
                         }
-                        if (mainData.athlete.package.cgstAmt != null) {
+                        if (mainData.cgstAmt != null) {
                             obj["CGST AMOUNT"] = mainData.cgstAmount;
                         } else {
-                            mainData.athlete.package.cgstAmt = 0;
+                            obj["CGST AMOUNT"] = 0;
                         }
-                        if (mainData.athlete.package.sgstPercent != null) {
-                            obj["SGST PERCENT"] = mainData.athlete.package.sgstPercent;
+                        if (sgstPercent != null) {
+                            obj["SGST PERCENT"] = sgstPercent;
                         } else {
-                            mainData.athlete.package.sgstPercent = 0;
+                            obj["SGST PERCENT"] = 0;
                         }
-                        if (mainData.athlete.package.sgstAmt != null) {
+                        if (mainData.sgstAmt != null) {
                             obj["SGST AMOUNT"] = mainData.sgstAmount;
                         } else {
-                            mainData.athlete.package.sgstAmt = 0;
+                            obj["SGST AMOUNT"] = 0;
                         }
-                        if (mainData.athlete.package.igstPercent != null) {
-                            obj["IGST PERCENT"] = mainData.athlete.package.igstPercent;
+                        if (igstPercent != null) {
+                            obj["IGST PERCENT"] = igstPercent;
                         } else {
-                            mainData.athlete.package.igstPercent = 0;
+                            obj["IGST PERCENT"] = 0;
                         }
                         if (mainData.igstAmt != null) {
                             obj["IGST AMOUNT"] = mainData.igstAmount;
                         } else {
-                            mainData.athlete.package.igstAmt = 0;
+                            obj["IGST AMOUNT"] = 0;
                         }
                         obj["DISCOUNT"] = mainData.discount;
                         if (obj["IGST AMOUNT"] > 0) {
-                            obj["TOTAL TO PAY"] = (mainData.athlete.package.finalPrice + obj["IGST AMOUNT"]) - mainData.discount;
+                            obj["TOTAL TO PAY"] = (finalPrice + obj["IGST AMOUNT"]) - mainData.discount;
                         } else {
-                            obj["TOTAL TO PAY"] = (mainData.athlete.package.finalPrice + obj["CGST AMOUNT"] + obj["SGST AMOUNT"]) - mainData.discount;
+                            obj["TOTAL TO PAY"] = (finalPrice + obj["CGST AMOUNT"] + obj["SGST AMOUNT"]) - mainData.discount;
                         }
                         obj["TOTAL PAID"] = mainData.totalPaid;
                         obj["OUTSTANDING AMOUNT"] = mainData.outstandingAmount;
@@ -1074,8 +1132,8 @@ var model = {
             if (err) {
                 callback(err, null);
             } else {
-                callback(null, complete);
-                // Config.generateExcel("KnockoutIndividual", complete, res);
+                // callback(null, complete);
+                Config.generateExcel("KnockoutIndividual", complete, res);
             }
         })
     }

@@ -431,7 +431,7 @@ var model = {
                                             }
                                         };
                                         Transaction.update({
-                                            school: data.school
+                                            _id: foundTransact._id
                                         }, matchObj).exec(
                                             function (err, data3) {
                                                 if (err) {

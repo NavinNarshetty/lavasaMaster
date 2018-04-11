@@ -24,7 +24,7 @@ var controller = {
 
   generateAthleteExcel: function (req, res) {
     if (req.body) {
-      Accounts.generateAthleteExcel(req.body, res.callback);
+      Accounts.generateAthleteExcel(req.body, res);
     } else {
       res.json({
         "data": "Body not Found",
@@ -35,7 +35,7 @@ var controller = {
 
   generateSchoolExcel: function (req, res) {
     if (req.body) {
-      Accounts.generateSchoolExcel(req.body, res.callback);
+      Accounts.generateSchoolExcel(req.body, res);
     } else {
       res.json({
         "data": "Body not Found",
