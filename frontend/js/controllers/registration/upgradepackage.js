@@ -1,4 +1,4 @@
-myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateService, NavigationService, $timeout, $uibModal, $filter, configService, toastr, $state) {
+myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateService, NavigationService, $timeout, $uibModal, $filter, configService, toastr, $state, loginService) {
   $scope.template = TemplateService.getHTML("content/registration/upgrade-package.html");
   TemplateService.title = "School Registration Form"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
@@ -19,6 +19,17 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
     });
   }
   // SET FLAGS END
+  // CHECK LOGIN
+  loginService.loginGet(function(data){
+    $scope.loginCheck = data;
+    if ($scope.loginCheck.isLoggedIn == false) {
+      toastr.error("Please login to upgrade", "Error");
+      $state.go('registerplayer', {
+        type: $scope.flag
+      });
+    }
+  })
+  // CHECK LOGIN END
   if ($stateParams.id) {
     $scope.pageData = {
       // _id: "5ac374ad4a0b3006e5a7b97d"
