@@ -11,7 +11,7 @@
                     <p class="mb0">&nbsp;{{detail.sfaIdObj}}</p>
                     <p class="mb0" ng-if="detail.userType === 'school'">&nbsp;{{detail.schoolName}}</p>
                     <p class="mb0" ng-if="detail.userType === 'athlete'">&nbsp;{{detail.firstName}}&nbsp&nbsp{{detail.surname}}</p>
-                    <p class="mb0" ng-if="detail.userType === 'athlete'">{{userDetails.selectedEvent}}/{{userDetails.package.eventCount}}</p>
+                    <p class="mb0" ng-if="detail.userType === 'athlete'">{{userDetails.selectedEvent}}<span ng-if="userDetails.package.order!=1">/{{userDetails.package.eventCount}}</span>  </p>
                 </div>
                 
             </div>

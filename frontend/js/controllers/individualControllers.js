@@ -251,7 +251,7 @@ myApp.controller('IndividualSelectionCtrl', function ($scope, TemplateService, e
 });
 
 
-//Confirm-Fencing
+//Confirm-Fencing // Fencing And Archery (FA-confirm3)
 myApp.controller('ConfirmFencingCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, loginService, errorService, selectService, toastr, $stateParams, $filter, configService) {
     //Used to name the .html file
     $scope.sportTab = $filter('firstcapitalize')($stateParams.name);
@@ -377,7 +377,7 @@ myApp.controller('ConfirmFencingCtrl', function ($scope, TemplateService, Naviga
     });
 });
 
-//Confirm-Individual
+//Confirm-Individual // Individual (I-confirm2)
 myApp.controller('ConfirmIndividualCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, loginService, errorService, selectService, toastr, $stateParams, $filter, configService) {
     //Used to name the .html file
     $scope.sportTab = $filter('firstcapitalize')($stateParams.name);
@@ -473,8 +473,7 @@ myApp.controller('ConfirmIndividualCtrl', function ($scope, TemplateService, Nav
 
 });
 
-//Confirm-karate
-
+//Confirm-karate // Karate (K-confirm4)
 myApp.controller('ConfirmKarateCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, loginService, errorService, selectService, toastr, $stateParams, $filter, configService) {
     //Used to name the .html file
     $scope.sportTab = $filter('firstcapitalize')($stateParams.name);
@@ -526,8 +525,7 @@ myApp.controller('ConfirmKarateCtrl', function ($scope, TemplateService, Navigat
 
 });
 
-//Confirm-athlete-swimming
-
+//Confirm-athlete-swimming // Athletics Swimming And Shooting (AAS-confirm5)
 myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, NavigationService, loginService, $timeout, $state, selectService, toastr, $stateParams, $filter, configService, errorService) {
     //Used to name the .html file
     $scope.sportTab = $filter('firstcapitalize')($stateParams.name);
@@ -617,6 +615,10 @@ myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, Navigat
             $('.bs-searchbox input[type="text"]').attr('placeholder', 'Search Event');
         }, 200);
     }
+    $timeout(function () {
+        $('.selectpicker').selectpicker("refresh")
+        $('.bs-searchbox input[type="text"]').attr('placeholder', 'Search Event');
+    }, 200);
 
     var selectPickerClone = selectPicker(selectService.team,toastr,selectService.sportType,selectService.sportName,$filter);
 });
