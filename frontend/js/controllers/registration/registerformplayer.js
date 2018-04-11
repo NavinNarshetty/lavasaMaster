@@ -36,6 +36,7 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
         if (data.value == true) {
           $scope.formData = data.data;
           $scope.formData.password = "";
+          $scope.formData.termsAndCondition = false;
         } else {
           console.log("Error in ath get", data);
         }
