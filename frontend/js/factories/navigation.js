@@ -1,11 +1,12 @@
 // var imgPath = adminurl + "upload/readFile";
 // var uploadUrl = adminurl + "upload/";
+var masterAdminUrl = "http://master.sfanow.in/api/";
 var adminUrl2 = adminurl;
 var imgPath2 = adminUrl2 + "upload/readFile";
 var uploadUrl2 = adminUrl2 + "upload/";
 
 // var currentYears = ["2015", "2016"];
-myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeout, $log, ResultSportInitialization,$state) {
+myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeout, $log, ResultSportInitialization, $state) {
     var standardDelay = 1000;
     var navigation = [{
         name: "Home",
@@ -1367,41 +1368,50 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
                 callback(data);
             });
         },
-        updateUserDetailsJstorage: function(){
-            if($.jStorage.get("userDetails")){
-                if($.jStorage.get("userType") == "school"){
+        updateUserDetailsJstorage: function () {
+            if ($.jStorage.get("userDetails")) {
+                if ($.jStorage.get("userType") == "school") {
 
-                }else{
+                } else {
                     $http({
                         url: adminUrl2 + 'Athelete/getOne',
                         method: 'POST',
                         data: {
-                            "_id":$.jStorage.get("userDetails")._id
+                            "_id": $.jStorage.get("userDetails")._id
                         }
                     }).then(function (data) {
-                        console.log("data",data.data.data);
-                        $.jStorage.set("userDetails",data.data.data);
+                        console.log("data", data.data.data);
+                        $.jStorage.set("userDetails", data.data.data);
                     });
                 }
             }
         },
-        getStatusUpgrade: function(request, callback) {
-          $http({
-            url: adminUrl2 + 'Accounts/getStatus',
-            method: 'POST',
-            data: request
-          }).then(function(data){
-            callback(data);
-          });
+        getStatusUpgrade: function (request, callback) {
+            $http({
+                url: adminUrl2 + 'Accounts/getStatus',
+                method: 'POST',
+                data: request
+            }).then(function (data) {
+                callback(data);
+            });
         },
-        upgradeAccount: function(request, callback) {
-          $http({
-            url: adminUrl2 + 'Accounts/upgradeAccount',
-            method: 'POST',
-            data: request
-          }).then(function(data){
-            callback(data);
-          });
-        }
+        upgradeAccount: function (request, callback) {
+            $http({
+                url: adminUrl2 + 'Accounts/upgradeAccount',
+                method: 'POST',
+                data: request
+            }).then(function (data) {
+                callback(data);
+            });
+        },
+        getMasterData: function (request, url, callback) {
+            $http({
+                url: masterAdminUrl + url,
+                method: 'POST',
+                data: request
+            }).then(function (data) {
+                callback(data);
+            });
+        },
     };
 });

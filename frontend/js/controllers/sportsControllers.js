@@ -508,7 +508,7 @@ myApp.controller('SportsRulesCtrl', function ($scope, TemplateService, $state, N
 
 });
 
-myApp.controller('SportIndividualCtrl', function ($scope, TemplateService, toastr, $filter, NavigationService, $timeout, $state, $stateParams, loginService, errorService, configService) {
+myApp.controller('SportIndividualCtrl', function ($scope, TemplateService, toastr, $filter, $uibModal, NavigationService, $timeout, $state, $stateParams, loginService, errorService, configService) {
     $scope.template = TemplateService.getHTML("content/sport-individualdetail.html");
     TemplateService.title = "Registered Individual Detail";
     $scope.navigation = NavigationService.getNavigation();
@@ -591,12 +591,51 @@ myApp.controller('SportIndividualCtrl', function ($scope, TemplateService, toast
     $scope.getDetailRegisteredSport();
 
 
-    $scope.deletePlayer = function (id) {
+    $scope.deletePlayer = function (sportInfo) {
+        $scope.sportNameLists = [];
+        $scope.sportInfo = sportInfo;
+        $scope.sportName = sportInfo.name;
+        _.each($scope.getIndividualDetails, function (value) {
+            _.each(value.info, function (key) {
+                if (key.mainid == sportInfo.mainid && key.name !== sportInfo.name) {
+                    $scope.sportNameLists.push(key.name);
+                }
+            });
+        });
+        if ($.jStorage.get("userType") == 'school') {
+            if (sportInfo.middlename) {
+                $scope.sportInfo.athleteName = sportInfo.firstname + ' ' + sportInfo.middlename + ' ' + sportInfo.lastname + ' - ' + sportInfo.sfaid;
+            } else {
+                $scope.sportInfo.athleteName = sportInfo.firstname + ' ' + sportInfo.lastname + ' - ' + sportInfo.sfaid;
+            }
+        }
+        $scope.modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: 'views/modal/deleteSport.html',
+            // backdrop: 'static',
+            keyboard: false,
+            size: 'sm',
+            scope: $scope
+
+        });
+
+    };
+
+    $scope.confirmDelete = function () {
         var obj = {};
-        obj._id = id;
+        obj._id = $scope.sportInfo.mainid;
         var url = 'IndividualSport/delete';
+        console.log("id", $scope.sportInfo);
         NavigationService.deleteData(url, obj, function (data) {
             $scope.getDetailRegisteredSport();
+            if (data.value == true) {
+                if (($.jStorage.get("userType") == 'school')) {
+                    toastr.success($scope.sportInfo.athleteName + ' ' + 'registration for' + ' ' + $scope.sportInfo.sportName + ' ' + 'has been deleted successfully');
+                } else {
+                    toastr.success('Your registration for' + ' ' + $scope.sportInfo.sportName + ' ' + 'has been deleted successfully');
+                }
+
+            }
             if ($scope.getIndividualDetails === undefined) {
                 $state.go('sports-selection');
             }
@@ -700,56 +739,7 @@ myApp.controller('SportTeamCtrl', function ($scope, TemplateService, toastr, Nav
     };
     $scope.getDetailRegisteredSport();
 
-    $scope.deletePlayer = function (sportInfo) {
-        $scope.sportNameLists = [];
-        $scope.sportInfo = sportInfo;
-        $scope.sportName = sportInfo.name;
-        _.each($scope.getIndividualDetails, function (value) {
-            _.each(value.info, function (key) {
-                if (key.mainid == sportInfo.mainid && key.name !== sportInfo.name) {
-                    $scope.sportNameLists.push(key.name);
-                }
-            });
-        });
-        if ($.jStorage.get("userType") == 'school') {
-            if (sportInfo.middlename) {
-                $scope.sportInfo.athleteName = sportInfo.firstname + ' ' + sportInfo.middlename + ' ' + sportInfo.lastname + ' - ' + sportInfo.sfaid;
-            } else {
-                $scope.sportInfo.athleteName = sportInfo.firstname + ' ' + sportInfo.lastname + ' - ' + sportInfo.sfaid;
-            }
-        }
-        $scope.modalInstance = $uibModal.open({
-            animation: $scope.animationsEnabled,
-            templateUrl: 'views/modal/deleteSport.html',
-            // backdrop: 'static',
-            keyboard: false,
-            size: 'sm',
-            scope: $scope
 
-        });
-
-    };
-
-    $scope.confirmDelete = function () {
-        var obj = {};
-        obj._id = $scope.sportInfo.mainid;
-        var url = 'IndividualSport/delete';
-        console.log("id", obj._id);
-        NavigationService.deleteData(url, obj, function (data) {
-            $scope.getDetailRegisteredSport();
-            if (data.value == true) {
-                if (($.jStorage.get("userType") == 'school')) {
-                    toastr.success($scope.sportInfo.athleteName + ' ' + 'registration for' + ' ' + $scope.sportInfo.sportName + ' ' + 'has been deleted successfully');
-                } else {
-                    toastr.success('Your registration for' + ' ' + $scope.sportInfo.sportName + ' ' + 'has been deleted successfully');
-                }
-
-            }
-            if ($scope.getIndividualDetails === undefined) {
-                $state.go('sports-selection');
-            }
-        });
-    };
 
 
     // function for printing..
