@@ -250,6 +250,101 @@ myApp.controller('IndividualSelectionCtrl', function ($scope, TemplateService, e
 
 });
 
+//Confirm-Individual // Individual (I-confirm2)
+myApp.controller('ConfirmIndividualCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, loginService, errorService, selectService, toastr, $stateParams, $filter, configService) {
+    //Used to name the .html file
+    $scope.sportTab = $filter('firstcapitalize')($stateParams.name);
+    $scope.template = TemplateService.getHTML("content/confirmindividual.html");
+    TemplateService.title = "Confirm" + ' ' + $scope.sportTab;
+    $scope.navigation = NavigationService.getNavigation();
+    configService.getDetail(function (data) {
+        $scope.state = data.state;
+        $scope.year = data.year;
+        $scope.eventYear = data.eventYear;
+        $scope.sfaCity = data.sfaCity;
+        $scope.isCollege = data.isCollege;
+        $scope.type = data.type;
+    });
+    $scope.selectService = selectService;
+    $scope.redirectTo = $.jStorage.get("confirmPageKey");
+    // console.log($scope.selectService.team);
+    $scope.config = {
+        'weightsReq': false,
+        'varSet': false,
+        'selectAgeExpression': ''
+    };
+    if (selectService.sportName === 'Judo' || selectService.sportName === 'judo' || selectService.sportName === 'Boxing' || selectService.sportName === 'boxing' || selectService.sportName === 'Taekwondo' || selectService.sportName === 'taekwondo' || selectService.sportName === 'Sport MMA' || selectService.sportName === 'sport MMA' || selectService.sportName === 'Wrestling' || selectService.sportName === 'wrestling') {
+        $scope.withWeight = true;
+    } else {
+        $scope.withWeight = false;
+    }
+
+    function configureVariables() {
+        if ($scope.selectService && $scope.selectService.sportName) {
+            var st = $scope.selectService.sportName;
+            if (st == 'Judo' || st == 'Boxing' || st == 'Taekwondo' || st == 'Sport MMA' || st == 'Wrestling') {
+                $scope.config.weightsReq = true;
+                $scope.config.ageVar = 'athelete.ageSelected';
+                $scope.config.weightVar = 'athelete.sport';
+                $scope.config.selectAgeExpression = "age._id for age in athelete.ageGroups | orderBy:'_id' track by age._id";
+            } else {
+                $scope.config.weightsReq = false;
+                $scope.config.ageVar = 'athelete.sport';
+                $scope.config.weightVar = '';
+                $scope.config.selectAgeExpression = "age.data[0].sport as age._id for age in athelete.ageGroups | orderBy:'_id' track by age._id";
+            }
+        }
+    }
+
+
+    configureVariables();
+
+
+    $scope.formData = {};
+    loginService.loginGet(function (data) {
+        $scope.detail = data;
+        $scope.formData.schoolName = $scope.detail.schoolName;
+    });
+
+    var data={};
+    if($.jStorage.get("userDetails") === null){
+        if ($.jStorage.get("userType") == "school") {
+            data.type = "school";
+        }else{
+            data.type = "player";
+        }
+        $state.go('registerplayer', {
+            type: data.type
+        });
+    }else{
+        $scope.userDetails = $.jStorage.get("userDetails");
+        $scope.hideChangePassword=true;
+    }
+
+    $scope.logoutCandidate = function () {
+        loginService.logoutCandidate(function (data) {
+            console.log("data", data);
+            if (data.isLoggedIn === false) {
+                toastr.success('Successfully Logged Out', 'Logout Message');
+                $state.go('registerplayer', {
+                    type: data.type
+                });
+            } else {
+                toastr.error('Something went wrong', 'Logout Message');
+            }
+        });
+    };
+
+    $scope.tp = function (data) {
+        // console.log(data);
+    };
+
+    $scope.saveIt = function (team) {
+        // console.log(team);
+    };
+
+
+});
 
 //Confirm-Fencing // Fencing And Archery (FA-confirm3)
 myApp.controller('ConfirmFencingCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, loginService, errorService, selectService, toastr, $stateParams, $filter, configService) {
@@ -375,102 +470,6 @@ myApp.controller('ConfirmFencingCtrl', function ($scope, TemplateService, Naviga
     $('selectpicker').on('hidden.bs.select', function (e) {
         console.log("hidden",e);
     });
-});
-
-//Confirm-Individual // Individual (I-confirm2)
-myApp.controller('ConfirmIndividualCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, loginService, errorService, selectService, toastr, $stateParams, $filter, configService) {
-    //Used to name the .html file
-    $scope.sportTab = $filter('firstcapitalize')($stateParams.name);
-    $scope.template = TemplateService.getHTML("content/confirmindividual.html");
-    TemplateService.title = "Confirm" + ' ' + $scope.sportTab;
-    $scope.navigation = NavigationService.getNavigation();
-    configService.getDetail(function (data) {
-        $scope.state = data.state;
-        $scope.year = data.year;
-        $scope.eventYear = data.eventYear;
-        $scope.sfaCity = data.sfaCity;
-        $scope.isCollege = data.isCollege;
-        $scope.type = data.type;
-    });
-    $scope.selectService = selectService;
-    $scope.redirectTo = $.jStorage.get("confirmPageKey");
-    // console.log($scope.selectService.team);
-    $scope.config = {
-        'weightsReq': false,
-        'varSet': false,
-        'selectAgeExpression': ''
-    };
-    if (selectService.sportName === 'Judo' || selectService.sportName === 'judo' || selectService.sportName === 'Boxing' || selectService.sportName === 'boxing' || selectService.sportName === 'Taekwondo' || selectService.sportName === 'taekwondo' || selectService.sportName === 'Sport MMA' || selectService.sportName === 'sport MMA' || selectService.sportName === 'Wrestling' || selectService.sportName === 'wrestling') {
-        $scope.withWeight = true;
-    } else {
-        $scope.withWeight = false;
-    }
-
-    function configureVariables() {
-        if ($scope.selectService && $scope.selectService.sportName) {
-            var st = $scope.selectService.sportName;
-            if (st == 'Judo' || st == 'Boxing' || st == 'Taekwondo' || st == 'Sport MMA' || st == 'Wrestling') {
-                $scope.config.weightsReq = true;
-                $scope.config.ageVar = 'athelete.ageSelected';
-                $scope.config.weightVar = 'athelete.sport';
-                $scope.config.selectAgeExpression = "age._id for age in athelete.ageGroups | orderBy:'_id' track by age._id";
-            } else {
-                $scope.config.weightsReq = false;
-                $scope.config.ageVar = 'athelete.sport';
-                $scope.config.weightVar = '';
-                $scope.config.selectAgeExpression = "age.data[0].sport as age._id for age in athelete.ageGroups | orderBy:'_id' track by age._id";
-            }
-        }
-    }
-
-
-    configureVariables();
-
-
-    $scope.formData = {};
-    loginService.loginGet(function (data) {
-        $scope.detail = data;
-        $scope.formData.schoolName = $scope.detail.schoolName;
-    });
-
-    var data={};
-    if($.jStorage.get("userDetails") === null){
-        if ($.jStorage.get("userType") == "school") {
-            data.type = "school";
-        }else{
-            data.type = "player";
-        }
-        $state.go('registerplayer', {
-            type: data.type
-        });
-    }else{
-        $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideChangePassword=true;
-    }
-
-    $scope.logoutCandidate = function () {
-        loginService.logoutCandidate(function (data) {
-            console.log("data", data);
-            if (data.isLoggedIn === false) {
-                toastr.success('Successfully Logged Out', 'Logout Message');
-                $state.go('registerplayer', {
-                    type: data.type
-                });
-            } else {
-                toastr.error('Something went wrong', 'Logout Message');
-            }
-        });
-    };
-
-    $scope.tp = function (data) {
-        // console.log(data);
-    };
-
-    $scope.saveIt = function (team) {
-        // console.log(team);
-    };
-
-
 });
 
 //Confirm-karate // Karate (K-confirm4)
@@ -622,7 +621,6 @@ myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, Navigat
 
     var selectPickerClone = selectPicker(selectService.team,toastr,selectService.sportType,selectService.sportName,$filter);
 });
-
 
 myApp.controller('IndividualCongratsCtrl', function ($scope, TemplateService, toastr, NavigationService, $timeout, $state, $stateParams, loginService, errorService, configService) {
     $scope.template = TemplateService.getHTML("content/individual-congrats.html");

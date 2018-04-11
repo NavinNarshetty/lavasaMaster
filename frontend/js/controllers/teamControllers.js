@@ -620,6 +620,7 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
 
 });
 
+//(CT-confirm1)
 myApp.controller('ConfirmTeamCtrl', function ($scope, TemplateService, NavigationService, $timeout, toastr, $state, $stateParams, loginService, selectService, $filter, errorService, configService) {
     $scope.template = TemplateService.getHTML("content/confirmteam.html");
     TemplateService.title = "Confirm Team"; //This is the Title of the Website
