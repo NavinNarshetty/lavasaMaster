@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>
+    </title>
+    <style>
+        @font-face {
+            font-family: 'TitilliumWeb-Bold';
+            src: url("../font/TitilliumWeb-Bold.ttf");
+        }
+
+        @font-face {
+            font-family: 'TitilliumWeb-Regular';
+            src: url("../font/TitilliumWeb-Regular.ttf");
+        }
+
+        .body {
+            font-family: TitilliumWeb-Regular;
+        }
+
+        .img-responsive {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .inline-block {
+            display: inline-block;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .list-inline>li {
+            display: inline-block;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        a {
+            text-decoration: none;
+
+        }
+
+        a:hover {
+            text-decoration: underline !important;
+        }
+
+        table {
+            width: 600px;
+            margin: 0 auto;
+
+
+        }
+
+        h2:before {
+            content: '';
+            width: 100px;
+            height: 0px;
+            color: #00aaff;
+            top: 50%;
+            display: block;
+            border-bottom: 1px solid #00aaff;
+            left: 150px;
+            position: absolute;
+            -ms-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+
+        h2:after {
+            content: '';
+            width: 100px;
+            height: 0px;
+            color: #00aaff;
+            top: 50%;
+            display: block;
+            border-bottom: 1px solid #00aaff;
+            right: 50px;
+            position: absolute;
+            -ms-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+
+        table,
+        .table {
+            border-spacing: 0;
+            border-collapse: collapse;
+        }
+
+        .table>thead>tr>th,
+        .table>tbody>tr>td {
+            padding: 8px;
+            font-weight: 400;
+            border: 1px solid #000;
+        }
+
+        .table>tbody>tr>td:nth-child(2),
+        .table>thead>tr>th:nth-child(2) {
+            text-align: left;
+        }
+
+        a {
+            cursor: pointer;
+        }
+
+        .mg-bottom {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <thead>
+            <tr>
+                <td>
+                    <div class="logo text-center" style="margin-top: 30px;">
+                        <img src="../img/logo.png" class="img-responsive" style="margin: 0 auto;">
+                        <br>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center">
+                    <span style="font-family: TitilliumWeb-Regular;color:#0a1a72;font-size: 20px;">SPORTS REGISTRATIONS </span>
+                    <h2 style="margin:10px;position: relative;font-family: TitilliumWeb-Bold;color:#00aaff;font-size: 27px;">SFA MUMBAI 2017 </h2>
+                    <!-- Integrate -->
+                    <h2 style="margin:10px;position:relative;font-family:TitilliumWeb-Bold;color:#00aaff;font-size: 27px;">SFA
+                        <%=city%>
+                            <%=eventYear%>
+                    </h2>
+                    <!-- Integrate End -->
+                </td>
+
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>
+                    <div class="main-div" style="padding: 0px 54px; text-align: justify; font-family: TitilliumWeb-Regular;font-size: 17px;">
+                        <p style="margin-bottom: 0px;">Congratulations! You have successfully registered
+                            <span style="font-weight: bold;">Number of players</span> for
+                            <span style="font-weight: bold;">Sport</span>. Please find below the details for the same:
+                        </p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="padding: 0px 54px;">
+                        <p class="text-center" style="border: 1px solid #000;padding: 8px;margin-bottom: 0px;font-weight: bold;font-family:TitilliumWeb-Bold;">
+                            <span style="font-weight: bold;">Sport</span> - School SFA ID:
+                            <span style="font-weight: bold;"> MS…..</span>
+                        </p>
+                    </div>
+
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <div style="padding: 0px 54px;">
+                        <table class="table">
+                            <thead style="text-align: center;font-weight: bold;font-family:TitilliumWeb-Bold;">
+                                <th>SR.NO</th>
+                                <th>Athlete Name</th>
+                                <th>Athlete SFA ID </th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="3">
+                                        <div style="margin-top:-15px;">
+                                            <p class="text-center" style="margin-bottom: 0px;">
+                                                <span style="font-weight: bold;font-family:TitilliumWeb-Bold;">Basketball Boys U-16 - Team SFA ID:
+                                                    <%=teamId%>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr style="text-align: center">
+                                    <td>1.</td>
+                                    <td>Captian Name1</td>
+                                    <td>MA-17-1234</td>
+                                </tr>
+                                <tr style="text-align: center">
+                                    <td>2.</td>
+                                    <td> Goalkeeper</td>
+                                    <td>MA-17-1234</td>
+                                </tr>
+                                <tr style="text-align: center">
+                                    <td>3.</td>
+                                    <td> Name1</td>
+                                    <td>MA-17-1234</td>
+                                </tr>
+                                <tr style="text-align: center">
+                                    <td>4.</td>
+                                    <td> Name1</td>
+                                    <td>MA-17-1234</td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr>
+                                    <td colspan="3">
+                                        <div style="margin-top:-15px;">
+                                            <p class="text-center" style="margin-bottom: 0px;">
+                                                <span style="font-weight: bold;font-family:TitilliumWeb-Bold;">Basketball Boys U-16 - Team SFA ID:
+                                                    <%=teamId%>
+                                                </span>
+                                            </p>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                                <tr style="text-align: center">
+                                    <td>1.</td>
+                                    <td>Captian Name1</td>
+                                    <td>MA-17-1234</td>
+                                </tr>
+                                <tr style="text-align: center">
+                                    <td>2.</td>
+                                    <td> Goalkeeper</td>
+                                    <td>MA-17-1234</td>
+                                </tr>
+                                <tr style="text-align: center">
+                                    <td>3.</td>
+                                    <td> Name1</td>
+                                    <td>MA-17-1234</td>
+                                </tr>
+                                <tr style="text-align: center">
+                                    <td>4.</td>
+                                    <td> Name1</td>
+                                    <td>MA-17-1234</td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr>
+                                    <td colspan="3">
+                                        <div style="margin-top:-15px;">
+                                            <p class="text-center" style="margin-bottom: 0px;">
+                                                <span style="font-weight: bold;font-family:TitilliumWeb-Bold;">Basketball Boys U-16 - Team SFA ID:
+                                                    <%=teamId%>
+                                                </span>
+                                            </p>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                                <tr style="text-align: center">
+                                    <td>1.</td>
+                                    <td>Captian Name1</td>
+                                    <td>MA-17-1234</td>
+                                </tr>
+                                <tr style="text-align: center">
+                                    <td>2.</td>
+                                    <td> Goalkeeper</td>
+                                    <td>MA-17-1234</td>
+                                </tr>
+                                <tr style="text-align: center">
+                                    <td>3.</td>
+                                    <td> Name1</td>
+                                    <td>MA-17-1234</td>
+                                </tr>
+                                <tr style="text-align: center">
+                                    <td>4.</td>
+                                    <td> Name1</td>
+                                    <td>MA-17-1234</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <div style="padding: 0px 54px; font-weight: bold;">
+                        <p style="margin-bottom: 0px"> Kindly Note:</p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 0px 54px;">
+                    <ul>
+                        <li class="mg-bottom">
+                            All changes in your sports registration can be made via the sports registration (STEP 2) using your SFA ID and Password before
+                            the last date of registrations.
+                        </li>
+                        <li class="mg-bottom">
+                            Registrations for SFA Championship 2018-19, City Name will be closed on 30th September 2018
+                        </li>
+                        <li class="mg-bottom">
+                            A final list of sports wise and event wise teams and players will be published on www.sfanow.in at least 25 days prior to
+                            the Championship. In case there is a team or a player who is missing from that list SFA must
+                            be informed of the same within 48 hours.
+                        </li>
+                        <li class="mg-bottom">
+                            All draws and schedules will be published on our website 15 days prior to start of the Championship
+                        </li>
+                        <li class="mg-bottom">
+                            Click here to view the rules & regulations of
+                            <span style="font-weight: bold;">SPORT NAME</span>. Kindly note the rules & regulations are subject to change till the beginning
+                            of your sport at the Championship. We recommend that all players to view rules and regulations
+                            of their sport 1 day prior to the Championship.
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="padding: 0px 54px; ">
+                        <p style="margin-top: 20px; font-weight: bold;"> Thank You </p>
+                        <p style="font-family:TitilliumWeb-Bold; font-weight: bold;">Regards,
+                            <br>Team SFA</p>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        <!-- Integrate -->
+        <tbody hidden>
+            <tr>
+                <td>
+                    <div class="main-div" style="padding: 0px 54px; text-align: justify; font-family: TitilliumWeb-Regular;font-size: 17px;">
+                        <p style="margin-bottom: 0px;">Congratulations! You have successfully registered
+                            <span style="font-weight: bold;">
+                                <%=totalAthlete%> players</span> for
+                            <span style="font-weight: bold;">
+                                <%=completeSportInfo[0].sportName%>
+                            </span>. Please find below the details for the same:
+                        </p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="padding: 0px 54px;">
+                        <p class="text-center" style="border: 1px solid #000;padding: 8px;margin-bottom: 0px;font-weight: bold;font-family:TitilliumWeb-Bold;">
+                            <span style="font-weight: bold;">
+                                <%=completeSportInfo[0].sportName%>
+                            </span> - School SFA ID:
+                            <span style="font-weight: bold;">
+                                <%=schoolSFA%>
+                            </span>
+                        </p>
+                    </div>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="padding: 0px 54px;">
+                        <table class="table">
+                            <thead style="text-align: center;">
+                                <th style="font-weight:600;">Sr.No.</th>
+                                <th style="font-weight:600;">Athlete SFA ID-Name</th>
+                                <th style="font-weight:600;">Athlete Gender </th>
+                                <th style="font-weight:600;">Athlete AgeGroup </th>
+                            </thead>
+                            <tbody>
+                                <%_.each(completeSportInfo,function(mainData){%>
+                                    <tr>
+                                        <td colspan="4">
+                                            <div style="margin-top: -15px">
+                                                <p class="text-center" style="padding: 8px;margin-bottom: 0px;">
+                                                    <span style="font-weight: bold;font-family:TitilliumWeb-Bold;">
+                                                        <%=mainData.eventName%>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <% _.each(mainData.athleteData,function(data){%>
+                                        <tr style="text-align: center;">
+                                            <td>
+                                                <%=data.srno%>
+                                            </td>
+                                            <td>
+                                                <%=data.sfaid%>-
+                                                    <%=data.name%>
+                                            </td>
+                                            <td>
+                                                <%=data.gender%>
+                                            </td>
+                                            <td>
+                                                <%=data.ageGroup%>
+                                            </td>
+                                        </tr>
+                                        <%})%>
+                                            <%})%>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <div style="padding: 0px 54px; font-weight: bold; ">
+                        <p style="margin-bottom: 0px "> Kindly Note:</p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 0px 54px; ">
+                    <ul>
+                        <li class="mg-bottom ">
+                            All changes in your sports registration can be made via the sports registration (STEP 2) using your SFA ID and Password before
+                            the last date of registrations.
+                        </li>
+                        <li class="mg-bottom ">
+                            Registrations for SFA Championship 2018-19, City Name will be closed on 30th September 2018
+                        </li>
+                        <li class="mg-bottom ">
+                            A final list of sports wise and event wise teams and players will be published on www.sfanow.in at least 25 days prior to
+                            the Championship. In case there is a team or a player who is missing from that list SFA must
+                            be informed of the same within 48 hours.
+                        </li>
+                        <li class="mg-bottom ">
+                            All draws and schedules will be published on our website 15 days prior to start of the Championship
+                        </li>
+                        <li class="mg-bottom ">
+                            Click here to view the rules & regulations of
+                            <span style="font-weight: bold; ">SPORT NAME</span>. Kindly note the rules & regulations are subject to change till the beginning
+                            of your sport at the Championship. We recommend that all players to view rules and regulations
+                            of their sport 1 day prior to the Championship.
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="padding: 0px 54px; ">
+                        <p style="margin-top: 20px; font-weight: bold; "> Thank You </p>
+                        <p style="font-family:TitilliumWeb-Bold; font-weight: bold; ">Regards,
+                            <br>Team SFA</p>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        <!-- Integrate End-->
+        <tfoot>
+            <tr>
+                <td>
+                    <div class="blue-footer " style="background:#0a1a72;font-family: TitilliumWeb-Regular; ">
+                        <ul class="list-inline " style="padding: 8px 35px;font-size: 16px;font-weight: bold ">
+                            <li>
+                                <img src="../img/g1.png " alt=" ">
+                            </li>
+                            <li style="vertical-align: top;padding-left: 0; ">
+                                <a href=" " style="color:#fff;text-decoration: none; ">www.sfanow.in</a>
+                            </li>
+                            <li>
+                                <img src="../img/g2.png " alt=" ">
+                            </li>
+                            <li style="vertical-align: top;padding-left: 0; ">
+                                <a href=" " style="color:#fff;text-decoration: none; ">/sportsforallnow</a>
+                            </li>
+                            <li>
+                                <img src="../img/g3.png " alt=" ">
+                            </li>
+                            <li style="vertical-align: top;padding-left: 0; ">
+                                <a href=" " style="color:#fff;text-decoration: none; ">/sfanow</a>
+                            </li>
+                            <li>
+                                <img src="../img/g4.png " alt=" ">
+                            </li>
+                            <li style="vertical-align: top;padding-left: 0; ">
+                                <a href=" " style="color:#fff;text-decoration: none; ">/sfanow </a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+
+</html>
