@@ -1672,7 +1672,7 @@ var model = {
                 } else {
                     temp = temp - 1;
                 }
-                emailData.prevPaidAmount = final.
+                // emailData.prevPaidAmount = final.
                 callback(null, emailData);
             }
 
