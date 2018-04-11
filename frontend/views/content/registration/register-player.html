@@ -77,7 +77,7 @@
     <!-- HEADER END -->
     <!-- PACKAGE TABLE -->
     <section class="registerplayer-package">
-        <sfa-package-table user="{{formData.type}}" caption="hello" cashback="true"></sfa-package-table>
+      <sfa-package-table user="{{formData.type}}" caption="hello" cashback="true"></sfa-package-table>
     </section>
     <!-- PACKAGE TABLE END -->
     <!-- REGISTER FORM  -->
@@ -86,7 +86,8 @@
         <button class="btn btn-mainregister" ng-click="registerOpen();" ng-class="{'active': showForm}">Click Here To Register For SFA Mumbai 2018-19</button>
       </div>
       <div class="registerform-holder" ng-show="showForm">
-        <p class="registerform-intro">All <span ng-if="pageType == 'player'">players</span><span ng-if="pageType == 'school'">schools</span> must complete the following two step registration process</p>
+        <p class="registerform-intro">All <span ng-if="pageType == 'player'">players</span><span ng-if="pageType == 'school'">schools</span> must complete
+          the following two step registration process</p>
         <!-- STEP BUTTONS -->
         <ul class="list-inline">
           <li>
@@ -113,14 +114,29 @@
           <div class="registerform-step1" ng-show="stepForm">
             <p>Kindly Enter</p>
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="SFA ID">
-              <div class="input-group-btn">
+              <!-- <input type="text" class="form-control" placeholder="SFA ID"> -->
+              <ui-select name="playername" ng-model="searchSfaObj.sfaId" theme="bootstrap" required>
+                <ui-select-match placeholder="search by Sfa ID and Name" allow-clear="true" title="{{$select.selected.fullName}}">
+                  {{$select.selected.sfaId}}
+                </ui-select-match>
+                <ui-select-choices refresh-delay="0" repeat="player as player in masterData | filter: $select.search" refresh="masterSearchSFA($select.search)">
+                  <div>
+                    <span class="text-capitalize" ng-bind-html="player.fullName"></span>
+                  </div>
+                </ui-select-choices>
+              </ui-select>
+
+              <!-- <input type="text" class="form-control" placeholder="SFA ID" ng-model="formData.keyword" ng-change="getMasterData(formData)"> -->
+              <div class="input-group-btn" ng-click="generateOtp(searchSfaObj)">
                 <button class="btn m-clear">Send OTP</button>
               </div>
+              <!-- <div class="input-group-btn">
+                <button class="btn m-clear">Send OTP</button>
+              </div> -->
             </div>
-            <p>An OTP will be sent to your registered Mobile Number & Email Id</p>
-            <div class="">
-              <p>An OTP has been sent to your registered Mobile no: <span>98xxxxxx14</span> | Email Id: <span>xxxxx@gmail.com</span></p>
+            <p ng-if="!showRegisteredCredentials">An OTP will be sent to your registered Mobile Number & Email Id</p>
+            <div class="" ng-if="showRegisteredCredentials">
+              <p>An OTP has been sent to your registered Mobile no: <span>{{registeredMobileNo|securedEmailmobile:'mobile'}}</span>                | Email Id: <span>{{registeredEmail|securedEmailmobile:'email'}}</span></p>
               <div class="input-group forgototp-input">
                 <input type="number" class="form-control" placeholder="OTP">
                 <div class="input-group-btn">
@@ -160,7 +176,7 @@
               <a class="btn btn-link" ng-click="showForgotPassword()">Forgot Password</a>
             </div>
           </div>
-          <div class="text-center" ng-if="showErrorMsg" >
+          <div class="text-center" ng-if="showErrorMsg">
             <ul class="list-inline">
               <li>
                 <a ui-sref="sports-selection">Go to selection page</a>

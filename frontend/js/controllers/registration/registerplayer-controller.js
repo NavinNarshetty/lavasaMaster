@@ -26,7 +26,7 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
     $scope.pageType = 'school';
     $scope.formData.type = 'school';
     $scope.validateOtpObj.type = 'school';
-    if ($scope.flag = 'school') {
+    if ($scope.flag == 'school') {
       $scope.displayType = 'school';
       TemplateService.title = "School Registration";
     } else if ($scope.flag == 'college') {
@@ -185,17 +185,17 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
 
   // LOGOUT FUNCTION
   $scope.logoutCandidate = function () {
-      console.log("iminnn");
-      loginService.logoutCandidate(function (data) {
-          console.log("data", data);
-          if (data.isLoggedIn === false) {
-            $scope.showErrorMsg = false;
-              console.log("imiinnnnnnnnnnn");
-              toastr.success('Successfully Logged Out', 'Logout Message');
-          } else {
-              toastr.error('Something went wrong', 'Logout Message');
-          }
-      });
+    console.log("iminnn");
+    loginService.logoutCandidate(function (data) {
+      console.log("data", data);
+      if (data.isLoggedIn === false) {
+        $scope.showErrorMsg = false;
+        console.log("imiinnnnnnnnnnn");
+        toastr.success('Successfully Logged Out', 'Logout Message');
+      } else {
+        toastr.error('Something went wrong', 'Logout Message');
+      }
+    });
   };
   // LOGOUT FUNCTION END
 
@@ -537,6 +537,64 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
     });
   }
   $scope.getTestimonials();
+  //GET MASTER DATA
+
+  $scope.searchSfaObj.page = 1;
+  $scope.searchSfaObj.keyword = '';
+  $scope.masterSearchSFA = function (formData) {
+    $scope.searchSfaObj.keyword = formData;
+    var url;
+    if ($.jStorage.get("userType") != null && $.jStorage.get("userType") === 'school') {
+      url = 'Registration/search';
+    } else {
+      url = 'Athelete/search';
+    }
+    NavigationService.getMasterData($scope.searchSfaObj, url, function (data) {
+      if (data.data.value) {
+        $scope.masterData = data.data.data.results;
+        _.each($scope.masterData, function (key) {
+          if ($.jStorage.get("userType") != null && $.jStorage.get("userType") === 'school') {
+            key.sfaId = key.sfaID;
+            key.fullName = key.sfaID + ' - ' + key.schoolName;
+          } else {
+            if (key.middleName) {
+              key.fullName = key.sfaId + ' - ' + key.firstName + ' ' + key.middleName + ' ' + key.surname;
+            } else {
+              key.fullName = key.sfaId + ' - ' + key.firstName + ' ' + key.surname;
+            }
+
+          }
+
+        });
+        console.log("$scope.masterData ", $scope.masterData);
+      }
+    });
+
+  };
+
+  //generateOtp
+
+  $scope.generateOtp = function (otpObj) {
+    var obj = {};
+    var url;
+    if ($scope.formData.type == 'school') {
+      url = 'Registration/getOTP';
+    } else {
+      url = 'Athelete/getOTP';
+    }
+    obj.sfaId = otpObj.sfaId.sfaId;
+    obj.mobile = otpObj.sfaId.mobile;
+    obj.email = otpObj.sfaId.email;
+    $scope.showRegisteredCredentials = true;
+    $scope.registeredMobileNo = otpObj.sfaId.mobile;
+    $scope.registeredEmail = otpObj.sfaId.email;
+    console.log("obj", obj);
+    NavigationService.getOTP(obj, url, function (data) {
+      if (data) {
+        console.log("data", data);
+      }
+    });
+  };
   // GET TESTIMONIALS END
   // API CALLS END
   // JSONS

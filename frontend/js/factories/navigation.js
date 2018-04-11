@@ -1413,5 +1413,22 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
                 callback(data);
             });
         },
+        getOTP: function (request, url, callback) {
+            $http({
+                url: adminUrl2 + url,
+                method: 'POST',
+                data: request
+            }).then(function (data) {
+                callback(data);
+            });
+        },
+
+        apiCallWithDataMaster: function (url, formData, callback) {
+            $http.post(masterAdminUrl + url, formData).then(function (data) {
+                data = data.data;
+                callback(data);
+
+            });
+        },
     };
 });
