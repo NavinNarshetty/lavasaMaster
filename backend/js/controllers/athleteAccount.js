@@ -110,6 +110,8 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
         if (key.package._id == upgradePackage) {
           console.log("key i am in value")
           key.currentAthletePackage = true;
+        } else {
+          key.currentAthletePackage = false;
         }
       })
     }
@@ -205,6 +207,17 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
   }
   // SAVE END
 
+  // GENERATE EXCEL
+  $scope.generateExcel = function () {
+    $scope.url = "Accounts/generateAthleteExcel";
+    $scope.constraints = {};
+    $scope.constraints.file = "Athleteaccount"
+    NavigationService.generateExcelWithoutData($scope.url, $scope.constraints, function (data) {
+      console.log(data, "excel");
+      $state.reload();
+    });
+  }
+  // GENERATE EXCEL END
   $scope.athleteAccountData = {
     payementMode: 'Online,Cash,Online,Cash',
     packagea: '2000',

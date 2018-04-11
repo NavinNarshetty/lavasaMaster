@@ -35,6 +35,18 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
     }
   };
 
+  // GENERATE EXCEL
+  $scope.generateExcel = function () {
+    $scope.url = "Accounts/generateSchoolExcel";
+    $scope.constraints = {};
+    $scope.constraints.file = "Schoolaccount"
+    NavigationService.generateExcelWithoutData($scope.url, $scope.constraints, function (data) {
+      console.log(data, "excel");
+      $state.reload();
+    });
+  }
+  // GENERATE EXCEL END
+
   // VIEW TABLE
   $scope.viewTable = function () {
     $scope.url = "Accounts/getSchoolAccount";
@@ -202,4 +214,6 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
     $scope.viewTable();
   }
   // SAVE END
+
+
 })
