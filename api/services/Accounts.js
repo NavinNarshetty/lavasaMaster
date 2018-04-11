@@ -620,7 +620,7 @@ var model = {
             });
     },
 
-    updateAthletePaymentStatusOld: function (data, callback) {
+    updateAthletePaymentStatus: function (data, callback) {
         async.waterfall([
                 function (callback) {
                     Athelete.findOne({ //finds one with refrence to id
@@ -712,7 +712,7 @@ var model = {
             });
     },
 
-    updateSchoolPaymentStatusOld: function (data, callback) {
+    updateSchoolPaymentStatus: function (data, callback) {
         async.waterfall([
                 function (callback) {
                     ConfigProperty.find().lean().exec(function (err, property) {
@@ -814,425 +814,271 @@ var model = {
             });
     },
 
-    updateAthletePaymentStatus: function (data, callback) {
+    generateAthleteExcel: function (data, callback) {
         async.waterfall([
-                function (callback) {
-                    Athelete.findOne({ //finds one with refrence to id
-                        firstName: data.firstName,
-                        surname: data.surname,
-                        email: data.email,
-                    }).lean().exec(function (err, found) {
-                        if (err) {
-                            callback(err, null);
-                        } else if (_.isEmpty(found)) {
-                            console.log("empty in Athelete found");
-                            callback(null, "Data is empty");
-                        } else {
-                            async.waterfall([
-                                    function (callback) {
-                                        Accounts.findOne({
-                                            athlete: found._id
-                                        }).lean().exec(function (err, accountsData) {
-                                            if (err || _.isEmpty(accountsData)) {
-                                                callback(null, {
-                                                    error: "no data found",
-                                                    data: found
-                                                });
-                                            } else {
-                                                found.accounts = accountsData;
-                                                callback(null, found);
-                                            }
-                                        });
-                                    },
-                                    function (found, callback) {
-                                        data.athlete = true;
-                                        Transaction.saveUpdateTransaction(data, found, function (err, vData) {
-                                            if (err || _.isEmpty(vData)) {
-                                                callback(null, {
-                                                    error: "no data found",
-                                                    data: found
-                                                });
-                                            } else {
-                                                console.log("vData", vData.package);
-                                                found.packageNew = vData.package;
-                                                callback(null, found);
-                                            }
-                                        });
-                                    },
-                                ],
-                                function (err, complete) {
-                                    if (err) {
-                                        callback(err, callback);
-                                    } else {
-                                        callback(null, complete);
-                                    }
-                                });
+            function (callback) {
+                Accounts.find({
+                        athlete: {
+                            $exists: true
                         }
-                    });
-                },
-                function (found, callback) {
-                    if (found.error) {
-                        callback(null, found);
-                    } else {
-                        console.log("found in update", found);
-
-                        var matchObj = {
-                            $set: {
-                                package: found.packageNew
-                            }
-                        };
-                        Athelete.update({
-                            _id: found._id
-                        }, matchObj).exec(
-                            function (err, data3) {
-                                if (err) {
-                                    console.log(err);
-                                    callback(err, null);
-                                } else if (data3) {
-                                    callback(null, found);
-                                }
+                    }).lean()
+                    .deepPopulate("athlete athlete.school athlete.package transaction transaction.package")
+                    .exec(function (err, found) {
+                        if (err || _.isEmpty(found)) {
+                            callback(null, {
+                                error: "no data found",
+                                data: data
                             });
-                    }
-                },
-                function (found, callback) {
-                    async.waterfall([
-                            function (callback) {
-                                ConfigProperty.find().lean().exec(function (err, property) {
-                                    if (err) {
-                                        callback(err, null);
-                                    } else {
-                                        if (_.isEmpty(property)) {
-                                            callback(null, []);
-                                        } else {
-                                            callback(null, property);
-                                        }
-                                    }
-                                });
-                            },
-                            function (property, callback) {
-                                Athelete.find({
-                                    _id: found._id
-                                }).lean().deepPopulate("package").exec(
-                                    function (err, athleteData) {
-                                        if (err) {
-                                            console.log(err);
-                                            callback(err, null);
-                                        } else if (athleteData) {
-                                            callback(null, athleteData);
-                                        }
-                                    });
-                            },
-                            function (property, athleteData, callback) {
-                                Featurepackage.findOne({
-                                    Featurepackage: found.packageNew
-                                }).lean().exec(function (err, features) {
-                                    if (err) {
-                                        callback(err, null);
-                                    } else {
-                                        if (_.isEmpty(features)) {
-                                            callback(null, []);
-                                        } else {
-                                            callback(null, property, athleteData, features);
-                                        }
-                                    }
-                                });
-                            },
-                            function (property, athleteData, features, callback) {
-                                async.parallel([
-                                        function (callback) {
-                                            var emailData = {};
-                                            // emailData.from = "info@sfanow.in";
-                                            emailData.from = property[0].infoId;
-                                            emailData.email = athleteData.email;
-                                            emailData.infoId = property[0].infoId;
-                                            emailData.infoNo = property[0].infoNo;
-                                            emailData.cityAddress = property[0].cityAddress;
-                                            emailData.ddFavour = property[0].ddFavour;
-                                            emailData.city = property[0].sfaCity;
-                                            emailData.year = property[0].year;
-                                            emailData.eventYear = property[0].eventYear;
-                                            emailData.type = property[0].institutionType;
-                                            emailData.packageName = athleteData.package.name;
-                                            emailData.featureDetail = features;
-                                            emailData.flag = emailData.type;
-                                            emailData.filename = "player-school/upgrade.ejs";
-                                            emailData.subject = "SFA: Thank you for upgrading your package for SFA " + emailData.city + " " + emailData.eventYear;
-                                            console.log("emaildata", emailData);
-                                            Config.email(emailData, function (err, emailRespo) {
-                                                if (err) {
-                                                    console.log(err);
-                                                    callback(null, err);
-                                                } else if (emailRespo) {
-                                                    callback(null, emailRespo);
-                                                } else {
-                                                    callback(null, "Invalid data");
-                                                }
-                                            });
-                                        },
-                                        function (callback) {
-                                            var smsData = {};
-                                            smsData.mobile = athleteData.mobile;
-                                            smsData.content = "Thank you for upgrading your package for SFA " + property[0].sfaCity + " " + property[0].eventYear + ". For further details please check your registered email ID.";
-                                            console.log("smsdata", smsData);
-                                            Config.sendSms(smsData, function (err, smsRespo) {
-                                                if (err) {
-                                                    console.log(err);
-                                                    callback(err, null);
-                                                } else if (smsRespo) {
-                                                    console.log(smsRespo, "sms sent");
-                                                    callback(null, smsRespo);
-                                                } else {
-                                                    callback(null, "Invalid data");
-                                                }
-                                            });
-                                        }
-                                    ],
-                                    function (err, final) {
-                                        if (err) {
-                                            callback(err, null);
-                                        } else {
-                                            callback(null, final);
-                                        }
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+            },
+            function (found, callback) {
+                async.concatSeries(found, function (mainData, callback) {
+                        var obj = {};
+                        obj["SFA ID"] = mainData.athlete.sfaId;
+                        if (mainData.athlete.middleName) {
+                            obj["ATHLETE NAME"] = mainData.athlete.firstName + " " + mainData.athlete.middleName + " " + mainData.athlete.surname;
+                        } else {
+                            obj["ATHLETE NAME"] = mainData.athlete.firstName + " " + mainData.athlete.surname;
+                        }
+                        if (mainData.athlete.atheleteSchoolName) {
+                            obj["ATHLETE SCHOOL NAME"] = mainData.athlete.atheleteSchoolName;
+                        } else {
+                            obj["ATHLETE SCHOOL NAME"] = mainData.athlete.school.name;
+                        }
 
-                                    });
-                            }
-                        ],
-                        function (err, data2) {
-                            if (err) {
-                                console.log(err);
-                                callback(err, null);
+                        var i = 0;
+                        var paymentMode;
+                        var payu;
+
+                        _.each(mainData.transaction, function (n) {
+                            if (i == 0) {
+                                obj["SELECTED PACKAGES"] = n.package.name;
+                                paymentMode = n.paymentMode;
+                                payu = n.PayuId;
                             } else {
-                                callback(null, data2);
+                                obj["SELECTED PACKAGES"] = obj["SELECTED PACKAGES"] + "," + n.package.name;
+                                paymentMode = paymentMode + "," + n.paymentMode;
+                                payu = payu + "," + n.PayuId
                             }
 
+                            i++;
                         });
-                }
-            ],
-            function (err, data2) {
-                if (err) {
-                    console.log(err);
-                    callback(err, null);
-                } else {
-                    callback(null, data2);
-                }
 
-            });
-    },
-
-    updateSchoolPaymentStatus: function (data, callback) {
-        async.waterfall([
-                function (callback) {
-                    ConfigProperty.find().lean().exec(function (err, property) {
-                        if (err) {
-                            callback(err, null);
+                        obj["CURRENT PACKAGE"] = mainData.athlete.package.name;
+                        obj["CURRENT PACKAGE AMOUNT"] = mainData.athlete.package.finalPrice;
+                        if (mainData.athlete.package.cgstPercent != null) {
+                            obj["CGST PERCENT"] = mainData.athlete.package.cgstPercent;
                         } else {
-                            if (_.isEmpty(property)) {
-                                callback(null, []);
+                            mainData.athlete.package.cgstPercent = 0;
+                        }
+                        if (mainData.cgst != null) {
+                            obj["CGST AMOUNT"] = mainData.cgst;
+                        } else {
+                            obj["CGST AMOUNT"] = 0;
+                        }
+                        if (mainData.athlete.package.sgstPercent != null) {
+                            obj["SGST PERCENT"] = mainData.athlete.package.sgstPercent;
+                        } else {
+                            mainData.athlete.package.sgstPercent = 0;
+                        }
+                        if (mainData.athlete.package.sgstAmt != null) {
+                            obj["SGST AMOUNT"] = mainData.sgst;
+                        } else {
+                            obj["SGST AMOUNT"] = 0;
+                        }
+                        if (mainData.igst != null) {
+                            obj["IGST PERCENT"] = mainData.igst;
+                        } else {
+                            mainData.athlete.package.igstPercent = 0;
+                        }
+                        if (mainData.igst != null) {
+                            obj["IGST AMOUNT"] = mainData.igst;
+                        } else {
+                            obj["IGST AMOUNT"] = 0;
+                        }
+                        obj["DISCOUNT"] = mainData.discount;
+                        if (obj["IGST AMOUNT"] > 0) {
+                            obj["TOTAL TO PAY"] = (mainData.athlete.package.finalPrice + obj["IGST AMOUNT"]) - mainData.discount;
+                        } else {
+                            obj["TOTAL TO PAY"] = (mainData.athlete.package.finalPrice + obj["CGST AMOUNT"] + obj["SGST AMOUNT"]) - mainData.discount;
+                        }
+                        obj["TOTAL PAID"] = mainData.totalPaid;
+                        obj["OUTSTANDING AMOUNT"] = mainData.outstandingAmount;
+                        if (mainData.upgrade == true) {
+                            obj["UPGRADED"] = "YES";
+                        } else {
+                            obj["UPGRADED"] = "NO";
+                        }
+                        if (mainData.transaction) {
+                            var len = mainData.transaction.length;
+                            if (len > 0) {
+                                len--;
+                                obj["LAST PAYMENT DATE"] = mainData.transaction[len].dateOfTransaction;
                             } else {
-                                callback(null, property);
+                                obj["LAST PAYMENT DATE"] = "";
                             }
-                        }
-                    });
-                },
-                function (property, callback) {
-                    console.log("inside update", data);
-                    Registration.findOne({ //finds one with refrence to id
-                        schoolName: data.schoolName
-                    }).exec(function (err, found) {
-                        if (err) {
-                            callback(err, null);
-                        } else if (_.isEmpty(found)) {
-                            callback(null, "Data is empty");
                         } else {
-                            async.waterfall([
-                                    function (callback) {
-                                        Accounts.findOne({
-                                            school: found._id
-                                        }).lean().exec(function (err, accountsData) {
-                                            if (err || _.isEmpty(accountsData)) {
-                                                callback(null, {
-                                                    error: "no data found",
-                                                    data: found
-                                                });
-                                            } else {
-                                                found.accounts = accountsData;
-                                                callback(null, found);
-                                            }
-                                        });
-                                    },
-                                    function (found, callback) {
-                                        data.school = true;
-                                        Transaction.saveUpdateTransaction(data, found, function (err, vData) {
-                                            if (err || _.isEmpty(vData)) {
-                                                callback(null, {
-                                                    error: "no data found",
-                                                    data: found
-                                                });
-                                            } else {
-                                                found.packageNew = vData.package;
-                                                callback(null, found);
-                                            }
-                                        });
-                                    },
-                                    function (found, callback) {
-                                        if (found.error) {
-                                            callback(null, found);
-                                        } else {
-                                            var matchObj = {
-                                                $set: {
-                                                    package: found.packageNew
-                                                }
-                                            };
-                                            console.log("found in update", found);
-                                            Registration.update({
-                                                _id: found._id
-                                            }, matchObj).exec(
-                                                function (err, data3) {
-                                                    callback(err, data3);
-                                                    if (err) {
-                                                        callback(err, null);
-                                                    } else {
-                                                        callback(null, found);
-                                                    }
-                                                });
-                                        }
-                                    },
-                                    function (found, callback) {
-                                        async.waterfall([
-                                                function (callback) {
-                                                    ConfigProperty.find().lean().exec(function (err, property) {
-                                                        if (err) {
-                                                            callback(err, null);
-                                                        } else {
-                                                            if (_.isEmpty(property)) {
-                                                                callback(null, []);
-                                                            } else {
-                                                                callback(null, property);
-                                                            }
-                                                        }
-                                                    });
-                                                },
-                                                function (property, callback) {
-                                                    Registration.find({
-                                                        _id: found._id
-                                                    }).lean().deepPopulate("package").exec(
-                                                        function (err, schoolData) {
-                                                            if (err) {
-                                                                console.log(err);
-                                                                callback(err, null);
-                                                            } else if (schoolData) {
-                                                                callback(null, schoolData);
-                                                            }
-                                                        });
-                                                },
-                                                function (property, schoolData, callback) {
-                                                    Featurepackage.findOne({
-                                                        Featurepackage: found.packageNew
-                                                    }).lean().exec(function (err, features) {
-                                                        if (err) {
-                                                            callback(err, null);
-                                                        } else {
-                                                            if (_.isEmpty(features)) {
-                                                                callback(null, []);
-                                                            } else {
-                                                                callback(null, property, schoolData, features);
-                                                            }
-                                                        }
-                                                    });
-                                                },
-                                                function (property, schoolData, features, callback) {
-                                                    async.parallel([
-                                                            function (callback) {
-                                                                var emailData = {};
-                                                                // emailData.from = "info@sfanow.in";
-                                                                emailData.from = property[0].infoId;
-                                                                emailData.email = schoolData.email;
-                                                                emailData.infoId = property[0].infoId;
-                                                                emailData.infoNo = property[0].infoNo;
-                                                                emailData.cityAddress = property[0].cityAddress;
-                                                                emailData.ddFavour = property[0].ddFavour;
-                                                                emailData.city = property[0].sfaCity;
-                                                                emailData.year = property[0].year;
-                                                                emailData.eventYear = property[0].eventYear;
-                                                                emailData.type = property[0].institutionType;
-                                                                emailData.packageName = schoolData.package.name;
-                                                                emailData.featureDetail = features;
-                                                                emailData.flag = emailData.type;
-                                                                emailData.filename = "player-school/upgrade.ejs";
-                                                                emailData.subject = "SFA: Thank you for upgrading your package for SFA " + emailData.city + " " + emailData.eventYear;
-                                                                console.log("emaildata", emailData);
-                                                                Config.email(emailData, function (err, emailRespo) {
-                                                                    if (err) {
-                                                                        console.log(err);
-                                                                        callback(null, err);
-                                                                    } else if (emailRespo) {
-                                                                        callback(null, emailRespo);
-                                                                    } else {
-                                                                        callback(null, "Invalid data");
-                                                                    }
-                                                                });
-                                                            },
-                                                            function (callback) {
-                                                                var smsData = {};
-                                                                smsData.mobile = schoolData.mobile;
-                                                                smsData.content = "Thank you for upgrading your package for SFA " + property[0].sfaCity + " " + property[0].eventYear + ". For further details please check your registered email ID.";
-                                                                console.log("smsdata", smsData);
-                                                                Config.sendSms(smsData, function (err, smsRespo) {
-                                                                    if (err) {
-                                                                        console.log(err);
-                                                                        callback(err, null);
-                                                                    } else if (smsRespo) {
-                                                                        console.log(smsRespo, "sms sent");
-                                                                        callback(null, smsRespo);
-                                                                    } else {
-                                                                        callback(null, "Invalid data");
-                                                                    }
-                                                                });
-                                                            }
-                                                        ],
-                                                        function (err, final) {
-                                                            if (err) {
-                                                                callback(err, null);
-                                                            } else {
-                                                                callback(null, final);
-                                                            }
+                            obj["LAST PAYMENT DATE"] = "";
+                        }
+                        obj["PAYMENT MODE"] = paymentMode;
 
-                                                        });
-                                                }
-                                            ],
-                                            function (err, data2) {
-                                                if (err) {
-                                                    console.log(err);
-                                                    callback(err, null);
-                                                } else {
-                                                    callback(null, data2);
-                                                }
+                        obj["PAYU ID"] = payu;
+                        var j = 0;
+                        _.each(mainData.receiptId, function (n) {
+                            if (j == 0) {
+                                obj["RECEIPT NO"] = n;
+                            } else {
+                                obj["RECEIPT NO"] = obj["RECEIPT NO"] + "," + n
+                            }
+                            j++;
+                        });
+                        callback(null, obj);
+                    },
+                    function (err, singleData) {
+                        // Config.generateExcel("KnockoutIndividual", singleData, res);
+                        callback(null, singleData);
+                    });
+            }
+        ], function (err, complete) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, complete);
+                // Config.generateExcel("KnockoutIndividual", complete, res);
+            }
+        })
+    },
 
-                                            });
-                                    }
-                                ],
-                                function (err, complete) {
-                                    if (err) {
-                                        callback(err, callback);
-                                    } else {
-                                        callback(null, complete);
-                                    }
-                                });
-
+    generateSchoolExcel: function (data, callback) {
+        async.waterfall([
+            function (callback) {
+                Accounts.find({
+                        school: {
+                            $exists: true
+                        }
+                    }).lean()
+                    .deepPopulate("school school.package transaction transaction.package")
+                    .exec(function (err, found) {
+                        if (err || _.isEmpty(found)) {
+                            callback(null, {
+                                error: "no data found",
+                                data: data
+                            });
+                        } else {
+                            callback(null, found);
                         }
                     });
-                }
-            ],
-            function (err, data2) {
-                if (err) {
-                    console.log(err);
-                    callback(err, null);
-                } else {
-                    callback(null, data2);
-                }
+            },
+            function (found, callback) {
+                async.concatSeries(found, function (mainData, callback) {
+                        var obj = {};
+                        obj["SFA ID"] = mainData.school.sfaID;
+                        obj["SCHOOL NAME"] = mainData.school.schoolName;
+                        var i = 0;
+                        var paymentMode;
+                        var payu;
 
-            });
-    },
+                        _.each(mainData.transaction, function (n) {
+                            if (i == 0) {
+                                // obj["SELECTED PACKAGES"] = n.package.name;
+                                paymentMode = n.paymentMode;
+                                payu = n.PayuId;
+                            } else {
+                                // obj["SELECTED PACKAGES"] = obj["SELECTED PACKAGES"] + "," + n.package.name;
+                                paymentMode = paymentMode + "," + n.paymentMode;
+                                payu = payu + "," + n.PayuId
+                            }
+
+                            i++;
+                        });
+
+                        obj["PACKAGE"] = mainData.athlete.package.name;
+                        obj["PACKAGE AMOUNT"] = mainData.athlete.package.finalPrice;
+                        if (mainData.athlete.package.cgstPercent != null) {
+                            obj["CGST PERCENT"] = mainData.athlete.package.cgstPercent;
+                        } else {
+                            mainData.athlete.package.cgstPercent = 0;
+                        }
+                        if (mainData.athlete.package.cgstAmt != null) {
+                            obj["CGST AMOUNT"] = mainData.cgstAmount;
+                        } else {
+                            mainData.athlete.package.cgstAmt = 0;
+                        }
+                        if (mainData.athlete.package.sgstPercent != null) {
+                            obj["SGST PERCENT"] = mainData.athlete.package.sgstPercent;
+                        } else {
+                            mainData.athlete.package.sgstPercent = 0;
+                        }
+                        if (mainData.athlete.package.sgstAmt != null) {
+                            obj["SGST AMOUNT"] = mainData.sgstAmount;
+                        } else {
+                            mainData.athlete.package.sgstAmt = 0;
+                        }
+                        if (mainData.athlete.package.igstPercent != null) {
+                            obj["IGST PERCENT"] = mainData.athlete.package.igstPercent;
+                        } else {
+                            mainData.athlete.package.igstPercent = 0;
+                        }
+                        if (mainData.igstAmt != null) {
+                            obj["IGST AMOUNT"] = mainData.igstAmount;
+                        } else {
+                            mainData.athlete.package.igstAmt = 0;
+                        }
+                        obj["DISCOUNT"] = mainData.discount;
+                        if (obj["IGST AMOUNT"] > 0) {
+                            obj["TOTAL TO PAY"] = (mainData.athlete.package.finalPrice + obj["IGST AMOUNT"]) - mainData.discount;
+                        } else {
+                            obj["TOTAL TO PAY"] = (mainData.athlete.package.finalPrice + obj["CGST AMOUNT"] + obj["SGST AMOUNT"]) - mainData.discount;
+                        }
+                        obj["TOTAL PAID"] = mainData.totalPaid;
+                        obj["OUTSTANDING AMOUNT"] = mainData.outstandingAmount;
+                        if (mainData.upgrade == true) {
+                            obj["UPGRADED"] = "YES";
+                        } else {
+                            obj["UPGRADED"] = "NO";
+                        }
+                        if (mainData.transaction) {
+                            var len = mainData.transaction.length;
+                            if (len > 0) {
+                                len--;
+                                obj["LAST PAYMENT DATE"] = mainData.transaction[len].dateOfTransaction;
+                            } else {
+                                obj["LAST PAYMENT DATE"] = "";
+                            }
+                        } else {
+                            obj["LAST PAYMENT DATE"] = "";
+                        }
+                        obj["PAYMENT MODE"] = paymentMode;
+
+                        obj["PAYU ID"] = payu;
+                        var j = 0;
+                        _.each(mainData.receiptId, function (n) {
+                            if (j == 0) {
+                                obj["RECEIPT NO"] = n;
+                            } else {
+                                obj["RECEIPT NO"] = obj["RECEIPT NO"] + "," + n
+                            }
+                            j++;
+                        });
+                        callback(null, obj);
+                    },
+                    function (err, singleData) {
+                        // Config.generateExcel("KnockoutIndividual", singleData, res);
+                        callback(null, singleData);
+                    });
+            }
+        ], function (err, complete) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, complete);
+                // Config.generateExcel("KnockoutIndividual", complete, res);
+            }
+        })
+    }
 
 
 };

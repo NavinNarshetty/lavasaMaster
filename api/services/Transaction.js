@@ -372,7 +372,7 @@ var model = {
                                             }
                                         };
                                         Transaction.update({
-                                            athlete: data.athleteId
+                                            _id: foundTransact._id
                                         }, matchObj).exec(
                                             function (err, data3) {
                                                 if (err) {
