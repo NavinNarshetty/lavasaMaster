@@ -213,23 +213,24 @@ myApp.filter('myFilter', function () {
 
 
     .filter('securedEmailmobile', function () {
-        var index = 2;
-        return function (value, type) {
-            if (value && type == 'mobile') {
-                value = value.substr(0, index) + 'xxxxxxxx' + value.substr(value.length - 2);
-                return value;
-            } else if (value && type == 'email') {
-                var newString = value.slice(0, value.indexOf("@"));
-                var afterStr = value.substr(value.indexOf("@"));
-                var beforeStr = '';
-                for (var i = 0; i < newString.length; i++) {
-                    beforeStr += 'x';
-                }
-                var returnStr = beforeStr.concat(afterStr);
-                return returnStr;
-
-            }
-        };
+      var index = 2;
+      return function (value, type) {
+        if (value && type == 'mobile') {
+          value = value.substr(0, index) + 'xxxxxxxx' + value.substr(value.length - 2);
+          return value;
+        } else if (value && type == 'email') {
+          var newString = value.slice(0, value.indexOf("@"));
+          var initialChar = newString.slice(0, 2);
+          newString = newString.substring(2);
+          var afterStr = value.substr(value.indexOf("@"));
+          var beforeStr = '';
+          for (var i = 0; i < newString.length; i++) {
+            beforeStr += 'x';
+          }
+          var returnStr = initialChar.concat(beforeStr, afterStr);
+          return returnStr;
+        }
+      };
     })
 
     .filter('englishNumeralDate', function () {

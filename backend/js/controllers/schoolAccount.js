@@ -23,6 +23,18 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
   $scope.schoolformData.page = 1;
   $scope.schoolformData.keyword = '';
 
+  // SEARCHTABLE
+  $scope.searchInTable = function (data) {
+    $scope.schoolformData.page = 1;
+    if (data.length >= 2) {
+      $scope.schoolformData.keyword = data;
+      $scope.viewTable();
+    } else if (data.length == '') {
+      $scope.schoolformData.keyword = data;
+      $scope.viewTable();
+    }
+  };
+
   // VIEW TABLE
   $scope.viewTable = function () {
     $scope.url = "Accounts/getSchoolAccount";

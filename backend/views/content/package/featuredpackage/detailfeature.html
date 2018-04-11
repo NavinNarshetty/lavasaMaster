@@ -30,6 +30,7 @@
                 <div class="form-group">
                   <label>Feature Logo</label>
                   <upload-image ng-model="formData.featureLogo" inobj></upload-image>
+                  <button class="btn btn-danger" ng-click="deleteLogo()" ng-if="formData.featureLogo">Delete Feature Logo</button>
                 </div>
               </div>
               <!-- FEATURE LOGO END -->

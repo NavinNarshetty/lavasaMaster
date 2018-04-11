@@ -42,11 +42,12 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
     $scope.athleteformData.page = $scope.athleteformData.page++;
     $scope.athleteformData.filter = {};
     // $scope.formData.filter.pageType = '';
+    $scope.athleteformData.page = $scope.athleteformData.page++;
     NavigationService.apiCall($scope.url, $scope.athleteformData, function (data) {
       console.log("data.value", data);
       $scope.items = data.data.results;
       $scope.totalItems = data.data.total;
-      // $scope.maxRow = data.data.options.count;
+      $scope.maxRow = data.data.options.count;
       _.each($scope.items, function (key) {
         console.log(key._id, "key in array");
         key.athleteData = {};

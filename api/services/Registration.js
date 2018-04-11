@@ -224,7 +224,6 @@ var model = {
                             Registration.remove({ //finds one with refrence to id
                                 _id: found._id
                             }).exec(function (err, removed) {
-
                                 Registration.saveRegistration(data, function (err, vData) {
                                     if (err) {
                                         callback(err, null);
@@ -985,12 +984,6 @@ var model = {
                 },
                 function (property, callback) {
                     console.log("inside update", data);
-                    var matchObj = {
-                        $set: {
-                            paymentStatus: "Paid",
-                            transactionID: data.transactionid
-                        }
-                    };
                     Registration.findOne({ //finds one with refrence to id
                         schoolName: data.schoolName
                     }).exec(function (err, found) {
@@ -1033,6 +1026,12 @@ var model = {
                                             callback(null, found);
                                         } else {
                                             console.log("found in update", found);
+                                            var matchObj = {
+                                                $set: {
+                                                    paymentStatus: "Paid",
+                                                    transactionID: data.transactionid
+                                                }
+                                            };
                                             Registration.update({
                                                 _id: found._id
                                             }, matchObj).exec(
@@ -1230,17 +1229,18 @@ var model = {
 
                                 smsData.content = "Thank you for registering for SFA " + property[0].sfaCity + " " + property[0].eventYear + ". For further details please check your registered email ID.";
                                 console.log("smsdata", smsData);
-                                Config.sendSms(smsData, function (err, smsRespo) {
-                                    if (err) {
-                                        console.log(err);
-                                        callback(err, null);
-                                    } else if (smsRespo) {
-                                        console.log(smsRespo, "sms sent");
-                                        callback(null, smsRespo);
-                                    } else {
-                                        callback(null, "Invalid data");
-                                    }
-                                });
+                                callback(null, smsData);
+                                // Config.sendSms(smsData, function (err, smsRespo) {
+                                //     if (err) {
+                                //         console.log(err);
+                                //         callback(err, null);
+                                //     } else if (smsRespo) {
+                                //         console.log(smsRespo, "sms sent");
+                                //         callback(null, smsRespo);
+                                //     } else {
+                                //         callback(null, "Invalid data");
+                                //     }
+                                // });
                             }
                         ],
                         function (err, final) {
@@ -1623,7 +1623,7 @@ var model = {
                     });
                 },
                 function (property, callback) {
-                    async.parallel([
+                    async.waterfall([
                             //Athlete email
                             function (callback) {
                                 Registration.findOne({ //finds one with refrence to id
@@ -1667,6 +1667,7 @@ var model = {
                                         emailData.email1 = [{
                                             email: found.email
                                         }];
+
                                         emailData.bcc1 = [{
                                             email: "payments@sfanow.in"
                                         }, {
@@ -1688,7 +1689,7 @@ var model = {
                                     }
                                 });
                             },
-                            function (callback) {
+                            function (email, callback) {
                                 Registration.findOne({ //finds one with refrence to id
                                     _id: data._id
                                 }).exec(function (err, found) {
@@ -1723,10 +1724,26 @@ var model = {
                                         emailData.amountInWords = property[0].totalAmountInWordsType;
                                         emailData.amountWithoutTax = property[0].amoutWithoutTaxType;
                                         emailData.taxTotalAmountInWords = property[0].taxTotalAmountInWords;
-                                        emailData.cgstAmout = property[0].cgstAmout;
-                                        emailData.cgstPercent = property[0].cgstPercent;
-                                        emailData.sgstAmout = property[0].sgstAmout;
-                                        emailData.sgstPercent = property[0].sgstPercent;
+                                        if (property[0].cgstAmout) {
+                                            emailData.cgstAmout = property[0].cgstAmout;
+                                        } else {
+                                            emailData.cgstAmout = 0;
+                                        }
+                                        if (property[0].cgstPercent) {
+                                            emailData.cgstPercent = property[0].cgstPercent;
+                                        } else {
+                                            emailData.cgstPercent = 0;
+                                        }
+                                        if (property[0].sgstAmout) {
+                                            emailData.sgstAmout = property[0].sgstAmout;
+                                        } else {
+                                            emailData.sgstAmout = 0;
+                                        }
+                                        if (property[0].sgstPercent) {
+                                            emailData.sgstPercent = property[0].sgstPercent;
+                                        } else {
+                                            emailData.sgstPercent = 0;
+                                        }
                                         emailData.transactionID = found.transactionID;
                                         emailData.Date = moment().format("DD-MM-YYYY");
                                         emailData.igstAmout = property[0].igstAmout;

@@ -55,7 +55,7 @@ var selectPicker = function(team,toastr,sT,sN,$filter){
                         if($.jStorage.get('userType')=="school"){
                             toastr.info("Sfa Id " + team[k].sfaId +" Can Only Participate In "+ team[k].selectLimit +" Event. As per Selected Package", "Upgrade Package");
                         }else{
-                            toastr.info("You Can Only Participate in One Event");                    
+                            toastr.info("You Can Only Participate in "+team[k].selectLimit+" Event");                    
                         }
                     }
                 });
@@ -140,7 +140,7 @@ myApp.controller('IndividualSelectionCtrl', function ($scope, TemplateService, e
         });
     }else{
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout=true;
+        $scope.hideChangePassword=true;
     }
 
     $scope.logoutCandidate = function () {
@@ -250,138 +250,7 @@ myApp.controller('IndividualSelectionCtrl', function ($scope, TemplateService, e
 
 });
 
-
-//Confirm-Fencing
-myApp.controller('ConfirmFencingCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, loginService, errorService, selectService, toastr, $stateParams, $filter, configService) {
-    //Used to name the .html file
-    $scope.sportTab = $filter('firstcapitalize')($stateParams.name);
-    $scope.template = TemplateService.getHTML("content/confirmfencing.html");
-    TemplateService.title = "Confirm" + ' ' + $scope.sportTab;
-    $scope.navigation = NavigationService.getNavigation();
-    configService.getDetail(function (data) {
-        $scope.state = data.state;
-        $scope.year = data.year;
-        $scope.eventYear = data.eventYear;
-        $scope.sfaCity = data.sfaCity;
-        $scope.isCollege = data.isCollege;
-        $scope.type = data.type;
-    });
-    $scope.selectService = selectService;
-    $scope.formData = {};
-    loginService.loginGet(function (data) {
-        $scope.detail = data;
-        $scope.formData.schoolName = $scope.detail.schoolName;
-    });
-
-    var data={};
-    if($.jStorage.get("userDetails") === null){
-        if ($.jStorage.get("userType") == "school") {
-            data.type = "school";
-        }else{
-            data.type = "player";
-        }
-        $state.go('registerplayer', {
-            type: data.type
-        });
-    }else{
-        $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout=true;
-    }
-
-    $scope.config = {};
-
-    function configureVariables() {
-        if ($scope.selectService && $scope.selectService.sportName) {
-            var st = $scope.selectService.sportName;
-            if (st == 'Fencing') {
-                // $scope.config.weightsReq = true;
-                // $scope.config.event1Expression = "epee.data[0].sport as epee._id | formatEvent:'Epee' for epee in athelete.eventEpee | orderBy:'_id' track by epee._id";
-                // $scope.config.event2Expression = "sabre.data[0].sport as sabre._id | formatEvent:'Sabre' for sabre in athelete.eventSabre | orderBy:'_id' track by sabre._id";
-                // $scope.config.event3Expression = "foil.data[0].sport as foil._id | formatEvent:'Foil' for foil in athelete.eventFoil | orderBy:'_id' track by foil._id";
-                $scope.config.event3Expression = "event.data[0].sport as event._id  for event in athelete.events"
-            } else {
-                // $scope.config.weightsReq = false;
-                $scope.config.event1Expression = "event1 as event1._id | formatEvent:event1.eventName for event1 in athelete.allEvents";
-                $scope.config.event2Expression = "event2 as event2._id | formatEvent:event2.eventName for event2 in athelete.optionalEvents";
-            }
-        }
-    }
-
-    configureVariables();
-
-    $scope.logoutCandidate = function () {
-        loginService.logoutCandidate(function (data) {
-            if (data.isLoggedIn === false) {
-                toastr.success('Successfully Logged Out', 'Logout Message');
-                $state.go('registerplayer', {
-                    type: data.type
-                });
-            } else {
-                toastr.error('Something went wrong', 'Logout Message');
-            }
-        });
-    };
-
-    $scope.tp = function (event) {
-        // console.log(event);
-    };
-    // $timeout(function () {
-    //     $('.selectpicker').selectpicker()
-    //     $('.bs-searchbox input[type="text"]').attr('placeholder', 'Search Event');
-    // }, 200);
-
-    $timeout(function () {
-        $('.table-responsive').on('show.bs.dropdown', function () {
-            $('.table-responsive').css( "overflow", "inherit" );
-       });
-       
-       $('.table-responsive').on('hide.bs.dropdown', function () {
-            $('.table-responsive').css( "overflow", "auto" );
-       })
-    }, 200);
-
-    $scope.selectEvent = function(ath,whichSelectTag,justClicked){
-        console.log("justClicked",justClicked);
-        if($scope.selectLimit==1){
-            if(whichSelectTag == "Fen1" && (ath.fen1flag==false && ath.fen2flag==false)){
-                ath.fen1flag=true; 
-            } else if(whichSelectTag == "Fen2" && (ath.fen1flag==false && ath.fen2flag==false)){
-                ath.fen2flag=true; 
-            }
-            if(ath.fen1flag && (whichSelectTag == "Fen1")){
-                console.log("1");                
-                ath.sport[1]="";
-            }else if(ath.fen2flag && (whichSelectTag == "Fen2")){
-                console.log("2");
-                ath.sport[0]="";                
-            }else if(ath.fen1flag && (whichSelectTag == "Fen2")){
-                console.log("3");
-                ath.sport[1]="";
-                toastr.error("Max Reached","Error Messege");
-            }else if(ath.fen2flag && (whichSelectTag == "Fen1")){
-                console.log("4");
-                if(justClicked.eventName=="Indian Bow"){
-                    toastr.error("Only 1 Event Is Left As Per Your Package");
-                    ath.sport[1]="";
-                }else{
-                    ath.sport[0]="";
-                    toastr.error("Max Reached","Error Messege");
-                }
-                
-            }
-            ath.disableEvent2=true;
-        }
-       
-    }
-
-    var selectPickerClone = selectPicker(selectService.team,toastr,selectService.sportType,selectService.sportName,$filter);
-   
-    $('selectpicker').on('hidden.bs.select', function (e) {
-        console.log("hidden",e);
-    });
-});
-
-//Confirm-Individual
+//Confirm-Individual // Individual (I-confirm2)
 myApp.controller('ConfirmIndividualCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, loginService, errorService, selectService, toastr, $stateParams, $filter, configService) {
     //Used to name the .html file
     $scope.sportTab = $filter('firstcapitalize')($stateParams.name);
@@ -449,7 +318,7 @@ myApp.controller('ConfirmIndividualCtrl', function ($scope, TemplateService, Nav
         });
     }else{
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout=true;
+        $scope.hideChangePassword=true;
     }
 
     $scope.logoutCandidate = function () {
@@ -477,8 +346,133 @@ myApp.controller('ConfirmIndividualCtrl', function ($scope, TemplateService, Nav
 
 });
 
-//Confirm-karate
+//Confirm-Fencing // Fencing And Archery (FA-confirm3)
+myApp.controller('ConfirmFencingCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, loginService, errorService, selectService, toastr, $stateParams, $filter, configService) {
+    //Used to name the .html file
+    $scope.sportTab = $filter('firstcapitalize')($stateParams.name);
+    $scope.template = TemplateService.getHTML("content/confirmfencing.html");
+    TemplateService.title = "Confirm" + ' ' + $scope.sportTab;
+    $scope.navigation = NavigationService.getNavigation();
+    configService.getDetail(function (data) {
+        $scope.state = data.state;
+        $scope.year = data.year;
+        $scope.eventYear = data.eventYear;
+        $scope.sfaCity = data.sfaCity;
+        $scope.isCollege = data.isCollege;
+        $scope.type = data.type;
+    });
+    $scope.selectService = selectService;
+    $scope.formData = {};
+    loginService.loginGet(function (data) {
+        $scope.detail = data;
+        $scope.formData.schoolName = $scope.detail.schoolName;
+    });
 
+    var data={};
+    if($.jStorage.get("userDetails") === null){
+        if ($.jStorage.get("userType") == "school") {
+            data.type = "school";
+        }else{
+            data.type = "player";
+        }
+        $state.go('registerplayer', {
+            type: data.type
+        });
+    }else{
+        $scope.userDetails = $.jStorage.get("userDetails");
+        $scope.hideChangePassword=true;
+    }
+
+    $scope.config = {};
+
+    function configureVariables() {
+        if ($scope.selectService && $scope.selectService.sportName) {
+            var st = $scope.selectService.sportName;
+            if (st == 'Fencing') {
+                // $scope.config.weightsReq = true;
+                // $scope.config.event1Expression = "epee.data[0].sport as epee._id | formatEvent:'Epee' for epee in athelete.eventEpee | orderBy:'_id' track by epee._id";
+                // $scope.config.event2Expression = "sabre.data[0].sport as sabre._id | formatEvent:'Sabre' for sabre in athelete.eventSabre | orderBy:'_id' track by sabre._id";
+                // $scope.config.event3Expression = "foil.data[0].sport as foil._id | formatEvent:'Foil' for foil in athelete.eventFoil | orderBy:'_id' track by foil._id";
+                $scope.config.event3Expression = "event.data[0].sport as event._id  for event in athelete.events"
+            } else {
+                // $scope.config.weightsReq = false;
+                $scope.config.event1Expression = "event1 as event1._id | formatEvent:event1.eventName for event1 in athelete.allEvents";
+                $scope.config.event2Expression = "event2 as event2._id | formatEvent:event2.eventName for event2 in athelete.optionalEvents";
+            }
+        }
+    }
+
+    configureVariables();
+
+    $scope.logoutCandidate = function () {
+        loginService.logoutCandidate(function (data) {
+            if (data.isLoggedIn === false) {
+                toastr.success('Successfully Logged Out', 'Logout Message');
+                $state.go('registerplayer', {
+                    type: data.type
+                });
+            } else {
+                toastr.error('Something went wrong', 'Logout Message');
+            }
+        });
+    };
+
+    $timeout(function () {
+        $('.selectpicker').selectpicker()
+        $('.bs-searchbox input[type="text"]').attr('placeholder', 'Search Event');
+    }, 200);
+
+    $timeout(function () {
+        $('.table-responsive').on('show.bs.dropdown', function () {
+            $('.table-responsive').css( "overflow", "inherit" );
+       });
+       
+       $('.table-responsive').on('hide.bs.dropdown', function () {
+            $('.table-responsive').css( "overflow", "auto" );
+       })
+    }, 200);
+
+    $scope.selectEvent = function(ath,whichSelectTag,justClicked){
+        if($scope.selectLimit==1){
+            if(whichSelectTag == "Fen1" && (ath.fen1flag==false && ath.fen2flag==false)){
+                ath.fen1flag=true; 
+            } else if(whichSelectTag == "Fen2" && (ath.fen1flag==false && ath.fen2flag==false)){
+                ath.fen2flag=true; 
+            }
+            if(ath.fen1flag && (whichSelectTag == "Fen1")){
+                console.log("1");                
+                ath.sport[1]="";
+            }else if(ath.fen2flag && (whichSelectTag == "Fen2")){
+                console.log("2");
+                ath.sport[0]="";                
+            }else if(ath.fen1flag && (whichSelectTag == "Fen2")){
+                console.log("3");
+                ath.sport[1]="";
+                toastr.error("Max Reached","Error Messege");
+            }else if(ath.fen2flag && (whichSelectTag == "Fen1")){
+                console.log("4");
+                if(justClicked.eventName=="Indian Bow"){
+                    toastr.error("Only 1 Event Is Left As Per Your Package");
+                    ath.sport[1]="";
+                }else{
+                    ath.sport[0]="";
+                    toastr.error("Max Reached","Error Messege");
+                }
+                
+            }
+            ath.disableEvent2=true;
+        }
+       
+    }
+
+    var selectPickerClone = selectPicker(selectService.team,toastr,selectService.sportType,selectService.sportName,$filter);
+   
+    $('selectpicker').on('hidden.bs.select', function (e) {
+        console.log("hidden",e);
+    });
+});
+
+//Confirm-karate // Karate (K-confirm4)
 myApp.controller('ConfirmKarateCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, loginService, errorService, selectService, toastr, $stateParams, $filter, configService) {
     //Used to name the .html file
     $scope.sportTab = $filter('firstcapitalize')($stateParams.name);
@@ -512,7 +506,7 @@ myApp.controller('ConfirmKarateCtrl', function ($scope, TemplateService, Navigat
         });
     }else{
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout=true;
+        $scope.hideChangePassword=true;
     }
 
     $scope.logoutCandidate = function () {
@@ -530,8 +524,7 @@ myApp.controller('ConfirmKarateCtrl', function ($scope, TemplateService, Navigat
 
 });
 
-//Confirm-athlete-swimming
-
+//Confirm-athlete-swimming // Athletics Swimming And Shooting (AAS-confirm5)
 myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, NavigationService, loginService, $timeout, $state, selectService, toastr, $stateParams, $filter, configService, errorService) {
     //Used to name the .html file
     $scope.sportTab = $filter('firstcapitalize')($stateParams.name);
@@ -566,7 +559,7 @@ myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, Navigat
         });
     }else{
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout=true;
+        $scope.hideChangePassword=true;
     }
 
     $scope.logoutCandidate = function () {
@@ -621,10 +614,13 @@ myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, Navigat
             $('.bs-searchbox input[type="text"]').attr('placeholder', 'Search Event');
         }, 200);
     }
+    $timeout(function () {
+        $('.selectpicker').selectpicker("refresh")
+        $('.bs-searchbox input[type="text"]').attr('placeholder', 'Search Event');
+    }, 200);
 
     var selectPickerClone = selectPicker(selectService.team,toastr,selectService.sportType,selectService.sportName,$filter);
 });
-
 
 myApp.controller('IndividualCongratsCtrl', function ($scope, TemplateService, toastr, NavigationService, $timeout, $state, $stateParams, loginService, errorService, configService) {
     $scope.template = TemplateService.getHTML("content/individual-congrats.html");
@@ -654,8 +650,12 @@ myApp.controller('IndividualCongratsCtrl', function ($scope, TemplateService, to
             type: data.type
         });
     }else{
-        $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout=true;
+        $timeout(function(){
+            if($.jStorage.get("userDetails")){
+                $scope.userDetails = $.jStorage.get("userDetails");
+                $scope.hideChangePassword=true;
+            }
+        },500);
     }
 
     $scope.logoutCandidate = function () {

@@ -62,7 +62,7 @@ myApp.controller('DetailPackageCtrl', function ($scope, TemplateService, Navigat
   $scope.formData.pageType = ' ';
 
   var url = 'Package';
-  // GET ONE
+
   // GET ONE
   if ($stateParams.id) {
     $scope.title = 'Edit';
@@ -74,8 +74,6 @@ myApp.controller('DetailPackageCtrl', function ($scope, TemplateService, Navigat
     });
   }
   // GET ONE END
-  // GET ONE END
-
 
   // SAVE FUNCTION
   var state = 'package';
@@ -189,7 +187,6 @@ myApp.controller('detailFeatureCtrl', function ($scope, TemplateService, Navigat
   // END OF GET ALL PACKAGE
 
   // GET ONE
-  // GET ONE
   if ($stateParams.id) {
     $scope.title = 'Edit';
     var id = $stateParams.id;
@@ -209,7 +206,18 @@ myApp.controller('detailFeatureCtrl', function ($scope, TemplateService, Navigat
     });
   }
   // GET ONE END
-  // GET ONE END
+
+  // DELETE LOGO
+  $scope.deleteLogo = function(){
+    console.log("in", $scope.formData.featureLogo);
+    if ($scope.formData.featureLogo) {
+      console.log("bef", $scope.formData.featureLogo);
+      delete $scope.formData.featureLogo;
+      $scope.formData.featureLogo = '';
+      console.log("aft", $scope.formData.featureLogo);
+    }
+  }
+  // DELETE LOGO END
 
 
   // SAVE FUNCTION

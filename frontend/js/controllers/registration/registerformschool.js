@@ -1,4 +1,4 @@
-myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout, TemplateService, NavigationService, $timeout, $uibModal, $filter, configService) {
+myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout, TemplateService, NavigationService, $timeout, $uibModal, $filter, configService, $stateParams, toastr, $state) {
   $scope.template = TemplateService.getHTML("content/registration/registerform-school.html");
   TemplateService.title = "School Registration Form"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
@@ -16,6 +16,8 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
   $scope.sfaID = '';
   $scope.emailOtp = {};
   $scope.showOtpSuccess = {};
+  $scope.formFlag = $stateParams.flag;
+  $scope.pageType = 'school';
 
 
   // CONFIG PROPERTY
@@ -44,6 +46,47 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
     });
   }, 100);
   // FANCYBOX BUTTON CUSTOM END
+
+  // getEditSchool
+  $scope.getEditSchool = function(){
+    $scope.getSchoolUrl = 'Registration/getOne';
+    $scope.getSchoolFormData = {
+      _id: $scope.formId
+    }
+    NavigationService.apiCallWithDataMaster($scope.getSchoolUrl, $scope.getSchoolFormData, function(data){
+      console.log("getSchool", data);
+      if (data.value == true) {
+        $scope.formData = data.data;
+      } else {
+        console.log("Error in ath get", data);
+      }
+    });
+  }
+  // getEditSchool END
+
+  // FLAGS SET FOR CREATE EDIT
+  if ($scope.formFlag === 'edit') {
+    if ($stateParams.id) {
+      $scope.formId = $stateParams.id;
+      $scope.getEditSchool();
+      console.log("Edit Id", $scope.formFlag, $scope.formId);
+    } else {
+      console.log("Edit no Id");
+      toastr.error("No School ID Found", "Error")
+      $state.go('registerplayer', {
+        type: 'school'
+      });
+    }
+  } else if ($scope.formFlag === 'create') {
+    console.log("Create", $scope.formFlag);
+  } else {
+    console.log("Other Flag");
+    toastr.error("Error");
+    $state.go('registerplayer', {
+      type: 'school'
+    });
+  }
+  // FLAGS SET FOR CREATE EDIT END
 
 
 
@@ -129,7 +172,10 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
   // };
 
   $scope.closeModal = function () {
-
+    $state.go('registerplayer', {
+      type: 'player'
+    });
+    $scope.modalInstances.$disiss();
   }
   // THANK YOU MODAL END
 
@@ -224,7 +270,7 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
         packageUser: type
       }
     };
-    NavigationService.getPackages($scope.formPackage, function (data) {
+    NavigationService.getPackages($scope.fetchPackage, function (data) {
       data = data.data;
       console.log("pack", data);
       if (data.value = true) {
@@ -240,7 +286,7 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
   //PACKAGE FETCHING END
 
   console.log("packages", $scope.packages);
-  //SAVE FUNCTION 
+  //SAVE FUNCTION
   $scope.isDisabled = false;
   $scope.saveRegis = function (formdata, formvalid) {
     console.log(formdata, formvalid, "check", $scope.packages);

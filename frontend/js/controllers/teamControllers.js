@@ -18,7 +18,7 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
         });
     } else {
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout = true;
+        $scope.hideChangePassword = true;
     }
 
     // see if user is login / this page has stateParams then redirect accordingly
@@ -84,7 +84,7 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
 
     if ($.jStorage.get("userDetails")) {
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout = true;
+        $scope.hideChangePassword = true;
     }
 
     // set jStorage:"flag" to true
@@ -164,7 +164,7 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
                                 });
                                 $scope.selectAthlete = _.uniqBy($scope.selectAthlete, 'sfaId');
                                 if ($.jStorage.get("flag") === true) {
-                                    $scope.selectService.team = [];
+                                    // $scope.selectService.team = [];
                                     if ($scope.editablestudentTeam) {
                                         _.each($scope.selectService.team, function (j) {
                                             _.each($scope.editablestudentTeam, function (k, index) {
@@ -620,6 +620,7 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
 
 });
 
+//(CT-confirm1)
 myApp.controller('ConfirmTeamCtrl', function ($scope, TemplateService, NavigationService, $timeout, toastr, $state, $stateParams, loginService, selectService, $filter, errorService, configService) {
     $scope.template = TemplateService.getHTML("content/confirmteam.html");
     TemplateService.title = "Confirm Team"; //This is the Title of the Website
@@ -676,7 +677,7 @@ myApp.controller('ConfirmTeamCtrl', function ($scope, TemplateService, Navigatio
         });
     } else {
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout = true;
+        $scope.hideChangePassword = true;
     }
     loginService.loginGet(function (data) {
         $scope.detail = data;
@@ -831,8 +832,12 @@ myApp.controller('TeamCongratsCtrl', function ($scope, TemplateService, toastr, 
             type: data.type
         });
     } else {
-        $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideLogout = true;
+        $timeout(function(){
+            if($.jStorage.get("userDetails")){
+                $scope.userDetails = $.jStorage.get("userDetails");
+                $scope.hideChangePassword=true;
+            }
+        },500);
     }
 
     $scope.logoutCandidate = function () {

@@ -1,14 +1,16 @@
-myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $element, NavigationService, $timeout, $uibModal, GoogleAdWordsService, $location, $state, errorService, toastr, $filter, configService) {
+myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $element, NavigationService, $timeout, $uibModal, GoogleAdWordsService, $location, $state, errorService, toastr, $filter, configService, $stateParams) {
     $scope.template = TemplateService.getHTML("content/registration/registerform-player.html");
     TemplateService.title = "Player Registration Form"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
     $scope.formData = {};
+    $scope.pageType = 'player';
     $scope.packages = [];
     $scope.formPackage = {
         filter: {
             packageUser: 'athlete'
         }
     }
+    $scope.formFlag = $stateParams.flag;
     $scope.showPaymentTab = false;
     $scope.showPackageDetail = false;
     configService.getDetail(function (data) {
@@ -22,6 +24,48 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;
     });
+
+    // getEditAthlete
+    $scope.getEditAthlete = function(){
+      $scope.getAthleteUrl = 'Athelete/getAthlete';
+      $scope.getAthleteFormData = {
+        _id: $scope.formId
+      }
+      NavigationService.apiCallWithDataMaster($scope.getAthleteUrl, $scope.getAthleteFormData, function(data){
+        console.log("getAth", data);
+        if (data.value == true) {
+          $scope.formData = data.data;
+          $scope.formData.password = "";
+        } else {
+          console.log("Error in ath get", data);
+        }
+      });
+    }
+    // getEditAthlete END
+
+    // FLAGS SET FOR CREATE EDIT
+    if ($scope.formFlag === 'edit') {
+      if ($stateParams.id) {
+        $scope.formId = $stateParams.id;
+        $scope.getEditAthlete();
+        console.log("Edit Id", $scope.formFlag, $scope.formId);
+      } else {
+        console.log("Edit no Id");
+        toastr.error("No Player ID Found", "Error")
+        $state.go('registerplayer', {
+          type: 'player'
+        });
+      }
+    } else if ($scope.formFlag === 'create') {
+      console.log("Create", $scope.formFlag);
+    } else {
+      console.log("Other Flag");
+      toastr.error("Error");
+      $state.go('registerplayer', {
+        type: 'player'
+      });
+    }
+    // FLAGS SET FOR CREATE EDIT END
 
     // CALL PACKAGES
     NavigationService.getPackages($scope.formPackage, function (data) {
@@ -610,12 +654,12 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
         $scope.show = 0;
     };
 
-    $scope.deleteCertificate = function (data, className){
-      console.log("cert", className, data);
+    $scope.deleteCertificate = function (data, className, index){
+      console.log("cert", className, data, index);
       $("." + className + " input").val("");
-      delete data;
+      delete $scope.formData.sportLevel[index].certificateImage;
       $scope.show = 0;
-      console.log(data, className, $scope.show);
+      console.log("del", $scope.formData.sportLevel[index].certificateImage, className, $scope.show);
     }
 
     $scope.addSportForm = function () {
@@ -718,7 +762,7 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
     $scope.openModal = function () {
         $timeout(function () {
             // fbq('track', 'CompleteRegistration');
-            fbq('track', 'CompleteRegistration');
+            // fbq('track', 'CompleteRegistration');
             // GoogleAdWordsService.sendRegisterCustomerConversion();
         });
         var modalInstance = $uibModal.open({

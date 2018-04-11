@@ -34,15 +34,15 @@
               <h4 class="d-fjalla-one text-uppercase m-clear">Quick Details About SFA Championship {{eventYear}}</h4>
             </uib-accordion-heading>
             <div class="register-accordioncontent">
-              <div class="register-contentholder">
+              <div class="register-contentholder" ng-if="sports.length>0">
                 <label class="display-block">Sports:</label>
                 <span class="register-sportlist" ng-repeat="sport in sports track by $index"> {{sport}} <span class="register-seperator">|</span>                </span>
               </div>
-              <div class="register-contentholder">
+              <div class="register-contentholder register-contentdate" ng-if="sfaDates">
                 <label for="">Dates:</label>
                 <span>{{sfaDates}}</span>
               </div>
-              <div class="register-contentholder">
+              <div class="register-contentholder" ng-if="venue.length>0">
                 <label for="">Venue:</label>
                 <span class="register-venue" ng-repeat="place in venue track by $index"> {{place}} <span class="register-seperator">|</span></span>
               </div>
@@ -83,7 +83,7 @@
     <!-- REGISTER FORM  -->
     <section class="registerplayer-form">
       <div class="registerform-btnholder">
-        <button class="btn btn-mainregister" ng-click="registerOpen();" ng-class="{'active': showForm}">Register For SFA Mumbai 2018-19</button>
+        <button class="btn btn-mainregister" ng-click="registerOpen();" ng-class="{'active': showForm}">Click Here To Register For SFA Mumbai 2018-19</button>
       </div>
       <div class="registerform-holder" ng-show="showForm">
         <p class="registerform-intro">All <span ng-if="pageType == 'player'">players</span><span ng-if="pageType == 'school'">schools</span> must complete the following two step registration process</p>
@@ -102,11 +102,11 @@
           <div class="registerstep-btnholder">
             <ul class="list-unstyled">
               <li>
-                <button class="btn btn-register1" ui-sref="registerformplayer({flag: 'create'})" ng-if="pageType == 'player'">Participating  for the First Time</button>
-                <button class="btn btn-register1" ui-sref="registerformschool({flag: 'create'})" ng-if="pageType == 'school'">Participating  for the First Time</button>
+                <button class="btn btn-register1 text-capitalize" ui-sref="registerformplayer({flag: 'create'})" ng-if="pageType == 'player'">I am Participating  for the First Time</button>
+                <button class="btn btn-register1 text-capitalize" ui-sref="registerformschool({flag: 'create'})" ng-if="pageType == 'school'">Participating  for the First Time</button>
               </li>
               <li>
-                <button class="btn btn-register1" ng-click="showStepForm()" ng-class="{'active': stepForm}">Have Participated Before</button>
+                <button class="btn btn-register1 text-capitalize" ng-click="showStepForm()" ng-class="{'active': stepForm}">I Have Participated Before</button>
               </li>
             </ul>
           </div>
@@ -127,7 +127,7 @@
                   <button class="btn m-clear"><span class="fa fa-arrow-right"></span></button>
                 </div>
               </div>
-              <ul class="list-inline">
+              <ul class="list-inline formoption-li">
                 <li><a href="">Resend OTP</a></li>
                 <li>|</li>
                 <li><a ng-click="changeDetails();">Change Registered Email/Mobile</a></li>
@@ -201,7 +201,7 @@
     <section class="registerplayer-testimonials" ng-if="testimonials.length>0">
       <div class="registerplayer-introtitle">Testimonials From Past Championships</div>
       <div class="row">
-        <div class="col-md-offset-2 col-md-8">
+        <div class="col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-10 col-xs-offset-1 col-xs-10">
           <div class="registerplayer-testimonialslider">
             <div class="swiper-container">
               <div class="swiper-wrapper">
@@ -232,7 +232,7 @@
     <!-- TESTIMONIALS END  -->
   </div>
   <!-- COUNTS  -->
-  <section class="registerplayer-counts" ng-if="counts.length>0">
+  <section class="registerplayer-counts " ng-if="counts.length>0">
     <div class="container">
       <div class="registercount-flex">
         <div class="registercount-item" ng-repeat="count in counts track by $index">
@@ -253,7 +253,7 @@
             <div class="swiper-slide" ng-repeat="slide in allGallery.slidePhotos track by $index">
               <div class="registergallery-slide">
                 <div class="row">
-                  <div class="col-md-6 registergallery-photoslide" ng-repeat="photoList in slide track by $index">
+                  <div class="col-md-6 col-sm-6 registergallery-photoslide" ng-repeat="photoList in slide track by $index">
                     <div class="registergallery-photo">
                       <div class="registergallery-photoholder" ng-repeat="photo in photoList|limitTo:3">
                         <img ng-src="{{photo.mediaLink|serverimage2}}" alt="Sports For All" class="img-responsive">
@@ -271,5 +271,4 @@
     </div>
   </section>
   <!-- PHOTOS END  -->
-
 </div>

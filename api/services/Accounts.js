@@ -86,11 +86,6 @@ var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
     getAthleteAccount: function (data, callback) {
-        var matchObj = {
-            athlete: {
-                $exists: true
-            }
-        };
         var Model = this;
         var Const = this(data);
         var maxRow = Config.maxRow;
@@ -114,19 +109,104 @@ var model = {
             start: (page - 1) * maxRow,
             count: maxRow
         };
-        var Search = Model.find(matchObj)
-            .order(options)
-            .deepPopulate("athlete athlete.school school transaction")
-            .keyword(options)
-            .page(options, callback);
+        if (data.keyword == "") {
+            var matchObj = {
+                athlete: {
+                    $exists: true
+                }
+            };
+            var Search = Model.find(matchObj)
+                .order(options)
+                .deepPopulate("athlete athlete.school transaction")
+                .keyword(options)
+                .page(options, callback);
+        } else {
+            Accounts.aggregate(
+                [{
+                        $lookup: {
+                            "from": "atheletes",
+                            "localField": "athlete",
+                            "foreignField": "_id",
+                            "as": "athlete"
+                        }
+                    },
+                    // Stage 2
+                    {
+                        $unwind: {
+                            path: "$athlete",
+                        }
+                    },
+                    // Stage 3
+                    {
+                        $match: {
+
+                            $or: [{
+                                "athlete.firstName": {
+                                    $regex: data.keyword,
+                                    $options: "i"
+                                }
+                            }, {
+                                "athlete.middleName": {
+                                    $regex: data.keyword,
+                                    $options: "i"
+                                }
+                            }, {
+                                "athlete.surname": {
+                                    $regex: data.keyword,
+                                    $options: "i"
+                                }
+                            }, {
+                                "athlete.sfaID": {
+                                    $regex: data.keyword,
+                                    $options: "i"
+                                }
+                            }]
+
+                        }
+                    },
+                    {
+                        $sort: {
+                            "createdAt": -1
+
+                        }
+                    },
+                ],
+                function (err, returnReq) {
+                    console.log("returnReq : ", returnReq);
+                    if (err) {
+                        console.log(err);
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(returnReq)) {
+                            var count = returnReq.length;
+                            console.log("count", count);
+
+                            var data = {};
+                            data.options = options;
+
+                            data.results = returnReq;
+                            data.total = count;
+                            callback(null, data);
+                        } else {
+                            var count = returnReq.length;
+                            console.log("count", count);
+
+                            var data = {};
+                            data.options = options;
+
+                            data.results = returnReq;
+                            data.total = count;
+                            callback(null, data);
+
+                        }
+                    }
+                });
+
+        }
     },
 
     getSchoolAccount: function (data, callback) {
-        var matchObj = {
-            school: {
-                $exists: true
-            }
-        };
+
         var Model = this;
         var Const = this(data);
         var maxRow = Config.maxRow;
@@ -150,11 +230,87 @@ var model = {
             start: (page - 1) * maxRow,
             count: maxRow
         };
-        var Search = Model.find(matchObj)
-            .order(options)
-            .deepPopulate("athlete athlete.school school transaction")
-            .keyword(options)
-            .page(options, callback);
+        if (data.keyword == "") {
+            var matchObj = {
+                school: {
+                    $exists: true
+                }
+            };
+
+            var Search = Model.find(matchObj)
+                .order(options)
+                .deepPopulate("school transaction")
+                .keyword(options)
+                .page(options, callback);
+        } else {
+            Accounts.aggregate(
+                [{
+                        $lookup: {
+                            "from": "registrations",
+                            "localField": "school",
+                            "foreignField": "_id",
+                            "as": "school"
+                        }
+                    },
+                    // Stage 2
+                    {
+                        $unwind: {
+                            path: "$school",
+                        }
+                    },
+                    // Stage 3
+                    {
+                        $match: {
+                            $or: [{
+                                "school.schoolName": {
+                                    $regex: data.keyword,
+                                    $options: "i"
+                                }
+                            }, {
+                                "school.sfaID": {
+                                    $regex: data.keyword,
+                                    $options: "i"
+                                }
+                            }]
+                        }
+                    },
+                    {
+                        $sort: {
+                            "createdAt": -1
+                        }
+                    },
+                ],
+                function (err, returnReq) {
+                    console.log("returnReq : ", returnReq);
+                    if (err) {
+                        console.log(err);
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(returnReq)) {
+                            var count = returnReq.length;
+                            console.log("count", count);
+
+                            var data = {};
+                            data.options = options;
+
+                            data.results = returnReq;
+                            data.total = count;
+                            callback(null, data);
+                        } else {
+                            var count = returnReq.length;
+                            console.log("count", count);
+
+                            var data = {};
+                            data.options = options;
+
+                            data.results = returnReq;
+                            data.total = count;
+                            callback(null, data);
+
+                        }
+                    }
+                });
+        }
     },
 
     getAccount: function (data, callback) {
@@ -657,6 +813,273 @@ var model = {
 
             });
     },
+
+    generateAthleteExcel: function (data, callback) {
+        async.waterfall([
+            function (callback) {
+                Accounts.find({
+                        athlete: {
+                            $exists: true
+                        }
+                    }).lean()
+                    .deepPopulate("athlete athlete.school athlete.package transaction transaction.package")
+                    .exec(function (err, found) {
+                        if (err || _.isEmpty(found)) {
+                            callback(null, {
+                                error: "no data found",
+                                data: data
+                            });
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+            },
+            function (found, callback) {
+                async.concatSeries(found, function (mainData, callback) {
+                        var obj = {};
+                        obj["SFA ID"] = mainData.athlete.sfaId;
+                        if (mainData.athlete.middleName) {
+                            obj["ATHLETE NAME"] = mainData.athlete.firstName + " " + mainData.athlete.middleName + " " + mainData.athlete.surname;
+                        } else {
+                            obj["ATHLETE NAME"] = mainData.athlete.firstName + " " + mainData.athlete.surname;
+                        }
+                        if (mainData.athlete.atheleteSchoolName) {
+                            obj["ATHLETE SCHOOL NAME"] = mainData.athlete.atheleteSchoolName;
+                        } else {
+                            obj["ATHLETE SCHOOL NAME"] = mainData.athlete.school.name;
+                        }
+
+                        var i = 0;
+                        var paymentMode;
+                        var payu;
+
+                        _.each(mainData.transaction, function (n) {
+                            if (i == 0) {
+                                obj["SELECTED PACKAGES"] = n.package.name;
+                                paymentMode = n.paymentMode;
+                                payu = n.PayuId;
+                            } else {
+                                obj["SELECTED PACKAGES"] = obj["SELECTED PACKAGES"] + "," + n.package.name;
+                                paymentMode = paymentMode + "," + n.paymentMode;
+                                payu = payu + "," + n.PayuId
+                            }
+
+                            i++;
+                        });
+
+                        obj["CURRENT PACKAGE"] = mainData.athlete.package.name;
+                        obj["CURRENT PACKAGE AMOUNT"] = mainData.athlete.package.finalPrice;
+                        if (mainData.athlete.package.cgstPercent != null) {
+                            obj["CGST PERCENT"] = mainData.athlete.package.cgstPercent;
+                        } else {
+                            mainData.athlete.package.cgstPercent = 0;
+                        }
+                        if (mainData.cgst != null) {
+                            obj["CGST AMOUNT"] = mainData.cgst;
+                        } else {
+                            obj["CGST AMOUNT"] = 0;
+                        }
+                        if (mainData.athlete.package.sgstPercent != null) {
+                            obj["SGST PERCENT"] = mainData.athlete.package.sgstPercent;
+                        } else {
+                            mainData.athlete.package.sgstPercent = 0;
+                        }
+                        if (mainData.athlete.package.sgstAmt != null) {
+                            obj["SGST AMOUNT"] = mainData.sgst;
+                        } else {
+                            obj["SGST AMOUNT"] = 0;
+                        }
+                        if (mainData.igst != null) {
+                            obj["IGST PERCENT"] = mainData.igst;
+                        } else {
+                            mainData.athlete.package.igstPercent = 0;
+                        }
+                        if (mainData.igst != null) {
+                            obj["IGST AMOUNT"] = mainData.igst;
+                        } else {
+                            obj["IGST AMOUNT"] = 0;
+                        }
+                        obj["DISCOUNT"] = mainData.discount;
+                        if (obj["IGST AMOUNT"] > 0) {
+                            obj["TOTAL TO PAY"] = (mainData.athlete.package.finalPrice + obj["IGST AMOUNT"]) - mainData.discount;
+                        } else {
+                            obj["TOTAL TO PAY"] = (mainData.athlete.package.finalPrice + obj["CGST AMOUNT"] + obj["SGST AMOUNT"]) - mainData.discount;
+                        }
+                        obj["TOTAL PAID"] = mainData.totalPaid;
+                        obj["OUTSTANDING AMOUNT"] = mainData.outstandingAmount;
+                        if (mainData.upgrade == true) {
+                            obj["UPGRADED"] = "YES";
+                        } else {
+                            obj["UPGRADED"] = "NO";
+                        }
+                        if (mainData.transaction) {
+                            var len = mainData.transaction.length;
+                            if (len > 0) {
+                                len--;
+                                obj["LAST PAYMENT DATE"] = mainData.transaction[len].dateOfTransaction;
+                            } else {
+                                obj["LAST PAYMENT DATE"] = "";
+                            }
+                        } else {
+                            obj["LAST PAYMENT DATE"] = "";
+                        }
+                        obj["PAYMENT MODE"] = paymentMode;
+
+                        obj["PAYU ID"] = payu;
+                        var j = 0;
+                        _.each(mainData.receiptId, function (n) {
+                            if (j == 0) {
+                                obj["RECEIPT NO"] = n;
+                            } else {
+                                obj["RECEIPT NO"] = obj["RECEIPT NO"] + "," + n
+                            }
+                            j++;
+                        });
+                        callback(null, obj);
+                    },
+                    function (err, singleData) {
+                        // Config.generateExcel("KnockoutIndividual", singleData, res);
+                        callback(null, singleData);
+                    });
+            }
+        ], function (err, complete) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, complete);
+                // Config.generateExcel("KnockoutIndividual", complete, res);
+            }
+        })
+    },
+
+    generateSchoolExcel: function (data, callback) {
+        async.waterfall([
+            function (callback) {
+                Accounts.find({
+                        school: {
+                            $exists: true
+                        }
+                    }).lean()
+                    .deepPopulate("school school.package transaction transaction.package")
+                    .exec(function (err, found) {
+                        if (err || _.isEmpty(found)) {
+                            callback(null, {
+                                error: "no data found",
+                                data: data
+                            });
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+            },
+            function (found, callback) {
+                async.concatSeries(found, function (mainData, callback) {
+                        var obj = {};
+                        obj["SFA ID"] = mainData.school.sfaID;
+                        obj["SCHOOL NAME"] = mainData.school.schoolName;
+                        var i = 0;
+                        var paymentMode;
+                        var payu;
+
+                        _.each(mainData.transaction, function (n) {
+                            if (i == 0) {
+                                // obj["SELECTED PACKAGES"] = n.package.name;
+                                paymentMode = n.paymentMode;
+                                payu = n.PayuId;
+                            } else {
+                                // obj["SELECTED PACKAGES"] = obj["SELECTED PACKAGES"] + "," + n.package.name;
+                                paymentMode = paymentMode + "," + n.paymentMode;
+                                payu = payu + "," + n.PayuId
+                            }
+
+                            i++;
+                        });
+
+                        obj["PACKAGE"] = mainData.athlete.package.name;
+                        obj["PACKAGE AMOUNT"] = mainData.athlete.package.finalPrice;
+                        if (mainData.athlete.package.cgstPercent != null) {
+                            obj["CGST PERCENT"] = mainData.athlete.package.cgstPercent;
+                        } else {
+                            mainData.athlete.package.cgstPercent = 0;
+                        }
+                        if (mainData.athlete.package.cgstAmt != null) {
+                            obj["CGST AMOUNT"] = mainData.cgstAmount;
+                        } else {
+                            mainData.athlete.package.cgstAmt = 0;
+                        }
+                        if (mainData.athlete.package.sgstPercent != null) {
+                            obj["SGST PERCENT"] = mainData.athlete.package.sgstPercent;
+                        } else {
+                            mainData.athlete.package.sgstPercent = 0;
+                        }
+                        if (mainData.athlete.package.sgstAmt != null) {
+                            obj["SGST AMOUNT"] = mainData.sgstAmount;
+                        } else {
+                            mainData.athlete.package.sgstAmt = 0;
+                        }
+                        if (mainData.athlete.package.igstPercent != null) {
+                            obj["IGST PERCENT"] = mainData.athlete.package.igstPercent;
+                        } else {
+                            mainData.athlete.package.igstPercent = 0;
+                        }
+                        if (mainData.igstAmt != null) {
+                            obj["IGST AMOUNT"] = mainData.igstAmount;
+                        } else {
+                            mainData.athlete.package.igstAmt = 0;
+                        }
+                        obj["DISCOUNT"] = mainData.discount;
+                        if (obj["IGST AMOUNT"] > 0) {
+                            obj["TOTAL TO PAY"] = (mainData.athlete.package.finalPrice + obj["IGST AMOUNT"]) - mainData.discount;
+                        } else {
+                            obj["TOTAL TO PAY"] = (mainData.athlete.package.finalPrice + obj["CGST AMOUNT"] + obj["SGST AMOUNT"]) - mainData.discount;
+                        }
+                        obj["TOTAL PAID"] = mainData.totalPaid;
+                        obj["OUTSTANDING AMOUNT"] = mainData.outstandingAmount;
+                        if (mainData.upgrade == true) {
+                            obj["UPGRADED"] = "YES";
+                        } else {
+                            obj["UPGRADED"] = "NO";
+                        }
+                        if (mainData.transaction) {
+                            var len = mainData.transaction.length;
+                            if (len > 0) {
+                                len--;
+                                obj["LAST PAYMENT DATE"] = mainData.transaction[len].dateOfTransaction;
+                            } else {
+                                obj["LAST PAYMENT DATE"] = "";
+                            }
+                        } else {
+                            obj["LAST PAYMENT DATE"] = "";
+                        }
+                        obj["PAYMENT MODE"] = paymentMode;
+
+                        obj["PAYU ID"] = payu;
+                        var j = 0;
+                        _.each(mainData.receiptId, function (n) {
+                            if (j == 0) {
+                                obj["RECEIPT NO"] = n;
+                            } else {
+                                obj["RECEIPT NO"] = obj["RECEIPT NO"] + "," + n
+                            }
+                            j++;
+                        });
+                        callback(null, obj);
+                    },
+                    function (err, singleData) {
+                        // Config.generateExcel("KnockoutIndividual", singleData, res);
+                        callback(null, singleData);
+                    });
+            }
+        ], function (err, complete) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, complete);
+                // Config.generateExcel("KnockoutIndividual", complete, res);
+            }
+        })
+    }
+
 
 };
 module.exports = _.assign(module.exports, exports, model);

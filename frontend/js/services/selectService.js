@@ -79,7 +79,8 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                 case "FA":
                     // console.log(ath);
                     if (sN == 'Fencing') {
-                        if (ath.eventEpee.length <= 1 && ath.eventSabre.length <= 1 && ath.eventFoil.length <= 1) {
+                        console.log("ath",ath);
+                        if (ath.eventEpee.length <= 0 && ath.eventSabre.length <= 0 && ath.eventFoil.length <= 0) {
                             ath.checked = false;
                             toastr.error("Not Applicable");
                             isApplicable = false;
@@ -311,7 +312,18 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
             _.each(kumite, function (n, i) {
                 n.data = _.filter(n.data, ['eventName', 'Kumite']);
             });
-            athelete.eventKumite = getAgeGroups(kumite);
+            // athelete.eventKumite = getAgeGroups(kumite);
+            athelete.eventKumite = _.compact(_.map(getAgeGroups(kumite),function(n){
+                n.data=_.compact(_.map(n.data,function(m){
+                    if(!(m && m.weight && m.weight!="")){
+                        return m;
+                    }
+                }));
+                // console.log("data",_.compact(n.data));
+                if(!_.isEmpty(_.compact(n.data))){
+                    return n;
+                }
+            }));
             console.log("eventKumite", athelete.eventKumite);
 
             athelete.sport = [];
@@ -328,60 +340,9 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                     'weight': 'First Select Kumite'
                 }]
             });
+           console.log(athelete);
             return athelete;
         }
-
-        // for fencing
-        // function filterFencing(events) {
-        //     var epee = _.cloneDeep(events);
-        //     var sabre = _.cloneDeep(events);
-        //     var foil = _.cloneDeep(events);
-
-        //     //epee
-        //     _.each(epee, function (n, i) {
-        //         n.data = _.filter(n.data, ['eventName', 'Epee']);
-        //     });
-        //     athelete.eventEpee = getAgeGroups(epee);
-        //     athelete.eventEpee.unshift({
-        //         '_id': 'None',
-        //         'data': [{
-        //             'sport': null
-        //         }]
-        //     });
-        //     console.log("athelete.eventEpee",athelete.eventEpee);
-
-        //     // sabre
-        //     _.each(sabre, function (n, i) {
-        //         n.data = _.filter(n.data, ['eventName', 'Sabre']);
-        //     });
-        //     athelete.eventSabre = getAgeGroups(sabre);
-        //     athelete.eventSabre.unshift({
-        //         '_id': 'None',
-        //         'data': [{
-        //             'sport': null
-        //         }]
-        //     });
-        //     console.log("athelete.eventSabre",athelete.eventSabre);
-
-
-        //     // foil
-        //     _.each(foil, function (n, i) {
-        //         n.data = _.filter(n.data, ['eventName', 'Foil']);
-        //     });
-        //     athelete.eventFoil = getAgeGroups(foil);
-        //     athelete.eventFoil.unshift({
-        //         '_id': 'None',
-        //         'data': [{
-        //             'sport': null
-        //         }]
-        //     });
-        //     console.log("athelete.eventFoil",athelete.eventFoil);
-
-
-        //     // console.log(athelete.eventFoil, "foil");
-        //     athelete.sport = [];
-        //     return athelete;
-        // }
 
         function filterFencing(events) {
             var epee = _.cloneDeep(events);
@@ -397,12 +358,12 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                 n._id = n._id + "-Epee"
                 return n;
             });
-            athelete.eventEpee.unshift({
-                '_id': 'None',
-                'data': [{
-                    'sport': null
-                }]
-            });
+            // athelete.eventEpee.unshift({
+            //     '_id': 'None',
+            //     'data': [{
+            //         'sport': null
+            //     }]
+            // });
             console.log("athelete.eventEpee", athelete.eventEpee);
 
             // sabre
@@ -492,7 +453,19 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                 break;
             case "I":
                 athelete.sport = [];
-                athelete.ageGroups = getAgeGroups(events);
+
+                athelete.ageGroups = _.compact(_.map(getAgeGroups(events),function(n){
+                    n.data=_.compact(_.map(n.data,function(m){
+                        if(!(m && m.weight && m.weight!="")){
+                            return m;
+                        }
+                    }));
+                    // console.log("data",_.compact(n.data));
+                    if(!_.isEmpty(_.compact(n.data))){
+                        return n;
+                    }
+                }));
+                // console.log("final age Group",athelete.ageGroups);
                 break;
             case "CT":
                 break;
@@ -691,6 +664,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
 
                 var arr = athelete.sport;
                 var weights = _.cloneDeep(athelete.event2Weights);
+                console.log("weights",weights);
                 if (athelete.event2Weights) {
                     var obj = _.find(weights.data, function (n) {
                         if (!n.weight) {
@@ -701,7 +675,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                     if (obj) {
                         arr[1] = obj;
                     } else {
-                        arr[1] = {};
+                        arr[1] = null;
                     }
                 }
                 athelete.isValidSelection = (arr.length == 0 || ((!arr[0] || arr[0] && arr[0].data && arr[0].data[0].sport == null) && ((arr[1] && !arr[1].sport) || (arr[1] && arr[1].sport == null)))) ? false : ((arr.length >= 1 && arr[0] && arr[0].data && arr[0].data[0] && arr[0].data[0].sport != null) || ((arr.length >= 1 && (!arr[0] || arr[0] && arr[0].data[0].sport == null)) && (arr.length >= 1 && arr[1] && arr[1].sport != null)) || ((arr.length >= 1 && arr[0] && arr[0].data[0] && arr[0].data[0].sport != null) && (arr.length >= 1 && arr[1] && arr[1].sport != null))) ? true : false;
@@ -713,10 +687,12 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                     var arr = _.compact(athelete.sport);
                     athelete.isValidSelection = arr.length > 0;
                 } else if (this.sportName == 'Archery') {
-                    console.log("event from Service");
+                    console.log("athelete.sport",athelete.sport);
 
-                    var allowedAsPerPackage = (((athelete.package.eventCount - athelete.selectedEvent) - _.compact(athelete.sport).length) <= 0) ? true : false;
+                    var allowedAsPerPackage = (((athelete.package.eventCount - athelete.selectedEvent) - _.compact(athelete.sport).length) < 0) ? true : false;
+                    console.log("allowedAsPerPackage",allowedAsPerPackage,((athelete.package.eventCount - athelete.selectedEvent) - _.compact(athelete.sport).length));
                     if (allowedAsPerPackage) {
+                        athelete.sport[1] = {}; //last added
                         athelete.disableEvent2 = true;
                         athelete.informTitle = "Upgrade Package To Add More";
                         if (whichSelectTag == 'Fen2') {
