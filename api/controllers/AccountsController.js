@@ -22,6 +22,29 @@ var controller = {
     }
   },
 
+  generateAthleteExcel: function (req, res) {
+    if (req.body) {
+      Accounts.generateAthleteExcel(req.body, res.callback);
+    } else {
+      res.json({
+        "data": "Body not Found",
+        "value": false
+      });
+    }
+  },
+
+  generateSchoolExcel: function (req, res) {
+    if (req.body) {
+      Accounts.generateSchoolExcel(req.body, res.callback);
+    } else {
+      res.json({
+        "data": "Body not Found",
+        "value": false
+      });
+    }
+  },
+
+
   upgradeAccount: function (req, res) {
     if (req.body) {
       Accounts.upgradeAccount(req.body, res.callback);
