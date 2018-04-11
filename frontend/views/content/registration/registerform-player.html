@@ -188,11 +188,18 @@
             <div class="formplayer-playerdetails formregister-mtb20">
               <div class="formregister-heading">Player Details</div>
               <!-- FIRST NAME  -->
+              <div class="form-group" ng-if="formFlag === 'edit'">
+                <label for="sfaid" class="control-label col-sm-2">*SFA ID:</label>
+                <div class="col-sm-4">
+                  <input type="text" name="sfaid" placeholder="SFA ID" class="form-control" ng-model="formData.sfaId" ng-readonly="formFlag === 'edit'" >
+                </div>
+              </div>
+              <!-- FIRST NAME END -->
+              <!-- FIRST NAME  -->
               <div class="form-group">
                 <label for="firstName" class="control-label col-sm-2">*First Name:</label>
                 <div class="col-sm-10">
-                  <input type="text" name="firstName" placeholder="Enter Your First Name" class="form-control" ng-model="formData.firstName"
-                    capitalize only-alpha required>
+                  <input type="text" name="firstName" placeholder="Enter Your First Name" class="form-control" ng-model="formData.firstName" ng-readonly="formFlag === 'edit'" capitalize only-alpha required>
                   <div class="label label-danger pull-right" ng-if="formAthlete.firstName.$invalid && formAthlete.firstName.$touched">Please Enter Your First Name</div>
                 </div>
               </div>
@@ -201,8 +208,7 @@
               <div class="form-group">
                 <label for="middleName" class="control-label col-sm-2">Middle Name:</label>
                 <div class="col-sm-10">
-                  <input type="text" name="middleName" placeholder="Enter Your Middle Name" class="form-control" ng-model="formData.middleName"
-                    capitalize only-alpha>
+                  <input type="text" name="middleName" placeholder="Enter Your Middle Name" class="form-control" ng-model="formData.middleName" ng-readonly="formFlag === 'edit'" capitalize only-alpha>
                 </div>
               </div>
               <!-- MIDDLE NAME END -->
@@ -210,8 +216,7 @@
               <div class="form-group">
                 <label for="surname" class="control-label col-sm-2">*Surname:</label>
                 <div class="col-sm-10">
-                  <input type="text" name="surname" placeholder="Enter Your Surname" class="form-control" ng-model="formData.surname" capitalize
-                    only-alpha required>
+                  <input type="text" name="surname" placeholder="Enter Your Surname" class="form-control" ng-model="formData.surname" capitalize ng-readonly="formFlag === 'edit'" only-alpha required>
                   <div class="label label-danger pull-right" ng-if="formAthlete.surname.$invalid && formAthlete.surname.$touched">Please Enter Your Surname</div>
                 </div>
               </div>
@@ -221,13 +226,15 @@
                 <label for="radio04" class="control-label col-sm-2">*Gender:</label>
                 <div class="col-sm-8">
                   <label for="radio04" class="sfa-radiobox">
-                    <input type="radio" name="radio1" id="radio04" value="male" class="form-control" ng-model="formData.gender" required>
+                    <input type="radio" name="radio1" id="radio04" value="male" class="form-control" ng-model="formData.gender" ng-disabled="formFlag == 'edit'" required>
                     <span class="sfa-radio"></span>
+                    <span class="sfa-radio-disabled"></span>
                     Male
                   </label>
                   <label for="radio03" class="sfa-radiobox">
-                    <input type="radio" name="radio1" id="radio03" value="female" class="form-control" ng-model="formData.gender" required>
+                    <input type="radio" name="radio1" id="radio03" value="female" class="form-control" ng-model="formData.gender" ng-disabled="formFlag == 'edit'" required>
                     <span class="sfa-radio"></span>
+                    <span class="sfa-radio-disabled"></span>
                     Female
                   </label>
                 </div>
@@ -328,7 +335,7 @@
                   <div class="form-group">
                     <label for="" class="control-label col-sm-4">*Date Of Birth</label>
                     <div class="col-sm-8">
-                      <input-date class="bor-t date-month sf-list " ng-model="formData.dob "></input-date>
+                      <input-date class="bor-t date-month sf-list " ng-model="formData.dob" disabled="formFlag == 'edit'"></input-date>
                       <div class="label label-danger pull-right " ng-if="formAthlete.dob.$invalid && formAthlete.dob.$touched ">Please Enter Date of birth</div>
                     </div>
                   </div>
@@ -691,11 +698,13 @@
               <div class="checkbox-custom hidden-xs">
                 <input type="checkbox" name="checkIhav" ng-checked="termsCheck(formData.termsAndCondition)" ng-model="formData.termsAndCondition"
                   id="test5" />
-                <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span>*Tick the box to accept all <a href="https://storage.googleapis.com/sportsforall/termplayer.pdf#toolbar=0" fancybox class="fancybox.iframe " title="Click here"><strong>Terms & Conditions</strong></a>
+                <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span>*I have carefully read and understood the <a href="https://storage.googleapis.com/sportsforall/termplayer.pdf#toolbar=0" fancybox class="fancybox.iframe " title="Click here"><strong>Terms & Conditions</strong></a>  of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all
+                of them.
                     </label>
 
                 <div class="visible-xs">
-                  <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span>*Tick the box to accept all <a href="https://storage.googleapis.com/sportsforall/termplayer.pdf#toolbar=0" target="_new" class="" title="Click here"><strong>Terms & Conditions</strong></a>
+                  <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span>*I have carefully read and understood the <a href="https://storage.googleapis.com/sportsforall/termplayer.pdf#toolbar=0" target="_new" class="" title="Click here"><strong>Terms & Conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all
+                  of them.
                   </label>
                 </div>
 

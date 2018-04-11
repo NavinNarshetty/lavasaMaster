@@ -631,7 +631,7 @@ var model = {
             });
     },
 
-    updateAthletePaymentStatus: function (data, callback) {
+    updateAthletePaymentStatusOld: function (data, callback) {
         async.waterfall([
                 function (callback) {
                     Athelete.findOne({ //finds one with refrence to id
@@ -723,7 +723,7 @@ var model = {
             });
     },
 
-    updateSchoolPaymentStatus: function (data, callback) {
+    updateSchoolPaymentStatusOld: function (data, callback) {
         async.waterfall([
                 function (callback) {
                     ConfigProperty.find().lean().exec(function (err, property) {
@@ -800,6 +800,442 @@ var model = {
                                                     }
                                                 });
                                         }
+                                    }
+                                ],
+                                function (err, complete) {
+                                    if (err) {
+                                        callback(err, callback);
+                                    } else {
+                                        callback(null, complete);
+                                    }
+                                });
+
+                        }
+                    });
+                }
+            ],
+            function (err, data2) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
+                    callback(null, data2);
+                }
+
+            });
+    },
+
+    updateAthletePaymentStatus: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    Athelete.findOne({ //finds one with refrence to id
+                        firstName: data.firstName,
+                        surname: data.surname,
+                        email: data.email,
+                    }).lean().exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            console.log("empty in Athelete found");
+                            callback(null, "Data is empty");
+                        } else {
+                            async.waterfall([
+                                    function (callback) {
+                                        Accounts.findOne({
+                                            athlete: found._id
+                                        }).lean().exec(function (err, accountsData) {
+                                            if (err || _.isEmpty(accountsData)) {
+                                                callback(null, {
+                                                    error: "no data found",
+                                                    data: found
+                                                });
+                                            } else {
+                                                found.accounts = accountsData;
+                                                callback(null, found);
+                                            }
+                                        });
+                                    },
+                                    function (found, callback) {
+                                        data.athlete = true;
+                                        Transaction.saveUpdateTransaction(data, found, function (err, vData) {
+                                            if (err || _.isEmpty(vData)) {
+                                                callback(null, {
+                                                    error: "no data found",
+                                                    data: found
+                                                });
+                                            } else {
+                                                console.log("vData", vData.package);
+                                                found.packageNew = vData.package;
+                                                callback(null, found);
+                                            }
+                                        });
+                                    },
+                                ],
+                                function (err, complete) {
+                                    if (err) {
+                                        callback(err, callback);
+                                    } else {
+                                        callback(null, complete);
+                                    }
+                                });
+                        }
+                    });
+                },
+                function (found, callback) {
+                    if (found.error) {
+                        callback(null, found);
+                    } else {
+                        console.log("found in update", found);
+
+                        var matchObj = {
+                            $set: {
+                                package: found.packageNew
+                            }
+                        };
+                        Athelete.update({
+                            _id: found._id
+                        }, matchObj).exec(
+                            function (err, data3) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(err, null);
+                                } else if (data3) {
+                                    callback(null, found);
+                                }
+                            });
+                    }
+                },
+                function (found, callback) {
+                    async.waterfall([
+                            function (callback) {
+                                ConfigProperty.find().lean().exec(function (err, property) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else {
+                                        if (_.isEmpty(property)) {
+                                            callback(null, []);
+                                        } else {
+                                            callback(null, property);
+                                        }
+                                    }
+                                });
+                            },
+                            function (property, callback) {
+                                Athelete.find({
+                                    _id: found._id
+                                }).lean().deepPopulate("package").exec(
+                                    function (err, athleteData) {
+                                        if (err) {
+                                            console.log(err);
+                                            callback(err, null);
+                                        } else if (athleteData) {
+                                            callback(null, athleteData);
+                                        }
+                                    });
+                            },
+                            function (property, athleteData, callback) {
+                                var packageId = {};
+                                packageId._id = found.packageNew;
+                                Featurepackage.featureDetailByPackage(packageId, function (err, features) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else {
+                                        if (_.isEmpty(features)) {
+                                            callback(null, []);
+                                        } else {
+                                            var finalData = {};
+                                            finalData.property = property;
+                                            finalData.athleteData = athleteData;
+                                            finalData.features = features;
+                                            callback(null, finalData);
+                                        }
+                                    }
+                                });
+                            },
+                            function (finalData, callback) {
+                                var property = finalData.property;
+                                var athleteData = finalData.athleteData;
+                                var features = finalData.features;
+                                async.parallel([
+                                        function (callback) {
+                                            var emailData = {};
+                                            // emailData.from = "info@sfanow.in";
+                                            emailData.from = property[0].infoId;
+                                            emailData.email = athleteData.email;
+                                            emailData.infoId = property[0].infoId;
+                                            emailData.infoNo = property[0].infoNo;
+                                            emailData.cityAddress = property[0].cityAddress;
+                                            emailData.ddFavour = property[0].ddFavour;
+                                            emailData.city = property[0].sfaCity;
+                                            emailData.year = property[0].year;
+                                            emailData.eventYear = property[0].eventYear;
+                                            emailData.type = property[0].institutionType;
+                                            emailData.packageName = athleteData.package.name;
+                                            emailData.packageOrder = athleteData.package.order;
+                                            emailData.featureDetail = features;
+                                            emailData.flag = emailData.type;
+                                            emailData.filename = "player-school/upgrade.ejs";
+                                            emailData.subject = "SFA: Thank you for upgrading your package for SFA " + emailData.city + " " + emailData.eventYear;
+                                            console.log("emaildata", emailData);
+                                            Config.email(emailData, function (err, emailRespo) {
+                                                if (err) {
+                                                    console.log(err);
+                                                    callback(null, err);
+                                                } else if (emailRespo) {
+                                                    callback(null, emailRespo);
+                                                } else {
+                                                    callback(null, "Invalid data");
+                                                }
+                                            });
+                                        },
+                                        function (callback) {
+                                            var smsData = {};
+                                            smsData.mobile = athleteData.mobile;
+                                            smsData.content = "Thank you for upgrading your package for SFA " + property[0].sfaCity + " " + property[0].eventYear + ". For further details please check your registered email ID.";
+                                            console.log("smsdata", smsData);
+                                            Config.sendSms(smsData, function (err, smsRespo) {
+                                                if (err) {
+                                                    console.log(err);
+                                                    callback(err, null);
+                                                } else if (smsRespo) {
+                                                    console.log(smsRespo, "sms sent");
+                                                    callback(null, smsRespo);
+                                                } else {
+                                                    callback(null, "Invalid data");
+                                                }
+                                            });
+                                        }
+                                    ],
+                                    function (err, final) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            callback(null, final);
+                                        }
+
+                                    });
+                            }
+                        ],
+                        function (err, data2) {
+                            if (err) {
+                                console.log(err);
+                                callback(err, null);
+                            } else {
+                                callback(null, data2);
+                            }
+
+                        });
+                }
+            ],
+            function (err, data2) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
+                    callback(null, data2);
+                }
+
+            });
+    },
+
+    updateSchoolPaymentStatus: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    ConfigProperty.find().lean().exec(function (err, property) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(property)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, property);
+                            }
+                        }
+                    });
+                },
+                function (property, callback) {
+                    console.log("inside update", data);
+                    Registration.findOne({ //finds one with refrence to id
+                        schoolName: data.schoolName
+                    }).exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            callback(null, "Data is empty");
+                        } else {
+                            async.waterfall([
+                                    function (callback) {
+                                        Accounts.findOne({
+                                            school: found._id
+                                        }).lean().exec(function (err, accountsData) {
+                                            if (err || _.isEmpty(accountsData)) {
+                                                callback(null, {
+                                                    error: "no data found",
+                                                    data: found
+                                                });
+                                            } else {
+                                                found.accounts = accountsData;
+                                                callback(null, found);
+                                            }
+                                        });
+                                    },
+                                    function (found, callback) {
+                                        data.school = true;
+                                        Transaction.saveUpdateTransaction(data, found, function (err, vData) {
+                                            if (err || _.isEmpty(vData)) {
+                                                callback(null, {
+                                                    error: "no data found",
+                                                    data: found
+                                                });
+                                            } else {
+                                                found.packageNew = vData.package;
+                                                callback(null, found);
+                                            }
+                                        });
+                                    },
+                                    function (found, callback) {
+                                        if (found.error) {
+                                            callback(null, found);
+                                        } else {
+                                            var matchObj = {
+                                                $set: {
+                                                    package: found.packageNew
+                                                }
+                                            };
+                                            console.log("found in update", found);
+                                            Registration.update({
+                                                _id: found._id
+                                            }, matchObj).exec(
+                                                function (err, data3) {
+                                                    callback(err, data3);
+                                                    if (err) {
+                                                        callback(err, null);
+                                                    } else {
+                                                        callback(null, found);
+                                                    }
+                                                });
+                                        }
+                                    },
+                                    function (found, callback) {
+                                        async.waterfall([
+                                                function (callback) {
+                                                    ConfigProperty.find().lean().exec(function (err, property) {
+                                                        if (err) {
+                                                            callback(err, null);
+                                                        } else {
+                                                            if (_.isEmpty(property)) {
+                                                                callback(null, []);
+                                                            } else {
+                                                                callback(null, property);
+                                                            }
+                                                        }
+                                                    });
+                                                },
+                                                function (property, callback) {
+                                                    Registration.find({
+                                                        _id: found._id
+                                                    }).lean().deepPopulate("package").exec(
+                                                        function (err, schoolData) {
+                                                            if (err) {
+                                                                console.log(err);
+                                                                callback(err, null);
+                                                            } else if (schoolData) {
+                                                                callback(null, schoolData);
+                                                            }
+                                                        });
+                                                },
+                                                function (property, schoolData, callback) {
+                                                    var packageId = {};
+                                                    packageId._id = found.packageNew;
+                                                    Featurepackage.featureDetailByPackage(packageId, function (err, features) {
+                                                        if (err) {
+                                                            callback(err, null);
+                                                        } else {
+                                                            if (_.isEmpty(features)) {
+                                                                callback(null, []);
+                                                            } else {
+                                                                var finalData = {};
+                                                                finalData.property = property;
+                                                                finalData.schoolData = schoolData;
+                                                                finalData.features = features;
+                                                                callback(null, finalData);
+                                                            }
+                                                        }
+                                                    });
+                                                },
+                                                function (finalData, callback) {
+                                                    var property = finalData.property;
+                                                    var schoolData = finalData.schoolData;
+                                                    var features = finalData.features;
+                                                    async.parallel([
+                                                            function (callback) {
+                                                                var emailData = {};
+                                                                // emailData.from = "info@sfanow.in";
+                                                                emailData.from = property[0].infoId;
+                                                                emailData.email = schoolData.email;
+                                                                emailData.infoId = property[0].infoId;
+                                                                emailData.infoNo = property[0].infoNo;
+                                                                emailData.cityAddress = property[0].cityAddress;
+                                                                emailData.ddFavour = property[0].ddFavour;
+                                                                emailData.city = property[0].sfaCity;
+                                                                emailData.year = property[0].year;
+                                                                emailData.eventYear = property[0].eventYear;
+                                                                emailData.type = property[0].institutionType;
+                                                                emailData.packageName = schoolData.package.name;
+                                                                emailData.packageOrder = schoolData.package.order;
+                                                                emailData.featureDetail = features;
+                                                                emailData.flag = emailData.type;
+                                                                emailData.filename = "player-school/upgrade.ejs";
+                                                                emailData.subject = "SFA: Thank you for upgrading your package for SFA " + emailData.city + " " + emailData.eventYear;
+                                                                console.log("emaildata", emailData);
+                                                                Config.email(emailData, function (err, emailRespo) {
+                                                                    if (err) {
+                                                                        console.log(err);
+                                                                        callback(null, err);
+                                                                    } else if (emailRespo) {
+                                                                        callback(null, emailRespo);
+                                                                    } else {
+                                                                        callback(null, "Invalid data");
+                                                                    }
+                                                                });
+                                                            },
+                                                            function (callback) {
+                                                                var smsData = {};
+                                                                smsData.mobile = schoolData.mobile;
+                                                                smsData.content = "Thank you for upgrading your package for SFA " + property[0].sfaCity + " " + property[0].eventYear + ". For further details please check your registered email ID.";
+                                                                console.log("smsdata", smsData);
+                                                                Config.sendSms(smsData, function (err, smsRespo) {
+                                                                    if (err) {
+                                                                        console.log(err);
+                                                                        callback(err, null);
+                                                                    } else if (smsRespo) {
+                                                                        console.log(smsRespo, "sms sent");
+                                                                        callback(null, smsRespo);
+                                                                    } else {
+                                                                        callback(null, "Invalid data");
+                                                                    }
+                                                                });
+                                                            }
+                                                        ],
+                                                        function (err, final) {
+                                                            if (err) {
+                                                                callback(err, null);
+                                                            } else {
+                                                                callback(null, final);
+                                                            }
+
+                                                        });
+                                                }
+                                            ],
+                                            function (err, data2) {
+                                                if (err) {
+                                                    console.log(err);
+                                                    callback(err, null);
+                                                } else {
+                                                    callback(null, data2);
+                                                }
+
+                                            });
                                     }
                                 ],
                                 function (err, complete) {

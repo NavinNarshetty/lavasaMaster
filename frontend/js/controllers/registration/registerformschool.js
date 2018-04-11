@@ -173,7 +173,7 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
 
   $scope.closeModal = function () {
     $state.go('registerplayer', {
-      type: 'player'
+      type: 'school'
     });
     $scope.modalInstances.$disiss();
   }
