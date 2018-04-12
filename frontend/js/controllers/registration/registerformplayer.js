@@ -36,7 +36,24 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
         if (data.value == true) {
           $scope.formData = data.data;
           $scope.formData.password = "";
+          $scope.formData.standard = "";
           $scope.formData.termsAndCondition = false;
+          $scope.formData.refundAmount = 200;
+          $scope.age = $filter('ageYearFilter')($scope.formData.dob);
+          $scope.mobileNo = $scope.formData.mobile;
+          $scope.editMobile = false;
+          $scope.showMobileOtpSuccess = false;
+          $scope.emailId = $scope.formData.email;
+          $scope.editEmail = false;
+          $scope.showEmailOtpSuccess = false;
+          $scope.dob = $filter('englishNumeralDateOne')($scope.formData.dob);
+          $scope.formData.package = "";
+          $scope.formData.registrationFee = "";
+          delete $scope.formData.accessToken;
+          delete $scope.formData.createdAt;
+          delete $scope.formData.receiptId;
+          delete $scope.formData._id;
+          delete $scope.formData._v;
         } else {
           console.log("Error in ath get", data);
         }
@@ -85,6 +102,16 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
         $scope.showPackageDetail = !$scope.showPackageDetail;
     }
     // VIEW PACKAGE TABLE END
+    // CHECK REFUND
+    $scope.checkRefund = function(){
+      if ($scope.formData.refundAmount >= $scope.formData.amountToPay) {
+        $scope.formData.amountPaid = 0;
+      } else {
+        $scope.formData.amountPaid = $scope.formData.amountToPay - $scope.formData.refundAmount;
+        $scope.calculateTax();
+      }
+    }
+    // CHECK REFUND END
     // SET PAYMENT TABLE
     $scope.setPackageDetails = function () {
 
@@ -109,6 +136,9 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
                     $scope.formData.igstPercent = n.igstPercent;
                     $scope.formData.igstAmt = n.igstAmt;
                     $scope.formData.amountPaid = $scope.formData.amountToPay + $scope.formData.igstAmt;
+                    if ($scope.formData.refundAmount) {
+                      $scope.checkRefund();
+                    }
                 }
                 if (n.cgstPercent && n.sgstPercent) {
                     $scope.formData.cgstPercent = n.cgstPercent;
@@ -116,6 +146,9 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
                     $scope.formData.sgstPercent = n.sgstPercent;
                     $scope.formData.sgstAmt = n.sgstAmt;
                     $scope.formData.amountPaid = $scope.formData.amountToPay + $scope.formData.cgstAmt + $scope.formData.sgstAmt;
+                    if ($scope.formData.refundAmount) {
+                      $scope.checkRefund();
+                    }
                     console.log($scope.formData.amountPaid, $scope.formData.amountToPay);
                 }
             }
@@ -134,7 +167,6 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
             console.log("aft", $scope.formData.cgstAmt);
             $scope.formData.amountPaid = $scope.formData.amountPaid + $scope.formData.cgstAmt + $scope.formData.sgstAmt;
         }
-        $scope.promoApplied = true;
     }
     // CALCULATE TAX END
     // CALCULATE DISCOUNT
@@ -146,14 +178,21 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
                 toastr.error("Sorry. This coupon code is not valid");
             } else {
                 $scope.formData.amountPaid = $scope.formData.amountToPay - promoDetail.amount;
+                if ($scope.formData.refundAmount) {
+                  $scope.formData.amountPaid = $scope.formData.amountPaid - $scope.formData.refundAmount;
+                }
                 $scope.formData.discount = promoDetail.amount;
                 $scope.calculateTax();
+                $scope.promoApplied = true;
             }
         } else if (promoDetail.percent) {
             var a = _.round(TemplateService.calculatePercentage($scope.formData.amountToPay, promoDetail.percent));
             console.log(a);
             $scope.formData.discount = a;
             $scope.formData.amountPaid = $scope.formData.amountToPay - a;
+            if ($scope.formData.refundAmount) {
+              $scope.formData.amountPaid = $scope.formData.amountPaid - $scope.formData.refundAmount;
+            }
             $scope.calculateTax();
         }
     }
@@ -182,6 +221,32 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
       }
     }
     // APPLY PROMOCODE
+    // CHECK CHANGE
+    $scope.checkChange = function(field){
+      if ($scope.formFlag == 'edit') {
+        switch (field) {
+          case 'mobile':
+            if ($scope.formData.mobile != $scope.mobileNo) {
+              $scope.editMobile = true;
+              $scope.showMobileOtpSuccess = true;
+            } else {
+              $scope.editMobile = false;
+              $scope.showMobileOtpSuccess = false;
+            }
+          break;
+          case 'email':
+            if ($scope.formData.email != $scope.emailId) {
+              $scope.editEmail = true;
+              $scope.showEmailOtpSuccess = true;
+            } else {
+              $scope.editEmail = false;
+              $scope.showEmailOtpSuccess = false;
+            }
+          break;
+        }
+      }
+    };
+    // CHECK CHANGE END
     $scope.changeitSchoolId = function (err, data) {
         // console.log(err, data);
         if (err) {
@@ -398,7 +463,9 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
         } else {
             $scope.showTerm = false;
         }
-        formdata.sfaId = $scope.sfaId;
+        if ($scope.formFlag === 'create') {
+          formdata.sfaId = $scope.sfaId;
+        }
         formdata.age = $scope.age;
         formdata.school = $scope.schoolname;
         if (_.isEmpty($location.search())) {
@@ -446,8 +513,10 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
         // console.log($scope.url);
         // console.log(formdata);
         if (formAthlete.$valid && $scope.showTerm === false) {
+          console.log("showTerm", $scope.showTerm);
             if ($scope.showEmailOtpSuccess === false && $scope.showMobileOtpSuccess === false) {
                 $scope.isDisabled = true;
+                console.log("ath saves", formdata);
                 // console.log('google', formdata);
                 NavigationService.apiCallWithData($scope.url, formdata, function (data) {
                     if (data.value === true) {
@@ -789,7 +858,7 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
       $state.go('registerplayer',{
         type: 'player'
       });
-      $scope.modalInstances.$disiss();
+      $scope.modalInstances.$dismiss();
     }
 
     $scope.openErrModal = function () {

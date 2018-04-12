@@ -127,7 +127,7 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
               window.location.href = adminUrl2 + url;
               $scope.disableUpgrade = true;
             }
-          } else {
+          } else if(formData.registrationFee == "cash") {
             toastr.success("Package upgraded Successfully");
             $state.go("sports-selection");
             $scope.disableUpgrade = true;
