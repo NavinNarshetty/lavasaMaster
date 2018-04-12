@@ -117,7 +117,7 @@
               <!-- <input type="text" class="form-control" placeholder="SFA ID"> -->
               <ui-select name="playername" ng-model="searchSfaObj.sfaId" theme="bootstrap" required>
                 <ui-select-match placeholder="search by Sfa ID and Name" allow-clear="true" title="{{$select.selected.fullName}}">
-                  {{$select.selected.sfaId}}
+                  {{$select.selected.fullName}}
                 </ui-select-match>
                 <ui-select-choices refresh-delay="0" repeat="player as player in masterData | filter: $select.search" refresh="masterSearchSFA($select.search)">
                   <div>
@@ -144,7 +144,7 @@
                 </div>
               </div>
               <ul class="list-inline formoption-li">
-                <li ng-click="generateOtp(searchSfaObj)"><a href="">Resend OTP</a></li>
+                <li ng-click="regenerateOtp(searchSfaObj)"><a href="">Resend OTP</a></li>
                 <li>|</li>
                 <li><a ng-click="changeDetails();">Change Registered Email/Mobile</a></li>
               </ul>

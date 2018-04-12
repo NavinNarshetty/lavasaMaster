@@ -598,8 +598,14 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
     });
   };
 
+  $scope.regenerateOtp = function (searchSfaObj) {
+    $scope.verifyOtpObj.otp = '';
+    $scope.generateOtp(searchSfaObj);
+  };
+
 
   $scope.verifyOTP = function (otpObj) {
+    console.log("otpObj", otpObj);
     if (otpObj.otp === otpObj.validOtp) {
       toastr.success('Successful OTP validation', 'Success Message');
       if ($scope.formData.type == 'school') {
