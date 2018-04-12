@@ -153,28 +153,27 @@
                       </div>
                     </div>
                   </div>
-                  <div class="form-group">
+                  <div class="form-group" ng-if="detail.userType === 'athlete'">
                     <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
                       <div class="nominate">
                         <a data-toggle="collapse" data-target="#collapseExample">
-                          <p class="">Nominate a fellow sports enthusiast, who’s got what it takes to compete and become an SFA Champion,
-                            NOW!
+                          <p class="">Which sport academy do you train at ?
                             <i class="fa fa-chevron-down pull-right"></i>
                           </p>
                         </a>
                         <div class="collapse" id="collapseExample" ng-if="detail.userType === 'athlete'">
                           <div class="">
                             <div class="form-group">
-                              <div class="col-md-6 col-sm-6 col-xs-12">
+                              <div class="col-md-6 hide col-sm-6 col-xs-12">
                                 <input type="text" class="form-control text-center" ng-model="formData.nominatedName" placeholder="Enter Athlete Name" name="nominatedName"
                                   id="nominatedName">
                               </div>
-                              <div class="col-md-6 col-sm-6 col-xs-12">
+                              <div class="col-md-12 col-sm-6 col-xs-12">
                                 <input type="text" class="form-control text-center" ng-model="formData.nominatedSchoolName" placeholder="Enter Athlete {{type | firstcapitalize}} Name"
                                   name="nominatedSchoolName" id="nominatedSchoolName">
                               </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group hide">
                               <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="tel" only-Digits class="form-control text-center" ng-model="formData.nominatedContactDetails" placeholder="Enter Contact Details"
                                   name="nominatedContactDetails" id="nominatedContactDetails">
@@ -186,7 +185,7 @@
                             </div>
                           </div>
                         </div>
-                        <div class="collapse" id="collapseExample" ng-if="detail.userType === 'school'">
+                        <div class="collapse hide" id="collapseExample" ng-if="detail.userType === 'school'">
                           <div class="">
                             <div class="form-group">
                               <div class="col-md-6 col-sm-6 col-xs-12">
