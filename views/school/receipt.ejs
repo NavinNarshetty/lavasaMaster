@@ -9,17 +9,17 @@
     <style>
         @font-face {
             font-family: 'TitilliumWeb-Bold';
-            src: url("../font/TitilliumWeb-Bold.ttf");
+            src: url("../views/font/TitilliumWeb-Bold.ttf");
         }
 
         @font-face {
             font-family: 'TitilliumWeb-LightItalic';
-            src: url("../font/TitilliumWeb-LightItalic.ttf");
+            src: url("../views/font/TitilliumWeb-LightItalic.ttf");
         }
 
         @font-face {
             font-family: 'TitilliumWeb-Regular';
-            src: url("../font/TitilliumWeb-Regular.ttf");
+            src: url("../views/font/TitilliumWeb-Regular.ttf");
         }
 
         TitilliumWeb-ExtraLightItalic.ttf .body {
@@ -45,10 +45,38 @@
             padding-left: 5px;
             padding-right: 5px;
         }
+        .color-primary{
+            color: #0a1a72;
+        }
+
+        .bold{
+            font-weight: bold;
+        }
+
+        .sfa-bold{
+            font-family:TitilliumWeb-Bold
+        }
+
+        .m-clear{
+            margin: 0px;
+        }
+
+        .mtb8{
+            margin: 8px 0px;
+        }
 
         table {
             width: 600px;
             margin: 0 auto;
+        }
+
+        .equal-div{
+            width: 50%;
+            float:left;
+            position: relative;
+            min-height: 1px;
+            padding-right: 15px;
+            padding-left: 15px;
         }
 
         .emailer-table table {
@@ -74,42 +102,49 @@
 <body>
     <table>
         <thead>
+            <!-- LOGO AND HEADER  -->
             <tr>
                 <td>
-                    <div class="logo text-center" style="margin-top: 30px;background:#0a1a72;padding: 15px 0 8px; "><img src="https://sfa.wohlig.co.in/img/img/symbol.png" class="img-responsive" style="margin: 0 auto;"><br>
-                        <h2 style="margin:0;color: #fff;font-family:TitilliumWeb-Bold;">SFA EVENTS PVT. LTD</h2>
+                <div class="text-center">
+                    <img src="logo.png" class="img-responsive" style="margin: 0 auto;">
+                </div>
+                    <div class="text-center" style="margin:30px 0px;">
+                        <h2 class="color-primary" style="margin:0;;font-family:TitilliumWeb-Bold;">SFA EVENTS PVT. LTD</h2>
                     </div>
                 </td>
             </tr>
+            <!-- LOGO AND HEADER END -->
 
         </thead>
 
         <tbody>
-
+        <!-- INVOICE ID -->
             <tr>
                 <td>
-                    <ul style="font-family: TitilliumWeb-Regular;font-size:14px;padding-right: 40px;">
-                        <li class="inline-block" style="padding-bottom: 5px;"><b>CIN :</b> U74999MH2015PTC268781</li>
-                        <li class="inline-block" style="padding-bottom: 5px;"><b>GST IN :</b> 27AAWCS2792J1ZG</li>
-                        <li class="inline-block" style="padding-right: 93px;padding-bottom: 5px;"><b> RECIEPT NO. :</b>
-                            <%=receiptNo%>
-                        </li>
-                        <li class="inline-block" style="padding-bottom: 5px;"><b>SAC: </b> 00440197</li><br>
-                        <li class="inline-block"><b>SFA ID :</b>
-                            <%=sfaID%>
-                        </li>
-                        <li class="inline-block" style="float:right"><b>DATED :</b>
-                            <%=Date%>
-                        </li>
-                    </ul>
 
+                    <div class="inline-block" style="margin: 0px 15px; vertical-align: top;">
+                       <p class="mtb8"><span class="bold">CIN :</span> <span>U74999MH2015PTC268781</span></p>
+                        <p class="mtb8"><span class="bold">RECIEPT NO :</span> <span> <%=receiptNo%></span></p> 
+                        <p class="mtb8"><span class="bold">SAC :</span> <span> 00440197</span></p> 
+                    </div>
+
+                    <div class="inline-block" style="margin: 0px 15px; vertical-align: top;">
+                        <p class="mtb8"><span class="bold">GST IN :</span> <span>27AAWCS2792J1ZG</span></p>
+                        <p class="mtb8"><span class="bold">PAN NO :</span> <span>AAWC527921</span></p>
+                       <p class="mtb8"><span class="bold">TAN N0 :</span> <span>MUMS84804G</span></p>
+                       <p class="mtb8"><span class="bold">DATED : <span></span></span></p>
+
+                    </div>
                 </td>
             </tr>
+            <!-- INVOICE ID END -->
+
+            <!-- INVOICE TABLE -->
             <tr>
                 <td>
-                    <h4 class="text-center" style="margin: -10px 0px 5px;;color: #0a1a72;font-family: TitilliumWeb-Bold  ;font-size: 20px;">RECEIPT VOUCHER</h4>
-                    <div class="emailer-table" style="margin: 0 40px;">
-                        <table style="font-family: TitilliumWeb-Regular;  ">
+                    <h4 class="text-center color-primary sfa" style="font-family: TitilliumWeb-Bold;">INVOICE/RECEIPT</h4>
+                    <div class="emailer-table">
+                        <table class="sfa-bold">
                             <tr>
                                 <th>Particulars </th>
                                 <th>Amount</th>
@@ -117,14 +152,21 @@
                             <tr>
                                 <td>Account :</td>
                                 <td></td>
-
                             </tr>
+
+                            <!-- PACKAGE NAME -->
                             <tr>
-                                <td>SFA Championship Registration Fees</td>
+                                <td>SFA Championship Registration Fees<br>
+                                <%=pacakageName%>
+                                </td>
                                 <td>
                                     <%=amountWithoutTax%>
                                 </td>
                             </tr>
+
+                            <!-- PACAKAGE NAME END -->
+
+
                             <%if(city == 'Mumbai'){%>
                                 <tr>
                                     <td style="padding: 0 10px;">CGST @
@@ -157,48 +199,81 @@
                                             </td>
                                         </tr>
                                         <%}%>
+
+                                        <!-- REGISTRATION FEE  RECEIVED -->
                                             <tr>
-                                                <td><b> On Account Of :</b><br> Being registration fees received from<br>
+                                                <td>
+                                                On Account of: <br>
+                                                Registration fees received from<br>
                                                     <%=schoolName%>
+                                                </td>
+                                                <td>
+                                                    
+                                                </td>
+                                            </tr>
+                                        <!-- REGISTERTATION FEE RECIVED FROM END-->
+
+                                        <!-- SCHOOL GSTN NO -->
+                                        <tr>
+                                            <td>
+                                                School GSTN No:<br>
+                                                <%=schoolGstNo%>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <!-- SCHOOL GSTN NO -->
+
+                                        <!-- MODE OF PAYEMENT -->
+                                            <tr>
+                                                <td>
+                                                    Mode of Payment<br>
+                                                    <%=paymentMode%>
                                                 </td>
                                                 <td></td>
                                             </tr>
+
+                                        <!-- MODE OF PAYEMENT  -->
+
+                                        <!-- TRANSACTION DETAILS -->
                                             <tr>
-                                                <td style="padding:5px 10px 15px 10px;"><b>Transaction Details</b><br><span><%=transactionID%></span></td>
+                                                <td style="padding:5px 10px 15px 10px;"><b>Transaction Details</b><br><span><%=transactionID%></span> </td>
                                                 <td style="padding:5px 10px 15px 10px;"></td>
                                             </tr>
+                                        <!-- TRANSACTION DETAILS -->
+
+                                        <!-- AMOUNTS -->
                                             <tr>
                                                 <td style="padding:0 10px 15px 10px;"><b>Amount (In Words) :</b> <br>INR <span> <%=amountInWords%> </span> </td>
                                                 <td style="padding: 0 10px 0px 10px;border-top: 1px solid black;"><i class="fa fa-inr" aria-hidden="true"></i>
-                                                    <%=typeAmount%>
+                                                    <%=athleteAmount%>
                                                 </td>
                                             </tr>
+                                        <!--AMOUNTS END  -->
+                                            <tr>
+                                                <td>
+                                                    <p>*This is a system generated acknowledgement and does not require any signature </p>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                            <!-- INVOICE TABLE END -->
                         </table>
-                    </div>
-                    <tr>
-                        <td>
-                            <ul style="font-family: TitilliumWeb-Regular;font-size:14px;padding-right: 40px;margin: 0;">
-                                <li class="inline-block"><b>PAN NO :</b> AAWC527921 </li>
-                                <li class="inline-block" style="float:right"><b>TAN N0 :</b> MUMS84804G </li>
-                            </ul>
-                            <p class="text-center" style="margin-bottom: 0;font-family: TitilliumWeb-LightItalic">*This is a system generated acknowledgement & does not require any signature. </p>
-                        </td>
-                    </tr>
+                        </div>
+                </td>
+            </tr>
         </tbody>
         <tfoot>
             <tr>
                 <td>
                     <div class="blue-footer text-center" style="background:#0a1a72;font-family: TitilliumWeb-Regular; color: #fff">
-
                         <%if(infoId == 'info@sfanow.in'){%>
-                            <p style="padding: 3px 0;"> 17A, Raviraj House, 6th Floor, Saraswati Road, Off Linking Road, Santacruz (West) - 400053 <br>www.sfanow.in
+                            <p style="padding: 3px 0;"> 17A, Raviraj House, 6th Floor, Saraswati Road, Off Linking Road, Santacruz (West) - 400054 <br>www.sfanow.in
                                 I
                                 <%=infoId%> Contact :
                                     <%=infoNo%>
                             </p>
                             <%} else if(infoId == 'info.hyd@sfanow.in'){%>
                                 <p style="padding: 3px 0;">Head Office: SFA Sporting Services Pvt Ltd, 17A, Raviraj House, 6th Floor, Saraswati Road,
-                                    Off Linking Road, Santacruz (West) - 400053
+                                    Off Linking Road, Santacruz (West) - 400054
                                     <br>www.sfanow.in I
                                     <%=infoId%> Contact :
                                         <%=infoNo%>

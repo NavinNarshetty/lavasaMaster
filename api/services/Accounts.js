@@ -62,7 +62,7 @@ var schema = new Schema({
 schema.plugin(deepPopulate, {
     populate: {
         "athlete": {
-            select: '_id sfaId status year registrationFee firstName middleName surname school paymentStatus package atheleteSchoolName'
+            select: '_id sfaId status year registrationFee firstName middleName surname school paymentStatus package atheleteSchoolName transactionID'
         },
         "athlete.school": {
             select: ''
@@ -932,6 +932,15 @@ var model = {
                         if (err) {
                             callback(err, null);
                         } else {
+                            callback(null, found);
+                        }
+                    });
+                },
+                function (found, callback) {
+                    Accounts.upgradeInvoiceAthlete(found, function (err, mailData) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
                             callback(null, mailData);
                         }
                     });
@@ -1634,7 +1643,7 @@ var model = {
             },
             function (property, callback) {
                 Accounts.findOne({
-                        athlete: data.athlete
+                        athlete: data._id
                     }).lean()
                     .deepPopulate("athlete athlete.school athlete.package transaction transaction.package")
                     .exec(function (err, accountsData) {
@@ -1657,9 +1666,16 @@ var model = {
                 len--;
                 var emailData = {};
                 emailData.city = final.property.sfaCity;
-
+                emailData.type = final.property.institutionType;
+                emailData.infoNo = final.property.infoNo;
+                emailData.infoId = final.property.infoId;
+                if (final.accounts.upgrade) {
+                    emailData.upgrade = final.accounts.upgrade;
+                } else {
+                    emailData.upgrade = false;
+                }
                 emailData.packageName = final.accounts.transaction[len].package.name;
-                emailData.packagePrice = final.accounts.transaction[len].package.finalPrice;
+                emailData.amountWithoutTax = final.accounts.transaction[len].package.finalPrice;
                 emailData.cgstPercent = final.accounts.transaction[len].package.cgstPercent;
                 emailData.sgstPercent = final.accounts.transaction[len].package.sgstPercent;
                 emailData.igstPercent = final.accounts.transaction[len].package.igstPercent;
@@ -1667,14 +1683,43 @@ var model = {
                 emailData.sgstAmount = final.accounts.transaction[len].sgstAmount;
                 emailData.igstAmount = final.accounts.transaction[len].igstAmount;
                 emailData.eventYear = final.property.eventYear;
-                if (temp > 1 || temp > 0) {
+                if (temp > 1) {
                     temp = temp - 2;
                 } else {
-                    temp = temp - 1;
+                    temp = 0;
                 }
-                // emailData.prevPaidAmount = final.
-                callback(null, emailData);
-            }
+                emailData.prevPaidAmount = final.accounts.transaction[temp].amountPaid;
+                emailData.discount = final.accounts.discount;
+                emailData.firstName = final.accounts.athlete.firstName;
+                emailData.surname = final.accounts.athlete.surname;
+                emailData.paymentMode = final.accounts.transaction[len].paymentMode;
+                emailData.athleteAmount = final.accounts.transaction[len].amountPaid;
+                if (final.accounts.transaction[len].PayuId) {
+                    emailData.transactionId = final.accounts.transaction[len].PayuId;
+                }
+                emailData.amountToWords = Accounts.amountToWords(final.accounts.transaction[len].amountPaid);
+                emailData.from = final.property.infoId;
+                emailData.email1 = [{
+                    email: found.accounts.athlete.email
+                }];
+                emailData.bcc1 = [{
+                    email: "payments@sfanow.in"
+                }, {
+                    email: "admin@sfanow.in"
+                }];
+                emailData.filename = "player/receipt.ejs";
+                emailData.subject = "SFA: Your Payment Receipt as an Athlete for SFA " + emailData.city + " " + emailData.type + " " + emailData.eventYear + ".";
+                console.log("emaildata", emailData);
+                Config.emailTo(emailData, function (err, emailRespo) {
+                    if (err) {
+                        console.log(err);
+                        callback(null, err);
+                    } else {
+                        callback(null, emailRespo);
+                    }
+                });
+
+            },
 
         ], function (err, complete) {
             if (err) {
@@ -1683,8 +1728,23 @@ var model = {
                 callback(null, complete);
             }
         })
-    }
+    },
 
+    amountToWords: function (num) {
+        var a = ['', 'one ', 'two ', 'three ', 'four ', 'five ', 'six ', 'seven ', 'eight ', 'nine ', 'ten ', 'eleven ', 'twelve ', 'thirteen ', 'fourteen ', 'fifteen ', 'sixteen ', 'seventeen ', 'eighteen ', 'nineteen '];
+        var b = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+
+        if ((num = num.toString()).length > 9) return 'overflow';
+        n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
+        if (!n) return;
+        var str = '';
+        str += (n[1] != 0) ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + 'crore ' : '';
+        str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'lakh ' : '';
+        str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'thousand ' : '';
+        str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'hundred ' : '';
+        str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) : '';
+        return str;
+    }
 
 };
 module.exports = _.assign(module.exports, exports, model);
