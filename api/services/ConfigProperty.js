@@ -7,6 +7,7 @@ var schema = new Schema({
     venue: [{
         type: String,
     }],
+    endDate: String,
     institutionType: {
         type: String,
     },
@@ -128,6 +129,7 @@ var model = {
                     finalData.bronzeMedal = property[0].bronzeMedal;
                     finalData.date = property[0].date;
                     finalData.venue = property[0].venue;
+                    finalData.endDate = property[0].endDate;
                     callback(null, finalData);
                 }
             }

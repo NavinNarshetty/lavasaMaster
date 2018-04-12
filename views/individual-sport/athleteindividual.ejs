@@ -224,19 +224,19 @@
                 <td>
                     <div style="padding: 0px 54px;">
                         <p>You have selected
-                            <%=package.name%> which entitles you to the following benefits:
+                            <%=packageName%> which entitles you to the following benefits:
                         </p>
 
                         <ul type='circle'>
                             <%_.each(featureDetail,function(features){%>
                                 <li>
-                                    <%=features.name%>
+                                    <%=features.featureName%>
                                 </li>
                                 <%})%>
                         </ul>
 
 
-                        <%if(package.order !== 1){%>
+                        <%if(packageOrder !== 1){%>
                             <p style="font-family:TitilliumWeb-Bold;font-weight:bold;">Click here to view details of various player registration packages</p>
                             <p>In case you wish to upgrade your package, you can do so via sports registration (STEP 2)
                             </p>
@@ -275,7 +275,8 @@
                         <li class="mg-bottom">
                             Click here to view the rules & regulations of
                             <span style="font-weight: bold;">
-                                <%=linkSportName%>
+                                <%=sportName%>
+                                    <!-- <%=urls%>/sport/ <%=sportName%> -->
                             </span>. Kindly note the rules & regulations are subject to change till the beginning of your sport
                             at the Championship. We recommend that all players to view rules and regulations of their sport
                             <span style="font-weight: bold;">1</span> day prior to the Championship.

@@ -193,7 +193,7 @@ var model = {
                         });
 
                     }
-                    
+
                 }
             ],
             function (err, data2) {
@@ -475,9 +475,10 @@ var model = {
                         emailData.year = data.property.year;
                         emailData.eventYear = data.property.eventYear;
                         emailData.type = data.property.institutionType;
-                        emailData.filename = "teamSport.ejs";
+                        emailData.filename = "team-sport/teamsport.ejs";
                         emailData.teamId = total.teamSport.teamId;
                         emailData.students = total.studentTeam;
+                        emailData.endDate = data.property.endDate;
                         emailData.linkSportName = data.linkSportName;
                         emailData.subject = "SFA: Successful Team Sport Registered";
                         // console.log("emaildata", emailData);
@@ -514,7 +515,7 @@ var model = {
                     },
                     //athlete email
                     function (callback) {
-                        data.emailfile = "studentmailTeam.ejs";
+                        data.emailfile = "team-sport/studentmailTeam.ejs";
                         data.schoolSFA = found.sfaID;
                         data.schoolName = found.schoolName;
                         TeamSport.athleteMailers(data, total, function (err, mailData) {
@@ -528,7 +529,6 @@ var model = {
                                 }
                             }
                         });
-
                     },
                 ], function (err, data3) {
                     if (err) {
@@ -573,9 +573,9 @@ var model = {
                                 data.schoolName = found.atheleteSchoolName;
                                 data.schoolSFA = "Unregistered";
                                 if (data.property.institutionType == "school") {
-                                    data.emailfile = "studentTeamUnregister.ejs";
+                                    data.emailfile = "team-sport/studentTeamUnregister.ejs";
                                 } else {
-                                    data.emailfile = "studentTeam.ejs";
+                                    data.emailfile = "team-sport/studentTeam.ejs";
                                 }
                                 callback(null, data);
 
@@ -583,7 +583,7 @@ var model = {
                                 data.mobile = found.mobile;
                                 data.schoolName = schoolData.schoolName;
                                 data.schoolSFA = schoolData.sfaID;
-                                data.emailfile = "studentTeam.ejs";
+                                data.emailfile = "team-sport/studentTeam.ejs";
                                 callback(null, data);
                             }
                         });
@@ -606,9 +606,9 @@ var model = {
                                         data.schoolName = schoolData.name;
                                         data.schoolSFA = "Unregistered";
                                         if (data.property.institutionType == "school") {
-                                            data.emailfile = "studentTeamUnregister.ejs";
+                                            data.emailfile = "team-sport/studentTeamUnregister.ejs";
                                         } else {
-                                            data.emailfile = "studentTeam.ejs";
+                                            data.emailfile = "team-sport/studentTeam.ejs";
                                         }
                                         callback(null, data);
 
@@ -616,7 +616,7 @@ var model = {
                                         data.mobile = found.mobile;
                                         data.schoolName = schoolData1.schoolName;
                                         data.schoolSFA = schoolData1.sfaID;
-                                        data.emailfile = "studentTeam.ejs";
+                                        data.emailfile = "team-sport/studentTeam.ejs";
                                         callback(null, data);
                                     }
                                 });
@@ -662,7 +662,11 @@ var model = {
                     var emailData = {};
                     emailData.sportName = data.name;
                     emailData.schoolName = data.schoolName;
-                    emailData.schoolSFA = data.schoolSFA;
+                    if (data.schoolSFA == "Unregistered") {
+                        emailData.schoolSFA = '';
+                    } else {
+                        emailData.schoolSFA = data.schoolSFA;
+                    }
                     // emailData.from = "info@sfanow.in";
                     emailData.from = data.property.infoId;
                     emailData.infoId = data.property.infoId;
@@ -685,6 +689,7 @@ var model = {
                     emailData.filename = data.emailfile;
                     emailData.teamId = total.teamSport.teamId;
                     emailData.students = total.studentTeam;
+                    emailData.endDate = data.property.endDate;
                     emailData.linkSportName = data.linkSportName;
                     emailData.subject = "SFA: Successful Team Sport Registered";
                     Config.email(emailData, function (err, emailRespo) {
@@ -766,15 +771,15 @@ var model = {
                             if (_.isEmpty(complete1)) {
                                 callback(null, []);
                             } else {
-                                callback(null, complete1,complete);
+                                callback(null, complete1, complete);
                             }
                         }
                     });
                 },
 
-                function (complete1,complete, callback) {
+                function (complete1, complete, callback) {
                     if (complete1 == "deleted") {
-                        TeamSport.deleteData(complete,function (err, complete2) {
+                        TeamSport.deleteData(complete, function (err, complete2) {
                             if (err) {
                                 callback(err, null);
                             } else {
@@ -899,8 +904,9 @@ var model = {
                         emailData.year = data.property.year;
                         emailData.eventYear = data.property.eventYear;
                         emailData.type = data.property.institutionType;
+                        emailData.endDate = data.property.endDate;
                         emailData.name = totals[0].studentId.firstName;
-                        emailData.filename = "rejectionTeam.ejs";
+                        emailData.filename = "team-sport/rejectionTeam.ejs";
                         emailData.teamId = totals[0].teamId.teamId;
                         emailData.subject = "SFA: Team Rejected";
                         // console.log("emaildata", emailData);
@@ -932,7 +938,7 @@ var model = {
                         // });
                         StudentTeam.deleteData({
                             _id: n
-                        },function (err, found) {
+                        }, function (err, found) {
                             if (err) {
                                 callback(err, null);
                             } else {
@@ -1602,7 +1608,7 @@ var model = {
 
                                     StudentTeam.deleteData({
                                         _id: n._id
-                                    },function (err, found) {
+                                    }, function (err, found) {
                                         if (err) {
                                             callback(err, null);
                                         } else {
@@ -1769,6 +1775,7 @@ var model = {
                         emailData.year = data.property.year;
                         emailData.eventYear = data.property.eventYear;
                         emailData.infoId = data.property.infoId;
+                        emailData.endDate = data.property.endDate;
                         emailData.infoNo = data.property.infoNo;
                         if (data.property.sfaCity == 'Mumbai') {
                             emailData.urls = "https://mumbai.sfanow.in";
@@ -1938,7 +1945,8 @@ var model = {
                         emailData.infoNo = data.property.infoNo;
                         emailData.cityAddress = data.property.cityAddress;
                         emailData.ddFavour = data.property.ddFavour;
-                        emailData.filename = "editTeamSport.ejs";
+                        emailData.filename = "team-sport/editTeamSport.ejs";
+                        emailData.endDate = data.property.endDate;
                         emailData.teamId = total.teamSport.teamId;
                         emailData.students = total.studentTeam;
                         emailData.linkSportName = data.linkSportName;
@@ -1977,7 +1985,7 @@ var model = {
                     },
                     //athlete email
                     function (callback) {
-                        data.emailfile = "studentEditTeamRemove.ejs";
+                        data.emailfile = "team-sport/studentEditTeamRemove.ejs";
                         data.schoolSFA = found.sfaID;
                         data.mobile = found.mobile;
                         data.schoolName = found.schoolName;
@@ -2038,9 +2046,9 @@ var model = {
                                 data.schoolName = found.atheleteSchoolName;
                                 data.schoolSFA = "Unregistered";
                                 if (data.property.institutionType == "school") {
-                                    data.emailfile = "studentEditTeamUnregister.ejs";
+                                    data.emailfile = "team-sport/studentEditTeamUnregister.ejs";
                                 } else {
-                                    data.emailfile = "studentEditTeam.ejs";
+                                    data.emailfile = "team-sport/studentEditTeam.ejs";
                                 }
 
                                 callback(null, data);
@@ -2049,7 +2057,7 @@ var model = {
                                 data.mobile = found.mobile;
                                 data.schoolName = schoolData.schoolName;
                                 data.schoolSFA = schoolData.sfaID;
-                                data.emailfile = "studentEditTeam.ejs";
+                                data.emailfile = "team-sport/studentEditTeam.ejs";
                                 callback(null, data);
                             }
                         });
@@ -2072,9 +2080,9 @@ var model = {
                                         data.schoolName = found.atheleteSchoolName;
                                         data.schoolSFA = "Unregistered";
                                         if (data.property.institutionType == "school") {
-                                            data.emailfile = "studentEditTeamUnregister.ejs";
+                                            data.emailfile = "team-sport/studentEditTeamUnregister.ejs";
                                         } else {
-                                            data.emailfile = "studentEditTeam.ejs";
+                                            data.emailfile = "team-sport/studentEditTeam.ejs";
                                         }
                                         callback(null, data);
 
@@ -2082,7 +2090,7 @@ var model = {
                                         data.mobile = found.mobile;
                                         data.schoolName = schoolData.schoolName;
                                         data.schoolSFA = schoolData.sfaID;
-                                        data.emailfile = "studentEditTeam.ejs";
+                                        data.emailfile = "team-sport/studentEditTeam.ejs";
                                         callback(null, data);
                                     }
                                 });
@@ -2151,6 +2159,7 @@ var model = {
                                     emailData.year = data.property.year;
                                     emailData.eventYear = data.property.eventYear;
                                     emailData.type = data.property.institutionType;
+                                    emailData.endDate = data.property.endDate;
                                     // emailData.filename = data.emailfile;
                                     emailData.teamId = total.teamSport.teamId;
                                     emailData.students = total.studentTeam;
@@ -2178,7 +2187,7 @@ var model = {
                                             }
                                         });
                                     } else {
-                                        emailData.filename = "studentEditTeamRemove.ejs";
+                                        emailData.filename = "team-sport/studentEditTeamRemove.ejs";
                                         emailData.email = n.email;
                                         Config.email(emailData, function (err, emailRespo) {
                                             if (err) {
@@ -2216,6 +2225,7 @@ var model = {
                                     emailData.year = data.property.year;
                                     emailData.eventYear = data.property.eventYear;
                                     emailData.type = data.property.institutionType;
+                                    emailData.endDate = data.property.endDate;
                                     emailData.filename = data.emailfile;
                                     emailData.teamId = total.teamSport.teamId;
                                     emailData.students = total.studentTeam;
@@ -2308,7 +2318,8 @@ var model = {
                                 emailData.urls = "https://ahmedabad.sfanow.in";
                             }
                             emailData.type = data.property.institutionType;
-                            emailData.filename = "studentEditTeamRemove.ejs";
+                            emailData.endDate = data.property.endDate;
+                            emailData.filename = "team-sport/studentEditTeamRemove.ejs";
                             emailData.teamId = n.teamId
                             emailData.students = total.studentTeam;
                             emailData.linkSportName = data.linkSportName;

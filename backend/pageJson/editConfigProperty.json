@@ -90,6 +90,19 @@
             "dropDown": ""
         },
         {
+            "name": "Registration End Date",
+            "type": "text",
+            "tableRef": "endDate",
+            "placeholder": "Enter Registration End Date",
+            "id": "endDate",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "url": ""
+        },
+        {
             "name": "Institution Type",
             "type": "text",
             "tableRef": "institutionType",

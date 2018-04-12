@@ -38,21 +38,31 @@ schema.plugin(deepPopulate, {
 });
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
-schema.post('remove', function (removed,next) {
-    Athelete.findOne({"_id": removed.athleteId}).exec(function(err,ath){
+schema.post('remove', function (removed, next) {
+    Athelete.findOne({
+        "_id": removed.athleteId
+    }).exec(function (err, ath) {
         var finalCount = ath.selectedEvent - _.compact(removed.sport).length;
-        if(finalCount<0){
+        if (finalCount < 0) {
             finalCount = 0;
         }
-        Athelete.saveData({"_id": removed.athleteId,"selectedEvent":finalCount},function(err,data){
+        Athelete.saveData({
+            "_id": removed.athleteId,
+            "selectedEvent": finalCount
+        }, function (err, data) {
             next();
         })
     });
 });
 
-schema.post('save', function (saved,next) {
-    Athelete.findOne({_id: saved.athleteId}).exec(function(err,ath){
-        Athelete.saveData({"_id": saved.athleteId,"selectedEvent":(ath.selectedEvent + _.compact(saved.sport).length)},function(err,data){
+schema.post('save', function (saved, next) {
+    Athelete.findOne({
+        _id: saved.athleteId
+    }).exec(function (err, ath) {
+        Athelete.saveData({
+            "_id": saved.athleteId,
+            "selectedEvent": (ath.selectedEvent + _.compact(saved.sport).length)
+        }, function (err, data) {
             next();
         })
     });
@@ -60,14 +70,16 @@ schema.post('save', function (saved,next) {
 
 schema.pre('save', function (next) {
     var count = _.compact(this.sport).length;
-    Athelete.findOne({_id: this.athleteId}).deepPopulate("package").lean().exec(function(err,ath){
+    Athelete.findOne({
+        _id: this.athleteId
+    }).deepPopulate("package").lean().exec(function (err, ath) {
         var currentTotalSportsCount = ath.selectedEvent + count;
-        if(currentTotalSportsCount <= ath.package.eventCount){
+        if (currentTotalSportsCount <= ath.package.eventCount) {
             console.log("Allowed");
             next();
-        }else{
+        } else {
             console.log("Not Allowed");
-            next(new Error('Upgrade Your Package'),null);
+            next(new Error('Upgrade Your Package'), null);
         }
     });
 });
@@ -1077,6 +1089,21 @@ var model = {
                     path: "$athleteId",
                 }
             },
+            {
+                $lookup: {
+                    "from": "packages",
+                    "localField": "athleteId.package",
+                    "foreignField": "_id",
+                    "as": "athleteId.package"
+                }
+            },
+
+            // Stage 3
+            {
+                $unwind: {
+                    path: "$athleteId.package",
+                }
+            },
             // Stage 4
             {
                 $unwind: {
@@ -1169,6 +1196,9 @@ var model = {
                             email: "$athleteId.email",
                             mobile: "$athleteId.mobile",
                             age: "$athleteId.age",
+                            packageId: "$athleteId.package._id",
+                            packageName: "$athleteId.package.name",
+                            packageOrder: "$athleteId.package.order",
                             gender: "$sport.gender",
                             eventName: "$sport.sportslist.name",
                             ageGroup: "$sport.ageGroup.name",
@@ -1291,7 +1321,7 @@ var model = {
                     });
                 },
 
-                function (found, callback) {                    
+                function (found, callback) {
                     if (found.atheleteSchoolName) {
                         data.school = found.atheleteSchoolName;
                         data.sfaid = '-';
@@ -1363,7 +1393,7 @@ var model = {
                             ],
                             function (err, data2) {
                                 if (err) {
-                                    callback(err,null);
+                                    callback(err, null);
                                 } else if (data2) {
                                     if (_.isEmpty(data2)) {
                                         callback(null, []);
@@ -1474,6 +1504,9 @@ var model = {
                                         athelete.email = n.email;
                                         athelete.mobile = n.mobile;
                                         athelete.age = n.age;
+                                        athelete.packageId = n.packageId;
+                                        athelete.packageName = n.packageName;
+                                        athelete.packageOrder = n.packageOrder;
                                         athelete.gender = n.gender;
                                         athelete.data = n.ageGroup + ' - ' + n.eventName;
                                         athelete.eventName.push(athelete.data);
@@ -1563,6 +1596,26 @@ var model = {
                     });
                 },
                 function (property, callback) {
+                    var packageID = {};
+                    packageID._id = n.packageId;
+                    Featurepackage.featureDetailByPackage(packageID, function (err, features) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(features)) {
+                                callback(null, []);
+                            } else {
+                                var finalData = {};
+                                finalData.features = features;
+                                finalData.property = property;
+                                callback(null, finalData);
+                            }
+                        }
+                    });
+                },
+                function (finalData, callback) {
+                    var property = finalData.property;
+                    var features = finalData.features;
                     async.parallel([
                             //email
                             function (callback) {
@@ -1609,12 +1662,16 @@ var model = {
                                 }
                                 emailData.type = property[0].institutionType;
                                 emailData.year = property[0].year;
+                                emailData.endDate = property[0].endDate;
                                 emailData.eventYear = property[0].eventYear;
                                 emailData.infoId = property[0].infoId;
                                 emailData.infoNo = property[0].infoNo;
                                 emailData.cityAddress = property[0].cityAddress;
                                 emailData.ddFavour = property[0].ddFavour;
-                                emailData.filename = "athleteindividual.ejs";
+                                emailData.packageName = n.packageName;
+                                emailData.featureDetail = features;
+                                emailData.packageOrder = n.packageOrder;
+                                emailData.filename = "individual-sport/athleteindividual.ejs";
                                 emailData.subject = "SFA: Individual Sport Selection";
                                 console.log(null, emailData);
                                 Config.email(emailData, function (err, emailRespo) {
@@ -1748,7 +1805,8 @@ var model = {
                                 emailData.year = property[0].year;
                                 emailData.eventYear = property[0].eventYear;
                                 emailData.type = property[0].institutionType;
-                                emailData.filename = "schoolindividual.ejs";
+                                emailData.endDate = property[0].endDate;
+                                emailData.filename = "individual-sport/schoolindividual.ejs";
                                 emailData.subject = "SFA: Individual Sport Selection List";
                                 Config.email(emailData, function (err, emailRespo) {
                                     if (err) {
@@ -1820,6 +1878,26 @@ var model = {
                     });
                 },
                 function (property, callback) {
+                    var packageID = {};
+                    packageID._id = n.packageId;
+                    Featurepackage.featureDetailByPackage(packageID, function (err, features) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(features)) {
+                                callback(null, []);
+                            } else {
+                                var finalData = {};
+                                finalData.features = features;
+                                finalData.property = property;
+                                callback(null, finalData);
+                            }
+                        }
+                    });
+                },
+                function (finalData, callback) {
+                    var property = finalData.property;
+                    var features = finalData.features;
                     // console.log('data', data);
                     // console.log('N', n);
                     async.parallel([
@@ -1865,11 +1943,15 @@ var model = {
                                 emailData.year = property[0].year;
                                 emailData.eventYear = property[0].eventYear;
                                 emailData.type = property[0].institutionType;
+                                emailData.endDate = property[0].endDate;
                                 emailData.infoId = property[0].infoId;
                                 emailData.infoNo = property[0].infoNo;
                                 emailData.cityAddress = property[0].cityAddress;
                                 emailData.ddFavour = property[0].ddFavour;
-                                emailData.filename = "athleteindividual.ejs";
+                                emailData.packageName = n.packageName;
+                                emailData.featureDetail = features;
+                                emailData.packageOrder = n.packageOrder;
+                                emailData.filename = "individual-sport/athleteindividual.ejs";
                                 emailData.subject = "SFA: Individual Sport Selection";
                                 Config.email(emailData, function (err, emailRespo) {
                                     if (err) {
@@ -1948,6 +2030,9 @@ var model = {
                             athelete.email = n.email;
                             athelete.age = n.age;
                             athelete.gender = n.gender;
+                            athelete.packageId = n.packageId;
+                            athelete.packageName = n.packageName;
+                            athelete.packageOrder = n.packageOrder;
                             athelete.data = n.ageGroup + ' - ' + n.eventName;
                             athelete.eventName.push(athelete.data);
                             athelete.ageGroup = n.ageGroup;
