@@ -152,7 +152,13 @@ var model = {
                         } else if (_.isEmpty(found)) {
                             var formData = {};
                             formData.currentYear = singleData.year;
+                            // if (_.includes(singleData.sfaID, "15")) {
+                            //     var len = singleData.sfaID.length;
+                            //     var sfa = singleData.sfaID.substring(4, len);
+                            //     formData.sfaID = "MS16" + sfa;
+                            // } else {
                             formData.sfaID = singleData.sfaID;
+                            // }
                             formData.receiptId = singleData.receiptId;
                             formData.institutionType = singleData.institutionType;
                             formData.password = singleData.password;
@@ -228,14 +234,15 @@ var model = {
                             callback(null, formData);
                         } else {
                             var formData = {};
-                            found.year.push(singleData.year);
+                            // 
                             var i = (found.year.length - 1);
-                            if (singleData.year < found.year[i]) {
+                            if (singleData.year > found.year[i]) {
                                 formData._id = found._id;
                                 formData.sfaID = singleData.sfaID;
                                 formData.receiptId = singleData.receiptId;
                                 formData.institutionType = singleData.institutionType;
                                 formData.password = singleData.password;
+                                found.year.push(singleData.year);
                                 formData.year = found.year;
                                 formData.schoolName = singleData.schoolName;
                                 if (singleData.schoolType) {

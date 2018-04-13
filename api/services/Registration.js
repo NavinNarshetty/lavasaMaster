@@ -26,8 +26,10 @@ var schema = new Schema({
         default: "Pending"
     },
     password: String,
-    year: String,
-
+    currentYear: String,
+    year: [{
+        type: String
+    }],
     schoolName: String,
     schoolType: String,
     schoolCategory: String,
@@ -41,17 +43,11 @@ var schema = new Schema({
     locality: String,
     pinCode: String,
     contactPerson: String,
-    contactDesignation: String,
     landline: String,
     email: String,
     website: String,
     mobile: String,
     enterOTP: String,
-    package: {
-        type: Schema.Types.ObjectId,
-        ref: 'Package',
-        index: true
-    },
     schoolPrincipalName: String,
     schoolPrincipalMobile: String,
     schoolPrincipalLandline: String,
@@ -63,6 +59,7 @@ var schema = new Schema({
         email: String,
         photograph: String
     }],
+
     teamSports: [{
         name: {
             type: String
@@ -93,7 +90,6 @@ var schema = new Schema({
             type: String
         }
     }],
-
     registrationFee: String,
     paymentStatus: {
         type: String,
@@ -107,22 +103,26 @@ var schema = new Schema({
         type: String,
     },
     verifiedDate: Date,
-
     remarks: String,
     accessToken: String,
     utm_medium: String,
     utm_source: String,
     utm_campaign: String,
     panNo: String,
-    gstNo: String
+    gstNo: String,
+    oldId: {
+        type: Schema.Types.ObjectId,
+        ref: 'OldRegistration',
+        index: true
+    }
 });
 
 schema.plugin(deepPopulate, {
-    populate: {
-        package: {
-            select: ''
-        }
-    }
+    // populate: {
+    //     package: {
+    //         select: ''
+    //     }
+    // }
 });
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);

@@ -135,7 +135,8 @@ var model = {
     },
 
     saveAthleteOriginal: function (data, callback) {
-        _.each(data, function (singleData) {
+        // callback(null, data);
+        async.concatLimit(data, 5, function (singleData, callback) {
             async.waterfall([
                 function (callback) {
                     Athelete.findOne({
@@ -146,8 +147,12 @@ var model = {
                         } else if (_.isEmpty(found)) {
                             var formData = {};
                             console.log("singleData.year", singleData.year);
+                            if (singleData.year == null) {
+                                singleData.year = "2017";
+                            }
                             formData.currentYear = singleData.year;
                             formData.sfaId = singleData.sfaId;
+                            // }
                             formData.receiptId = singleData.receiptId;
                             formData.atheleteID = singleData.atheleteID;
                             formData.password = singleData.password;
@@ -171,20 +176,128 @@ var model = {
                             }
                             formData.gender = singleData.gender;
                             formData.dob = singleData.dob;
-                            formData.age = singleData.age;
-                            formData.mobile = singleData.mobile;
-                            formData.email = singleData.email;
-                            formData.address = singleData.address;
-                            formData.state = singleData.state;
-                            formData.district = singleData.district;
-                            formData.city = singleData.city;
-                            formData.pinCode = singleData.pinCode;
                             if (singleData.standard) {
                                 formData.standard = singleData.standard;
                             }
                             if (singleData.bloodGroup) {
                                 formData.bloodGroup = singleData.bloodGroup;
                             }
+                            if (singleData.photograph) {
+                                formData.photograph = singleData.photograph;
+                            }
+                            if (singleData.idProof) {
+                                formData.idProof = singleData.idProof;
+                            }
+                            if (singleData.dob) {
+                                formData.dob = singleData.dob;
+                            }
+                            if (singleData.age) {
+                                formData.age = singleData.age;
+                            }
+                            if (singleData.ageProof) {
+                                formData.ageProof = singleData.ageProof;
+                            }
+                            if (singleData.photoImage) {
+                                formData.photoImage = singleData.photoImage;
+                            }
+                            if (singleData.birthImage) {
+                                formData.birthImage = singleData.birthImage;
+                            }
+                            if (singleData.playedTournaments) {
+                                formData.playedTournaments = singleData.playedTournaments;
+                            }
+                            if (singleData.sportLevel) {
+                                formData.sportLevel = singleData.sportLevel;
+                            }
+                            if (singleData.mobile) {
+                                formData.mobile = singleData.mobile;
+                            }
+                            if (singleData.smsOTP) {
+                                formData.smsOTP = singleData.smsOTP;
+                            }
+                            if (singleData.email) {
+                                formData.email = singleData.email;
+                            }
+                            if (singleData.emailOTP) {
+                                formData.emailOTP = singleData.emailOTP;
+                            }
+                            if (singleData.address) {
+                                formData.address = singleData.address;
+                            }
+                            if (singleData.addressLine2) {
+                                formData.addressLine2 = singleData.addressLine2;
+                            }
+                            if (singleData.termsAndCondition) {
+                                formData.termsAndCondition = singleData.termsAndCondition;
+                            }
+                            formData.state = singleData.state;
+                            formData.district = singleData.district;
+                            formData.city = singleData.city;
+                            formData.pinCode = singleData.pinCode;
+                            if (singleData.parentDetails) {
+                                formData.parentDetails = singleData.parentDetails;
+                            }
+                            if (singleData.atheleteSchoolContact) {
+                                formData.atheleteSchoolContact = singleData.atheleteSchoolContact;
+                            }
+                            if (singleData.atheleteSchoolName) {
+                                formData.atheleteSchoolName = singleData.atheleteSchoolName;
+                            }
+                            if (singleData.atheleteSchoolIdImage) {
+                                formData.atheleteSchoolIdImage = singleData.atheleteSchoolIdImage;
+                            }
+                            if (singleData.atheleteSchoolLocality) {
+                                formData.atheleteSchoolLocality = singleData.atheleteSchoolLocality;
+                            }
+                            if (singleData.registrationFee) {
+                                formData.registrationFee = singleData.registrationFee;
+                            }
+                            if (singleData.paymentStatus) {
+                                formData.paymentStatus = singleData.paymentStatus;
+                            }
+                            if (singleData.verifyCount) {
+                                formData.verifyCount = singleData.verifyCount;
+                            }
+                            if (singleData.transactionID) {
+                                formData.transactionID = singleData.transactionID;
+                            }
+                            if (singleData.university) {
+                                formData.university = singleData.university;
+                            }
+                            if (singleData.faculty) {
+                                formData.faculty = singleData.faculty;
+                            }
+                            if (singleData.degree) {
+                                formData.degree = singleData.degree;
+                            }
+                            if (singleData.collegeYear) {
+                                formData.collegeYear = singleData.collegeYear;
+                            }
+                            if (singleData.verifiedDate) {
+                                formData.verifiedDate = singleData.verifiedDate;
+                            }
+                            if (singleData.remarks) {
+                                formData.remarks = singleData.remarks;
+                            }
+                            if (singleData.accessToken) {
+                                formData.accessToken = singleData.accessToken;
+                            }
+                            if (singleData.isSelected) {
+                                formData.isSelected = singleData.isSelected;
+                            }
+                            if (singleData.utm_campaign) {
+                                formData.utm_campaign = singleData.utm_campaign;
+                            }
+                            if (singleData.utm_medium) {
+                                formData.utm_medium = singleData.utm_medium;
+                            }
+                            if (singleData.utm_source) {
+                                formData.utm_source = singleData.utm_source;
+                            }
+                            if (singleData.isBib) {
+                                formData.isBib = singleData.isBib;
+                            }
+
                             formData.registrationFee = singleData.registrationFee;
                             formData.verifyCount = singleData.verifyCount;
                             formData.paymentStatus = singleData.paymentStatus;
@@ -196,10 +309,19 @@ var model = {
                             formData.oldId = singleData._id;
                             callback(null, formData);
                         } else {
+                            console.log("found", found, "singleData", singleData);
                             var formData = {};
-                            found.year.push(singleData.year);
+                            if (singleData.year == null) {
+                                singleData.year = "2017";
+                            }
+                            // if (found.year == undefined) {
+                            //     found.year = [];
+                            //     found.year.push(singleData.year);
+                            // } else {
+                            //     found.year.push(singleData.year);
+                            // }
                             var i = (found.year.length - 1);
-                            if (singleData.year < found.year[i]) {
+                            if (parseInt(singleData.year) > parseInt(found.year[i])) {
                                 formData._id = found._id;
                                 if (singleData.receiptId) {
                                     formData.receiptId = singleData.receiptId;
@@ -211,6 +333,7 @@ var model = {
                                 formData.status = singleData.status;
                                 formData.school = singleData.school;
                                 formData.currentYear = singleData.year;
+                                found.year.push(singleData.year);
                                 formData.year = found.year;
                                 if (singleData.idProof) {
                                     formData.idProof = singleData.idProof;
@@ -342,7 +465,9 @@ var model = {
                                 if (singleData.isBib) {
                                     formData.isBib = singleData.isBib;
                                 }
+                                callback(null, formData);
                             } else {
+                                console.log("year", found.year);
                                 formData._id = found._id;
                                 if (found.receiptId) {
                                     formData.receiptId = found.receiptId;
@@ -353,8 +478,10 @@ var model = {
                                 formData.sfaId = found.sfaId;
                                 formData.status = found.status;
                                 formData.school = found.school;
-                                formData.currentYear = found.year;
-                                formData.year.push(found.year);
+                                var len = found.year.length;
+                                formData.currentYear = found.year[len--];
+                                // found.year.push()
+                                formData.year = found.year;
                                 if (found.idProof) {
                                     formData.idProof = found.idProof;
                                 }
@@ -485,8 +612,9 @@ var model = {
                                 if (found.isBib) {
                                     formData.isBib = found.isBib;
                                 }
+                                callback(null, formData);
+
                             }
-                            callback(null, formData);
                         }
                     });
                 },
@@ -502,9 +630,16 @@ var model = {
                         }
                     });
                 }
-            ]);
+            ], function (err, complete) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    callback(null, complete);
+                }
+            });
+        }, function (err, final) {
+            callback(null, final);
         });
-        callback(null, data);
     }
 
 };
