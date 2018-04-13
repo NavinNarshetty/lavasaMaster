@@ -33,7 +33,11 @@ var model = {
       // Stage 1
       {
         $match: {
-          "featureDetails.packageName": ObjectId(data._id)
+          $or: [{
+            "featureDetails.packageName": data._id
+          }, {
+            "featureDetails.packageName": ObjectId(data._id)
+          }]
         }
       },
 
@@ -51,7 +55,7 @@ var model = {
         var finalData = [];
         _.each(features, function (featureList) {
           _.each(featureList.featureDetails, function (featurePack) {
-            if (data._id === featurePack.packageName.toString()) {
+            if (data._id.toString() === featurePack.packageName.toString()) {
               if (featurePack.featureType === 'checkbox' && featurePack.featureCheck === true) {
                 featureList.featuresShow = featureList.featureName;
               } else if (featurePack.featureType === 'text' && featurePack.featureText !== '') {

@@ -183,14 +183,18 @@
                             <li>SFA ID:
                                 <%=sfaId%>
                             </li>
-                            <li>Password: As mentioned in their
-                                <%=flag%> registration form (To be kept confidential)</li>
+                            <li>Password:
+                                <%=password%> (To be kept confidential)</li>
                         </ol>
 
                         <%if(flag === 'school' || flag === 'college'){%>
                             <!-- SCHOOL -->
                             <p style="font-family:TitilliumWeb-Bold;font-weight:bold;">Click on the following to register players/teams from your
-                                <%=type%> (STEP 2) of the registration process
+                                <%=type%> (STEP 2) of the registration process:
+                                    <br>
+                                    <a href="<%=schoolUrl%>" target="_new">
+                                        <%=schoolUrl%>
+                                    </a>
                             </p>
 
                             <p style="font-family:TitilliumWeb-Bold;font-weight:bold;">KINDLY NOTE: TEAMS/PLAYERS WILL BE AVAILABLE FOR SELECTION IN ANY SPORT ONLY IF HE/SHE IS REGISTERED
@@ -200,7 +204,11 @@
                             <!-- SCHOOL END -->
                             <%} else {%>
                                 <!-- PLAYER -->
-                                <p style="font-family:TitilliumWeb-Bold;font-weight:bold;">Click on the following to complete sports registration (STEP 2) of the registration process
+                                <p style="font-family:TitilliumWeb-Bold;font-weight:bold;">Click on the following to complete sports registration (STEP 2) of the registration process:
+                                    <br>
+                                    <a href="<%=playerUrl%>" target="_new">
+                                        <%=playerUrl%>
+                                    </a>
                                 </p>
 
                                 <p>You have selected

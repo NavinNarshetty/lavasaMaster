@@ -844,6 +844,45 @@
             "url": ""
         },
         {
+            "name": "Player URL",
+            "type": "text",
+            "tableRef": "playerUrl",
+            "placeholder": "Select Player Url",
+            "id": "playerUrl",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "url": ""
+        },
+        {
+            "name": "School URL",
+            "type": "text",
+            "tableRef": "schoolUrl",
+            "placeholder": "Select School Url",
+            "id": "schoolUrl",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "url": ""
+        },
+        {
+            "name": "Rule URL",
+            "type": "text",
+            "tableRef": "ruleUrl",
+            "placeholder": "Select Rule Url",
+            "id": "ruleUrl",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "url": ""
+        },
+        {
             "name": "Domain URL",
             "type": "text",
             "tableRef": "domainUrl",

@@ -144,10 +144,12 @@
                         <%if(registrationFee==='cash'){%>
                             <p>You have selected the ‘Cash/Cheque/DD’ payment option. To complete your registration process
                                 kindly courier/hand deliver a payment of Rs.
-                                <%=amount%> in favour of
-                                    <span class="sfa-bold">“
-                                        <%=ddFavour%>”</span> within
-                                    <span class="sfa-bold">4</span> working days to:</p>
+                                <span class="sfa-bold">
+                                    <%=amount%>
+                                </span> in favour of
+                                <span class="sfa-bold">“
+                                    <%=ddFavour%>”</span> within
+                                <span class="sfa-bold">4</span> working days to:</p>
 
                             <p class="sfa-bold">
                                 <%=cityAddress%>
@@ -211,8 +213,7 @@
 
                                                 <!-- LINK TO BE ADDED -->
                                                 <p>
-                                                    Click here to view details of various player registration packages
-                                                    <a href=""></a>
+                                                    <a href="<%=playerUrl%>" target="_new">Click here to view details of various player registration packages.</a>
                                                 </p>
                                                 <!-- LINK TO BE ADDED END -->
 

@@ -64,9 +64,9 @@ var schema = new Schema({
     igstAmoutAdditional: Number,
     igstPercentAdditional: Number,
     reqUrl: String,
-    domainUrl: String,
-    paymentUrl: String,
-    backendUrl: String,
+    // domainUrl: String,
+    // paymentUrl: String,
+    // backendUrl: String,
     // dbName: String,
     athleteStandards: [{
         type: String
@@ -84,7 +84,10 @@ var schema = new Schema({
     minNoShow: Number,
     bucketName: String,
     cloudUrlPrefix: String,
-    keyfileName: String
+    keyfileName: String,
+    playerUrl: String,
+    schoolUrl: String,
+    ruleUrl: String
 
 });
 
@@ -130,6 +133,10 @@ var model = {
                     finalData.date = property[0].date;
                     finalData.venue = property[0].venue;
                     finalData.endDate = property[0].endDate;
+                    finalData.playerUrl = property[0].playerUrl;
+                    finalData.schoolUrl = property[0].schoolUrl;
+                    finalData.ruleUrl = property[0].ruleUrl;
+
                     callback(null, finalData);
                 }
             }
