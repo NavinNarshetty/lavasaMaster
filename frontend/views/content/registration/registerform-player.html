@@ -66,7 +66,7 @@
                     </div>
                     <p class="">Kindly Note: These prices are part of the EARLY BIRD OFFER valid for the first 7500 registrations. </p>
                     <div class="">
-                      <button class="btn formregister-link" ng-click="viewPackage()">Click Here to <span ng-show="!showPackageDetail">View</span><span ng-show="showPackageDetail">Hide</span> Package Details</button>
+                      <button type="button" class="btn formregister-link" ng-click="viewPackage()">Click Here to <span ng-show="!showPackageDetail">View</span><span ng-show="showPackageDetail">Hide</span> Package Details</button>
                     </div>
                     <div class="registerform-packagetable" ng-show="showPackageDetail">
                       <sfa-package-table user="athlete" caption="hello" cashback="true"></sfa-package-table>
@@ -103,7 +103,7 @@
                 <p class="">or
                   </>
                   <p class="italicize">Kindly Add {{type}}, if your {{type}}'s name does not appear in the above mentioned list.</p>
-                  <button class="btn formregister-btn" ng-disabled="oneClick == true" ng-click="goto()"> Add {{type|firstcapitalize}}</button>
+                  <button type="button" class="btn formregister-btn" ng-disabled="oneClick == true" ng-click="goto()"> Add {{type|firstcapitalize}}</button>
               </div>
               <div class="formregister-addschool" ng-if="showSchool && !formData.school">
                 <div class="x-img3">
@@ -356,7 +356,7 @@
                 <!-- AGE -->
                 <div class="col-sm-2">
                   <div class="form-group">
-                    <label class="control-label col-xs-6">Age:{{age}}</label>
+                    <label class="control-label col-xs-6">Age:</label>
                     <label ng-if="formData.dob" class="control-label col-xs-6">{{ageCalculate(formData.dob)}}</label>
                   </div>
                 </div>
@@ -402,7 +402,7 @@
                       <select class="sfa-drop2 sf-list sfa-mob2 label-two form-control" name="ageProof " ng-model="formData.ageProof" required>
                           <option style="display:none "></option>
                           <option>Aadhar Card with DD/MM/YYYY format preferred</option>
-                          <option value="aadharAge">Aadhar Card with DD/MM/YYYY format preferred + Photo ID</option>
+                          <option value="aadharAge">Aadhar Card with year + Photo ID with DD/MM/YYYY format preferred</option>
                           <option value="birthCert">Birth Certificate + Photo ID</option>
                           <option>PAN Card</option>
                           <option>Passport</option>
@@ -410,7 +410,7 @@
                       <div class="dirctive-op upload5 Upload-Age" ng-init="showBirthImg = 0;showPhotoImg = 0">
                         <upload-image2 class="up-img birthImg ng-isolate-scope" ng-model="formData.birthImage" no-view file-types=" 'image/jpeg,image/png'"
                           ng-click="showBirthImg=1" ng-disabled="type.disabled" ng-callback="changeitBirthImage"></upload-image2>
-                        <div class="">
+                        <div class="" ng-if="formData.ageProof == 'aadharAage' || formData.ageProof =='birthCert'">
                           <div class="label label-info text-uppercase">Pic 1</div>
                         </div>
                       </div>
@@ -418,7 +418,7 @@
                         <upload-image2 class="up-img photoImg ng-isolate-scope " file-types="'image/jpeg,image/png'" ng-disabled="type.disabled"
                           ng-callback="changeitPhotoImage" no-view ng-click="showPhotoImg=1" ng-model="formData.photoImage"></upload-image2>
                         <div class="">
-                          <div class="label label-info text-uppercase" ng-show="formData.ageProof=='aadharAge' || formData.ageProof=='birthCert'">Pic 2</div>
+                          <div class="label label-info text-uppercase" ng-show="formData.ageProof=='aadharAge' || formData.ageProof=='birthCert'" >Pic 2</div>
                         </div>
                       </div>
                       <div class="hover-img " ng-if="formData.ageProof!='aadharAge' && formData.ageProof!='birthCert' && formData.birthImage && showBirthImg == 1">
@@ -429,7 +429,7 @@
                               </a>
                           </div>
                         </div>
-                        <div class="label label-info text-uppercase">Pic 1</div>
+                        <div class="label label-info text-uppercase" ng-if="formData.ageProof == 'aadharAage' || formData.ageProof =='birthCert'">Pic 1</div>
                         <div class="hover-img " style="margin-left:18px ">
                           <img src="img/icon/x.png " alt="logo" ng-click="removeProof(formData.birthImage, 'birthImage') " class="img-responsive myicon ">
                         </div>
@@ -457,7 +457,7 @@
                                     <img ng-src="{{formData.birthImage |serverimage2}} " class="img-responsive">
                                   </a>
                           </div>
-                          <div class="label label-info text-uppercase" ng-if=" showBirthImg == 1 && formData.birthImage">Pic 1</div>
+                          <div class="label label-info text-uppercase" ng-if="(formData.ageProof == 'aadharAage' || formData.ageProof =='birthCert') && showBirthImg == 1 && formData.birthImage" >Pic 1</div>
                         </div>
                       </div>
                     </div>
@@ -630,7 +630,7 @@
                     <input type="text" name="mobile1" placeholder="Enter Mobile No." class="form-control sfa-drop" minlength="10" maxlength="10"
                       ng-model="formData.mobile" ng-change="checkChange('mobile')" only-Digits required>
                     <div class="input-group-btn" ng-if="formFlag == 'create' || editMobile == true">
-                      <button class="btn-default formregister-btn" ng-click="sendMobileOTP(formData.mobile)">Send OTP </button>
+                      <button type="button" class="btn-default formregister-btn" ng-click="sendMobileOTP(formData.mobile)">Send OTP </button>
                     </div>
                   </div>
                   <div class="label label-danger pull-right" ng-if="formAthlete.mobile1.$invalid && formAthlete.mobile1.$touched">Please Enter Your Mobile No.</div>
@@ -656,7 +656,7 @@
                     <input type="email" name="email1" ng-model="formData.email" ng-change="checkChange('email')" class="form-control bor-t sfa-drop" placeholder="Enter Email"
                       required>
                     <div class="input-group-btn" ng-if="formFlag == 'create' || editEmail == true">
-                      <button class=" btn-default formregister-btn" ng-click="sendEmailOTP(formData.email)">Send OTP </button>
+                      <button type="button" class=" btn-default formregister-btn" ng-click="sendEmailOTP(formData.email)">Send OTP </button>
                     </div>
                   </div>
                   <div class="label label-danger pull-right" ng-if="formAthlete.email1.$invalid && formAthlete.email1.$touched">Please Enter Your Email Id</div>
@@ -899,8 +899,8 @@
                               <!-- <div class="label label-danger pull-right" ng-if="formAthlete.promocode.$invalid && formAthlete.promocode.$touched">
                                 Enter Correct Promo Code
                               </div> -->
-                              <button class="formregister-link" ng-hide="promoApplied" ng-click="validatePromoCode(promoCode)">Apply</button>
-                              <button class="formregister-link" ng-show="promoApplied" ng-click="setPackageDetails()">Remove</button>
+                              <button type="button" class="formregister-link" ng-hide="promoApplied" ng-click="validatePromoCode(promoCode)">Apply</button>
+                              <button type="button" class="formregister-link" ng-show="promoApplied" ng-click="setPackageDetails()">Remove</button>
                             </div>
                           </td>
                           <td>- <span>{{formData.discount}}</span></td>

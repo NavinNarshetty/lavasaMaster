@@ -91,6 +91,7 @@
             </div>
             <!-- REGISTERED SPORTS TAB -->
             <div class="box-padd mb-50" ng-show="sportsregistered">
+              <p>"The player will have to delete the sport and then register for that sport in the required event category"</p>
                 <div class="registeredsport-tab" ng-if="registerSport.length > 0">
                     <ul class="list-unstyled registeredsport-list">
                         <li class="registersport-lists" ng-repeat="sport in registerSport | orderBy:'_id.sportName' track by $index">

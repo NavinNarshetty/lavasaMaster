@@ -471,7 +471,7 @@
                             <input name="email1" placeholder="Email ID" autocomplete='email' ng-model="formData.email" ng-change="checkChange('email')"
                               type="email" class="form-control" required>
                             <div class="input-group-btn" ng-if="showOtpSuccess===true && formFlag==='edit' || formFlag==='create'">
-                              <button class="formregister-btn" ng-click="sendOTP(formData.email)">
+                              <button type="button" class="formregister-btn" ng-click="sendOTP(formData.email)">
                                 <i class="">Send OTP</i>
                               </button>
                             </div>
@@ -834,14 +834,14 @@
               <div>
                 <!-- CASH PAYMENT -->
                 <p ng-if="show==10">
-                  Cash/Cheque/Demand Draft: Selecting this option will enable you to pay the registration fee of Rs. 2,500 (+ 18% GST) by Cash/Cheque/Demand
+                  Cash/Cheque/Demand Draft: Selecting this option will enable you to pay the registration fee of Rs. 2,950 (inclusive of all taxes) by Cash/Cheque/Demand
                   Draft in favour of ‘SFA Sporting Services Pvt Ltd’ which is to be couriered/hand delivered to: 17A, Raviraj
                   House, 6th Floor, Saraswati Road, Off Linking Road, Santacruz (West) - 400054.
                 </p>
                 <!-- CASH PAYMENT END -->
                 <!-- ONLINE -->
                 <p ng-if="show==9">
-                  Online Payment: Selecting this option will enable you to pay the registration fee of Rs. 2,500 (+ 18% GST) via one of the
+                  Online Payment: Selecting this option will enable you to pay the registration fee of Rs. 2,950 (inclusive of all taxes) via one of the
                   following methods: 1) Credit Card 2) Debit Card 3) Net Banking
                 </p>
                 <!-- ONLINE END -->
