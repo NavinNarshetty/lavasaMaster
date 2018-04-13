@@ -265,6 +265,11 @@ myApp.factory('NavigationService', function ($http) {
                     sref: "#/faq",
                     icon: "phone"
                 }, {
+                    name: "About Championship",
+                    classis: "activeColor",
+                    sref: "#/tableaboutchampionship",
+                    icon: "phone"
+                }, {
                     name: "Certificate",
                     classis: "activeColor",
                     sref: "",

@@ -662,7 +662,22 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'schoolAccountCtrl'
         })
-        // *******************ACOUNT END********************************** 
+        // *******************ACOUNT END**********************************
+
+        // ***************ABOUT CHAMPIONSHIP**************
+        .state('tableaboutchampionship', {
+            url: "/tableaboutchampionship",
+            templateUrl: "views/template.html",
+            controller: 'AboutChampionshipCtrl'
+        })
+
+        .state('detailaboutchampionship', {
+            url: "/detailaboutchampionship/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailAboutChampionshipCtrl'
+        })
+
+        // ***************ABOUT CHAMPIONSHIP END**********
         .state('jagz', {
             url: "/jagz",
             templateUrl: "views/jagz.html",

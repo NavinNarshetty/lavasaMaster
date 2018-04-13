@@ -1595,21 +1595,63 @@
      }
  } //  ACCOUNT MODAL EEND
  // NO ACCESS PAGE
- .noaccess-page{
-   .widget{
-     min-height: 60vh;
-   }
-   .noaccess-content{
-     width: 60%;
-     padding: 30px;
-     margin: 0 auto;
-     text-align: center;
-
-     h4{
-       font-weight: 700;
+ .noaccess-page {
+     .widget {
+         min-height: 60vh;
      }
-   }
+     .noaccess-content {
+         width: 60%;
+         padding: 30px;
+         margin: 0 auto;
+         text-align: center;
+         h4 {
+             font-weight: 700;
+         }
+     }
+ } // NO ACCESS PAGE END
+ //  COMMON CLASS
+ .table-font {
+     .table {
+         border: 1px solid #e1e1e1;
+         border-style: dashed;
+     }
+     th {
+         font-size: 12px;
+         text-transform: capitalize;
+         text-align: center;
+     }
+     td {
+         font-size: 12px;
+     }
  }
- // NO ACCESS PAGE END
+
+ .reduce-tablepadding {
+     .table>thead>tr>td,
+     .table>tbody>tr>td,
+     .table>tfoot>tr>td {
+         padding: 5px;
+         vertical-align: middle;
+     }
+ } //  ONLY FOR UPLOAD IMAGE
+ .override-margin {
+     .form-group {
+         margin-bottom: 5px;
+     }
+     input {
+         width: 100%;
+         display: block;
+     }
+ }
+
+ .override-height {
+     .form-control {
+         height: 25px;
+     }
+ } //  OVERRIDE SELECT
+ .override-select {
+     border: none;
+     border-radius: 20px;
+ } //  OVERRIDE SELECT END
+ // COMMON CLASS END
  @import "fancybox-override";
  @import "other/mobile";

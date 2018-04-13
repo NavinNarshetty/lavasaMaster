@@ -1,0 +1,114 @@
+<!-- TABLE HEADER -->
+<div class="table-header">
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="heading-profile">
+        <h4 class="m-clear">ABOUT CHAMPIONSHIP</h4>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- TABLE HEADER END -->
+
+<!-- CONTENT -->
+<div class="table-content">
+  <div class="row">
+    <div class="col-md-12">
+      <!-- WHITE BOX -->
+      <div class="widget">
+        <div class="table-area ">
+          <!-- TITLE -->
+          <div class="table-widget">
+            <div class="row">
+              <div class="col-md-5 col-sm-6 col-xs-12">
+                <h5 class="m-clear">List of Like
+                  <span>Total :</span>
+                  <span></span>
+                </h5>
+              </div>
+              <div class="col-md-7 col-sm-6 col-xs-12" ng-if="items.length !=1">
+                <div class="widget-holder text-right">
+                  <button type="submit" class="btn btn-success" ui-sref="detailaboutchampionship">Create</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- TITLE END -->
+          <!-- TABLE RESPONSIVE -->
+          <div class="table-responsive table-font">
+            <table class="table">
+              <thead>
+                <th>
+                  <div>
+                    Sr.no
+                  </div>
+                </th>
+                <th>
+                  <div class="text-capitalize">
+                    title
+                  </div>
+                </th>
+                <th>
+                  <div class="text-capitalize">
+                    City
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    Action
+                  </div>
+                </th>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in items track by $index">
+                  <td>
+                    <div class="text-center">
+                      {{($index + 1)+((formData.page-1)*maxRow)}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="text-center">
+                      <span>{{item.title}}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="text-center">
+                      <span>
+                        {{item.city}}
+                      </span>
+                    </div>
+                  </td>
+                  <td>
+                    <div>
+                      <a class="btn btn-primary" target="_new" ui-sref="detailaboutchampionship({id:item._id})">
+                        <i class="fa fa-pencil"></i>
+                      </a>
+                      <a class="btn btn-danger" ng-click="confirmDelete(item._id)">
+                        <i class="fa fa-trash"></i>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- TABLE RESPONSIVE END -->
+
+          <!-- PAGINATION -->
+          <div class="tableData " ng-show="totalItems===0 ">
+            <h5>No data found</h5>
+          </div>
+          <div class="tableData " ng-show="totalItems===undefined ">
+            <h5>Loading Data</h5>
+          </div>
+          <ul ng-if="totalItems" ng-change="viewTable();" uib-pagination total-items="totalItems" items-per-page="maxRow" ng-model="formData.page"
+            max-size="template.pageMax" class="pagination-sm" boundary-links="true " force-ellipses="true "></ul>
+          <!-- PAGINATION END -->
+
+        </div>
+      </div>
+      <!-- WHITE BOX END -->
+    </div>
+  </div>
+</div>
+<!-- CONTENT END -->

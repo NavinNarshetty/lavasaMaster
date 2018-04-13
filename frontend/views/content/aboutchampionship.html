@@ -1,0 +1,59 @@
+<!-- ABOUTCHAPIONSHIP PAGE -->
+<div class="aboutchampionship-page">
+  <!-- <pre>{{championshipData | json}}</pre> -->
+  <!-- CONTAINER -->
+  <div class="container">
+    <!-- HEADER -->
+    <div class="aboutchampionship-page-headertitle sfa-header-title text-uppercase d-fjalla-one sport-color-primary">
+      {{ championshipData.title }}
+    </div>
+    <!-- HEADER END -->
+
+    <!-- BANNER HOLDER-->
+    <div class="aboutchampionship-page-bannerholder">
+      <!-- IMAGE -->
+      <div class="about-championship-page-image" style="background-image:url('{{championshipData.mediaLink | serverimage}}')" ng-if="championshipData.mediaType=='image'">
+
+      </div>
+      <!-- IMAGE END -->
+
+      <!-- VIDEO -->
+
+      <div class="aboutchampionship-page-video" ng-if="championshipData.mediaType=='video'">
+        <video width="100%" height="56%" loop preload="yes" autoplay>
+          <source ng-src="{{ championshipData.mediaLink }}" type="video/webm">
+        </video>
+        <!-- <iframe width="100%" ng-src="" frameborder="0" allowfullscreen></iframe> -->
+      </div>
+      <!-- VIDEO END -->
+    </div>
+    <!-- BANNER END -->
+
+    <!-- CONTENT -->
+    <div class="aboutchampionship-page-content">
+      <p ng-bind-html="championshipData.contentData"></p>
+    </div>
+    <!-- CONTENT END -->
+
+    <!-- BUTTONS -->
+    <div class="aboutchampionship-page-buttons">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12" ng-repeat="championsbutton in championshipData.buttonData track by $index">
+          <div class="form-group text-center aboutchampionship-page-buttonholder" ng-if="championsbutton.buttonStatus==='enable'">
+            <a href="{{championsbutton.buttonLink}}" class="form-control opensans-regular" target="{{championsbutton.buttonLinkType=='external' ? '_new' : '_self'}}">
+              {{championsbutton.buttonTitle}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- BUTTONS END -->
+
+    <!-- AB JEETHEGA INDIA -->
+    <div class="text-center d-fjalla-one text-capitalize sport-color-primary aboutchampionship-page-abjeethega">
+      Ab Jeetega India!
+    </div>
+    <!-- AB JEETHEGA INDIA END -->
+  </div>
+  <!-- CONTAINER END -->
+</div>
+<!-- ABOUTCHAPIONSHIP PAGE END -->

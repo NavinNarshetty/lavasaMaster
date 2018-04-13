@@ -511,6 +511,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'GalleryPostCtrl'
         })
+        .state('aboutchampionship', {
+            url: "/aboutchampionship",
+            templateUrl: tempateURL,
+            controller: 'aboutChampionshipCtrl'
+        })
         // NEW REGISTRATION PAGES
         .state('registerplayer', {
             url: "/register/:type",
@@ -542,8 +547,8 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'UpgradePackageCtrl'
         })
-        // NEW REGISTRATION PAGES
-        ;
+    // NEW REGISTRATION PAGES
+    ;
     // if (window.location.origin != "http://testmumbaischool.sfanow.in") {
     if (window.location.origin == "http://mumbaischool.sfanow.in") {
         $urlRouterProvider.otherwise("/championship");

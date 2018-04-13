@@ -1,0 +1,190 @@
+<!-- Top Bar Chart -->
+<div class="panel-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="widget">
+        <div class="form-elements-sec">
+          <form name="detailChampionsform" role="form" class="sec">
+            <div class="row">
+
+              <!-- CITY -->
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>City</label>
+                  <select name="city" id="city" ng-model="formData.city" class="form-control" autocomplete="city" ng-disabled="true">
+                    <option value="Mumbai">Mumbai</option>
+                    <option value="Hyderabad">Hyderabad</option>
+                  </select>
+                </div>
+              </div>
+              <!-- CITY END -->
+              <!-- TITLE -->
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label> Page Title</label>
+                  <input type="text" class="form-control" ng-model="formData.title" placeholder="Enter the Title">
+                </div>
+              </div>
+              <!-- TITLE END -->
+
+              <!-- TYPE -->
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="">Banner Type</label>
+                  <select name="mediatype" id="mediatype" ng-model="formData.mediaType" class="form-control">
+                    <option value="image">Image</option>
+                    <option value="video">Video</option>
+                  </select>
+                </div>
+              </div>
+              <!-- TYPE END -->
+
+              <!-- VIDEO SOURCE -->
+              <div class="col-md-12" ng-if="formData.mediaType=='video'">
+                <div class="form-group">
+                  <label>Video Source</label>
+                  <select name="videosource" id="videosource" ng-model="formData.mediaSource" class="form-control">
+                    <option value="youtube">Youtube</option>
+                    <option value="vimeo">Vimeo</option>
+                  </select>
+                </div>
+              </div>
+              <!-- VIDEO SOURCE END -->
+
+              <!-- VIDEO LINK -->
+              <div class="col-md-12" ng-if="formData.mediaType=='video'">
+                <div class="form-group">
+                  <label>Video Link</label>
+                  <input type="text" name="pagetype" ng-model="formData.mediaLink" class="form-control" placeholder="Enter Page Type">
+                </div>
+              </div>
+              <!-- VIDEO LINK END -->
+
+              <!-- IMAGE LINK -->
+              <div class="col-md-12" ng-if="formData.mediaType=='image'">
+                <div class="form-group">
+                  <label>Image: </label>
+                  <span>
+                    <b>Banner Size-1920 x 600 only</b>
+                  </span>
+                  <upload-image ng-model="formData.mediaLink"></upload-image>
+                </div>
+              </div>
+              <!-- IMAGE LINK END -->
+
+              <!-- CONTENT -->
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Content :</label>
+                  <text-angular ng-model="formData.contentData" name="championshipcontent"></text-angular>
+                </div>
+              </div>
+              <!-- CONTENT END -->
+
+              <div class="col-md-12">
+                <div class="form-group text-center">
+                  <label for="">Button Table</label>
+                </div>
+                <div class="form-group text-right">
+                  <button type="submit" class="btn btn-primary" ng-click="addRow(formData)">Add</button>
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="form-group table-responsive table-font reduce-tablepadding">
+                  <table class="table table-striped ">
+                    <thead>
+                      <th>
+                        <div>
+                          Sr.no
+                        </div>
+                      </th>
+                      <th>
+                        <div>
+                          Title
+                        </div>
+                      </th>
+                      <th>
+                        <div>
+                          Link Type
+                        </div>
+                      </th>
+                      <th>
+                        <div>
+                          Link
+                        </div>
+                      </th>
+                      <th>
+                        <div>
+                          Status
+                        </div>
+                      </th>
+                      <th>
+                        <div>
+                          Action
+                        </div>
+                      </th>
+                    </thead>
+                    <tbody class="">
+                      <tr ng-repeat="item in formData.buttonData track by $index">
+                        <td>
+                          <div class="text-center">
+                            {{$index + 1}}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="text-center override-margin">
+                            <input type="text" name="button title" class="form-control" ng-model="item.buttonTitle" placeholder="Enter title">
+                          </div>
+                        </td>
+                        <td>
+                          <div class="text-center">
+                            <select name="linktype" id="linktype" ng-model="item.buttonLinkType" class="form-control" style="margin:0px;">
+                              <option value="internal">INTERNAL</option>
+                              <option value="external">EXTERNAL</option>
+                            </select>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="text-center">
+                            <input type="text" name="linkofwebsite" id="linkofwebsite" class="form-control" ng-model="item.buttonLink" placeholder="Enter the Link">
+                          </div>
+                        </td>
+                        <td>
+                          <div class="text-center">
+                            <select name="buttonstatus" id="buttonstatus" class="form-control" ng-model="item.buttonStatus" style="margin:0px;">
+                              <option value="enable">Enable</option>
+                              <option value="disable">Disable</option>
+                            </select>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="text-center">
+                            <button type="submit" class="btn btn-danger" ng-click="deleteRow(formData,$index)">Delete</button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+
+                  </table>
+                </div>
+              </div>
+
+
+
+              <!-- BUTTON -->
+              <div class="col-md-12">
+                <div class="text-center mt20 odd-even-button">
+                  <button class="btn btn-default" type="submit" ng-click="saveData(formData)">Save</button>
+                  <button class="btn btn-default" ui-sref="tableaboutchampionship">Cancel</button>
+                </div>
+              </div>
+              <!-- BUTTON END -->
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -83,5 +83,6 @@ module.exports = [
     'backend/js/controllers/couponcode.js',
     'backend/js/controllers/athleteAccount.js',
     'backend/js/controllers/schoolAccount.js',
+    'backend/js/controllers/aboutchampionship.js',
 
 ];

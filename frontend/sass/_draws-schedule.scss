@@ -101,6 +101,7 @@ $sport-table-grey:#efeeee !default;
 .sport-success {
   color: $sport-success;
 }
+
 .sport-danger {
   color: $sport-danger;
 }
@@ -2187,3 +2188,46 @@ $sport-table-grey:#efeeee !default;
 }
 
 // CUSTOM CHECKBOX FOR FORM END
+// ABOUT CHAMPIONSHIP
+.aboutchampionship-page-headertitle {
+  // margin-top: 40px;
+}
+
+.aboutchampionship-page-bannerholder {
+  margin: 10px 0px 40px 0px;
+}
+
+.aboutchampionship-page-buttons,
+.aboutchampionship-page-abjeethega,
+.aboutchampionship-page {
+  margin: 40px 0px;
+}
+
+.about-championship-page-image {
+  height: calc(100vh - 30vh);
+  background-position: 50% 30%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: 0 5px 15px #ebebeb;
+}
+
+.aboutchampionship-page-buttonholder {
+  box-shadow: 4px 4px 5px 0 #ebebeb;
+  a {
+    &:hover {
+      text-decoration: none;
+      background-color: $sport-primary;
+      color: #fff;
+    }
+  }
+}
+
+.aboutchampionship-page-abjeethega {
+  font-size: 28px;
+}
+
+.sfa-header-title {
+  font-size: 45px;
+}
+
+// ABOUT CHAMPIONSHIP END
