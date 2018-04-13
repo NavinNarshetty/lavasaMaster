@@ -252,7 +252,7 @@
                             </li>
                             <!-- SPONSORS AND PARTNERS END -->
 
-                            <!-- SFA BUTTON -->
+                            <!-- SMALL SCREENS -->
                             <li class="hidden-md hidden-lg dropdown ">
                                 <div class="display-inline forCityPlacingSm ">
                                     <div class="citySelect sfa-select ">
@@ -273,18 +273,23 @@
                                         <li>
                                             <a>SCHOOL CHAMPIONSHIP</a>
                                         </li>
+
+                                        <!-- OLD LINKS -->
                                         <li style="display:none !important;" ng-if="selectedCity!=='hyderabad'">
                                             <a href="{{linkForAll}}liveupdates " style="color:#5aeba4 !important" target="_blank ">LIVE UPDATES</a>
                                         </li>
                                         <li class="hide" style="display:none !important;" ng-if="selectedCity !=='hyderabad'">
                                             <a href="{{registerSchool}}/livescore" style="color:#5aeba4 !important">LIVE SCORES</a>
                                         </li>
-                                        <li ng-if="!registerSchool " class="hide" style="display:none !important;">
-                                            <a ui-sref="championship "> ABOUT CHAMPIONSHIP</a>
+                                        <!-- OLD CHAMPIONSHIP -->
+                                        <li ng-if="!registerSchool " class="" style="display:none !important;">
+                                            <a ui-sref="championship"> ABOUT CHAMPIONSHIP</a>
                                         </li>
-                                        <li ng-if="registerSchool " class="hide" style="display:none !important;">
+                                        <li ng-if="registerSchool " class="" style="display:none !important;">
                                             <a href="{{registerSchool}}/championship " target="_blank "> ABOUT CHAMPIONSHIP</a>
                                         </li>
+                                        <!-- OLD CHAMPIONSHIP -->
+
                                         <li ng-if="!registerSchool" class="hide" style="display:none !important;">
                                             <a ui-sref="register "> REGISTER</a>
                                         </li>
@@ -311,6 +316,37 @@
                                         <li ng-if="registerSchool" class="hide" style="display:none !important;">
                                             <a href="{{registerSchool}}/specialevents" target="_blank">SPECIAL EVENTS</a>
                                         </li>
+                                        <!-- OLD LINKS -->
+
+                                        <!-- NEW LINKS -->
+                                        <!-- NEW CHAMPIONSHIP -->
+                                        <li ng-if="!registerSchool">
+                                            <a ui-sref="aboutchampionship">ABOUT CHAMPIONSHIP</a>
+                                        </li>
+                                        <li ng-if="registerSchool">
+                                            <a href="{{registerSchool}}/aboutchampionship" target="_blank">ABOUT CHAMPIONSHIP</a>
+                                        </li>
+                                        <!-- NEW CHAMPIONSHIP END -->
+
+                                        <!-- REGISTER AS PLAYER -->
+                                        <li ng-if="!registerSchool" class="text-uppercase">
+                                            <a ui-sref="registerplayer({type:'player'})">Register As A player</a>
+                                        </li>
+                                        <li ng-if="registerSchool" class="text-uppercase">
+                                            <a href="{{registerSchool}}/register/player" target="_blank">Register as a Player</a>
+                                        </li>
+                                        <!-- REGISTER AS PLAYER END -->
+
+                                        <!-- REGISTER AS SCHOOL -->
+                                        <li ng-if="!registerSchool" class="text-uppercase">
+                                            <a ui-sref="registerplayer({type:'school'})">Register As a school</a>
+                                        </li>
+                                        <li ng-if="registerSchool" class="text-uppercase">
+                                            <a href="{{registerSchool}}/register/school" target="_blank">Register as a school</a>
+                                        </li>
+                                        <!-- REGISTER AS SCHOOL END -->
+
+                                        <!-- NEW LINKS -->
                                         <li ng-if="!registerSchool">
                                             <a ui-sref="faq ">FAQs</a>
                                         </li>
@@ -365,7 +401,7 @@
                                                           <li><a ui-sref="faq ">FAQs</a></li> -->
                                 </ul>
                             </li>
-                            <!-- SFA BUTTON END -->
+                            <!-- SMALL SCREENS-->
                         </ul>
                         <!-- LARGER SCREEN HEADER END -->
 
@@ -554,10 +590,12 @@
                             <span class="only-border "></span>
                         </div>
                     </div>
+                    <!-- DESKTOP BUTTON SCREEN -->
                     <div class="sfa-mum " ng-if="selectedCity!=='hyderabad'">
                         <button type="button " name="button " class="btn btn-sfatop " ng-mouseenter="optionss=!optionss
                                   " ng-model="checkboxs ">
-                            <span ng-if="selectedCity ==='Hyderabad'">LIVE</span> <span class="">SFA</span>  {{selectedCity | capitalize}} {{eventYear}}</button>
+                            <span ng-if="selectedCity ==='Hyderabad'">LIVE</span>
+                            <span class="">SFA</span> {{selectedCity | capitalize}} {{eventYear}}</button>
                         <div class="on-mouse-hover hidden-xs hidden-sm specialCase specialCase2" ng-mouseenter="optionss=true " ng-mouseleave="optionss=false "
                             ng-show="optionss || checkboxs ">
                             <!-- <div class="on-mouse-hover "> -->
@@ -568,18 +606,24 @@
                                     <li>
                                         <p>SCHOOL CHAMPIONSHIP</p>
                                     </li>
+                                    <!-- OLD LINKS -->
                                     <li class="hide" ng-if="selectedCity !=='hyderabad'">
                                         <a href="{{linkForAll}}liveupdates " style="color:#5aeba4 !important" target="_blank ">LIVE UPDATES</a>
                                     </li>
                                     <li class="hide" ng-if="selectedCity !=='hyderabad'">
                                         <a href="{{registerSchool}}/livescore" style="color:#5aeba4 !important">LIVE SCORES</a>
                                     </li>
+
+                                    <!-- OLD CHAMPIONSHIP -->
                                     <li ng-if="!registerSchool " class="hide">
                                         <a ui-sref="championship "> ABOUT CHAMPIONSHIP</a>
                                     </li>
                                     <li ng-if="registerSchool " class="hide">
                                         <a href="{{registerSchool}}/championship " target="_blank "> ABOUT CHAMPIONSHIP</a>
                                     </li>
+                                    <!-- OLD CHAMPIONSHIP END -->
+
+
                                     <li ng-if="!registerSchool " class="hide">
                                         <a ui-sref="register "> REGISTER</a>
                                     </li>
@@ -606,6 +650,36 @@
                                     <li ng-if="registerSchool" class="hide">
                                         <a href="{{registerSchool}}/specialevents" target="_blank">SPECIAL EVENTS</a>
                                     </li>
+                                    <!-- OLD LINKS -->
+                                    <!-- NEW LINKS -->
+                                    <!-- NEW CHAMPIONSHIP -->
+                                    <li ng-if="!registerSchool">
+                                        <a ui-sref="aboutchampionship">ABOUT CHAMPIONSHIP</a>
+                                    </li>
+                                    <li ng-if="registerSchool">
+                                        <a href="{{registerSchool}}/aboutchampionship" target="_blank">ABOUT CHAMPIONSHIP</a>
+                                    </li>
+                                    <!-- NEW CHAMPIONSHIP END -->
+
+                                    <!-- REGISTER AS PLAYER -->
+                                    <li ng-if="!registerSchool" class="text-uppercase">
+                                        <a ui-sref="registerplayer({type:'player'})">Register As A player</a>
+                                    </li>
+                                    <li ng-if="registerSchool" class="text-uppercase">
+                                        <a href="{{registerSchool}}/register/player" target="_blank">Register as a Player</a>
+                                    </li>
+                                    <!-- REGISTER AS PLAYER END -->
+
+                                    <!-- REGISTER AS SCHOOL -->
+                                    <li ng-if="!registerSchool" class="text-uppercase">
+                                        <a ui-sref="registerplayer({type:'school'})">Register As a school</a>
+                                    </li>
+                                    <li ng-if="registerSchool" class="text-uppercase">
+                                        <a href="{{registerSchool}}/register/school" target="_blank">Register as a school</a>
+                                    </li>
+                                    <!-- REGISTER AS SCHOOL END -->
+
+                                    <!-- NEW LINKS -->
                                     <li ng-if="!registerSchool ">
                                         <a ui-sref="faq ">FAQs</a>
                                     </li>
@@ -656,13 +730,16 @@
                             </div>
                         </div>
                     </div>
+                    <!-- DESKTOP BUTTON SCREEN -->
                 </div>
+                <!-- MOBILE BUTTON SCREEN -->
                 <div class="visible-xs " ng-if="selectedCity!=='hyderabad'">
                     <div class=" ">
                         <a class="dropdown-toggle mb25 " data-toggle="dropdown">
                             <div class="sfa-mum sfa-mum-m ">
                                 <button type="button" name="button " class="btn btn-sfatop margin0 " ng-mouseenter="optionss=!optionss">
-                                    <span ng-if="selectedCity ==='Hyderabad'">LIVE</span> <span class="">SFA</span> {{selectedCity | capitalize}} {{eventYear}}</button>
+                                    <span ng-if="selectedCity ==='Hyderabad'">LIVE</span>
+                                    <span class="">SFA</span> {{selectedCity | capitalize}} {{eventYear}}</button>
                             </div>
                         </a>
                         <ul class="dropdown-menu text-center cl-pr placingDrop typePlacing ">
@@ -670,6 +747,8 @@
                                 <li>
                                     <a>SCHOOL CHAMPIONSHIP</a>
                                 </li>
+
+                                <!-- OLD LINKS -->
                                 <li class="hide" class="live-update-color" ng-if="selectedCity !=='hyderabad'">
                                     <a href="{{linkForAll}}liveupdates " style="color:#5aeba4 !important" target="_blank ">LIVE UPDATES</a>
                                 </li>
@@ -708,6 +787,35 @@
                                 <li ng-if="registerSchool" class="hide">
                                     <a href="{{registerSchool}}/specialevents" target="_blank">SPECIAL EVENTS</a>
                                 </li>
+                                <!-- OLD LINKS -->
+                                <!-- NEW LINKS -->
+                                <!-- NEW CHAMPIONSHIP -->
+                                <li ng-if="!registerSchool">
+                                    <a ui-sref="aboutchampionship">ABOUT CHAMPIONSHIP</a>
+                                </li>
+                                <li ng-if="registerSchool">
+                                    <a href="{{registerSchool}}/aboutchampionship" target="_blank">ABOUT CHAMPIONSHIP</a>
+                                </li>
+                                <!-- NEW CHAMPIONSHIP END -->
+
+                                <!-- REGISTER AS PLAYER -->
+                                <li ng-if="!registerSchool" class="text-uppercase">
+                                    <a ui-sref="registerplayer({type:'player'})">Register As A player</a>
+                                </li>
+                                <li ng-if="registerSchool" class="text-uppercase">
+                                    <a href="{{registerSchool}}/register/player" target="_blank">Register as a Player</a>
+                                </li>
+                                <!-- REGISTER AS PLAYER END -->
+
+                                <!-- REGISTER AS SCHOOL -->
+                                <li ng-if="!registerSchool" class="text-uppercase">
+                                    <a ui-sref="registerplayer({type:'school'})">Register As a school</a>
+                                </li>
+                                <li ng-if="registerSchool" class="text-uppercase">
+                                    <a href="{{registerSchool}}/register/school" target="_blank">Register as a school</a>
+                                </li>
+                                <!-- REGISTER AS SCHOOL END -->
+                                <!-- NEW LINKS END -->
                                 <li ng-if="!registerSchool ">
                                     <a ui-sref="faq ">FAQs</a>
                                 </li>
@@ -773,7 +881,7 @@
                                   " ng-model="checkboxs ">SFA {{selectedCity | capitalize}} {{eventYear}}</button>
                     </div>
                 </div>
-
+                <!-- MOBILE BUTTON SCREEN END -->
             </div>
 
 
