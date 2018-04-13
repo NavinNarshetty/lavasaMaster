@@ -20,6 +20,7 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
   $scope.pageType = 'school';
 
 
+
   // CONFIG PROPERTY
   configService.getDetail(function (data) {
     $scope.city = data.city;
@@ -48,21 +49,55 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
   // FANCYBOX BUTTON CUSTOM END
 
   // getEditSchool
-  $scope.getEditSchool = function(){
+  $scope.getEditSchool = function () {
     $scope.getSchoolUrl = 'Registration/getOne';
     $scope.getSchoolFormData = {
       _id: $scope.formId
     }
-    NavigationService.apiCallWithDataMaster($scope.getSchoolUrl, $scope.getSchoolFormData, function(data){
+    NavigationService.apiCallWithDataMaster($scope.getSchoolUrl, $scope.getSchoolFormData, function (data) {
       console.log("getSchool", data);
       if (data.value == true) {
         $scope.formData = data.data;
+        $scope.formData.password = '';
+        $scope.formData.termsAndCondition = '';
+        $scope.formData.registrationFee = '';
+        $scope.emailId = $scope.formData.email;
+        $scope.formData.combatSports = '';
+        $scope.formData.individualSports = '';
+        $scope.formData.racquetSports = '';
+        $scope.formData.teamSports = '';
+        $scope.formData.targetSports = '';
+        $scope.formData.aquaticsSports = '';
+        $scope.editEmail = false;
+        $scope.showOtpSuccess = false;
+        // console.log(oldEmail, "email id");
+
+
       } else {
         console.log("Error in ath get", data);
       }
     });
   }
   // getEditSchool END
+
+  // CHECK CHANGE
+
+  $scope.checkChange = function (field) {
+    if ($scope.formFlag == 'edit') {
+      switch (field) {
+        case 'email':
+          if ($scope.formData.email != $scope.emailId) {
+            $scope.editEmail = true;
+            $scope.showOtpSuccess = true;
+          } else {
+            $scope.editEmail = false;
+            $scope.showOtpSuccess = false;
+          }
+          break;
+      }
+    }
+  };
+  // CHECK CHANGE END
 
   // FLAGS SET FOR CREATE EDIT
   if ($scope.formFlag === 'edit') {
@@ -302,7 +337,15 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
     formdata.targetSports = $scope.targetSports;
     formdata.individualSports = $scope.individualSports;
     formdata.aquaticsSports = $scope.aquaticsSports;
-    formdata.sfaID = $scope.sfaID;
+    if ($scope.formFlag === 'create') {
+      formdata.sfaID = $scope.sfaID;
+    }
+    if ($scope.formFlag === 'edit') {
+      delete formdata._id;
+      delete formdata.receiptId;
+      delete formdata.createdAt;
+      delete formdata.updatedAt;
+    }
     $scope.value = {};
     if (formdata.teamSports.length > 0 || formdata.racquetSports.length > 0 || formdata.combatSports.length > 0 || formdata.targetSports.length > 0 || formdata.individualSports.length > 0 || formdata.aquaticsSports.length > 0) {
       $scope.showTeamSports = false;
@@ -340,7 +383,9 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
     // console.log($scope.url);
     // console.log('final data', formdata);
     if (formvalid.$valid && $scope.showTerm === false && $scope.showTeamSports === false) {
+
       if ($scope.showOtpSuccess === false) {
+        // console.log("innnnnnnnnn");
         $scope.isDisabled = true;
         NavigationService.apiCallWithData($scope.url, formdata, function (data) {
           if (data.value === true) {
@@ -363,6 +408,7 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
         });
       }
     } else {
+      console.log(formvalid.$valid, $scope.showTerm, $scope.showTeamSports, "save call");
       $scope.isDisabled = false;
       // console.log("Enter all mandatory fields");
       $scope.openErrorModal();
@@ -604,42 +650,43 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
   $scope.schoolRegisterSportForm2 = [{
       name: "Doubles",
       sportName: [{
-        name: 'Badminton Doubles',
-        type: 'racquetSports'
-      }, {
-        name: 'Table Tennis Doubles',
-        type: 'racquetSports'
-      }, {
-        name: 'Tennis Doubles',
-        type: 'racquetSports'
-      },
-      // {
-      //   name: 'Tennis Mixed Doubles',
-      //   type: 'racquetSports'
-      // }
-    ]
+          name: 'Badminton Doubles',
+          type: 'racquetSports'
+        }, {
+          name: 'Table Tennis Doubles',
+          type: 'racquetSports'
+        }, {
+          name: 'Tennis Doubles',
+          type: 'racquetSports'
+        }
+        // , {
+        //   name: 'Tennis Mixed Doubles',
+        //   type: 'racquetSports'
+        // }
+      ]
 
     },
     {
       name: "Relay",
       sportName: [{
-        name: 'Athletics 4x50m Relay',
-        type: 'individualSports'
-      },
-      // {
-      //   name: 'Athletics 4x100m Relay',
-      //   type: 'individualSports'
-      // },
-       {
-        name: 'Athletics Medley Relay',
-        type: 'individualSports'
-      }, {
-        name: 'Swimming 4x50m Freestyle Relay',
-        type: 'aquaticsSports'
-      }, {
-        name: 'Swimming 4x50m Medley Relay',
-        type: 'aquaticsSports'
-      }]
+          name: 'Athletics 4x50m Relay',
+          type: 'individualSports'
+        },
+        //  {
+        //   name: 'Athletics 4x100m Relay',
+        //   type: 'individualSports'
+        // },
+        {
+          name: 'Athletics Medley Relay',
+          type: 'individualSports'
+        }, {
+          name: 'Swimming 4x50m Freestyle Relay',
+          type: 'aquaticsSports'
+        }, {
+          name: 'Swimming 4x50m Medley Relay',
+          type: 'aquaticsSports'
+        }
+      ]
     }
   ]
   $scope.addSportsTest = function (data, sportType) {
