@@ -17,8 +17,7 @@
             <!-- <a class="fancybox.iframe" fancybox href="img/pdf/sfa_agegroup_event.pdf#toolbar=0">
                   demo click
               </a> -->
-            <p>The annual {{type}} registration fee for SFA Championship {{eventYear}}, {{sfaCity}} is Rs. 2,500 (Inclusive
-              of all applicable taxes)
+            <p>The annual {{type}} registration fee for SFA Championship {{eventYear}}, {{sfaCity}} is Rs. 2,500 (+ applicable taxes)
               <a ng-click="regisBenModal(type,sfaCity,year,eventYear)">
                 <strong>Click here</strong>
               </a> to view registered {{type}} benefits for SFA Championships City {{eventYear}}, {{sfaCity}}. </p>
@@ -389,7 +388,7 @@
                         <label class="col-sm-4 control-label">Landline :</label>
                         <div class="col-sm-8">
                           <input ng-model="formData.landline" name="regisLandline" autocomplete="landline" only-Digits type="text" class="form-control"
-                            minlength="11" maxlength="11" placeholder="Enter Landline Number">
+                            minlength="10" maxlength="11" placeholder="Enter Landline Number">
                           <div class="label label-danger pull-right" ng-show="schoolRegisterForm.regisLandline.$invalid && schoolRegisterForm.regisLandline.$touched">Please Enter Landline *</div>
                         </div>
                       </div>
@@ -541,7 +540,7 @@
                       <label class="col-sm-4 control-label"> Landline :</label>
                       <div class="col-sm-8">
                         <input ng-model="formData.schoolPrincipalLandline" autocomplete='address-level1' name="principalLandline" only-Digits type="text"
-                          class="form-control" minlength="11" maxlength="11" placeholder="Enter Principal Landline">
+                          class="form-control" minlength="10" maxlength="11" placeholder="Enter Principal Landline">
                         <!-- <div class="label label-danger pull-right" ng-show="schoolRegisterForm.principalLandline.$invalid && schoolRegisterForm.principalLandline.$touched">Please Enter Your Principal Landline *</div> -->
                       </div>
                     </div>
@@ -579,7 +578,7 @@
 
                 <!--DETAILS  -->
                 <div class="registerform-schooloptionaldetails" ng-repeat="x in formData.sportsDepartment track by $index">
-                  <div class="registerform-schoolclose" ng-click="removeSportForm($index)">
+                  <div class="registerform-schoolclose" ng-click="removeSportForm($index)" ng-if="$index != 1">
                     <img src="img/icon/cross.png" alt="crosslogo" class="">
                   </div>
                   <!-- DEPARTMENT NAME -->
@@ -780,7 +779,7 @@
 
               <!-- KINDILY NOTE -->
               <div class="termscondition-text">
-                A registration fee of 2,500 /- (inclusive of all applicable taxes) will be payable.*Kindly Note: This is an annual fee that
+                A registration fee of 2,500 /- (+ applicable taxes) will be payable.*Kindly Note: This is an annual fee that
                 enables your {{type}} to send any number of athletes who have registered for SFA Championship {{eventYear}},
                 {{sfaCity}} across all the above mentioned sports. This fee structure has been devised to encourage {{type}}s
                 and athletes to participate in multiple sports and to maintain a high quality of competition.
@@ -825,16 +824,14 @@
               <div>
                 <!-- CASH PAYMENT -->
                 <p ng-if="show==10">
-                  Cash/Cheque/Demand Draft: Selecting this option will enable you to pay the registration fee of Rs. 2,500 (Inclusive of all
-                  applicable taxes) by Cash/Cheque/Demand Draft in favour of ‘SFA Sporting Services Pvt Ltd’ which is to
+                  Cash/Cheque/Demand Draft: Selecting this option will enable you to pay the registration fee of Rs. 2,500 (+ 18% GST) by Cash/Cheque/Demand Draft in favour of ‘SFA Sporting Services Pvt Ltd’ which is to
                   be couriered/hand delivered to: 17A, Raviraj House, 6th Floor, Saraswati Road, Off Linking Road, Santacruz
                   (West) - 400054.
                 </p>
                 <!-- CASH PAYMENT END -->
                 <!-- ONLINE -->
                 <p ng-if="show==9">
-                  Online Payment: Selecting this option will enable you to pay the registration fee of Rs. 2,500 (Inclusive of all applicable
-                  taxes) via one of the following methods: 1) Credit Card 2) Debit Card 3) Net Banking
+                  Online Payment: Selecting this option will enable you to pay the registration fee of Rs. 2,500 (+ 18% GST) via one of the following methods: 1) Credit Card 2) Debit Card 3) Net Banking
                 </p>
                 <!-- ONLINE END -->
               </div>

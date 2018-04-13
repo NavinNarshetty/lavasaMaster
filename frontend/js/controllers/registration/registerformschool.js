@@ -612,10 +612,12 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
       }, {
         name: 'Tennis Doubles',
         type: 'racquetSports'
-      }, {
-        name: 'Tennis Mixed Doubles',
-        type: 'racquetSports'
-      }]
+      },
+      // {
+      //   name: 'Tennis Mixed Doubles',
+      //   type: 'racquetSports'
+      // }
+    ]
 
     },
     {
@@ -623,10 +625,12 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
       sportName: [{
         name: 'Athletics 4x50m Relay',
         type: 'individualSports'
-      }, {
-        name: 'Athletics 4x100m Relay',
-        type: 'individualSports'
-      }, {
+      },
+      // {
+      //   name: 'Athletics 4x100m Relay',
+      //   type: 'individualSports'
+      // },
+       {
         name: 'Athletics Medley Relay',
         type: 'individualSports'
       }, {

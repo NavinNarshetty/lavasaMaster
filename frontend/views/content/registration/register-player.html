@@ -122,10 +122,10 @@
                 <ui-select-choices refresh-delay="0" repeat="player as player in masterData | filter: $select.search" refresh="masterSearchSFA($select.search)">
                   <div>
                     <span class="text-capitalize" ng-bind-html="player.fullName"></span>
+                    <span>{{player}}</span>
                   </div>
                 </ui-select-choices>
               </ui-select>
-
               <!-- <input type="text" class="form-control" placeholder="SFA ID" ng-model="formData.keyword" ng-change="getMasterData(formData)"> -->
               <div class="input-group-btn">
                 <button class="btn m-clear" ng-click="generateOtp(searchSfaObj)" 7>Send OTP</button>
