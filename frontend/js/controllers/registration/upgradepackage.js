@@ -41,7 +41,8 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
     });
   }
   $scope.formData = {
-    package: ""
+    package: "",
+    registrationFee: ""
   }
   $scope.formPackage = {
     filter: {
@@ -109,35 +110,40 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
   $scope.packageUpgrade = function (formData) {
     $scope.formData.upgrade = true;
     // console.log("upgrade", formData);
-    if (formData.registrationFee != '') {
+    if (formData.registrationFee != "") {
+      $scope.disableUpgrade = true;
       if ($scope.formData.package != $scope.currentPackage._id) {
+        $scope.disableUpgrade = true;
         NavigationService.upgradeAccount(formData, function (data) {
           console.log("upgrade return", data);
           if (formData.registrationFee == "online PAYU") {
+            $scope.disableUpgrade = true;
+            console.log($scope.disableUpgrade, "payu");
             if (formData.athlete) {
               var id = formData.athlete;
               console.log("id**", id);
               var url = "payU/upgradeAthletePayment?id=" + id;
               window.location.href = adminUrl2 + url;
-              $scope.disableUpgrade = true;
             } else {
               var id = formData.school;
               console.log("id**", id);
               var url = "payU/upgradeSchoolPayment?id=" + id;
               window.location.href = adminUrl2 + url;
-              $scope.disableUpgrade = true;
             }
           } else if(formData.registrationFee == "cash") {
+            $scope.disableUpgrade = true;
             toastr.success("Package upgraded Successfully");
             $state.go("sports-selection");
-            $scope.disableUpgrade = true;
+            console.log($scope.disableUpgrade, "cash");
           }
         });
       } else {
-        toatr.warning("Cannot upgrade to the current package. Please select a different package to upgrade");
+        $scope.disableUpgrade = false;
+        toastr.warning("Cannot upgrade to the current package. Please select a different package to upgrade");
       }
     } else {
       toastr.error("Please select Mode of Payment");
+      $scope.disableUpgrade = false;
     }
   }
   // UPGRADE PACKAGE END

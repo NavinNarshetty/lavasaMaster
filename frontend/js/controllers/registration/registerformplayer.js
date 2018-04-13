@@ -49,11 +49,18 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
           $scope.dob = $filter('englishNumeralDateOne')($scope.formData.dob);
           $scope.formData.package = "";
           $scope.formData.registrationFee = "";
+          $scope.formData.ageProof = "";
           delete $scope.formData.accessToken;
           delete $scope.formData.createdAt;
           delete $scope.formData.receiptId;
           delete $scope.formData._id;
           delete $scope.formData._v;
+          if ($scope.formData.birthImage) {
+            delete $scope.formData.birthImage;
+          }
+          if ($scope.formData.photoImage) {
+            delete $scope.formData.photoImage;
+          }
         } else {
           console.log("Error in ath get", data);
         }

@@ -48,7 +48,25 @@ var model = {
       } else if (_.isEmpty(features)) {
         callback(null, []);
       } else {
-        callback(null, features);
+        var finalData = [];
+        _.each(features, function (featureList) {
+          _.each(featureList.featureDetails, function (featurePack) {
+            if (data._id === featurePack.packageName.toString()) {
+              if (featurePack.featureType === 'checkbox' && featurePack.featureCheck === true) {
+                featureList.featuresShow = featureList.featureName;
+              } else if (featurePack.featureType === 'text' && featurePack.featureText !== '') {
+                featureList.featuresShow = featureList.featureName + ' ' + '-' + ' ' + featurePack.featureText;
+              }
+            }
+            if (featureList.featuresShow) {
+              finalData.push({
+                featureName: featureList.featuresShow
+              });
+            }
+          });
+        });
+        finalData = _.uniqBy(finalData, 'featureName');
+        callback(null, finalData);
       }
     });
   }
