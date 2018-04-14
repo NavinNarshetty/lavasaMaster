@@ -27,5 +27,24 @@ module.exports = {
     realHost: "http://wohlig.io:1337",
     // realHost: "http://testhyderabadschool.sfanow.in",
     // realHost: "https://sfabackend.sfanow.in",
-    emails: ["chintan@wohlig.com", "raj@wohlig.com", "supriya.bhartiya@wohlig.com", "rahi.shah@sfanow.in", "shiva.singh@sfanow.in", "sunil.rathod@sfanow.in", "venkatesh.rathod@sfanow.in", "neeraj.jaiswal@sfanow.in", "suksha.khodake@wohlig.com", "pratik.patel@wohlig.com", "sagar.mulchandani@wohlig.com", "navin.narshetty@wohlig.com"]
+
+    accessLevels:[{
+        name:"Super Admin",
+        emails:['pratik.wohlig@gmail.com','rahi.shah@sfanow.in']
+    },{
+        name:"Admin",
+        emails:['pratik.wohlig@gmail.com',"chintan@wohlig.com", "raj@wohlig.com", "supriya.bhartiya@wohlig.com", "rahi.shah@sfanow.in", "shiva.singh@sfanow.in", "sunil.rathod@sfanow.in", "venkatesh.rathod@sfanow.in", "neeraj.jaiswal@sfanow.in", "suksha.khodake@wohlig.com", "pratik.patel@wohlig.com", "sagar.mulchandani@wohlig.com", "navin.narshetty@wohlig.com"]
+    },{
+        name:"Sports Ops",
+        emails:['rajas.joshi@sfanow.in','shamik.shah@sfanow.in','aditi.parikh@sfanow.in','faron.fernandes@sfanow.in']
+    },{
+        name:"Volunteers",
+        emails:['akshay.singh@sfanow.in','gargee.potdar@sfanow.in','rahi.shah@sfanow.in','sonia.chhabria@sfanow.in','venkatesh.rathod@sfanow.in']
+    },{
+        name:"Accounts",
+        emails:['accounts@sfanow.in','payments@sfanow.in']
+    }],
+    
+
+    
 };

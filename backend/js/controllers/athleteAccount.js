@@ -1,7 +1,7 @@
 myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, crudService, $state, toastr, $uibModal) {
   //Used to name the .html file
   $scope.template = TemplateService.changecontent("accounts/athlete/athleteaccount");
-  $scope.menutitle = NavigationService.makeactive("Athlete Account");
+  $scope.menutitle = NavigationService.makeactive("Athletes Account");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
 

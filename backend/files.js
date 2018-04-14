@@ -60,6 +60,7 @@ module.exports = [
 
     //Factories
     'backend/js/factories/navigation.js',
+    'backend/js/factories/login.js',
 
     // Contorllers
     'backend/js/controllers/controller.js',
@@ -84,5 +85,6 @@ module.exports = [
     'backend/js/controllers/athleteAccount.js',
     'backend/js/controllers/schoolAccount.js',
     'backend/js/controllers/aboutchampionship.js',
+    'backend/js/controllers/access.js'
 
 ];

@@ -643,7 +643,6 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
             'url': adminUrl2 + 'individualSport/saveInIndividual',
             'data': obj
         }).then(function (data) {
-            ref.isDisabled = false;
             errorService.errorCode(data, function (allData) {
                 console.log("allData", allData);
                 if (allData.value) {
@@ -651,6 +650,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
 
                     $state.go("individual-congrats");
                 } else {
+                    ref.isDisabled=false;
                     toastr.error(allData.message || allData.error, 'Error Message');
                 }
             });
@@ -664,7 +664,6 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
 
                 var arr = athelete.sport;
                 var weights = _.cloneDeep(athelete.event2Weights);
-                console.log("weights",weights);
                 if (athelete.event2Weights) {
                     var obj = _.find(weights.data, function (n) {
                         if (!n.weight) {
@@ -679,6 +678,45 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                     }
                 }
                 athelete.isValidSelection = (arr.length == 0 || ((!arr[0] || arr[0] && arr[0].data && arr[0].data[0].sport == null) && ((arr[1] && !arr[1].sport) || (arr[1] && arr[1].sport == null)))) ? false : ((arr.length >= 1 && arr[0] && arr[0].data && arr[0].data[0] && arr[0].data[0].sport != null) || ((arr.length >= 1 && (!arr[0] || arr[0] && arr[0].data[0].sport == null)) && (arr.length >= 1 && arr[1] && arr[1].sport != null)) || ((arr.length >= 1 && arr[0] && arr[0].data[0] && arr[0].data[0].sport != null) && (arr.length >= 1 && arr[1] && arr[1].sport != null))) ? true : false;
+              
+                var currentSelected = _.map(athelete.sport,function(n,k){
+                    if(k==0){
+                        if(n && n._id!="None"){
+                            return n;
+                        }
+                    }else if(k==1){
+                        if(n && n.sport){
+                            return n;
+                        }
+                    }
+                    
+                });
+                currentSelected = _.compact(currentSelected).length;
+                
+                var allowedAsPerPackage = (((athelete.package.eventCount - athelete.selectedEvent) - currentSelected) > 0) ? true : false;
+                if(athelete.package.eventCount - athelete.selectedEvent<2){
+                    if (allowedAsPerPackage) {
+                        if(whichSelectTag == 'E1'){
+                            athelete.disableEvent2 = false;
+                            athelete.informTitle2 = "Select Event";
+                        }else{
+                            athelete.disableEvent1 = false;
+                            athelete.informTitle1 = "Select Event";
+                        }
+                    }else{
+                        if(whichSelectTag == 'E1'){
+                            athelete.sport[1]=null;
+                            athelete.disableEvent2 = true;
+                            athelete.informTitle2 = "Upgrade Package To Add More";
+                            toastr.info("Sfa Id " + athelete.sfaId +" Can Only Participate In "+ athelete.selectLimit +" Event. As per Selected Package");                        
+                        }else{
+                            athelete.sport[0]=null;
+                            athelete.disableEvent1 = true;
+                            athelete.informTitle1 = "Upgrade Package To Add More";
+                            toastr.info("Sfa Id " + athelete.sfaId +" Can Only Participate In "+ athelete.selectLimit +" Event. As per Selected Package");
+                        }
+                    }
+                }
                 break;
 
             case "FA":

@@ -2095,7 +2095,7 @@ myApp.controller('IndividualTeamCtrl', function ($scope, TemplateService, Naviga
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tableindividualsport");
-    $scope.menutitle = NavigationService.makeactive("Individual  Sport");
+    $scope.menutitle = NavigationService.makeactive("Individual Sport");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
     $scope.items = [{
@@ -2276,7 +2276,7 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tableschool");
-    $scope.menutitle = NavigationService.makeactive("School");
+    $scope.menutitle = NavigationService.makeactive("View School");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
 
@@ -2449,7 +2449,7 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
     //athlete filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tableathlete");
-    $scope.menutitle = NavigationService.makeactive("Athlete");
+    $scope.menutitle = NavigationService.makeactive("View Athlete");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
     $scope.changeInput = function () {
@@ -3966,21 +3966,21 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         };
     })
 
-    .controller('LoginCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+    .controller('LoginCtrl', function ($scope, TemplateService,LoginService, $http, $timeout, $stateParams, $state, toastr) {
         //Used to name the .html file
-        $scope.menutitle = NavigationService.makeactive("Login");
+
         TemplateService.title = $scope.menutitle;
         $scope.template = TemplateService;
         $scope.currentHost = window.location.origin;
+        console.log("stateParams",$stateParams);
         if ($stateParams.id) {
-            console.log("Temp is here");
             if ($stateParams.id === "AccessNotAvailable") {
-                toastr.error("You do not have access for the Backend.");
+                $state.go("noaccess");
             } else {
                 console.log("Demo 1234");
-                NavigationService.parseAccessToken($stateParams.id, function () {
+                LoginService.parseAccessToken($stateParams.id,$stateParams.accessLevel, function () {
                     console.log("reached Herre");
-                    NavigationService.profile(function () {
+                    LoginService.profile(function () {
                         $state.go("dashboard");
                     }, function () {
                         $state.go("login");
@@ -3988,7 +3988,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
                 });
             }
         } else {
-            NavigationService.removeAccessToken();
+            LoginService.removeAccessToken();
         }
 
     })
@@ -4668,7 +4668,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
     .controller('MatchesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
         //Used to name the .html file
         $scope.template = TemplateService.changecontent("tablematch");
-        $scope.menutitle = NavigationService.makeactive("Matches List");
+        $scope.menutitle = NavigationService.makeactive("Matches");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
         $scope.formData = {};
@@ -6214,6 +6214,8 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
     $scope.menutitle = NavigationService.makeactive("Dashboard");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+   
+    
 
     // $state.reload();
 
@@ -6226,8 +6228,15 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
     }
 })
 
-    .controller('headerctrl', function ($scope, TemplateService, $uibModal) {
+    .controller('headerctrl', function ($scope, TemplateService, $uibModal,$rootScope,$location,$state) {
         $scope.template = TemplateService;
+               
+    
+       $rootScope.$watch(function () {return $location.path()}, function (newLocation, oldLocation) {
+            if($rootScope.actualLocation === newLocation) {
+                $state.go("login");
+            }
+        });
         $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
             $(window).scrollTop(0);
         });

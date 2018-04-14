@@ -422,15 +422,15 @@ myApp.controller('ConfirmFencingCtrl', function ($scope, TemplateService, Naviga
         $('.bs-searchbox input[type="text"]').attr('placeholder', 'Search Event');
     }, 200);
 
-    $timeout(function () {
-        $('.table-responsive').on('show.bs.dropdown', function () {
-            $('.table-responsive').css( "overflow", "inherit" );
-       });
+    // $timeout(function () {
+    //     $('.table-responsive').on('show.bs.dropdown', function () {
+    //         $('.table-responsive').css( "overflow", "inherit" );
+    //    });
        
-       $('.table-responsive').on('hide.bs.dropdown', function () {
-            $('.table-responsive').css( "overflow", "auto" );
-       })
-    }, 200);
+    //    $('.table-responsive').on('hide.bs.dropdown', function () {
+    //         $('.table-responsive').css( "overflow", "auto" );
+    //    })
+    // }, 200);
 
     $scope.selectEvent = function(ath,whichSelectTag,justClicked){
         if($scope.selectLimit==1){

@@ -1,11 +1,13 @@
 module.exports = _.cloneDeep(require("sails-wohlig-controller"));
 var controller = {
+    
     loginFacebook: function (req, res) {
         passport.authenticate('facebook', {
             scope: ['public_profile', 'user_friends', 'email'],
             failureRedirect: '/'
         }, res.socialLogin)(req, res);
     },
+
     loginGoogle: function (req, res) {
         if (req.query.returnUrl) {
             req.session.returnUrl = req.query.returnUrl;
@@ -18,6 +20,7 @@ var controller = {
             failureRedirect: '/'
         }, res.socialLogin)(req, res);
     },
+
     profile: function (req, res) {
         if (req.body && req.body.accessToken) {
             User.profile(req.body, res.callback);
@@ -25,6 +28,7 @@ var controller = {
             res.callback("Please provide Valid AccessToken", null);
         }
     },
+
     pdf: function (req, res) {
 
         var html = fs.readFileSync('./views/pdf/demo.ejs', 'utf8');
@@ -44,6 +48,21 @@ var controller = {
         pdf.create(html).toStream(function (err, stream) {
             stream.pipe(writestream);
         });
+    },
+
+    getAllUsers:function(req, res){
+        User.getAllUsers(res.callback);
+    },
+
+    getOneUser:function(req, res){
+        if(req.body && req.body._id){
+            User.getOneUser(req.body,res.callback);
+        }else{
+            res.json({
+                value:false,
+                data:"Invalid Data"
+            })
+        }
     },
     // backupDatabase: function (req, res) {
     //     res.connection.setTimeout(200000000);
