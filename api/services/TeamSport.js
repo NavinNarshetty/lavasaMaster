@@ -465,6 +465,9 @@ var model = {
                         emailData.ddFavour = data.property.ddFavour;
                         emailData.email = found.email;
                         emailData.city = data.property.sfaCity;
+                        emailData.playerUrl = data.property.playerUrl;
+                        emailData.ruleUrl = data.property.ruleUrl;
+                        emailData.schoolUrl = data.property.schoolUrl;
                         if (data.property.sfaCity == 'Mumbai') {
                             emailData.urls = "https://mumbai.sfanow.in";
                         } else if (data.property.sfaCity == 'Hyderabad') {
@@ -479,6 +482,7 @@ var model = {
                         emailData.teamId = total.teamSport.teamId;
                         emailData.students = total.studentTeam;
                         emailData.endDate = data.property.endDate;
+                        emailData.flag = emailData.type;
                         emailData.linkSportName = data.linkSportName;
                         if (data.linkSportName != 'Athletics 4x50m Relay' && data.linkSportName != 'athletics 4x50m relay' && data.linkSportName != 'Athletics 4x100m Relay' && data.linkSportName != 'athletics 4 x100m relay' && data.linkSportName != 'Athletics Medley Relay' && data.linkSportName != 'athletics medley relay' && data.linkSportName != 'Badminton Doubles' && data.linkSportName != 'badminton doubles' && data.linkSportName != 'Table Tennis Doubles' && data.linkSportName != 'table tennis doubles' && data.linkSportName != 'Tennis Mixed Doubles' && data.linkSportName != 'tennis mixed doubles' && data.linkSportName != 'Tennis Doubles' && data.linkSportName != 'tennis doubles' && data.linkSportName != 'KarateTeam Kumite' && data.linkSportName != 'karate team kumite' && data.linkSportName != 'Swimming 4x50m Medley Relay' && data.linkSportName != 'swimming 4x50m medley relay' && data.linkSportName != 'Swimming 4x50m Freestyle Relay' && data.linkSportName != 'swimming 4x50mfreestyle relay') {
                             emailData.sportNameLink = data.linkSportName;
@@ -705,6 +709,9 @@ var model = {
                     emailData.teamId = total.teamSport.teamId;
                     emailData.students = total.studentTeam;
                     emailData.endDate = data.property.endDate;
+                    emailData.playerUrl = data.property.playerUrl;
+                    emailData.ruleUrl = data.property.ruleUrl;
+                    emailData.schoolUrl = data.property.schoolUrl;
                     emailData.linkSportName = data.linkSportName;
                     if (data.linkSportName != 'Athletics 4x50m Relay' && data.linkSportName != 'athletics 4x50m relay' && data.linkSportName != 'Athletics 4x100m Relay' && data.linkSportName != 'athletics 4 x100m relay' && data.linkSportName != 'Athletics Medley Relay' && data.linkSportName != 'athletics medley relay' && data.linkSportName != 'Badminton Doubles' && data.linkSportName != 'badminton doubles' && data.linkSportName != 'Table Tennis Doubles' && data.linkSportName != 'table tennis doubles' && data.linkSportName != 'Tennis Mixed Doubles' && data.linkSportName != 'tennis mixed doubles' && data.linkSportName != 'Tennis Doubles' && data.linkSportName != 'tennis doubles' && data.linkSportName != 'KarateTeam Kumite' && data.linkSportName != 'karate team kumite' && data.linkSportName != 'Swimming 4x50m Medley Relay' && data.linkSportName != 'swimming 4x50m medley relay' && data.linkSportName != 'Swimming 4x50m Freestyle Relay' && data.linkSportName != 'swimming 4x50mfreestyle relay') {
                         emailData.sportNameLink = data.linkSportName;
@@ -1979,6 +1986,9 @@ var model = {
                             emailData.endDate = data.property.endDate;
                             emailData.teamId = total.teamSport.teamId;
                             emailData.students = total.studentTeam;
+                            emailData.playerUrl = data.property.playerUrl;
+                            emailData.ruleUrl = data.property.ruleUrl;
+                            emailData.schoolUrl = data.property.schoolUrl;
                             emailData.linkSportName = data.linkSportName;
                             if (data.linkSportName != 'Athletics 4x50m Relay' && data.linkSportName != 'athletics 4x50m relay' && data.linkSportName != 'Athletics 4x100m Relay' && data.linkSportName != 'athletics 4 x100m relay' && data.linkSportName != 'Athletics Medley Relay' && data.linkSportName != 'athletics medley relay' && data.linkSportName != 'Badminton Doubles' && data.linkSportName != 'badminton doubles' && data.linkSportName != 'Table Tennis Doubles' && data.linkSportName != 'table tennis doubles' && data.linkSportName != 'Tennis Mixed Doubles' && data.linkSportName != 'tennis mixed doubles' && data.linkSportName != 'Tennis Doubles' && data.linkSportName != 'tennis doubles' && data.linkSportName != 'KarateTeam Kumite' && data.linkSportName != 'karate team kumite' && data.linkSportName != 'Swimming 4x50m Medley Relay' && data.linkSportName != 'swimming 4x50m medley relay' && data.linkSportName != 'Swimming 4x50m Freestyle Relay' && data.linkSportName != 'swimming 4x50mfreestyle relay') {
                                 emailData.sportNameLink = data.linkSportName;
@@ -2194,6 +2204,9 @@ var model = {
                                     emailData.ddFavour = data.property.ddFavour;
                                     emailData.email = n.email;
                                     emailData.name = n.firstName;
+                                    emailData.playerUrl = data.property.playerUrl;
+                                    emailData.ruleUrl = data.property.ruleUrl;
+                                    emailData.schoolUrl = data.property.schoolUrl;
                                     emailData.city = data.property.sfaCity;
                                     if (data.property.sfaCity == 'Mumbai') {
                                         emailData.urls = "https://mumbai.sfanow.in";
@@ -2275,6 +2288,9 @@ var model = {
                                     emailData.ddFavour = data.property.ddFavour;
                                     emailData.email = n.email;
                                     emailData.name = n.firstName;
+                                    emailData.playerUrl = data.property.playerUrl;
+                                    emailData.ruleUrl = data.property.ruleUrl;
+                                    emailData.schoolUrl = data.property.schoolUrl;
                                     emailData.city = data.property.sfaCity;
                                     if (data.property.sfaCity == 'Mumbai') {
                                         emailData.urls = "https://mumbai.sfanow.in";
@@ -2367,6 +2383,9 @@ var model = {
                             emailData.cityAddress = data.property.cityAddress;
                             emailData.ddFavour = data.property.ddFavour;
                             emailData.eventYear = data.property.eventYear;
+                            emailData.playerUrl = data.property.playerUrl;
+                            emailData.ruleUrl = data.property.ruleUrl;
+                            emailData.schoolUrl = data.property.schoolUrl;
                             emailData.email = n.email;
                             emailData.name = n.name;
                             emailData.city = n.city;
