@@ -2307,6 +2307,21 @@ var model = {
                                     emailData.teamId = total.teamSport.teamId;
                                     emailData.students = total.studentTeam;
                                     emailData.linkSportName = data.linkSportName;
+                                    if (data.linkSportName != 'Athletics 4x50m Relay' && data.linkSportName != 'athletics 4x50m relay' && data.linkSportName != 'Athletics 4x100m Relay' && data.linkSportName != 'athletics 4 x100m relay' && data.linkSportName != 'Athletics Medley Relay' && data.linkSportName != 'athletics medley relay' && data.linkSportName != 'Badminton Doubles' && data.linkSportName != 'badminton doubles' && data.linkSportName != 'Table Tennis Doubles' && data.linkSportName != 'table tennis doubles' && data.linkSportName != 'Tennis Mixed Doubles' && data.linkSportName != 'tennis mixed doubles' && data.linkSportName != 'Tennis Doubles' && data.linkSportName != 'tennis doubles' && data.linkSportName != 'KarateTeam Kumite' && data.linkSportName != 'karate team kumite' && data.linkSportName != 'Swimming 4x50m Medley Relay' && data.linkSportName != 'swimming 4x50m medley relay' && data.linkSportName != 'Swimming 4x50m Freestyle Relay' && data.linkSportName != 'swimming 4x50mfreestyle relay') {
+                                        emailData.sportNameLink = data.linkSportName;
+                                    } else if (data.linkSportName == 'Athletics 4x50m Relay' || data.linkSportName == 'athletics 4x50m relay' || data.linkSportName == 'Athletics 4x100m Relay' || data.linkSportName == 'athletics 4x100m relay' || data.linkSportName == 'Athletics Medley Relay' || data.linkSportName == 'athletics medley relay') {
+                                        emailData.sportNameLink = 'Athletics';
+                                    } else if (data.linkSportName == 'Badminton Doubles' || data.linkSportName == 'badminton doubles') {
+                                        emailData.sportNameLink = 'Badminton';
+                                    } else if (data.linkSportName == 'Table Tennis Doubles' || data.linkSportName == 'table tennis doubles') {
+                                        emailData.sportNameLink = 'Table Tennis';
+                                    } else if (data.linkSportName == 'Tennis Mixed Doubles' || data.linkSportName == 'tennis mixed doubles' || data.linkSportName == 'Tennis Doubles' || data.linkSportName == 'tennis doubles') {
+                                        emailData.sportNameLink = 'Tennis';
+                                    } else if (data.linkSportName == 'Karate Team Kumite' || data.linkSportName == 'karate team kumite') {
+                                        emailData.sportNameLink = 'Karate';
+                                    } else if (data.linkSportName == 'Swimming 4x50m Medley Relay' || data.linkSportName == 'swimming 4x50m medley relay' || data.linkSportName == 'Swimming 4x50m Freestyle Relay' || data.linkSportName == 'swimming 4x50m freestyle relay') {
+                                        emailData.sportNameLink = 'Swimming';
+                                    }
                                     emailData.subject = "SFA: Successful Team Sport Registered";
                                     // callback(null, emailData);
                                     Config.email(emailData, function (err, emailRespo) {
