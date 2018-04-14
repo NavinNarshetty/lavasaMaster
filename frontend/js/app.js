@@ -547,8 +547,8 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'UpgradePackageCtrl'
         })
-    // NEW REGISTRATION PAGES
-    ;
+        // NEW REGISTRATION PAGES
+        ;
     // if (window.location.origin != "http://testmumbaischool.sfanow.in") {
     if (window.location.origin == "http://mumbaischool.sfanow.in") {
         $urlRouterProvider.otherwise("/championship");

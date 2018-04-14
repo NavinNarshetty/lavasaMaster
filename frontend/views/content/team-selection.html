@@ -64,12 +64,12 @@
                                             <label for="inputEmail3" class="col-md-2 col-sm-3 col-xs-12 para2" ng-if="sportTitle!='Tennis Mixed Doubles' &&!isEdit">Select Gender</label>
                                             <div class="col-md-10 col-sm-9 col-xs-12" ng-if="!isEdit">
                                                 <input type="radio" ng-model="formData.gender" id="radio04" name="radioMale" value="male" ng-if="sportTitle!='Tennis Mixed Doubles'"
-                                                    ng-checked="selectService.gender=='male'" required ng-change="sortGenderWise(formData.gender);selectService.gender='male';selectService.ageGroup=''"
+                                                    ng-checked="selectService.gender=='male'" required ng-change="sortGenderWise(formData.gender);selectService.gender='male';getAthletePerSchoolObj.age ='' ;selectService.ageGroup=''"
                                                     ng-disabled="isEdit&&selectService.gender=='female'">
                                                 <label for="radio04" class="padd-lr sf-list" ng-if="sportTitle!='Tennis Mixed Doubles'"><span></span>Male</label>
 
                                                 <input type="radio" ng-model="formData.gender" id="radio05" name="radioFemale" value="female" ng-if="sportTitle!='Tennis Mixed Doubles'"
-                                                    required ng-checked="selectService.gender=='female'" ng-change="sortGenderWise(formData.gender);selectService.gender='female';selectService.ageGroup=''"
+                                                    required ng-checked="selectService.gender=='female'" ng-change="sortGenderWise(formData.gender);selectService.gender='female'; getAthletePerSchoolObj.age ='';selectService.ageGroup=''"
                                                     ng-disabled="isEdit&&selectService.gender=='male'">
                                                 <label for="radio05" class="padd-lr sf-list" ng-if="sportTitle!='Tennis Mixed Doubles'"><span></span>Female</label>
 
@@ -176,8 +176,8 @@
                                                 </div>
                                             </div>
                                         </form>
-                                      
-                                        
+
+
 
                                         <form class="visible-xs">
                                             <div class="form-group">
@@ -228,7 +228,7 @@
                                                                     <h4 class="">Max Sport Registration Reached</h4>
                                                                 </div>
                                                                 <div class="selectedPlayer" ng-if="checked.maxReached?false:checked.onlyTeamSports">
-                                                                        <h4 class="">Can Participate Only For One Team Sport</h4>
+                                                                    <h4 class="">Can Participate Only For One Team Sport</h4>
                                                                 </div>
                                                                 <div class="selectedPlayer" ng-if="checked.disableGender === true && checked.gender=== 'male' && setDisabled === false">
                                                                     <h4 class="">Male Player is already Selected</h4>
@@ -331,7 +331,7 @@
                                     <!--<button class="btn btn-default width-86 sub-mit" type="button" ui-sref="confirmteam" ng-disabled="disabledNextBtn">Next</button>-->
                                     <button class="btn btn-default width-86 sub-mit" type="button" ui-sref="sports-selection">Back</button>
 
-                                    <button class="btn btn-default width-86 sub-mit" type="button" ng-click="selectService.goNext(basicSportDetails,formData.gender,formData.ageGroup,selectService.team.length);"
+                                    <button class="btn btn-default width-86 sub-mit" type="button" ng-click="goNext(basicSportDetails,formData.gender,formData.ageGroup,selectService.team.length);"
                                         ng-disabled="selectService.team.length < minPlayer || selectService.team.length > maxPlayer">Next</button>
                                     <!--<button class="btn btn-default width-86 sub-mit" type="button" ng-click="selectService.goNext('confirmteam',formData.gender,formData.ageGroup);"
                                         ng-disabled="selectService.team.length < minPlayer || selectService.team.length > maxPlayer"

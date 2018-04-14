@@ -26,7 +26,7 @@ var model = {
                     callback(err, null);
                 } else {
                     if (_.isEmpty(complete)) {
-                        callback(null, "Data not found");
+                        callback("Data not found", null);
                     } else {
                         callback(null, complete);
                     }
@@ -40,7 +40,7 @@ var model = {
                     callback(err, null);
                 } else {
                     if (_.isEmpty(complete)) {
-                        callback(null, "Data not found");
+                        callback("Data not found", null);
                     } else {
                         callback(null, complete);
                     }
@@ -60,12 +60,15 @@ var model = {
                     sfaID: data.sfaid,
                     status: "Verified"
                 }).exec(function (err, found) {
-                    console.log("err,found",err,found);
+                    console.log("err,found", err, found);
                     if (err) {
                         console.log(err);
                         callback(err, null);
+                    } else if (_.isEmpty(found)) {
+                        data.tokenExist = true;
+                        data.notExist = true;
+                        callback(null, data);
                     } else if (found) {
-                        console.log("found", found);
                         if (_.isEmpty(found.accessToken) || found.accessToken == " ") {
                             data.tokenExist = false;
                             callback(null, data);
@@ -74,8 +77,8 @@ var model = {
                             callback(null, data);
                         }
 
-                    }else{
-                        callback("Invalid SfaId",null);
+                    } else {
+                        callback("Invalid SfaId", null);
                     }
                 });
             },
@@ -108,24 +111,33 @@ var model = {
             },
             function (data3, callback) {
                 console.log(data);
-                Registration.findOne({
-                    sfaID: data.sfaid,
-                    status: "Verified",
-                    password: data.password
-                }).exec(function (err, found) {
-                    if (err) {
-                        callback(err, null);
-                    } else if (_.isEmpty(found)) {
-                        callback("Incorrect Login Details", null);
-                    } else {
-                        console.log("found", found);
-                        callback(null, found);
-                    }
-                });
+                if (!data3.notExist) {
+                    Registration.findOne({
+                        sfaID: data.sfaid,
+                        status: "Verified",
+                        password: data.password
+                    }).exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            callback("Incorrect Login Details", null);
+                        } else {
+                            console.log("found", found);
+                            callback(null, found);
+                        }
+                    });
+                } else {
+                    var data4 = 'Not Found';
+                    callback(null, data4);
+                }
             }
         ], function (err, found) {
             if (found) {
-                callback(null, found);
+                if (found == 'Not Found') {
+                    callback(null, []);
+                } else {
+                    callback(null, found);
+                }
             } else {
                 callback("Incorrect Login Details", null);
             }
@@ -134,7 +146,6 @@ var model = {
     },
 
     AthleteToken: function (data, callback) {
-
         async.waterfall([
             function (callback) {
                 Athelete.findOne({
@@ -144,8 +155,11 @@ var model = {
                     if (err) {
                         console.log(err);
                         callback(err, null);
+                    } else if (_.isEmpty(found)) {
+                        data.tokenExist = true;
+                        data.notExist = true;
+                        callback(null, data);
                     } else if (found) {
-                        console.log("found", found);
                         if (_.isEmpty(found.accessToken) || found.accessToken == " ") {
                             data.tokenExist = false;
                             callback(null, data);
@@ -153,7 +167,6 @@ var model = {
                             data.tokenExist = true;
                             callback(null, data);
                         }
-
                     }
                 });
             },
@@ -186,64 +199,72 @@ var model = {
                 }
             },
             function (data3, callback) {
-                Athelete.aggregate([{
-                    // Stage 1
+                if (!data3.notExist) {
+                    Athelete.aggregate([{
+                        // Stage 1
 
-                    $lookup: {
-                        "from": "schools",
-                        "localField": "school",
-                        "foreignField": "_id",
-                        "as": "school"
-                    }
-                },
-
-                // Stage 2
-                {
-                    $unwind: {
-                        path: "$school",
-                        preserveNullAndEmptyArrays: true // optional
-                    }
-                },
-                // Stage 3
-                {
-                    $lookup: {
-                        "from": "packages",
-                        "localField": "package",
-                        "foreignField": "_id",
-                        "as": "package"
-                    }
-                },
-
-                // Stage 4
-                {
-                    $unwind: {
-                        path: "$package",
-                        preserveNullAndEmptyArrays: true // optional
-                    }
-                },
-                {
-                    $match: {
-                        "sfaId": data.sfaid,
-                        "status": "Verified",
-                        "password": data.password
-                    }
-                }
-                ],
-                    function (err, found) {
-                        console.log('found', found);
-                        if (err) {
-                            callback(err, null);
-                        } else if (_.isEmpty(found)) {
-                            callback("Incorrect Login Details", null);
-                        } else {
-                            console.log("found", found);
-                            callback(null, found[0]);
+                        $lookup: {
+                            "from": "schools",
+                            "localField": "school",
+                            "foreignField": "_id",
+                            "as": "school"
                         }
-                    });
+                    },
+
+                    // Stage 2
+                    {
+                        $unwind: {
+                            path: "$school",
+                            preserveNullAndEmptyArrays: true // optional
+                        }
+                    },
+                    // Stage 3
+                    {
+                        $lookup: {
+                            "from": "packages",
+                            "localField": "package",
+                            "foreignField": "_id",
+                            "as": "package"
+                        }
+                    },
+
+                    // Stage 4
+                    {
+                        $unwind: {
+                            path: "$package",
+                            preserveNullAndEmptyArrays: true // optional
+                        }
+                    },
+                    {
+                        $match: {
+                            "sfaId": data.sfaid,
+                            "status": "Verified",
+                            "password": data.password
+                        }
+                    }
+                    ],
+                        function (err, found) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (_.isEmpty(found)) {
+                                callback("Incorrect Login Details", null);
+                            } else {
+                                // console.log("found", found);
+                                callback(null, found[0]);
+                            }
+                        });
+                } else {
+                    var data4 = 'Not Found';
+                    callback(null, data4);
+                }
             }
         ], function (err, found) {
             if (found) {
-                callback(null, found);
+                if (found == 'Not Found') {
+                    callback(null, []);
+                } else {
+                    callback(null, found);
+                }
             } else {
                 callback("Incorrect Login Details", null);
             }
@@ -489,7 +510,7 @@ var model = {
                             emailObj.infoNo = data.property.infoNo;
                             emailObj.cityAddress = data.property.cityAddress;
                             emailObj.ddFavour = data.property.ddFavour;
-                            Config.email(emailObj,callback);
+                            Config.email(emailObj, callback);
                             // callback(null, "Next");
                         },
 
@@ -567,7 +588,7 @@ var model = {
                                 "filename": "emailOtp.ejs",
                                 "subject": "SFA: Your Email OTP (One time Password) for SFA registration is"
                             }
-                            
+
                             emailObj.sfaid = found.sfaID;
                             emailObj.email = found.email;
                             emailObj.city = data.property.sfaCity;
@@ -576,7 +597,7 @@ var model = {
                             emailObj.infoNo = data.property.infoNo;
                             emailObj.cityAddress = data.property.cityAddress;
                             emailObj.ddFavour = data.property.ddFavour;
-                            Config.email(emailObj,callback);
+                            Config.email(emailObj, callback);
                             // callback(null, "Next");
                         },
 

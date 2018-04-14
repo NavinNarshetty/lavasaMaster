@@ -122,7 +122,7 @@
                 <ui-select-choices refresh-delay="0" repeat="player as player in masterData | filter: $select.search" refresh="masterSearchSFA($select.search)">
                   <div>
                     <span class="text-capitalize" ng-bind-html="player.fullName"></span>
-                    <span>{{player}}</span>
+
                   </div>
                 </ui-select-choices>
               </ui-select>
@@ -187,10 +187,10 @@
               </li>
             </ul>
           </div>
-          <div class="register-step-error">
+          <!-- <div class="register-step-error">
             <p class="m-clear">You have not completed the Registration & Verification process.</p>
             <p class="m-clear">Kindly complete Step 1 and then proceed to Sports Registration.</p>
-          </div>
+          </div> -->
         </div>
         <!-- STEP 2 FORM END -->
       </div>

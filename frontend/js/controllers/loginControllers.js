@@ -212,11 +212,11 @@ myApp.controller('ChangePasswordCtrl', function ($scope, TemplateService, Naviga
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;
     });
-    var data={};
-    if($.jStorage.get("userDetails") === null){
+    var data = {};
+    if ($.jStorage.get("userDetails") === null) {
         if ($.jStorage.get("userType") == "school") {
             data.type = "school";
-        }else{
+        } else {
             data.type = "player";
         }
         $state.go('registerplayer', {
@@ -250,8 +250,12 @@ myApp.controller('ChangePasswordCtrl', function ($scope, TemplateService, Naviga
                     if ($.jStorage.get("userType") !== null) {
                         if ($.jStorage.get("userType") == "school") {
                             formChange.schoolToken = $.jStorage.get("userDetails").accessToken;
+                            formChange.type = 'school';
+                            formChange.sfaId = $.jStorage.get("userDetails").sfaID;
                         } else {
                             formChange.athleteToken = $.jStorage.get("userDetails").accessToken;
+                            formChange.type = 'athlete';
+                            formChange.sfaId = $.jStorage.get("userDetails").sfaId;
                         }
                         NavigationService.changePassword(formChange, function (data) {
                             errorService.errorCode(data, function (allData) {

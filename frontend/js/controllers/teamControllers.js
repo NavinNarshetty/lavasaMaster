@@ -556,6 +556,17 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
 
 
     //END OF PUSH TO TEAM
+    //START OF GO NEXT FUNCTION
+    $scope.goNext = function (basicSportDetails, gender, ageGroup, teamlength) {
+        if ($scope.getAthletePerSchoolObj.age) {
+            $scope.selectService.goNext(basicSportDetails, gender, ageGroup, teamlength);
+        } else {
+            toastr.error('Please select age group', 'Error Message');
+        }
+
+    };
+
+    //END OF GO NEXT FUNCTION
     // function
     $scope.deselectCheckbx = function () {
         $scope.setDisabled = false;
@@ -832,12 +843,12 @@ myApp.controller('TeamCongratsCtrl', function ($scope, TemplateService, toastr, 
             type: data.type
         });
     } else {
-        $timeout(function(){
-            if($.jStorage.get("userDetails")){
+        $timeout(function () {
+            if ($.jStorage.get("userDetails")) {
                 $scope.userDetails = $.jStorage.get("userDetails");
-                $scope.hideChangePassword=true;
+                $scope.hideChangePassword = true;
             }
-        },500);
+        }, 500);
     }
 
     $scope.logoutCandidate = function () {

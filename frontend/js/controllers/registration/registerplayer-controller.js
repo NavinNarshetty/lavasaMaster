@@ -174,7 +174,12 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
             toastr.success('Successfully Logged In.', 'Login Message');
             $state.go('sports-selection');
           } else {
-            toastr.error('Please Enter Valid SFA Id And Password.', 'Login Message');
+            if (allData.error == "Data not found") {
+              toastr.error('You have not completed the Registration & Verification process.Kindly complete Step 1 and then proceed to Sports Registration', 'Login Message');
+            } else {
+              toastr.error('Please Enter Valid SFA Id And Password.', 'Login Message');
+            }
+
           }
         } else {
           toastr.error(allData.message, 'Error Message');
