@@ -84,7 +84,7 @@
                     <h4 ng-if="isCollege == true && sport.info[0].createdBy != 'School'">Created By: {{sport.info[0].createdBy}}</h4>
 
                   </div>
-                  <div class="pull-right" style="margin-right: 15px;" ng-if="detail.userType === 'athlete' && sport.info[0].createdBy  == userType"
+                  <div class="pull-right" style="margin-right: 15px;" ng-if="detail.userType === 'athlete' && sport.info[0].createdBy  == userType && !hideDeleteEdit"
                     ng-click="deletePlayer(sport.info[0]);">
                     <a class="btn btn-default">Delete</a>
                   </div>
@@ -110,7 +110,7 @@
                         <th ng-if="sport.info[0].weight">
                           <div class="sportdetail-th">Weight</div>
                         </th>
-                        <th ng-if="detail.userType === 'school' && sport.info[0].createdBy == userType">
+                        <th ng-if="detail.userType === 'school' && sport.info[0].createdBy == userType &&!hideDeleteEdit">
                           <div class="sportdetail-th ">Action</div>
                         </th>
                       </thead>
@@ -132,7 +132,7 @@
                           <td ng-if="athlete.weight ">
                             <div class="sportdetail-td ">{{athlete.weight}}</div>
                           </td>
-                          <td ng-if="detail.userType==='school' && sport.info[0].createdBy==userType ">
+                          <td ng-if="detail.userType==='school' && sport.info[0].createdBy==userType && !hideDeleteEdit ">
                             <div class=" " style="margin-right: 15px; " ng-click="deletePlayer(athlete)">
                               <a class=" "> <i class="fa fa-trash "></i></a>
                             </div>

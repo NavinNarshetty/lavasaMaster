@@ -67,7 +67,7 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
                             _.each(tempObj.tempArr, function (sport) {
                                 // console.log("athlete", $scope.detail);
                                 if ($scope.detail.userType === "athlete" && !$scope.detail.mixAccess && $.jStorage.get("IsColg") === 'school' && (
-                                        sport.name === 'Water Polo' || sport.name === 'Athletics 4x100m Relay' || sport.name === 'Athletics 4x50m Relay' || sport.name === 'Athletics Medley Relay')) {
+                                    sport.name === 'Water Polo' || sport.name === 'Athletics 4x100m Relay' || sport.name === 'Athletics 4x50m Relay' || sport.name === 'Athletics Medley Relay')) {
                                     sport.isVisibleSport = true;
                                 } else {
                                     sport.isVisibleSport = false;
@@ -648,15 +648,25 @@ myApp.controller('SportIndividualCtrl', function ($scope, TemplateService, toast
     };
 
     // function for printing..
+    $scope.hideDeleteEdit = false;
     $scope.printFunction = function (printSectionId) {
-        var innerContents = document.getElementById(printSectionId).innerHTML;
-        // var popupWinindow = window.open('', '_blank', 'width=600,height=700,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
-        // popupWinindow.document.open();
-        var popupWinindow = window.open('width=600,height=700,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
-        // popupWinindow.document.open();
-        popupWinindow.document.write('<html><head><link rel="stylesheet" type="text/css" href="../../css/main.css" /></head><body onload="window.print()">' + innerContents + '</html>');
-        popupWinindow.document.close();
+        $scope.hideDeleteEdit = true;
+        $timeout(function () {
+            var innerContents = document.getElementById(printSectionId).innerHTML;
+            // var popupWinindow = window.open('', '_blank', 'width=600,height=700,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
+            // popupWinindow.document.open();
+            var popupWinindow = window.open('width=600,height=700,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
+            // popupWinindow.document.open();
+            popupWinindow.document.write('<html><head><link rel="stylesheet" type="text/css" href="../../css/main.css" /></head><body onload="window.print()">' + innerContents + '</html>');
+            popupWinindow.document.close();
+        }, 1000);
+        $timeout(function () {
+            $scope.hideDeleteEdit = false;
+        }, 1000);
+
     };
+
+
 });
 
 myApp.controller('SportTeamCtrl', function ($scope, TemplateService, toastr, NavigationService, $timeout, $state, $stateParams, loginService, errorService, selectService, configService) {
@@ -748,14 +758,24 @@ myApp.controller('SportTeamCtrl', function ($scope, TemplateService, toastr, Nav
 
 
     // function for printing..
+    $scope.hideDeleteEdit = false;
     $scope.printFunction = function (printSectionId) {
-        var innerContents = document.getElementById(printSectionId).innerHTML;
-        // var popupWinindow = window.open('', '_blank', 'width=600,height=700,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
-        // popupWinindow.document.open();
-        var popupWinindow = window.open('width=600,height=700,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
-        // popupWinindow.document.open();
-        popupWinindow.document.write('<html><head><link rel="stylesheet" type="text/css" href="../../css/main.css" /></head><body onload="window.print()">' + innerContents + '</html>');
-        popupWinindow.document.close();
+        $scope.hideDeleteEdit = true;
+        $timeout(function () {
+            var innerContents = document.getElementById(printSectionId).innerHTML;
+            // var popupWinindow = window.open('', '_blank', 'width=600,height=700,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
+            // popupWinindow.document.open();
+            var popupWinindow = window.open('width=600,height=700,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
+            // popupWinindow.document.open();
+            popupWinindow.document.write('<html><head><link rel="stylesheet" type="text/css" href="../../css/main.css" /></head><body onload="window.print()">' + innerContents + '</html>');
+            popupWinindow.document.close();
+        }, 1000);
+
+        $timeout(function () {
+            $scope.hideDeleteEdit = false;
+        }, 1000);
+
+
     };
 
 
