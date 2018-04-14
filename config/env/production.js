@@ -52,7 +52,7 @@ module.exports = {
     name: "Admin",
     emails: ["chintan@wohlig.com", "supriya.bhartiya@wohlig.com", "shiva.singh@sfanow.in", "suksha.khodake@wohlig.com", "pratik.patel@wohlig.com", "sagar.mulchandani@wohlig.com", "navin.narshetty@wohlig.com"]
   }, {
-    name: "Sports Ops"
+    name: "Sports Ops",
     emails: ['rajas.joshi@sfanow.in', 'shamik.shah@sfanow.in', 'aditi.parikh@sfanow.in', 'faron.fernandes@sfanow.in']
   }, {
     name: "Volunteers",
