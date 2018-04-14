@@ -708,12 +708,12 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                             athelete.sport[1]=null;
                             athelete.disableEvent2 = true;
                             athelete.informTitle2 = "Upgrade Package To Add More";
-                            toastr.info("Sfa Id " + athelete.sfaId +" Can Only Participate In "+ athelete.selectLimit +" Event. As per Selected Package");                        
+                            toastr.info("Sfa Id " + athelete.sfaId +" Can Only Participate In "+ (athelete.package.eventCount - athelete.selectedEvent) +" Event. As per Selected Package");                        
                         }else{
                             athelete.sport[0]=null;
                             athelete.disableEvent1 = true;
                             athelete.informTitle1 = "Upgrade Package To Add More";
-                            toastr.info("Sfa Id " + athelete.sfaId +" Can Only Participate In "+ athelete.selectLimit +" Event. As per Selected Package");
+                            toastr.info("Sfa Id " + athelete.sfaId +" Can Only Participate In "+ (athelete.package.eventCount - athelete.selectedEvent) +" Event. As per Selected Package");
                         }
                     }
                 }
