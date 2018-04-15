@@ -5,7 +5,7 @@ var uploadurl = imgurl;
 
 
 
-myApp.factory('NavigationService', function ($http) {
+myApp.factory('NavigationService', function ($http, $state) {
     console.log("----------");
     var navigation = [];
     var data;
@@ -387,7 +387,7 @@ myApp.factory('NavigationService', function ($http) {
         classis: "",
         sref: "#/school",
         icon: "phone"
-    },{
+    }, {
         name: "View Athlete",
         classis: "",
         sref: "#/athlete",
@@ -441,7 +441,7 @@ myApp.factory('NavigationService', function ($http) {
         getnav: function () {
             return navigation;
         },
-        
+
         makeactive: function (menuname) {
             for (var i = 0; i < navigation.length; i++) {
                 if (navigation[i].name == menuname) {
@@ -910,25 +910,25 @@ myApp.factory('NavigationService', function ($http) {
 
             }).then(callback);
         },
-        getAllUsers: function(callback){
+        getAllUsers: function (callback) {
             $http({
                 url: adminurl + 'user/getAllUsers',
                 method: 'POST'
 
             }).then(callback);
         },
-        getOneUser:function(data,callback){
+        getOneUser: function (data, callback) {
             $http({
                 url: adminurl + 'user/getOneUser',
-                data:data,
+                data: data,
                 method: 'POST'
 
             }).then(callback);
         },
-        saveUser: function(data,callback){
+        saveUser: function (data, callback) {
             $http({
                 url: adminurl + 'user/save',
-                data:data,
+                data: data,
                 method: 'POST'
 
             }).then(callback);
