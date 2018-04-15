@@ -230,9 +230,9 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
           console.log(" $scope.mobileNumber", $scope.mobileNumber);
         } else {
           if (data.error == "Data not found") {
-            toastr.error('You have not completed the Registration & Verification process.Kindly complete Step 1 and then proceed to Sports Registration', 'Error Message');
+            toastr.error('You have not completed the Registration & Verification process. Kindly complete Step 1 and then proceed to Sports Registration', 'Error Message');
           } else if (data.error == "Status pending") {
-            toastr.error('Yet your Verification process has been not completed. For any further queries contact us on' + $scope.infoNo + 'or email us at' + $scope.infoId + '.', 'Error Message');
+            toastr.error('Yet your Verification process has been not completed. For any further queries contact us on ' + $scope.infoNo + ' or email us at ' + $scope.infoId + '.', 'Error Message');
           } else {
             toastr.error('Incorrect User Details', 'Error Message');
           }
