@@ -201,48 +201,48 @@ var model = {
             function (data3, callback) {
                 if (!data3.notExist) {
                     Athelete.aggregate([{
-                        // Stage 1
+                                // Stage 1
 
-                        $lookup: {
-                            "from": "schools",
-                            "localField": "school",
-                            "foreignField": "_id",
-                            "as": "school"
-                        }
-                    },
+                                $lookup: {
+                                    "from": "schools",
+                                    "localField": "school",
+                                    "foreignField": "_id",
+                                    "as": "school"
+                                }
+                            },
 
-                    // Stage 2
-                    {
-                        $unwind: {
-                            path: "$school",
-                            preserveNullAndEmptyArrays: true // optional
-                        }
-                    },
-                    // Stage 3
-                    {
-                        $lookup: {
-                            "from": "packages",
-                            "localField": "package",
-                            "foreignField": "_id",
-                            "as": "package"
-                        }
-                    },
+                            // Stage 2
+                            {
+                                $unwind: {
+                                    path: "$school",
+                                    preserveNullAndEmptyArrays: true // optional
+                                }
+                            },
+                            // Stage 3
+                            {
+                                $lookup: {
+                                    "from": "packages",
+                                    "localField": "package",
+                                    "foreignField": "_id",
+                                    "as": "package"
+                                }
+                            },
 
-                    // Stage 4
-                    {
-                        $unwind: {
-                            path: "$package",
-                            preserveNullAndEmptyArrays: true // optional
-                        }
-                    },
-                    {
-                        $match: {
-                            "sfaId": data.sfaid,
-                            "status": "Verified",
-                            "password": data.password
-                        }
-                    }
-                    ],
+                            // Stage 4
+                            {
+                                $unwind: {
+                                    path: "$package",
+                                    preserveNullAndEmptyArrays: true // optional
+                                }
+                            },
+                            {
+                                $match: {
+                                    "sfaId": data.sfaid,
+                                    "status": "Verified",
+                                    "password": data.password
+                                }
+                            }
+                        ],
                         function (err, found) {
                             if (err) {
                                 callback(err, null);
@@ -412,119 +412,265 @@ var model = {
     forgotPassword: function (data, callback) {
         var sfatype = data.sfaId.charAt(1);
 
-        // async.waterfall([
+        // if (data.type == "school" && sfatype == 'S' || sfatype == 'C') {
+        //     Registration.findOne({
+        //         sfaID: data.sfaId,
+        //         status: "Verified"
+        //     }).lean().exec(function (err, found) {
+        //         if (err) {
+        //             callback("Internal Error", null);
+        //         } else if (_.isEmpty(found)) {
+        //             callback("Invalid Sfa Id", null);
+        //         } else {
+        //             var otp = "";
+        //             async.waterfall([
 
-        //     //Get School / Athletes Data
-        //     function(callback){
-        //         if(data.type == "school" && sfatype == 'S'){
-        //             Registration.findOne({
-        //                 sfaID: data.sfaId,
-        //                 status: "Verified"
-        //             }).lean().exec(function (err, found) {
-        //                 if(err){
-        //                     callback(err,null);
-        //                 }else if(!_.isEmpty(found)){
-        //                     callback(null,{
-        //                         "data":found,
-        //                         "skip":false
-        //                     });
-        //                 }else{
-        //                     callback("Incorrect Sfa Id",null);
+        //                 // generate 4-digit OTP
+        //                 function (callback) {
+        //                     otp = Athelete.generateOtp();
+        //                     console.log("otp", otp);
+        //                     callback();
+        //                 },
+
+        //                 // save in schools Profile (Registration Table)
+        //                 function (callback) {
+        //                     var updateObj = {
+        //                         "enterOTP": otp
+        //                     };
+        //                     Registration.update({
+        //                         _id: found._id
+        //                     }, updateObj).exec(callback);
+        //                 },
+
+        //                 // send OTP on Mobile
+        //                 function (resp, callback) {
+        //                     if (found.mobile) {
+        //                         console.log("OTP Sent On Mobile ");
+        //                         var mobileObj = {
+        //                             "otp": otp,
+        //                             "mobile": found.mobile,
+        //                             "content": "OTP Athlete: Your Mobile OTP (One time Password) for SFA registration is "
+        //                         }
+        //                         Athelete.sendOTPMobile(mobileObj, callback);
+        //                     } else {
+        //                         callback(null, "Move Ahead");
+        //                     }
+        //                 },
+
+        //                 // send OTP on email
+        //                 function (resp, callback) {
+        //                     console.log("OTP Sent On Email");
+        //                     var emailObj = {
+        //                         "otp": otp,
+        //                         "mobile": found.mobile,
+        //                         "content": "OTP Athlete: Your Email OTP (One time Password) for SFA registration is ",
+        //                         "from": "info@sfanow.in",
+        //                         "filename": "emailOtp.ejs",
+        //                         "subject": "SFA: Your Email OTP (One time Password) for SFA registration is",
+
+        //                     }
+        //                     emailObj.sfaid = found.sfaID;
+        //                     emailObj.email = found.email;
+        //                     emailObj.city = data.property.sfaCity;
+        //                     emailObj.year = data.property.year;
+        //                     emailObj.eventYear = data.property.eventYear;
+        //                     emailObj.infoNo = data.property.infoNo;
+        //                     emailObj.cityAddress = data.property.cityAddress;
+        //                     emailObj.ddFavour = data.property.ddFavour;
+        //                     Config.email(emailObj, callback);
+        //                     // callback(null, "Next");
+        //                 },
+
+        //                 // send final Obj
+        //                 function (resp, callback) {
+        //                     var sendObj = {
+        //                         "sfaId": found.sfaID,
+        //                         "mobile": found.mobile,
+        //                         "email": found.email,
+        //                         "accessToken": found.accessToken
+        //                     }
+        //                     callback(null, sendObj);
         //                 }
-        //             })
-        //         }else{
-        //             callback(null,{
-        //                 "data":null,
-        //                 "skip":true
-        //             });
+        //             ], callback);
         //         }
-        //     },
 
-        //     function(){
+        //     });
 
-        //     }
-        // ],callback);
+        // } else if (data.type == "athlete" && sfatype == 'A') {
+        //     console.log("im in else");
+        //     Athelete.findOne({
+        //         sfaId: data.sfaId,
+        //         status: "Verified"
+        //     }).lean().exec(function (err, found) {
+        //         console.log("found", found);
+        //         if (err) {
+        //             callback(err, null);
+        //         } else if (_.isEmpty(found)) {
+        //             callback("Incorrect User Details", null);
+        //         } else {
+        //             var otp = "";
+        //             async.waterfall([
+
+        //                 // generate 4-digit OTP
+        //                 function (callback) {
+        //                     otp = Athelete.generateOtp();
+        //                     console.log("otp", otp);
+        //                     callback();
+        //                 },
+
+        //                 // save in Athletes Profile (Registration Table)
+        //                 function (callback) {
+        //                     var updateObj = {
+        //                         "emailOTP": otp,
+        //                         "smsOTP": otp
+        //                     }
+        //                     Athelete.update({
+        //                         _id: found._id
+        //                     }, updateObj).exec(callback);
+        //                 },
+
+        //                 // send OTP on Mobile
+        //                 function (resp, callback) {
+        //                     if (found.mobile) {
+        //                         console.log("OTP Sent On Mobile ");
+        //                         var mobileObj = {
+        //                             "otp": otp,
+        //                             "mobile": found.mobile,
+        //                             "content": "OTP Athlete: Your Mobile OTP (One time Password) for SFA registration is "
+        //                         }
+        //                         Athelete.sendOTPMobile(mobileObj, callback);
+        //                     } else {
+        //                         callback(null, "Move Ahead");
+        //                     }
+        //                 },
+
+        //                 // send OTP on email
+        //                 function (resp, callback) {
+        //                     console.log("OTP Sent On Email");
+        //                     var emailObj = {
+        //                         "otp": otp,
+        //                         "mobile": found.mobile,
+        //                         "content": "OTP Athlete: Your Email OTP (One time Password) for SFA registration is ",
+        //                         "from": "info@sfanow.in",
+        //                         "filename": "emailOtp.ejs",
+        //                         "subject": "SFA: Your Email OTP (One time Password) for SFA registration is"
+        //                     }
+
+        //                     emailObj.sfaid = found.sfaID;
+        //                     emailObj.email = found.email;
+        //                     emailObj.city = data.property.sfaCity;
+        //                     emailObj.year = data.property.year;
+        //                     emailObj.eventYear = data.property.eventYear;
+        //                     emailObj.infoNo = data.property.infoNo;
+        //                     emailObj.cityAddress = data.property.cityAddress;
+        //                     emailObj.ddFavour = data.property.ddFavour;
+        //                     Config.email(emailObj, callback);
+        //                     // callback(null, "Next");
+        //                 },
+
+        //                 // send final Obj
+        //                 function (resp, callback) {
+        //                     var sendObj = {
+        //                         "sfaId": found.sfaID,
+        //                         "mobile": found.mobile,
+        //                         "email": found.email,
+        //                         "accessToken": found.accessToken
+        //                     }
+        //                     callback(null, sendObj);
+        //                 }
+        //             ], callback);
+
+        //         }
+
+        //     });
+
+        // } else {
+        //     callback("Incorrect Type", null);
+        // }
 
         if (data.type == "school" && sfatype == 'S' || sfatype == 'C') {
             Registration.findOne({
-                sfaID: data.sfaId,
-                status: "Verified"
+                sfaID: data.sfaId
             }).lean().exec(function (err, found) {
                 if (err) {
                     callback("Internal Error", null);
                 } else if (_.isEmpty(found)) {
-                    callback("Invalid Sfa Id", null);
+                    callback("Data not found", null);
                 } else {
-                    var otp = "";
-                    async.waterfall([
+                    if (found.status == 'Verified') {
+                        var otp = "";
+                        async.waterfall([
 
-                        // generate 4-digit OTP
-                        function (callback) {
-                            otp = Athelete.generateOtp();
-                            console.log("otp", otp);
-                            callback();
-                        },
+                            // generate 4-digit OTP
+                            function (callback) {
+                                otp = Athelete.generateOtp();
+                                console.log("otp", otp);
+                                callback();
+                            },
 
-                        // save in schools Profile (Registration Table)
-                        function (callback) {
-                            var updateObj = {
-                                "enterOTP": otp
-                            };
-                            Registration.update({
-                                _id: found._id
-                            }, updateObj).exec(callback);
-                        },
+                            // save in schools Profile (Registration Table)
+                            function (callback) {
+                                var updateObj = {
+                                    "enterOTP": otp
+                                };
+                                Registration.update({
+                                    _id: found._id
+                                }, updateObj).exec(callback);
+                            },
 
-                        // send OTP on Mobile
-                        function (resp, callback) {
-                            if (found.mobile) {
-                                console.log("OTP Sent On Mobile ");
-                                var mobileObj = {
+                            // send OTP on Mobile
+                            function (resp, callback) {
+                                if (found.mobile) {
+                                    console.log("OTP Sent On Mobile ");
+                                    var mobileObj = {
+                                        "otp": otp,
+                                        "mobile": found.mobile,
+                                        "content": "OTP Athlete: Your Mobile OTP (One time Password) for SFA registration is "
+                                    }
+                                    Athelete.sendOTPMobile(mobileObj, callback);
+                                } else {
+                                    callback(null, "Move Ahead");
+                                }
+                            },
+
+                            // send OTP on email
+                            function (resp, callback) {
+                                console.log("OTP Sent On Email");
+                                var emailObj = {
                                     "otp": otp,
                                     "mobile": found.mobile,
-                                    "content": "OTP Athlete: Your Mobile OTP (One time Password) for SFA registration is "
+                                    "content": "OTP Athlete: Your Email OTP (One time Password) for SFA registration is ",
+                                    "from": "info@sfanow.in",
+                                    "filename": "emailOtp.ejs",
+                                    "subject": "SFA: Your Email OTP (One time Password) for SFA registration is",
+
                                 }
-                                Athelete.sendOTPMobile(mobileObj, callback);
-                            } else {
-                                callback(null, "Move Ahead");
-                            }
-                        },
+                                emailObj.sfaid = found.sfaID;
+                                emailObj.email = found.email;
+                                emailObj.city = data.property.sfaCity;
+                                emailObj.year = data.property.year;
+                                emailObj.eventYear = data.property.eventYear;
+                                emailObj.infoNo = data.property.infoNo;
+                                emailObj.cityAddress = data.property.cityAddress;
+                                emailObj.ddFavour = data.property.ddFavour;
+                                Config.email(emailObj, callback);
+                                // callback(null, "Next");
+                            },
 
-                        // send OTP on email
-                        function (resp, callback) {
-                            console.log("OTP Sent On Email");
-                            var emailObj = {
-                                "otp": otp,
-                                "mobile": found.mobile,
-                                "content": "OTP Athlete: Your Email OTP (One time Password) for SFA registration is ",
-                                "from": "info@sfanow.in",
-                                "filename": "emailOtp.ejs",
-                                "subject": "SFA: Your Email OTP (One time Password) for SFA registration is",
-
+                            // send final Obj
+                            function (resp, callback) {
+                                var sendObj = {
+                                    "sfaId": found.sfaID,
+                                    "mobile": found.mobile,
+                                    "email": found.email,
+                                    "accessToken": found.accessToken
+                                }
+                                callback(null, sendObj);
                             }
-                            emailObj.sfaid = found.sfaID;
-                            emailObj.email = found.email;
-                            emailObj.city = data.property.sfaCity;
-                            emailObj.year = data.property.year;
-                            emailObj.eventYear = data.property.eventYear;
-                            emailObj.infoNo = data.property.infoNo;
-                            emailObj.cityAddress = data.property.cityAddress;
-                            emailObj.ddFavour = data.property.ddFavour;
-                            Config.email(emailObj, callback);
-                            // callback(null, "Next");
-                        },
-
-                        // send final Obj
-                        function (resp, callback) {
-                            var sendObj = {
-                                "sfaId": found.sfaID,
-                                "mobile": found.mobile,
-                                "email": found.email,
-                                "accessToken": found.accessToken
-                            }
-                            callback(null, sendObj);
-                        }
-                    ], callback);
+                        ], callback);
+                    } else {
+                        callback("Status pending", null);
+                    }
                 }
 
             });
@@ -532,86 +678,89 @@ var model = {
         } else if (data.type == "athlete" && sfatype == 'A') {
             console.log("im in else");
             Athelete.findOne({
-                sfaId: data.sfaId,
-                status: "Verified"
+                sfaId: data.sfaId
             }).lean().exec(function (err, found) {
                 console.log("found", found);
                 if (err) {
                     callback(err, null);
                 } else if (_.isEmpty(found)) {
-                    callback("Incorrect User Details", null);
+                    callback("Data not found", null);
                 } else {
-                    var otp = "";
-                    async.waterfall([
+                    if (found.status === 'Verified') {
+                        var otp = "";
+                        async.waterfall([
 
-                        // generate 4-digit OTP
-                        function (callback) {
-                            otp = Athelete.generateOtp();
-                            console.log("otp", otp);
-                            callback();
-                        },
+                            // generate 4-digit OTP
+                            function (callback) {
+                                otp = Athelete.generateOtp();
+                                console.log("otp", otp);
+                                callback();
+                            },
 
-                        // save in Athletes Profile (Registration Table)
-                        function (callback) {
-                            var updateObj = {
-                                "emailOTP": otp,
-                                "smsOTP": otp
-                            }
-                            Athelete.update({
-                                _id: found._id
-                            }, updateObj).exec(callback);
-                        },
+                            // save in Athletes Profile (Registration Table)
+                            function (callback) {
+                                var updateObj = {
+                                    "emailOTP": otp,
+                                    "smsOTP": otp
+                                }
+                                Athelete.update({
+                                    _id: found._id
+                                }, updateObj).exec(callback);
+                            },
 
-                        // send OTP on Mobile
-                        function (resp, callback) {
-                            if (found.mobile) {
-                                console.log("OTP Sent On Mobile ");
-                                var mobileObj = {
+                            // send OTP on Mobile
+                            function (resp, callback) {
+                                if (found.mobile) {
+                                    console.log("OTP Sent On Mobile ");
+                                    var mobileObj = {
+                                        "otp": otp,
+                                        "mobile": found.mobile,
+                                        "content": "OTP Athlete: Your Mobile OTP (One time Password) for SFA registration is "
+                                    }
+                                    Athelete.sendOTPMobile(mobileObj, callback);
+                                } else {
+                                    callback(null, "Move Ahead");
+                                }
+                            },
+
+                            // send OTP on email
+                            function (resp, callback) {
+                                console.log("OTP Sent On Email");
+                                var emailObj = {
                                     "otp": otp,
                                     "mobile": found.mobile,
-                                    "content": "OTP Athlete: Your Mobile OTP (One time Password) for SFA registration is "
+                                    "content": "OTP Athlete: Your Email OTP (One time Password) for SFA registration is ",
+                                    "from": "info@sfanow.in",
+                                    "filename": "emailOtp.ejs",
+                                    "subject": "SFA: Your Email OTP (One time Password) for SFA registration is"
                                 }
-                                Athelete.sendOTPMobile(mobileObj, callback);
-                            } else {
-                                callback(null, "Move Ahead");
-                            }
-                        },
 
-                        // send OTP on email
-                        function (resp, callback) {
-                            console.log("OTP Sent On Email");
-                            var emailObj = {
-                                "otp": otp,
-                                "mobile": found.mobile,
-                                "content": "OTP Athlete: Your Email OTP (One time Password) for SFA registration is ",
-                                "from": "info@sfanow.in",
-                                "filename": "emailOtp.ejs",
-                                "subject": "SFA: Your Email OTP (One time Password) for SFA registration is"
-                            }
+                                emailObj.sfaid = found.sfaID;
+                                emailObj.email = found.email;
+                                emailObj.city = data.property.sfaCity;
+                                emailObj.year = data.property.year;
+                                emailObj.eventYear = data.property.eventYear;
+                                emailObj.infoNo = data.property.infoNo;
+                                emailObj.cityAddress = data.property.cityAddress;
+                                emailObj.ddFavour = data.property.ddFavour;
+                                Config.email(emailObj, callback);
+                                // callback(null, "Next");
+                            },
 
-                            emailObj.sfaid = found.sfaID;
-                            emailObj.email = found.email;
-                            emailObj.city = data.property.sfaCity;
-                            emailObj.year = data.property.year;
-                            emailObj.eventYear = data.property.eventYear;
-                            emailObj.infoNo = data.property.infoNo;
-                            emailObj.cityAddress = data.property.cityAddress;
-                            emailObj.ddFavour = data.property.ddFavour;
-                            Config.email(emailObj, callback);
-                            // callback(null, "Next");
-                        },
-
-                        // send final Obj
-                        function (resp, callback) {
-                            var sendObj = {
-                                "sfaId": found.sfaID,
-                                "mobile": found.mobile,
-                                "email": found.email,
-                                "accessToken": found.accessToken
+                            // send final Obj
+                            function (resp, callback) {
+                                var sendObj = {
+                                    "sfaId": found.sfaID,
+                                    "mobile": found.mobile,
+                                    "email": found.email,
+                                    "accessToken": found.accessToken
+                                }
+                                callback(null, sendObj);
                             }
-                            callback(null, sendObj);
-                        }
-                    ], callback);
+                        ], callback);
+                    } else {
+                        callback("Status pending", null);
+                    }
 
                 }
 
@@ -675,18 +824,18 @@ var model = {
                     _id: data._id,
                     password: data.oldPassword
                 }, {
-                        password: data.password
-                    }, function (err, data1) {
-                        if (err) {
-                            callback(null, {
-                                error: err
-                            });
-                        } else if (data1) {
-                            callback(null, "Password Successfully Updated");
-                        } else {
-                            callback("Incorrect Old Password", null);
-                        }
-                    });
+                    password: data.password
+                }, function (err, data1) {
+                    if (err) {
+                        callback(null, {
+                            error: err
+                        });
+                    } else if (data1) {
+                        callback(null, "Password Successfully Updated");
+                    } else {
+                        callback("Incorrect Old Password", null);
+                    }
+                });
             } else {
                 callback("Password match or Same password exist", null);
             }
@@ -702,18 +851,18 @@ var model = {
                     _id: data._id,
                     password: data.oldPassword
                 }, {
-                        password: data.password
-                    }, function (err, data1) {
-                        if (err) {
-                            callback(null, {
-                                error: err
-                            });
-                        } else if (data1) {
-                            callback(null, "Password Successfully Updated");
-                        } else {
-                            callback("Incorrect Old Password", null);
-                        }
-                    });
+                    password: data.password
+                }, function (err, data1) {
+                    if (err) {
+                        callback(null, {
+                            error: err
+                        });
+                    } else if (data1) {
+                        callback(null, "Password Successfully Updated");
+                    } else {
+                        callback("Incorrect Old Password", null);
+                    }
+                });
             } else {
                 callback("Password match or Same password exist", null);
             }
@@ -728,18 +877,18 @@ var model = {
                 Registration.findOneAndUpdate({
                     _id: data._id
                 }, {
-                        password: data.newPassword
-                    }, function (err, data1) {
-                        if (err) {
-                            callback(null, {
-                                error: err
-                            });
-                        } else if (data1) {
-                            callback(null, "Password Successfully Updated");
-                        } else {
-                            callback("Error Occured While Updating", null);
-                        }
-                    });
+                    password: data.newPassword
+                }, function (err, data1) {
+                    if (err) {
+                        callback(null, {
+                            error: err
+                        });
+                    } else if (data1) {
+                        callback(null, "Password Successfully Updated");
+                    } else {
+                        callback("Error Occured While Updating", null);
+                    }
+                });
             } else {
                 callback("MisMatch Password And Confirm Password", null);
             }
@@ -754,18 +903,18 @@ var model = {
                 Athelete.findOneAndUpdate({
                     _id: data._id,
                 }, {
-                        password: data.newPassword
-                    }, function (err, data1) {
-                        if (err) {
-                            callback(null, {
-                                error: err
-                            });
-                        } else if (data1) {
-                            callback(null, "Password Successfully Updated");
-                        } else {
-                            callback("Error Occured While Updating", null);
-                        }
-                    });
+                    password: data.newPassword
+                }, function (err, data1) {
+                    if (err) {
+                        callback(null, {
+                            error: err
+                        });
+                    } else if (data1) {
+                        callback(null, "Password Successfully Updated");
+                    } else {
+                        callback("Error Occured While Updating", null);
+                    }
+                });
             } else {
                 callback("MisMatch Password And Confirm Password", null);
             }
@@ -853,29 +1002,29 @@ var model = {
     getSchoolPipeLine: function (data) {
 
         var pipeline = [{
-            $match: {
-                "_id": objectid(data.buf)
-            }
-        },
+                $match: {
+                    "_id": objectid(data.buf)
+                }
+            },
 
 
-        // Stage 1
-        {
-            $lookup: {
-                "from": "schools",
-                "localField": "school",
-                "foreignField": "_id",
-                "as": "school"
-            }
-        },
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "schools",
+                    "localField": "school",
+                    "foreignField": "_id",
+                    "as": "school"
+                }
+            },
 
-        // Stage 2
-        {
-            $unwind: {
-                path: "$school",
-                preserveNullAndEmptyArrays: true // optional
-            }
-        },
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$school",
+                    preserveNullAndEmptyArrays: true // optional
+                }
+            },
 
         ];
         return pipeline;

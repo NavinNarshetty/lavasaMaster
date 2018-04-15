@@ -62,12 +62,12 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
     $scope.sports = data.sports;
     $scope.sfaDates = data.date;
     $scope.venue = data.venue;
+    $scope.infoId = data.infoId;
+    $scope.infoNo = data.infoNo;
   });
   $scope.logoutCandidate = function () {
     loginService.logoutCandidate(function (data) {
-      if (data.isLoggedIn === false) {
-      } else {
-      }
+      if (data.isLoggedIn === false) {} else {}
     });
   };
 
@@ -229,7 +229,13 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
           $scope.showThis = true;
           console.log(" $scope.mobileNumber", $scope.mobileNumber);
         } else {
-          toastr.error('Incorrect User Details', 'Error Message');
+          if (data.error == "Data not found") {
+            toastr.error('You have not completed the Registration & Verification process.Kindly complete Step 1 and then proceed to Sports Registration', 'Error Message');
+          } else if (data.error == "Status pending") {
+            toastr.error('Yet your Verification process has been not completed. For any further queries contact us on' + $scope.infoNo + 'or email us at' + $scope.infoId + '.', 'Error Message');
+          } else {
+            toastr.error('Incorrect User Details', 'Error Message');
+          }
         }
       });
     } else {
