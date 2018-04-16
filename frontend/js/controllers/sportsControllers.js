@@ -148,7 +148,7 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
     } else {
         if ($.jStorage.get("userDetails") === null) {
             $state.go('registerplayer', {
-                type: data.type
+                type: $.jStorage.get("userType")
             });
         }
         $scope.callLogin();
@@ -422,7 +422,7 @@ myApp.controller('SportsRulesCtrl', function ($scope, TemplateService, $state, N
 
     if ($.jStorage.get("userDetails") === null) {
         $state.go('registerplayer', {
-            type: data.type
+            type: $.jStorage.get("userType")
         });
     }
 
@@ -533,7 +533,7 @@ myApp.controller('SportIndividualCtrl', function ($scope, TemplateService, toast
 
     if ($.jStorage.get("userDetails") === null) {
         $state.go('registerplayer', {
-            type: data.type
+            type: $.jStorage.get("userType")
         });
     }
 
@@ -695,7 +695,7 @@ myApp.controller('SportTeamCtrl', function ($scope, TemplateService, toastr, Nav
 
     if ($.jStorage.get("userDetails") === null) {
         $state.go('registerplayer', {
-            type: data.type
+            type: $.jStorage.get("userType")
         });
     }
 

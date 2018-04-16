@@ -19,7 +19,7 @@
                 <div class="table-area ">
                     <div class="widget-title ">
                         <h3>List of Registered School
-                            <!-- <span class="tableTotal ">(Total : {{totalItems}}) </span> -->
+                            <span class="tableTotal" ng-if="currentSatateName!='schoolOps'">(Total : {{totalItems}}) </span>
                         </h3>
                         <div class="row">
                             <div class="col-md-6">
@@ -101,7 +101,7 @@
                                         <input type="text " ng-keydown="$event.keyCode === 13 && searchInSchool(search) " placeholder="Search Here...
                              " ng-model="search" />
                                     </form>
-                                    <!-- <a class="btn btn-success" ng-click="loginPopup(formData,'excel')">Excel Export</a> -->
+                                    <a class="btn btn-success" ng-click="loginPopup(formData,'excel')" ng-if="currentSatateName!='schoolOps'">Excel Export</a>
                                     <a class="btn btn-danger" ng-click="logout()" ng-if="!showAccess && jSchoolops!=null">Logout</a>
                                 </div>
                             </div>
