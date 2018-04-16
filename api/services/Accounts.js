@@ -1721,7 +1721,7 @@ var model = {
                 emailData.amountToWords = Accounts.amountToWords(final.accounts.transaction[len].amountPaid);
                 emailData.from = final.property.infoId;
                 emailData.email1 = [{
-                    email: found.accounts.athlete.email
+                    email: final.accounts.athlete.email
                 }];
                 emailData.bcc1 = [{
                     email: "payments@sfanow.in"
