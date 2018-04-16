@@ -347,6 +347,7 @@ var model = {
                     found.display.igst = found.igst;
                     found.display.sgst = found.sgst;
                     found.display.cgst = found.cgst;
+                    found.display.refundAmount = found.refundAmount;
                     found.display.discount = found.discount;
                     found.display.receiptId = found.receiptId;
                     if (found.remarks) {

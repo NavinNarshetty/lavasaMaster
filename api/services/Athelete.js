@@ -1102,76 +1102,86 @@ var model = {
                     });
                 },
                 function (athleteData, callback) {
-                    data.transaction = [];
-                    if (athleteData.registrationFee == "cash") {
-                        var param = {};
-                        param.athlete = athleteData._id;
-                        param.school = undefined;
-                        param.package = athleteData.package;
-                        param.sgstAmount = data.sgstAmt;
-                        param.cgstAmount = data.cgstAmt;
-                        param.igstAmout = data.igstAmt;
-                        param.discount = data.discount;
-                        param.outstandingAmount = data.amountPaid;
-                        param.paymentMode = athleteData.registrationFee;
-                        param.paymentStatus = athleteData.paymentStatus;
-
-                        param.receiptId = [];
-                        param.checkNo = [];
-                        Transaction.saveData(param, function (err, transactData) {
-                            if (err || _.isEmpty(transactData)) {
-                                callback(null, {
-                                    error: "no data found",
-                                    data: data
-                                });
-                            } else {
-                                data.transaction.push(transactData._id);
-                                callback(null, athleteData);
-                            }
-                        });
-                    } else {
+                    if (athleteData.error) {
                         callback(null, athleteData);
+                    } else {
+                        data.transaction = [];
+                        if (athleteData.registrationFee == "cash") {
+                            var param = {};
+                            param.athlete = athleteData._id;
+                            param.school = undefined;
+                            param.package = athleteData.package;
+                            param.sgstAmount = data.sgstAmt;
+                            param.cgstAmount = data.cgstAmt;
+                            param.igstAmout = data.igstAmt;
+                            param.discount = data.discount;
+                            param.outstandingAmount = data.amountPaid;
+                            param.paymentMode = athleteData.registrationFee;
+                            param.paymentStatus = athleteData.paymentStatus;
+
+                            param.receiptId = [];
+                            param.checkNo = [];
+                            Transaction.saveData(param, function (err, transactData) {
+                                if (err || _.isEmpty(transactData)) {
+                                    callback(null, {
+                                        error: "no data found",
+                                        data: data
+                                    });
+                                } else {
+                                    data.transaction.push(transactData._id);
+                                    callback(null, athleteData);
+                                }
+                            });
+                        } else {
+                            callback(null, athleteData);
+                        }
                     }
 
                 },
                 function (athleteData, callback) {
-                    if (athleteData.registrationFee == "online PAYU") {
-                        var param = {};
-                        param.athlete = athleteData._id;
-                        param.school = undefined;
-                        param.sgst = data.sgstAmt;
-                        param.cgst = data.cgstAmt;
-                        param.igst = data.igstAmt;
-                        param.totalToPay = data.amountToPay;
-                        param.totalPaid = data.amountPaid;
-                        param.discount = data.discount;
-                        param.upgrade = false;
-                        param.paymentMode = athleteData.registrationFee;
-                        param.transaction = [];
+                    if (athleteData.error) {
+                        callback(null, athleteData);
                     } else {
-                        var param = {};
-                        param.athlete = athleteData._id;
-                        param.school = undefined;
-                        param.sgst = data.sgstAmt;
-                        param.cgst = data.cgstAmt;
-                        param.igst = data.igstAmt;
-                        param.discount = data.discount;
-                        param.outstandingAmount = data.amountPaid;
-                        param.paymentMode = athleteData.registrationFee;
-                        param.upgrade = false;
-                        param.transaction = data.transaction;
-                    }
-                    Accounts.saveData(param, function (err, accountsData) {
-                        if (err || _.isEmpty(accountsData)) {
-                            callback(null, {
-                                error: "No data found",
-                                data: athleteData
-                            });
+                        if (athleteData.registrationFee == "online PAYU") {
+                            var param = {};
+                            param.athlete = athleteData._id;
+                            param.school = undefined;
+                            param.sgst = data.sgstAmt;
+                            param.cgst = data.cgstAmt;
+                            param.igst = data.igstAmt;
+                            param.refundAmount = data.refundAmount;
+                            param.totalToPay = data.amountToPay;
+                            param.totalPaid = data.amountPaid;
+                            param.discount = data.discount;
+                            param.upgrade = false;
+                            param.paymentMode = athleteData.registrationFee;
+                            param.transaction = [];
                         } else {
-                            console.log("athelete accounts created", accountsData);
-                            callback(null, athleteData);
+                            var param = {};
+                            param.athlete = athleteData._id;
+                            param.school = undefined;
+                            param.sgst = data.sgstAmt;
+                            param.cgst = data.cgstAmt;
+                            param.igst = data.igstAmt;
+                            param.refundAmount = data.refundAmount;
+                            param.discount = data.discount;
+                            param.outstandingAmount = data.amountPaid;
+                            param.paymentMode = athleteData.registrationFee;
+                            param.upgrade = false;
+                            param.transaction = data.transaction;
                         }
-                    });
+                        Accounts.saveData(param, function (err, accountsData) {
+                            if (err || _.isEmpty(accountsData)) {
+                                callback(null, {
+                                    error: "No data found",
+                                    data: athleteData
+                                });
+                            } else {
+                                console.log("athelete accounts created", accountsData);
+                                callback(null, athleteData);
+                            }
+                        });
+                    }
                 },
                 function (athleteData, callback) {
                     if (athleteData.error) {
