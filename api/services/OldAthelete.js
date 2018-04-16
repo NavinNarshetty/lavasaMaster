@@ -135,8 +135,9 @@ var model = {
     },
 
     saveAthleteOriginal: function (data, callback) {
-        // callback(null, data);
-        async.concatLimit(data, 5, function (singleData, callback) {
+
+        async.eachSeries(data, function (singleData, callback) {
+            console.log("singleData", singleData);
             async.waterfall([
                 function (callback) {
                     Athelete.findOne({
@@ -147,7 +148,7 @@ var model = {
                         } else if (_.isEmpty(found)) {
                             var formData = {};
                             console.log("singleData.year", singleData.year);
-                            if (singleData.year == null) {
+                            if (!singleData.year) {
                                 singleData.year = "2017";
                             }
                             formData.currentYear = singleData.year;
@@ -311,17 +312,11 @@ var model = {
                         } else {
                             console.log("found", found, "singleData", singleData);
                             var formData = {};
-                            if (singleData.year == null) {
+                            if (!singleData.year) {
                                 singleData.year = "2017";
                             }
-                            // if (found.year == undefined) {
-                            //     found.year = [];
-                            //     found.year.push(singleData.year);
-                            // } else {
-                            //     found.year.push(singleData.year);
-                            // }
                             var i = (found.year.length - 1);
-                            if (parseInt(singleData.year) > parseInt(found.year[i])) {
+                            if (singleData.year == "2015, 2016") {
                                 formData._id = found._id;
                                 if (singleData.receiptId) {
                                     formData.receiptId = singleData.receiptId;
@@ -333,8 +328,8 @@ var model = {
                                 formData.status = singleData.status;
                                 formData.school = singleData.school;
                                 formData.currentYear = singleData.year;
-                                found.year.push(singleData.year);
-                                formData.year = found.year;
+                                var temp = _.trim(singleData.year);
+                                formData.year = temp.split(",");
                                 if (singleData.idProof) {
                                     formData.idProof = singleData.idProof;
                                 }
@@ -467,153 +462,300 @@ var model = {
                                 }
                                 callback(null, formData);
                             } else {
-                                console.log("year", found.year);
-                                formData._id = found._id;
-                                if (found.receiptId) {
-                                    formData.receiptId = found.receiptId;
-                                }
-                                if (found.atheleteID) {
-                                    formData.atheleteID = found.atheleteID;
-                                }
-                                formData.sfaId = found.sfaId;
-                                formData.status = found.status;
-                                formData.school = found.school;
-                                var len = found.year.length;
-                                formData.currentYear = found.year[len--];
-                                // found.year.push()
-                                formData.year = found.year;
-                                if (found.idProof) {
-                                    formData.idProof = found.idProof;
-                                }
-                                formData.surname = found.surname;
-                                formData.firstName = found.firstName;
-                                if (found.password) {
-                                    formData.password = found.password;
-                                }
-                                if (found.middleName) {
-                                    formData.middleName = found.middleName;
-                                }
-                                formData.gender = found.gender;
-                                if (found.standard) {
-                                    formData.standard = found.standard;
-                                }
-                                if (found.bloodGroup) {
-                                    formData.bloodGroup = found.bloodGroup;
-                                }
-                                if (found.photograph) {
-                                    formData.photograph = found.photograph;
-                                }
-                                if (found.dob) {
-                                    formData.dob = found.dob;
-                                }
-                                if (found.age) {
-                                    formData.age = found.age;
-                                }
-                                if (found.ageProof) {
-                                    formData.ageProof = found.ageProof;
-                                }
-                                if (found.photoImage) {
-                                    formData.photoImage = found.photoImage;
-                                }
-                                if (found.birthImage) {
-                                    formData.birthImage = found.birthImage;
-                                }
-                                if (found.playedTournaments) {
-                                    formData.playedTournaments = found.playedTournaments;
-                                }
-                                if (found.sportLevel) {
-                                    formData.sportLevel = found.sportLevel;
-                                }
-                                if (found.mobile) {
-                                    formData.mobile = found.mobile;
-                                }
-                                if (found.smsOTP) {
-                                    formData.smsOTP = found.smsOTP;
-                                }
-                                if (found.email) {
-                                    formData.email = found.email;
-                                }
-                                if (found.emailOTP) {
-                                    formData.emailOTP = found.emailOTP;
-                                }
-                                if (found.address) {
-                                    formData.address = found.address;
-                                }
-                                if (found.addressLine2) {
-                                    formData.addressLine2 = found.addressLine2;
-                                }
-                                if (found.termsAndCondition) {
-                                    formData.termsAndCondition = found.termsAndCondition;
-                                }
-                                formData.state = found.state;
-                                formData.district = found.district;
-                                formData.city = found.city;
-                                formData.pinCode = found.pinCode;
-                                if (found.parentDetails) {
-                                    formData.parentDetails = found.parentDetails;
-                                }
-                                if (found.atheleteSchoolContact) {
-                                    formData.atheleteSchoolContact = found.atheleteSchoolContact;
-                                }
-                                if (found.atheleteSchoolName) {
-                                    formData.atheleteSchoolName = found.atheleteSchoolName;
-                                }
-                                if (found.atheleteSchoolIdImage) {
-                                    formData.atheleteSchoolIdImage = found.atheleteSchoolIdImage;
-                                }
-                                if (found.atheleteSchoolLocality) {
-                                    formData.atheleteSchoolLocality = found.atheleteSchoolLocality;
-                                }
-                                if (found.registrationFee) {
-                                    formData.registrationFee = found.registrationFee;
-                                }
-                                if (found.paymentStatus) {
-                                    formData.paymentStatus = found.paymentStatus;
-                                }
-                                if (found.verifyCount) {
-                                    formData.verifyCount = found.verifyCount;
-                                }
-                                if (found.transactionID) {
-                                    formData.transactionID = found.transactionID;
-                                }
-                                if (found.university) {
-                                    formData.university = found.university;
-                                }
-                                if (found.faculty) {
-                                    formData.faculty = found.faculty;
-                                }
-                                if (found.degree) {
-                                    formData.degree = found.degree;
-                                }
-                                if (found.collegeYear) {
-                                    formData.collegeYear = found.collegeYear;
-                                }
-                                if (found.verifiedDate) {
-                                    formData.verifiedDate = found.verifiedDate;
-                                }
-                                if (found.remarks) {
-                                    formData.remarks = found.remarks;
-                                }
-                                if (found.accessToken) {
-                                    formData.accessToken = found.accessToken;
-                                }
-                                if (found.isSelected) {
-                                    formData.isSelected = found.isSelected;
-                                }
-                                if (found.utm_campaign) {
-                                    formData.utm_campaign = found.utm_campaign;
-                                }
-                                if (found.utm_medium) {
-                                    formData.utm_medium = found.utm_medium;
-                                }
-                                if (found.utm_source) {
-                                    formData.utm_source = found.utm_source;
-                                }
-                                if (found.isBib) {
-                                    formData.isBib = found.isBib;
-                                }
-                                callback(null, formData);
+                                if (parseInt(singleData.year) > parseInt(found.year[i]) || _.isEmpty(found.year)) {
+                                    formData._id = found._id;
+                                    if (singleData.receiptId) {
+                                        formData.receiptId = singleData.receiptId;
+                                    }
+                                    if (singleData.atheleteID) {
+                                        formData.atheleteID = singleData.atheleteID;
+                                    }
+                                    formData.sfaId = singleData.sfaId;
+                                    formData.status = singleData.status;
+                                    formData.school = singleData.school;
+                                    formData.currentYear = singleData.year;
+                                    found.year.push(singleData.year);
+                                    formData.year = found.year;
+                                    if (singleData.idProof) {
+                                        formData.idProof = singleData.idProof;
+                                    }
+                                    formData.surname = singleData.surname;
+                                    formData.firstName = singleData.firstName;
+                                    if (singleData.password) {
+                                        formData.password = singleData.password;
+                                    }
+                                    if (singleData.middleName) {
+                                        formData.middleName = singleData.middleName;
+                                    }
+                                    formData.gender = singleData.gender;
+                                    if (singleData.standard) {
+                                        formData.standard = singleData.standard;
+                                    }
+                                    if (singleData.bloodGroup) {
+                                        formData.bloodGroup = singleData.bloodGroup;
+                                    }
+                                    if (singleData.photograph) {
+                                        formData.photograph = singleData.photograph;
+                                    }
+                                    if (singleData.dob) {
+                                        formData.dob = singleData.dob;
+                                    }
+                                    if (singleData.age) {
+                                        formData.age = singleData.age;
+                                    }
+                                    if (singleData.ageProof) {
+                                        formData.ageProof = singleData.ageProof;
+                                    }
+                                    if (singleData.photoImage) {
+                                        formData.photoImage = singleData.photoImage;
+                                    }
+                                    if (singleData.birthImage) {
+                                        formData.birthImage = singleData.birthImage;
+                                    }
+                                    if (singleData.playedTournaments) {
+                                        formData.playedTournaments = singleData.playedTournaments;
+                                    }
+                                    if (singleData.sportLevel) {
+                                        formData.sportLevel = singleData.sportLevel;
+                                    }
+                                    if (singleData.mobile) {
+                                        formData.mobile = singleData.mobile;
+                                    }
+                                    if (singleData.smsOTP) {
+                                        formData.smsOTP = singleData.smsOTP;
+                                    }
+                                    if (singleData.email) {
+                                        formData.email = singleData.email;
+                                    }
+                                    if (singleData.emailOTP) {
+                                        formData.emailOTP = singleData.emailOTP;
+                                    }
+                                    if (singleData.address) {
+                                        formData.address = singleData.address;
+                                    }
+                                    if (singleData.addressLine2) {
+                                        formData.addressLine2 = singleData.addressLine2;
+                                    }
+                                    if (singleData.termsAndCondition) {
+                                        formData.termsAndCondition = singleData.termsAndCondition;
+                                    }
+                                    formData.state = singleData.state;
+                                    formData.district = singleData.district;
+                                    formData.city = singleData.city;
+                                    formData.pinCode = singleData.pinCode;
+                                    if (singleData.parentDetails) {
+                                        formData.parentDetails = singleData.parentDetails;
+                                    }
+                                    if (singleData.atheleteSchoolContact) {
+                                        formData.atheleteSchoolContact = singleData.atheleteSchoolContact;
+                                    }
+                                    if (singleData.atheleteSchoolName) {
+                                        formData.atheleteSchoolName = singleData.atheleteSchoolName;
+                                    }
+                                    if (singleData.atheleteSchoolIdImage) {
+                                        formData.atheleteSchoolIdImage = singleData.atheleteSchoolIdImage;
+                                    }
+                                    if (singleData.atheleteSchoolLocality) {
+                                        formData.atheleteSchoolLocality = singleData.atheleteSchoolLocality;
+                                    }
+                                    if (singleData.registrationFee) {
+                                        formData.registrationFee = singleData.registrationFee;
+                                    }
+                                    if (singleData.paymentStatus) {
+                                        formData.paymentStatus = singleData.paymentStatus;
+                                    }
+                                    if (singleData.verifyCount) {
+                                        formData.verifyCount = singleData.verifyCount;
+                                    }
+                                    if (singleData.transactionID) {
+                                        formData.transactionID = singleData.transactionID;
+                                    }
+                                    if (singleData.university) {
+                                        formData.university = singleData.university;
+                                    }
+                                    if (singleData.faculty) {
+                                        formData.faculty = singleData.faculty;
+                                    }
+                                    if (singleData.degree) {
+                                        formData.degree = singleData.degree;
+                                    }
+                                    if (singleData.collegeYear) {
+                                        formData.collegeYear = singleData.collegeYear;
+                                    }
+                                    if (singleData.verifiedDate) {
+                                        formData.verifiedDate = singleData.verifiedDate;
+                                    }
+                                    if (singleData.remarks) {
+                                        formData.remarks = singleData.remarks;
+                                    }
+                                    if (singleData.accessToken) {
+                                        formData.accessToken = singleData.accessToken;
+                                    }
+                                    if (singleData.isSelected) {
+                                        formData.isSelected = singleData.isSelected;
+                                    }
+                                    if (singleData.utm_campaign) {
+                                        formData.utm_campaign = singleData.utm_campaign;
+                                    }
+                                    if (singleData.utm_medium) {
+                                        formData.utm_medium = singleData.utm_medium;
+                                    }
+                                    if (singleData.utm_source) {
+                                        formData.utm_source = singleData.utm_source;
+                                    }
+                                    if (singleData.isBib) {
+                                        formData.isBib = singleData.isBib;
+                                    }
+                                    callback(null, formData);
+                                } else {
+                                    console.log("year", found.year);
+                                    formData._id = found._id;
+                                    if (found.receiptId) {
+                                        formData.receiptId = found.receiptId;
+                                    }
+                                    if (found.atheleteID) {
+                                        formData.atheleteID = found.atheleteID;
+                                    }
+                                    formData.sfaId = found.sfaId;
+                                    formData.status = found.status;
+                                    formData.school = found.school;
+                                    var len = found.year.length;
+                                    formData.currentYear = found.year[len--];
+                                    // found.year.push()
+                                    formData.year = found.year;
+                                    if (found.idProof) {
+                                        formData.idProof = found.idProof;
+                                    }
+                                    formData.surname = found.surname;
+                                    formData.firstName = found.firstName;
+                                    if (found.password) {
+                                        formData.password = found.password;
+                                    }
+                                    if (found.middleName) {
+                                        formData.middleName = found.middleName;
+                                    }
+                                    formData.gender = found.gender;
+                                    if (found.standard) {
+                                        formData.standard = found.standard;
+                                    }
+                                    if (found.bloodGroup) {
+                                        formData.bloodGroup = found.bloodGroup;
+                                    }
+                                    if (found.photograph) {
+                                        formData.photograph = found.photograph;
+                                    }
+                                    if (found.dob) {
+                                        formData.dob = found.dob;
+                                    }
+                                    if (found.age) {
+                                        formData.age = found.age;
+                                    }
+                                    if (found.ageProof) {
+                                        formData.ageProof = found.ageProof;
+                                    }
+                                    if (found.photoImage) {
+                                        formData.photoImage = found.photoImage;
+                                    }
+                                    if (found.birthImage) {
+                                        formData.birthImage = found.birthImage;
+                                    }
+                                    if (found.playedTournaments) {
+                                        formData.playedTournaments = found.playedTournaments;
+                                    }
+                                    if (found.sportLevel) {
+                                        formData.sportLevel = found.sportLevel;
+                                    }
+                                    if (found.mobile) {
+                                        formData.mobile = found.mobile;
+                                    }
+                                    if (found.smsOTP) {
+                                        formData.smsOTP = found.smsOTP;
+                                    }
+                                    if (found.email) {
+                                        formData.email = found.email;
+                                    }
+                                    if (found.emailOTP) {
+                                        formData.emailOTP = found.emailOTP;
+                                    }
+                                    if (found.address) {
+                                        formData.address = found.address;
+                                    }
+                                    if (found.addressLine2) {
+                                        formData.addressLine2 = found.addressLine2;
+                                    }
+                                    if (found.termsAndCondition) {
+                                        formData.termsAndCondition = found.termsAndCondition;
+                                    }
+                                    formData.state = found.state;
+                                    formData.district = found.district;
+                                    formData.city = found.city;
+                                    formData.pinCode = found.pinCode;
+                                    if (found.parentDetails) {
+                                        formData.parentDetails = found.parentDetails;
+                                    }
+                                    if (found.atheleteSchoolContact) {
+                                        formData.atheleteSchoolContact = found.atheleteSchoolContact;
+                                    }
+                                    if (found.atheleteSchoolName) {
+                                        formData.atheleteSchoolName = found.atheleteSchoolName;
+                                    }
+                                    if (found.atheleteSchoolIdImage) {
+                                        formData.atheleteSchoolIdImage = found.atheleteSchoolIdImage;
+                                    }
+                                    if (found.atheleteSchoolLocality) {
+                                        formData.atheleteSchoolLocality = found.atheleteSchoolLocality;
+                                    }
+                                    if (found.registrationFee) {
+                                        formData.registrationFee = found.registrationFee;
+                                    }
+                                    if (found.paymentStatus) {
+                                        formData.paymentStatus = found.paymentStatus;
+                                    }
+                                    if (found.verifyCount) {
+                                        formData.verifyCount = found.verifyCount;
+                                    }
+                                    if (found.transactionID) {
+                                        formData.transactionID = found.transactionID;
+                                    }
+                                    if (found.university) {
+                                        formData.university = found.university;
+                                    }
+                                    if (found.faculty) {
+                                        formData.faculty = found.faculty;
+                                    }
+                                    if (found.degree) {
+                                        formData.degree = found.degree;
+                                    }
+                                    if (found.collegeYear) {
+                                        formData.collegeYear = found.collegeYear;
+                                    }
+                                    if (found.verifiedDate) {
+                                        formData.verifiedDate = found.verifiedDate;
+                                    }
+                                    if (found.remarks) {
+                                        formData.remarks = found.remarks;
+                                    }
+                                    if (found.accessToken) {
+                                        formData.accessToken = found.accessToken;
+                                    }
+                                    if (found.isSelected) {
+                                        formData.isSelected = found.isSelected;
+                                    }
+                                    if (found.utm_campaign) {
+                                        formData.utm_campaign = found.utm_campaign;
+                                    }
+                                    if (found.utm_medium) {
+                                        formData.utm_medium = found.utm_medium;
+                                    }
+                                    if (found.utm_source) {
+                                        formData.utm_source = found.utm_source;
+                                    }
+                                    if (found.isBib) {
+                                        formData.isBib = found.isBib;
+                                    }
+                                    callback(null, formData);
 
+                                }
                             }
                         }
                     });
