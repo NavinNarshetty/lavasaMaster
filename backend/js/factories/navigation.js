@@ -210,6 +210,11 @@ myApp.factory('NavigationService', function ($http, $state) {
             sref: "#/calender",
             icon: "phone"
         }, {
+            name: "About Championship",
+            classis: "activeColor",
+            sref: "#/tableaboutchampionship",
+            icon: "phone"
+        }, {
             name: "Sponsor",
             classis: "activeColor",
             sref: "",
