@@ -115,8 +115,8 @@
             <p>Kindly Enter</p>
             <div class="input-group">
               <!-- <input type="text" class="form-control" placeholder="SFA ID"> -->
-              <ui-select name="playername" ng-model="searchSfaObj.sfaId" theme="bootstrap" required>
-                <ui-select-match placeholder="search by Sfa ID and Name" allow-clear="true" title="{{$select.selected.fullName}}">
+              <ui-select name="playername" class="registerform1-uiselect" ng-model="searchSfaObj.sfaId" theme="bootstrap" required>
+                <ui-select-match placeholder="Search by Sfa ID and Name" allow-clear="true" title="{{$select.selected.fullName}}">
                   {{$select.selected.fullName}}
                 </ui-select-match>
                 <ui-select-choices refresh-delay="0" repeat="player as player in masterData | filter: $select.search" refresh="masterSearchSFA($select.search)">

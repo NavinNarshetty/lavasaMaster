@@ -3027,6 +3027,21 @@ $tickerDuration: 60s;
       text-transform: uppercase;
     }
   }
+  .registerform1-uiselect{
+    .btn{
+      border: none;
+      margin: 0px;
+    }
+    .dropdown-menu{
+      left: 0;
+    }
+    .glyphicon{
+      display: none;
+    }
+    .ui-select-toggle{
+      border: 1px solid $sport-darkgrey;
+    }
+  }
 }
 .registerform-step2{
   padding: 40px 30px;
