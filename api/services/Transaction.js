@@ -71,7 +71,9 @@ var schema = new Schema({
 
 schema.plugin(deepPopulate, {
     populate: {
-        package: ''
+        package: {
+            select: ''
+        }
     }
 });
 schema.plugin(uniqueValidator);
