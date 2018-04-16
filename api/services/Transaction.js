@@ -102,7 +102,7 @@ var model = {
                         param.school = found._id;
                         param.athlete = undefined;
                     }
-                    // param.dateOfTransaction = new Date();
+                    param.dateOfTransaction = new Date();
                     param.package = found.package;
                     param.amountPaid = found.accounts.totalPaid;
                     param.amountToPay = found.accounts.totalToPay;
@@ -217,6 +217,7 @@ var model = {
                         receipt.push(temp);
                         var PayuId = [];
                         PayuId.push(data.transactionid);
+                        var date = new Date();
 
                         var matchObj = {
                             $set: {
@@ -226,6 +227,7 @@ var model = {
                                 outstandingAmount: 0,
                                 paymentStatus: "Paid",
                                 PayuId: PayuId,
+                                dateOfTransaction: date,
                             }
                         };
                         Transaction.update({
