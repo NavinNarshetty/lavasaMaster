@@ -6,7 +6,7 @@
                 <div class="row championshipdraw-cardrow">
                     <div class="col-md-offset-3 col-md-6">
                         <div class="championship-drawstitle">
-                            <h3 class="sport-type-head d-fjalla-one">SFA Championship 2017-18</h3>
+                            <h3 class="sport-type-head d-fjalla-one">SFA Championship {{eventYear}}</h3>
                             <!-- <p hidden>To view Draws & Schedules of your match kindly select the relevent categories to get results.
                             </p> -->
                             <p>Draws and Schedules published below.
@@ -195,12 +195,12 @@
                                                     </div>
                                                     <div class="championsschdule-pdfbutton text-left" ng-repeat="pdf in schedule.pdfDetail track by $index">
                                                         <a href="{{pdf.trustedURL}}" target="_new" ng-if="pdf.pdfType !=='resultlink'">
-                                                                    <span ng-class="{'champions-draw-orange':pdf.pdfName}">
-                                                                                    {{pdf.textHeader}}
-                                                                    </span>
-                                                                </a>
+                                                            <span ng-class="{'champions-draw-orange':pdf.pdfName}">
+                                                                {{pdf.textHeader}}
+                                                            </span>
+                                                        </a>
                                                         <a href="{{pdf.resultLink}}" target="_new" ng-if="pdf.pdfType =='resultlink'" ng-class="{'champions-draw-orange':pdf.pdfName}">
-                                                                    {{pdf.textHeader}}
+                                                            {{pdf.textHeader}}
                                                         </a>
                                                     </div>
                                                 </td>
@@ -234,9 +234,10 @@
                                                         </div>
                                                         <div class="championsschdule-pdfbutton" ng-repeat="pdf in schedule.pdfDetail track by $index">
                                                             <a href="{{pdf.trustedURL}}" target="_new" ng-if="pdf.pdfType !=='resultlink'">
-                                                                        <span ng-class="{'champions-draw-orange':pdf.pdfType =='schedulePdf' || pdf.pdfType =='order','champions-result-green':pdf.pdfType == 'resultPdf'}" ng-if="schedule.pdfDetail">
-                                                                        {{pdf.textHeader}}
-                                                                        </span>
+                                                                <span ng-class="{'champions-draw-orange':pdf.pdfType =='schedulePdf' || pdf.pdfType =='order','champions-result-green':pdf.pdfType == 'resultPdf'}"
+                                                                    ng-if="schedule.pdfDetail">
+                                                                    {{pdf.textHeader}}
+                                                                </span>
                                                             </a>
                                                             <a href="{{pdf.resultLink}}" target="_new" ng-if="pdf.pdfType =='resultlink'" class="champions-result-green">
                                                                 {{pdf.textHeader}}
