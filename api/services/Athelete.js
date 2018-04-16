@@ -4860,5 +4860,66 @@ var model = {
                 }
             });
     },
+
+    delete: function (data, callback) {
+        async.waterfall([
+            function (callback) {
+                Athelete.remove({
+                    _id: data._id
+                }).exec(function (err, found) {
+                    if (err || _.isEmpty(found)) {
+                        callback(null, {
+                            error: "no data removed",
+                            data: data
+                        });
+                    } else {
+                        callback(null, found);
+                    }
+                })
+            },
+            function (found, callback) {
+                if (found.error) {
+                    callback(null, found);
+                } else {
+                    Accounts.remove({
+                        athlete: data._id
+                    }).exec(function (err, found) {
+                        if (err || _.isEmpty(found)) {
+                            callback(null, {
+                                error: "no data removed",
+                                data: data
+                            });
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+                }
+            },
+            function (found, callback) {
+                if (found.error) {
+                    callback(null, found);
+                } else {
+                    Transaction.remove({
+                        athlete: data._id
+                    }).exec(function (err, found) {
+                        if (err || _.isEmpty(found)) {
+                            callback(null, {
+                                error: "no data removed",
+                                data: data
+                            });
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+                }
+            }
+        ], function (err, data3) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, data3);
+            }
+        });
+    },
 };
 module.exports = _.assign(module.exports, exports, model);

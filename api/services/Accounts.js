@@ -56,6 +56,10 @@ var schema = new Schema({
     remarks: String,
     upgrade: Boolean,
     upgradePaymentStatus: String,
+    refundAmount: {
+        type: Number,
+        default: 0
+    },
 
 });
 
@@ -1215,6 +1219,15 @@ var model = {
                                 }
                                 j++;
                             });
+                            var k = 0;
+                            _.each(mainData.checkNo, function (n) {
+                                if (k == 0) {
+                                    obj["CHECK NO"] = n;
+                                } else {
+                                    obj["CHECK NO"] = obj["CHECK NO"] + "," + n
+                                }
+                                k++;
+                            });
 
                             callback(null, obj);
                         },
@@ -1286,11 +1299,9 @@ var model = {
 
                         _.each(mainData.transaction, function (n) {
                             if (i == 0) {
-                                // obj["SELECTED PACKAGES"] = n.package.name;
                                 paymentMode = n.paymentMode;
                                 payu = n.PayuId;
                             } else {
-                                // obj["SELECTED PACKAGES"] = obj["SELECTED PACKAGES"] + "," + n.package.name;
                                 paymentMode = paymentMode + "," + n.paymentMode;
                                 payu = payu + "," + n.PayuId
                             }
@@ -1305,17 +1316,17 @@ var model = {
                             obj["CGST PERCENT"] = 0;
                         }
                         if (mainData.cgstAmt != null) {
-                            obj["CGST AMOUNT"] = mainData.cgstAmount;
+                            obj["CGST AMOUNT"] = mainData.cgstAmt;
                         } else {
                             obj["CGST AMOUNT"] = 0;
                         }
                         if (sgstPercent != null) {
-                            obj["SGST PERCENT"] = sgstPercent;
+                            obj["SGST PERCENT"] = mainData.sgstPercent;
                         } else {
                             obj["SGST PERCENT"] = 0;
                         }
                         if (mainData.sgstAmt != null) {
-                            obj["SGST AMOUNT"] = mainData.sgstAmount;
+                            obj["SGST AMOUNT"] = mainData.sgstAmt;
                         } else {
                             obj["SGST AMOUNT"] = 0;
                         }
@@ -1325,7 +1336,7 @@ var model = {
                             obj["IGST PERCENT"] = 0;
                         }
                         if (mainData.igstAmt != null) {
-                            obj["IGST AMOUNT"] = mainData.igstAmount;
+                            obj["IGST AMOUNT"] = mainData.igstAmt;
                         } else {
                             obj["IGST AMOUNT"] = 0;
                         }
@@ -1364,6 +1375,15 @@ var model = {
                                 obj["RECEIPT NO"] = obj["RECEIPT NO"] + "," + n
                             }
                             j++;
+                        });
+                        var k = 0;
+                        _.each(mainData.receiptId, function (n) {
+                            if (k == 0) {
+                                obj["CHECK NO"] = n;
+                            } else {
+                                obj["CHECK NO"] = obj["CHECK NO"] + "," + n
+                            }
+                            k++;
                         });
                         callback(null, obj);
                     },

@@ -51,6 +51,17 @@ var controller = {
         }
     },
 
+    delete: function (req, res) {
+        if (req.body) {
+            Athelete.delete(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
+
     searchByFilter: function (req, res) {
         Athelete.searchByFilter(req.body, res.callback);
     },
