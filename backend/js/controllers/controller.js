@@ -2297,6 +2297,7 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
     //     $scope.search.keyword = $stateParams.keyword;
     // }
 
+    $scope.currentSatateName = $state.current.name;
     $scope.formData = {};
     $scope.formData.page = 1;
     $scope.formData.type = '';
@@ -2452,6 +2453,7 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
     $scope.menutitle = NavigationService.makeactive("View Athlete");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.currentSatateName = $state.current.name;
     $scope.changeInput = function () {
         if ($scope.formData.input != '') {
             $scope.formData.input = '';
@@ -3966,19 +3968,19 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         };
     })
 
-    .controller('LoginCtrl', function ($scope, TemplateService,LoginService, $http, $timeout, $stateParams, $state, toastr) {
+    .controller('LoginCtrl', function ($scope, TemplateService, LoginService, $http, $timeout, $stateParams, $state, toastr) {
         //Used to name the .html file
 
         TemplateService.title = $scope.menutitle;
         $scope.template = TemplateService;
         $scope.currentHost = window.location.origin;
-        console.log("stateParams",$stateParams);
+        console.log("stateParams", $stateParams);
         if ($stateParams.id) {
             if ($stateParams.id === "AccessNotAvailable") {
                 $state.go("noaccess");
             } else {
                 console.log("Demo 1234");
-                LoginService.parseAccessToken($stateParams.id,$stateParams.accessLevel, function () {
+                LoginService.parseAccessToken($stateParams.id, $stateParams.accessLevel, function () {
                     console.log("reached Herre");
                     LoginService.profile(function () {
                         $state.go("dashboard");
@@ -6214,8 +6216,8 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
     $scope.menutitle = NavigationService.makeactive("Dashboard");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
-   
-    
+
+
 
     // $state.reload();
 
@@ -6228,12 +6230,12 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
     }
 })
 
-    .controller('headerctrl', function ($scope, TemplateService, $uibModal,$rootScope,$location,$state) {
+    .controller('headerctrl', function ($scope, TemplateService, $uibModal, $rootScope, $location, $state) {
         $scope.template = TemplateService;
-               
-    
-       $rootScope.$watch(function () {return $location.path()}, function (newLocation, oldLocation) {
-            if($rootScope.actualLocation === newLocation) {
+
+
+        $rootScope.$watch(function () { return $location.path() }, function (newLocation, oldLocation) {
+            if ($rootScope.actualLocation === newLocation) {
                 $state.go("login");
             }
         });

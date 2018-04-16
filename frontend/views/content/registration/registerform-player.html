@@ -86,6 +86,7 @@
               <div class="form-group">
                 <label for="selectSchoolName" class="control-label col-sm-2">*{{type | firstcapitalize}} Name</label>
                 <div class="col-sm-10">
+                  <!-- <pre>{{formData.school}}</pre> -->
                   <ui-select class="" name="selectSchoolName" id="selectSchoolName" theme="bootstrap" ng-model="formData.school" ng-change="searchChangeSchool($select.selected._id)">
                     <ui-select-match allow-clear="true" placeholder="Select/Search your {{type}}">
                       {{$select.selected.name}}
@@ -410,7 +411,7 @@
                       <div class="dirctive-op upload5 Upload-Age" ng-init="showBirthImg = 0;showPhotoImg = 0">
                         <upload-image2 class="up-img birthImg ng-isolate-scope" ng-model="formData.birthImage" no-view file-types=" 'image/jpeg,image/png'"
                           ng-click="showBirthImg=1" ng-disabled="type.disabled" ng-callback="changeitBirthImage"></upload-image2>
-                        <div class="" ng-if="formData.ageProof == 'aadharAage' || formData.ageProof =='birthCert'">
+                        <div class="" ng-if="formData.ageProof == 'aadharAge' || formData.ageProof =='birthCert'">
                           <div class="label label-info text-uppercase">Pic 1</div>
                         </div>
                       </div>
@@ -906,16 +907,6 @@
                           <td>- <span>{{formData.discount}}</span></td>
                         </tr>
                         <!-- PROMO CODE END -->
-                        <!-- REFUND -->
-                        <tr ng-if="formData.refundAmount">
-                          <td>
-                            <div class="text-left">
-                              <label for="" class="display-block">Refund Amount</label>
-                            </div>
-                          </td>
-                          <td>- <span>{{formData.refundAmount}}</span></td>
-                        </tr>
-                        <!-- REFUND END -->
                         <!-- IF IGST -->
                         <tr ng-if="formData.igstAmt != ''">
                           <td>
@@ -950,6 +941,16 @@
                           </td>
                         </tr>
                         <!-- IF SGST END  -->
+                        <!-- REFUND -->
+                        <tr ng-if="formData.refundAmount">
+                          <td>
+                            <div class="text-left">
+                              <label for="" class="display-block">Refund Amount</label>
+                            </div>
+                          </td>
+                          <td>- <span>{{formData.refundAmount}}</span></td>
+                        </tr>
+                        <!-- REFUND END -->
                         <tr>
                           <td>
                             <div class="text-left">
