@@ -66,7 +66,7 @@ var schema = new Schema({
 schema.plugin(deepPopulate, {
     populate: {
         "athlete": {
-            select: '_id sfaId status year registrationFee firstName middleName surname school paymentStatus package atheleteSchoolName transactionID'
+            select: '_id sfaId status year registrationFee firstName middleName surname school paymentStatus package atheleteSchoolName transactionID receiptId'
         },
         "athlete.school": {
             select: ''
