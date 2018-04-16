@@ -219,7 +219,8 @@
                   <div class="form-group  has-feedback" ng-class=" { 'has-success':matchedSuccess===true , 'has-error':notMatchedError===true} ">
                     <label class="col-sm-4 control-label"> *Confirm Password : </label>
                     <div class="col-sm-8">
-                      <input class="form-control" id="confirmPassword" capitalize ng-model="confirmPassword" ng-change="validatePassword(formData.password,confirmPassword)"
+                      <!-- {{ confirmPassword }} -->
+                      <input class="form-control" id="confirmPassword" capitalize ng-model="formData.confirmPassword" ng-change="validatePassword(formData.password,formData.confirmPassword)"
                         name="confirmPassword" type="password" placeholder="Re-enter Password to Confirm Password" minlength="8"
                         autocomplete="new-password" required>
                       <span class="fa fa-check form-control-feedback" ng-if="matchedSuccess"></span>
@@ -834,15 +835,15 @@
               <div>
                 <!-- CASH PAYMENT -->
                 <p ng-if="show==10">
-                  Cash/Cheque/Demand Draft: Selecting this option will enable you to pay the registration fee of Rs. 2,950 (inclusive of all taxes) by Cash/Cheque/Demand
-                  Draft in favour of ‘SFA Sporting Services Pvt Ltd’ which is to be couriered/hand delivered to: 17A, Raviraj
-                  House, 6th Floor, Saraswati Road, Off Linking Road, Santacruz (West) - 400054.
+                  Cash/Cheque/Demand Draft: Selecting this option will enable you to pay the registration fee of Rs. 2,950 (inclusive of all
+                  taxes) by Cash/Cheque/Demand Draft in favour of ‘SFA Sporting Services Pvt Ltd’ which is to be couriered/hand
+                  delivered to: 17A, Raviraj House, 6th Floor, Saraswati Road, Off Linking Road, Santacruz (West) - 400054.
                 </p>
                 <!-- CASH PAYMENT END -->
                 <!-- ONLINE -->
                 <p ng-if="show==9">
-                  Online Payment: Selecting this option will enable you to pay the registration fee of Rs. 2,950 (inclusive of all taxes) via one of the
-                  following methods: 1) Credit Card 2) Debit Card 3) Net Banking
+                  Online Payment: Selecting this option will enable you to pay the registration fee of Rs. 2,950 (inclusive of all taxes) via
+                  one of the following methods: 1) Credit Card 2) Debit Card 3) Net Banking
                 </p>
                 <!-- ONLINE END -->
               </div>

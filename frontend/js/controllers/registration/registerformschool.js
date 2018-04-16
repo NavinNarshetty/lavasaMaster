@@ -18,6 +18,7 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
   $scope.showOtpSuccess = {};
   $scope.formFlag = $stateParams.flag;
   $scope.pageType = 'school';
+  $scope.formData.confirmPassword = '';
 
 
 
@@ -721,9 +722,9 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
   }
   // VALIDATE PASSWORD END
   // CLEAR PASSWORD
-  $scope.clearPassword = function(){
-    $scope.confirmPassword = " ";
-    $scope.validatePassword($scope.formData.password, $scope.confirmPassword);
+  $scope.clearPassword = function () {
+    $scope.formData.confirmPassword = '';
+    $scope.validatePassword($scope.formData.password, $scope.formData.confirmPassword);
   }
   // CLEAR PASSWORD END
 });
