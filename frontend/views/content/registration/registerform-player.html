@@ -86,7 +86,6 @@
               <div class="form-group">
                 <label for="selectSchoolName" class="control-label col-sm-2">*{{type | firstcapitalize}} Name</label>
                 <div class="col-sm-10">
-                  <!-- <pre>{{formData.school}}</pre> -->
                   <ui-select class="" name="selectSchoolName" id="selectSchoolName" theme="bootstrap" ng-model="formData.school" ng-change="searchChangeSchool($select.selected._id)">
                     <ui-select-match allow-clear="true" placeholder="Select/Search your {{type}}">
                       {{$select.selected.name}}
@@ -970,7 +969,6 @@
           </section>
           <!-- REGISTRATION FEES END -->
           <section class="registerform-submitsec formregister-mtb20 text-center">
-            <pre>{{isDisabled}}</pre>
             <button class="btn formregister-btn" ng-disabled="isDisabled" type="submit">Accept & Submit</button>
           </section>
         </form>
