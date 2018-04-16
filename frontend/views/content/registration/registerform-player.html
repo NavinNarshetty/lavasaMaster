@@ -171,7 +171,7 @@
                   <div class="form-group has-feedback" ng-class="{'has-success': passwordMatch}">
                     <label class="control-label col-sm-4">*Create Password:</label>
                     <div class="col-sm-8">
-                      <input type="password" placeholder="Minimum 8 Characters" name="athletePassword" minlength="8" ng-model="formData.password"
+                      <input type="password" placeholder="Minimum 8 Characters" name="athletePassword" minlength="8" ng-model="formData.password" ng-change="clearPassword()"
                         class="form-control" required>
                       <span class="fa fa-check form-control-feedback" ng-show="passwordMatch"></span>
                       <div class="label label-danger pull-right" ng-if="formAthlete.athletePassword.$invalid && formAthlete.athletePassword.$touched">Please Enter Password with 8 characters</div>
@@ -430,7 +430,7 @@
                               </a>
                           </div>
                         </div>
-                        <div class="label label-info text-uppercase" ng-if="formData.ageProof == 'aadharAage' || formData.ageProof =='birthCert'">Pic 1</div>
+                        <div class="label label-info text-uppercase" ng-if="formData.ageProof == 'aadharAge' || formData.ageProof =='birthCert'">Pic 1</div>
                         <div class="hover-img " style="margin-left:18px ">
                           <img src="img/icon/x.png " alt="logo" ng-click="removeProof(formData.birthImage, 'birthImage') " class="img-responsive myicon ">
                         </div>
@@ -970,7 +970,8 @@
           </section>
           <!-- REGISTRATION FEES END -->
           <section class="registerform-submitsec formregister-mtb20 text-center">
-            <button class="btn formregister-btn" ng-disabled="isDisabled==true" type="submit">Accept & Submit</button>
+            <pre>{{isDisabled}}</pre>
+            <button class="btn formregister-btn" ng-disabled="isDisabled" type="submit">Accept & Submit</button>
           </section>
         </form>
         <!-- FORM START END -->

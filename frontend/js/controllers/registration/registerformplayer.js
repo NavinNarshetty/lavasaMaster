@@ -126,10 +126,12 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
     // VIEW PACKAGE TABLE END
     // CHECK REFUND
     $scope.checkRefund = function(){
-      if ($scope.formData.refundAmount >= $scope.formData.amountPaid) {
-        $scope.formData.amountPaid = 0;
-      } else {
-        $scope.formData.amountPaid = $scope.formData.amountPaid - $scope.formData.refundAmount;
+      if ($scope.formData.refundAmount) {
+        if ($scope.formData.refundAmount >= $scope.formData.amountPaid) {
+          $scope.formData.amountPaid = 0;
+        } else {
+          $scope.formData.amountPaid = $scope.formData.amountPaid - $scope.formData.refundAmount;
+        }
       }
     }
     // CHECK REFUND END
@@ -1002,4 +1004,10 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
         }
     }
     // CHECK PASSWORD END
+    // CLEAR PASSWORD
+    $scope.clearPassword = function(){
+      $scope.formData.confirmPassword = "";
+      $scope.checkPassword($scope.formData.confirmPassword);
+    }
+    // CLEAR PASSWORD END
 });

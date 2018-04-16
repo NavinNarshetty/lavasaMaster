@@ -706,16 +706,24 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
 
   // SPORTS JSON END
 
+  // VALIDATE PASSWORD
   $scope.validatePassword = function (setPasswordValue, confirmPasswordValue) {
     // console.log(setPasswordValue, confirmPasswordValue);
-    if (setPasswordValue === confirmPasswordValue) {
+    if (confirmPasswordValue === setPasswordValue) {
       // console.log("verified");
       $scope.matchedSuccess = true;
       $scope.notMatchedError = false;
-    } else if (setPasswordValue !== confirmPasswordValue) {
+    } else if (confirmPasswordValue !== setPasswordValue) {
       // console.log("not matched")
       $scope.notMatchedError = true;
       $scope.matchedSuccess = false;
     }
   }
+  // VALIDATE PASSWORD END
+  // CLEAR PASSWORD
+  $scope.clearPassword = function(){
+    $scope.confirmPassword = " ";
+    $scope.validatePassword($scope.formData.password, $scope.confirmPassword);
+  }
+  // CLEAR PASSWORD END
 });

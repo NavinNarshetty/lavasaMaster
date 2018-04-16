@@ -209,7 +209,7 @@
                     <label class="col-sm-4 control-label">*Create Password : </label>
                     <div class="col-sm-8">
                       <input class="form-control" id="setPassword" capitalize ng-model="formData.password" name="setPassword" type="password" placeholder="Enter Password - Minimum 8 Characters"
-                        minlength="8" autocomplete="new-password" required>
+                        minlength="8" autocomplete="new-password" ng-change="clearPassword()" required>
                       <div class="label label-danger pull-right" ng-show="schoolRegisterForm.setPassword.$invalid && schoolRegisterForm.setPassword.$touched">Please Enter Your Password Minimum 8 Character required*</div>
                     </div>
                   </div>
