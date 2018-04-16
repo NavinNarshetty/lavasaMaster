@@ -558,9 +558,9 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
     $scope.searchSfaObj.keyword = formData;
     var url;
     if ($.jStorage.get("userType") != null && $.jStorage.get("userType") === 'school') {
-      url = 'Registration/search';
+      url = 'Registration/getSearch';
     } else {
-      url = 'Athelete/search';
+      url = 'Athelete/getSearch';
     }
     NavigationService.getMasterData($scope.searchSfaObj, url, function (data) {
       if (data.data.value) {
