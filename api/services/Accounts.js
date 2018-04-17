@@ -1097,6 +1097,7 @@ var model = {
                 },
                 function (found, callback) {
                     async.concatSeries(found, function (mainData, callback) {
+                            console.log("mainData", mainData);
                             var obj = {};
                             var currentPackName;
                             var packPrice;
@@ -1213,23 +1214,31 @@ var model = {
 
                             obj["PAYU ID"] = payu;
                             var j = 0;
-                            _.each(mainData.receiptId, function (n) {
-                                if (j == 0) {
-                                    obj["RECEIPT NO"] = n;
-                                } else {
-                                    obj["RECEIPT NO"] = obj["RECEIPT NO"] + "," + n
-                                }
-                                j++;
-                            });
+                            if (!_.isEmpty(mainData.receiptId)) {
+                                _.each(mainData.receiptId, function (n) {
+                                    if (j == 0) {
+                                        obj["RECEIPT NO"] = n;
+                                    } else {
+                                        obj["RECEIPT NO"] = obj["RECEIPT NO"] + "," + n;
+                                    }
+                                    j++;
+                                });
+                            } else {
+                                obj["RECEIPT NO"] = "";
+                            }
                             var k = 0;
-                            _.each(mainData.checkNo, function (n) {
-                                if (k == 0) {
-                                    obj["CHECK NO"] = n;
-                                } else {
-                                    obj["CHECK NO"] = obj["CHECK NO"] + "," + n
-                                }
-                                k++;
-                            });
+                            if (!_.isEmpty(mainData.checkNo)) {
+                                _.each(mainData.checkNo, function (n) {
+                                    if (k == 0) {
+                                        obj["CHECK NO"] = n;
+                                    } else {
+                                        obj["CHECK NO"] = obj["CHECK NO"] + "," + n;
+                                    }
+                                    k++;
+                                });
+                            } else {
+                                obj["CHECK NO"] = "";
+                            }
 
                             callback(null, obj);
                         },
@@ -1244,7 +1253,6 @@ var model = {
                 if (err) {
                     callback(err, null);
                 } else {
-                    // callback(null, complete);
                     Config.generateExcel("KnockoutIndividual", complete, res);
                 }
             })
@@ -1370,23 +1378,31 @@ var model = {
 
                         obj["PAYU ID"] = payu;
                         var j = 0;
-                        _.each(mainData.receiptId, function (n) {
-                            if (j == 0) {
-                                obj["RECEIPT NO"] = n;
-                            } else {
-                                obj["RECEIPT NO"] = obj["RECEIPT NO"] + "," + n
-                            }
-                            j++;
-                        });
+                        if (!_.isEmpty(mainData.receiptId)) {
+                            _.each(mainData.receiptId, function (n) {
+                                if (j == 0) {
+                                    obj["RECEIPT NO"] = n;
+                                } else {
+                                    obj["RECEIPT NO"] = obj["RECEIPT NO"] + "," + n
+                                }
+                                j++;
+                            });
+                        } else {
+                            obj["RECEIPT NO"] = "";
+                        }
                         var k = 0;
-                        _.each(mainData.receiptId, function (n) {
-                            if (k == 0) {
-                                obj["CHECK NO"] = n;
-                            } else {
-                                obj["CHECK NO"] = obj["CHECK NO"] + "," + n
-                            }
-                            k++;
-                        });
+                        if (!_.isEmpty(mainData.checkNo)) {
+                            _.each(mainData.checkNo, function (n) {
+                                if (k == 0) {
+                                    obj["CHECK NO"] = n;
+                                } else {
+                                    obj["CHECK NO"] = obj["CHECK NO"] + "," + n
+                                }
+                                k++;
+                            });
+                        } else {
+                            obj["CHECK NO"] = "";
+                        }
                         callback(null, obj);
                     },
                     function (err, singleData) {
@@ -1769,7 +1785,8 @@ var model = {
         str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'hundred ' : '';
         str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) : '';
         return str;
-    }
+    },
+
 
 };
 module.exports = _.assign(module.exports, exports, model);
