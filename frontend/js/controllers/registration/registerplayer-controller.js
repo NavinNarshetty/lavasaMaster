@@ -565,7 +565,7 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
     if ($.jStorage.get("userType") != null && $.jStorage.get("userType") === 'school') {
       url = 'Registration/getSearch';
     } else {
-      url = 'Athelete/getSearch';
+      url = 'Athelete/search';
     }
     NavigationService.getMasterData($scope.searchSfaObj, url, function (data) {
       if (data.data.value) {

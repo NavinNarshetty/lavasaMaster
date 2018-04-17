@@ -205,6 +205,13 @@
     background-color: transparent;
     color: $register-base;
   }
+  .ui-select-container{
+    .glyphicon-remove:before{
+      content: '\f00d';
+      font: normal normal normal 14px/1 FontAwesome;
+      color: $sport-primary;
+    }
+  }
 }
 
 // TAB
