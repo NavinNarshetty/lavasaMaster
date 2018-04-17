@@ -415,6 +415,7 @@ myApp.controller('SportsRulesCtrl', function ($scope, TemplateService, $state, N
         $scope.selectService.sportType = obj.sportType;
         $scope.selectService.isTeam = obj.isTeam;
         $scope.selectService.disableNextOnRules = false;
+        $scope.selectService.isDisabled = false;
     });
     loginService.loginGet(function (data) {
         $scope.detail = data;
