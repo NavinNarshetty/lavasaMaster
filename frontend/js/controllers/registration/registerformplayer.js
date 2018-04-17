@@ -416,7 +416,7 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
                 $timeout(function () {
                     $scope.birthInstances.close();
                 }, 3000);
-            } else if (form.ageProof == "hello" && !form.photoImage) {
+            } else if ((form.ageProof == "aadharAge" || form.ageProof == "birthCert") && !form.photoImage) {
                 // alert("Photo id not uploaded");
                 // return false;
                 $scope.openAgeModal();

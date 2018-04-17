@@ -90,7 +90,7 @@
                     <ui-select-match allow-clear="true" placeholder="Select/Search your {{type}}">
                       {{$select.selected.name}}
                     </ui-select-match>
-                    <ui-select-choices refresh-delay="0" repeat="item in schoolList | filter: $select.search" refresh="refreshChangeSchool($select.search)">
+                    <ui-select-choices refresh-delay="0" repeat="item._id as item in schoolList | filter: $select.search" refresh="refreshChangeSchool($select.search)">
                       <span ng-bind-html="item.name"></span>
                     </ui-select-choices>
                   </ui-select>
