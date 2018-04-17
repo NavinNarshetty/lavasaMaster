@@ -3042,6 +3042,14 @@ $tickerDuration: 60s;
       border: 1px solid $sport-darkgrey;
     }
   }
+  .formsearch-uiloadmore{
+    margin-bottom: -10px;
+    &:hover{
+      .btn-primary{
+        color: $sport-primary;
+      }
+    }
+  }
 }
 .registerform-step2{
   padding: 40px 30px;
