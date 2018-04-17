@@ -74,6 +74,9 @@ schema.plugin(deepPopulate, {
         "school": {
             select: '_id schoolName schoolType schoolCategory year paymentStatus status sfaID package receiptId email mobile'
         },
+        "school.package": {
+            select: ''
+        },
         "transaction": {
             select: ''
         },
@@ -1280,17 +1283,18 @@ var model = {
             },
             function (found, callback) {
                 async.concatSeries(found, function (mainData, callback) {
+                        console.log("mainData", mainData);
                         var obj = {};
-                        var currentPackName;
-                        var packPrice;
-                        var cgstPercent;
-                        var sgstPercent;
-                        var igstPercent;
+                        var currentPackName = "";
+                        var packPrice = 0;
+                        var cgstPercent = 0;
+                        var sgstPercent = 0;
+                        var igstPercent = 0;
                         var finalPrice = 0;
                         if (mainData.school) {
                             obj["SFA ID"] = mainData.school.sfaID;
                             obj["SCHOOL NAME"] = mainData.school.schoolName;
-                            if (mainData.school.package == undefined) {
+                            if (mainData.school.package) {
                                 currentPackName = mainData.school.package.name;
                                 packPrice = mainData.school.package.finalPrice;
                                 cgstPercent = mainData.school.package.cgstPercent;
@@ -1325,8 +1329,8 @@ var model = {
                         } else {
                             obj["CGST PERCENT"] = 0;
                         }
-                        if (mainData.cgstAmt != null) {
-                            obj["CGST AMOUNT"] = mainData.cgstAmt;
+                        if (mainData.cgst != null) {
+                            obj["CGST AMOUNT"] = mainData.cgst;
                         } else {
                             obj["CGST AMOUNT"] = 0;
                         }
@@ -1335,8 +1339,8 @@ var model = {
                         } else {
                             obj["SGST PERCENT"] = 0;
                         }
-                        if (mainData.sgstAmt != null) {
-                            obj["SGST AMOUNT"] = mainData.sgstAmt;
+                        if (mainData.sgst != null) {
+                            obj["SGST AMOUNT"] = mainData.sgst;
                         } else {
                             obj["SGST AMOUNT"] = 0;
                         }
@@ -1345,8 +1349,8 @@ var model = {
                         } else {
                             obj["IGST PERCENT"] = 0;
                         }
-                        if (mainData.igstAmt != null) {
-                            obj["IGST AMOUNT"] = mainData.igstAmt;
+                        if (mainData.igst != null) {
+                            obj["IGST AMOUNT"] = mainData.igst;
                         } else {
                             obj["IGST AMOUNT"] = 0;
                         }
