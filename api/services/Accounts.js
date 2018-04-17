@@ -625,30 +625,30 @@ var model = {
                                 });
                         }
                     }
-                },
-                //need to check for duplicate mail
-                function (data, callback) {
-                    if (data.athlete) {
-                        var found = {};
-                        found._id = data.athlete;
-                        Accounts.updateAthleteMailAndSms(found, function (err, mailData) {
-                            if (err) {
-                                callback(err, null);
-                            } else {
-                                callback(null, mailData);
-                            }
-                        });
-                    } else {
-                        found._id = data.school;
-                        Accounts.updateScoolMailAndSms(found, function (err, mailData) {
-                            if (err) {
-                                callback(err, null);
-                            } else {
-                                callback(null, mailData);
-                            }
-                        });
-                    }
                 }
+                // //need to check for duplicate mail
+                // function (data, callback) {
+                //     if (data.athlete) {
+                //         var found = {};
+                //         found._id = data.athlete;
+                //         Accounts.updateAthleteMailAndSms(found, function (err, mailData) {
+                //             if (err) {
+                //                 callback(err, null);
+                //             } else {
+                //                 callback(null, mailData);
+                //             }
+                //         });
+                //     } else {
+                //         found._id = data.school;
+                //         Accounts.updateScoolMailAndSms(found, function (err, mailData) {
+                //             if (err) {
+                //                 callback(err, null);
+                //             } else {
+                //                 callback(null, mailData);
+                //             }
+                //         });
+                //     }
+                // }
             ],
             function (err, complete) {
                 if (err) {
