@@ -218,7 +218,6 @@ var model = {
                         var PayuId = [];
                         PayuId.push(data.transactionid);
                         var date = new Date();
-
                         var matchObj = {
                             $set: {
                                 receiptId: receipt,

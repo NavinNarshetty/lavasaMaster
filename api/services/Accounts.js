@@ -920,7 +920,8 @@ var model = {
 
                         var matchObj = {
                             $set: {
-                                package: found.packageNew
+                                package: found.packageNew,
+                                paymentStatus: "Paid"
                             }
                         };
                         Athelete.update({
@@ -1027,7 +1028,8 @@ var model = {
                                         } else {
                                             var matchObj = {
                                                 $set: {
-                                                    package: found.packageNew
+                                                    package: found.packageNew,
+                                                    paymentStatus: "Paid"
                                                 }
                                             };
                                             console.log("found in update", found);
