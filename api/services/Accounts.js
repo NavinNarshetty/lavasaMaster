@@ -1691,6 +1691,7 @@ var model = {
                 emailData.type = final.property.institutionType;
                 emailData.infoNo = final.property.infoNo;
                 emailData.infoId = final.property.infoId;
+                emailData.ddFavour = final.property.ddFavour;
                 emailData.cityAddress = final.property.cityAddress;
                 if (final.accounts.upgrade) {
                     emailData.upgrade = final.accounts.upgrade;
