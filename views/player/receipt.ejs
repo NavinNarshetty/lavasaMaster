@@ -280,7 +280,7 @@
                                                                             <b>Transaction Details</b>
                                                                             <br>
                                                                             <span>
-                                                                                <%=transactionID%>
+                                                                                <%=transactionId%>
                                                                             </span>
                                                                         </td>
                                                                         <td style="padding:5px 10px 15px 10px;"></td>
@@ -293,7 +293,7 @@
                                                                             <b>Amount (In Words) :</b>
                                                                             <br>INR
                                                                             <span>
-                                                                                <%=amountInWords%>
+                                                                                <%=amountToWords%>
                                                                             </span>
                                                                         </td>
                                                                         <td style="padding: 0 10px 0px 10px;border-top: 1px solid black;">
@@ -313,17 +313,18 @@
                 <td>
                     <div class="blue-footer text-center" style="background:#0a1a72;font-family: TitilliumWeb-Regular; color: #fff">
                         <%if(infoId == 'info@sfanow.in'){%>
-                            <p style="padding: 3px 0;"> 17A, Raviraj House, 6th Floor, Saraswati Road, Off Linking Road, Santacruz (West) - 400054
-                                <br>www.sfanow.in I
-                                <%=infoId%> Contact :
-                                    <%=infoNo%>
-                            </p>
-                            <%} else if(infoId == 'info.hyd@sfanow.in'){%>
-                                <p style="padding: 3px 0;">Head Office: SFA Sporting Services Pvt Ltd, 17A, Raviraj House, 6th Floor, Saraswati Road,
-                                    Off Linking Road, Santacruz (West) - 400054
+                            <p style="padding: 3px 0;">
+                                <%=cityAddress%>
                                     <br>www.sfanow.in I
                                     <%=infoId%> Contact :
                                         <%=infoNo%>
+                            </p>
+                            <%} else if(infoId == 'info.hyd@sfanow.in'){%>
+                                <p style="padding: 3px 0;">Head Office:
+                                    <%=cityAddress%>
+                                        <br>www.sfanow.in I
+                                        <%=infoId%> Contact :
+                                            <%=infoNo%>
                                 </p>
                                 <%}%>
 
