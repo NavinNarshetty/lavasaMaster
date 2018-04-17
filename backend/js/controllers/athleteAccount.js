@@ -95,6 +95,7 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
     $scope.formData.cgst = player.athleteData.cgst;
     $scope.formData.sgst = player.athleteData.sgst;
     $scope.formData.igst = player.athleteData.igst;
+    $scope.formData.refundAmount = player.athleteData.refundAmount;
     $scope.formData.outstandingAmount = player.athleteData.outstandingAmount;
     $scope.formData.discount = player.athleteData.discount;
     $scope.formData.netTotal = player.athleteData.totalPaid;
