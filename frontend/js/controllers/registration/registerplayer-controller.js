@@ -97,7 +97,12 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
   //LOGIN FUNCTION
   $scope.login = function (formData, formSports) {
     $scope.yourPromise = NavigationService.success().then(function () {
-      formData.type = $scope.formData.type;
+      // formData.type = $scope.formData.type;
+      if ($stateParams.type == 'player') {
+        formData.type = 'athlete';
+      } else {
+        formData.type = 'school';
+      }
       console.log(" formData.type", formData.type);
       if (formSports.$valid) {
         if (formData) {
