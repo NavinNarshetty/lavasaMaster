@@ -1685,7 +1685,7 @@ var model = {
             });
     },
 
-    receiptMail: function (data, callback) {
+    receiptMailOld: function (data, callback) {
         async.waterfall([
                 function (callback) {
                     ConfigProperty.find().lean().exec(function (err, property) {
@@ -1775,6 +1775,107 @@ var model = {
 
             });
 
+    },
+
+    receiptMail: function (data, callback) {
+        async.waterfall([
+            function (callback) {
+                ConfigProperty.find().lean().exec(function (err, property) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(property)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, property);
+                        }
+                    }
+                });
+            },
+            function (property, callback) {
+                Accounts.findOne({
+                        athlete: data._id
+                    }).lean()
+                    .deepPopulate("athlete athlete.package transaction transaction.package")
+                    .exec(function (err, accountsData) {
+                        if (err || _.isEmpty(accountsData)) {
+                            callback(null, {
+                                error: "no accounts found",
+                                data: data
+                            });
+                        } else {
+                            var final = {};
+                            final.accounts = accountsData;
+                            final.property = property[0];
+                            callback(null, final);
+                        }
+                    });
+            },
+            function (final, callback) {
+                console.log("final data------->", final);
+                var len = final.accounts.transaction.length;
+                var temp = len;
+                len--;
+                var emailData = {};
+                emailData.city = final.property.sfaCity;
+                emailData.type = final.property.institutionType;
+                emailData.infoNo = final.property.infoNo;
+                emailData.infoId = final.property.infoId;
+                emailData.packageName = final.accounts.transaction[len].package.name;
+                emailData.amountWithoutTax = final.accounts.transaction[len].package.finalPrice;
+                emailData.cgstPercent = final.accounts.transaction[len].package.cgstPercent;
+                emailData.sgstPercent = final.accounts.transaction[len].package.sgstPercent;
+                emailData.igstPercent = final.accounts.transaction[len].package.igstPercent;
+                emailData.cgstAmount = final.accounts.transaction[len].cgstAmount;
+                emailData.sgstAmount = final.accounts.transaction[len].sgstAmount;
+                emailData.igstAmount = final.accounts.transaction[len].igstAmount;
+                emailData.eventYear = final.property.eventYear;
+                if (temp > 1) {
+                    temp = temp - 2;
+                } else {
+                    temp = 0;
+                }
+                emailData.prevPaidAmount = final.accounts.transaction[temp].amountPaid;
+                emailData.discount = final.accounts.discount;
+                emailData.firstName = final.accounts.athlete.firstName;
+                emailData.receiptNo = final.accounts.athlete.receiptId;
+                emailData.surname = final.accounts.athlete.surname;
+                emailData.paymentMode = final.accounts.transaction[len].paymentMode;
+                emailData.athleteAmount = final.accounts.transaction[len].amountPaid;
+                if (final.accounts.transaction[len].PayuId) {
+                    emailData.transactionId = final.accounts.transaction[len].PayuId;
+                }
+                emailData.amountToWords = Accounts.amountToWords(final.accounts.transaction[len].amountPaid);
+                emailData.from = final.property.infoId;
+                emailData.email1 = [{
+                    email: "supriya.bhartiya@wohlig.com"
+                }];
+                emailData.bcc1 = [{
+                    email: "payments@sfanow.in"
+                }, {
+                    email: "admin@sfanow.in"
+                }];
+                emailData.filename = "player/receipt.ejs";
+                emailData.subject = "SFA: Your Payment Receipt as an School for SFA " + emailData.city + " " + emailData.type + " " + emailData.eventYear + ".";
+                console.log("emaildata", emailData);
+                Config.emailTo(emailData, function (err, emailRespo) {
+                    if (err) {
+                        console.log(err);
+                        callback(null, err);
+                    } else {
+                        callback(null, emailRespo);
+                    }
+                });
+
+            },
+
+        ], function (err, complete) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, complete);
+            }
+        })
     },
 
     generateMobileOTP: function (data, callback) {
@@ -1995,7 +2096,7 @@ var model = {
                 },
                 function (property, accountData, callback) {
                     Package.findOne({
-                        _id: data.package
+                        _id: data.package._id
                     }).lean().exec(function (err, package) {
                         if (err) {
                             callback(err, null);
@@ -2010,7 +2111,7 @@ var model = {
                 },
                 function (property, accountData, package, callback) {
                     var packageId = {};
-                    packageId._id = data.package;
+                    packageId._id = data.package._id;
                     Featurepackage.featureDetailByPackage(packageId, function (err, features) {
                         if (err) {
                             callback(err, null);
@@ -2109,7 +2210,6 @@ var model = {
 
     },
 
-
     registeredCashPaymentMailSms: function (data, callback) {
         async.waterfall([
                 function (callback) {
@@ -2142,7 +2242,7 @@ var model = {
                 },
                 function (property, accountData, callback) {
                     Package.findOne({
-                        _id: data.package
+                        _id: data.package._id
                     }).lean().exec(function (err, package) {
                         if (err) {
                             callback(err, null);
@@ -2157,7 +2257,7 @@ var model = {
                 },
                 function (property, accountData, package, callback) {
                     var packageId = {};
-                    packageId._id = data.package;
+                    packageId._id = data.package._id;
                     Featurepackage.featureDetailByPackage(packageId, function (err, features) {
                         if (err) {
                             callback(err, null);
@@ -2485,7 +2585,7 @@ var model = {
                 },
                 function (property, accountData, callback) {
                     Package.findOne({
-                        _id: data.package
+                        _id: data.package._id
                     }).lean().exec(function (err, package) {
                         if (err) {
                             callback(err, null);
@@ -2500,7 +2600,7 @@ var model = {
                 },
                 function (property, accountData, package, callback) {
                     var packageId = {};
-                    packageId._id = data.package;
+                    packageId._id = data.package._id;
                     Featurepackage.featureDetailByPackage(packageId, function (err, features) {
                         if (err) {
                             callback(err, null);
@@ -2635,7 +2735,7 @@ var model = {
                 },
                 function (property, accountData, callback) {
                     Package.findOne({
-                        _id: data.package
+                        _id: data.package._id
                     }).lean().exec(function (err, package) {
                         if (err) {
                             callback(err, null);
@@ -2650,7 +2750,7 @@ var model = {
                 },
                 function (property, accountData, package, callback) {
                     var packageId = {};
-                    packageId._id = data.package;
+                    packageId._id = data.package._id;
                     Featurepackage.featureDetailByPackage(packageId, function (err, features) {
                         if (err) {
                             callback(err, null);
