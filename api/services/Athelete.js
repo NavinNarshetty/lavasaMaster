@@ -1821,6 +1821,9 @@ var model = {
                 emailData.type = final.property.institutionType;
                 emailData.infoNo = final.property.infoNo;
                 emailData.infoId = final.property.infoId;
+                emailData.ddFavour = final.property.ddFavour;
+                emailData.cityAddress = final.property.cityAddress;
+                emailData.upgrade = false;
                 emailData.packageName = final.accounts.transaction[len].package.name;
                 emailData.amountWithoutTax = final.accounts.transaction[len].package.finalPrice;
                 emailData.cgstPercent = final.accounts.transaction[len].package.cgstPercent;
@@ -1838,7 +1841,7 @@ var model = {
                 emailData.prevPaidAmount = final.accounts.transaction[temp].amountPaid;
                 emailData.discount = final.accounts.discount;
                 emailData.firstName = final.accounts.athlete.firstName;
-                emailData.receiptNo = final.accounts.athlete.receiptId;
+                emailData.receiptNo = final.accounts.transaction[len].receiptId[0];
                 emailData.surname = final.accounts.athlete.surname;
                 emailData.paymentMode = final.accounts.transaction[len].paymentMode;
                 emailData.athleteAmount = final.accounts.transaction[len].amountPaid;
@@ -1848,7 +1851,7 @@ var model = {
                 emailData.amountToWords = Accounts.amountToWords(final.accounts.transaction[len].amountPaid);
                 emailData.from = final.property.infoId;
                 emailData.email1 = [{
-                    email: "supriya.bhartiya@wohlig.com"
+                    email: final.accounts.athlete.email
                 }];
                 emailData.bcc1 = [{
                     email: "payments@sfanow.in"

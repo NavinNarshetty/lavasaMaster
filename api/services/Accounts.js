@@ -1706,7 +1706,6 @@ var model = {
                 emailData.cgstAmount = final.accounts.transaction[len].cgstAmount;
                 emailData.sgstAmount = final.accounts.transaction[len].sgstAmount;
                 emailData.igstAmount = final.accounts.transaction[len].igstAmount;
-                emailData.upgrade = true;
                 emailData.eventYear = final.property.eventYear;
                 if (temp > 1) {
                     temp = temp - 2;
