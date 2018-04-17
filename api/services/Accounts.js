@@ -66,13 +66,13 @@ var schema = new Schema({
 schema.plugin(deepPopulate, {
     populate: {
         "athlete": {
-            select: '_id sfaId status year registrationFee firstName middleName surname school paymentStatus package atheleteSchoolName transactionID receiptId'
+            select: '_id sfaId status year email mobile registrationFee firstName middleName surname school paymentStatus package atheleteSchoolName transactionID receiptId'
         },
         "athlete.school": {
             select: ''
         },
         "school": {
-            select: '_id schoolName schoolType schoolCategory year paymentStatus status sfaID package receiptId'
+            select: '_id schoolName schoolType schoolCategory year paymentStatus status sfaID package receiptId email mobile'
         },
         "transaction": {
             select: ''
@@ -626,6 +626,7 @@ var model = {
                         }
                     }
                 },
+                //need to check for duplicate mail
                 function (data, callback) {
                     if (data.athlete) {
                         var found = {};
@@ -1703,6 +1704,7 @@ var model = {
                 emailData.cgstAmount = final.accounts.transaction[len].cgstAmount;
                 emailData.sgstAmount = final.accounts.transaction[len].sgstAmount;
                 emailData.igstAmount = final.accounts.transaction[len].igstAmount;
+                emailData.upgrade = true;
                 emailData.eventYear = final.property.eventYear;
                 if (temp > 1) {
                     temp = temp - 2;
