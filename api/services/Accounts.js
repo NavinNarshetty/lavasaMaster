@@ -1157,11 +1157,19 @@ var model = {
                                 if (i == 0) {
                                     obj["SELECTED PACKAGES"] = n.package.name;
                                     paymentMode = n.paymentMode;
-                                    payu = n.PayuId;
+                                    if (n.PayuId) {
+                                        payu = n.PayuId;
+                                    } else {
+                                        payu = "NA";
+                                    }
                                 } else {
                                     obj["SELECTED PACKAGES"] = obj["SELECTED PACKAGES"] + "," + n.package.name;
                                     paymentMode = paymentMode + "," + n.paymentMode;
-                                    payu = payu + "," + n.PayuId
+                                    if (n.PayuId) {
+                                        payu = payu + "," + n.PayuId;
+                                    } else {
+                                        payu = payu + "," + "NA";
+                                    }
                                 }
                                 totalPaid = totalPaid + n.amountPaid;
 
@@ -1326,10 +1334,18 @@ var model = {
                         _.each(mainData.transaction, function (n) {
                             if (i == 0) {
                                 paymentMode = n.paymentMode;
-                                payu = n.PayuId;
+                                if (n.PayuId) {
+                                    payu = n.PayuId;
+                                } else {
+                                    payu = "NA"
+                                }
                             } else {
                                 paymentMode = paymentMode + "," + n.paymentMode;
-                                payu = payu + "," + n.PayuId
+                                if (n.PayuId) {
+                                    payu = payu + "," + n.PayuId;
+                                } else {
+                                    payu = payu + "," + "NA";
+                                }
                             }
                             totalPaid = totalPaid + n.amountPaid;
                             i++;
