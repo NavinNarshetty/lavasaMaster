@@ -110,7 +110,7 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
                 $scope.selectService.sportName = data.data.sportName;
                 $scope.selectService.sportType = data.data.sportType;
                 $scope.selectService.categoryType = data.data.categoryType;
-
+                $scope.selectService.isDisabled = false;
                 console.log("$scope.selectService", $scope.selectService);
             });
     };
@@ -442,8 +442,8 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
                     if (findIndex >= 0) {
                         $scope.listOfAthelete[findIndex].disableGender = true;
                         $scope.listOfAthelete[findIndex].checked = false;
-                    } else { }
-                } else { }
+                    } else {}
+                } else {}
             }
 
             if ($scope.selectService.team.length === 2) {
