@@ -231,12 +231,12 @@ var model = {
                             formData.sportsDepartment = singleData.sportsDepartment;
                             formData.status = singleData.status;
                             formData.oldId = singleData._id;
-                            callback(null, formData);
+
                         } else {
                             var formData = {};
                             // 
                             var i = (found.year.length - 1);
-                            if (singleData.year > found.year[i]) {
+                            if (parseInt(singleData.year) > parseInt(found.year[i]) || _.isEmpty(found.year)) {
                                 formData._id = found._id;
                                 formData.sfaID = singleData.sfaID;
                                 formData.receiptId = singleData.receiptId;
@@ -316,12 +316,12 @@ var model = {
                                 formData.teamSports = singleData.teamSports;
                                 formData.sportsDepartment = singleData.sportsDepartment;
                                 formData.status = singleData.status;
-                                formData.currentYear = singleData.currentYear;
+                                formData.currentYear = singleData.year;
                             } else {
                                 formData._id = found._id;
                                 formData.sfaID = found.sfaID;
                                 formData.receiptId = found.receiptId;
-                                formData.institutionType = found.institutionType;
+                                formData.institutionType = "school";
                                 formData.password = found.password;
                                 formData.year = found.year;
                                 formData.schoolName = found.schoolName;
@@ -396,10 +396,11 @@ var model = {
                                 formData.teamSports = found.teamSports;
                                 formData.sportsDepartment = found.sportsDepartment;
                                 formData.status = found.status;
-                                formData.currentYear = found.currentYear;
+                                formData.currentYear = found.year;
                             }
-                            callback(null, formData);
+                            // callback(null, formData);
                         }
+                        callback(null, formData);
                     });
                 },
                 function (formData, callback) {
