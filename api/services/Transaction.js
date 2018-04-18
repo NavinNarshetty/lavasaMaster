@@ -532,14 +532,14 @@ var model = {
                     }
                 },
                 function (accountsData, callback) {
-                    if (data.athlete) {
+                    if (data.athleteId) {
                         var matchObj = {
                             $set: {
                                 paymentStatus: paymentStatusFinal
                             }
                         };
                         Athelete.update({
-                            _id: data.athlete
+                            _id: data.athleteId
                         }, matchObj).exec(
                             function (err, data3) {
                                 if (err) {
