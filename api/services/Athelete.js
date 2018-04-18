@@ -382,6 +382,52 @@ var model = {
         });
     },
 
+    getSearchAggregatePipeline: function (data) {
+        var pipeline = [ // Stage 1
+            {
+                $match: {
+
+                    $or: [{
+                            "firstName": {
+                                $regex: data.keyword,
+                                $options: "i"
+                            }
+                        }, {
+                            "surname": {
+                                $regex: data.keyword,
+                                $options: "i"
+                            }
+                        },
+                        {
+                            "sfaId": data.keyword
+                        }
+                    ]
+                }
+            },
+            // Stage 4
+            {
+                $match: {
+                    $or: [{
+                        registrationFee: {
+                            $ne: "online PAYU"
+                        }
+                    }, {
+                        paymentStatus: {
+                            $ne: "Pending"
+                        }
+                    }]
+                }
+            },
+            {
+                $sort: {
+                    "createdAt": -1
+
+                }
+            },
+        ];
+        return pipeline;
+    },
+
     filterAthlete: function (data, callback) {
         console.log("date", data.startDate);
         var maxRow = Config.maxRow;
@@ -683,78 +729,38 @@ var model = {
                     }
                 });
         } else if (data.keyword !== "") {
-            Athelete.aggregate(
-                [{
-                        $match: {
-
-                            $or: [{
-                                    "firstName": {
-                                        $regex: data.keyword,
-                                        $options: "i"
-                                    }
-                                }, {
-                                    "surname": {
-                                        $regex: data.keyword,
-                                        $options: "i"
-                                    }
-                                },
-                                {
-                                    "sfaId": data.keyword
-                                }
-                            ]
-                        }
-                    },
-                    // Stage 4
-                    {
-                        $match: {
-                            $or: [{
-                                registrationFee: {
-                                    $ne: "online PAYU"
-                                }
-                            }, {
-                                paymentStatus: {
-                                    $ne: "Pending"
-                                }
-                            }]
-                        }
-                    },
-                    {
-                        $sort: {
-                            "createdAt": -1
-
-                        }
-                    },
-                ],
-                function (err, returnReq) {
-                    console.log("returnReq : ", returnReq);
-                    if (err) {
-                        console.log(err);
-                        callback(null, err);
-                    } else {
-                        if (_.isEmpty(returnReq)) {
-                            var count = returnReq.length;
-                            console.log("count", count);
-
-                            var data = {};
-                            data.options = options;
-
-                            data.results = returnReq;
-                            data.total = count;
-                            callback(null, data);
+            var count = 0;
+            var pipeLine = Athelete.getSearchAggregatePipeline(data);
+            var newPipeLine = _.cloneDeep(pipeLine);
+            Athelete.aggregate(pipeLine, function (err, matchData) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    newPipeLine.push({
+                        $skip: options.start
+                    }, {
+                        $limit: options.count
+                    });
+                    Athelete.aggregate(newPipeLine, function (err, returnReq) {
+                        if (err) {
+                            console.log(err);
+                            callback(err, "error in mongoose");
                         } else {
-                            var count = returnReq.length;
-                            console.log("count", count);
-
-                            var data = {};
-                            data.options = options;
-
-                            data.results = returnReq;
-                            data.total = count;
-                            callback(null, data);
-
+                            if (_.isEmpty(returnReq)) {
+                                callback(null, []);
+                            } else {
+                                count = matchData.length;
+                                console.log("count", count);
+                                var data = {};
+                                data.options = options;
+                                data.results = returnReq;
+                                data.total = count;
+                                callback(null, data);
+                            }
                         }
-                    }
-                });
+                    });
+                }
+            });
         } else {
             Athelete.find(matchObj)
                 .sort({
