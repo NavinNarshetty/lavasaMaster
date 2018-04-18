@@ -1151,6 +1151,7 @@ var model = {
                             var i = 0;
                             var paymentMode;
                             var payu;
+                            var totalPaid = 0;;
 
                             _.each(mainData.transaction, function (n) {
                                 if (i == 0) {
@@ -1162,6 +1163,7 @@ var model = {
                                     paymentMode = paymentMode + "," + n.paymentMode;
                                     payu = payu + "," + n.PayuId
                                 }
+                                totalPaid = totalPaid + n.amountPaid;
 
                                 i++;
                             });
@@ -1204,7 +1206,7 @@ var model = {
                             } else {
                                 obj["TOTAL TO PAY"] = (finalPrice + obj["CGST AMOUNT"] + obj["SGST AMOUNT"]) - mainData.discount;
                             }
-                            obj["TOTAL PAID"] = mainData.totalPaid;
+                            obj["TOTAL PAID"] = totalPaid;
                             obj["OUTSTANDING AMOUNT"] = mainData.outstandingAmount;
                             if (mainData.upgrade == true) {
                                 obj["UPGRADED"] = "YES";
@@ -1319,6 +1321,7 @@ var model = {
                         var i = 0;
                         var paymentMode;
                         var payu;
+                        var totalPaid = 0;
 
                         _.each(mainData.transaction, function (n) {
                             if (i == 0) {
@@ -1328,6 +1331,7 @@ var model = {
                                 paymentMode = paymentMode + "," + n.paymentMode;
                                 payu = payu + "," + n.PayuId
                             }
+                            totalPaid = totalPaid + n.amountPaid;
                             i++;
                         });
 
@@ -1369,7 +1373,7 @@ var model = {
                         } else {
                             obj["TOTAL TO PAY"] = (finalPrice + obj["CGST AMOUNT"] + obj["SGST AMOUNT"]) - mainData.discount;
                         }
-                        obj["TOTAL PAID"] = mainData.totalPaid;
+                        obj["TOTAL PAID"] = totalPaid;
                         obj["OUTSTANDING AMOUNT"] = mainData.outstandingAmount;
                         if (mainData.upgrade == true) {
                             obj["UPGRADED"] = "YES";
