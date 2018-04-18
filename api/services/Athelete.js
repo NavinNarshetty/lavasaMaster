@@ -4836,6 +4836,11 @@ var model = {
                         "mobile": data.mobile,
                         "otp": otp
                     };
+                } else {
+                    var sendObj = {
+                        "sfaId": data.sfaId,
+                        "otp": otp
+                    };
                 }
                 // var sendObj = {
                 //     "sfaId": data.sfaId,
