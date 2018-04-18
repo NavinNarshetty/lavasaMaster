@@ -35,6 +35,7 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
         console.log("getAth", data);
         if (data.value == true) {
           $scope.formData = data.data;
+          $scope.refreshChangeSchool("");
           $scope.formData.password = "";
           $scope.formData.standard = "";
           $scope.formData.termsAndCondition = false;
