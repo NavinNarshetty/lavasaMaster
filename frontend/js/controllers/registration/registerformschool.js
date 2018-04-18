@@ -710,14 +710,22 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
   // VALIDATE PASSWORD
   $scope.validatePassword = function (setPasswordValue, confirmPasswordValue) {
     // console.log(setPasswordValue, confirmPasswordValue);
-    if (confirmPasswordValue === setPasswordValue) {
-      // console.log("verified");
-      $scope.matchedSuccess = true;
-      $scope.notMatchedError = false;
-    } else if (confirmPasswordValue !== setPasswordValue) {
-      // console.log("not matched")
-      $scope.notMatchedError = true;
-      $scope.matchedSuccess = false;
+    $scope.passwordError = "Minimum 8 characters";
+    console.log("pass", $scope.passwordError, confirmPasswordValue);
+    $scope.showConfirm = true;
+    $scope.passwordMatch = false;
+    if (confirmPasswordValue && confirmPasswordValue != undefined) {
+      if (confirmPasswordValue.length >= 8) {
+          if (confirmPasswordValue != setPasswordValue) {
+              $scope.passwordError = "Entered passwords do not match";
+              $scope.showConfirm = true;
+          } else {
+              $scope.passwordMatch = true;
+              $scope.showConfirm = false;
+          }
+      }
+    } else {
+      $scope.passwordError = "Enter Confirm Password";
     }
   }
   // VALIDATE PASSWORD END

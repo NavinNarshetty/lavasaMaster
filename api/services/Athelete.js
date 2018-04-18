@@ -2245,7 +2245,7 @@ var model = {
                 },
                 function (property, accountData, callback) {
                     Package.findOne({
-                        _id: data.package._id
+                        _id: data.package
                     }).lean().exec(function (err, package) {
                         if (err) {
                             callback(err, null);
@@ -2260,7 +2260,7 @@ var model = {
                 },
                 function (property, accountData, package, callback) {
                     var packageId = {};
-                    packageId._id = data.package._id;
+                    packageId._id = data.package;
                     Featurepackage.featureDetailByPackage(packageId, function (err, features) {
                         if (err) {
                             callback(err, null);
@@ -2738,7 +2738,7 @@ var model = {
                 },
                 function (property, accountData, callback) {
                     Package.findOne({
-                        _id: data.package._id
+                        _id: data.package
                     }).lean().exec(function (err, package) {
                         if (err) {
                             callback(err, null);
@@ -2753,7 +2753,7 @@ var model = {
                 },
                 function (property, accountData, package, callback) {
                     var packageId = {};
-                    packageId._id = data.package._id;
+                    packageId._id = data.package;
                     Featurepackage.featureDetailByPackage(packageId, function (err, features) {
                         if (err) {
                             callback(err, null);

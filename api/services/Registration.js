@@ -1878,11 +1878,13 @@ var model = {
                 }
                 emailData.prevPaidAmount = final.accounts.transaction[temp].amountPaid;
                 emailData.discount = final.accounts.discount;
-                emailData.firstName = final.accounts.athlete.firstName;
-                emailData.receiptNo = final.accounts.athlete.receiptId;
-                emailData.surname = final.accounts.athlete.surname;
+                emailData.schoolName = found.accounts.school.schoolName;
+                if (found.accounts.school.gstNo) {
+                    emailData.schoolGstNo = found.accounts.school.gstNo;
+                }
+                emailData.receiptNo = final.accounts.transaction[len].receiptId[0];
                 emailData.paymentMode = final.accounts.transaction[len].paymentMode;
-                emailData.athleteAmount = final.accounts.transaction[len].amountPaid;
+                emailData.schoolAmount = final.accounts.transaction[len].amountPaid;
                 if (final.accounts.transaction[len].PayuId) {
                     emailData.transactionId = final.accounts.transaction[len].PayuId;
                 }
