@@ -701,6 +701,26 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
         NavigationService.getSchoolSFA(paramData, function (data) {
             // console.log("sfa 1", data);
             $scope.schoolList = data.data.results;
+            if ($scope.formFlag === 'edit') {
+              var findSchool = _.find($scope.schoolList, {'_id': $scope.formData.school});
+              if (findSchool == undefined || findSchool == '' || findSchool == {}) {
+                console.log("SC not in list");
+                $scope.editSchoolData = {
+                  _id: $scope.formData.school
+                }
+                $scope.urlGetSschool = 'school/getOne';
+                NavigationService.apiCallWithData($scope.urlGetSschool, $scope.editSchoolData, function(data){
+                  console.log("one", data);
+                  if (data.value == true) {
+                    $scope.schoolList.push(data.data);
+                  } else {
+                    console.log("Old School Not Found");
+                  }
+                })
+              } else {
+                console.log("Old school in schoollist");
+              }
+            }
         });
     };
 
