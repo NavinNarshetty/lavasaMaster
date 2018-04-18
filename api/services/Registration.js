@@ -1878,11 +1878,13 @@ var model = {
                 }
                 emailData.prevPaidAmount = final.accounts.transaction[temp].amountPaid;
                 emailData.discount = final.accounts.discount;
-                emailData.firstName = final.accounts.athlete.firstName;
-                emailData.receiptNo = final.accounts.athlete.receiptId;
-                emailData.surname = final.accounts.athlete.surname;
+                emailData.schoolName = found.accounts.school.schoolName;
+                if (found.accounts.school.gstNo) {
+                    emailData.schoolGstNo = found.accounts.school.gstNo;
+                }
+                emailData.receiptNo = final.accounts.transaction[len].receiptId[0];
                 emailData.paymentMode = final.accounts.transaction[len].paymentMode;
-                emailData.athleteAmount = final.accounts.transaction[len].amountPaid;
+                emailData.schoolAmount = final.accounts.transaction[len].amountPaid;
                 if (final.accounts.transaction[len].PayuId) {
                     emailData.transactionId = final.accounts.transaction[len].PayuId;
                 }
@@ -3298,55 +3300,83 @@ var model = {
                     };
                     console.log("mobileObj", mobileObj);
                     //uncomment this function 
-                    // Athelete.sendOTPMobile(mobileObj, callback);
-                    callback(null, "Move Ahead");
+                    Athelete.sendOTPMobile(mobileObj, callback);
+                    // callback(null, "Move Ahead");
                 } else {
                     callback(null, "Move Ahead");
                 }
             },
             // send OTP on email
             function (res, callback) {
-                console.log("second fun", res);
-                console.log("OTP Sent On Email");
-                var emailObj = {
-                    "otp": otp,
-                    "mobile": data.mobile,
-                    "content": "OTP Athlete: Your Email OTP (One time Password) for SFA registration is ",
-                    "from": "info@sfanow.in",
-                    "filename": "emailOtp.ejs",
-                    "subject": "SFA: Your Email OTP (One time Password) for SFA registration is",
-                };
-                ConfigProperty.find().lean().exec(function (err, property) {
-                    if (err) {
-                        callback(err, null);
-                    } else {
-                        if (_.isEmpty(property)) {
-                            callback(null, []);
+                if (data.email) {
+                    console.log("second fun", res);
+                    console.log("OTP Sent On Email");
+                    var emailObj = {
+                        "otp": otp,
+                        "mobile": data.mobile,
+                        "content": "OTP Athlete: Your Email OTP (One time Password) for SFA registration is ",
+                        "from": "info@sfanow.in",
+                        "filename": "emailOtp.ejs",
+                        "subject": "SFA: Your Email OTP (One time Password) for SFA registration is",
+                    };
+                    ConfigProperty.find().lean().exec(function (err, property) {
+                        if (err) {
+                            callback(err, null);
                         } else {
-                            emailObj.sfaid = data.sfaId;
-                            emailObj.email = data.email;
-                            emailObj.city = property[0].sfaCity;
-                            emailObj.year = property[0].year;
-                            emailObj.eventYear = property[0].eventYear;
-                            emailObj.infoNo = property[0].infoNo;
-                            emailObj.cityAddress = property[0].cityAddress;
-                            emailObj.ddFavour = property[0].ddFavour;
-                            Config.email(emailObj, callback);
+                            if (_.isEmpty(property)) {
+                                callback(null, []);
+                            } else {
+                                emailObj.sfaid = data.sfaId;
+                                emailObj.email = data.email;
+                                emailObj.city = property[0].sfaCity;
+                                emailObj.year = property[0].year;
+                                emailObj.eventYear = property[0].eventYear;
+                                emailObj.infoNo = property[0].infoNo;
+                                emailObj.cityAddress = property[0].cityAddress;
+                                emailObj.ddFavour = property[0].ddFavour;
+                                Config.email(emailObj, callback);
 
+                            }
                         }
-                    }
-                });
-
+                    });
+                } else {
+                    callback(null, "Move Ahead");
+                }
             },
             // send final Obj
             function (resp, callback) {
-                var sendObj = {
-                    "sfaId": data.sfaId,
-                    "mobile": data.mobile,
-                    "email": data.email,
-                    "otp": otp
+                if (data.email && data.mobile) {
+                    var sendObj = {
+                        "sfaId": data.sfaId,
+                        "mobile": data.mobile,
+                        "email": data.email,
+                        "otp": otp
+                    };
+                } else if (data.email) {
+                    var sendObj = {
+                        "sfaId": data.sfaId,
+                        "email": data.email,
+                        "otp": otp
+                    };
+                } else if (data.mobile) {
+                    var sendObj = {
+                        "sfaId": data.sfaId,
+                        "mobile": data.mobile,
+                        "otp": otp
+                    };
+                } else {
+                    var sendObj = {
+                        "sfaId": data.sfaId,
+                        "otp": otp
+                    };
+                }
+                // var sendObj = {
+                //     "sfaId": data.sfaId,
+                //     "mobile": data.mobile,
+                //     "email": data.email,
+                //     "otp": otp
 
-                };
+                // };
                 callback(null, sendObj);
             }
         ], callback);

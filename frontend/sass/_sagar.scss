@@ -3035,12 +3035,36 @@ $tickerDuration: 60s;
     .dropdown-menu{
       left: 0;
     }
-    .glyphicon{
-      display: none;
+    .glyphicon-remove:before{
+      content: '\f00d';
+      font: normal normal normal 14px/1 FontAwesome;
+      color: $sport-primary;
     }
     .ui-select-toggle{
       border: 1px solid $sport-darkgrey;
     }
+  }
+  .formsearch-uiloadmore{
+    padding-top: 5px;
+    padding-right: 5px;
+    margin-bottom: -15px;
+    margin-left: -5px;
+    background-color: transparent;
+    .btn-primary{
+      height: auto;
+      padding: 4px 12px;
+      // border: 1px solid $sport-darkgrey;
+      border-radius: 4px;
+      margin: 0px;
+      background-color: $sport-darkgrey;
+      color: #fff;
+      line-height: 1;
+    }
+    // &:hover{
+    //   .btn-primary{
+    //     color: $sport-primary;
+    //   }
+    // }
   }
 }
 .registerform-step2{

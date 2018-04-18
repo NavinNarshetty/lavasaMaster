@@ -411,14 +411,14 @@
                         <upload-image2 class="up-img birthImg ng-isolate-scope" ng-model="formData.birthImage" no-view file-types=" 'image/jpeg,image/png'"
                           ng-click="showBirthImg=1" ng-disabled="type.disabled" ng-callback="changeitBirthImage"></upload-image2>
                         <div class="" ng-if="formData.ageProof == 'aadharAge' || formData.ageProof =='birthCert'">
-                          <div class="label label-info text-uppercase">Pic 1</div>
+                          <div class="label label-info text-uppercase">Image 1</div>
                         </div>
                       </div>
                       <div class="dirctive-op upload7 Upload-Age" ng-show="formData.ageProof=='aadharAge' || formData.ageProof=='birthCert'">
                         <upload-image2 class="up-img photoImg ng-isolate-scope " file-types="'image/jpeg,image/png'" ng-disabled="type.disabled"
                           ng-callback="changeitPhotoImage" no-view ng-click="showPhotoImg=1" ng-model="formData.photoImage"></upload-image2>
                         <div class="">
-                          <div class="label label-info text-uppercase" ng-show="formData.ageProof=='aadharAge' || formData.ageProof=='birthCert'" >Pic 2</div>
+                          <div class="label label-info text-uppercase" ng-show="formData.ageProof=='aadharAge' || formData.ageProof=='birthCert'">Image 2</div>
                         </div>
                       </div>
                       <div class="hover-img " ng-if="formData.ageProof!='aadharAge' && formData.ageProof!='birthCert' && formData.birthImage && showBirthImg == 1">
@@ -429,7 +429,7 @@
                               </a>
                           </div>
                         </div>
-                        <div class="label label-info text-uppercase" ng-if="formData.ageProof == 'aadharAge' || formData.ageProof =='birthCert'">Pic 1</div>
+                        <div class="label label-info text-uppercase" ng-if="formData.ageProof == 'aadharAge' || formData.ageProof =='birthCert'">Image 1</div>
                         <div class="hover-img " style="margin-left:18px ">
                           <img src="img/icon/x.png " alt="logo" ng-click="removeProof(formData.birthImage, 'birthImage') " class="img-responsive myicon ">
                         </div>
@@ -446,7 +446,7 @@
                                     <img ng-src="{{formData.photoImage |serverimage2}} " class="img-responsive">
                                   </a>
                           </div>
-                          <div class="label label-info text-uppercase">Pic 2</div>
+                          <div class="label label-info text-uppercase">Image 2</div>
                         </div>
                         <div class="display-block  " ng-if=" showBirthImg == 1 && formData.birthImage">
                           <div class="w150 ">

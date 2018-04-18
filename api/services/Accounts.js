@@ -72,7 +72,10 @@ schema.plugin(deepPopulate, {
             select: ''
         },
         "school": {
-            select: '_id schoolName schoolType schoolCategory year paymentStatus status sfaID package receiptId email mobile'
+            select: '_id schoolName schoolType schoolCategory year paymentStatus status sfaID package receiptId email mobile gstNo'
+        },
+        "school.package": {
+            select: ''
         },
         "transaction": {
             select: ''
@@ -140,6 +143,14 @@ var model = {
                             path: "$athlete",
                         }
                     },
+                    {
+                        $lookup: {
+                            "from": "transactions",
+                            "localField": "transaction",
+                            "foreignField": "_id",
+                            "as": "transaction"
+                        }
+                    },
                     // Stage 3
                     {
                         $match: {
@@ -171,7 +182,6 @@ var model = {
                     {
                         $sort: {
                             "createdAt": -1
-
                         }
                     }, {
                         $skip: options.start
@@ -917,7 +927,8 @@ var model = {
 
                         var matchObj = {
                             $set: {
-                                package: found.packageNew
+                                package: found.packageNew,
+                                paymentStatus: "Paid"
                             }
                         };
                         Athelete.update({
@@ -1024,7 +1035,8 @@ var model = {
                                         } else {
                                             var matchObj = {
                                                 $set: {
-                                                    package: found.packageNew
+                                                    package: found.packageNew,
+                                                    paymentStatus: "Paid"
                                                 }
                                             };
                                             console.log("found in update", found);
@@ -1139,17 +1151,27 @@ var model = {
                             var i = 0;
                             var paymentMode;
                             var payu;
+                            var totalPaid = 0;;
 
                             _.each(mainData.transaction, function (n) {
                                 if (i == 0) {
                                     obj["SELECTED PACKAGES"] = n.package.name;
                                     paymentMode = n.paymentMode;
-                                    payu = n.PayuId;
+                                    if (n.PayuId) {
+                                        payu = n.PayuId;
+                                    } else {
+                                        payu = "NA";
+                                    }
                                 } else {
                                     obj["SELECTED PACKAGES"] = obj["SELECTED PACKAGES"] + "," + n.package.name;
                                     paymentMode = paymentMode + "," + n.paymentMode;
-                                    payu = payu + "," + n.PayuId
+                                    if (n.PayuId) {
+                                        payu = payu + "," + n.PayuId;
+                                    } else {
+                                        payu = payu + "," + "NA";
+                                    }
                                 }
+                                totalPaid = totalPaid + n.amountPaid;
 
                                 i++;
                             });
@@ -1192,7 +1214,7 @@ var model = {
                             } else {
                                 obj["TOTAL TO PAY"] = (finalPrice + obj["CGST AMOUNT"] + obj["SGST AMOUNT"]) - mainData.discount;
                             }
-                            obj["TOTAL PAID"] = mainData.totalPaid;
+                            obj["TOTAL PAID"] = totalPaid;
                             obj["OUTSTANDING AMOUNT"] = mainData.outstandingAmount;
                             if (mainData.upgrade == true) {
                                 obj["UPGRADED"] = "YES";
@@ -1280,17 +1302,18 @@ var model = {
             },
             function (found, callback) {
                 async.concatSeries(found, function (mainData, callback) {
+                        console.log("mainData", mainData);
                         var obj = {};
-                        var currentPackName;
-                        var packPrice;
-                        var cgstPercent;
-                        var sgstPercent;
-                        var igstPercent;
+                        var currentPackName = "";
+                        var packPrice = 0;
+                        var cgstPercent = 0;
+                        var sgstPercent = 0;
+                        var igstPercent = 0;
                         var finalPrice = 0;
                         if (mainData.school) {
                             obj["SFA ID"] = mainData.school.sfaID;
                             obj["SCHOOL NAME"] = mainData.school.schoolName;
-                            if (mainData.school.package == undefined) {
+                            if (mainData.school.package) {
                                 currentPackName = mainData.school.package.name;
                                 packPrice = mainData.school.package.finalPrice;
                                 cgstPercent = mainData.school.package.cgstPercent;
@@ -1306,15 +1329,25 @@ var model = {
                         var i = 0;
                         var paymentMode;
                         var payu;
+                        var totalPaid = 0;
 
                         _.each(mainData.transaction, function (n) {
                             if (i == 0) {
                                 paymentMode = n.paymentMode;
-                                payu = n.PayuId;
+                                if (n.PayuId) {
+                                    payu = n.PayuId;
+                                } else {
+                                    payu = "NA"
+                                }
                             } else {
                                 paymentMode = paymentMode + "," + n.paymentMode;
-                                payu = payu + "," + n.PayuId
+                                if (n.PayuId) {
+                                    payu = payu + "," + n.PayuId;
+                                } else {
+                                    payu = payu + "," + "NA";
+                                }
                             }
+                            totalPaid = totalPaid + n.amountPaid;
                             i++;
                         });
 
@@ -1325,8 +1358,8 @@ var model = {
                         } else {
                             obj["CGST PERCENT"] = 0;
                         }
-                        if (mainData.cgstAmt != null) {
-                            obj["CGST AMOUNT"] = mainData.cgstAmt;
+                        if (mainData.cgst != null) {
+                            obj["CGST AMOUNT"] = mainData.cgst;
                         } else {
                             obj["CGST AMOUNT"] = 0;
                         }
@@ -1335,8 +1368,8 @@ var model = {
                         } else {
                             obj["SGST PERCENT"] = 0;
                         }
-                        if (mainData.sgstAmt != null) {
-                            obj["SGST AMOUNT"] = mainData.sgstAmt;
+                        if (mainData.sgst != null) {
+                            obj["SGST AMOUNT"] = mainData.sgst;
                         } else {
                             obj["SGST AMOUNT"] = 0;
                         }
@@ -1345,8 +1378,8 @@ var model = {
                         } else {
                             obj["IGST PERCENT"] = 0;
                         }
-                        if (mainData.igstAmt != null) {
-                            obj["IGST AMOUNT"] = mainData.igstAmt;
+                        if (mainData.igst != null) {
+                            obj["IGST AMOUNT"] = mainData.igst;
                         } else {
                             obj["IGST AMOUNT"] = 0;
                         }
@@ -1356,7 +1389,7 @@ var model = {
                         } else {
                             obj["TOTAL TO PAY"] = (finalPrice + obj["CGST AMOUNT"] + obj["SGST AMOUNT"]) - mainData.discount;
                         }
-                        obj["TOTAL PAID"] = mainData.totalPaid;
+                        obj["TOTAL PAID"] = totalPaid;
                         obj["OUTSTANDING AMOUNT"] = mainData.outstandingAmount;
                         if (mainData.upgrade == true) {
                             obj["UPGRADED"] = "YES";

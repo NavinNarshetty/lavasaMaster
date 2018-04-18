@@ -136,7 +136,7 @@
                         </p>
                         <p class="mtb8">
                             <span class="bold">SAC :</span>
-                            <span> 00440197</span>
+                            <span>999651</span>
                         </p>
                     </div>
 
@@ -147,7 +147,7 @@
                         </p>
                         <p class="mtb8">
                             <span class="bold">PAN NO :</span>
-                            <span>AAWC527921</span>
+                            <span>AAWCS22792J</span>
                         </p>
                         <p class="mtb8">
                             <span class="bold">TAN N0 :</span>
@@ -174,16 +174,16 @@
                                 <th>Particulars </th>
                                 <th>Amount</th>
                             </tr>
-                            <tr>
+                            <!-- <tr>
                                 <td>Account :</td>
                                 <td></td>
-                            </tr>
+                            </tr> -->
 
                             <!-- PACKAGE NAME -->
                             <tr>
                                 <td>SFA Championship Registration Fees
-                                    <br>
-                                    <%=packageName%>
+                                    <!-- <br>
+                                    <%=packageName%> -->
                                 </td>
                                 <td>
                                     <%=amountWithoutTax%>
@@ -198,14 +198,14 @@
                                     <td style="padding: 0 10px;">CGST @
                                         <%=cgstPercent%>%</td>
                                     <td style="padding: 0 10px;">
-                                        <%=cgstAmout%>
+                                        <%=cgstAmount%>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="padding: 0 10px 60px;">SGST @
                                         <%=sgstPercent%>% </td>
                                     <td style="padding: 0 10px 60px;">
-                                        <%=sgstAmout%>
+                                        <%=sgstAmount%>
                                     </td>
                                 </tr>
                                 <%} else if(city == 'Hyderabad'){%>
@@ -213,7 +213,7 @@
                                         <td style="padding: 0 10px 60px;">IGST @
                                             <%=igstPercent%>% </td>
                                         <td style="padding: 0 10px 60px;">
-                                            <%=igstAmout%>
+                                            <%=igstAmount%>
                                         </td>
                                     </tr>
                                     <%} else if(city == 'Ahmedabad'){%>
@@ -221,7 +221,7 @@
                                             <td style="padding: 0 10px 60px;">IGST @
                                                 <%=igstPercent%>% </td>
                                             <td style="padding: 0 10px 60px;">
-                                                <%=igstAmout%>
+                                                <%=igstAmount%>
                                             </td>
                                         </tr>
                                         <%}%>
@@ -241,64 +241,66 @@
                                             <!-- REGISTERTATION FEE RECIVED FROM END-->
 
                                             <!-- SCHOOL GSTN NO -->
-                                            <tr>
-                                                <td>
-                                                    School GSTN No:
-                                                    <br>
-                                                    <%=schoolGstNo%>
-                                                </td>
-                                                <td></td>
-                                            </tr>
-                                            <!-- SCHOOL GSTN NO -->
+                                            <%if(schoolGstNo){%>
+                                                <tr>
+                                                    <td>
+                                                        School GSTN No:
+                                                        <br>
+                                                        <%=schoolGstNo%>
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                                <%}%>
+                                                    <!-- SCHOOL GSTN NO -->
 
-                                            <!-- MODE OF PAYEMENT -->
-                                            <tr>
-                                                <td>
-                                                    Mode of Payment
-                                                    <br>
-                                                    <%=paymentMode%>
-                                                </td>
-                                                <td></td>
-                                            </tr>
+                                                    <!-- MODE OF PAYEMENT -->
+                                                    <tr>
+                                                        <td>
+                                                            Mode of Payment
+                                                            <br>
+                                                            <%=paymentMode%>
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
 
-                                            <!-- MODE OF PAYEMENT  -->
+                                                    <!-- MODE OF PAYEMENT  -->
 
-                                            <!-- TRANSACTION DETAILS -->
-                                            <tr>
-                                                <td style="padding:5px 10px 15px 10px;">
-                                                    <b>Transaction Details</b>
-                                                    <br>
-                                                    <span>
-                                                        <%=transactionID%>
-                                                    </span>
-                                                </td>
-                                                <td style="padding:5px 10px 15px 10px;"></td>
-                                            </tr>
-                                            <!-- TRANSACTION DETAILS -->
+                                                    <!-- TRANSACTION DETAILS -->
+                                                    <tr>
+                                                        <td style="padding:5px 10px 15px 10px;">
+                                                            <b>Transaction Details</b>
+                                                            <br>
+                                                            <span>
+                                                                <%=transactionId%>
+                                                            </span>
+                                                        </td>
+                                                        <td style="padding:5px 10px 15px 10px;"></td>
+                                                    </tr>
+                                                    <!-- TRANSACTION DETAILS -->
 
-                                            <!-- AMOUNTS -->
-                                            <tr>
-                                                <td style="padding:0 10px 15px 10px;">
-                                                    <b>Amount (In Words) :</b>
-                                                    <br>INR
-                                                    <span>
-                                                        <%=amountInWords%>
-                                                    </span>
-                                                </td>
-                                                <td style="padding: 0 10px 0px 10px;border-top: 1px solid black;">
-                                                    <i class="fa fa-inr" aria-hidden="true"></i>
-                                                    <%=athleteAmount%>
-                                                </td>
-                                            </tr>
-                                            <!--AMOUNTS END  -->
-                                            <tr>
-                                                <td>
-                                                    <p>*This is a system generated acknowledgement and does not require any
-                                                        signature </p>
-                                                </td>
-                                                <td></td>
-                                            </tr>
-                                            <!-- INVOICE TABLE END -->
+                                                    <!-- AMOUNTS -->
+                                                    <tr>
+                                                        <td style="padding:0 10px 15px 10px;">
+                                                            <b>Amount (In Words) :</b>
+                                                            <br>INR
+                                                            <span>
+                                                                <%=amountToWords%>
+                                                            </span>
+                                                        </td>
+                                                        <td style="padding: 0 10px 0px 10px;border-top: 1px solid black;">
+                                                            <i class="fa fa-inr" aria-hidden="true"></i>
+                                                            <%=schoolAmount%>
+                                                        </td>
+                                                    </tr>
+                                                    <!--AMOUNTS END  -->
+                                                    <tr>
+                                                        <td>
+                                                            <p>*This is a system generated acknowledgement and does not require
+                                                                any signature </p>
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <!-- INVOICE TABLE END -->
                         </table>
                     </div>
                 </td>
@@ -309,17 +311,19 @@
                 <td>
                     <div class="blue-footer text-center" style="background:#0a1a72;font-family: TitilliumWeb-Regular; color: #fff">
                         <%if(infoId == 'info@sfanow.in'){%>
-                            <p style="padding: 3px 0;"> 17A, Raviraj House, 6th Floor, Saraswati Road, Off Linking Road, Santacruz (West) - 400054
-                                <br>www.sfanow.in I
-                                <%=infoId%> Contact :
-                                    <%=infoNo%>
-                            </p>
-                            <%} else if(infoId == 'info.hyd@sfanow.in'){%>
-                                <p style="padding: 3px 0;">Head Office: SFA Sporting Services Pvt Ltd, 17A, Raviraj House, 6th Floor, Saraswati Road,
-                                    Off Linking Road, Santacruz (West) - 400054
+                            <p style="padding: 3px 0;">
+                                <%=cityAddress%>
                                     <br>www.sfanow.in I
                                     <%=infoId%> Contact :
                                         <%=infoNo%>
+                            </p>
+                            <%} else if(infoId == 'info.hyd@sfanow.in'){%>
+                                <p style="padding: 3px 0;">Head Office:
+                                    <%=ddFavour%>,
+                                        <%=cityAddress%>
+                                            <br>www.sfanow.in I
+                                            <%=infoId%> Contact :
+                                                <%=infoNo%>
                                 </p>
                                 <%}%>
 

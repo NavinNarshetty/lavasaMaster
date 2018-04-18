@@ -119,24 +119,24 @@ var controller = {
 
     cronSchoolWithPaymentDue: function (req, res) {
         async.waterfall([
-            function (callback) {
-                ConfigProperty.find().lean().exec(function (err, property) {
-                    if (err) {
-                        callback(err, null);
-                    } else {
-                        if (_.isEmpty(property)) {
-                            callback(null, []);
+                function (callback) {
+                    ConfigProperty.find().lean().exec(function (err, property) {
+                        if (err) {
+                            callback(err, null);
                         } else {
-                            callback(null, property);
+                            if (_.isEmpty(property)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, property);
+                            }
                         }
-                    }
-                });
-            },
-            function (property, callback) {
-                req.body.property = property[0];
-                Registration.cronSchoolWithPaymentDue(req.body, res.callback);
-            }
-        ],
+                    });
+                },
+                function (property, callback) {
+                    req.body.property = property[0];
+                    Registration.cronSchoolWithPaymentDue(req.body, res.callback);
+                }
+            ],
             function (err, data2) {
                 if (err) {
                     console.log(err);
@@ -171,7 +171,7 @@ var controller = {
         }
     },
     getOTP: function (req, res) {
-        if (req.body && req.body.mobile && req.body.sfaId && req.body.email) {
+        if (req.body && req.body.sfaId) {
             Registration.getOTP(req.body, res.callback);
         } else {
             res.json({

@@ -559,17 +559,29 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
   // START OF GENERATE OTP FOR PARTICIPATED BEFORE
   $scope.searchSfaObj.page = 1;
   $scope.searchSfaObj.keyword = '';
-  $scope.masterSearchSFA = function (formData) {
+  $scope.masterSearchSFA = function (formData, $event) {
+    // no event means first load!
+    $scope.loading = true;
+    if (!$event) {
+      $scope.searchSfaObj.page = 1;
+      $scope.masterData = [];
+    } else {
+      $event.stopPropagation();
+      $event.preventDefault();
+      $scope.searchSfaObj.page++;
+    }
+    // no event means first
     $scope.searchSfaObj.keyword = formData;
     var url;
     if ($.jStorage.get("userType") != null && $.jStorage.get("userType") === 'school') {
       url = 'Registration/getSearch';
     } else {
-      url = 'Athelete/search';
+      url = 'Athelete/getSearch';
     }
     NavigationService.getMasterData($scope.searchSfaObj, url, function (data) {
       if (data.data.value) {
-        $scope.masterData = data.data.data.results;
+        // $scope.masterData = data.data.data.results;
+        $scope.masterData = $scope.masterData.concat(data.data.data.results);
         _.each($scope.masterData, function (key) {
           if ($.jStorage.get("userType") != null && $.jStorage.get("userType") === 'school') {
             key.sfaId = key.sfaID;
@@ -584,7 +596,9 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
           }
 
         });
-        console.log("$scope.masterData ", $scope.masterData);
+        if ($scope.masterData.length == data.data.data.total) {
+          $scope.loading = false;
+        }
       }
     });
 

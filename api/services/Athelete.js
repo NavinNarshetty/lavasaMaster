@@ -382,6 +382,52 @@ var model = {
         });
     },
 
+    getSearchAggregatePipeline: function (data) {
+        var pipeline = [ // Stage 1
+            {
+                $match: {
+
+                    $or: [{
+                            "firstName": {
+                                $regex: data.keyword,
+                                $options: "i"
+                            }
+                        }, {
+                            "surname": {
+                                $regex: data.keyword,
+                                $options: "i"
+                            }
+                        },
+                        {
+                            "sfaId": data.keyword
+                        }
+                    ]
+                }
+            },
+            // Stage 4
+            {
+                $match: {
+                    $or: [{
+                        registrationFee: {
+                            $ne: "online PAYU"
+                        }
+                    }, {
+                        paymentStatus: {
+                            $ne: "Pending"
+                        }
+                    }]
+                }
+            },
+            {
+                $sort: {
+                    "createdAt": -1
+
+                }
+            },
+        ];
+        return pipeline;
+    },
+
     filterAthlete: function (data, callback) {
         console.log("date", data.startDate);
         var maxRow = Config.maxRow;
@@ -683,78 +729,38 @@ var model = {
                     }
                 });
         } else if (data.keyword !== "") {
-            Athelete.aggregate(
-                [{
-                        $match: {
-
-                            $or: [{
-                                    "firstName": {
-                                        $regex: data.keyword,
-                                        $options: "i"
-                                    }
-                                }, {
-                                    "surname": {
-                                        $regex: data.keyword,
-                                        $options: "i"
-                                    }
-                                },
-                                {
-                                    "sfaId": data.keyword
-                                }
-                            ]
-                        }
-                    },
-                    // Stage 4
-                    {
-                        $match: {
-                            $or: [{
-                                registrationFee: {
-                                    $ne: "online PAYU"
-                                }
-                            }, {
-                                paymentStatus: {
-                                    $ne: "Pending"
-                                }
-                            }]
-                        }
-                    },
-                    {
-                        $sort: {
-                            "createdAt": -1
-
-                        }
-                    },
-                ],
-                function (err, returnReq) {
-                    console.log("returnReq : ", returnReq);
-                    if (err) {
-                        console.log(err);
-                        callback(null, err);
-                    } else {
-                        if (_.isEmpty(returnReq)) {
-                            var count = returnReq.length;
-                            console.log("count", count);
-
-                            var data = {};
-                            data.options = options;
-
-                            data.results = returnReq;
-                            data.total = count;
-                            callback(null, data);
+            var count = 0;
+            var pipeLine = Athelete.getSearchAggregatePipeline(data);
+            var newPipeLine = _.cloneDeep(pipeLine);
+            Athelete.aggregate(pipeLine, function (err, matchData) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    newPipeLine.push({
+                        $skip: options.start
+                    }, {
+                        $limit: options.count
+                    });
+                    Athelete.aggregate(newPipeLine, function (err, returnReq) {
+                        if (err) {
+                            console.log(err);
+                            callback(err, "error in mongoose");
                         } else {
-                            var count = returnReq.length;
-                            console.log("count", count);
-
-                            var data = {};
-                            data.options = options;
-
-                            data.results = returnReq;
-                            data.total = count;
-                            callback(null, data);
-
+                            if (_.isEmpty(returnReq)) {
+                                callback(null, []);
+                            } else {
+                                count = matchData.length;
+                                console.log("count", count);
+                                var data = {};
+                                data.options = options;
+                                data.results = returnReq;
+                                data.total = count;
+                                callback(null, data);
+                            }
                         }
-                    }
-                });
+                    });
+                }
+            });
         } else {
             Athelete.find(matchObj)
                 .sort({
@@ -2245,7 +2251,7 @@ var model = {
                 },
                 function (property, accountData, callback) {
                     Package.findOne({
-                        _id: data.package._id
+                        _id: data.package
                     }).lean().exec(function (err, package) {
                         if (err) {
                             callback(err, null);
@@ -2260,7 +2266,7 @@ var model = {
                 },
                 function (property, accountData, package, callback) {
                     var packageId = {};
-                    packageId._id = data.package._id;
+                    packageId._id = data.package;
                     Featurepackage.featureDetailByPackage(packageId, function (err, features) {
                         if (err) {
                             callback(err, null);
@@ -2738,7 +2744,7 @@ var model = {
                 },
                 function (property, accountData, callback) {
                     Package.findOne({
-                        _id: data.package._id
+                        _id: data.package
                     }).lean().exec(function (err, package) {
                         if (err) {
                             callback(err, null);
@@ -2753,7 +2759,7 @@ var model = {
                 },
                 function (property, accountData, package, callback) {
                     var packageId = {};
-                    packageId._id = data.package._id;
+                    packageId._id = data.package;
                     Featurepackage.featureDetailByPackage(packageId, function (err, features) {
                         if (err) {
                             callback(err, null);
@@ -4772,8 +4778,8 @@ var model = {
                         "mobile": data.mobile,
                         "content": "OTP Athlete: Your Mobile OTP (One time Password) for SFA registration is "
                     };
-                    // Athelete.sendOTPMobile(mobileObj, callback);
-                    callback(null, "Move Ahead");
+                    Athelete.sendOTPMobile(mobileObj, callback);
+                    // callback(null, "Move Ahead");
                 } else {
                     callback(null, "Move Ahead");
                 }
@@ -4781,45 +4787,73 @@ var model = {
 
             // send OTP on email
             function (resp, callback) {
-                console.log("OTP Sent On Email");
-                var emailObj = {
-                    "otp": otp,
-                    "mobile": data.mobile,
-                    "content": "OTP Athlete: Your Email OTP (One time Password) for SFA registration is ",
-                    "from": "info@sfanow.in",
-                    "filename": "emailOtp.ejs",
-                    "subject": "SFA: Your Email OTP (One time Password) for SFA registration is"
-                };
-                ConfigProperty.find().lean().exec(function (err, property) {
-                    if (err) {
-                        callback(err, null);
-                    } else {
-                        if (_.isEmpty(property)) {
-                            callback(null, []);
+                if (data.email) {
+                    console.log("OTP Sent On Email");
+                    var emailObj = {
+                        "otp": otp,
+                        "mobile": data.mobile,
+                        "content": "OTP Athlete: Your Email OTP (One time Password) for SFA registration is ",
+                        "from": "info@sfanow.in",
+                        "filename": "emailOtp.ejs",
+                        "subject": "SFA: Your Email OTP (One time Password) for SFA registration is"
+                    };
+                    ConfigProperty.find().lean().exec(function (err, property) {
+                        if (err) {
+                            callback(err, null);
                         } else {
-                            emailObj.sfaid = data.sfaId;
-                            emailObj.email = data.email;
-                            emailObj.city = property[0].sfaCity;
-                            emailObj.year = property[0].year;
-                            emailObj.eventYear = property[0].eventYear;
-                            emailObj.infoNo = property[0].infoNo;
-                            emailObj.cityAddress = property[0].cityAddress;
-                            emailObj.ddFavour = property[0].ddFavour;
-                            Config.email(emailObj, callback);
+                            if (_.isEmpty(property)) {
+                                callback(null, []);
+                            } else {
+                                emailObj.sfaid = data.sfaId;
+                                emailObj.email = data.email;
+                                emailObj.city = property[0].sfaCity;
+                                emailObj.year = property[0].year;
+                                emailObj.eventYear = property[0].eventYear;
+                                emailObj.infoNo = property[0].infoNo;
+                                emailObj.cityAddress = property[0].cityAddress;
+                                emailObj.ddFavour = property[0].ddFavour;
+                                Config.email(emailObj, callback);
+                            }
                         }
-                    }
-                });
+                    });
+                } else {
+                    callback(null, "Move Ahead");
+                }
             },
 
             // send final Obj
             function (resp, callback) {
-                var sendObj = {
-                    "sfaId": data.sfaId,
-                    "mobile": data.mobile,
-                    "email": data.email,
-                    "otp": otp
-
-                };
+                if (data.email && data.mobile) {
+                    var sendObj = {
+                        "sfaId": data.sfaId,
+                        "mobile": data.mobile,
+                        "email": data.email,
+                        "otp": otp
+                    };
+                } else if (data.email) {
+                    var sendObj = {
+                        "sfaId": data.sfaId,
+                        "email": data.email,
+                        "otp": otp
+                    };
+                } else if (data.mobile) {
+                    var sendObj = {
+                        "sfaId": data.sfaId,
+                        "mobile": data.mobile,
+                        "otp": otp
+                    };
+                } else {
+                    var sendObj = {
+                        "sfaId": data.sfaId,
+                        "otp": otp
+                    };
+                }
+                // var sendObj = {
+                //     "sfaId": data.sfaId,
+                //     "mobile": data.mobile,
+                //     "email": data.email,
+                //     "otp": otp
+                // };
                 callback(null, sendObj);
             }
         ], callback);
