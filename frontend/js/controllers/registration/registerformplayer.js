@@ -1014,14 +1014,18 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
         console.log("pass", $scope.passwordError, confirm);
         $scope.showConfirm = true;
         $scope.passwordMatch = false;
-        if (confirm.length >= 8) {
-            if (confirm != $scope.formData.password) {
-                $scope.passwordError = "Entered passwords do not match";
-                $scope.showConfirm = true;
-            } else {
-                $scope.passwordMatch = true;
-                $scope.showConfirm = false;
-            }
+        if (confirm && confirm != undefined) {
+          if (confirm.length >= 8) {
+              if (confirm != $scope.formData.password) {
+                  $scope.passwordError = "Entered passwords do not match";
+                  $scope.showConfirm = true;
+              } else {
+                  $scope.passwordMatch = true;
+                  $scope.showConfirm = false;
+              }
+          }
+        } else {
+          $scope.passwordError = "Enter Confirm Password";
         }
     }
     // CHECK PASSWORD END
