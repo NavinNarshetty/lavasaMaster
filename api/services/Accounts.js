@@ -143,6 +143,14 @@ var model = {
                             path: "$athlete",
                         }
                     },
+                    {
+                        $lookup: {
+                            "from": "transactions",
+                            "localField": "transaction",
+                            "foreignField": "_id",
+                            "as": "transaction"
+                        }
+                    },
                     // Stage 3
                     {
                         $match: {
@@ -174,7 +182,6 @@ var model = {
                     {
                         $sort: {
                             "createdAt": -1
-
                         }
                     }, {
                         $skip: options.start
