@@ -72,7 +72,7 @@ schema.plugin(deepPopulate, {
             select: ''
         },
         "school": {
-            select: '_id schoolName schoolType schoolCategory year paymentStatus status sfaID package receiptId email mobile'
+            select: '_id schoolName schoolType schoolCategory year paymentStatus status sfaID package receiptId email mobile gstNo'
         },
         "school.package": {
             select: ''
