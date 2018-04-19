@@ -3117,6 +3117,14 @@ $tickerDuration: 60s;
 }
 .register-step-error{
   color: $sport-danger;
+  a{
+    color: $sport-danger;
+    text-decoration: underline;
+    &:hover{
+      color: $sport-danger;
+      text-decoration: underline;
+    }
+  }
   @extend .d-opensans-semibold;
 }
 // REGISTRATION PLAYER END

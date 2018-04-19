@@ -19,17 +19,6 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
     });
   }
   // SET FLAGS END
-  // CHECK LOGIN
-  loginService.loginGet(function(data){
-    $scope.loginCheck = data;
-    if ($scope.loginCheck.isLoggedIn == false) {
-      toastr.error("Please login to upgrade", "Error");
-      $state.go('registerplayer', {
-        type: $scope.flag
-      });
-    }
-  })
-  // CHECK LOGIN END
   if ($stateParams.id) {
     $scope.pageData = {
       // _id: "5ac374ad4a0b3006e5a7b97d"
@@ -37,7 +26,7 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
     };
   } else {
     $state.go('registerplayer', {
-      type: data.type
+      type: $scope.pageType
     });
   }
   $scope.formData = {
@@ -49,6 +38,25 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
       packageUser: $scope.pageType
     }
   };
+  // CHECK LOGIN
+  loginService.loginGet(function(data){
+    $scope.loginCheck = data;
+    if ($scope.loginCheck.isLoggedIn == false) {
+      toastr.error("Please login to upgrade", "Error");
+      $state.go('registerplayer', {
+        type: $scope.flag
+      });
+    } else if ($scope.loginCheck.userType != $scope.pageType) {
+      console.log("Type no match");
+      toastr.error("User type does not match", "Error");
+      $state.go('registerplayer', {
+        type: $scope.flag
+      });
+    } else {
+      console.log("log in and type match");
+    }
+  })
+  // CHECK LOGIN END
   // VARIABLES END
   // FUNCTIONS
   // SET PACKAGE DETAILS
@@ -153,14 +161,32 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
       data = data.data;
       if (data.value == true) {
         $scope.detail = data.data;
+        console.log($scope.detail, $scope.loginCheck, '111');
         if ($scope.pageType == 'athlete') {
-          $scope.formData.athlete = $scope.detail.athlete._id;
-          $scope.currentPackage = _.find($scope.packages, ['_id', $scope.detail.athlete.package]);
-          $scope.setPackageDetails($scope.detail.athlete.package, 'load');
+          if ($scope.loginCheck.sfaIdObj == $scope.detail.athlete.sfaId) {
+            $scope.formData.athlete = $scope.detail.athlete._id;
+            $scope.currentPackage = _.find($scope.packages, ['_id', $scope.detail.athlete.package]);
+            $scope.setPackageDetails($scope.detail.athlete.package, 'load');
+          } else {
+            console.log("ID NO match");
+            toastr.error("User does not match", "Error");
+            $state.go('registerplayer', {
+              type: $scope.flag
+            });
+          }
         } else if ($scope.pageType == 'school') {
-          $scope.formData.school = $scope.detail.school._id;
-          $scope.currentPackage = _.find($scope.packages, ['_id', $scope.detail.school.package]);
-          $scope.setPackageDetails($scope.detail.school.package, 'load');
+          if ($scope.loginCheck.sfaIdObj == $scope.detail.school.sfaId) {
+
+            $scope.formData.school = $scope.detail.school._id;
+            $scope.currentPackage = _.find($scope.packages, ['_id', $scope.detail.school.package]);
+            $scope.setPackageDetails($scope.detail.school.package, 'load');
+          } else {
+            console.log("ID NO match");
+            toastr.error("User does not match", "Error");
+            $state.go('registerplayer', {
+              type: $scope.flag
+            });
+          }
         }
         console.log("ath", $scope.detail);
         $scope.formData.outstandingAmount = $scope.detail.outstandingAmount;
