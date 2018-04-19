@@ -2495,10 +2495,8 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
         // $stateParams.filter = $scope.formData;
 
         $scope.url = "Athelete/filterAthlete";
-        $scope.search = $scope.formData.keyword;
+        // $scope.search = $scope.formData.keyword;
         $scope.formData.page = $scope.formData.page++;
-
-
         NavigationService.apiCall($scope.url, $scope.formData, function (data) {
             $scope.items = data.data.results;
             $scope.totalItems = data.data.total;
