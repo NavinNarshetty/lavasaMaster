@@ -986,10 +986,7 @@ var model = {
                 function (property, callback) {
                     console.log("inside update", data);
                     Registration.findOne({ //finds one with refrence to id
-                        schoolName: {
-                            $regex: data.schoolName,
-                            $options: i
-                        }
+                        schoolName: data.schoolName
                     }).lean().deepPopulate("package").exec(function (err, found) {
                         if (err) {
                             callback(err, null);
