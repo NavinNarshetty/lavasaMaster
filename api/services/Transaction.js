@@ -318,6 +318,7 @@ var model = {
     saveCashTransaction: function (data, callback) {
         var finaloutstanding = 0;
         var paymentStatusFinal;
+        var paymentModeFinal
         var finalPay = 0;
         data.transaction = [];
         data.receipt = [];
@@ -327,6 +328,7 @@ var model = {
                     var len = data.transactions.length;
                     len--;
                     paymentStatusFinal = data.transactions[len].paymentStatus;
+                    paymentModeFinal = data.transactions[len].paymentMode;
                     async.each(data.transactions, function (n, callback) {
                             if (data.athleteId) {
                                 Transaction.findOne({
@@ -367,7 +369,7 @@ var model = {
                                                 receiptId: receipt,
                                                 amountToPay: foundTransact.outstandingAmount,
                                                 checkNo: checkNo,
-                                                // paymentMode: n.paymentMode,
+                                                paymentMode: n.paymentMode,
                                                 cgstAmount: data.cgst,
                                                 sgstAmount: data.sgst,
                                                 outstandingAmount: outstanding,
@@ -426,7 +428,7 @@ var model = {
                                                 checkNo: checkNo,
                                                 amountToPay: n.amountPaid,
                                                 amountPaid: n.amountPaid,
-                                                // paymentMode: n.paymentMode,
+                                                paymentMode: n.paymentMode,
                                                 cgstAmount: data.cgst,
                                                 sgstAmount: data.sgst,
                                                 outstandingAmount: outstanding,
@@ -472,7 +474,7 @@ var model = {
                                             discount: data.discount,
                                             receiptId: data.receipt,
                                             checkNo: data.checkNo,
-                                            // paymentMode: n.paymentMode,
+                                            paymentMode: n.paymentMode,
                                             checkNo: data.checkNo,
                                             cgst: data.cgst,
                                             sgst: data.sgst,
@@ -508,7 +510,7 @@ var model = {
                                             totalPaid: finalPay,
                                             discount: data.discount,
                                             receiptId: data.receipt,
-                                            // paymentMode: n.paymentMode,
+                                            paymentMode: n.paymentMode,
                                             checkNo: data.checkNo,
                                             cgst: data.cgst,
                                             sgst: data.sgst,
@@ -535,7 +537,8 @@ var model = {
                     if (data.athleteId) {
                         var matchObj = {
                             $set: {
-                                paymentStatus: paymentStatusFinal
+                                paymentStatus: paymentStatusFinal,
+                                registrationFee: paymentModeFinal
                             }
                         };
                         Athelete.update({
@@ -552,7 +555,8 @@ var model = {
                     } else {
                         var matchObj = {
                             $set: {
-                                paymentStatus: paymentStatusFinal
+                                paymentStatus: paymentStatusFinal,
+                                registrationFee: paymentModeFinal
                             }
                         };
                         Registration.update({
@@ -567,7 +571,6 @@ var model = {
                                 }
                             });
                     }
-
                 }
             ],
             function (err, complete) {
