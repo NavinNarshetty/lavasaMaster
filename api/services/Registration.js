@@ -3386,6 +3386,20 @@ var model = {
             }
         ], callback);
 
-    }
+    },
+
+    getOneBySfaId: function (data, callback) {
+        Registration.findOne({ //finds one with refrence to id
+            sfaID: data.sfaID
+        }).exec(function (err, athleteInfo) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(athleteInfo)) {
+                callback("Data is empty", null);
+            } else {
+                callback(null, "data found");
+            }
+        });
+    },
 };
 module.exports = _.assign(module.exports, exports, model);
