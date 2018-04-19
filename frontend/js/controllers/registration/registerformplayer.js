@@ -56,6 +56,7 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
           $scope.formData.verifyCount = 0;
           $scope.formData.paymentStatus = "Pending";
           $scope.formData.selectedEvent = 0;
+          delete $scope.formData.year;
           delete $scope.formData.atheleteID;
           delete $scope.formData.remarks;
           delete $scope.formData.verifiedDate;

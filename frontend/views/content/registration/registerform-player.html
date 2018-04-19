@@ -407,6 +407,7 @@
                           <option>PAN Card</option>
                           <option>Passport</option>
                       </select>
+                      <!-- IMAGE 1 UPLOAD -->
                       <div class="dirctive-op upload5 Upload-Age" ng-init="showBirthImg = 0;showPhotoImg = 0">
                         <upload-image2 class="up-img birthImg ng-isolate-scope" ng-model="formData.birthImage" no-view file-types=" 'image/jpeg,image/png'"
                           ng-click="showBirthImg=1" ng-disabled="type.disabled" ng-callback="changeitBirthImage"></upload-image2>
@@ -414,6 +415,8 @@
                           <div class="label label-info text-uppercase">Image 1</div>
                         </div>
                       </div>
+                      <!-- IMAGE 1 UPLOAD END -->
+                      <!-- IMAGE 2 UPLOAD  -->
                       <div class="dirctive-op upload7 Upload-Age" ng-show="formData.ageProof=='aadharAge' || formData.ageProof=='birthCert'">
                         <upload-image2 class="up-img photoImg ng-isolate-scope " file-types="'image/jpeg,image/png'" ng-disabled="type.disabled"
                           ng-callback="changeitPhotoImage" no-view ng-click="showPhotoImg=1" ng-model="formData.photoImage"></upload-image2>
@@ -421,24 +424,42 @@
                           <div class="label label-info text-uppercase" ng-show="formData.ageProof=='aadharAge' || formData.ageProof=='birthCert'">Image 2</div>
                         </div>
                       </div>
-                      <div class="hover-img " ng-if="formData.ageProof!='aadharAge' && formData.ageProof!='birthCert' && formData.birthImage && showBirthImg == 1">
+                      <!-- IMAGE 2 UPLOAD END -->
+                      <!-- 1 IMAGE  DISPLAY -->
+                      <div class="hover-img relate" ng-if="formData.ageProof!='aadharAge' && formData.ageProof!='birthCert' && formData.birthImage && showBirthImg == 1">
                         <div class="registerform-uploadimageholder ">
-                          <div class="register-imageplace ">
+                          <div class="register-imageplace registerform-imgholder-float">
                             <a fancybox href="{{formData.birthImage |serverimage2}}">
                                 <img ng-src="{{formData.birthImage |serverimage2}} " class="img-responsive">
                               </a>
                           </div>
                         </div>
                         <div class="label label-info text-uppercase" ng-if="formData.ageProof == 'aadharAge' || formData.ageProof =='birthCert'">Image 1</div>
-                        <div class="hover-img " style="margin-left:18px ">
+                        <div class="registerform-imgcross">
                           <img src="img/icon/x.png " alt="logo" ng-click="removeProof(formData.birthImage, 'birthImage') " class="img-responsive myicon ">
                         </div>
                         <div class="label label-danger pull-right " ng-if="formAthlete.ageProof.$invalid && formAthlete.ageProof.$touched ">Select Age Proof</div>
                       </div>
-                      <div ng-if="formData.ageProof=='aadharAge' || formData.ageProof=='birthCert' ">
-                        <div class="display-block " ng-if="showPhotoImg == 1 && formData.photoImage">
+                      <!-- 1 IMAGE  DISPLAY END -->
+                      <!-- 2 IMAGE  DISPLAY  -->
+                      <div class="clearfix" ng-if="formData.ageProof=='aadharAge' || formData.ageProof=='birthCert' ">
+                        <!-- BIRTH IMAGE DISPLAY  -->
+                        <div class="display-block registerform-imgholder-float" ng-if=" showBirthImg == 1 && formData.birthImage">
+                          <div class="registerform-imgcross">
+                            <img src="img/icon/x.png " alt="logo" ng-click="removeProof(formData.birthImage, 'birthImage') " class="img-responsive myicon cross-icon ">
+                          </div>
+                          <div class="register-imageplace ">
+                            <a fancybox href="{{formData.birthImage |serverimage2}}">
+                                    <img ng-src="{{formData.birthImage |serverimage2}} " class="img-responsive">
+                                  </a>
+                          </div>
+                          <div class="label label-info text-uppercase" ng-if="(formData.ageProof == 'aadharAge' || formData.ageProof =='birthCert') && showBirthImg == 1 && formData.birthImage" >Image 1</div>
+                        </div>
+                        <!-- BIRTH IMAGE DISPLAY END -->
+                        <!-- PHOTO IMAGE DISPLAY -->
+                        <div class="display-block registerform-imgholder-float" ng-if="showPhotoImg == 1 && formData.photoImage">
                           <!--ng-if="formData.birthImage && formData.photoImage "-->
-                          <div class="w150 ">
+                          <div class="registerform-imgcross">
                             <img src="img/icon/x.png " alt="logo" ng-click="removeProof1(formData.photoImage,'photoImg') " class="img-responsive myicon cross-icon ">
                           </div>
                           <div class="register-imageplace ">
@@ -448,18 +469,9 @@
                           </div>
                           <div class="label label-info text-uppercase">Image 2</div>
                         </div>
-                        <div class="display-block  " ng-if=" showBirthImg == 1 && formData.birthImage">
-                          <div class="w150 ">
-                            <img src="img/icon/x.png " alt="logo" ng-click="removeProof(formData.birthImage, 'birthImage') " class="img-responsive myicon cross-icon ">
-                          </div>
-                          <div class="register-imageplace ">
-                            <a fancybox href="{{formData.birthImage |serverimage2}}">
-                                    <img ng-src="{{formData.birthImage |serverimage2}} " class="img-responsive">
-                                  </a>
-                          </div>
-                          <div class="label label-info text-uppercase" ng-if="(formData.ageProof == 'aadharAage' || formData.ageProof =='birthCert') && showBirthImg == 1 && formData.birthImage" >Pic 1</div>
-                        </div>
+                        <!-- PHOTO IMAGE DISPLAY END -->
                       </div>
+                      <!-- 2 IMAGE  DISPLAY END -->
                     </div>
                   </div>
                 </div>

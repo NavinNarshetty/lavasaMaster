@@ -16,6 +16,7 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
   $scope.emailId = '';
   $scope.showSec2 = false;
   $scope.noEmailMobile = false;
+  $scope.noContact = false;
 
   $scope.flag = $stateParams.type;
   // SET FLAG
@@ -605,6 +606,19 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
 
   };
 
+  $scope.checkSearchChange = function(changeObj){
+    console.log("change", changeObj);
+    if (changeObj) {
+      if (!changeObj.email && !changeObj.mobile ) {
+        $scope.noContact = true;
+        $scope.showRegisteredCredentials = false;
+        $scope.verifyOtpObj.validOtp = "";
+      } else {
+        $scope.noContact = false;
+      }
+    }
+  };
+
   $scope.generateOtp = function (otpObj) {
     if (otpObj.sfaId.email || otpObj.sfaId.mobile) {
       var obj = {};
@@ -618,7 +632,6 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
       obj.mobile = otpObj.sfaId.mobile;
       obj.email = otpObj.sfaId.email;
       $scope.verifyOtpObj.id = otpObj.sfaId._id;
-      $scope.showRegisteredCredentials = true;
       $scope.noEmailMobile = false;
       if (otpObj.sfaId.mobile) {
         $scope.registeredMobileNo = otpObj.sfaId.mobile;
@@ -629,6 +642,7 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
       NavigationService.getOTP(obj, url, function (data) {
         if (data.data.value) {
           $scope.verifyOtpObj.validOtp = data.data.data.otp;
+          $scope.showRegisteredCredentials = true;
         }
       });
     } else {
