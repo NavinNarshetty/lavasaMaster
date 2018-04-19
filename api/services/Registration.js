@@ -1881,6 +1881,8 @@ var model = {
                 emailData.schoolName = final.accounts.school.schoolName;
                 if (final.accounts.school.gstNo) {
                     emailData.schoolGstNo = final.accounts.school.gstNo;
+                } else {
+                    emailData.schoolGstNo = false;
                 }
                 emailData.receiptNo = final.accounts.transaction[len].receiptId[0];
                 emailData.paymentMode = final.accounts.transaction[len].paymentMode;
