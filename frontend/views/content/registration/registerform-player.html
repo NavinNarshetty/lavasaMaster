@@ -341,13 +341,14 @@
               </div>
               <!-- PHOTOGRAPH END -->
               <!-- DOB/ AGE  -->
-              <div class="form-group" ng-if="formFlag == 'create'">
+              <div class="form-group" ng-if="formFlag == 'create' || (formFlag == 'edit' && !editDob)">
+
                 <!-- DOB -->
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="" class="control-label col-sm-4">*Date Of Birth</label>
                     <div class="col-sm-8">
-                      <input-date class="bor-t date-month sf-list " ng-model="formData.dob" disabled="formFlag == 'edit'"></input-date>
+                      <input-date class="bor-t date-month sf-list " ng-model="formData.dob" isDisabled="formFlag == 'edit' && (formData.dob != undefined || formData.dob != '')"></input-date>
                       <div class="label label-danger pull-right " ng-if="formAthlete.dob.$invalid && formAthlete.dob.$touched ">Please Enter Date of birth</div>
                     </div>
                   </div>
@@ -367,7 +368,7 @@
                   </div>
                 </div>
               </div>
-              <div class="form-group" ng-if="formFlag == 'edit'">
+              <div class="form-group" ng-if="formFlag == 'edit' && editDob">
                 <!-- DOB -->
                 <div class="col-sm-6">
                   <div class="form-group">

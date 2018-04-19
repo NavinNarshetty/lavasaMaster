@@ -13,6 +13,7 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
     $scope.formFlag = $stateParams.flag;
     $scope.showPaymentTab = false;
     $scope.showPackageDetail = false;
+    $scope.editDob = false;
     configService.getDetail(function (data) {
         $scope.city = data.city;
         $scope.district = data.district;
@@ -35,49 +36,68 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
         console.log("getAth", data);
         if (data.value == true) {
           $scope.formData = data.data;
-          $scope.refreshChangeSchool("");
-          $scope.formData.password = "";
-          $scope.formData.standard = "";
-          $scope.formData.termsAndCondition = false;
-          $scope.age = $filter('ageYearFilter')($scope.formData.dob);
-          $scope.mobileNo = $scope.formData.mobile;
-          $scope.editMobile = false;
-          $scope.showMobileOtpSuccess = false;
-          $scope.formData.smsOTP = "";
-          $scope.emailId = $scope.formData.email;
-          $scope.editEmail = false;
-          $scope.formData.emailOTP = "";
-          $scope.showEmailOtpSuccess = false;
-          $scope.dob = $filter('englishNumeralDateOne')($scope.formData.dob);
-          $scope.formData.package = "";
-          $scope.formData.registrationFee = "";
-          $scope.formData.ageProof = "";
-          $scope.formData.status = "Pending";
-          $scope.formData.verifyCount = 0;
-          $scope.formData.paymentStatus = "Pending";
-          $scope.formData.selectedEvent = 0;
-          delete $scope.formData.year;
-          delete $scope.formData.atheleteID;
-          delete $scope.formData.remarks;
-          delete $scope.formData.verifiedDate;
-          delete $scope.formData.accessToken;
-          delete $scope.formData.createdAt;
-          delete $scope.formData.updatedAt;
-          delete $scope.formData.receiptId;
-          delete $scope.formData._id;
-          delete $scope.formData._v;
-          if ($scope.formData.photograph) {
-            delete $scope.formData.photograph;
+          $scope.checkRegistration = {
+            sfaId: $scope.formData.sfaId
           }
-          if ($scope.formData.atheleteSchoolIdImage) {
-            delete $scope.formData.atheleteSchoolIdImage;
-          }
-          if ($scope.formData.birthImage) {
-            delete $scope.formData.birthImage;
-          }
-          if ($scope.formData.photoImage) {
-            delete $scope.formData.photoImage;
-          }
+          NavigationService.getOneBySfaId($scope.checkRegistration, function(data){
+            console.log("sfaid",data);
+            if (data.data.value == true) {
+              toastr.error("Already registered","Error");
+              $state.go('registerplayer',{
+                type: 'player'
+              })
+            } else {
+              $scope.refreshChangeSchool("");
+              $scope.formData.password = "";
+              $scope.formData.standard = "";
+              $scope.formData.termsAndCondition = false;
+              $scope.age = $filter('ageYearFilter')($scope.formData.dob);
+              $scope.mobileNo = $scope.formData.mobile;
+              $scope.editMobile = false;
+              $scope.showMobileOtpSuccess = false;
+              $scope.formData.smsOTP = "";
+              $scope.emailId = $scope.formData.email;
+              $scope.editEmail = false;
+              $scope.formData.emailOTP = "";
+              $scope.showEmailOtpSuccess = false;
+              if ($scope.formData.dob != undefined || formData.dob != null) {
+                $scope.dob = $filter('englishNumeralDateOne')($scope.formData.dob);
+                $scope.editDob = true;
+              } else {
+                $scope.dob = '';
+                $scope.editDob = false;
+              }
+              $scope.formData.package = "";
+              $scope.formData.registrationFee = "";
+              $scope.formData.ageProof = "";
+              $scope.formData.status = "Pending";
+              $scope.formData.verifyCount = 0;
+              $scope.formData.paymentStatus = "Pending";
+              $scope.formData.selectedEvent = 0;
+              delete $scope.formData.year;
+              delete $scope.formData.atheleteID;
+              delete $scope.formData.remarks;
+              delete $scope.formData.verifiedDate;
+              delete $scope.formData.accessToken;
+              delete $scope.formData.createdAt;
+              delete $scope.formData.updatedAt;
+              delete $scope.formData.receiptId;
+              delete $scope.formData._id;
+              delete $scope.formData._v;
+              if ($scope.formData.photograph) {
+                delete $scope.formData.photograph;
+              }
+              if ($scope.formData.atheleteSchoolIdImage) {
+                delete $scope.formData.atheleteSchoolIdImage;
+              }
+              if ($scope.formData.birthImage) {
+                delete $scope.formData.birthImage;
+              }
+              if ($scope.formData.photoImage) {
+                delete $scope.formData.photoImage;
+              }
+            }
+          });
         } else {
           console.log("Error in ath get", data);
         }

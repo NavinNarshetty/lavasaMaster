@@ -20,8 +20,6 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
   $scope.pageType = 'school';
   $scope.formData.confirmPassword = '';
 
-
-
   // CONFIG PROPERTY
   configService.getDetail(function (data) {
     $scope.city = data.city;
@@ -59,29 +57,42 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
       console.log("getSchool", data);
       if (data.value == true) {
         $scope.formData = data.data;
-        $scope.formData.password = '';
-        $scope.formData.termsAndCondition = '';
-        $scope.formData.registrationFee = '';
-        $scope.emailId = $scope.formData.email;
-        $scope.formData.combatSports = '';
-        $scope.formData.individualSports = '';
-        $scope.formData.racquetSports = '';
-        $scope.formData.teamSports = '';
-        $scope.formData.targetSports = '';
-        $scope.formData.aquaticsSports = '';
-        $scope.editEmail = false;
-        $scope.showOtpSuccess = false;
-        $scope.formData.paymentStatus = "Pending";
-        $scope.formData.status = "Pending";
-        $scope.formData.verifyCount = 0;
-        // console.log(oldEmail, "email id");
-        delete $scope.formData.year;
-        delete $scope.formData._id;
-        delete $scope.formData._v;
-        delete $scope.formData.receiptId;
-        delete $scope.formData.createdAt;
-        delete $scope.formData.updatedAt;
-
+        $scope.checkRegistration = {
+          sfaID : $scope.formData.sfaID
+        }
+        $scope.checkUrl = 'Registration/getOneBySfaId';
+        NavigationService.apiCallWithData($scope.checkUrl, $scope.checkRegistration, function(data){
+          console.log("da", data);
+          if (data.value == true) {
+            toastr.error("School registered","Error");
+            $state.go('registerplayer',{
+              type: 'school'
+            })
+          } else {
+            $scope.formData.password = '';
+            $scope.formData.termsAndCondition = '';
+            $scope.formData.registrationFee = '';
+            $scope.emailId = $scope.formData.email;
+            $scope.formData.combatSports = '';
+            $scope.formData.individualSports = '';
+            $scope.formData.racquetSports = '';
+            $scope.formData.teamSports = '';
+            $scope.formData.targetSports = '';
+            $scope.formData.aquaticsSports = '';
+            $scope.editEmail = false;
+            $scope.showOtpSuccess = false;
+            $scope.formData.paymentStatus = "Pending";
+            $scope.formData.status = "Pending";
+            $scope.formData.verifyCount = 0;
+            // console.log(oldEmail, "email id");
+            delete $scope.formData.year;
+            delete $scope.formData._id;
+            delete $scope.formData._v;
+            delete $scope.formData.receiptId;
+            delete $scope.formData.createdAt;
+            delete $scope.formData.updatedAt;
+          }
+        });
       } else {
         console.log("Error in ath get", data);
       }

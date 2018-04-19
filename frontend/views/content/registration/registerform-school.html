@@ -99,9 +99,9 @@
                 <div class="col-sm-10">
                   <select name="schoolType" ng-model="formData.schoolType" class="form-control" required>
                     <option style="display:none"></option>
-                    <option>Co-Educational</option>
-                    <option>Boys</option>
-                    <option>Girls</option>
+                    <option value="co-ed">Co-Educational</option>
+                    <option value="boys">Boys</option>
+                    <option value="girls">Girls</option>
                   </select>
                   <div class="label label-danger pull-right " ng-show="schoolRegisterForm.schoolType.$invalid && schoolRegisterForm.schoolType.$touched">Please Enter Your {{type| firstcapitalize}} Type*</div>
                 </div>
@@ -114,9 +114,9 @@
                 <div class="col-sm-10">
                   <select name="schoolCategory" ng-model="formData.schoolCategory" class="form-control" title="Select Category" required>
                     <option style="display:none"></option>
-                    <option>Un-aided </option>
-                    <option>Government </option>
-                    <option> Aided</option>
+                    <option value="un-aided">Un-aided</option>
+                    <option value="government">Government</option>
+                    <option value="aided">Aided</option>
                   </select>
                   <div class="label label-danger pull-right " ng-show="schoolRegisterForm.schoolCategory.$invalid && schoolRegisterForm.schoolCategory.$touched">Please Enter Your {{type| firstcapitalize}} Category*</div>
                 </div>
@@ -129,14 +129,14 @@
                 <div class="col-sm-10">
                   <select name="affiliatedBoard" class="form-control" ng-model="formData.affiliatedBoard" required>
                     <option style="display:none"></option>
-                    <option>Central Board of Secondary Education (CBSE) </option>
-                    <option>Cambridge & IB</option>
-                    <option>International Baccalaureate (IB)</option>
-                    <option>Indian Certificate of Secondary Education (ICSE)</option>
-                    <option>International General Certificate of Secondary Education (IGCSE)</option>
-                    <option>National Institute of Open Schooling (NIOS)</option>
-                    <option>Secondary School Certificate (SSC)</option>
-                    <option>A Level</option>
+                    <option value="cbse">Central Board of Secondary Education (CBSE)</option>
+                    <option value="camridge+ib">Cambridge & IB</option>
+                    <option value="ib">International Baccalaureate (IB)</option>
+                    <option value="icse">Indian Certificate of Secondary Education (ICSE)</option>
+                    <option value="igcse">International General Certificate of Secondary Education (IGCSE)</option>
+                    <option value="nios">National Institute of Open Schooling (NIOS)</option>
+                    <option value="ssc">Secondary School Certificate (SSC)</option>
+                    <option value="a-level">A Level</option>
                   </select>
                   <div class="label label-danger pull-right " ng-show="schoolRegisterForm.affiliatedBoard.$invalid && schoolRegisterForm.affiliatedBoard.$touched">Please Enter Your Affiliated Board*</div>
                 </div>
