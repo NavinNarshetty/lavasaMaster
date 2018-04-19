@@ -999,6 +999,7 @@ var model = {
                         } else if (_.isEmpty(found)) {
                             callback(null, "Data is empty");
                         } else {
+                            console.log('found', found);
                             async.waterfall([
                                     function (callback) {
                                         Accounts.findOne({
@@ -1017,6 +1018,7 @@ var model = {
                                     },
                                     function (found, callback) {
                                         data.school = true;
+                                        console.log('data!!!!!!!', data, 'found!!!!!!!', found);
                                         Transaction.saveUpdateTransaction(data, found, function (err, vData) {
                                             if (err || _.isEmpty(vData)) {
                                                 callback(null, {
