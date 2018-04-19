@@ -22,7 +22,16 @@ var controller = {
             });
         }
     },
-
+    getOneBySfaId: function (req, res) {
+        if (req.body) {
+            Registration.getOneBySfaId(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
     search: function (req, res) {
         if (req.body) {
             Registration.search(req.body, res.callback);

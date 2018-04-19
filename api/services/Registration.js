@@ -1862,6 +1862,8 @@ var model = {
                 emailData.type = final.property.institutionType;
                 emailData.infoNo = final.property.infoNo;
                 emailData.infoId = final.property.infoId;
+                emailData.cityAddress = final.property.cityAddress;
+                emailData.ddFavour = final.property.ddFavour;
                 emailData.packageName = final.accounts.transaction[len].package.name;
                 emailData.amountWithoutTax = final.accounts.transaction[len].package.finalPrice;
                 emailData.cgstPercent = final.accounts.transaction[len].package.cgstPercent;
@@ -1878,20 +1880,23 @@ var model = {
                 }
                 emailData.prevPaidAmount = final.accounts.transaction[temp].amountPaid;
                 emailData.discount = final.accounts.discount;
-                emailData.schoolName = found.accounts.school.schoolName;
-                if (found.accounts.school.gstNo) {
-                    emailData.schoolGstNo = found.accounts.school.gstNo;
+                emailData.schoolName = final.accounts.school.schoolName;
+                if (final.accounts.school.gstNo) {
+                    emailData.schoolGstNo = final.accounts.school.gstNo;
+                } else {
+                    emailData.schoolGstNo = false;
                 }
                 emailData.receiptNo = final.accounts.transaction[len].receiptId[0];
                 emailData.paymentMode = final.accounts.transaction[len].paymentMode;
                 emailData.schoolAmount = final.accounts.transaction[len].amountPaid;
+                emailData.registrationDate = final.accounts.transaction[len].dateOfTransaction;
                 if (final.accounts.transaction[len].PayuId) {
                     emailData.transactionId = final.accounts.transaction[len].PayuId;
                 }
                 emailData.amountToWords = Accounts.amountToWords(final.accounts.transaction[len].amountPaid);
                 emailData.from = final.property.infoId;
                 emailData.email1 = [{
-                    email: found.accounts.school.email
+                    email: final.accounts.school.email
                 }];
                 emailData.bcc1 = [{
                     email: "payments@sfanow.in"
@@ -3381,6 +3386,20 @@ var model = {
             }
         ], callback);
 
-    }
+    },
+
+    getOneBySfaId: function (data, callback) {
+        Registration.findOne({ //finds one with refrence to id
+            sfaID: data.sfaID
+        }).exec(function (err, athleteInfo) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(athleteInfo)) {
+                callback("Data is empty", null);
+            } else {
+                callback(null, "data found");
+            }
+        });
+    },
 };
 module.exports = _.assign(module.exports, exports, model);

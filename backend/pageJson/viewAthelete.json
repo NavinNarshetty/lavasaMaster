@@ -54,7 +54,12 @@
             "name": "_id",
             "value": "_id"
         }
-    }]
+    }],
+
+    "apiCall": {
+        "url": "Athelete/search",
+        "params": "_id"
+    }
 
 
 }

@@ -999,6 +999,7 @@ var model = {
                         } else if (_.isEmpty(found)) {
                             callback(null, "Data is empty");
                         } else {
+                            console.log('found', found);
                             async.waterfall([
                                     function (callback) {
                                         Accounts.findOne({
@@ -1017,6 +1018,7 @@ var model = {
                                     },
                                     function (found, callback) {
                                         data.school = true;
+                                        console.log('data!!!!!!!', data, 'found!!!!!!!', found);
                                         Transaction.saveUpdateTransaction(data, found, function (err, vData) {
                                             if (err || _.isEmpty(vData)) {
                                                 callback(null, {
@@ -1748,6 +1750,7 @@ var model = {
                     emailData.upgrade = false;
                 }
                 emailData.packageName = final.accounts.transaction[len].package.name;
+                emailData.registrationDate = final.accounts.transaction[len].dateOfTransaction;
                 emailData.amountWithoutTax = final.accounts.transaction[len].package.finalPrice;
                 emailData.cgstPercent = final.accounts.transaction[len].package.cgstPercent;
                 emailData.sgstPercent = final.accounts.transaction[len].package.sgstPercent;

@@ -15,6 +15,9 @@ var schema = new Schema({
     sfaCity: String,
     cityAddress: String,
     infoNo: String,
+    infoNoArr: [{
+        type: String
+    }],
     infoId: String,
     ddFavour: String,
     city: [{
@@ -123,6 +126,7 @@ var model = {
                     finalData.athleteAmount = property[0].totalAmountAthlete;
                     finalData.cityAddress = property[0].cityAddress;
                     finalData.infoNo = property[0].infoNo;
+                    finalData.infoNoArr = property[0].infoNoArr;
                     finalData.infoId = property[0].infoId;
                     finalData.ddFavour = property[0].ddFavour;
                     finalData.additionalFee = property[0].additionalFee;
@@ -141,7 +145,7 @@ var model = {
                 }
             }
         });
-    }
+    },
 
 };
 module.exports = _.assign(module.exports, exports, model);

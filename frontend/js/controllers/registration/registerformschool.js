@@ -71,8 +71,16 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
         $scope.formData.aquaticsSports = '';
         $scope.editEmail = false;
         $scope.showOtpSuccess = false;
+        $scope.formData.paymentStatus = "Pending";
+        $scope.formData.status = "Pending";
+        $scope.formData.verifyCount = 0;
         // console.log(oldEmail, "email id");
-
+        delete $scope.formData.year;
+        delete $scope.formData._id;
+        delete $scope.formData._v;
+        delete $scope.formData.receiptId;
+        delete $scope.formData.createdAt;
+        delete $scope.formData.updatedAt;
 
       } else {
         console.log("Error in ath get", data);
@@ -123,9 +131,6 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
     });
   }
   // FLAGS SET FOR CREATE EDIT END
-
-
-
 
   // UPLOAD FUNCTION *********DO NOT REMOVE *****
   $scope.changeitSchoolLogo = function (err, data) {
@@ -340,12 +345,6 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
     formdata.aquaticsSports = $scope.aquaticsSports;
     if ($scope.formFlag === 'create') {
       formdata.sfaID = $scope.sfaID;
-    }
-    if ($scope.formFlag === 'edit') {
-      delete formdata._id;
-      delete formdata.receiptId;
-      delete formdata.createdAt;
-      delete formdata.updatedAt;
     }
     $scope.value = {};
     if (formdata.teamSports.length > 0 || formdata.racquetSports.length > 0 || formdata.combatSports.length > 0 || formdata.targetSports.length > 0 || formdata.individualSports.length > 0 || formdata.aquaticsSports.length > 0) {

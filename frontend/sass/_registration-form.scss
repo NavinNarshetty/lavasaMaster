@@ -363,6 +363,19 @@
   font-size: 12px;
 }
 
+.registerform-imgholder-float{
+  padding: 10px;
+  margin: 5px;
+  float: left;
+  position: relative;
+}
+.registerform-imgcross{
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
 // UPGRADE PACKAGE PAGE
 .upgradepackage-page {
   min-height: 100vh;

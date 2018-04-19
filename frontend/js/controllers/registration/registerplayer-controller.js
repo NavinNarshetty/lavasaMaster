@@ -15,6 +15,8 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
   $scope.mobileNumber = '';
   $scope.emailId = '';
   $scope.showSec2 = false;
+  $scope.noEmailMobile = false;
+  $scope.noContact = false;
 
   $scope.flag = $stateParams.type;
   // SET FLAG
@@ -604,28 +606,49 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
 
   };
 
-
+  $scope.checkSearchChange = function(changeObj){
+    console.log("change", changeObj);
+    if (changeObj) {
+      if (!changeObj.email && !changeObj.mobile ) {
+        $scope.noContact = true;
+        $scope.showRegisteredCredentials = false;
+        $scope.verifyOtpObj.validOtp = "";
+      } else {
+        $scope.noContact = false;
+      }
+    }
+  };
 
   $scope.generateOtp = function (otpObj) {
-    var obj = {};
-    var url;
-    if ($scope.formData.type == 'school') {
-      url = 'Registration/getOTP';
-    } else {
-      url = 'Athelete/getOTP';
-    }
-    obj.sfaId = otpObj.sfaId.sfaId;
-    obj.mobile = otpObj.sfaId.mobile;
-    obj.email = otpObj.sfaId.email;
-    $scope.verifyOtpObj.id = otpObj.sfaId._id;
-    $scope.showRegisteredCredentials = true;
-    $scope.registeredMobileNo = otpObj.sfaId.mobile;
-    $scope.registeredEmail = otpObj.sfaId.email;
-    NavigationService.getOTP(obj, url, function (data) {
-      if (data.data.value) {
-        $scope.verifyOtpObj.validOtp = data.data.data.otp;
+    if (otpObj.sfaId.email || otpObj.sfaId.mobile) {
+      var obj = {};
+      var url;
+      if ($scope.formData.type == 'school') {
+        url = 'Registration/getOTP';
+      } else {
+        url = 'Athelete/getOTP';
       }
-    });
+      obj.sfaId = otpObj.sfaId.sfaId;
+      obj.mobile = otpObj.sfaId.mobile;
+      obj.email = otpObj.sfaId.email;
+      $scope.verifyOtpObj.id = otpObj.sfaId._id;
+      $scope.noEmailMobile = false;
+      if (otpObj.sfaId.mobile) {
+        $scope.registeredMobileNo = otpObj.sfaId.mobile;
+      }
+      if (otpObj.sfaId.email) {
+        $scope.registeredEmail = otpObj.sfaId.email;
+      }
+      NavigationService.getOTP(obj, url, function (data) {
+        if (data.data.value) {
+          $scope.verifyOtpObj.validOtp = data.data.data.otp;
+          $scope.showRegisteredCredentials = true;
+        }
+      });
+    } else {
+      $scope.showRegisteredCredentials = false;
+      $scope.noEmailMobile = true;
+    }
   };
 
   $scope.regenerateOtp = function (searchSfaObj) {

@@ -4,7 +4,8 @@
     <section class="registerplayer-header">
       <!-- TITLE -->
       <div class="registerplayer-title">
-        REGISTRATIONS <span class="regiterplayer-titlesmall">Sfa {{sfaCity}} {{eventYear}}</span>
+        REGISTRATIONS
+        <span class="regiterplayer-titlesmall">Sfa {{sfaCity}} {{eventYear}}</span>
       </div>
       <!-- TITLE END -->
       <!-- BANNER -->
@@ -30,13 +31,19 @@
         <uib-accordion close-others="oneAtATime">
           <div uib-accordion-group class="panel-default" is-open="true" is-disabled="true">
             <uib-accordion-heading class="clearfix">
-              <span class="hide pull-right register-accordion-view"> View <span ng-if="!s.open">Details</span> <span ng-if='s.open'>Less</span>              <i class="fa " ng-class="{'fa-chevron-up': s.open, 'fa-chevron-down': !s.open}"></i></span>
+              <span class="hide pull-right register-accordion-view"> View
+                <span ng-if="!s.open">Details</span>
+                <span ng-if='s.open'>Less</span>
+                <i class="fa " ng-class="{'fa-chevron-up': s.open, 'fa-chevron-down': !s.open}"></i>
+              </span>
               <h4 class="d-fjalla-one text-uppercase m-clear">Quick Details About SFA Championship {{eventYear}}</h4>
             </uib-accordion-heading>
             <div class="register-accordioncontent">
               <div class="register-contentholder" ng-if="sports.length>0">
                 <label class="display-block">Sports:</label>
-                <span class="register-sportlist" ng-repeat="sport in sports track by $index"> {{sport}} <span class="register-seperator">|</span>                </span>
+                <span class="register-sportlist" ng-repeat="sport in sports track by $index"> {{sport}}
+                  <span class="register-seperator">|</span>
+                </span>
               </div>
               <div class="register-contentholder register-contentdate" ng-if="sfaDates">
                 <label for="">Dates:</label>
@@ -44,7 +51,9 @@
               </div>
               <div class="register-contentholder" ng-if="venue.length>0">
                 <label for="">Venue:</label>
-                <span class="register-venue" ng-repeat="place in venue track by $index"> {{place}} <span class="register-seperator">|</span></span>
+                <span class="register-venue" ng-repeat="place in venue track by $index"> {{place}}
+                  <span class="register-seperator">|</span>
+                </span>
               </div>
               <div class="register-contentholder">
                 <ul class="list-inline">
@@ -69,7 +78,9 @@
       <!-- ACCORDION END -->
       <!-- INTRO SECTION -->
       <div class="registerplayer-intro">
-        <div class="registerplayer-introtitle"><span ng-if="pageType == 'player'">Player</span><span ng-if="pageType == 'school'">School</span> Registrations</div>
+        <div class="registerplayer-introtitle">
+          <span ng-if="pageType == 'player'">Player</span>
+          <span ng-if="pageType == 'school'">School</span> Registrations</div>
         <div class="registerplayer-introcontent" ng-bind-html="content"></div>
       </div>
       <!-- INTRO SECTION END -->
@@ -86,8 +97,9 @@
         <button class="btn btn-mainregister" ng-click="registerOpen();" ng-class="{'active': showForm}">Click Here To Register For SFA Mumbai 2018-19</button>
       </div>
       <div class="registerform-holder" ng-show="showForm">
-        <p class="registerform-intro">All <span ng-if="pageType == 'player'">players</span><span ng-if="pageType == 'school'">schools</span> must complete
-          the following two step registration process</p>
+        <p class="registerform-intro">All
+          <span ng-if="pageType == 'player'">players</span>
+          <span ng-if="pageType == 'school'">schools</span> must complete the following two step registration process</p>
         <!-- STEP BUTTONS -->
         <ul class="list-inline">
           <li>
@@ -103,8 +115,8 @@
           <div class="registerstep-btnholder">
             <ul class="list-unstyled">
               <li>
-                <button class="btn btn-register1 text-capitalize" ui-sref="registerformplayer({flag: 'create'})" ng-if="pageType == 'player'">I am Participating  for the First Time</button>
-                <button class="btn btn-register1 text-capitalize" ui-sref="registerformschool({flag: 'create'})" ng-if="pageType == 'school'">Participating  for the First Time</button>
+                <button class="btn btn-register1 text-capitalize" ui-sref="registerformplayer({flag: 'create'})" ng-if="pageType == 'player'">I am Participating for the First Time</button>
+                <button class="btn btn-register1 text-capitalize" ui-sref="registerformschool({flag: 'create'})" ng-if="pageType == 'school'">Participating for the First Time</button>
               </li>
               <li>
                 <button class="btn btn-register1 text-capitalize" ng-click="showStepForm()" ng-class="{'active': stepForm}">I Have Participated Before</button>
@@ -115,9 +127,10 @@
             <p>Kindly Enter</p>
             <div class="input-group">
               <!-- <input type="text" class="form-control" placeholder="SFA ID"> -->
-              <ui-select name="playername" class="registerform1-uiselect" ng-model="searchSfaObj.sfaId" theme="bootstrap" required>
+              <ui-select name="playername" class="registerform1-uiselect" ng-model="searchSfaObj.sfaId" theme="bootstrap" ng-change="checkSearchChange(searchSfaObj.sfaId)" required>
                 <ui-select-match placeholder="Search by Sfa ID and Name" allow-clear="true" title="{{$select.selected.fullName}}">{{$select.selected.fullName}}</ui-select-match>
-                <ui-select-choices repeat="player as player in masterData | filter: $select.search" refresh="masterSearchSFA($select.search)" refresh-delay="300">
+                <ui-select-choices repeat="player as player in masterData | filter: $select.search" refresh="masterSearchSFA($select.search)"
+                  refresh-delay="300">
                   <div>
                     <span class="text-capitalize" ng-bind-html="player.fullName"></span>
                   </div>
@@ -128,25 +141,45 @@
               </ui-select>
               <!-- <input type="text" class="form-control" placeholder="SFA ID" ng-model="formData.keyword" ng-change="getMasterData(formData)"> -->
               <div class="input-group-btn">
-                <button class="btn m-clear" ng-click="generateOtp(searchSfaObj)" 7>Send OTP</button>
+                <button class="btn m-clear" ng-click="generateOtp(searchSfaObj)" ng-disabled="noContact">Send OTP</button>
               </div>
               <!-- <div class="input-group-btn">
                 <button class="btn m-clear">Send OTP</button>
               </div> -->
             </div>
-            <p ng-if="!showRegisteredCredentials">An OTP will be sent to your registered Mobile Number & Email Id</p>
+            <!-- && !searchSfaObj.sfaId -->
+            <p ng-if="!showRegisteredCredentials && !noContact">An OTP will be sent to your registered Mobile Number & Email Id</p>
+            <div class="register-step-error" ng-show="noContact">
+              <!-- ng-if="!showRegisteredCredentials && noEmailMobile == true && !searchSfaObj.sfaId.email && !searchSfaObj.sfaId.mobile && searchSfaObj.sfaId._id" -->
+              <p >Your Mobile Number & Email Id does not exist.
+                <br> Kindly Contact us on
+                <a class="" href="tel:7045684365">7045684365</a> /
+                <a class="" href="tel:7045684366">7045684366</a> /
+                <a class="" href="tel:7045684367">7045684367</a> or Email us at:
+                <a href="mailto:info@sfanow.in">info@sfanow.in</a>.</p>
+            </div>
             <div class="" ng-if="showRegisteredCredentials">
-              <p>An OTP has been sent to your registered Mobile no: <span>{{registeredMobileNo|securedEmailmobile:'mobile'}}</span>                | Email Id: <span>{{registeredEmail|securedEmailmobile:'email'}}</span></p>
+              <p>An OTP has been sent to your registered
+                <span ng-if="searchSfaObj.sfaId.mobile">Mobile no: {{registeredMobileNo|securedEmailmobile:'mobile'}}</span>
+                <span ng-if="searchSfaObj.sfaId.email && searchSfaObj.sfaId.mobile">|</span>
+                <span ng-if="searchSfaObj.sfaId.email">Email Id: {{registeredEmail|securedEmailmobile:'email'}}</span>
+              </p>
               <div class="input-group forgototp-input">
                 <input type="text" class="form-control" ng-model="verifyOtpObj.otp" placeholder="OTP">
                 <div class="input-group-btn">
-                  <button class="btn m-clear" ng-disabled="!verifyOtpObj.otp" ng-click="verifyOTP(verifyOtpObj)"><span class="fa fa-arrow-right"></span></button>
+                  <button class="btn m-clear" ng-disabled="!verifyOtpObj.otp" ng-click="verifyOTP(verifyOtpObj)">
+                    <span class="fa fa-arrow-right"></span>
+                  </button>
                 </div>
               </div>
               <ul class="list-inline formoption-li">
-                <li ng-click="regenerateOtp(searchSfaObj)"><a href="">Resend OTP</a></li>
+                <li ng-click="regenerateOtp(searchSfaObj)">
+                  <a href="">Resend OTP</a>
+                </li>
                 <li>|</li>
-                <li><a ng-click="changeDetails();">Change Registered Email/Mobile</a></li>
+                <li>
+                  <a ng-click="changeDetails();">Change Registered Email/Mobile</a>
+                </li>
               </ul>
             </div>
           </div>
@@ -209,7 +242,10 @@
         </ul>
       </div>
       <div class="registerplayer-questionknowmore text-right" ng-if="questionList.length>2">
-        <a ng-click="moreQuestions();" class="btn">View <span ng-if="questionLimit.more">More</span> <span ng-if="!questionLimit.more">Less</span></a>
+        <a ng-click="moreQuestions();" class="btn">View
+          <span ng-if="questionLimit.more">More</span>
+          <span ng-if="!questionLimit.more">Less</span>
+        </a>
       </div>
     </section>
     <!-- QUESTIONS END  -->
@@ -231,7 +267,9 @@
                     </div>
                     <div class="register-testimonialcontent" ng-bind-html="card.content"></div>
                     <div class="register-testimonialauthor text-right">
-                      <p class="register-testimonialname">- <span>{{card.author}}</span></p>
+                      <p class="register-testimonialname">-
+                        <span>{{card.author}}</span>
+                      </p>
                       <p class="register-testimonialposition">{{card.designation}}</p>
                     </div>
                   </div>
