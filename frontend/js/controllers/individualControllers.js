@@ -1,26 +1,26 @@
-var selectPicker = function(team,toastr,sT,sN,$filter){
+var selectPicker = function (team, toastr, sT, sN, $filter, $scope, $uibModal, userDetails, userType) {
     var howMuchSelectPicker;
-    var id; 
+    var id;
     switch (sT) {
         case "K":
 
             break;
         case "FA":
             if (sN == 'Fencing') {
-                howMuchSelectPicker=1;
-                id="#selectpicker_";
+                howMuchSelectPicker = 1;
+                id = "#selectpicker_";
             } else if (sN == 'Archery') {
-                howMuchSelectPicker=2;
-                id="#selectpicker_";
+                howMuchSelectPicker = 2;
+                id = "#selectpicker_";
             }
             break;
         case "AAS":
             if (sN == "Athletics" || sN == "Swimming") {
-                howMuchSelectPicker=1;
-                id="#selectpicker_";
+                howMuchSelectPicker = 1;
+                id = "#selectpicker_";
             } else if (sN == "Shooting") {
-                howMuchSelectPicker=3;
-                id="#selectpicker_";
+                howMuchSelectPicker = 3;
+                id = "#selectpicker_";
             }
 
             break;
@@ -31,12 +31,14 @@ var selectPicker = function(team,toastr,sT,sN,$filter){
             break;
     }
 
-    console.log("howMuchSelectPicker,id",howMuchSelectPicker,id);
+    console.log("howMuchSelectPicker,id", howMuchSelectPicker, id);
+    console.log("userDetails", userDetails);
+    console.log("userType", userType);
 
     setTimeout(function () {
-        for(i=1;i<=howMuchSelectPicker;i++){
-            _.each(team,function(n,k){
-                var tp = id+i+"_"+k;
+        for (i = 1; i <= howMuchSelectPicker; i++) {
+            _.each(team, function (n, k) {
+                var tp = id + i + "_" + k;
                 console.log(tp);
                 $(tp).on('changed.bs.select', function (e) {
                     console.log("hit");
@@ -51,17 +53,36 @@ var selectPicker = function(team,toastr,sT,sN,$filter){
                     //     }
                     // }
 
-                    if(team[k].selectLimit == e.target.selectedOptions.length){
-                        if($.jStorage.get('userType')=="school"){
-                            toastr.info("Sfa Id " + team[k].sfaId +" Can Only Participate In "+ team[k].selectLimit +" Event. As per Selected Package", "Upgrade Package");
-                        }else{
-                            toastr.info("You Can Only Participate in "+team[k].selectLimit+" Event");                    
+                    if (team[k].selectLimit == e.target.selectedOptions.length) {
+                        if ($.jStorage.get('userType') == "school") {
+                            toastr.info("Sfa Id " + team[k].sfaId + " Can Only Participate In " + team[k].selectLimit + " Event. As per Selected Package", "Upgrade Package");
+                        } else {
+                            // for athelete
+                            // toastr.info("You Can Only Participate in " + team[k].selectLimit + " Event sukshaaaa");
+                            // SHOW UPGRADE POPUP
+                            $scope.upgrade = {};
+                            if (userType == 'athlete') {
+                                $scope.upgrade.userType = 'player';
+                            } else {
+                                $scope.upgrade.userType = 'school';
+                            }
+                            $scope.upgrade.id = userDetails._id;
+                            $scope.upgrade.package = userDetails.package;
+                            $uibModal.open({
+                                animation: true,
+                                scope: $scope,
+                                // backdrop: 'static',
+                                // keyboard: false,
+                                templateUrl: 'views/modal/upgradepackage-modal.html',
+                                windowClass: 'modal-upgradepackage'
+                            });
+                            // SHOW UPGRADE POPUP END
                         }
                     }
                 });
-            })
+            });
         }
-        
+
     }, 200);
 }
 
@@ -128,19 +149,19 @@ myApp.controller('IndividualSelectionCtrl', function ($scope, TemplateService, e
         $.jStorage.set("confirmPageKey", data.data.sportType);
     });
 
-    var data={};
-    if($.jStorage.get("userDetails") === null){
+    var data = {};
+    if ($.jStorage.get("userDetails") === null) {
         if ($.jStorage.get("userType") == "school") {
             data.type = "school";
-        }else{
+        } else {
             data.type = "player";
         }
         $state.go('registerplayer', {
             type: data.type
         });
-    }else{
+    } else {
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideChangePassword=true;
+        $scope.hideChangePassword = true;
     }
 
     $scope.logoutCandidate = function () {
@@ -306,19 +327,19 @@ myApp.controller('ConfirmIndividualCtrl', function ($scope, TemplateService, Nav
         $scope.formData.schoolName = $scope.detail.schoolName;
     });
 
-    var data={};
-    if($.jStorage.get("userDetails") === null){
+    var data = {};
+    if ($.jStorage.get("userDetails") === null) {
         if ($.jStorage.get("userType") == "school") {
             data.type = "school";
-        }else{
+        } else {
             data.type = "player";
         }
         $state.go('registerplayer', {
             type: data.type
         });
-    }else{
+    } else {
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideChangePassword=true;
+        $scope.hideChangePassword = true;
     }
 
     $scope.logoutCandidate = function () {
@@ -347,7 +368,7 @@ myApp.controller('ConfirmIndividualCtrl', function ($scope, TemplateService, Nav
 });
 
 //Confirm-Fencing // Fencing And Archery (FA-confirm3)
-myApp.controller('ConfirmFencingCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, loginService, errorService, selectService, toastr, $stateParams, $filter, configService) {
+myApp.controller('ConfirmFencingCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, loginService, errorService, selectService, toastr, $stateParams, $filter, $uibModal, configService) {
     //Used to name the .html file
     $scope.sportTab = $filter('firstcapitalize')($stateParams.name);
     $scope.template = TemplateService.getHTML("content/confirmfencing.html");
@@ -368,19 +389,19 @@ myApp.controller('ConfirmFencingCtrl', function ($scope, TemplateService, Naviga
         $scope.formData.schoolName = $scope.detail.schoolName;
     });
 
-    var data={};
-    if($.jStorage.get("userDetails") === null){
+    var data = {};
+    if ($.jStorage.get("userDetails") === null) {
         if ($.jStorage.get("userType") == "school") {
             data.type = "school";
-        }else{
+        } else {
             data.type = "player";
         }
         $state.go('registerplayer', {
             type: data.type
         });
-    }else{
+    } else {
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideChangePassword=true;
+        $scope.hideChangePassword = true;
     }
 
     $scope.config = {};
@@ -426,50 +447,55 @@ myApp.controller('ConfirmFencingCtrl', function ($scope, TemplateService, Naviga
     //     $('.table-responsive').on('show.bs.dropdown', function () {
     //         $('.table-responsive').css( "overflow", "inherit" );
     //    });
-       
+
     //    $('.table-responsive').on('hide.bs.dropdown', function () {
     //         $('.table-responsive').css( "overflow", "auto" );
     //    })
     // }, 200);
 
-    $scope.selectEvent = function(ath,whichSelectTag,justClicked){
-        if($scope.selectLimit==1){
-            if(whichSelectTag == "Fen1" && (ath.fen1flag==false && ath.fen2flag==false)){
-                ath.fen1flag=true; 
-            } else if(whichSelectTag == "Fen2" && (ath.fen1flag==false && ath.fen2flag==false)){
-                ath.fen2flag=true; 
+    $scope.selectEvent = function (ath, whichSelectTag, justClicked) {
+        if ($scope.selectLimit == 1) {
+            if (whichSelectTag == "Fen1" && (ath.fen1flag == false && ath.fen2flag == false)) {
+                ath.fen1flag = true;
+            } else if (whichSelectTag == "Fen2" && (ath.fen1flag == false && ath.fen2flag == false)) {
+                ath.fen2flag = true;
             }
-            if(ath.fen1flag && (whichSelectTag == "Fen1")){
-                console.log("1");                
-                ath.sport[1]="";
-            }else if(ath.fen2flag && (whichSelectTag == "Fen2")){
+            if (ath.fen1flag && (whichSelectTag == "Fen1")) {
+                console.log("1");
+                ath.sport[1] = "";
+            } else if (ath.fen2flag && (whichSelectTag == "Fen2")) {
                 console.log("2");
-                ath.sport[0]="";                
-            }else if(ath.fen1flag && (whichSelectTag == "Fen2")){
+                ath.sport[0] = "";
+            } else if (ath.fen1flag && (whichSelectTag == "Fen2")) {
                 console.log("3");
-                ath.sport[1]="";
-                toastr.error("Max Reached","Error Messege");
-            }else if(ath.fen2flag && (whichSelectTag == "Fen1")){
+                ath.sport[1] = "";
+                toastr.error("Max Reached", "Error Messege");
+            } else if (ath.fen2flag && (whichSelectTag == "Fen1")) {
                 console.log("4");
-                if(justClicked.eventName=="Indian Bow"){
+                if (justClicked.eventName == "Indian Bow") {
                     toastr.error("Only 1 Event Is Left As Per Your Package");
-                    ath.sport[1]="";
-                }else{
-                    ath.sport[0]="";
-                    toastr.error("Max Reached","Error Messege");
+                    ath.sport[1] = "";
+                } else {
+                    ath.sport[0] = "";
+                    toastr.error("Max Reached", "Error Messege");
                 }
-                
-            }
-            ath.disableEvent2=true;
-        }
-       
-    }
 
-    var selectPickerClone = selectPicker(selectService.team,toastr,selectService.sportType,selectService.sportName,$filter);
-   
+            }
+            ath.disableEvent2 = true;
+        }
+
+    };
+
+    var selectPickerClone = selectPicker(selectService.team, toastr, selectService.sportType, selectService.sportName, $filter, $scope, $uibModal, $.jStorage.get("userDetails"), $.jStorage.get("userType"));
+
     $('selectpicker').on('hidden.bs.select', function (e) {
-        console.log("hidden",e);
+        console.log("hidden", e);
     });
+
+    $scope.isValidSelection = function (athelete, fen) {
+        $scope.selectService.isValidSelection(athelete, fen, $scope);
+    };
+
 });
 
 //Confirm-karate // Karate (K-confirm4)
@@ -494,19 +520,19 @@ myApp.controller('ConfirmKarateCtrl', function ($scope, TemplateService, Navigat
         $scope.formData.schoolName = $scope.detail.schoolName;
     });
 
-    var data={};
-    if($.jStorage.get("userDetails") === null){
+    var data = {};
+    if ($.jStorage.get("userDetails") === null) {
         if ($.jStorage.get("userType") == "school") {
             data.type = "school";
-        }else{
+        } else {
             data.type = "player";
         }
         $state.go('registerplayer', {
             type: data.type
         });
-    }else{
+    } else {
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideChangePassword=true;
+        $scope.hideChangePassword = true;
     }
 
     $scope.logoutCandidate = function () {
@@ -521,11 +547,15 @@ myApp.controller('ConfirmKarateCtrl', function ($scope, TemplateService, Navigat
             }
         });
     };
+    $scope.isValidSelection = function (athelete, E) {
+        console.log("athlete", athelete);
+        $scope.selectService.isValidSelection(athelete, E, $scope);
+    };
 
 });
 
 //Confirm-athlete-swimming // Athletics Swimming And Shooting (AAS-confirm5)
-myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, NavigationService, loginService, $timeout, $state, selectService, toastr, $stateParams, $filter, configService, errorService) {
+myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, NavigationService, loginService, $timeout, $state, selectService, toastr, $stateParams, $filter, configService, $uibModal, errorService) {
     //Used to name the .html file
     $scope.sportTab = $filter('firstcapitalize')($stateParams.name);
     $scope.template = TemplateService.getHTML("content/confirmathleteswim.html");
@@ -547,19 +577,19 @@ myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, Navigat
         $scope.formData.schoolName = $scope.detail.schoolName;
     });
 
-    var data={};
-    if($.jStorage.get("userDetails") === null){
+    var data = {};
+    if ($.jStorage.get("userDetails") === null) {
         if ($.jStorage.get("userType") == "school") {
             data.type = "school";
-        }else{
+        } else {
             data.type = "player";
         }
         $state.go('registerplayer', {
             type: data.type
         });
-    }else{
+    } else {
         $scope.userDetails = $.jStorage.get("userDetails");
-        $scope.hideChangePassword=true;
+        $scope.hideChangePassword = true;
     }
 
     $scope.logoutCandidate = function () {
@@ -619,7 +649,7 @@ myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, Navigat
         $('.bs-searchbox input[type="text"]').attr('placeholder', 'Search Event');
     }, 200);
 
-    var selectPickerClone = selectPicker(selectService.team,toastr,selectService.sportType,selectService.sportName,$filter);
+    var selectPickerClone = selectPicker(selectService.team, toastr, selectService.sportType, selectService.sportName, $filter, $scope, $uibModal, $.jStorage.get("userDetails"), $.jStorage.get("userType"));
 });
 
 myApp.controller('IndividualCongratsCtrl', function ($scope, TemplateService, toastr, NavigationService, $timeout, $state, $stateParams, loginService, errorService, configService) {
@@ -639,23 +669,23 @@ myApp.controller('IndividualCongratsCtrl', function ($scope, TemplateService, to
         $scope.detail = data;
     });
 
-    var data={};
-    if($.jStorage.get("userDetails") === null){
+    var data = {};
+    if ($.jStorage.get("userDetails") === null) {
         if ($.jStorage.get("userType") == "school") {
             data.type = "school";
-        }else{
+        } else {
             data.type = "player";
         }
         $state.go('registerplayer', {
             type: data.type
         });
-    }else{
-        $timeout(function(){
-            if($.jStorage.get("userDetails")){
+    } else {
+        $timeout(function () {
+            if ($.jStorage.get("userDetails")) {
                 $scope.userDetails = $.jStorage.get("userDetails");
-                $scope.hideChangePassword=true;
+                $scope.hideChangePassword = true;
             }
-        },500);
+        }, 500);
     }
 
     $scope.logoutCandidate = function () {

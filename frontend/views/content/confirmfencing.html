@@ -117,16 +117,18 @@
                                 <!-- Events Column For Archery -->
                                 <td ng-if="st !=='Fencing'">
                                   <div>
-                                    <select id="Archery" class="form-control" ng-init="selectService.isValidSelection(athelete)" ng-model="athelete.sport[0]" ng-required=""
-                                      ng-options="event1 as event1._id | formatEvent:event1.eventName for event1 in athelete.allEvents" ng-change="selectService.isValidSelection(athelete,'Fen1');selectEvent(athelete,'Fen1',event1)" onchange="">
+                                    <select id="Archery" class="form-control" ng-init="selectService.isValidSelection(athelete)" ng-model="athelete.sport[0]"
+                                      ng-required="" ng-options="event1 as event1._id | formatEvent:event1.eventName for event1 in athelete.allEvents"
+                                      ng-change="isValidSelection(athelete,'Fen1');selectEvent(athelete,'Fen1',event1)" onchange="">
                                     </select>
                                   </div>
                                 </td>
                                 <td ng-if="st !=='Fencing'">
                                   <div>
-                                    <select  class="form-control" title={{athelete.informTitle}} ng-init="selectService.isValidSelection(athelete)" ng-model="athelete.sport[1]" ng-required=""
-                                      ng-options="event2 as event2._id | formatEvent:event2.eventName for event2 in athelete.optionalEvents" ng-change="selectService.isValidSelection(athelete,'Fen2');selectEvent(athelete,'Fen2',event2)"
-                                      ng-disabled="athelete.disableEvent2" onchange="">
+                                    <select class="form-control" title={{athelete.informTitle}} ng-init="selectService.isValidSelection(athelete)" ng-model="athelete.sport[1]"
+                                      ng-required="" ng-options="event2 as event2._id | formatEvent:event2.eventName for event2 in athelete.optionalEvents"
+                                      ng-change="isValidSelection(athelete,'Fen2');selectEvent(athelete,'Fen2',event2)" ng-disabled="athelete.disableEvent2"
+                                      onchange="">
                                     </select>
                                   </div>
                                 </td>
@@ -134,12 +136,14 @@
                                   {{athelete.selectLimit}}
                               </td> -->
 
-                               <!-- Events Column For Fencing -->
+                                <!-- Events Column For Fencing -->
                                 <td ng-if="st=='Fencing'">
                                   <div class="override-fencingselect sfa-btsselect">
-                                    <select id="selectpicker_1_{{$index}}" class="selectpicker form-control" multiple ng-init="selectService.isValidSelection(athelete)" ng-model="athelete.sport"
-                                      ng-required="" ng-options="event.data[0].sport as event._id  for event in athelete.events" title="Select Event" ng-change="selectService.isValidSelection(athelete)"
-                                      data-selected-text-format="count > 3" data-size="5" data-dropup-auto="true" data-live-search="true" data-max-options="{{athelete.selectLimit}}" data-max-options-text="{{athelete.maxOptionsText}}">
+                                    <select id="selectpicker_1_{{$index}}" class="selectpicker form-control" multiple ng-init="selectService.isValidSelection(athelete)"
+                                      ng-model="athelete.sport" ng-required="" ng-options="event.data[0].sport as event._id  for event in athelete.events"
+                                      title="Select Event" ng-change="selectService.isValidSelection(athelete)" data-selected-text-format="count > 3"
+                                      data-size="5" data-dropup-auto="true" data-live-search="true" data-max-options="{{athelete.selectLimit}}"
+                                      data-max-options-text="{{athelete.maxOptionsText}}">
                                     </select>
                                   </div>
                                 </td>

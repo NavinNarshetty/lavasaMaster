@@ -67,7 +67,7 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
                             _.each(tempObj.tempArr, function (sport) {
                                 // console.log("athlete", $scope.detail);
                                 if ($scope.detail.userType === "athlete" && !$scope.detail.mixAccess && $.jStorage.get("IsColg") === 'school' && (
-                                        sport.name === 'Water Polo' || sport.name === 'Athletics 4x100m Relay' || sport.name === 'Athletics 4x50m Relay' || sport.name === 'Athletics Medley Relay')) {
+                                    sport.name === 'Water Polo' || sport.name === 'Athletics 4x100m Relay' || sport.name === 'Athletics 4x50m Relay' || sport.name === 'Athletics Medley Relay')) {
                                     sport.isVisibleSport = true;
                                 } else {
                                     sport.isVisibleSport = false;
@@ -147,8 +147,14 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
         }
     } else {
         if ($.jStorage.get("userDetails") === null) {
+            $scope.data = {};
+            if ($.jStorage.get("userType") === 'athlete') {
+                $scope.data.type = 'player';
+            } else {
+                $scope.data.type = 'school';
+            }
             $state.go('registerplayer', {
-                type: $.jStorage.get("userType")
+                type: $scope.data.type
             });
         }
         $scope.callLogin();
@@ -422,8 +428,14 @@ myApp.controller('SportsRulesCtrl', function ($scope, TemplateService, $state, N
     });
 
     if ($.jStorage.get("userDetails") === null) {
+        $scope.data = {};
+        if ($.jStorage.get("userType") === 'athlete') {
+            $scope.data.type = 'player';
+        } else {
+            $scope.data.type = 'school';
+        }
         $state.go('registerplayer', {
-            type: $.jStorage.get("userType")
+            type: $scope.data.type
         });
     }
 
@@ -533,9 +545,16 @@ myApp.controller('SportIndividualCtrl', function ($scope, TemplateService, toast
     });
 
     if ($.jStorage.get("userDetails") === null) {
+        $scope.data = {};
+        if ($.jStorage.get("userType") === 'athlete') {
+            $scope.data.type = 'player';
+        } else {
+            $scope.data.type = 'school';
+        }
         $state.go('registerplayer', {
-            type: $.jStorage.get("userType")
+            type: $scope.data.type
         });
+
     }
 
     if ($.jStorage.get("userDetails")) {
@@ -695,9 +714,16 @@ myApp.controller('SportTeamCtrl', function ($scope, TemplateService, toastr, Nav
     };
 
     if ($.jStorage.get("userDetails") === null) {
+        $scope.data = {};
+        if ($.jStorage.get("userType") === 'athlete') {
+            $scope.data.type = 'player';
+        } else {
+            $scope.data.type = 'school';
+        }
         $state.go('registerplayer', {
-            type: $.jStorage.get("userType")
+            type: $scope.data.type
         });
+
     }
 
     if ($.jStorage.get("userDetails")) {

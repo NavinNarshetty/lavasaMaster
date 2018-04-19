@@ -6,6 +6,7 @@ myApp.service('loginService', function ($http, TemplateService, $state, toastr, 
             getData.isLoggedIn = true;
             if ($.jStorage.get("userType") == "school") {
                 getData.userType = 'school';
+                getData.usertype = 'school';
                 getData.sfaIdObj = getJ.sfaID;
                 getData.schoolName = getJ.schoolName;
                 getData.accessToken = getJ.accessToken;
@@ -16,6 +17,7 @@ myApp.service('loginService', function ($http, TemplateService, $state, toastr, 
                 NavigationService.setUserSchool(getData.schoolName);
             } else {
                 getData.userType = 'athlete';
+                getData.usertype = 'player';
                 getData.firstName = getJ.firstName;
                 getData.surname = getJ.surname;
                 getData.sfaIdObj = getJ.sfaId;
