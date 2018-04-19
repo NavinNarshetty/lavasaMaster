@@ -1878,9 +1878,9 @@ var model = {
                 }
                 emailData.prevPaidAmount = final.accounts.transaction[temp].amountPaid;
                 emailData.discount = final.accounts.discount;
-                emailData.schoolName = found.accounts.school.schoolName;
-                if (found.accounts.school.gstNo) {
-                    emailData.schoolGstNo = found.accounts.school.gstNo;
+                emailData.schoolName = final.accounts.school.schoolName;
+                if (final.accounts.school.gstNo) {
+                    emailData.schoolGstNo = final.accounts.school.gstNo;
                 }
                 emailData.receiptNo = final.accounts.transaction[len].receiptId[0];
                 emailData.paymentMode = final.accounts.transaction[len].paymentMode;
@@ -1891,7 +1891,7 @@ var model = {
                 emailData.amountToWords = Accounts.amountToWords(final.accounts.transaction[len].amountPaid);
                 emailData.from = final.property.infoId;
                 emailData.email1 = [{
-                    email: found.accounts.school.email
+                    email: final.accounts.school.email
                 }];
                 emailData.bcc1 = [{
                     email: "payments@sfanow.in"
