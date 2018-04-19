@@ -571,7 +571,7 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
         // mainLink: 'http://mumbaischool.sfanow.in',
         champDetail: [{
                 name: 'about championship',
-                link: 'championship'
+                link: 'aboutchampionship'
             },
             //  {
             //     name: 'live updates',
@@ -592,7 +592,15 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
             // }, {
             //     name: 'draws schedule',
             //     link: 'draws-schedule'
-            // }, 
+            // },
+            {
+                name: 'Register As a player',
+                link: 'register/player'
+            },
+            {
+                name: 'Register As a school',
+                link: 'register/school'
+            },
             {
                 name: 'faqs',
                 link: 'faq'
