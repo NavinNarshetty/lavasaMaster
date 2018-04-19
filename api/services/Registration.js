@@ -986,13 +986,17 @@ var model = {
                 function (property, callback) {
                     console.log("inside update", data);
                     Registration.findOne({ //finds one with refrence to id
-                        schoolName: data.schoolName
+                        schoolName: {
+                            $regex: data.schoolName,
+                            $options: i
+                        }
                     }).lean().deepPopulate("package").exec(function (err, found) {
                         if (err) {
                             callback(err, null);
                         } else if (_.isEmpty(found)) {
                             callback(null, "Data is empty");
                         } else {
+                            console.log("inside found", found);
                             async.waterfall([
                                     function (callback) {
                                         Accounts.findOne({
@@ -1011,6 +1015,7 @@ var model = {
                                     },
                                     function (found, callback) {
                                         data.school = true;
+                                        console.log("data------", data, "found------", found);
                                         Transaction.saveTransaction(data, found, function (err, vData) {
                                             if (err || _.isEmpty(vData)) {
                                                 callback(null, {
