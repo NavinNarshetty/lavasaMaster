@@ -1748,6 +1748,7 @@ var model = {
                     emailData.upgrade = false;
                 }
                 emailData.packageName = final.accounts.transaction[len].package.name;
+                emailData.registrationDate = final.accounts.transaction[len].dateOfTransaction;
                 emailData.amountWithoutTax = final.accounts.transaction[len].package.finalPrice;
                 emailData.cgstPercent = final.accounts.transaction[len].package.cgstPercent;
                 emailData.sgstPercent = final.accounts.transaction[len].package.sgstPercent;
