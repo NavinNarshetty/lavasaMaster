@@ -166,12 +166,12 @@
                   <!--MODE OF PAYMENT  -->
                   <td>
                     <div class="form-group m-clear">
-                      <!-- <select name="modepayment" id="modepayment" class="form-control custom-select" ng-model="formData.paymentMode" readonly>
-                          <option value="onlinePAYU">Online</option>
-                          <option value="cash">Cash</option>
-                          <option value="sponsor">Sponsered</option>
-                    </select> -->
-                      <input type="text" class="form-control" name="modepayment" id="modepayment" ng-model="packageDetail.paymentMode" readonly>
+                      <select name="modepayment" id="modepayment" class="form-control custom-select" ng-model="packageDetail.paymentMode">
+                        <option value="onlinePAYU">Online</option>
+                        <option value="cash">Cash</option>
+                        <option value="sponsor">Sponsered</option>
+                      </select>
+                      <!-- <input type="text" class="form-control" name="modepayment" id="modepayment" ng-model="packageDetail.paymentMode" readonly> -->
                       <div class="label label-danger pull-right" ng-if="accountForm.modepayment.$invalid && accountForm.modepayment.$touched">Please Enter Mode *</div>
                     </div>
                   </td>
