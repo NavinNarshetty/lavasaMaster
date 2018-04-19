@@ -70,6 +70,9 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
             })
           } else {
             $scope.formData.password = '';
+            $scope.formData.schoolType = "";
+            $scope.formData.schoolCategory = "";
+            $scope.formData.affiliatedBoard = "";
             $scope.formData.termsAndCondition = '';
             $scope.formData.registrationFee = '';
             $scope.emailId = $scope.formData.email;
