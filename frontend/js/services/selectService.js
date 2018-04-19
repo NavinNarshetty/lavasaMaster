@@ -1,4 +1,4 @@
-myApp.service('selectService', function ($http, TemplateService, $state, toastr, NavigationService, loginService, errorService, $timeout) {
+myApp.service('selectService', function ($http, TemplateService, $state, toastr, $uibModal, NavigationService, loginService, errorService, $timeout) {
     this.team = [];
     this.detail = null;
     this.sportsId = null; // Req in api For sending data at backend eg:5864..69
@@ -46,21 +46,21 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
         _.each(editTeam, function (n) {
             n.checked = true;
         });
-        console.log("editTeam,remTeam",editTeam,remTeam);
+        console.log("editTeam,remTeam", editTeam, remTeam);
         remTeam = _.map(remTeam, function (n) {
-            if ((_.has(n,'package','selectedEvent')) && !n.isIndividualSelected) {
+            if ((_.has(n, 'package', 'selectedEvent')) && !n.isIndividualSelected) {
                 if (n.selectedEvent == n.package.eventCount) {
                     n.maxReached = true;
                 }
-                if(n.package.order==4 && cT!="Team Sports" && sN!="Water Polo"){
-                    n.onlyTeamSports=true;
+                if (n.package.order == 4 && cT != "Team Sports" && sN != "Water Polo") {
+                    n.onlyTeamSports = true;
                 }
                 return n;
             } else {
                 return n;
             }
         });
-        return _.concat(editTeam,remTeam);
+        return _.concat(editTeam, remTeam);
     };
 
     // push to Team (all validations objects are made here-For School As well as for Athlete Login)
@@ -79,7 +79,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                 case "FA":
                     // console.log(ath);
                     if (sN == 'Fencing') {
-                        console.log("ath",ath);
+                        console.log("ath", ath);
                         if (ath.eventEpee.length <= 0 && ath.eventSabre.length <= 0 && ath.eventFoil.length <= 0) {
                             ath.checked = false;
                             toastr.error("Not Applicable");
@@ -313,14 +313,14 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                 n.data = _.filter(n.data, ['eventName', 'Kumite']);
             });
             // athelete.eventKumite = getAgeGroups(kumite);
-            athelete.eventKumite = _.compact(_.map(getAgeGroups(kumite),function(n){
-                n.data=_.compact(_.map(n.data,function(m){
-                    if(!(m && m.weight && m.weight!="")){
+            athelete.eventKumite = _.compact(_.map(getAgeGroups(kumite), function (n) {
+                n.data = _.compact(_.map(n.data, function (m) {
+                    if (!(m && m.weight && m.weight != "")) {
                         return m;
                     }
                 }));
                 // console.log("data",_.compact(n.data));
-                if(!_.isEmpty(_.compact(n.data))){
+                if (!_.isEmpty(_.compact(n.data))) {
                     return n;
                 }
             }));
@@ -340,7 +340,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                     'weight': 'First Select Kumite'
                 }]
             });
-           console.log(athelete);
+            console.log(athelete);
             return athelete;
         }
 
@@ -454,14 +454,14 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
             case "I":
                 athelete.sport = [];
 
-                athelete.ageGroups = _.compact(_.map(getAgeGroups(events),function(n){
-                    n.data=_.compact(_.map(n.data,function(m){
-                        if(!(m && m.weight && m.weight!="")){
+                athelete.ageGroups = _.compact(_.map(getAgeGroups(events), function (n) {
+                    n.data = _.compact(_.map(n.data, function (m) {
+                        if (!(m && m.weight && m.weight != "")) {
                             return m;
                         }
                     }));
                     // console.log("data",_.compact(n.data));
-                    if(!_.isEmpty(_.compact(n.data))){
+                    if (!_.isEmpty(_.compact(n.data))) {
                         return n;
                     }
                 }));
@@ -577,7 +577,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                     console.log("this.team[0].sport[0].data", this.team[0].sport[0].data);
                     _.each(formData, function (n, i) {
                         arr = _.filter(n.sport[0].data, function (o, i) {
-                            return !_.has(o, 'weight')
+                            return !_.has(o, 'weight');
                         });
                         console.log("arr", arr);
                         n.sport = _.map(arr, 'sport');
@@ -594,7 +594,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
             // console.log("isValid");
             _.each(formData, function (n, i) {
                 n.sportsListSubCategory = $.jStorage.get("sportsId");
-                n.athleteId = n._id
+                n.athleteId = n._id;
                 formData[i] = _.pick(n, ['sport', 'sportsListSubCategory', 'athleteId']);
             });
             console.log("finalData", formData);
@@ -650,15 +650,17 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
 
                     $state.go("individual-congrats");
                 } else {
-                    ref.isDisabled=false;
+                    ref.isDisabled = false;
                     toastr.error(allData.message || allData.error, 'Error Message');
                 }
             });
         });
     };
 
-    this.isValidSelection = function (athelete, whichSelectTag) {
+    this.isValidSelection = function (athelete, whichSelectTag, scopes) {
+        console.log("this.sportType", this.sportType);
         switch (this.sportType) {
+
 
             case "K":
 
@@ -668,7 +670,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                     var obj = _.find(weights.data, function (n) {
                         if (!n.weight) {
                             console.log("n", n);
-                            return n
+                            return n;
                         }
                     });
                     if (obj) {
@@ -678,42 +680,89 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                     }
                 }
                 athelete.isValidSelection = (arr.length == 0 || ((!arr[0] || arr[0] && arr[0].data && arr[0].data[0].sport == null) && ((arr[1] && !arr[1].sport) || (arr[1] && arr[1].sport == null)))) ? false : ((arr.length >= 1 && arr[0] && arr[0].data && arr[0].data[0] && arr[0].data[0].sport != null) || ((arr.length >= 1 && (!arr[0] || arr[0] && arr[0].data[0].sport == null)) && (arr.length >= 1 && arr[1] && arr[1].sport != null)) || ((arr.length >= 1 && arr[0] && arr[0].data[0] && arr[0].data[0].sport != null) && (arr.length >= 1 && arr[1] && arr[1].sport != null))) ? true : false;
-              
-                var currentSelected = _.map(athelete.sport,function(n,k){
-                    if(k==0){
-                        if(n && n._id!="None"){
+
+                var currentSelected = _.map(athelete.sport, function (n, k) {
+                    if (k == 0) {
+                        if (n && n._id != "None") {
                             return n;
                         }
-                    }else if(k==1){
-                        if(n && n.sport){
+                    } else if (k == 1) {
+                        if (n && n.sport) {
                             return n;
                         }
                     }
-                    
+
                 });
                 currentSelected = _.compact(currentSelected).length;
-                
+
                 var allowedAsPerPackage = (((athelete.package.eventCount - athelete.selectedEvent) - currentSelected) > 0) ? true : false;
-                if(athelete.package.eventCount - athelete.selectedEvent<2){
+                if (athelete.package.eventCount - athelete.selectedEvent < 2) {
                     if (allowedAsPerPackage) {
-                        if(whichSelectTag == 'E1'){
+                        if (whichSelectTag == 'E1') {
                             athelete.disableEvent2 = false;
                             athelete.informTitle2 = "Select Event";
-                        }else{
+                        } else {
                             athelete.disableEvent1 = false;
                             athelete.informTitle1 = "Select Event";
                         }
-                    }else{
-                        if(whichSelectTag == 'E1'){
-                            athelete.sport[1]=null;
+                    } else {
+                        if (scopes && $.jStorage.get("userType") == 'athlete') {
+                            scopes.upgrade = {};
+                            scopes.upgrade.id = $.jStorage.get("userDetails")._id;
+                            if ($.jStorage.get("userType") == 'athlete') {
+                                scopes.upgrade.userType = 'player';
+                            } else if ($.jStorage.get("userType") == 'school') {
+                                if ($.jStorage.get("userType") == 'school') {
+                                    scopes.upgrade.userType = 'school';
+                                } else if ($.jStorage.get("userType") == 'college') {
+                                    scopes.upgrade.userType = 'college';
+                                }
+                            }
+                        }
+
+
+                        if (whichSelectTag == 'E1') {
+                            console.log("upgrade", scopes.upgrade);
+                            athelete.sport[1] = null;
                             athelete.disableEvent2 = true;
                             athelete.informTitle2 = "Upgrade Package To Add More";
-                            toastr.info("Sfa Id " + athelete.sfaId +" Can Only Participate In "+ (athelete.package.eventCount - athelete.selectedEvent) +" Event. As per Selected Package");                        
-                        }else{
-                            athelete.sport[0]=null;
+                            if ($.jStorage.get("userType") == 'athlete') {
+                                // SHOW UPGRADE POPUP
+                                scopes.upgrade.package = athelete.package;
+                                scopes.modalInstance = $uibModal.open({
+                                    animation: true,
+                                    scope: scopes,
+                                    // backdrop: 'static',
+                                    // keyboard: false,
+                                    templateUrl: 'views/modal/upgradepackage-modal.html',
+                                    windowClass: 'modal-upgradepackage'
+                                });
+                                // SHOW UPGRADE POPUP END
+                            } else {
+                                toastr.info("Sfa Id " + athelete.sfaId + " Can Only Participate In " + (athelete.package.eventCount - athelete.selectedEvent) + " Event. As per Selected Package");
+
+                            }
+
+                        } else {
+                            athelete.sport[0] = null;
                             athelete.disableEvent1 = true;
                             athelete.informTitle1 = "Upgrade Package To Add More";
-                            toastr.info("Sfa Id " + athelete.sfaId +" Can Only Participate In "+ (athelete.package.eventCount - athelete.selectedEvent) +" Event. As per Selected Package");
+                            if ($.jStorage.get("userType") == 'athlete') {
+                                if (scopes) {
+                                    scopes.upgrade.package = athelete.package;
+                                    scopes.modalInstance = $uibModal.open({
+                                        animation: true,
+                                        scope: scopes,
+                                        // backdrop: 'static',
+                                        // keyboard: false,
+                                        templateUrl: 'views/modal/upgradepackage-modal.html',
+                                        windowClass: 'modal-upgradepackage'
+                                    });
+                                }
+                            } else {
+                                toastr.info("Sfa Id " + athelete.sfaId + " Can Only Participate In " + (athelete.package.eventCount - athelete.selectedEvent) + " Event. As per Selected Package");
+
+                            }
                         }
                     }
                 }
@@ -724,28 +773,54 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                 if (this.sportName == 'Fencing') {
                     var arr = _.compact(athelete.sport);
                     athelete.isValidSelection = arr.length > 0;
+                    console.log("this.sportName im in", this.sportName);
                 } else if (this.sportName == 'Archery') {
-                    console.log("athelete.sport",athelete.sport);
+
+                    console.log("athelete.sport", athelete.sport);
+                    console.log("this.sportName im in else", this.sportName);
 
                     var allowedAsPerPackage = (((athelete.package.eventCount - athelete.selectedEvent) - _.compact(athelete.sport).length) < 0) ? true : false;
-                    console.log("allowedAsPerPackage",allowedAsPerPackage,((athelete.package.eventCount - athelete.selectedEvent) - _.compact(athelete.sport).length));
+                    console.log("allowedAsPerPackage", allowedAsPerPackage, ((athelete.package.eventCount - athelete.selectedEvent) - _.compact(athelete.sport).length));
                     if (allowedAsPerPackage) {
                         athelete.sport[1] = {}; //last added
                         athelete.disableEvent2 = true;
                         athelete.informTitle = "Upgrade Package To Add More";
                         if (whichSelectTag == 'Fen2') {
-                            athelete.sport[1]={};
-                            toastr.info("Sfa Id " + athelete.sfaId +" Can Only Participate In "+ athelete.selectLimit +" Event. As per Selected Package", "Select From Event 1");
+                            athelete.sport[1] = {};
+                            if (scopes && $.jStorage.get("userType") == 'athlete') {
+                                scopes.upgrade = {};
+                                scopes.upgrade.id = $.jStorage.get("userDetails")._id;
+                                if ($.jStorage.get("userType") == 'athlete') {
+                                    scopes.upgrade.userType = 'player';
+                                } else if ($.jStorage.get("userType") == 'school') {
+                                    if ($.jStorage.get("userType") == 'school') {
+                                        scopes.upgrade.userType = 'school';
+                                    } else if ($.jStorage.get("userType") == 'college') {
+                                        scopes.upgrade.userType = 'college';
+                                    }
+                                }
+                                scopes.upgrade.package = athelete.package;
+                                scopes.modalInstance = $uibModal.open({
+                                    animation: true,
+                                    scope: scopes,
+                                    // backdrop: 'static',
+                                    // keyboard: false,
+                                    templateUrl: 'views/modal/upgradepackage-modal.html',
+                                    windowClass: 'modal-upgradepackage'
+                                });
+                            } else {
+                                toastr.info("Sfa Id " + athelete.sfaId + " Can Only Participate In " + athelete.selectLimit + " Event. As per Selected Package", "Select From Event 1");
+                            }
                         }
                     }
 
-                    var disableIfNotIndianBow = (athelete && athelete.sport && athelete.sport[0] && athelete.sport[0].eventName != 'Indian Bow')?true:false;
+                    var disableIfNotIndianBow = (athelete && athelete.sport && athelete.sport[0] && athelete.sport[0].eventName != 'Indian Bow') ? true : false;
                     if (disableIfNotIndianBow) {
                         athelete.disableEvent2 = true;
                         athelete.informTitle = "Not Allowed";
                     }
                     athelete.disableEvent2 = (allowedAsPerPackage || disableIfNotIndianBow) ? true : false;
-                    
+
                     athelete.isValidSelection = ((athelete.sport && athelete.sport[0]) || (athelete.sport && athelete.sport[1])) ? true : false
                     if (athelete.sport && athelete.sport[1] && athelete.sport[1] != '' && athelete.sport[0] && athelete.sport[0].eventName != 'Indian Bow') {
                         athelete.sport[1] = {};

@@ -100,7 +100,7 @@
                                   <!--athelete.sport[athelete.sport.length]-->
                                   <!--ng-init="athelete.sport[0]=athelete.eventKata[1].sport"-->
                                   <select class="form-control" ng-init="selectService.isValidSelection(athelete)" ng-model="athelete.sport[0]" ng-options="event1 as event1._id | formatEvent:'Kata'  for event1 in athelete.eventKata | orderBy:'_id' track by event1._id"
-                                  ng-change="selectService.isValidSelection(athelete,'E1')" ng-disabled="athelete.disableEvent1" title="{{athelete.informTitle1}}">
+                                    ng-change="isValidSelection(athelete,'E1')" ng-disabled="athelete.disableEvent1" title="{{athelete.informTitle1}}">
                                   </select>
                                   <!--event 1 selection ends-->
 
@@ -109,7 +109,7 @@
                                   <!--event 2 selection starts-->
                                   <!--ng-init="athelete.event2Weights=athelete.eventKumite[0]"-->
                                   <select class="form-control" ng-init="selectService.isValidSelection(athelete)" ng-model="athelete.event2Weights" ng-options="event2 as event2._id | formatEvent:'Kumite' for event2 in athelete.eventKumite | orderBy:'_id' track by event2._id"
-                                  ng-change="selectService.isValidSelection(athelete,'E2')" ng-disabled="athelete.disableEvent2" title="{{athelete.informTitle2}}">
+                                    ng-change="isValidSelection(athelete,'E2')" ng-disabled="athelete.disableEvent2" title="{{athelete.informTitle2}}">
                                   </select>
                                   <!--event 2 selection ends-->
                                 </td>
