@@ -510,7 +510,7 @@ var model = {
                                             totalPaid: finalPay,
                                             discount: data.discount,
                                             receiptId: data.receipt,
-                                            paymentMode: n.paymentMode,
+                                            paymentMode: paymentModeFinal,
                                             checkNo: data.checkNo,
                                             cgst: data.cgst,
                                             sgst: data.sgst,

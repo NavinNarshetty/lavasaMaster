@@ -986,10 +986,7 @@ var model = {
                 function (property, callback) {
                     console.log("inside update", data);
                     Registration.findOne({ //finds one with refrence to id
-                        schoolName: {
-                            $regex: data.schoolName,
-                            $options: i
-                        }
+                        schoolName: data.schoolName
                     }).lean().deepPopulate("package").exec(function (err, found) {
                         if (err) {
                             callback(err, null);
@@ -1894,7 +1891,8 @@ var model = {
                 emailData.receiptNo = final.accounts.transaction[len].receiptId[0];
                 emailData.paymentMode = final.accounts.transaction[len].paymentMode;
                 emailData.schoolAmount = final.accounts.transaction[len].amountPaid;
-                emailData.registrationDate = final.accounts.transaction[len].dateOfTransaction;
+                emailData.registrationDate = moment(final.accounts.transaction[len].dateOfTransaction, "DD-MM-YYYY").add(1, 'days');
+                // emailData.registrationDate = final.accounts.transaction[len].dateOfTransaction;
                 if (final.accounts.transaction[len].PayuId) {
                     emailData.transactionId = final.accounts.transaction[len].PayuId;
                 }
