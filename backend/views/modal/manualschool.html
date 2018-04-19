@@ -153,12 +153,12 @@
                   <!--MODE OF PAYMENT  -->
                   <td>
                     <div class="form-group m-clear">
-                      <!-- <select name="modepayment" id="modepayment" class="form-control custom-select" ng-model="formData.paymentMode" readonly>
-                            <option value="onlinePAYU">Online</option>
-                            <option value="cash">Cash</option>
-                            <option value="sponsor">Sponsered</option>
-                      </select> -->
-                      <input type="text" class="form-control" name="modepayment" id="modepayment" ng-model="packageDetail.paymentMode" readonly>
+                      <select name="modepayment" id="modepayment" class="form-control custom-select" ng-model="packageDetail.paymentMode">
+                        <option value="onlinePAYU">Online</option>
+                        <option value="cash">Cash</option>
+                        <option value="sponsor">Sponsered</option>
+                      </select>
+                      <!-- <input type="text" class="form-control" name="modepayment" id="modepayment" ng-model="packageDetail.paymentMode" readonly> -->
                       <div class="label label-danger pull-right" ng-if="accountForm.modepayment.$invalid && accountForm.modepayment.$touched">Please Enter Mode *</div>
                     </div>
                   </td>
@@ -168,7 +168,7 @@
                     <div class="form-group m-clear">
                       <select name="packageName" id="packagename" class="form-control custom-select" ng-model="packageDetail.package" ng-options="{_id:data._id,name:data.name,finalPrice:data.finalPrice} as data.name for data in packageNameData track by data._id"
                         readonly disabled="true">
-                        </select>
+                      </select>
                     </div>
                     <div class="label label-danger pull-right" ng-if="accountForm.packageName.$invalid && accountForm.packageName.$touched">Please Enter Valid Package Name *</div>
                   </td>
@@ -204,7 +204,7 @@
                   <td>
                     <div class="form-group m-clear">
                       <input type="text" placeholder="Enter checkNo" name="checkNo" class="form-control" ng-model="packageDetail.checkNo" ng-list
-                        ng-readonly="packageDetail.paymentMode==='online PAYU' || || packageDetail.currentSchoolPackage===false">
+                        ng-readonly="packageDetail.paymentMode==='online PAYU' ||  packageDetail.currentSchoolPackage===false">
                       <div class="label label-danger pull-right" ng-if="accountForm.checkNo.$invalid && accountForm.checkNo.$touched">Please Enter Valid Recipt No *</div>
                     </div>
 
@@ -214,17 +214,19 @@
                   <!-- STATUS -->
                   <td>
                     <div class="form-group m-clear">
-                      <select name="status" id="status" class="form-control custom-select" ng-model="packageDetail.paymentStatus" ng-disabled="packageDetail.paymentMode==='online PAYU' || || packageDetail.currentSchoolPackage===false">
-                              <option value="Paid">Paid</option>
-                              <option value="Pending">Pending</option>
-                        </select>
+                      <select name="status" id="status" class="form-control custom-select" ng-model="packageDetail.paymentStatus" ng-disabled="packageDetail.paymentMode==='online PAYU' ||  packageDetail.currentSchoolPackage===false">
+                        <option value="Paid">Paid</option>
+                        <option value="Pending">Pending</option>
+                      </select>
                     </div>
                   </td>
                   <!-- STATUS END -->
 
 
                   <td class="hide">
-                    <span class="text-center" ng-click="deleteRow(formData,$index,isDelete)"><i class="fa btn btn-danger fa-trash" aria-hidden="true"></i></span>
+                    <span class="text-center" ng-click="deleteRow(formData,$index,isDelete)">
+                      <i class="fa btn btn-danger fa-trash" aria-hidden="true"></i>
+                    </span>
                   </td>
                   <div class="highlighted-package" ng-if="packageDetail.currentSchoolPackage">
                     <label class="label label-success pull-right">current package</label>
