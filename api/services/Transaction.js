@@ -474,7 +474,7 @@ var model = {
                                             discount: data.discount,
                                             receiptId: data.receipt,
                                             checkNo: data.checkNo,
-                                            paymentMode: n.paymentMode,
+                                            paymentMode: paymentModeFinal,
                                             checkNo: data.checkNo,
                                             cgst: data.cgst,
                                             sgst: data.sgst,
