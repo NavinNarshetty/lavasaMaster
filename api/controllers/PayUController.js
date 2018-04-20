@@ -104,7 +104,7 @@ var controller = {
         var data = req.allParams();
         var param = {};
 
-        param.schoolName = data.UDF1;
+        param.schoolName = data.udf1;
         param.transactionid = data.mihpayid;
         var status = data.status;
 
@@ -656,7 +656,7 @@ var controller = {
         var data = req.allParams();
         var param = {};
 
-        param.schoolName = data.UDF1;
+        param.schoolName = data.udf1;
         param.transactionid = data.mihpayid;
         var status = data.status;
 

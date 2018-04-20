@@ -51,7 +51,7 @@ var models = {
                 } else {
                     var productinfo = "College Registration to SFA";
                 }
-                var hash = sha512(payukey + "|" + txnid + "|" + amount + "|" + productinfo + "|" + UDF1 + "|" + email + "|||||||||||" + payusalt);
+                var hash = sha512(payukey + "|" + txnid + "|" + amount + "|" + productinfo + "|" + firstname + "|" + email + "|" + udf1 + "||||||||||" + payusalt);
                 var hashtext = hash.toString('hex');
                 request.post({
                     url: payuurl,
@@ -60,7 +60,8 @@ var models = {
                         txnid: txnid,
                         amount: amount,
                         productinfo: productinfo,
-                        UDF1: firstname,
+                        firstname: firstname,
+                        udf1: firstname,
                         // surl: 'http://mumbaischool.sfanow.in/api/payU/successErrorSchool',
                         // furl: 'http://mumbaischool.sfanow.in/api/payU/successErrorSchool',
                         // surl: 'http://mumbaicollege.sfanow.in/api/payU/successErrorSchool',
@@ -104,7 +105,8 @@ var models = {
                         state: state,
                         country: country,
                         zipcode: pincode,
-                        city: city
+                        city: city,
+
                     }
                 }, callback);
             }
