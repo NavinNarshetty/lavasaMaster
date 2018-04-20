@@ -64,7 +64,8 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
         NavigationService.apiCallWithData($scope.checkUrl, $scope.checkRegistration, function(data){
           console.log("da", data);
           if (data.value == true) {
-            toastr.error("School registered","Error");
+            // toastr.error("You have already completed STEP 1 for SFA Championship 2018-19.  Kindly proceed to STEP 2 (Sports Registration) if you have received a confirmation email. For further queries kindly call us on 7045684365/66/67.","Error");
+            toastr.error("You have already completed STEP 1.  Kindly proceed to STEP 2. if you have received a confirmation email. For any queries contact us.","Error");
             $state.go('registerplayer',{
               type: 'school'
             })
