@@ -1752,7 +1752,8 @@ var model = {
                     emailData.upgrade = false;
                 }
                 emailData.packageName = final.accounts.transaction[len].package.name;
-                emailData.registrationDate = moment().format(final.accounts.transaction[len].dateOfTransaction, "DD-MM-YYYY").add(1, 'days');
+                var dateTime = moment(final.accounts.transaction[len].dateOfTransaction, "DD-MM-YYYY").add(1, 'days');
+                emailData.registrationDate = dateTime;
                 // emailData.registrationDate = final.accounts.transaction[len].dateOfTransaction;
                 emailData.amountWithoutTax = final.accounts.transaction[len].package.finalPrice;
                 emailData.cgstPercent = final.accounts.transaction[len].package.cgstPercent;
