@@ -1907,7 +1907,7 @@ var model = {
                     email: "admin@sfanow.in"
                 }];
                 emailData.filename = "school/receipt.ejs";
-                emailData.subject = "SFA: Your Payment Receipt as an School for SFA " + emailData.city + " " + emailData.type + " " + emailData.eventYear + ".";
+                emailData.subject = "SFA: Your Payment Receipt as an " + emailData.type + " for SFA " + emailData.city + " " + emailData.eventYear + ".";
                 console.log("emaildata", emailData);
                 Config.emailTo(emailData, function (err, emailRespo) {
                     if (err) {

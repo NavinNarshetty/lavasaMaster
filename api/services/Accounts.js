@@ -1788,7 +1788,7 @@ var model = {
                     email: "admin@sfanow.in"
                 }];
                 emailData.filename = "player/receipt.ejs";
-                emailData.subject = "SFA: Your Payment Receipt as an Athlete for SFA " + emailData.city + " " + emailData.type + " " + emailData.eventYear + ".";
+                emailData.subject = "SFA: Your Payment Receipt as an Athlete for SFA " + emailData.city + " " + emailData.eventYear + ".";
                 console.log("emaildata", emailData);
                 Config.emailTo(emailData, function (err, emailRespo) {
                     if (err) {
