@@ -1752,7 +1752,7 @@ var model = {
                     emailData.upgrade = false;
                 }
                 emailData.packageName = final.accounts.transaction[len].package.name;
-                var dateTime = moment(final.accounts.transaction[len].dateOfTransaction, "DD-MM-YYYY").add(1, 'days');
+                var dateTime = moment().utc(final.accounts.transaction[len].dateOfTransaction).format("DD-MM-YYYY");
                 emailData.registrationDate = dateTime;
                 // emailData.registrationDate = final.accounts.transaction[len].dateOfTransaction;
                 emailData.amountWithoutTax = final.accounts.transaction[len].package.finalPrice;
