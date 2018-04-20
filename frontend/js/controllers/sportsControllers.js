@@ -708,9 +708,13 @@ myApp.controller('SportTeamCtrl', function ($scope, TemplateService, toastr, Nav
     loginService.loginGet(function (data) {
         $scope.detail = data;
     });
-    $scope.setTeamid = function (id) {
+    $scope.setTeamid = function (id, stateId) {
         NavigationService.setTeamid(id);
         NavigationService.setVariable(true);
+        $scope.selectService.team = [];
+        $state.go('team-selection', {
+            id: stateId
+        });
     };
 
     if ($.jStorage.get("userDetails") === null) {
@@ -780,6 +784,8 @@ myApp.controller('SportTeamCtrl', function ($scope, TemplateService, toastr, Nav
         });
     };
     $scope.getDetailRegisteredSport();
+
+
 
 
 

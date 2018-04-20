@@ -84,12 +84,13 @@
                     ng-click="setTeamid(sport._id)">
                     <a class="btn btn-default" ui-sref="team-selection({id:stateId})">Edit</a>
                   </div> -->
-                  <div class="pull-right" ng-if="detail.userType == 'school' && !hideDeleteEdit" style="margin-right: 15px;" ng-click="setTeamid(sport._id)">
-                    <a class="btn btn-default" ui-sref="team-selection({id:stateId})">Edit</a>
+                  <div class="pull-right" ng-if="detail.userType == 'school' && !hideDeleteEdit" style="margin-right: 15px;" ng-click="setTeamid(sport._id,stateId);">
+                    <a class="btn btn-default">Edit</a>
                   </div>
                   <div class="pull-right" ng-if="detail.userType == 'athlete' && detail.mixAccess && !hideDeleteEdit" style="margin-right: 15px;"
-                    ng-click="setTeamid(sport._id)">
-                    <a class="btn btn-default" ui-sref="team-selection({id:stateId})">Edit</a>
+                    ng-click="setTeamid(sport._id,stateId)">
+                    <a class="btn btn-default">Edit</a>
+                    <!-- ui-sref="team-selection({id:stateId})" -->
                   </div>
                 </div>
               </div>

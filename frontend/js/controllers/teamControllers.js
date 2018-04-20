@@ -164,8 +164,15 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
                                 });
                                 $scope.selectAthlete = _.uniqBy($scope.selectAthlete, 'sfaId');
                                 if ($.jStorage.get("flag") === true) {
-                                    // $scope.selectService.team = [];
-                                    if ($scope.editablestudentTeam) {
+                                    if ($scope.editablestudentTeam.length > 0) {
+                                        _.each($scope.editablestudentTeam, function (key) {
+                                            _.each($scope.selectAthlete, function (value) {
+                                                if (key.studentId === value._id) {
+                                                    value.isTeamSelected = false;
+                                                }
+                                            });
+
+                                        });
                                         _.each($scope.selectService.team, function (j) {
                                             _.each($scope.editablestudentTeam, function (k, index) {
                                                 if (k != undefined) {
@@ -442,8 +449,8 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
                     if (findIndex >= 0) {
                         $scope.listOfAthelete[findIndex].disableGender = true;
                         $scope.listOfAthelete[findIndex].checked = false;
-                    } else {}
-                } else {}
+                    } else { }
+                } else { }
             }
 
             if ($scope.selectService.team.length === 2) {
