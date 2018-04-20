@@ -641,9 +641,6 @@ var model = {
                                             // }
 
                                         }
-
-
-
                                     } else {
                                         Registration.saveVerify(data, schoolData, function (err, vData) {
                                             if (err) {
@@ -731,92 +728,7 @@ var model = {
                                 if (err) {
                                     callback(err, null);
                                 } else if (vData) {
-                                    async.waterfall([
-                                        function (callback) {
-                                            Registration.findOne({
-                                                _id: schoolData._id
-                                            }).lean().exec(function (err, school) {
-                                                if (err) {
-                                                    console.log("err", err);
-                                                    callback("No school Found!", null);
-                                                } else {
-                                                    var schoolSfa = school.sfaID;
-                                                    console.log("schoolSfa", schoolSfa);
-                                                    callback(null, schoolSfa);
-                                                }
-                                            });
-                                            // callback(null, "schoolSfa");
-                                        },
-                                        // callback(null, vData);
-                                        function (schoolSfa, callback) {
-                                            School.findOne({ //to check registration exist and if it exist retrive previous data
-                                                sfaid: schoolSfa
-                                            }).sort({
-                                                createdAt: -1
-                                            }).lean().exec(function (err, replica) {
-                                                console.log("replica", replica); // retrives registration data
-                                                if (err) {
-                                                    console.log(err);
-                                                    callback(err, null);
-                                                } else {
-                                                    if (_.isEmpty(replica)) {
-                                                        console.log("isempty");
-                                                        callback(null, "No data found");
-                                                    } else {
-                                                        Athelete.aggregate([{
-                                                                $match: {
-                                                                    $or: [{
-                                                                        school: replica._id
-                                                                    }, {
-                                                                        $or: [{
-                                                                            atheleteSchoolName: replica.name
-                                                                        }]
-                                                                    }]
-                                                                }
-                                                            }],
-                                                            function (err, found) {
-                                                                console.log("found athelete", found);
-                                                                if (err) {
-                                                                    console.log(err);
-                                                                    callback(err, null);
-                                                                } else if (found) {
-                                                                    if (_.isEmpty(found)) {
-                                                                        callback(null, "No data found");
-                                                                    } else {
-                                                                        async.each(found, function (data, callback) {
-                                                                            Registration.allAtheleteMailSms(data, function (err, vData) {
-                                                                                if (err) {
-                                                                                    callback(err, null);
-                                                                                } else if (vData) {
-                                                                                    callback(null, vData);
-                                                                                }
-                                                                            });
-                                                                        }, function (err, data4) {
-                                                                            if (err) {
-                                                                                console.log(err);
-                                                                                callback(err, null);
-                                                                            } else {
-                                                                                callback(null, "Successfully removed!");
-                                                                            }
-                                                                        });
-
-
-                                                                    }
-
-                                                                }
-                                                            });
-
-                                                    }
-                                                }
-                                            });
-                                        }
-                                    ], function (err, finalData) {
-                                        if (err) {
-                                            callback(err, null);
-                                        } else {
-                                            callback(null, finalData);
-                                        }
-                                    });
+                                    callback(null, vData);
                                 }
                             });
 
