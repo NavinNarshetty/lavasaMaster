@@ -1891,7 +1891,8 @@ var model = {
                 emailData.receiptNo = final.accounts.transaction[len].receiptId[0];
                 emailData.paymentMode = final.accounts.transaction[len].paymentMode;
                 emailData.schoolAmount = final.accounts.transaction[len].amountPaid;
-                emailData.registrationDate = moment().format(final.accounts.transaction[len].dateOfTransaction, "DD-MM-YYYY").add(1, 'days');
+                var dateTime = moment(final.accounts.transaction[len].dateOfTransaction, "DD-MM-YYYY").add(1, 'days');
+                emailData.registrationDate = dateTime;
                 // emailData.registrationDate = final.accounts.transaction[len].dateOfTransaction;
                 if (final.accounts.transaction[len].PayuId) {
                     emailData.transactionId = final.accounts.transaction[len].PayuId;
