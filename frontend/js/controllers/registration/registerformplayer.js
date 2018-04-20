@@ -557,9 +557,9 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
           console.log("showTerm", $scope.showTerm);
             if ($scope.showEmailOtpSuccess === false && $scope.showMobileOtpSuccess === false) {
                 $scope.isDisabled = true;
-                console.log("ath saves", formdata);
                 // console.log('google', formdata);
                 formdata.refundAmount = formdata.refundAmount || 0;
+                console.log("ath saves", formdata);
                 NavigationService.apiCallWithData($scope.url, formdata, function (data) {
                     if (data.value === true) {
                         console.log("registrationFee", data.data.registrationFee);
@@ -735,6 +735,7 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
                   console.log("one", data);
                   if (data.value == true) {
                     $scope.schoolList.push(data.data);
+                    $scope.searchChangeSchool($scope.formData.school);
                   } else {
                     console.log("Old School Not Found");
                   }
