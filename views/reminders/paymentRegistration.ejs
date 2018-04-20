@@ -11,68 +11,72 @@
             font-family: 'TitilliumWeb-Bold';
             src: url("../font/TitilliumWeb-Bold.ttf");
         }
-        
+
         @font-face {
             font-family: 'TitilliumWeb-Regular';
             src: url("../font/TitilliumWeb-Regular.ttf");
         }
-        
-        .body { color:#000;
+
+        .body {
+            color: #000;
             font-family: TitilliumWeb-Regular;
         }
-        
+
         .img-responsive {
             max-width: 100%;
             height: auto;
             display: block;
         }
-        
+
         .inline-block {
             display: inline-block;
         }
-        
+
         .text-center {
             text-align: center;
         }
-        
+
         .list-inline>li {
             display: inline-block;
             padding-left: 5px;
             padding-right: 5px;
         }
 
-        .color-primary{
+        .color-primary {
             color: #0a1a72;
         }
 
-        .bold{
+        .bold {
             font-weight: bold;
         }
 
-        .sfa-bold{
-            font-family:TitilliumWeb-Bold
+        .sfa-bold {
+            font-family: TitilliumWeb-Bold
         }
 
-        .m-clear{
+        .m-clear {
             margin: 0px;
         }
-        
-       a{
-        text-decoration: none;
-         
-       }
 
-       a:hover{
-        text-decoration: underline !important; 
-       }
+        a {
+            text-decoration: none;
+
+        }
+
+        a:hover {
+            text-decoration: underline !important;
+        }
 
         table {
             width: 600px;
             margin: 0 auto;
-
-
         }
-        
+
+        tr,
+        td {
+            color: #000;
+        }
+
         h2:before {
             content: '';
             width: 100px;
@@ -88,7 +92,7 @@
             -webkit-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
         }
-        
+
         h2:after {
             content: '';
             width: 100px;
@@ -112,13 +116,16 @@
         <thead>
             <tr>
                 <td>
-                    <div class="logo text-center" style="margin-top: 30px;"><img src="../img/logo.png" class="img-responsive" style="margin: 0 auto;"><br></div>
+                    <div class="logo text-center" style="margin-top: 30px;">
+                        <img src="../img/logo.png" class="img-responsive" style="margin: 0 auto;">
+                        <br>
+                    </div>
                 </td>
             </tr>
             <tr>
                 <td class="text-center">
                     <span style="font-family: TitilliumWeb-Regular;color:#0a1a72;font-size: 20px;">SPORTS REGISTRATIONS </span>
-                    <h2 style="margin:10px;position: relative;font-family: TitilliumWeb-Bold;color:#00aaff;font-size: 27px;">SFA MUMBAI 2017  </h2>
+                    <h2 style="margin:10px;position: relative;font-family: TitilliumWeb-Bold;color:#00aaff;font-size: 27px;">SFA MUMBAI 2017 </h2>
                 </td>
 
             </tr>
@@ -127,55 +134,71 @@
         <tbody>
             <tr>
                 <td>
-                    <div class="main-div"style="padding: 0px 54px; text-align: justify; font-family: TitilliumWeb-Regular;font-size: 17px;">
+                    <div class="main-div" style="padding: 0px 54px; text-align: justify; font-family: TitilliumWeb-Regular;font-size: 17px;">
 
                         <!-- COMMON TEXT -->
-                        <p class="sfa-bold">REGISTRATIONS FOR SFA CHAMPIONSHIP <%=eventYear%>, <%=city%> NAME IS 2 STEP PROCESS. YOU WILL BE ABLE TO ACCESS SPORTS REGISTRATION (STEP 2) VIA YOUR SFA ID & PASSWORD.</p>
+                        <p class="sfa-bold">REGISTRATIONS FOR SFA CHAMPIONSHIP
+                            <%=eventYear%>,
+                                <%=city%> NAME IS 2 STEP PROCESS. YOU WILL BE ABLE TO ACCESS SPORTS REGISTRATION (STEP 2) VIA YOUR
+                                    SFA ID & PASSWORD.</p>
 
-                         <p> Dear Sir/Madam, we are unable to process your form for SFA Championship <%=eventYear%>, <%=city%> due to non-payment of the registration fee. .</p>
+                        <p> Dear Sir/Madam, we are unable to process your form for SFA Championship
+                            <%=eventYear%>,
+                                <%=city%> due to non-payment of the registration fee. .</p>
                         <!-- COMMON TEXT END -->
 
                         <!-- TEXT TO BE CHANGED AS PER THE UPGRADE/REGISTRATION -->
-                      
+
                         <%if(flag==='player'){%>
-                          <!-- INSIDE PLAYER -->
-                        <%if(upgrade){%>
-                            <!-- UPGRADE -->
-                             <p>Kindly request you to courier/hand deliver a payment of Rs. 599/899/1999 to complete the upgrade process within 2 working days to:</p>
-                             <!-- UPGRADE END -->
-                        <%} else {%>
-                            <!-- REGISTRATION -->
-                             <p>Kindly request you to courier/hand deliver a payment of Rs. 599/899/1999 to complete the registration process within 2 working days to:</p>
-                            <!-- REGISTRATION END-->
-                        <%}%>
-                        <%} else {%>
-                        <!-- INSIDE SCHOOL -->
-                        <%if(upgrade){%>
-                            <!-- UPGRADE -->
-                             <p>Kindly request you to courier/hand deliver a payment of Rs. 2,500/- (+GST) to complete the upgrade process within 2 working days to:</p>
-                             <!-- UPGRADE END -->
-                        <%} else {%>
-                            <!-- REGISTRATION -->
-                             <p>Kindly request you to courier/hand deliver a payment of Rs.  2,500/- (+GST) to complete the registration process within 2 working days to:</p>
-                             <!-- REGISTRATION END-->
-                        <%}%>
-                        <%}%>
-                        <!-- TEXT TO BE CHANGED AS PER THE UPGRADE/REGISTRATION END-->
-                       
+                            <!-- INSIDE PLAYER -->
+                            <%if(upgrade){%>
+                                <!-- UPGRADE -->
+                                <p>Kindly request you to courier/hand deliver a payment of Rs. 599/899/1999 to complete the
+                                    upgrade process within 2 working days to:</p>
+                                <!-- UPGRADE END -->
+                                <%} else {%>
+                                    <!-- REGISTRATION -->
+                                    <p>Kindly request you to courier/hand deliver a payment of Rs. 599/899/1999 to complete
+                                        the registration process within 2 working days to:</p>
+                                    <!-- REGISTRATION END-->
+                                    <%}%>
+                                        <%} else {%>
+                                            <!-- INSIDE SCHOOL -->
+                                            <%if(upgrade){%>
+                                                <!-- UPGRADE -->
+                                                <p>Kindly request you to courier/hand deliver a payment of Rs. 2,500/- (+GST)
+                                                    to complete the upgrade process within 2 working days to:</p>
+                                                <!-- UPGRADE END -->
+                                                <%} else {%>
+                                                    <!-- REGISTRATION -->
+                                                    <p>Kindly request you to courier/hand deliver a payment of Rs. 2,500/- (+GST)
+                                                        to complete the registration process within 2 working days to:</p>
+                                                    <!-- REGISTRATION END-->
+                                                    <%}%>
+                                                        <%}%>
+                                                            <!-- TEXT TO BE CHANGED AS PER THE UPGRADE/REGISTRATION END-->
 
-                        <!-- COMMON TEXT -->
-                        <p class="sfa-bold">6th Floor, 17A, Raviraj House, Saraswati Road, Off Linking Road, Santacruz (W), Mumbai 400054</p>
 
-                        <p>Failure to make the payment will result in  <span class="sfa-bold">CANCELLATION </span> of your entry.</p>
+                                                            <!-- COMMON TEXT -->
+                                                            <p class="sfa-bold">6th Floor, 17A, Raviraj House, Saraswati Road, Off Linking Road,
+                                                                Santacruz (W), Mumbai 400054</p>
 
-                        <p> <span class="sfa-bold">Kindly Note:</span> Registrations for SFA Championship 2018-19, City Name is 2 STEP Process. You will be able to access Sports Registration (STEP 2) via your SFA ID & password on successful verification. </p>
+                                                            <p>Failure to make the payment will result in
+                                                                <span class="sfa-bold">CANCELLATION </span> of your entry.</p>
 
-                        <p>For further queries kindly call us on 7045684365/66/67. </p>
-                        <!-- COMMON TEXT END -->
+                                                            <p>
+                                                                <span class="sfa-bold">Kindly Note:</span> Registrations for SFA Championship 2018-19,
+                                                                City Name is 2 STEP Process. You will be able to access Sports
+                                                                Registration (STEP 2) via your SFA ID & password on successful
+                                                                verification. </p>
 
-                        <!-- REGARDS -->
-                        <p style="font-family:TitilliumWeb-Bold; font-weight: bold;">Regards,<br>Team SFA</p>
-                        <!-- REGARDS END -->
+                                                            <p>For further queries kindly call us on 7045684365/66/67. </p>
+                                                            <!-- COMMON TEXT END -->
+
+                                                            <!-- REGARDS -->
+                                                            <p style="font-family:TitilliumWeb-Bold; font-weight: bold;">Regards,
+                                                                <br>Team SFA</p>
+                                                            <!-- REGARDS END -->
                     </div>
                 </td>
             </tr>
@@ -185,14 +208,30 @@
                 <td>
                     <div class="blue-footer" style="background:#0a1a72;font-family: TitilliumWeb-Regular;">
                         <ul class="list-inline" style="padding: 8px 35px;font-size: 16px;font-weight: bold">
-                            <li><img src="../img/g1.png" alt=""></li>
-                            <li style="vertical-align: top;padding-left: 0;"><a href="" style="color:#fff;text-decoration: none;">www.sfanow.in</a></li>
-                            <li><img src="../img/g2.png" alt=""></li>
-                            <li style="vertical-align: top;padding-left: 0;"><a href="" style="color:#fff;text-decoration: none;">/sportsforallnow</a></li>
-                            <li><img src="../img/g3.png" alt=""></li>
-                            <li style="vertical-align: top;padding-left: 0;"><a href="" style="color:#fff;text-decoration: none;">/sfanow</a></li>
-                            <li><img src="../img/g4.png" alt=""></li>
-                            <li style="vertical-align: top;padding-left: 0;"><a href="" style="color:#fff;text-decoration: none;">/sfanow </a></li>
+                            <li>
+                                <img src="../img/g1.png" alt="">
+                            </li>
+                            <li style="vertical-align: top;padding-left: 0;">
+                                <a href="" style="color:#fff;text-decoration: none;">www.sfanow.in</a>
+                            </li>
+                            <li>
+                                <img src="../img/g2.png" alt="">
+                            </li>
+                            <li style="vertical-align: top;padding-left: 0;">
+                                <a href="" style="color:#fff;text-decoration: none;">/sportsforallnow</a>
+                            </li>
+                            <li>
+                                <img src="../img/g3.png" alt="">
+                            </li>
+                            <li style="vertical-align: top;padding-left: 0;">
+                                <a href="" style="color:#fff;text-decoration: none;">/sfanow</a>
+                            </li>
+                            <li>
+                                <img src="../img/g4.png" alt="">
+                            </li>
+                            <li style="vertical-align: top;padding-left: 0;">
+                                <a href="" style="color:#fff;text-decoration: none;">/sfanow </a>
+                            </li>
                         </ul>
                     </div>
                 </td>

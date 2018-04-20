@@ -940,7 +940,7 @@ var model = {
                     emailData.year = property[0].year;
                     emailData.eventYear = property[0].eventYear;
                     emailData.otp = emailOtp;
-                    emailData.filename = "emailOtp.ejs";
+                    emailData.filename = "player-school/emailOtp.ejs";
                     emailData.subject = "SFA: Your Email OTP (One time Password) for SFA registration is";
                     console.log("emaildata", emailData);
 
@@ -3325,7 +3325,7 @@ var model = {
                         "mobile": data.mobile,
                         "content": "OTP Athlete: Your Email OTP (One time Password) for SFA registration is ",
                         "from": "info@sfanow.in",
-                        "filename": "emailOtp.ejs",
+                        "filename": "player-school/emailOtp.ejs",
                         "subject": "SFA: Your Email OTP (One time Password) for SFA registration is",
                     };
                     ConfigProperty.find().lean().exec(function (err, property) {

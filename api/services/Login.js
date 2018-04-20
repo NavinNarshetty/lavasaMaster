@@ -465,7 +465,7 @@ var model = {
         //                         "mobile": found.mobile,
         //                         "content": "OTP Athlete: Your Email OTP (One time Password) for SFA registration is ",
         //                         "from": "info@sfanow.in",
-        //                         "filename": "emailOtp.ejs",
+        //                         "filename": "player-school/emailOtp.ejs",
         //                         "subject": "SFA: Your Email OTP (One time Password) for SFA registration is",
 
         //                     }
@@ -552,7 +552,7 @@ var model = {
         //                         "mobile": found.mobile,
         //                         "content": "OTP Athlete: Your Email OTP (One time Password) for SFA registration is ",
         //                         "from": "info@sfanow.in",
-        //                         "filename": "emailOtp.ejs",
+        //                         "filename": "player-school/emailOtp.ejs",
         //                         "subject": "SFA: Your Email OTP (One time Password) for SFA registration is"
         //                     }
 
@@ -641,7 +641,7 @@ var model = {
                                     "mobile": found.mobile,
                                     "content": "OTP Athlete: Your Email OTP (One time Password) for SFA registration is ",
                                     "from": "info@sfanow.in",
-                                    "filename": "emailOtp.ejs",
+                                    "filename": "player-school/emailOtp.ejs",
                                     "subject": "SFA: Your Email OTP (One time Password) for SFA registration is",
 
                                 }
@@ -731,7 +731,7 @@ var model = {
                                     "mobile": found.mobile,
                                     "content": "OTP Athlete: Your Email OTP (One time Password) for SFA registration is ",
                                     "from": "info@sfanow.in",
-                                    "filename": "emailOtp.ejs",
+                                    "filename": "player-school/emailOtp.ejs",
                                     "subject": "SFA: Your Email OTP (One time Password) for SFA registration is"
                                 }
 
