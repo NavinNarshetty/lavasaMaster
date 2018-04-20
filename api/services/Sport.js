@@ -145,6 +145,22 @@ var model = {
                 }
             },
             // Stage 3
+             {
+                $lookup: {
+                    "from": "packages",
+                    "localField": "package",
+                    "foreignField": "_id",
+                    "as": "package"
+                }
+            },
+            // Stage 4
+            {
+                $unwind: {
+                    path: "$package",
+                    preserveNullAndEmptyArrays: true // optional
+                }
+            },
+            // Stage 5
             {
                 $match: {
 
@@ -231,6 +247,23 @@ var model = {
                     preserveNullAndEmptyArrays: true // optional
                 }
             },
+             // Stage 3
+             {
+                $lookup: {
+                    "from": "packages",
+                    "localField": "package",
+                    "foreignField": "_id",
+                    "as": "package"
+                }
+            },
+            // Stage 4
+            {
+                $unwind: {
+                    path: "$package",
+                    preserveNullAndEmptyArrays: true // optional
+                }
+            },
+            
             // Stage 3
             {
                 $match: {
@@ -713,6 +746,7 @@ var model = {
         console.log("data", data);
         // console.log("foundfront", found);
         async.waterfall([
+
                 function (callback) {
                     var pipeLine = Sport.getSportPipeLine();
                     var newPipeLine = _.cloneDeep(pipeLine);
@@ -745,6 +779,7 @@ var model = {
                         }
                     });
                 },
+
                 function (data, callback) {
                     console.log("data", data);
                     if ((data.sportName.toLowerCase() == "shooting air pistol team") || (data.sportName.toLowerCase() == "shooting air rifle open team") || (data.sportName.toLowerCase() == "shooting air rifle peep team")) {
@@ -796,6 +831,7 @@ var model = {
                         });
                     }
                 },
+
                 function (complete, callback) {
                     // console.log("complete next", complete.results);
                     if (data.sportName.includes("Doubles") || data.sportName.includes("doubles")) {
@@ -955,6 +991,7 @@ var model = {
                         });
                     }
                 }
+
             ],
             function (err, results) {
                 if (err) {
@@ -1869,7 +1906,7 @@ var model = {
         if (data.keyword === "") {
             var deepSearch = "sportslist ageGroup weight";
             var Search = Model.find()
-            // data.keyword
+                // data.keyword
                 .order(options)
                 .deepPopulate(deepSearch)
                 .keyword(options)

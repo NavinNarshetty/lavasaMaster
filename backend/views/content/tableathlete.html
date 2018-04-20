@@ -23,7 +23,7 @@
                 <div class="table-area ">
                     <div class="widget-title ">
                         <h3>List of Registered Athlete
-                            <span class="tableTotal ">(Total : {{totalItems}}) </span>
+                            <span class="tableTotal " ng-if="currentSatateName!='athleteOps'">(Total : {{totalItems}}) </span>
                         </h3>
                         <div class="row">
                             <div class="col-md-5">
@@ -112,9 +112,9 @@
                                         <input type="text" ng-keydown="$event.keyCode === 13 && searchInAthlete(search)" placeholder="Search Here..." ng-model="search"
                                         />
                                     </form>
-                                    <a class="btn btn-success" ng-click="loginPopup(formData,'excel')"> <span style="font-size:12px;">Excel Export</span></a>
-                                    <!-- <a class="btn btn-success" ng-click="loginPopup(formData,'excel')">Login</a> -->
-                                    <a class="btn btn-success" ng-click="loginPopup('','targetexcel')"> <span style="font-size:12px;" >Target Export</span></a>
+                                    <a class="btn btn-success" ng-click="loginPopup(formData,'excel')" ng-if="currentSatateName!='athleteOps'"> <span style="font-size:12px;">Excel Export</span></a>
+                                    <a class="btn btn-success" ng-click="loginPopup(formData,'excel')" ng-if="currentSatateName!='athleteOps'">Login</a>
+                                    <a class="btn btn-success" ng-click="loginPopup('','targetexcel')" ng-if="currentSatateName!='athleteOps'"> <span style="font-size:12px;" >Target Export</span></a>
                                     <a class="btn btn-danger" ng-click="logout()" ng-if="!showAccess && jAtheletOps!=null">Logout</a>
                                 </div>
                             </div>

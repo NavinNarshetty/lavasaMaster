@@ -79,6 +79,7 @@ schema.plugin(autoIncrement.plugin, {
     startAt: 1,
     incrementBy: 1
 });
+
 module.exports = mongoose.model('TeamSport', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
@@ -91,6 +92,7 @@ var model = {
         var indexNext = tempName.indexOf("-");
         data.linkSportName = tempName.slice(0, indexNext);
         async.waterfall([
+
                 function (callback) {
                     ConfigProperty.find().lean().exec(function (err, property) {
                         if (err) {
@@ -104,6 +106,7 @@ var model = {
                         }
                     });
                 },
+
                 function (property, callback) {
                     var team = {};
                     team.name = data.name;
@@ -128,9 +131,10 @@ var model = {
                         team.isVideoAnalysis = data.isVideoAnalysis;
                     }
                     data.property = property[0];
-                    console.log("data", data);
+                    // console.log("data", data);
                     callback(null, team);
                 },
+
                 function (team, callback) {
                     TeamSport.saveInTeam(team, data, function (err, complete) {
                         if (err) {
@@ -144,6 +148,7 @@ var model = {
                         }
                     });
                 },
+
                 function (complete, callback) {
                     TeamSport.createStudentTeam(complete, data, function (err, complete1) {
                         if (err) {
@@ -160,6 +165,7 @@ var model = {
                         }
                     });
                 },
+
                 function (total, callback) {
                     if (data.schoolToken) {
                         TeamSport.schoolTeamMailers(data, total, function (err, final) {
@@ -187,11 +193,11 @@ var model = {
                         });
 
                     }
+
                 }
             ],
             function (err, data2) {
                 if (err) {
-                    console.log(err);
                     callback(null, []);
                 } else if (data2) {
                     if (_.isEmpty(data2)) {
@@ -280,7 +286,7 @@ var model = {
     },
 
     saveInTeam: function (data, mainData, callback) {
-        console.log("mainData", mainData);
+        // console.log("mainData", mainData);
         async.waterfall([
                 function (callback) {
                     TeamSport.findOne().sort({
@@ -305,23 +311,23 @@ var model = {
                             }
                         } else {
                             if (mainData.property.sfaCity == 'Mumbai') {
-                                console.log("autoID", team.autoID);
+                                // console.log("autoID", team.autoID);
                                 var year = new Date().getFullYear().toString().substr(2, 2);
                                 var teamid = "M" + "T" + year + ++team.autoID;
-                                console.log("teamid", teamid);
+                                // console.log("teamid", teamid);
                                 callback(null, teamid);
                             } else if (mainData.property.sfaCity == "Hyderabad") {
-                                console.log("autoID", team.autoID);
+                                // console.log("autoID", team.autoID);
                                 var year = new Date().getFullYear().toString().substr(2, 2);
                                 var teamid = "H" + "T" + year + ++team.autoID;
-                                console.log("teamid", teamid);
+                                // console.log("teamid", teamid);
                                 callback(null, teamid);
                             } else {
-                                console.log("autoID", team.autoID);
+                                // console.log("autoID", team.autoID);
                                 var city = mainData.property.sfaCity.substr(0, 1);
                                 var year = new Date().getFullYear().toString().substr(2, 2);
                                 var teamid = city + "T" + year + ++team.autoID;
-                                console.log("teamid", teamid);
+                                // console.log("teamid", teamid);
                                 callback(null, teamid);
                             }
                         }
@@ -331,7 +337,7 @@ var model = {
                     data.teamId = teamid;
                     TeamSport.saveData(data, function (err, teamData) {
                         if (err) {
-                            console.log("err", err);
+                            // console.log("err", err);
                             callback("There was an error ", null);
                         } else {
                             if (_.isEmpty(teamData)) {
@@ -345,7 +351,7 @@ var model = {
             ],
             function (err, data2) {
                 if (err) {
-                    console.log(err);
+                    // console.log(err);
                     callback(null, []);
                 } else if (data2) {
                     if (_.isEmpty(data2)) {
@@ -392,7 +398,7 @@ var model = {
                             } else if (_.isEmpty(found)) {
                                 callback(null, "Data is empty");
                             } else {
-                                console.log(" found athlete");
+                                // console.log(" found athlete");
                                 var athleteInfo = {};
                                 athleteInfo.srno = ++i;
                                 if (found.middleName) {
@@ -413,7 +419,7 @@ var model = {
                 ],
                 function (err, atheleteName) {
                     if (err) {
-                        console.log(err);
+                        // console.log(err);
                         callback(null, []);
                     } else if (atheleteName) {
                         if (_.isEmpty(atheleteName)) {
@@ -425,10 +431,10 @@ var model = {
                 });
         }, function (err) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err, null);
             } else {
-                console.log("array", atheleteName);
+                // console.log("array", atheleteName);
                 callback(null, atheleteName);
             }
         });
@@ -446,7 +452,7 @@ var model = {
                 async.parallel([
                     //school email
                     function (callback) {
-                        console.log("total", total);
+                        // console.log("total", total);
                         var emailData = {};
                         emailData.schoolName = found.schoolName;
                         emailData.sportName = data.name;
@@ -459,6 +465,9 @@ var model = {
                         emailData.ddFavour = data.property.ddFavour;
                         emailData.email = found.email;
                         emailData.city = data.property.sfaCity;
+                        emailData.playerUrl = data.property.playerUrl;
+                        emailData.ruleUrl = data.property.ruleUrl;
+                        emailData.schoolUrl = data.property.schoolUrl;
                         if (data.property.sfaCity == 'Mumbai') {
                             emailData.urls = "https://mumbai.sfanow.in";
                         } else if (data.property.sfaCity == 'Hyderabad') {
@@ -469,16 +478,33 @@ var model = {
                         emailData.year = data.property.year;
                         emailData.eventYear = data.property.eventYear;
                         emailData.type = data.property.institutionType;
-                        emailData.filename = "teamSport.ejs";
+                        emailData.filename = "team-sport/teamsport.ejs";
                         emailData.teamId = total.teamSport.teamId;
                         emailData.students = total.studentTeam;
+                        emailData.endDate = data.property.endDate;
+                        emailData.flag = emailData.type;
                         emailData.linkSportName = data.linkSportName;
-                        emailData.subject = "SFA: Successful Team Sport Registered";
-                        console.log("emaildata", emailData);
+                        if (data.linkSportName != 'Athletics 4x50m Relay' && data.linkSportName != 'athletics 4x50m relay' && data.linkSportName != 'Athletics 4x100m Relay' && data.linkSportName != 'athletics 4 x100m relay' && data.linkSportName != 'Athletics Medley Relay' && data.linkSportName != 'athletics medley relay' && data.linkSportName != 'Badminton Doubles' && data.linkSportName != 'badminton doubles' && data.linkSportName != 'Table Tennis Doubles' && data.linkSportName != 'table tennis doubles' && data.linkSportName != 'Tennis Mixed Doubles' && data.linkSportName != 'tennis mixed doubles' && data.linkSportName != 'Tennis Doubles' && data.linkSportName != 'tennis doubles' && data.linkSportName != 'KarateTeam Kumite' && data.linkSportName != 'karate team kumite' && data.linkSportName != 'Swimming 4x50m Medley Relay' && data.linkSportName != 'swimming 4x50m medley relay' && data.linkSportName != 'Swimming 4x50m Freestyle Relay' && data.linkSportName != 'swimming 4x50mfreestyle relay') {
+                            emailData.sportNameLink = data.linkSportName;
+                        } else if (data.linkSportName == 'Athletics 4x50m Relay' || data.linkSportName == 'athletics 4x50m relay' || data.linkSportName == 'Athletics 4x100m Relay' || data.linkSportName == 'athletics 4x100m relay' || data.linkSportName == 'Athletics Medley Relay' || data.linkSportName == 'athletics medley relay') {
+                            emailData.sportNameLink = 'Athletics';
+                        } else if (data.linkSportName == 'Badminton Doubles' || data.linkSportName == 'badminton doubles') {
+                            emailData.sportNameLink = 'Badminton';
+                        } else if (data.linkSportName == 'Table Tennis Doubles' || data.linkSportName == 'table tennis doubles') {
+                            emailData.sportNameLink = 'Table Tennis';
+                        } else if (data.linkSportName == 'Tennis Mixed Doubles' || data.linkSportName == 'tennis mixed doubles' || data.linkSportName == 'Tennis Doubles' || data.linkSportName == 'tennis doubles') {
+                            emailData.sportNameLink = 'Tennis';
+                        } else if (data.linkSportName == 'Karate Team Kumite' || data.linkSportName == 'karate team kumite') {
+                            emailData.sportNameLink = 'Karate';
+                        } else if (data.linkSportName == 'Swimming 4x50m Medley Relay' || data.linkSportName == 'swimming 4x50m medley relay' || data.linkSportName == 'Swimming 4x50m Freestyle Relay' || data.linkSportName == 'swimming 4x50m freestyle relay') {
+                            emailData.sportNameLink = 'Swimming';
+                        }
+                        emailData.subject = "SFA:  Successful Team Sport Registration";
+                        // console.log("emaildata", emailData);
 
                         Config.email(emailData, function (err, emailRespo) {
                             if (err) {
-                                console.log(err);
+                                // console.log(err);
                                 callback(null, err);
                             } else if (emailRespo) {
                                 callback(null, emailRespo);
@@ -493,13 +519,13 @@ var model = {
                         var smsData = {};
                         smsData.mobile = found.mobile;
                         smsData.content = "SFA: Thank you for registering for Team Sports at SFA " + data.property.eventYear + ". For Further details Please check your registered email ID.";
-                        console.log("smsdata", smsData);
+                        // console.log("smsdata", smsData);
                         Config.sendSms(smsData, function (err, smsRespo) {
                             if (err) {
-                                console.log(err);
+                                // console.log(err);
                                 callback(err, null);
                             } else if (smsRespo) {
-                                console.log(smsRespo, "sms sent");
+                                // console.log(smsRespo, "sms sent");
                                 callback(null, smsRespo);
                             } else {
                                 callback(null, "Invalid data");
@@ -508,7 +534,7 @@ var model = {
                     },
                     //athlete email
                     function (callback) {
-                        data.emailfile = "studentmailTeam.ejs";
+                        data.emailfile = "team-sport/studentmailTeam.ejs";
                         data.schoolSFA = found.sfaID;
                         data.schoolName = found.schoolName;
                         TeamSport.athleteMailers(data, total, function (err, mailData) {
@@ -522,11 +548,10 @@ var model = {
                                 }
                             }
                         });
-
                     },
                 ], function (err, data3) {
                     if (err) {
-                        console.log(err);
+                        // console.log(err);
                         callback(err, null);
                     } else {
                         if (_.isEmpty(data3)) {
@@ -567,9 +592,9 @@ var model = {
                                 data.schoolName = found.atheleteSchoolName;
                                 data.schoolSFA = "Unregistered";
                                 if (data.property.institutionType == "school") {
-                                    data.emailfile = "studentTeamUnregister.ejs";
+                                    data.emailfile = "team-sport/studentTeamUnregister.ejs";
                                 } else {
-                                    data.emailfile = "studentTeam.ejs";
+                                    data.emailfile = "team-sport/studentTeam.ejs";
                                 }
                                 callback(null, data);
 
@@ -577,7 +602,7 @@ var model = {
                                 data.mobile = found.mobile;
                                 data.schoolName = schoolData.schoolName;
                                 data.schoolSFA = schoolData.sfaID;
-                                data.emailfile = "studentTeam.ejs";
+                                data.emailfile = "team-sport/studentTeam.ejs";
                                 callback(null, data);
                             }
                         });
@@ -600,9 +625,9 @@ var model = {
                                         data.schoolName = schoolData.name;
                                         data.schoolSFA = "Unregistered";
                                         if (data.property.institutionType == "school") {
-                                            data.emailfile = "studentTeamUnregister.ejs";
+                                            data.emailfile = "team-sport/studentTeamUnregister.ejs";
                                         } else {
-                                            data.emailfile = "studentTeam.ejs";
+                                            data.emailfile = "team-sport/studentTeam.ejs";
                                         }
                                         callback(null, data);
 
@@ -610,7 +635,7 @@ var model = {
                                         data.mobile = found.mobile;
                                         data.schoolName = schoolData1.schoolName;
                                         data.schoolSFA = schoolData1.sfaID;
-                                        data.emailfile = "studentTeam.ejs";
+                                        data.emailfile = "team-sport/studentTeam.ejs";
                                         callback(null, data);
                                     }
                                 });
@@ -635,7 +660,7 @@ var model = {
             ],
             function (err, data2) {
                 if (err) {
-                    console.log(err);
+                    // console.log(err);
                     callback(null, []);
                 } else if (data2) {
                     if (_.isEmpty(data2)) {
@@ -656,7 +681,11 @@ var model = {
                     var emailData = {};
                     emailData.sportName = data.name;
                     emailData.schoolName = data.schoolName;
-                    emailData.schoolSFA = data.schoolSFA;
+                    if (data.schoolSFA == "Unregistered") {
+                        emailData.schoolSFA = '';
+                    } else {
+                        emailData.schoolSFA = data.schoolSFA;
+                    }
                     // emailData.from = "info@sfanow.in";
                     emailData.from = data.property.infoId;
                     emailData.infoId = data.property.infoId;
@@ -679,7 +708,26 @@ var model = {
                     emailData.filename = data.emailfile;
                     emailData.teamId = total.teamSport.teamId;
                     emailData.students = total.studentTeam;
+                    emailData.endDate = data.property.endDate;
+                    emailData.playerUrl = data.property.playerUrl;
+                    emailData.ruleUrl = data.property.ruleUrl;
+                    emailData.schoolUrl = data.property.schoolUrl;
                     emailData.linkSportName = data.linkSportName;
+                    if (data.linkSportName != 'Athletics 4x50m Relay' && data.linkSportName != 'athletics 4x50m relay' && data.linkSportName != 'Athletics 4x100m Relay' && data.linkSportName != 'athletics 4 x100m relay' && data.linkSportName != 'Athletics Medley Relay' && data.linkSportName != 'athletics medley relay' && data.linkSportName != 'Badminton Doubles' && data.linkSportName != 'badminton doubles' && data.linkSportName != 'Table Tennis Doubles' && data.linkSportName != 'table tennis doubles' && data.linkSportName != 'Tennis Mixed Doubles' && data.linkSportName != 'tennis mixed doubles' && data.linkSportName != 'Tennis Doubles' && data.linkSportName != 'tennis doubles' && data.linkSportName != 'KarateTeam Kumite' && data.linkSportName != 'karate team kumite' && data.linkSportName != 'Swimming 4x50m Medley Relay' && data.linkSportName != 'swimming 4x50m medley relay' && data.linkSportName != 'Swimming 4x50m Freestyle Relay' && data.linkSportName != 'swimming 4x50mfreestyle relay') {
+                        emailData.sportNameLink = data.linkSportName;
+                    } else if (data.linkSportName == 'Athletics 4x50m Relay' || data.linkSportName == 'athletics 4x50m relay' || data.linkSportName == 'Athletics 4x100m Relay' || data.linkSportName == 'athletics 4x100m relay' || data.linkSportName == 'Athletics Medley Relay' || data.linkSportName == 'athletics medley relay') {
+                        emailData.sportNameLink = 'Athletics';
+                    } else if (data.linkSportName == 'Badminton Doubles' || data.linkSportName == 'badminton doubles') {
+                        emailData.sportNameLink = 'Badminton';
+                    } else if (data.linkSportName == 'Table Tennis Doubles' || data.linkSportName == 'table tennis doubles') {
+                        emailData.sportNameLink = 'Table Tennis';
+                    } else if (data.linkSportName == 'Tennis Mixed Doubles' || data.linkSportName == 'tennis mixed doubles' || data.linkSportName == 'Tennis Doubles' || data.linkSportName == 'tennis doubles') {
+                        emailData.sportNameLink = 'Tennis';
+                    } else if (data.linkSportName == 'Karate Team Kumite' || data.linkSportName == 'karate team kumite') {
+                        emailData.sportNameLink = 'Karate';
+                    } else if (data.linkSportName == 'Swimming 4x50m Medley Relay' || data.linkSportName == 'swimming 4x50m medley relay' || data.linkSportName == 'Swimming 4x50m Freestyle Relay' || data.linkSportName == 'swimming 4x50m freestyle relay') {
+                        emailData.sportNameLink = 'Swimming';
+                    }
                     emailData.subject = "SFA: Successful Team Sport Registered";
                     Config.email(emailData, function (err, emailRespo) {
                         if (err) {
@@ -735,6 +783,7 @@ var model = {
 
     rejectionTeam: function (data, callback) {
         async.waterfall([
+
                 function (callback) {
                     TeamSport.findOne({
                         teamId: data.teamId
@@ -750,6 +799,7 @@ var model = {
                         }
                     });
                 },
+
                 function (complete, callback) {
                     TeamSport.athleteRelease(complete, function (err, complete1) {
                         if (err) {
@@ -758,16 +808,15 @@ var model = {
                             if (_.isEmpty(complete1)) {
                                 callback(null, []);
                             } else {
-                                callback(null, complete1);
+                                callback(null, complete1, complete);
                             }
                         }
                     });
                 },
-                function (complete1, callback) {
+
+                function (complete1, complete, callback) {
                     if (complete1 == "deleted") {
-                        TeamSport.remove({
-                            teamId: data.teamId
-                        }).exec(function (err, complete2) {
+                        TeamSport.deleteData(complete, function (err, complete2) {
                             if (err) {
                                 callback(err, null);
                             } else {
@@ -779,12 +828,11 @@ var model = {
                             }
                         });
                     }
-
                 }
             ],
             function (err, data2) {
                 if (err) {
-                    console.log(err);
+                    // console.log(err);
                     callback(null, []);
                 } else if (data2) {
                     if (_.isEmpty(data2)) {
@@ -878,7 +926,7 @@ var model = {
                         });
                     },
                     function (totals, callback) {
-                        console.log("totals", totals);
+                        // console.log("totals", totals);
                         var emailData = {};
                         var index = totals[0].teamId.name.indexOf("-");
                         emailData.sportName = totals[0].teamId.name.slice(++index, totals[0].teamId.name.length);
@@ -893,11 +941,12 @@ var model = {
                         emailData.year = data.property.year;
                         emailData.eventYear = data.property.eventYear;
                         emailData.type = data.property.institutionType;
+                        emailData.endDate = data.property.endDate;
                         emailData.name = totals[0].studentId.firstName;
-                        emailData.filename = "rejectionTeam.ejs";
+                        emailData.filename = "team-sport/rejectionTeam.ejs";
                         emailData.teamId = totals[0].teamId.teamId;
                         emailData.subject = "SFA: Team Rejected";
-                        console.log("emaildata", emailData);
+                        // console.log("emaildata", emailData);
                         Config.email(emailData, function (err, emailRespo) {
                             if (err) {
                                 console.log(err);
@@ -911,9 +960,22 @@ var model = {
                         });
                     },
                     function (emailRespo, callback) {
-                        StudentTeam.remove({
+                        // StudentTeam.remove({
+                        //     _id: n
+                        // }).exec(function (err, found) {
+                        //     if (err) {
+                        //         callback(err, null);
+                        //     } else {
+                        //         if (_.isEmpty(found)) {
+                        //             callback(null, []);
+                        //         } else {
+                        //             callback(null, found);
+                        //         }
+                        //     }
+                        // });
+                        StudentTeam.deleteData({
                             _id: n
-                        }).exec(function (err, found) {
+                        }, function (err, found) {
                             if (err) {
                                 callback(err, null);
                             } else {
@@ -1567,9 +1629,23 @@ var model = {
 
                                 function (complete1, callback) {
                                     console.log("complete1", complete1);
-                                    StudentTeam.remove({
+                                    // StudentTeam.remove({
+                                    //     _id: n._id
+                                    // }).exec(function (err, found) {
+                                    //     if (err) {
+                                    //         callback(err, null);
+                                    //     } else {
+                                    //         if (_.isEmpty(found)) {
+                                    //             callback(null, []);
+                                    //         } else {
+                                    //             callback(null, found);
+                                    //         }
+                                    //     }
+                                    // });
+
+                                    StudentTeam.deleteData({
                                         _id: n._id
-                                    }).exec(function (err, found) {
+                                    }, function (err, found) {
                                         if (err) {
                                             callback(err, null);
                                         } else {
@@ -1713,27 +1789,18 @@ var model = {
                 },
                 function (totals, callback) {
                     totals.count = 0;
-                    console.log("length", param.athleteTeam.length);
                     var length1 = param.athleteTeam.length;
-                    console.log("length1", length1);
-                    console.log("totals", totals);
                     _.each(param.athleteTeam, function (m) {
-
-                        console.log("id", totals[0].studentId._id);
-                        console.log("edit", m.studentId);
                         if (totals[0].studentId._id.equals(m.studentId)) {
                             totals.count++;
-                            // param.countEdit++;
                         }
                     });
-                    console.log("params", param.countEdit);
                     if (totals.count == 0) {
                         param.countEdit++;
                     }
                     callback(null, totals);
                 },
                 function (totals, callback) {
-                    console.log("totals", totals);
                     if (totals.count == 0) {
                         var emailData = {};
                         var index = totals[0].teamId.name.indexOf("-");
@@ -1745,6 +1812,7 @@ var model = {
                         emailData.year = data.property.year;
                         emailData.eventYear = data.property.eventYear;
                         emailData.infoId = data.property.infoId;
+                        emailData.endDate = data.property.endDate;
                         emailData.infoNo = data.property.infoNo;
                         if (data.property.sfaCity == 'Mumbai') {
                             emailData.urls = "https://mumbai.sfanow.in";
@@ -1883,105 +1951,125 @@ var model = {
                 callback(null, "Data is empty");
             } else {
                 async.parallel([
-                    //school email
-                    function (callback) {
-                        console.log("total", total);
-                        var emailData = {};
-                        emailData.schoolName = found.schoolName;
-                        emailData.sportName = data.name;
-                        emailData.schoolSFA = found.sfaID;
-                        // emailData.from = "info@sfanow.in";
-                        emailData.from = data.property.infoId;
-                        emailData.email = found.email;
-                        // emailData.email1 = [{
-                        //     email: found.email
-                        // }];
-                        // emailData.bcc1 = [{
-                        //     email: "raj@wohlig.com"
-                        // }];
-                        emailData.city = data.property.sfaCity;
-                        if (data.property.sfaCity == 'Mumbai') {
-                            emailData.urls = "https://mumbai.sfanow.in";
-                        } else if (data.property.sfaCity == 'Hyderabad') {
-                            emailData.urls = "https://hyderabad.sfanow.in";
-                        } else if (data.property.sfaCity == 'Ahmedabad') {
-                            emailData.urls = "https://ahmedabad.sfanow.in";
-                        }
-                        emailData.year = data.property.year;
-                        emailData.eventYear = data.property.eventYear;
-                        emailData.type = data.property.institutionType;
-                        emailData.infoId = data.property.infoId;
-                        emailData.infoNo = data.property.infoNo;
-                        emailData.cityAddress = data.property.cityAddress;
-                        emailData.ddFavour = data.property.ddFavour;
-                        emailData.filename = "editTeamSport.ejs";
-                        emailData.teamId = total.teamSport.teamId;
-                        emailData.students = total.studentTeam;
-                        emailData.linkSportName = data.linkSportName;
-                        emailData.subject = "SFA: Successful Team Sport Registered";
-                        console.log("emaildata", emailData);
-
-                        Config.email(emailData, function (err, emailRespo) {
-                            if (err) {
-                                console.log(err);
-                                callback(null, err);
-                            } else if (emailRespo) {
-                                callback(null, emailRespo);
-                            } else {
-                                callback(null, "Invalid data");
+                        //school email
+                        function (callback) {
+                            console.log("total", total);
+                            var emailData = {};
+                            emailData.schoolName = found.schoolName;
+                            emailData.sportName = data.name;
+                            emailData.schoolSFA = found.sfaID;
+                            // emailData.from = "info@sfanow.in";
+                            emailData.from = data.property.infoId;
+                            emailData.email = found.email;
+                            // emailData.email1 = [{
+                            //     email: found.email
+                            // }];
+                            // emailData.bcc1 = [{
+                            //     email: "raj@wohlig.com"
+                            // }];
+                            emailData.city = data.property.sfaCity;
+                            if (data.property.sfaCity == 'Mumbai') {
+                                emailData.urls = "https://mumbai.sfanow.in";
+                            } else if (data.property.sfaCity == 'Hyderabad') {
+                                emailData.urls = "https://hyderabad.sfanow.in";
+                            } else if (data.property.sfaCity == 'Ahmedabad') {
+                                emailData.urls = "https://ahmedabad.sfanow.in";
                             }
-                        });
-
-                    },
-                    //school sms
-                    function (callback) {
-                        var smsData = {};
-                        smsData.mobile = found.mobile;
-                        smsData.content = "SFA: Thank you for registering for Team Sports at SFA " + data.property.eventYear + ". For Further details Please check your registered email ID.";
-                        console.log("smsdata", smsData);
-                        Config.sendSms(smsData, function (err, smsRespo) {
-                            if (err) {
-                                console.log(err);
-                                callback(err, null);
-                            } else if (smsRespo) {
-                                console.log(smsRespo, "sms sent");
-                                callback(null, smsRespo);
-                            } else {
-                                callback(null, "Invalid data");
+                            emailData.year = data.property.year;
+                            emailData.eventYear = data.property.eventYear;
+                            emailData.type = data.property.institutionType;
+                            emailData.infoId = data.property.infoId;
+                            emailData.infoNo = data.property.infoNo;
+                            emailData.cityAddress = data.property.cityAddress;
+                            emailData.ddFavour = data.property.ddFavour;
+                            emailData.filename = "team-sport/editTeamSport.ejs";
+                            emailData.endDate = data.property.endDate;
+                            emailData.teamId = total.teamSport.teamId;
+                            emailData.students = total.studentTeam;
+                            emailData.playerUrl = data.property.playerUrl;
+                            emailData.ruleUrl = data.property.ruleUrl;
+                            emailData.schoolUrl = data.property.schoolUrl;
+                            emailData.linkSportName = data.linkSportName;
+                            if (data.linkSportName != 'Athletics 4x50m Relay' && data.linkSportName != 'athletics 4x50m relay' && data.linkSportName != 'Athletics 4x100m Relay' && data.linkSportName != 'athletics 4 x100m relay' && data.linkSportName != 'Athletics Medley Relay' && data.linkSportName != 'athletics medley relay' && data.linkSportName != 'Badminton Doubles' && data.linkSportName != 'badminton doubles' && data.linkSportName != 'Table Tennis Doubles' && data.linkSportName != 'table tennis doubles' && data.linkSportName != 'Tennis Mixed Doubles' && data.linkSportName != 'tennis mixed doubles' && data.linkSportName != 'Tennis Doubles' && data.linkSportName != 'tennis doubles' && data.linkSportName != 'KarateTeam Kumite' && data.linkSportName != 'karate team kumite' && data.linkSportName != 'Swimming 4x50m Medley Relay' && data.linkSportName != 'swimming 4x50m medley relay' && data.linkSportName != 'Swimming 4x50m Freestyle Relay' && data.linkSportName != 'swimming 4x50mfreestyle relay') {
+                                emailData.sportNameLink = data.linkSportName;
+                            } else if (data.linkSportName == 'Athletics 4x50m Relay' || data.linkSportName == 'athletics 4x50m relay' || data.linkSportName == 'Athletics 4x100m Relay' || data.linkSportName == 'athletics 4x100m relay' || data.linkSportName == 'Athletics Medley Relay' || data.linkSportName == 'athletics medley relay') {
+                                emailData.sportNameLink = 'Athletics';
+                            } else if (data.linkSportName == 'Badminton Doubles' || data.linkSportName == 'badminton doubles') {
+                                emailData.sportNameLink = 'Badminton';
+                            } else if (data.linkSportName == 'Table Tennis Doubles' || data.linkSportName == 'table tennis doubles') {
+                                emailData.sportNameLink = 'Table Tennis';
+                            } else if (data.linkSportName == 'Tennis Mixed Doubles' || data.linkSportName == 'tennis mixed doubles' || data.linkSportName == 'Tennis Doubles' || data.linkSportName == 'tennis doubles') {
+                                emailData.sportNameLink = 'Tennis';
+                            } else if (data.linkSportName == 'Karate Team Kumite' || data.linkSportName == 'karate team kumite') {
+                                emailData.sportNameLink = 'Karate';
+                            } else if (data.linkSportName == 'Swimming 4x50m Medley Relay' || data.linkSportName == 'swimming 4x50m medley relay' || data.linkSportName == 'Swimming 4x50m Freestyle Relay' || data.linkSportName == 'swimming 4x50m freestyle relay') {
+                                emailData.sportNameLink = 'Swimming';
                             }
-                        });
-                    },
-                    //athlete email
-                    function (callback) {
-                        data.emailfile = "studentEditTeamRemove.ejs";
-                        data.schoolSFA = found.sfaID;
-                        data.mobile = found.mobile;
-                        data.schoolName = found.schoolName;
-                        TeamSport.athleteEditMailers(data, total, function (err, mailData) {
-                            if (err) {
-                                callback(err, null);
-                            } else {
-                                if (_.isEmpty(mailData)) {
-                                    callback(null, []);
+                            emailData.subject = "SFA:  Successful Team Sport Registration";
+                            // console.log("emaildata", emailData);
+
+                            Config.email(emailData, function (err, emailRespo) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(null, err);
+                                } else if (emailRespo) {
+                                    callback(null, emailRespo);
                                 } else {
-                                    callback(null, mailData);
+                                    callback(null, "Invalid data");
                                 }
-                            }
-                        });
+                            });
 
-                    },
-                ], function (err, data3) {
-                    if (err) {
-                        console.log(err);
-                        callback(err, null);
-                    } else {
-                        if (_.isEmpty(data3)) {
-                            callback(null, []);
+                        },
+                        //school sms
+                        function (callback) {
+                            var smsData = {};
+                            smsData.mobile = found.mobile;
+                            smsData.content = "SFA: Thank you for registering for Team Sports at SFA " + data.property.eventYear + ". For Further details Please check your registered email ID.";
+                            console.log("smsdata", smsData);
+                            Config.sendSms(smsData, function (err, smsRespo) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(err, null);
+                                } else if (smsRespo) {
+                                    console.log(smsRespo, "sms sent");
+                                    callback(null, smsRespo);
+                                } else {
+                                    callback(null, "Invalid data");
+                                }
+                            });
+                        },
+                        //athlete email
+                        function (callback) {
+                            data.emailfile = "team-sport/studentEditTeamRemove.ejs";
+                            data.schoolSFA = found.sfaID;
+                            data.mobile = found.mobile;
+                            data.schoolName = found.schoolName;
+                            TeamSport.athleteEditMailers(data, total, function (err, mailData) {
+                                if (err) {
+                                    callback(err, null);
+                                } else {
+                                    if (_.isEmpty(mailData)) {
+                                        callback(null, []);
+                                    } else {
+                                        callback(null, mailData);
+                                    }
+                                }
+                            });
+
+                        },
+                    ],
+                    function (err, data3) {
+                        if (err) {
+                            console.log(err);
+                            callback(err, null);
                         } else {
-                            callback(null, data3);
+                            if (_.isEmpty(data3)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, data3);
+                            }
                         }
-                    }
-                });
+                    });
             }
         });
     },
@@ -2014,9 +2102,9 @@ var model = {
                                 data.schoolName = found.atheleteSchoolName;
                                 data.schoolSFA = "Unregistered";
                                 if (data.property.institutionType == "school") {
-                                    data.emailfile = "studentEditTeamUnregister.ejs";
+                                    data.emailfile = "team-sport/studentEditTeamUnregister.ejs";
                                 } else {
-                                    data.emailfile = "studentEditTeam.ejs";
+                                    data.emailfile = "team-sport/studentEditTeam.ejs";
                                 }
 
                                 callback(null, data);
@@ -2025,7 +2113,7 @@ var model = {
                                 data.mobile = found.mobile;
                                 data.schoolName = schoolData.schoolName;
                                 data.schoolSFA = schoolData.sfaID;
-                                data.emailfile = "studentEditTeam.ejs";
+                                data.emailfile = "team-sport/studentEditTeam.ejs";
                                 callback(null, data);
                             }
                         });
@@ -2048,9 +2136,9 @@ var model = {
                                         data.schoolName = found.atheleteSchoolName;
                                         data.schoolSFA = "Unregistered";
                                         if (data.property.institutionType == "school") {
-                                            data.emailfile = "studentEditTeamUnregister.ejs";
+                                            data.emailfile = "team-sport/studentEditTeamUnregister.ejs";
                                         } else {
-                                            data.emailfile = "studentEditTeam.ejs";
+                                            data.emailfile = "team-sport/studentEditTeam.ejs";
                                         }
                                         callback(null, data);
 
@@ -2058,7 +2146,7 @@ var model = {
                                         data.mobile = found.mobile;
                                         data.schoolName = schoolData.schoolName;
                                         data.schoolSFA = schoolData.sfaID;
-                                        data.emailfile = "studentEditTeam.ejs";
+                                        data.emailfile = "team-sport/studentEditTeam.ejs";
                                         callback(null, data);
                                     }
                                 });
@@ -2116,6 +2204,9 @@ var model = {
                                     emailData.ddFavour = data.property.ddFavour;
                                     emailData.email = n.email;
                                     emailData.name = n.firstName;
+                                    emailData.playerUrl = data.property.playerUrl;
+                                    emailData.ruleUrl = data.property.ruleUrl;
+                                    emailData.schoolUrl = data.property.schoolUrl;
                                     emailData.city = data.property.sfaCity;
                                     if (data.property.sfaCity == 'Mumbai') {
                                         emailData.urls = "https://mumbai.sfanow.in";
@@ -2127,10 +2218,26 @@ var model = {
                                     emailData.year = data.property.year;
                                     emailData.eventYear = data.property.eventYear;
                                     emailData.type = data.property.institutionType;
+                                    emailData.endDate = data.property.endDate;
                                     // emailData.filename = data.emailfile;
                                     emailData.teamId = total.teamSport.teamId;
                                     emailData.students = total.studentTeam;
                                     emailData.linkSportName = data.linkSportName;
+                                    if (data.linkSportName != 'Athletics 4x50m Relay' && data.linkSportName != 'athletics 4x50m relay' && data.linkSportName != 'Athletics 4x100m Relay' && data.linkSportName != 'athletics 4 x100m relay' && data.linkSportName != 'Athletics Medley Relay' && data.linkSportName != 'athletics medley relay' && data.linkSportName != 'Badminton Doubles' && data.linkSportName != 'badminton doubles' && data.linkSportName != 'Table Tennis Doubles' && data.linkSportName != 'table tennis doubles' && data.linkSportName != 'Tennis Mixed Doubles' && data.linkSportName != 'tennis mixed doubles' && data.linkSportName != 'Tennis Doubles' && data.linkSportName != 'tennis doubles' && data.linkSportName != 'KarateTeam Kumite' && data.linkSportName != 'karate team kumite' && data.linkSportName != 'Swimming 4x50m Medley Relay' && data.linkSportName != 'swimming 4x50m medley relay' && data.linkSportName != 'Swimming 4x50m Freestyle Relay' && data.linkSportName != 'swimming 4x50mfreestyle relay') {
+                                        emailData.sportNameLink = data.linkSportName;
+                                    } else if (data.linkSportName == 'Athletics 4x50m Relay' || data.linkSportName == 'athletics 4x50m relay' || data.linkSportName == 'Athletics 4x100m Relay' || data.linkSportName == 'athletics 4x100m relay' || data.linkSportName == 'Athletics Medley Relay' || data.linkSportName == 'athletics medley relay') {
+                                        emailData.sportNameLink = 'Athletics';
+                                    } else if (data.linkSportName == 'Badminton Doubles' || data.linkSportName == 'badminton doubles') {
+                                        emailData.sportNameLink = 'Badminton';
+                                    } else if (data.linkSportName == 'Table Tennis Doubles' || data.linkSportName == 'table tennis doubles') {
+                                        emailData.sportNameLink = 'Table Tennis';
+                                    } else if (data.linkSportName == 'Tennis Mixed Doubles' || data.linkSportName == 'tennis mixed doubles' || data.linkSportName == 'Tennis Doubles' || data.linkSportName == 'tennis doubles') {
+                                        emailData.sportNameLink = 'Tennis';
+                                    } else if (data.linkSportName == 'Karate Team Kumite' || data.linkSportName == 'karate team kumite') {
+                                        emailData.sportNameLink = 'Karate';
+                                    } else if (data.linkSportName == 'Swimming 4x50m Medley Relay' || data.linkSportName == 'swimming 4x50m medley relay' || data.linkSportName == 'Swimming 4x50m Freestyle Relay' || data.linkSportName == 'swimming 4x50m freestyle relay') {
+                                        emailData.sportNameLink = 'Swimming';
+                                    }
                                     emailData.subject = "SFA: Successful Team Sport Registered";
                                     var creatorMail = data.creatorMail;
                                     console.log("creatorMail", creatorMail);
@@ -2154,7 +2261,7 @@ var model = {
                                             }
                                         });
                                     } else {
-                                        emailData.filename = "studentEditTeamRemove.ejs";
+                                        emailData.filename = "team-sport/studentEditTeamRemove.ejs";
                                         emailData.email = n.email;
                                         Config.email(emailData, function (err, emailRespo) {
                                             if (err) {
@@ -2181,6 +2288,9 @@ var model = {
                                     emailData.ddFavour = data.property.ddFavour;
                                     emailData.email = n.email;
                                     emailData.name = n.firstName;
+                                    emailData.playerUrl = data.property.playerUrl;
+                                    emailData.ruleUrl = data.property.ruleUrl;
+                                    emailData.schoolUrl = data.property.schoolUrl;
                                     emailData.city = data.property.sfaCity;
                                     if (data.property.sfaCity == 'Mumbai') {
                                         emailData.urls = "https://mumbai.sfanow.in";
@@ -2192,10 +2302,26 @@ var model = {
                                     emailData.year = data.property.year;
                                     emailData.eventYear = data.property.eventYear;
                                     emailData.type = data.property.institutionType;
+                                    emailData.endDate = data.property.endDate;
                                     emailData.filename = data.emailfile;
                                     emailData.teamId = total.teamSport.teamId;
                                     emailData.students = total.studentTeam;
                                     emailData.linkSportName = data.linkSportName;
+                                    if (data.linkSportName != 'Athletics 4x50m Relay' && data.linkSportName != 'athletics 4x50m relay' && data.linkSportName != 'Athletics 4x100m Relay' && data.linkSportName != 'athletics 4 x100m relay' && data.linkSportName != 'Athletics Medley Relay' && data.linkSportName != 'athletics medley relay' && data.linkSportName != 'Badminton Doubles' && data.linkSportName != 'badminton doubles' && data.linkSportName != 'Table Tennis Doubles' && data.linkSportName != 'table tennis doubles' && data.linkSportName != 'Tennis Mixed Doubles' && data.linkSportName != 'tennis mixed doubles' && data.linkSportName != 'Tennis Doubles' && data.linkSportName != 'tennis doubles' && data.linkSportName != 'KarateTeam Kumite' && data.linkSportName != 'karate team kumite' && data.linkSportName != 'Swimming 4x50m Medley Relay' && data.linkSportName != 'swimming 4x50m medley relay' && data.linkSportName != 'Swimming 4x50m Freestyle Relay' && data.linkSportName != 'swimming 4x50mfreestyle relay') {
+                                        emailData.sportNameLink = data.linkSportName;
+                                    } else if (data.linkSportName == 'Athletics 4x50m Relay' || data.linkSportName == 'athletics 4x50m relay' || data.linkSportName == 'Athletics 4x100m Relay' || data.linkSportName == 'athletics 4x100m relay' || data.linkSportName == 'Athletics Medley Relay' || data.linkSportName == 'athletics medley relay') {
+                                        emailData.sportNameLink = 'Athletics';
+                                    } else if (data.linkSportName == 'Badminton Doubles' || data.linkSportName == 'badminton doubles') {
+                                        emailData.sportNameLink = 'Badminton';
+                                    } else if (data.linkSportName == 'Table Tennis Doubles' || data.linkSportName == 'table tennis doubles') {
+                                        emailData.sportNameLink = 'Table Tennis';
+                                    } else if (data.linkSportName == 'Tennis Mixed Doubles' || data.linkSportName == 'tennis mixed doubles' || data.linkSportName == 'Tennis Doubles' || data.linkSportName == 'tennis doubles') {
+                                        emailData.sportNameLink = 'Tennis';
+                                    } else if (data.linkSportName == 'Karate Team Kumite' || data.linkSportName == 'karate team kumite') {
+                                        emailData.sportNameLink = 'Karate';
+                                    } else if (data.linkSportName == 'Swimming 4x50m Medley Relay' || data.linkSportName == 'swimming 4x50m medley relay' || data.linkSportName == 'Swimming 4x50m Freestyle Relay' || data.linkSportName == 'swimming 4x50m freestyle relay') {
+                                        emailData.sportNameLink = 'Swimming';
+                                    }
                                     emailData.subject = "SFA: Successful Team Sport Registered";
                                     // callback(null, emailData);
                                     Config.email(emailData, function (err, emailRespo) {
@@ -2272,6 +2398,9 @@ var model = {
                             emailData.cityAddress = data.property.cityAddress;
                             emailData.ddFavour = data.property.ddFavour;
                             emailData.eventYear = data.property.eventYear;
+                            emailData.playerUrl = data.property.playerUrl;
+                            emailData.ruleUrl = data.property.ruleUrl;
+                            emailData.schoolUrl = data.property.schoolUrl;
                             emailData.email = n.email;
                             emailData.name = n.name;
                             emailData.city = n.city;
@@ -2284,12 +2413,28 @@ var model = {
                                 emailData.urls = "https://ahmedabad.sfanow.in";
                             }
                             emailData.type = data.property.institutionType;
-                            emailData.filename = "studentEditTeamRemove.ejs";
+                            emailData.endDate = data.property.endDate;
+                            emailData.filename = "team-sport/studentEditTeamRemove.ejs";
                             emailData.teamId = n.teamId
                             emailData.students = total.studentTeam;
                             emailData.linkSportName = data.linkSportName;
+                            if (data.linkSportName != 'Athletics 4x50m Relay' && data.linkSportName != 'athletics 4x50m relay' && data.linkSportName != 'Athletics 4x100m Relay' && data.linkSportName != 'athletics 4 x100m relay' && data.linkSportName != 'Athletics Medley Relay' && data.linkSportName != 'athletics medley relay' && data.linkSportName != 'Badminton Doubles' && data.linkSportName != 'badminton doubles' && data.linkSportName != 'Table Tennis Doubles' && data.linkSportName != 'table tennis doubles' && data.linkSportName != 'Tennis Mixed Doubles' && data.linkSportName != 'tennis mixed doubles' && data.linkSportName != 'Tennis Doubles' && data.linkSportName != 'tennis doubles' && data.linkSportName != 'KarateTeam Kumite' && data.linkSportName != 'karate team kumite' && data.linkSportName != 'Swimming 4x50m Medley Relay' && data.linkSportName != 'swimming 4x50m medley relay' && data.linkSportName != 'Swimming 4x50m Freestyle Relay' && data.linkSportName != 'swimming 4x50mfreestyle relay') {
+                                emailData.sportNameLink = data.linkSportName;
+                            } else if (data.linkSportName == 'Athletics 4x50m Relay' || data.linkSportName == 'athletics 4x50m relay' || data.linkSportName == 'Athletics 4x100m Relay' || data.linkSportName == 'athletics 4x100m relay' || data.linkSportName == 'Athletics Medley Relay' || data.linkSportName == 'athletics medley relay') {
+                                emailData.sportNameLink = 'Athletics';
+                            } else if (data.linkSportName == 'Badminton Doubles' || data.linkSportName == 'badminton doubles') {
+                                emailData.sportNameLink = 'Badminton';
+                            } else if (data.linkSportName == 'Table Tennis Doubles' || data.linkSportName == 'table tennis doubles') {
+                                emailData.sportNameLink = 'Table Tennis';
+                            } else if (data.linkSportName == 'Tennis Mixed Doubles' || data.linkSportName == 'tennis mixed doubles' || data.linkSportName == 'Tennis Doubles' || data.linkSportName == 'tennis doubles') {
+                                emailData.sportNameLink = 'Tennis';
+                            } else if (data.linkSportName == 'Karate Team Kumite' || data.linkSportName == 'karate team kumite') {
+                                emailData.sportNameLink = 'Karate';
+                            } else if (data.linkSportName == 'Swimming 4x50m Medley Relay' || data.linkSportName == 'swimming 4x50m medley relay' || data.linkSportName == 'Swimming 4x50m Freestyle Relay' || data.linkSportName == 'swimming 4x50m freestyle relay') {
+                                emailData.sportNameLink = 'Swimming';
+                            }
                             emailData.subject = n.subject;
-                            console.log("emailData....", emailData);
+                            // console.log("emailData....", emailData);
                             Config.email(emailData, function (err, emailRespo) {
                                 if (err) {
                                     console.log(err);

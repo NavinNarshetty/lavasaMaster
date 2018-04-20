@@ -253,13 +253,27 @@
                                                     <thead>
                                                         <tr>
                                                             <th>level</th>
-                                                            <th>sports</th>
+                                                            <!-- <th>sports</th> -->
+                                                            <th>Certificate</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <tr ng-repeat="data in athlete.sportLevel">
                                                             <td>{{data.level}}</td>
-                                                            <td>{{data.sport}}</td>
+                                                            <!-- <td>{{data.sport}}</td> -->
+                                                            <td>
+                                                                <div class="form-group">
+                                                                    <label class="">Certificate<span ng-show="type.size" class="">(250 x 250)</span></label>
+                                                                    <div class="form-group">
+                                                                        <div class="img-box">
+                                                                            <a href="{{data.certificateImage|uploadpath}}" fancybox-box>
+                                                                            <img ng-src="{{data.certificateImage|uploadpath}}" class="img-responsive uploadingImage img-thumbnail">
+                                                                        </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -317,6 +331,184 @@
                                             <input type="text" name="remarks" ng-model="athlete.remarks" class="form-control " readonly>
                                             <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid Remarks</div>-->
                                         </div>
+                                        <div class="form-group">
+                                            <label class="">Document Status</label>
+                                            <input type="text" name="pinCode" ng-model="athlete. Document_Status" class="form-control" readonly>
+                                            <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched &amp;&amp; type.required">Please enter valid Verification Status</div>-->
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="">Photo ID</label>
+                                            <input type="text" name="Photo_ID" ng-model="athlete.Photo_ID" class="form-control" readonly>
+                                            <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid First Name</div>-->
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="">School ID</label>
+                                            <input type="text" name="School_Id" ng-model="athlete.School_Id" class="form-control" readonly>
+                                            <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid First Name</div>-->
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="">Age Proof</label>
+                                            <input type="text" name="Age_Proof" ng-model="athlete.Age_Proof" class="form-control" readonly>
+                                            <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid First Name</div>-->
+                                        </div>
+
+                                        <div class="athleteaccount-datateam ">
+                                            <div class="text-center ">
+                                                <label class=" ">Data Team :</label>
+                                            </div>
+                                            <table class="table table-hover table-bordered ">
+                                                <thead>
+                                                    <th>
+                                                        <div class="text-capitalize ">
+                                                            System Mode
+                                                        </div>
+                                                    </th>
+                                                    <th ng-if="displayData.package1.name">
+                                                        <div class="text-capitalize">
+                                                            Package- {{ displayData.package1.name }}
+                                                        </div>
+                                                    </th>
+                                                    <th ng-if="displayData.package2.name">
+                                                        <div class="text-capitalize ">
+                                                            Package- {{displayData.package2.name }}
+                                                        </div>
+                                                    </th>
+                                                    <th ng-if="displayData.package3.name">
+                                                        <div class="text-capitalize ">
+                                                            Package- {{displayData.package3.name }}
+                                                        </div>
+                                                    </th>
+                                                    <th ng-if="displayData.package4.name">
+                                                        <div class="text-capitalize ">
+                                                            Package- {{ displayData.package4.name }}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="text-capitalize ">
+                                                            Regs Fees
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="text-capitalize ">
+                                                            Tax
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="text-capitalize ">
+                                                            Discount
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="text-capitalize ">
+                                                            Amt Due
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="text-capitalize ">
+                                                            Amt Outstanding
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="text-capitalize ">
+                                                            Verified
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="text-capitalize ">
+                                                            Receipt No
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="text-capitalize ">
+                                                            Payu Id
+                                                        </div>
+                                                    </th>
+                                                </thead>
+                                                <tbody>
+                                                    <td>
+                                                        <div>
+                                                            <span>{{displayData.paymentMode}}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td ng-if="displayData.package1.date">
+                                                        <div>
+
+                                                            <span>Registered Date</span> {{displayData.package1.date | date
+                                                            }}
+                                                            <span>Payment Date</span> {{displayData.package1.dateOfTransaction
+                                                            | date}}
+
+                                                        </div>
+                                                    </td>
+                                                    <td ng-if="displayData.package2.date">
+                                                        <div>
+                                                            <span>Registered Date</span> {{displayData.package2.date | date
+                                                            }}
+                                                            <span>Payment Date</span> {{displayData.package2.dateOfTransaction
+                                                            | date}}
+
+                                                        </div>
+                                                    </td>
+                                                    <td ng-if="displayData.package3.date">
+                                                        <div>
+                                                            <span>Registered Date</span> {{displayData.package3.date | date
+                                                            }}
+                                                            <span>Payment Date</span> {{displayData.package3.dateOfTransaction
+                                                            | englishNumeralCustomDate}}
+                                                        </div>
+                                                    </td>
+                                                    <td ng-if="displayData.package4.date">
+                                                        <div>
+                                                            <span>Registered Date</span> {{displayData.package4.date | date
+                                                            }}
+                                                            <span>Payment Date</span> {{displayData.package4.dateOfTransaction
+                                                            | englishNumeralCustomDate}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div>
+                                                            {{displayData.AmountToPay}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div>
+                                                            {{displayData.cgst + displayData.sgst}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div>
+                                                            {{ displayData.discount }}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div>
+                                                            {{displayData.AmountToPay}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div>
+                                                            {{displayData.outstandingAmount}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div>
+                                                            {{displayData.verified}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div>
+                                                            <span ng-repeat="idData in displayData.receiptId track by $index"> {{idData}}<span ng-if="$index < displayData.receiptId.length-1">,</span></span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div>
+                                                            <span ng-repeat="idData in displayData.payuId track by $index"> {{idData}}<span ng-if="$index < displayData.payuId.length-1">,</span></span>
+                                                        </div>
+                                                    </td>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
                                     </div>
                                     </detail-field>
                                 </div>

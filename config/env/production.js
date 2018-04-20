@@ -44,8 +44,23 @@ module.exports = {
   // realHost: "http://testahmedabadcollege.sfanow.in",
 
   // realHost: "https://sfa.wohlig.co.in",
-  emails: ["chintan@wohlig.com", "raj@wohlig.com", "supriya.bhartiya@wohlig.com", "rahi.shah@sfanow.in", "shiva.singh@sfanow.in", "sunil.rathod@sfanow.in", "venkatesh.rathod@sfanow.in", "neeraj.jaiswal@sfanow.in", "rahul.singh@sfanow.in", "datateam@sfanow.in", "akshay.singh@sfanow.in"]
-
+  // emails: ["chintan@wohlig.com", "raj@wohlig.com", "supriya.bhartiya@wohlig.com", "rahi.shah@sfanow.in", "shiva.singh@sfanow.in", "sunil.rathod@sfanow.in", "venkatesh.rathod@sfanow.in", "neeraj.jaiswal@sfanow.in", "rahul.singh@sfanow.in", "datateam@sfanow.in", "akshay.singh@sfanow.in"]
+  accessLevels: [{
+    name: "Super Admin",
+    emails: ['rahi.shah@sfanow.in', "raj@wohlig.com"]
+  }, {
+    name: "Admin",
+    emails: ["chintan@wohlig.com", "supriya.bhartiya@wohlig.com", "shiva.singh@sfanow.in", "suksha.khodake@wohlig.com", "pratik.patel@wohlig.com", "sagar.mulchandani@wohlig.com", "navin.narshetty@wohlig.com"]
+  }, {
+    name: "Sports Ops",
+    emails: ['rajas.joshi@sfanow.in', 'shamik.shah@sfanow.in', 'aditi.parikh@sfanow.in', 'faron.fernandes@sfanow.in']
+  }, {
+    name: "Volunteers",
+    emails: ['akshay.singh@sfanow.in', 'gargee.potdar@sfanow.in', 'sonia.chhabria@sfanow.in', 'venkatesh.rathod@sfanow.in']
+  }, {
+    name: "Accounts",
+    emails: ['accounts@sfanow.in', 'payments@sfanow.in']
+  }],
   /***************************************************************************
    * Set the log level in production environment to "silent"                 *
    ***************************************************************************/

@@ -22,6 +22,30 @@
      src: url("../fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("../fonts/glyphicons-halflings-regular.woff2") format("woff2"), url("../fonts/glyphicons-halflings-regular.woff") format("woff"), url("../fonts/glyphicons-halflings-regular.ttf") format("truetype"), url("../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg");
  }
 
+ @font-face {
+     font-family: 'Titillium Web SemiBold';
+     src: url("../fonts/titillium-web.semibold.ttf");
+     font-weight: 600;
+ }
+
+ @font-face {
+     font-family: 'Titillium Web Regular';
+     src: url("../fonts/titillium-web.regular.ttf");
+     font-weight: 600;
+ }
+
+ .r-titillium-web-semibold {
+     font-family: "Titillium Web SemiBold";
+     -webkit-font-smoothing: antialiased;
+     -moz-osx-font-smoothing: grayscale;
+ }
+
+ .r-titillium-web-regular {
+     font-family: "Titillium Web Regular";
+     -webkit-font-smoothing: antialiased;
+     -moz-osx-font-smoothing: grayscale;
+ }
+
  button,
  div,
  input {
@@ -1264,6 +1288,7 @@
  .activessColor {
      color: #ea5249;
  }
+
  /* Start writing sass here */
 
  .viewStudent {
@@ -1497,5 +1522,136 @@
          border-top: 2px solid #000;
      }
  } //  ARCHIVE PAGE END
+ .registercontent-gallerybanners,
+ .eventcount-data {
+     .table {
+         border: 1px solid #e1e1e1;
+     }
+     .table>thead>tr>th {
+         font-size: 12px;
+     }
+ }
+
+ .desktop-banner {
+     border-right: 3px solid #e1e1e1;
+ }
+
+ .table-imageresponsive {
+     .img-box {
+         width: 150px;
+         height: 100px;
+         overflow: hidden;
+         margin-bottom: 8px;
+     }
+     img {
+         max-width: 100%;
+         height: auto;
+     }
+ } // ACCOUNTS HOLDER
+ .athleteaccountsholder {
+     p {
+         font-size: 12px;
+     }
+     .panel-group .panel .panel-heading {
+         padding: 8px 10px;
+     }
+     .panel-group .panel>.panel-collapse .panel-body {
+         padding: 5px;
+     }
+     .athleteaccount-datateam,
+     .athleteaccount-accountteam {
+         th {
+             font-size: 10px;
+             padding: 5px;
+         }
+         td {
+             font-size: 10px;
+         }
+     }
+     .athleteaccount-datateam {
+         margin-bottom: 20px;
+         border-bottom: 2px solid #e1e1e1;
+     }
+ } // ACCOUNTS HOLDER END
+ //  ACCOUNT MODAL
+ .tablepackageholder {
+     table>thead>th {
+         font-size: 13px;
+         border-bottom: none;
+     }
+ }
+
+ .highligh-tablerow {
+     background-color: #e1e1e1; //  border: 1px solid #000;
+ }
+
+ .accounts-modal {
+     .modal-lg {
+         width: 95%;
+     }
+     .custom-select {
+         font-size: 13px;
+         padding: 3px;
+     }
+ } //  ACCOUNT MODAL EEND
+ // NO ACCESS PAGE
+ .noaccess-page {
+     .widget {
+         min-height: 60vh;
+     }
+     .noaccess-content {
+         width: 60%;
+         padding: 30px;
+         margin: 0 auto;
+         text-align: center;
+         h4 {
+             font-weight: 700;
+         }
+     }
+ } // NO ACCESS PAGE END
+ //  COMMON CLASS
+ .table-font {
+     .table {
+         border: 1px solid #e1e1e1;
+         border-style: dashed;
+     }
+     th {
+         font-size: 12px;
+         text-transform: capitalize;
+         text-align: center;
+     }
+     td {
+         font-size: 12px;
+     }
+ }
+
+ .reduce-tablepadding {
+     .table>thead>tr>td,
+     .table>tbody>tr>td,
+     .table>tfoot>tr>td {
+         padding: 5px;
+         vertical-align: middle;
+     }
+ } //  ONLY FOR UPLOAD IMAGE
+ .override-margin {
+     .form-group {
+         margin-bottom: 5px;
+     }
+     input {
+         width: 100%;
+         display: block;
+     }
+ }
+
+ .override-height {
+     .form-control {
+         height: 25px;
+     }
+ } //  OVERRIDE SELECT
+ .override-select {
+     border: none;
+     border-radius: 20px;
+ } //  OVERRIDE SELECT END
+ // COMMON CLASS END
  @import "fancybox-override";
  @import "other/mobile";

@@ -573,7 +573,7 @@ var model = {
     getSportsDeails: function (data, callback) {
         SportsListSubCategory.findOne({
             _id: data._id
-        }).exec(function (err, found) {
+        }).deepPopulate("sportsListCategory").exec(function (err, found) {
             if (err) {
                 callback(err, null);
             } else if (_.isEmpty(found)) {
@@ -583,6 +583,7 @@ var model = {
                 type.sportType = found.sportType;
                 type.sportName = found.name;
                 type.isTeam = found.isTeam;
+                type.categoryType = found.sportsListCategory.name;
                 callback(null, type);
             }
         });

@@ -707,6 +707,7 @@ var model = {
                 saveObj.noShowTotalMatches = 0;
                 async.waterfall([
 
+                    // calculate totalStrength,male-female count and their ratio
                     function (callback) {
                         Athelete.aggregate(
                             [{
@@ -741,7 +742,6 @@ var model = {
                                 });
                             }
                         );
-
                     },
 
                     function (callback) {
@@ -1013,7 +1013,6 @@ var model = {
                                     pullProperties = resultVar.resultVar + " " + "matchId";
                                 }
                                 
-
                                 Match.find(matchObj, pullProperties).lean().exec(function (err, matches) {
                                     var studArr = _.filter(parallelResult.arr, {
                                         '_id': single._id,
@@ -1316,6 +1315,278 @@ var model = {
             })
         })
     },
+
+    getTotalMatchesSchool:function(data,callback){
+        var totalMatches = 0;
+        async.waterfall([
+            function(callback){
+                async.parallel([
+                    //Individual Sports
+                    function (callback) {
+                        var indSportPipeline = [{
+                                //athletes 
+                                $lookup: {
+                                    "from": "atheletes",
+                                    "localField": "athleteId",
+                                    "foreignField": "_id",
+                                    "as": "athleteId"
+                                }
+                            }, {
+                                //athletes
+                                $unwind: {
+                                    path: "$athleteId",
+                                    includeArrayIndex: "arrayIndex", // optional
+                                }
+                            }, {
+                                //schools
+                                $lookup: {
+                                    "from": "schools",
+                                    "localField": "athleteId.school",
+                                    "foreignField": "_id",
+                                    "as": "athleteId.school"
+                                }
+                            }, {
+                                //schools
+                                $unwind: {
+                                    path: "$athleteId.school",
+                                    includeArrayIndex: "arrayIndex", // optional
+                                    preserveNullAndEmptyArrays: true // optional
+                                }
+                            }, {
+                                //by schoolName
+                                $match: {
+                                    $or: [{
+                                        "athleteId.school.name": data.school
+                                    }, {
+                                        "athleteId.atheleteSchoolName": data.school
+                                    }]
+                                }
+                            }, {
+                                //sportslistsubcategories
+                                $lookup: {
+                                    "from": "sportslistsubcategories",
+                                    "localField": "sportsListSubCategory",
+                                    "foreignField": "_id",
+                                    "as": "sportsListSubCategory"
+                                }
+                            }, {
+                                //sportslistsubcategories
+                                $unwind: {
+                                    path: "$sportsListSubCategory",
+                                    includeArrayIndex: "arrayIndex", // optional
+                                }
+                            }, {
+                                //sportslistcategories
+                                $lookup: {
+                                    "from": "sportslistcategories",
+                                    "localField": "sportsListSubCategory.sportsListCategory",
+                                    "foreignField": "_id",
+                                    "as": "sportsListSubCategory.sportsListCategory"
+                                }
+                            }, {
+                                // sportslistcategories
+                                $unwind: {
+                                    path: "$sportsListSubCategory.sportsListCategory",
+                                    includeArrayIndex: "arrayIndex", // optional
+                                }
+                            }, {
+                                // sport
+                                $unwind: {
+                                    path: "$sport",
+                                    includeArrayIndex: "arrayIndex", // optional
+                                    preserveNullAndEmptyArrays: false // optional
+                                }
+                            }, {
+                                $project: {
+                                    // specifications
+                                    "_id": "$_id",
+                                    "sportsListSubCategory._id": "$sportsListSubCategory._id",
+                                    "sportsListSubCategory.name": "$sportsListSubCategory.name",
+                                    "sportsListSubCategory.type": "$sportsListSubCategory.sportsListCategory.name",
+                                    "athleteId._id": "$athleteId._id",
+                                    "athleteId.gender": "$athleteId.gender",
+                                    "athleteId.isBib": "$athleteId.isBib",
+                                    "school.name1": "$athleteId.school.name",
+                                    "school.name2": "$athleteId.atheleteSchoolName",
+                                    "school._id": "$athleteId.school._id",
+                                    "type": "indi",
+                                    "sport": 1,
+
+                                }
+                            },
+
+                        ];
+                        IndividualSport.aggregate(indSportPipeline, function (err, result) {
+                            if (err) {
+                                fcallback(err, null);
+                            } else {
+                                callback(null, result);
+                            }
+                        });
+                    },
+                    //Team Sports
+                    function (callback) {
+                        var teamSportPipeline = [{
+                            // by schoolName
+                            $match: {
+                                "schoolName": data.school
+                            }
+                        }, {
+                            // sports
+                            $lookup: {
+                                "from": "sports",
+                                "localField": "sport",
+                                "foreignField": "_id",
+                                "as": "sport"
+                            }
+                        }, {
+                            // sports
+                            $unwind: {
+                                path: "$sport",
+                                includeArrayIndex: "arrayIndex", // optional
+                            }
+                        }, {
+                            // sportslists
+                            $lookup: {
+                                "from": "sportslists",
+                                "localField": "sport.sportslist",
+                                "foreignField": "_id",
+                                "as": "sport.sportslist"
+                            }
+                        }, {
+                            // sportslists
+                            $unwind: {
+                                path: "$sport.sportslist",
+                                includeArrayIndex: "arrayIndex", // optional
+                            }
+                        }, {
+                            // sportslistsubcategories
+                            $lookup: {
+                                "from": "sportslistsubcategories",
+                                "localField": "sport.sportslist.sportsListSubCategory",
+                                "foreignField": "_id",
+                                "as": "sport.sportslist.sportsListSubCategory"
+                            }
+                        }, {
+                            // sportslistsubcategories
+                            $unwind: {
+                                path: "$sport.sportslist.sportsListSubCategory",
+                                includeArrayIndex: "arrayIndex", // optional
+                            }
+                        }, {
+                            // sportslistcategories
+                            $lookup: {
+                                "from": "sportslistcategories",
+                                "localField": "sport.sportslist.sportsListSubCategory.sportsListCategory",
+                                "foreignField": "_id",
+                                "as": "sport.sportslist.sportsListSubCategory.sportsListCategory"
+                            }
+                        }, {
+                            // sportslistcategories
+                            $unwind: {
+                                path: "$sport.sportslist.sportsListSubCategory.sportsListCategory",
+                                includeArrayIndex: "arrayIndex", // optional
+                            }
+                        }, {
+                            // studentteams
+                            $lookup: {
+                                "from": "studentteams",
+                                "localField": "studentTeam",
+                                "foreignField": "_id",
+                                "as": "studentTeam"
+                            }
+                        }, {
+                            // studentteams
+                            $unwind: {
+                                path: "$studentTeam",
+                                includeArrayIndex: "arrayIndex", // optional
+                                preserveNullAndEmptyArrays: true // optional
+                            }
+                        }, {
+                            // atheletes
+                            $lookup: {
+                                "from": "atheletes",
+                                "localField": "studentTeam.studentId",
+                                "foreignField": "_id",
+                                "as": "studentTeam.studentId"
+                            }
+                        }, {
+                            // atheletes
+                            $unwind: {
+                                path: "$studentTeam.studentId",
+                                includeArrayIndex: "arrayIndex", // optional
+                            }
+                        }, {
+                            $project: {
+                                // specifications
+                                "_id": "$_id",
+                                "sportsListSubCategory._id": "$sport.sportslist.sportsListSubCategory._id",
+                                "sportsListSubCategory.name": "$sport.sportslist.sportsListSubCategory.name",
+                                "sportsListSubCategory.type": "$sport.sportslist.sportsListSubCategory.sportsListCategory.name",
+                                "school.name": "$schoolName",
+                                "athleteId._id": "$studentTeam.studentId._id",
+                                "athleteId.gender": "$studentTeam.studentId.gender",
+                                "athleteId.isBib": "$athleteId.isBib",
+                                "teamId": "$teamId",
+                                "type": "team",
+                                "sport": "$sport._id",
+                            }
+                        }];
+                        TeamSport.aggregate(teamSportPipeline, function (err, result) {
+                            if (err) {
+                                fcallback(err, null);
+                            } else {
+                                callback(null, result);
+                            }
+                        });
+                    }
+                ], function (err, parallelResult) {
+                    var winLoose = [];
+                    winLoose[0] = _.cloneDeep(parallelResult[0]);
+                    winLoose[1] = _.uniqBy(_.cloneDeep(parallelResult[1]), 'teamId');
+
+                    winLoose = _.flatten(winLoose);
+                    callback(null, winLoose);
+                });
+            },
+            function (winLoose, callback) {
+                console.log("winloose.arr.length",winLoose.length);
+                async.each(winLoose, function (single, callback) {
+
+                    var resultVar = Match.getResultVar(single.sportsListSubCategory.name, single.sportsListSubCategory.type);
+                    console.log("resultVar",resultVar);
+                    if (resultVar == null) {
+                        callback();
+                    } else {
+                        var matchObj = {};
+                        var pullProperties="";
+                        matchObj[resultVar.opponentsVar] = single._id;
+                        if (single.sportsListSubCategory.name == "Archery") {
+                            pullProperties = resultVar.resultVar1 + " " + resultVar.resultVar2 + " excelType matchId";
+                        }else{
+                            pullProperties = resultVar.resultVar + " " + "matchId";
+                        }
+                        
+
+                        Match.find(matchObj, pullProperties).lean().exec(function (err, matches) {
+                            console.log("matches",matches.length);
+                            totalMatches = totalMatches + matches.length;
+                            callback();
+                        });
+                    }
+                }, function (err) {
+                    callback(err,totalMatches);
+                })
+            },
+        ],function(err,count){
+            var obj = {
+                "name":data.school,
+                "totalMatches":count
+            }
+           callback(err,obj);
+        })
+
+    }
 
 
 

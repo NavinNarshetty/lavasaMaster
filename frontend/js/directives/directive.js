@@ -53,46 +53,46 @@ myApp.directive('img', function ($compile, $parse) {
                     target = element;
                 }
                 if (attr.share) {
-                  console.log("in share");
+                    console.log("in share");
                     shareUrl = attr.share;
                 } else {
-                  shareUrl = '';
+                    shareUrl = '';
                 }
                 // CUSTOM TAGGING
                 $.fancybox.defaults.btnTpl.tag = '<button data-fancybox-fb class="fancybox-button fancybox-button--fb" title="Tag"> <span class="fa fa-tags"></span></button>';
                 // CUSTOM TAGGING END
                 // CUSTOM SHARING
-                $.fancybox.defaults.btnTpl.sharing = '<button data-fancybox-fb class="fancybox-button fancybox-btnshare" title="Share"> <span class="fa fa-share-alt"></span><span class="fancy-sharelist"> <ul class="list-unstyled"> <li> <a target="_blank" title="Share on Facebook | Sports For All" href="https://www.facebook.com/sharer/sharer.php?u='+ shareUrl +'&title=Sports For All" > <div class="photovideo-socialbutton" > <span class="fa fa-facebook"></span> </div> </a> </li> <li> <a target="_blank" title="Share on Twitter | Sports For All" href="https://twitter.com/intent/tweet?url='+ shareUrl +'&title=Sports For All"> <div class="photovideo-socialbutton" > <span class="fa fa-twitter"></span> </div> </a> </li> <li> <a target="_blank" title="Share on Google+ | Sports for All" href="https://plus.google.com/share?url=='+ shareUrl +'&title=Sports For All"> <div class="photovideo-socialbutton"> <span class="fa fa-google-plus"></span> </div> </a> </li> </ul></span> </button>';
+                $.fancybox.defaults.btnTpl.sharing = '<button data-fancybox-fb class="fancybox-button fancybox-btnshare" title="Share"> <span class="fa fa-share-alt"></span><span class="fancy-sharelist"> <ul class="list-unstyled"> <li> <a target="_blank" title="Share on Facebook | Sports For All" href="https://www.facebook.com/sharer/sharer.php?u=' + shareUrl + '&title=Sports For All" > <div class="photovideo-socialbutton" > <span class="fa fa-facebook"></span> </div> </a> </li> <li> <a target="_blank" title="Share on Twitter | Sports For All" href="https://twitter.com/intent/tweet?url=' + shareUrl + '&title=Sports For All"> <div class="photovideo-socialbutton" > <span class="fa fa-twitter"></span> </div> </a> </li> <li> <a target="_blank" title="Share on Google+ | Sports for All" href="https://plus.google.com/share?url==' + shareUrl + '&title=Sports For All"> <div class="photovideo-socialbutton"> <span class="fa fa-google-plus"></span> </div> </a> </li> </ul></span> </button>';
                 // CUSTOM SHARING END
                 target.fancybox({
-                  padding: 0,
-                  openEffect: 'fade',
-                  closeEffect: 'fade',
-                  closeBtn: true,
-                  arrows : true,
-                  keyboard : true,
-                  infobar : false,
-                  protect : true,
-                  helpers: {
-                    media: {
-                      youtube : {
-                        autoplay : 1
-                      }
+                    padding: 0,
+                    openEffect: 'fade',
+                    closeEffect: 'fade',
+                    closeBtn: true,
+                    arrows: true,
+                    keyboard: true,
+                    infobar: false,
+                    protect: true,
+                    helpers: {
+                        media: {
+                            youtube: {
+                                autoplay: 1
+                            }
+                        }
+                    },
+                    buttons: [
+                        // 'fullScreen',
+                        //'download',
+                        // 'thumbs',
+                        'zoom',
+                        // 'tag',
+                        // 'share', //default share
+                        // 'sharing', //custom share
+                        'close',
+                    ],
+                    thumbs: {
+                        axis: 'x'
                     }
-                  },
-                  buttons: [
-                    // 'fullScreen',
-                    //'download',
-                    // 'thumbs',
-                    'zoom',
-                    // 'tag',
-                    // 'share', //default share
-                    // 'sharing', //custom share
-                    'close',
-                  ],
-                  thumbs: {
-                    axis: 'x'
-                  }
                 });
             }
         };
@@ -694,6 +694,36 @@ myApp.directive('img', function ($compile, $parse) {
         };
     })
 
+    .directive('specialDigit', function () {
+        return {
+            require: 'ngModel',
+            restrict: 'A',
+            link: function (scope, element, attr, ctrl) {
+                var digits;
+
+                function inputValue(val) {
+                    if (val) {
+                        if (attr.type == "tel") {
+                            digits = val.replace(/[^0-9\+\\!@#$%^*_+-=,<>'"]/g, '');
+                        } else {
+                            digits = val.replace(/[^0-9\-\\!@#$%^*_+-=,<>'"]/g, '');
+                        }
+
+
+                        if (digits !== val) {
+                            ctrl.$setViewValue(digits);
+                            ctrl.$render();
+                        }
+                        // return parseInt(digits, 10);
+                        return digits;
+                    }
+                    return undefined;
+                }
+                ctrl.$parsers.push(inputValue);
+            }
+        };
+    })
+
     .directive('inputDate', function ($compile, $parse) {
         return {
             restrict: 'E',
@@ -873,8 +903,88 @@ myApp.directive('img', function ($compile, $parse) {
                 };
             }
         };
-    });
-// SCROLLDOWN END
+    })
+    .directive('restrictField', function () {
+        return {
+            restrict: 'AE',
+            scope: {
+                restrictField: '='
+            },
+            link: function (scope) {
+                // this will match spaces, tabs, line feeds etc
+                // you can change this regex as you want
+                var regex = /\s/g;
+
+                scope.$watch('restrictField', function (newValue, oldValue) {
+                    if (newValue != oldValue && regex.test(newValue)) {
+                        scope.restrictField = newValue.replace(regex, '');
+                    }
+                });
+            }
+        };
+    })
+    .directive('disallowSpaces', function () {
+        return {
+            restrict: 'A',
+
+            link: function ($scope, $element) {
+                $element.bind('input', function () {
+                    $(this).val($(this).val().replace(/ /g, ''));
+                });
+            }
+        };
+    })
+    // SCROLLDOWN END
+    // PACKAGE CARD
+    .directive('sfaPackageTable', ['$compile', 'NavigationService', function ($compile, NavigationService) {
+        return {
+            restrict: 'E',
+            scope: {
+                'user': '@user',
+                'caption': '@caption',
+                'cashback': '=cashback'
+            },
+            templateUrl: 'views/directive/packagetable.html',
+            link: function ($scope, attrs) {
+                $scope.packages = [];
+                $scope.features = [];
+                $scope.formPackage = {
+                    filter: {
+                        packageUser: $scope.user
+                    }
+                }
+                $scope.formFeature = {
+                    filter: {
+                        featureUserType: $scope.user
+                    }
+                }
+                // console.log("cashback", $scope.cashback);
+
+                NavigationService.getPackages($scope.formPackage, function (data) {
+                    data = data.data;
+                    console.log("pack", data);
+                    if (data.value = true) {
+                        $scope.packages = data.data.results;
+                        // console.log("packages", $scope.packages);
+                    } else {
+                        console.log("packages search failed", data);
+                    }
+                });
+                NavigationService.getPackageFeatures($scope.formFeature, function (data) {
+                    data = data.data;
+                    console.log("feat", data);
+                    if (data.value = true) {
+                        $scope.features = data.data.results;
+                        // console.log("features", $scope.features);
+                    } else {
+                        console.log("features search failed", data);
+                    }
+                });
+            }
+        }
+    }])
+// PACKAGE CARD END
+;
 
 // .directive('onlyDigits', function () {
 //     return {

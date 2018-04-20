@@ -395,6 +395,9 @@ $grey: #e1e1e1;
 }
 
 // VIEW MORE END
+.certi-card{
+  padding: 10px;
+}
 // ATHLETE PROFILE CARD
 .profileathlete-card {
     position: relative;
@@ -2647,3 +2650,518 @@ $tickerDuration: 60s;
 }
 // GALLERY POST CONTENT SECTION END
 // GALLERY POST PAGE END
+// FORGOT PASSWORD POPUP
+.modal-forgotpassword{
+  .modal-dialog{
+    margin-top: 100px;
+  }
+  .modal-content{
+    border-radius: 0px;
+    box-shadow: none;
+  }
+  .forgotpassword-modal{
+    padding: 20px 30px;
+    text-align: center;
+  }
+  .forgotmodal-title{
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: $brand-primary;
+    text-transform: uppercase;
+  }
+  .forgotmodal-input{
+    margin-bottom: 20px;
+    label{
+      font-weight: 500;
+    }
+    .input-group{
+      width: 50%;
+      margin: 0px auto 10px;
+      border: none;
+      input{
+        border: 1px solid $brand-primary;
+      }
+      input[type=number]::-webkit-inner-spin-button,
+      input[type=number]::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          appearance: none;
+      }
+      .btn{
+        border: 1px solid $brand-primary;
+        background-color: transparent;
+        color: $brand-primary;
+        text-transform: uppercase;
+      }
+    }
+    .forgototp-input{
+      width: 40%;
+    }
+  }
+  .resetpassword-holder{
+    width: 50%;
+    margin: 0 auto;
+    input{
+      margin-bottom: 20px;
+    }
+    .btn-resetsubmit{
+      padding: 6px 12px;
+      color: $base;
+      &:active, &:focus, &:hover{
+        color: $base;
+      }
+    }
+  }
+}
+
+// FORGOT PASSWORD POPUP END
+// REGISTRATION PAGES
+// REGISTRATION PLAYER
+.registerplayer-page{
+  min-height: 100vh;
+  padding: 50px 0px;
+  color: $sport-darkgrey;
+  @extend .d-opensans-regular;
+
+  img.loading{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    @include transform(translate(-50%, -50%));
+    max-width: 100%;
+    height: auto;
+  }
+}
+.registerplayer-header, .registerplayer-package, .registerplayer-form, .registerplayer-questions, .registerplayer-testimonials, .registerplayer-counts, .registerplayer-photos{
+  margin-bottom: 40px;
+}
+.registerplayer-title{
+  color: $sport-primary;
+  font-size: 45px;
+  text-transform: uppercase;
+  @extend .d-fjalla-one;
+}
+.regiterplayer-titlesmall{
+  color: $sport-success;
+  font-size: 24px;
+}
+.registerplayer-accordion{
+  margin-bottom: 40px;
+  .register-accordion-view{
+    font-size: 14px;
+  }
+  .panel-title{
+    cursor: default;
+    .text-muted{
+      color: #fff;
+    }
+  }
+  .panel-default{
+    border: none;
+    border-radius: 0;
+    box-shadow: 0 0 10px #e1e1e1;
+    > .panel-heading{
+      padding: 20px;
+      border: none;
+      border-radius: 0;
+      background-color: transparent;
+    }
+  }
+  .panel-open > .panel-heading{
+    background-color: rgba(0,0,0,0.7);
+    color: #fff;
+    a{
+      &:active, &:focus, &:hover{
+        color: #fff;
+      }
+    }
+  }
+  .panel-body{
+    padding: 20px;
+  }
+  .register-accordioncontent{
+    color: $sport-darkgrey;
+  }
+  .register-contentholder{
+    margin-bottom: 10px;
+  }
+  .register-sportlist{
+    &:last-child{
+      .register-seperator{
+        display: none;
+      }
+    }
+  }
+  .register-venue{
+    &:last-child{
+      .register-seperator{
+        display: none;
+      }
+    }
+  }
+  .registeraccordion-links{
+    color: $sport-lightblue;
+    text-transform: uppercase;
+    text-decoration: underline;
+  }
+}
+.registerplayer-introtitle{
+  color: $sport-primary;
+  font-size: 30px;
+  text-align: center;
+  text-transform: uppercase;
+  @extend .d-fjalla-one;
+}
+.registerplayer-introcontent {
+  width: 90%;
+  margin: 0 auto;
+  text-align: justify;
+}
+.register-contentdate{
+  font-weight: 700;
+}
+.registerplayer-questiontitle{
+  border-bottom: 1px solid $base;
+  margin-bottom: 20px;
+  display: inline-block;
+  text-transform: uppercase;
+}
+.registerplayer-questionitem{
+  margin-bottom: 20px;
+  h4, h5, h6{
+    color: $sport-primary;
+  }
+}
+.registerplayer-testimonialslider{
+  .swiper-button-next, .swiper-button-prev{
+    width: 30px;
+    height: 30px;
+    margin-top: 0;
+    background-size: contain;
+    @include transform(translateY(-50%));
+  }
+  .swiper-button-prev, .swiper-container-rtl .swiper-button-next{
+    left: -40px;
+    background-image: url('../img/icon/prev-black.png');
+  }
+  .swiper-button-next, .swiper-container-rtl .swiper-button-prev{
+    right: -40px;
+    background-image: url('../img/icon/next-black.png');
+  }
+}
+.register-testimonialcard{
+  max-width: 350px;
+  width: 350px;
+  padding: 20px;
+  // border: 1px solid $grey;
+  border-bottom: 2px solid $sport-success;
+  box-shadow: 0 0 3px $sport-light-grey;
+  margin-right: 30px;
+  margin-top: 25%;
+}
+.register-testimonialimg{
+  margin-top: -30%;
+  margin-bottom: 20px;
+  position: relative;
+  img{
+    margin: 0 auto;
+  }
+}
+.register-testimonialquote{
+  width: 35px;
+  position: absolute;
+  bottom: -15px;
+  left: 0;
+}
+.register-testimonialcontent{
+  padding: 10px 0;
+  font-size: 14px;
+  text-align: left;
+}
+.register-testimonialauthor{
+  font-size: 14px;
+  font-style: italic;
+}
+.register-testimonialname{
+  margin: 0;
+  color: $sport-success;
+  @extend .d-opensans-semibold;
+}
+.registerplayer-counts{
+  background-color: #f7f7f7;
+}
+.registercount-flex{
+  padding: 20px 0;
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  justify-content: center;
+}
+.registercount-item{
+  // padding: 15px;
+  margin: 10px 30px;
+  color: $sport-darkgrey;
+  text-align: center;
+  text-transform: uppercase;
+}
+.registercount-number{
+  font-size: 36px;
+  @extend .d-fjalla-one;
+}
+.registercount-label{
+  font-size: 18px;
+  @extend .d-opensans-semibold;
+}
+.registerplayer-galleryslider{
+  margin-top: 20px;
+  position: relative;
+  .swiper-button-next, .swiper-button-prev{
+    width: 20px;
+    height: 20px;
+    margin-top: 0;
+    background-size: contain;
+    @include transform(translateY(-50%));
+  }
+  .swiper-button-next, .swiper-container-rtl .swiper-button-prev{
+    right: -15px;
+    background-image: url('../img/icon/next-black.png');
+  }
+  .swiper-button-prev, .swiper-container-rtl .swiper-button-next{
+    left: -25px;
+    background-image: url('../img/icon/prev-black.png');
+  }
+}
+.registergallery-slide{
+  width: 100%;
+}
+.registergallery-photoholder{
+  width: 50%;
+  position: relative;
+  padding-right: 10px;
+  margin-bottom: 10px;
+  float: left;
+}
+.registergallery-photoslide{
+  &:nth-child(odd) {
+    .registergallery-photoholder{
+      &:first-child{
+        width: 100%;
+      }
+    }
+  }
+  &:nth-child(even) {
+    .registergallery-photoholder{
+      &:nth-child(3){
+        width: 100%;
+      }
+    }
+  }
+}
+.registerform-btnholder{
+  text-align: center;
+}
+.btn-mainregister{
+  // width: 50%;
+  border: none;
+  box-shadow: 4px 4px 5px 0 $sport-darkgrey;
+  display: inline-block;
+  background-color: $sport-primary;
+  color: #fff;
+  font-size: 18px;
+  text-transform: uppercase;
+  &:active, &.active, &:hover, &:focus{
+    box-shadow: 4px 4px 5px 0 $sport-darkgrey;
+    color: #fff;
+  }
+}
+.registerform-holder {
+  padding: 20px;
+  text-align: center;
+}
+.registerform-intro{
+  font-size: 16px;
+}
+.btn-registerstep{
+  border: 1px solid $sport-lightblue;
+  background-color: transparent;
+  color: $sport-darkgrey;
+  @extend .d-opensans-semibold;
+  &:active, &:focus, &:hover, &.active{
+    background-color: $sport-lightblue;
+    color: $sport-primary;
+  }
+}
+.registerstep-btnholder{
+  width: 30%;
+  margin: 0 auto;
+}
+.btn-register1{
+  width: 100%;
+  border: 1px solid $sport-darkgrey;
+  background-color: transparent;
+  @extend .d-opensans-semibold;
+  &:active, &:focus, &:hover, &.active{
+    background-color: $sport-darkgrey;
+    color: #fff;
+  }
+}
+.registerform-step1{
+  padding: 10px;
+  .input-group{
+    width: 40%;
+    margin: 0px auto 10px;
+    border: none;
+    input{
+      border: 1px solid $sport-darkgrey;
+    }
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+    .btn{
+      border: 1px solid $sport-darkgrey;
+      background-color: transparent;
+      color: $sport-darkgrey;
+      text-transform: uppercase;
+    }
+  }
+  .registerform1-uiselect{
+    .btn{
+      border: none;
+      margin: 0px;
+    }
+    .dropdown-menu{
+      left: 0;
+    }
+    .glyphicon-remove:before{
+      content: '\f00d';
+      font: normal normal normal 14px/1 FontAwesome;
+      color: $sport-primary;
+      display: none;
+    }
+    .ui-select-toggle{
+      border: 1px solid $sport-darkgrey;
+    }
+  }
+  .formsearch-uiloadmore{
+    padding-top: 5px;
+    padding-right: 5px;
+    margin-bottom: -15px;
+    margin-left: -5px;
+    background-color: transparent;
+    .btn-primary{
+      height: auto;
+      padding: 4px 12px;
+      // border: 1px solid $sport-darkgrey;
+      border-radius: 4px;
+      margin: 0px;
+      background-color: $sport-darkgrey;
+      color: #fff;
+      line-height: 1;
+    }
+    // &:hover{
+    //   .btn-primary{
+    //     color: $sport-primary;
+    //   }
+    // }
+  }
+}
+.registerform-step2{
+  padding: 40px 30px;
+  &.active{
+    background-color: rgba(0, 170, 255, 0.3);
+    position: relative;
+    &:after{
+      content: '';
+      border-right: 10px solid transparent;
+      border-bottom: 10px solid rgba(0, 170, 255, 0.3);
+      border-left: 10px solid transparent;
+      position: absolute;
+      top: -10px;
+      right: 40%;
+    }
+  }
+  .btn-link{
+    color: $sport-darkgrey;
+    text-decoration: underline;
+    &:active, &:focus, &:hover{
+      color: $sport-darkgrey;
+      text-decoration: underline;
+    }
+  }
+}
+.register-step2holder{
+  width: 30%;
+  margin: 0px auto;
+  .register-stepinput{
+    border: 1px solid $sport-darkgrey;
+    background-color: transparent;
+    color: $sport-darkgrey;
+  }
+}
+.btn-register2{
+  border: none;
+  background-color: transparent;
+  color: $sport-darkgrey;
+  font-size: 16px;
+  text-transform: uppercase;
+  @extend .d-opensans-semibold;
+  &:active, &:focus, &:hover{
+    border: none;
+    background-color: transparent;
+    color: $sport-darkgrey;
+    outline: none;
+  }
+}
+.register-step-error{
+  color: $sport-danger;
+  a{
+    color: $sport-danger;
+    text-decoration: underline;
+    &:hover{
+      color: $sport-danger;
+      text-decoration: underline;
+    }
+  }
+  @extend .d-opensans-semibold;
+}
+// REGISTRATION PLAYER END
+// CHANGE DETAILS MODAL
+.modal-changedetails{
+  .modal-dialog{
+    margin-top: 100px;
+  }
+  .modal-content{
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+.changedetail-modal{
+  position: relative;
+  padding: 30px;
+  text-align: center;
+  a{
+    color: $sport-lightblue;
+    &:active, &:focus, &:hover{
+      color: $sport-lightblue;
+    }
+  }
+  .forgotmodal-title {
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: $sport-primary;
+    text-transform: uppercase;
+  }
+  .modal-close {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: -25px;
+    right: -25px;
+    cursor: pointer;
+  }
+}
+// CHANGE DETAILS MODAL END
+// REGISTRATION PAGES END

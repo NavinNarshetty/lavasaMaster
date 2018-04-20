@@ -7,8 +7,7 @@
     "urlFields": [
         "ConfigProperty"
     ],
-    "fields": [
-        {
+    "fields": [{
             "name": "Year",
             "type": "text",
             "tableRef": "year",
@@ -53,6 +52,48 @@
             "tableRef": "toMonth",
             "placeholder": "Enter toMonth",
             "id": "toMonth",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "url": ""
+        }, {
+            "name": "Event Date",
+            "type": "text",
+            "tableRef": "date",
+            "placeholder": "Enter Event Date",
+            "id": "date",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "url": ""
+        },
+        {
+            "name": "Venue",
+            "type": "tags",
+            "tableRef": "venue",
+            "placeholder": "Enter Venue",
+            "id": "city",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "onView": true,
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "multiple",
+            "dropDown": ""
+        },
+        {
+            "name": "Registration End Date",
+            "type": "text",
+            "tableRef": "endDate",
+            "placeholder": "Enter Registration End Date",
+            "id": "endDate",
             "validation": [
                 "",
                 "trim",
@@ -124,6 +165,23 @@
                 ""
             ],
             "url": ""
+        },
+        {
+            "name": "Info No. Array",
+            "type": "tags",
+            "tableRef": "infoNoArr",
+            "placeholder": "Enter info No",
+            "id": "infoNoArr",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "onView": true,
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "multiple",
+            "dropDown": ""
         },
         {
             "name": "Info Id",
@@ -810,6 +868,45 @@
             "url": ""
         },
         {
+            "name": "Player URL",
+            "type": "text",
+            "tableRef": "playerUrl",
+            "placeholder": "Select Player Url",
+            "id": "playerUrl",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "url": ""
+        },
+        {
+            "name": "School URL",
+            "type": "text",
+            "tableRef": "schoolUrl",
+            "placeholder": "Select School Url",
+            "id": "schoolUrl",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "url": ""
+        },
+        {
+            "name": "Rule URL",
+            "type": "text",
+            "tableRef": "ruleUrl",
+            "placeholder": "Select Rule Url",
+            "id": "ruleUrl",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "url": ""
+        },
+        {
             "name": "Backend URL",
             "type": "text",
             "tableRef": "backendUrl",
@@ -875,8 +972,7 @@
             "url": ""
         }
     ],
-    "action": [
-        {
+    "action": [{
             "name": "submit",
             "action": "submitConfigProperty",
             "stateName": {

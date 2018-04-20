@@ -102,12 +102,20 @@ $sport-table-grey:#efeeee !default;
   color: $sport-success;
 }
 
+.sport-danger {
+  color: $sport-danger;
+}
+
 .sport-green-table {
   color: $sport-green-table;
 }
 
 .sport-blue-table {
   color: $sport-blue-table;
+}
+
+.v-top {
+  vertical-align: top;
 }
 
 .draws-a {
@@ -2103,3 +2111,123 @@ $sport-table-grey:#efeeee !default;
 }
 
 // CHAMPIONS ARCHIVE PAGE END
+// REGISTER FORM SCHOOL
+.registerform-schoolpage {
+  min-height: 100vh;
+}
+
+.register-imageplace {
+  img {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+  }
+}
+
+.registerform-schoolcorrespondancecontact {
+  margin-bottom: 40px;
+  border: 1px solid #e1e1e1;
+  padding: 20px;
+}
+
+.formregister-lightheadingschool {
+  color: $sport-primary;
+  font-size: 16px;
+  @extend .r-titillium-web-regular;
+}
+
+.registerform-schoolprincipal {
+  margin-bottom: 40px;
+}
+
+.registerform-schooloptionaldetails {
+  position: relative;
+  @extend .registerform-schoolcorrespondancecontact;
+}
+
+.registerform-schoolclose {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  cursor: pointer;
+}
+
+.termscondition-text {
+  margin: 20px 0px;
+}
+
+.registerform-schooltermscondition,
+.registerform-schoolguidelines {
+  a {
+    @extend .r-titillium-web-bold;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.registerform-page {
+  .dirctive-op {
+    display: inline-block;
+    vertical-align: top;
+  }
+}
+
+.registerform-uploadimageholder {
+  margin-left: 20px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+// REGISTER FORM SCHOOL END
+// CUSTOM CHECKBOX FOR FORM
+.registerform-schooltermscondition {
+  .checkmark-sfatick {
+    top: 5px;
+  }
+}
+
+// CUSTOM CHECKBOX FOR FORM END
+// ABOUT CHAMPIONSHIP
+.aboutchampionship-page-headertitle {
+  // margin-top: 40px;
+}
+
+.aboutchampionship-page-bannerholder {
+  margin: 10px 0px 40px 0px;
+}
+
+.aboutchampionship-page-buttons,
+.aboutchampionship-page-abjeethega,
+.aboutchampionship-page {
+  margin: 40px 0px;
+}
+
+.about-championship-page-image {
+  height: calc(100vh - 30vh);
+  background-position: 50% 30%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: 0 5px 15px #ebebeb;
+}
+
+.aboutchampionship-page-buttonholder {
+  box-shadow: 4px 4px 5px 0 #ebebeb;
+  a {
+    &:hover {
+      text-decoration: none;
+      background-color: $sport-primary;
+      color: #fff;
+    }
+  }
+}
+
+.aboutchampionship-page-abjeethega {
+  font-size: 28px;
+}
+
+.sfa-header-title {
+  font-size: 45px;
+}
+
+// ABOUT CHAMPIONSHIP END

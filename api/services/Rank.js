@@ -400,7 +400,7 @@ var model = {
                         }
                     });
                 },
-                
+
                 function (sendObj, callback) {
                     if (data.event && data.age && data.gender) {
                         var final = [];
@@ -1126,7 +1126,6 @@ var model = {
         var str = '^' + data.name;
         var re = new RegExp(str, 'i');
         console.log("re", re);
-
         async.waterfall([
             function (callback) {
                 var sendObj = {

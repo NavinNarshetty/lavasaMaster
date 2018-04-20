@@ -5,11 +5,31 @@ $brand-warning: #9f9f9f !default;
 $brand-danger: #fc483f !default;
 $brand-info: #000072 !default;
 $base: #303030 !default;
+$register-base:#646464 !default;
 $white: #fff !default;
 $dark-grey: #e1e1e1 !default;
 $light-grey: #ebebeb !default;
 $other-blue: #2a45d4 !default;
 $green: #bcd200 !default;
+// COLORS
+$sport-primary: #0a1a72 !default; //blue
+$sport-success: #27b465 !default; //green
+$sport-warning: #ffb026 !default; //yellow
+$sport-danger: #da495b !default; //red
+$sport-info: #000072 !default; //lighter-blue
+$sport-base: #1a1a1a !default; //black
+$sport-lightblue:#00aaff !default;
+$sport-grey: #e1e1e1 !default;
+$sport-light-grey: #e5e5e5 !default;
+$sport-darkgrey: #757575 !default;
+$brand-green: #0eda85 !default; //green
+$light-blue:#00aaff !default;
+$light-orange:#ffad25 !default;
+$bg-color-male: #99ddff !default;
+$bg-color-female: #ffcd7b !default;
+$grey: #e1e1e1 !default;
+$package-bggrey: #f1f1f1 !default;
+// COLORS
 $font-family-sans-serif: "Titillium Web",
 "Sansation",
 "Built Titling",
@@ -76,6 +96,24 @@ sans-serif !default;
 }
 
 /* mixing*/
+
+.r-titillium-web-regular {
+    font-family: "Titillium Web Regular";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.r-titillium-web-semibold {
+    font-family: "Titillium Web SemiBold";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.r-titillium-web-bold {
+    font-family: "Titillium Web Bold";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
 @mixin placeholder {
     $placeholders: ":-webkit-input" ":-moz" "-moz" "-ms-input";
@@ -317,8 +355,8 @@ a {
     width: 86px !important;
 }
 
-.v-mid{
-  vertical-align: middle;
+.v-mid {
+    vertical-align: middle;
 }
 
 .navbar-default {
@@ -4281,6 +4319,11 @@ iframe#twitter-widget-0 {
     display: inline-block;
     width: 19.5%;
     vertical-align: top;
+    [type="checkbox"]:not(:checked),
+    [type="checkbox"]:checked {
+        position: absolute;
+        left: -9999px;
+    }
 }
 
 .step1 {
@@ -4576,12 +4619,6 @@ iframe#twitter-widget-0 {
 
 .padd-r18 {
     padding-right: 34px;
-}
-
-[type="checkbox"]:not(:checked),
-[type="checkbox"]:checked {
-    position: absolute;
-    left: -9999px;
 }
 
 [type="checkbox"]:not(:checked)+label,
@@ -8068,5 +8105,21 @@ h1.forgot-space {
     }
     .inner::-webkit-scrollbar-thumb {
         background-color: #555 !important;
+    }
+}
+
+.sports-selections-page {
+    min-height: 80vh;
+    .step4 {
+        margin: 0px 20px;
+        padding: 10px 30px;
+        width: auto;
+        height: auto;
+        &:before {
+            content: none;
+        }
+        &:after {
+            content: none;
+        }
     }
 }

@@ -1,0 +1,43 @@
+<div class="heading-sec">
+    <div class="row">
+      <div class="col-md-4 column">
+        <div class="heading-profile">
+          <h2>{{title}} Users</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Top Bar Chart -->
+  <div class="panel-content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="widget">
+          <div class="form-elements-sec">
+            <form name="detailForm" role="form" class="sec">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Name*</label>
+                    <input type="text" name="rulesname" ng-model="formData.name" class="form-control" placeholder="Enter Name" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label>Email</label>
+                    <input type="text" name="rulescity" ng-model="formData.email" class="form-control" placeholder="Enter City" readonly>
+                    <div class="error-msg" ng-if="detailForm.rulescity.$invalid && detailForm.rulescity.$touched">Please Enter Valid City *</div>
+                  </div>
+                  <div class="form-group">
+                    <label>Access Level</label>
+                      <select name="rulesIT" ng-model="formData.accessLevel" class="form-control" ng-options="role for role in roles" required></select>
+                  </div>
+                  <div class="text-center mt20 odd-even-button">
+                    <button class="btn btn-default" type="submit" ng-click="saveData(formData)">Save</button>
+                    <button class="btn btn-default" ui-sref="users">Cancel</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

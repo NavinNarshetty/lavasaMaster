@@ -141,5 +141,57 @@
       width: 30%;
     }
     // REPORT CARD PAGE END
+    // UPGRADE PACKAGE PAGE
+    .upgradepackage-title{
+      font-size: 36px;
+    }
+    // PACKAGE TABLE
+    .package-tabheader{
+      .package-headtab{
+        font-size: 10px;
+      }
+      .upgradepackage-offer{
+        font-size: 12px;
+      }
+      .upgradepackage-offeramount{
+        font-size: 12px;
+      }
+      .upgradepackage-radioprice{
+        font-size: 36px;
+      }
+      .upgradepackage-radioinr{
+        font-size: 16px;
+      }
+      .upgradepackage-radioname{
+        font-size: 14px;
+      }
+    }
+    .package-featurehead{
+      font-size: 36px;
+    }
+    // PACKAGE TABLE END
+    // UPGRADE PACKAGE PAGE END
+    // REGISTRATION LANDING
+    .registercount-item{
+      margin: 10px 20px;
+    }
+    .registerplayer-introcontent{
+      width: 100%;
+    }
+    .registercount-number{
+      font-size: 30px;
+    }
+    .registerstep-btnholder{
+      width: 60%;
+    }
+    .registerform-step1{
+      .input-group{
+        width: 50%;
+      }
+    }
+    .register-step2holder{
+      width: 60%;
+    }
+    // REGISTRATION LANDING END
     // Tablet End
  }

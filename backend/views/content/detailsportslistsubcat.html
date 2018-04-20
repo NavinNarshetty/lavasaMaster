@@ -96,10 +96,23 @@
                   </ui-select>
                   <div class="error-msg" ng-if="detailForm.selectrulandreg.$invalid && detailForm.selectrulandreg.$touched">Please Enter Rules And Regulation*</div>
                 </div>
-                <div class="form-group">
-                  <label>Sport select type</label>
+                <!-- <div class="form-group">
+                  <label for="">Sport select type</label>
                   <input type="text" name="spttype" ng-model="formData.sportType" class="form-control" placeholder="Enter Sport Type">
                   <div class="error-msg" ng-if="detailForm.spttype.$invalid && detailForm.spttype.$touched">Please Enter Valid Name *</div>
+                </div> -->
+                <div class="">
+                  <div class="form-group">
+                    <label for="spttypes">Sport select type</label>
+                    <select name="spttype" id="spttypes" placeholder="Select Sport Type" ng-model="formData.sportType" class="form-control">
+                      <option value="I">I (Individual Sports)</option>
+                      <option value="K">K (Karate)</option>
+                      <option value="AAS">AAS (Athletics, Swimming and Shooting)</option>
+                      <option value="FA">FA (Fencing and Archery)</option>
+                      <option value="CT">CT (Team Sports)</option>
+                    </select>
+                    <div class="error-msg" ng-if="detailForm.spttype.$invalid && detailForm.spttype.$touched">Please Select Valid Name *</div>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label>Max select</label>

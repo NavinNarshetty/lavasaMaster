@@ -278,7 +278,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
 
         .state('paymentSuccess', {
-            url: "/paymentSuccess",
+            url: "/paymentSuccess/:form/:type",
             templateUrl: tempateURL,
             controller: 'PaymentSuccessCtrl'
         })
@@ -510,7 +510,45 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             url: "/gallery/post",
             templateUrl: tempateURL,
             controller: 'GalleryPostCtrl'
-        });
+        })
+        .state('aboutchampionship', {
+            url: "/aboutchampionship",
+            templateUrl: tempateURL,
+            controller: 'aboutChampionshipCtrl'
+        })
+        // NEW REGISTRATION PAGES
+        .state('registerplayer', {
+            url: "/register/:type",
+            templateUrl: tempateURL,
+            controller: 'RegisterPlayerCtrl'
+        })
+        .state('registerformplayer', {
+            url: "/register/player/form/:flag",
+            templateUrl: tempateURL,
+            controller: 'RegisterFormPlayerCtrl'
+        })
+        .state('registerformplayeredit', {
+            url: "/register/player/form/:flag/:id",
+            templateUrl: tempateURL,
+            controller: 'RegisterFormPlayerCtrl'
+        })
+        .state('registerformschool', {
+            url: "/register/school/form/:flag",
+            templateUrl: tempateURL,
+            controller: 'RegisterFormSchoolCtrl'
+        })
+        .state('registerformschooledit', {
+            url: "/register/school/form/:flag/:id",
+            templateUrl: tempateURL,
+            controller: 'RegisterFormSchoolCtrl'
+        })
+        .state('upgradepackage', {
+            url: "/package/upgrade/:type/:id",
+            templateUrl: tempateURL,
+            controller: 'UpgradePackageCtrl'
+        })
+        // NEW REGISTRATION PAGES
+        ;
     // if (window.location.origin != "http://testmumbaischool.sfanow.in") {
     if (window.location.origin == "http://mumbaischool.sfanow.in") {
         $urlRouterProvider.otherwise("/championship");

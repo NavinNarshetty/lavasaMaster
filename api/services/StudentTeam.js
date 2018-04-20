@@ -41,6 +41,41 @@ schema.plugin(deepPopulate, {
 });
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
+
+schema.post('remove', function (removedAth,next) {
+    console.log("Post Remove",removedAth);
+    Athelete.findOne({"_id": removedAth.studentId}).exec(function(err,ath){
+        var finalCount = ath.selectedEvent - 1;
+        if(finalCount<0){
+            finalCount = 0;
+        }
+        Athelete.saveData({"_id": removedAth.studentId,"selectedEvent":finalCount},function(err,data){
+            next();
+        })
+    });
+});
+
+schema.post('save', function (saved,next) {
+    console.log("Post Save",saved);
+    // if(this.wasNew){
+        console.log("if");
+        Athelete.findOne({_id: saved.studentId}).exec(function(err,ath){
+            Athelete.saveData({"_id": saved.studentId,"selectedEvent":(ath.selectedEvent + 1)},function(err,data){
+                next();
+            })
+        });
+    // }else{
+    //     console.log("else");
+    // }
+    next();
+});
+
+schema.pre('save', function (next) {
+    console.log("Pre Save",this.isNew);
+    // this.wasNew = this.isNew;
+    next();
+});
+
 module.exports = mongoose.model('StudentTeam', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));

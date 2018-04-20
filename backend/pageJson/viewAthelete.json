@@ -48,7 +48,7 @@
         "buttonClass": "btn-danger",
         "type": "apiCallConfirm",
         "title": "Delete User",
-        "content": "Are you sure you want to delete User?",
+        "content": "If you delete the user, then you'll have to manually delete the registred sport of the user. So are you sure you want to delete?",
         "api": "athelete/delete",
         "fieldsToSend": {
             "name": "_id",
@@ -56,9 +56,10 @@
         }
     }],
 
-
     "apiCall": {
         "url": "Athelete/search",
         "params": "_id"
     }
+
+
 }

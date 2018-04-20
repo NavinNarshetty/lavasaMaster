@@ -176,3 +176,10 @@ myApp.filter('formatTeam', function () {
         return team;
     };
 });
+myApp.filter('englishNumeralCustomDate', function () {
+    return function (value) {
+        if (value) {
+            return moment(new Date(value)).subtract(1, 'days').format("MMM DD,YYYY");
+        }
+    };
+});

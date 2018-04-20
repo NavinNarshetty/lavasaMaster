@@ -1,0 +1,690 @@
+// OLD PAGES OVERRIDE
+.infono-config{
+  .infono-seperator{
+    display: inline;
+  }
+  &:last-child{
+    .infono-seperator{
+      display: none;
+    }
+  }
+}
+.btn-greenupgrade{
+  border: none;
+  margin-left: 5px;
+  background-color: #00FFAD;
+  color: $sport-dark-grey;
+  font-weight: 700;
+  text-transform: capitalize;
+
+  &:active, &:focus, &:hover, &.active{
+    border: none;
+    background-color: #00FFAD;
+    color: $sport-dark-grey;
+    outline: 0px;
+  }
+}
+.paymentsuccess-page{
+  min-height: 70vh;
+  padding: 50px 0;
+}
+// UPGRADE PACKAGE MODAL
+.modal-upgradepackage{
+  .modal-dialog{
+    margin-top: 100px;
+  }
+  .modal-content{
+    border-radius: 0px;
+    box-shadow: none;
+  }
+  .forgotpassword-modal{
+    padding: 20px 30px;
+    position: relative;
+    text-align: center;
+  }
+  .forgotpassword-modalclose{
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    cursor: pointer;
+  }
+  .forgotmodal-title{
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: $brand-primary;
+    text-transform: uppercase;
+  }
+  .upgradepackage-modalcontent{
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+// UPGRADE PACKAGE MODAL END
+// OLD PAGES OVERRIDE END
+// CUSTOM RADIO BUTTON
+.sfa-radiobox {
+  padding-left: 25px;
+  margin: 0px 10px 10px 0px;
+  position: relative;
+  font-size: 14px;
+  line-height: 27px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  .sfa-radio {
+    width: 20px;
+    height: 20px;
+    border: 1px solid $sport-primary;
+    border-radius: 50%;
+    background-color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    &:after {
+      content: '';
+      width: 100%;
+      height: 100%;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      background-color: $sport-warning;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      display: none;
+      @include transform(translate(-50%, -50%));
+    }
+  }
+  .sfa-radio-disabled{
+    display: none;
+    position: absolute;
+    top: -5px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(255,255,255,0.6);
+    cursor: not-allowed;
+    z-index: 5;
+  }
+  input[type='radio'] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    opacity: 0;
+    z-index: 1;
+  }
+  // HIGHLIGHT ON HOVER
+  &:hover {
+    input~.sfa-radio {
+      background-color: #f5f5f5;
+    }
+  }
+  // HIGHLIGHT ON HOVER END
+  // DISABLED
+  input:disabled~.sfa-radio-disabled{
+    display: block;
+  }
+  // DISABLED END
+  input:checked~.sfa-radio:after {
+    display: block;
+  }
+  input:checked {
+    outline: none;
+  }
+}
+
+// CUSTOM RADIO BUTTON END
+// LINK CLASS
+.formregister-link {
+  padding: 5px;
+  border: none;
+  background-color: transparent;
+  color: $sport-primary;
+  text-decoration: underline;
+  &:active,
+  &:focus,
+  &:hover {
+    border: none;
+    background-color: transparent;
+    color: $sport-primary;
+    text-decoration: underline;
+  }
+}
+
+// LINK CLASS END
+// BUTTON CLASS
+.formregister-btn {
+  padding: 6px 20px;
+  border: 1px solid $sport-primary;
+  background-color: transparent;
+  color: $sport-primary;
+  font-size: 14px;
+  &:active,
+  &:focus,
+  &:hover {
+    border: 1px solid $sport-primary;
+    background-color: transparent;
+    color: $sport-primary;
+    outline: 0px;
+  }
+}
+
+// BUTTON CLASS END
+.registerform-page {
+  padding: 50px 0;
+  color: $register-base;
+  @extend .r-titillium-web-regular;
+  .dropdown-menu {
+    left: 0;
+  }
+  label {
+    text-align: left !important;
+  }
+  [type="checkbox"]:not(:checked)+label:after,
+  [type="checkbox"]:checked+label:after {
+    top: 5px;
+  }
+}
+
+.registerform-title {
+  margin-bottom: 10px;
+  color: $sport-warning;
+  font-size: 36px;
+  text-align: center;
+  text-transform: uppercase;
+  @extend .d-fjalla-one;
+}
+
+.form-card {
+  margin-bottom: 40px;
+  padding: 20px;
+  box-shadow: 0 0 10px 5px $grey;
+  margin-bottom: 40px;
+  .input-group {
+    margin-bottom: 15px;
+  }
+  .input-group-addon {
+    border: none;
+    border-radius: 0px;
+    background-color: transparent;
+    color: $register-base;
+  }
+  .ui-select-container{
+    .glyphicon-remove:before{
+      content: '\f00d';
+      font: normal normal normal 14px/1 FontAwesome;
+      color: $sport-primary;
+    }
+  }
+}
+
+// TAB
+.section-tab {
+  padding: 8px 25px 8px 30px;
+  margin-right: 25px;
+  background-color: #0a1a72;
+  color: #fff;
+  display: inline-block;
+  position: relative;
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: capitalize;
+  @extend .r-titillium-web-regular;
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0px;
+    right: -25px;
+    border-right: 15px solid transparent;
+    border-left: 10px solid #0a1a72;
+    border-bottom: 23px solid #0a1a72;
+    border-top: 18px solid transparent;
+  }
+}
+
+// INFORMATON TAB
+.form-infonote {
+  padding: 8px;
+  color: $sport-dark-grey;
+  background-color: $sport-light-grey;
+  font-style: italic;
+  font-size: 12px;
+  @extend .r-titillium-web-regular;
+}
+
+// LABEL
+.formregister-heading {
+  color: $sport-primary;
+  font-size: 16px;
+  @extend .r-titillium-web-semibold;
+}
+
+.fromregister-label {
+  font-weight: 500;
+}
+
+.formregister-list {
+  list-style-type: circle;
+  padding-left: 20px;
+}
+
+.formregister-mtb20 {
+  margin: 20px 0px;
+}
+
+.registerform-tablepayment {
+  .table {
+    tbody {
+      tr {
+        background-color: transparent;
+      }
+      td {
+        border: 1px solid #d3d3d3;
+      }
+    }
+  }
+}
+
+.register-promobadge {
+  padding: 3px 6px;
+  border-radius: 2px;
+  border: 1px solid $grey;
+  background-color: $grey;
+  color: $sport-dark-grey;
+  font-size: 12px; // text-transform: capitalize;
+  @extend .r-titillium-web-semibold;
+  &:active,
+  &:focus,
+  &:hover {
+    border: 1px solid $sport-dark-grey;
+  }
+}
+
+// CUSTOM CHECKBOX
+.sfa-registercheckbox {
+  display: inline-block;
+  position: relative;
+  padding-left: 16px;
+  line-height: 16px;
+  cursor: pointer;
+  font-size: 14px;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+
+.sfa-registercheckbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom checkbox */
+
+.checkmark-sfatick {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  height: 12px;
+  width: 12px;
+  border: 1px solid #e1e1e1;
+  background-color: #fff;
+}
+
+/* On mouse-over, add a grey background color */
+
+.sfa-registercheckbox:hover input~.checkmark-sfatick {
+  background-color: #e1e1e1;
+}
+
+/* When the checkbox is checked, add a blue background */
+
+.sfa-registercheckbox input:checked~.checkmark-sfatick {
+  background-color: #fff;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+
+.checkmark-sfatick:after {
+  content: '✔';
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+
+.sfa-registercheckbox input:checked~.checkmark-sfatick:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+
+.sfa-registercheckbox .checkmark-sfatick:after {
+  left: 0px;
+  top: -3px;
+  border: solid white;
+  border-width: 0 0px 0px 0;
+  font-size: 12px;
+}
+
+.registerform-imgholder-float{
+  padding: 10px;
+  margin: 5px;
+  float: left;
+  position: relative;
+}
+.registerform-imgcross{
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+// UPGRADE PACKAGE PAGE
+.upgradepackage-page {
+  min-height: 100vh;
+  padding: 50px 0;
+  @extend .d-opensans-regular; // .sfa-radiobox{
+  //   line-height: normal;
+  // }
+}
+
+.upgradepackage-title {
+  margin-bottom: 20px;
+  color: $sport-primary;
+  font-size: 55px;
+  text-transform: uppercase;
+  @extend .d-fjalla-one;
+}
+
+.upgradepackage-content {
+  margin-bottom: 20px;
+}
+
+.upgradepackage-selection {
+  padding: 10px 0;
+}
+
+// UPGRADE RADIO SELECTION
+.upgradepackage-radiocontent {
+  margin: 0px 10px 0 5px;
+  text-align: center;
+}
+
+.upgradepackage-radioprice {
+  color: #606060;
+  display: block;
+  font-size: 45px;
+  vertical-align: top;
+  @extend .d-teko-semibold;
+}
+
+.upgradepackage-radioinr {
+  margin-top: -3px;
+  margin-right: 3px;
+  font-size: 21px;
+  line-height: 1;
+  vertical-align: top;
+}
+
+.upgradepackage-radioname {
+  font-size: 18px;
+  color: $sport-lightblue;
+  text-transform: uppercase;
+  @extend .d-fjalla-one;
+}
+
+.package-radio-blue {
+  .upgradepackage-radioname {
+    color: tint($sport-lightblue, 15%);
+    ;
+  }
+}
+
+.package-radio-green {
+  .upgradepackage-radioname {
+    color: tint($sport-success, 15%);
+  }
+}
+
+.package-radio-red {
+  .upgradepackage-radioname {
+    color: tint($sport-danger, 15%);
+  }
+}
+
+.package-radio-yellow {
+  .upgradepackage-radioname {
+    color: tint($sport-warning, 15%);
+  }
+}
+
+// UPGRADE RADIO SELECTION END
+// PACKAGE TABLE
+.package-tableholder {
+  padding: 5px;
+  margin: 20px 0;
+  .table {
+    margin-top: 40px;
+    thead {
+      tr {
+        th {
+          padding: 0px 2px;
+          border: none;
+        }
+      }
+    }
+    tbody {
+      box-shadow: 0 4px 5px 0px #a0a0a0;
+      tr {
+        background-color: transparent;
+        td {
+          border: none;
+          border-right: 3px solid #fff;
+          border-left: 3px solid #fff;
+        }
+        &:nth-child(odd) {
+          background-color: $package-bggrey;
+        }
+        &:nth-child(even) {
+          background-color: #fff;
+        }
+        &:first-child {
+          td {
+            margin-top: 10px;
+          }
+        }
+        &:last-child {
+          td {
+            margin-bottom: 10px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.packagetable-captionholder {
+  padding: 0;
+  font-size: 12px;
+}
+
+.packagetable-caption {
+  padding: 5px 15px;
+  box-shadow: 0 4px 5px 0px #a0a0a0;
+  background-color: $package-bggrey;
+  color: $sport-dark-grey;
+  font-style: italic;
+}
+
+.package-cashbackholder {
+  width: 95%;
+  padding: 5px 15px;
+  margin: 0px auto;
+  border-radius: 0 0 10px 10px;
+  position: relative;
+  background-color: $sport-dark-grey;
+  color: #fff;
+  text-align: center;
+}
+
+.package-cash30 {
+  width: 25px;
+  margin-right: 5px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.package-cashbadge {
+  width: 65px;
+  position: absolute;
+  top: -17px;
+  right: -5px;
+}
+
+.package-tabheader {
+  padding: 10px !important;
+  border-radius: 10px 10px 0 0;
+  border-left: 2px solid #fff !important;
+  border-right: 2px solid #fff !important;
+  position: relative;
+  background-color: $sport-table-grey;
+  color: #fff;
+  .upgradepackage-radioprice {
+    color: #fff;
+    line-height: 1;
+  }
+  .upgradepackage-radioinr {
+    margin-top: 4px;
+  }
+  .upgradepackage-radiocontent{
+    margin: 0;
+  }
+}
+
+.package-headtab {
+  width: 90%;
+  padding: 5px;
+  border-radius: 10px 10px 0 0;
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  font-size: 12px;
+  text-align: center;
+  text-transform: uppercase;
+  @include transform(translateX(-50%));
+}
+
+.package-tabhead-blue {
+  background-color: tint($sport-lightblue, 15%);
+  .upgradepackage-radioname {
+    color: shade($sport-lightblue, 30%);
+  }
+  .package-headtab {
+    background-color: tint($sport-lightblue, 50%);
+    color: shade($sport-lightblue, 30%);
+  }
+}
+
+.package-tabhead-green {
+  background-color: tint($sport-success, 15%);
+  .upgradepackage-radioname {
+    color: shade($sport-success, 30%);
+  }
+  .package-headtab {
+    background-color: tint($sport-success, 50%);
+    color: shade($sport-success, 30%);
+  }
+}
+
+.package-tabhead-red {
+  background-color: tint($sport-danger, 15%);
+  .upgradepackage-radioname {
+    color: shade($sport-danger, 30%);
+  }
+  .package-headtab {
+    background-color: tint($sport-danger, 50%);
+    color: shade($sport-danger, 30%);
+  }
+}
+
+.package-tabhead-yellow {
+  background-color: tint($sport-warning, 15%);
+  .upgradepackage-radioname {
+    color: shade($sport-warning, 30%);
+  }
+  .package-headtab {
+    background-color: tint($sport-warning, 50%);
+    color: shade($sport-warning, 30%);
+  }
+}
+
+.upgradepackage-offer {
+  text-transform: uppercase;
+}
+
+.upgradepackage-offeramount {
+  display: block;
+  text-decoration: line-through;
+  text-transform: uppercase;
+}
+
+.upgradepackage-tax {
+  margin-top: -10px;
+  display: block;
+  font-size: 10px;
+}
+
+.package-featurehead {
+  background-color: $sport-dark-grey;
+  font-size: 42px;
+  text-align: center;
+  text-transform: uppercase;
+  @extend .d-fjalla-one;
+}
+// PACKAGE FEATURE LOGO
+.upgradepackage-featuretext{
+  width: calc(100% - 65px);
+  display: inline-block;
+  vertical-align: middle;
+}
+.upgradepackage-featurelogo{
+  width: 60px;
+  height: auto;
+  display: inline-block;
+  vertical-align: middle;
+}
+// PACKAGE FEATURE LOGO END
+.btn-goodie{
+  padding: 5px 30px;
+  border-radius: 5px;
+  background-color: $sport-primary;
+  color: #fff;
+  font-style: normal;
+  text-transform: uppercase;
+  &:active, &:focus, &:hover{
+    color: #fff;
+  }
+}
+// PACKAGE TABLE END
+.upgradepackage-header{
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: $sport-primary;
+  @extend .r-titillium-web-semibold;
+}
+.upgradepackage-payment, .upgradepackage-paymentmode{
+  margin: 40px 0;
+}
+.upgrade-payment-blue{
+  background-color: $sport-primary;
+  color: #fff;
+  border: none !important;
+}
+// UPGRADE PACKAGE PAGE END

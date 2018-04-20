@@ -4,7 +4,7 @@ module.exports = [
     'bower_components/jquery-ui/jquery-ui.js',
     'bower_components/flexslider/jquery.flexslider-min.js',
     'bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js',
-    'bower_components/fancyBox/source/jquery.fancybox.js',
+    'bower_components/fancybox/dist/jquery.fancybox.js',
     'bower_components/peity/jquery.peity.min.js',
     'bower_components/jquery-slimscroll/jquery.slimscroll.min.js',
     'bower_components/angular/angular.js',
@@ -56,9 +56,11 @@ module.exports = [
     'backend/js/services/jsonService.js',
     'backend/js/services/base64Service.js',
     'backend/js/services/excelService.js',
+    'backend/js/services/crudService.js',
 
     //Factories
     'backend/js/factories/navigation.js',
+    'backend/js/factories/login.js',
 
     // Contorllers
     'backend/js/controllers/controller.js',
@@ -74,5 +76,15 @@ module.exports = [
     'backend/js/controllers/archive.js',
     'backend/js/controllers/highlightsvideo.js',
     'backend/js/controllers/folder.js',
-    'backend/js/controllers/adgallery.js'
+    'backend/js/controllers/adgallery.js',
+    'backend/js/controllers/registorcontent.js',
+    'backend/js/controllers/testimonial.js',
+    'backend/js/controllers/playerquestion.js',
+    'backend/js/controllers/package.js',
+    'backend/js/controllers/couponcode.js',
+    'backend/js/controllers/athleteAccount.js',
+    'backend/js/controllers/schoolAccount.js',
+    'backend/js/controllers/aboutchampionship.js',
+    'backend/js/controllers/access.js'
+
 ];

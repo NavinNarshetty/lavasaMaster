@@ -67,8 +67,8 @@ var schema = new Schema({
     },
     accessLevel: {
         type: String,
-        default: "User",
-        enum: ['User', 'Admin']
+        default: "New User",
+        enum: ['Super Admin', 'Admin', 'Sports Ops', 'Volunteers', 'New User']
     }
 });
 
@@ -84,7 +84,7 @@ schema.plugin(timestamps);
 
 module.exports = mongoose.model('User', schema);
 
-var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "user", "user"));
+var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "user", "_id name email"));
 var model = {
 
     existsSocial: function (user, callback) {
@@ -106,10 +106,23 @@ var model = {
                 };
                 if (user.emails && user.emails.length > 0) {
                     modelUser.email = user.emails[0].value;
-                    var envEmailIndex = _.indexOf(env.emails, modelUser.email);
-                    if (envEmailIndex >= 0) {
-                        modelUser.accessLevel = "Admin";
-                    }
+
+                    var found = _.compact(_.map(env.accessLevels, function (n) {
+                        var a = _.indexOf(n.emails, modelUser.email);
+                        console.log(a);
+                        if (a!=-1) {
+                            return n
+                        }
+                    }));
+
+                    if(!_.isEmpty(found)){
+                        modelUser.accessLevel = found[0].name;
+                    }                    
+
+                    // var envEmailIndex = _.indexOf(env.emails, modelUser.email);
+                    // if (envEmailIndex >= 0) {
+                    //     modelUser.accessLevel = "Admin";
+                    // }
                 }
                 modelUser.googleAccessToken = user.googleAccessToken;
                 modelUser.googleRefreshToken = user.googleRefreshToken;
@@ -139,6 +152,7 @@ var model = {
             }
         });
     },
+
     profile: function (data, callback, getGoogle) {
         var str = "name email photo mobile accessLevel";
         if (getGoogle) {
@@ -156,6 +170,7 @@ var model = {
             }
         });
     },
+
     updateAccessToken: function (id, accessToken) {
         User.findOne({
             "_id": id
@@ -163,6 +178,31 @@ var model = {
             data.googleAccessToken = accessToken;
             data.save(function () {});
         });
+    },
+
+    getAllUsers:function(callback){
+        User.find({},"_id name email accessLevel").exec(function(err,users){
+            if(err || _.isEmpty(users)){
+                callback(err,[])
+            }else{
+
+                users=_.groupBy(users,function(n){
+                    return n.accessLevel;
+                });
+                users = _.flattenDeep(_.compact([users['New User'],users['Super Admin'],users['Accounts'],users['Sports Ops'],users['Volunteers'],users['Admin']]))
+                callback(null,users);
+            }
+        });
+    },
+
+    getOneUser:function(data,callback){
+       User.findOne({"_id":data._id},"_id name email accessLevel").exec(function(err,user){
+        if(err || _.isEmpty(user)){
+            callback(err,[]);
+        }else{
+            callback(null,user);
+        }
+       }); 
     }
 
 };

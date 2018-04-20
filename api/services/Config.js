@@ -8,7 +8,7 @@ schema.plugin(deepPopulate, {});
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('Config', schema);
-// var requrl = "http://wohlig.io:1337/api/"; 
+// var requrl = "http://wohlig.io:1337/api/";
 // var requrl = "http://sfa2.wohlig.co.in/api/";
 // var requrl = "https://sfa.wohlig.co.in/api/";
 // var requrl = "http://mumbaischool.sfanow.in/api/";
@@ -115,7 +115,7 @@ var model = {
 
     },
 
-    uploadFile: function (filename, callback) {
+    olduploadFile: function (filename, callback) {
         var id = mongoose.Types.ObjectId();
         var extension = filename.split(".").pop();
         extension = extension.toLowerCase();
@@ -124,6 +124,56 @@ var model = {
         }
         var newFilename = id + "." + extension;
         var MaxImageSize = 1200;
+
+        var writestream = gfs.createWriteStream({
+            filename: newFilename
+        });
+        writestream.on('finish', function () {
+            callback(null, {
+                name: newFilename
+            });
+            fs.unlink(filename);
+        });
+
+        var imageStream = fs.createReadStream(filename);
+
+        if (extension == "png" || extension == "jpg" || extension == "gif") {
+            Jimp.read(filename, function (err, image) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    if (image.bitmap.width > MaxImageSize || image.bitmap.height > MaxImageSize) {
+                        image.scaleToFit(MaxImageSize, MaxImageSize).getBuffer(Jimp.AUTO, function (err, imageBuf) {
+                            var bufferStream = new stream.PassThrough();
+                            bufferStream.end(imageBuf);
+                            bufferStream.pipe(writestream);
+                        });
+                    } else {
+                        image.getBuffer(Jimp.AUTO, function (err, imageBuf) {
+                            var bufferStream = new stream.PassThrough();
+                            bufferStream.end(imageBuf);
+                            bufferStream.pipe(writestream);
+                        });
+                    }
+
+                }
+
+            });
+        } else {
+            imageStream.pipe(writestream);
+        }
+
+
+    },
+
+    uploadFile: function (filename, callback) {
+        var id = mongoose.Types.ObjectId();
+        var extension = filename.split(".").pop();
+        extension = extension.toLowerCase();
+        if (extension == "jpeg") {
+            extension = "jpg";
+        }
+        var newFilename = id + "." + extension;
 
         var writestream = gfs.createWriteStream({
             filename: newFilename
@@ -320,7 +370,7 @@ var model = {
             if (proceedI === 2) {
                 Jimp.read(buf, function (err, image) {
                     if (err) {
-                        callback(err, null);
+                        res.callback(err, null);
                     } else {
                         if (style === "contain" && width && height) {
                             image.contain(width, height).getBuffer(Jimp.AUTO, writer2);
@@ -403,8 +453,28 @@ var model = {
         //error handling, e.g. file does not exist
     },
 
+    readAttachment: function (filename, callback) {
+        console.log("filename", filename);
+        var readstream = gfs.createReadStream({
+            filename: filename
+        });
+        readstream.on('error', function (err) {
+
+            callback(err, false);
+        });
+        var buf;
+        var bufs = [];
+        readstream.on('data', function (d) {
+            bufs.push(d);
+        });
+        readstream.on('end', function () {
+            buf = Buffer.concat(bufs);
+            callback(null, buf);
+        });
+    },
+
     tempReadUploaded: function (filename, width, height, style, res) {
-            res.send();
+        res.send();
     },
 
     import: function (name) {
@@ -734,23 +804,23 @@ var model = {
                 var options = {
                     "paginationOffset": 5,
                     "phantomPath": "node_modules/phantomjs-prebuilt/bin/phantomjs",
-                    // Export options 
+                    // Export options
                     "directory": "/tmp",
                     "height": "10.5in", // allowed units: mm, cm, in, px
                     "width": "10in",
-                    "format": "Letter", // allowed units: A3, A4, A5, Legal, Letter, Tabloid 
-                    // "orientation": "portrait", // portrait or landscape 
-                    // "zoomFactor": "1", // default is 1 
-                    // Page options 
+                    "format": "Letter", // allowed units: A3, A4, A5, Legal, Letter, Tabloid
+                    // "orientation": "portrait", // portrait or landscape
+                    // "zoomFactor": "1", // default is 1
+                    // Page options
                     "border": {
-                        "top": "0.5cm", // default is 0, units: mm, cm, in, px 
+                        "top": "0.5cm", // default is 0, units: mm, cm, in, px
                         "right": "0",
                         "bottom": "0",
                         "left": "0"
                     },
-                    // File options 
-                    "type": "pdf", // allowed file types: png, jpeg, pdf 
-                    "timeout": 30000, // Timeout that will cancel phantomjs, in milliseconds 
+                    // File options
+                    "type": "pdf", // allowed file types: png, jpeg, pdf
+                    "timeout": 30000, // Timeout that will cancel phantomjs, in milliseconds
                     "footer": {
                         "height": "0",
                     },
@@ -869,23 +939,23 @@ var model = {
                 var options = {
                     "paginationOffset": 5,
                     "phantomPath": "node_modules/phantomjs-prebuilt/bin/phantomjs",
-                    // Export options 
+                    // Export options
                     "directory": "/tmp",
                     "height": "10.5in", // allowed units: mm, cm, in, px
                     "width": "10in",
-                    "format": "Letter", // allowed units: A3, A4, A5, Legal, Letter, Tabloid 
-                    // "orientation": "portrait", // portrait or landscape 
-                    // "zoomFactor": "1", // default is 1 
-                    // Page options 
+                    "format": "Letter", // allowed units: A3, A4, A5, Legal, Letter, Tabloid
+                    // "orientation": "portrait", // portrait or landscape
+                    // "zoomFactor": "1", // default is 1
+                    // Page options
                     "border": {
-                        "top": "0.5cm", // default is 0, units: mm, cm, in, px 
+                        "top": "0.5cm", // default is 0, units: mm, cm, in, px
                         "right": "0",
                         "bottom": "0",
                         "left": "0"
                     },
-                    // File options 
-                    "type": "pdf", // allowed file types: png, jpeg, pdf 
-                    "timeout": 30000, // Timeout that will cancel phantomjs, in milliseconds 
+                    // File options
+                    "type": "pdf", // allowed file types: png, jpeg, pdf
+                    "timeout": 30000, // Timeout that will cancel phantomjs, in milliseconds
                     "footer": {
                         "height": "0",
                     },

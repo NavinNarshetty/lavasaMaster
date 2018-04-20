@@ -41,6 +41,14 @@ myApp.service('TemplateService', function () {
     };
     // SCROLL FUNCTION FROM CONTROLLER END
 
+    // CALCULATE PERCENTAGE FUNCTION
+    this.calculatePercentage = function(value, percent){
+      var ans = value*percent;
+      var ans = ans/100;
+      return ans;
+    }
+    // CALCULATE PERCENTAGE FUNCTION END
+
     this.init();
 
 });

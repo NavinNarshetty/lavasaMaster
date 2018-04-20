@@ -2095,7 +2095,7 @@ myApp.controller('IndividualTeamCtrl', function ($scope, TemplateService, Naviga
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tableindividualsport");
-    $scope.menutitle = NavigationService.makeactive("Individual  Sport");
+    $scope.menutitle = NavigationService.makeactive("Individual Sport");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
     $scope.items = [{
@@ -2276,7 +2276,7 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tableschool");
-    $scope.menutitle = NavigationService.makeactive("School");
+    $scope.menutitle = NavigationService.makeactive("View School");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
 
@@ -2297,6 +2297,7 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
     //     $scope.search.keyword = $stateParams.keyword;
     // }
 
+    $scope.currentSatateName = $state.current.name;
     $scope.formData = {};
     $scope.formData.page = 1;
     $scope.formData.type = '';
@@ -2449,9 +2450,10 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
     //athlete filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tableathlete");
-    $scope.menutitle = NavigationService.makeactive("Athlete");
+    $scope.menutitle = NavigationService.makeactive("View Athlete");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.currentSatateName = $state.current.name;
     $scope.changeInput = function () {
         if ($scope.formData.input != '') {
             $scope.formData.input = '';
@@ -2493,10 +2495,8 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
         // $stateParams.filter = $scope.formData;
 
         $scope.url = "Athelete/filterAthlete";
-        $scope.search = $scope.formData.keyword;
+        // $scope.search = $scope.formData.keyword;
         $scope.formData.page = $scope.formData.page++;
-
-
         NavigationService.apiCall($scope.url, $scope.formData, function (data) {
             $scope.items = data.data.results;
             $scope.totalItems = data.data.total;
@@ -2974,13 +2974,33 @@ myApp.controller('ViewAthleteCtrl', function ($scope, TemplateService, Navigatio
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
     $scope.getOneAthleteById = function () {
-        $scope.url = 'Athelete/getOne';
+        // $scope.url = 'Athelete/getOne';
+        $scope.url = 'Athelete/getOneAthlete';
         $scope.constraints = {};
         $scope.constraints._id = $stateParams.id;
         NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
-            $scope.athlete = data.data;
+            $scope.athlete = data.data.athlete;
+            $scope.displayData = data.data.display;
+            console.log("$scope.display", $scope.displayData);
             console.log($scope.athlete);
+            if ($scope.athlete.Photo_ID === true) {
+                $scope.athlete.Photo_ID = 'Yes'
+            } else {
+                $scope.athlete.Photo_ID = 'No'
+            }
+            if ($scope.athlete.School_Id === true) {
+                $scope.athlete.School_Id = 'Yes'
+            } else {
+                $scope.athlete.School_Id = 'No'
+            }
+            if ($scope.athlete.Age_Proof === true) {
+                $scope.athlete.Age_Proof = 'Yes'
+            } else {
+                $scope.athlete.Age_Proof = 'No'
+            }
+            // if($scope.athelete.)
             if ($scope.athlete.school) {
+                1
                 $scope.url1 = 'School/getOne';
                 $scope.constraints = {};
                 $scope.constraints._id = $scope.athlete.school;
@@ -3474,12 +3494,12 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 
 
         JsonService.getJson($stateParams.id, function () {});
-
         globalfunction.confDel = function (callback) {
+            // console.log($scope.json.json.action, "check this")
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
                 templateUrl: 'views/modal/conf-delete.html',
-                size: 'sm',
+                size: 'md',
                 scope: $scope
             });
             $scope.close = function (value) {
@@ -3489,6 +3509,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         };
 
         globalfunction.openModal = function (callback) {
+
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
                 templateUrl: 'views/modal/modal.html',
@@ -3946,21 +3967,21 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         };
     })
 
-    .controller('LoginCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+    .controller('LoginCtrl', function ($scope, TemplateService, LoginService, $http, $timeout, $stateParams, $state, toastr) {
         //Used to name the .html file
-        $scope.menutitle = NavigationService.makeactive("Login");
+
         TemplateService.title = $scope.menutitle;
         $scope.template = TemplateService;
         $scope.currentHost = window.location.origin;
+        console.log("stateParams", $stateParams);
         if ($stateParams.id) {
-            console.log("Temp is here");
             if ($stateParams.id === "AccessNotAvailable") {
-                toastr.error("You do not have access for the Backend.");
+                $state.go("noaccess");
             } else {
                 console.log("Demo 1234");
-                NavigationService.parseAccessToken($stateParams.id, function () {
+                LoginService.parseAccessToken($stateParams.id, $stateParams.accessLevel, function () {
                     console.log("reached Herre");
-                    NavigationService.profile(function () {
+                    LoginService.profile(function () {
                         $state.go("dashboard");
                     }, function () {
                         $state.go("login");
@@ -3968,7 +3989,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
                 });
             }
         } else {
-            NavigationService.removeAccessToken();
+            LoginService.removeAccessToken();
         }
 
     })
@@ -4648,7 +4669,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
     .controller('MatchesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
         //Used to name the .html file
         $scope.template = TemplateService.changecontent("tablematch");
-        $scope.menutitle = NavigationService.makeactive("Matches List");
+        $scope.menutitle = NavigationService.makeactive("Matches");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
         $scope.formData = {};
@@ -6195,7 +6216,12 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
 
-        $scope.generateExcel = function(){
+
+
+        // $state.reload();
+
+
+        $scope.generateExcel = function () {
             $scope.url = "match/getUniqueEventsPlayed";
             NavigationService.generateExcel($scope.url, function (data) {
                 window.location.href = adminurl + $scope.url;
@@ -6203,8 +6229,17 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         }
     })
 
-    .controller('headerctrl', function ($scope, TemplateService, $uibModal) {
+    .controller('headerctrl', function ($scope, TemplateService, $uibModal, $rootScope, $location, $state) {
         $scope.template = TemplateService;
+
+
+        $rootScope.$watch(function () {
+            return $location.path()
+        }, function (newLocation, oldLocation) {
+            if ($rootScope.actualLocation === newLocation) {
+                $state.go("login");
+            }
+        });
         $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
             $(window).scrollTop(0);
         });

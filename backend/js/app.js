@@ -393,7 +393,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'GalleryCtrl'
         })
-        // folder 
+        // folder
         .state('folder', {
             url: "/folder",
             templateUrl: "views/template.html",
@@ -583,6 +583,120 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'DetailHighlightCtrl'
         })
 
+        // **********************PLAYER REGISTORION ********************
+        .state('registorcontent', {
+            url: "/registorcontent",
+            templateUrl: "views/template.html",
+            controller: 'RegistorContentCtrl'
+        })
+        .state('detailregistorcontent', {
+            url: "/detailregistorcontent/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailRegistorContentCtrl'
+        })
+        .state('testimonial', {
+            url: "/testimonial",
+            templateUrl: "views/template.html",
+            controller: 'TestimonialCtrl'
+        })
+        .state('detailtestimonial', {
+            url: "/detailtestimonial/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailTestimonialCtrl'
+        })
+        .state('playerquestion', {
+            url: "/playerquestion",
+            templateUrl: "views/template.html",
+            controller: 'PlayerQuestionCtrl'
+        })
+        .state('detailplayerquestion', {
+            url: "/detailplayerquestion/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailPlayerQuestionCtrl'
+        })
+
+
+        // **********************PLAYER REGISTORION END ********************
+
+        // *******************PACKAGE START******************************
+        .state('package', {
+            url: "/package",
+            templateUrl: "views/template.html",
+            controller: 'PackageCtrl'
+        })
+        .state('detailpackage', {
+            url: "/detailpackage/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailPackageCtrl'
+        })
+        .state('featurepackage', {
+            url: "/featurepackage",
+            templateUrl: "views/template.html",
+            controller: 'featurePackageCtrl'
+        })
+        .state('detailfeature', {
+            url: "/detailfeature/:id",
+            templateUrl: "views/template.html",
+            controller: 'detailFeatureCtrl'
+        })
+        .state('couponcode', {
+            url: "/couponcode",
+            templateUrl: "views/template.html",
+            controller: 'CouponCtrl'
+        })
+        .state('detailcouponcode', {
+            url: "/detailcouponcode/:id",
+            templateUrl: "views/template.html",
+            controller: 'detailCouponCtrl'
+        })
+        // *******************PACKAGE END******************************
+
+        // *******************ACOUNT **********************************
+        .state('athleteaccount', {
+            url: "/athleteaccount",
+            templateUrl: "views/template.html",
+            controller: 'athleteAccountCtrl'
+        })
+        .state('schoolaccount', {
+            url: "/schoolaccount",
+            templateUrl: "views/template.html",
+            controller: 'schoolAccountCtrl'
+        })
+        // *******************ACOUNT END**********************************
+
+        // ***************ABOUT CHAMPIONSHIP**************
+        .state('tableaboutchampionship', {
+            url: "/tableaboutchampionship",
+            templateUrl: "views/template.html",
+            controller: 'AboutChampionshipCtrl'
+        })
+
+        .state('detailaboutchampionship', {
+            url: "/detailaboutchampionship/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailAboutChampionshipCtrl'
+        })
+
+        // ***************ABOUT CHAMPIONSHIP END**********
+        // *******************ACCESS END**********************************
+        .state('noaccess', {
+            url: "/no-access",
+            templateUrl: "views/content/access/noaccess.html",
+            controller: 'headerctrl'
+        })
+
+        .state('users', {
+            url: "/users",
+            templateUrl: "views/template.html",
+            controller: 'UsersCtrl'
+        })
+
+        .state('detail-users', {
+            url: "/detail-users/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailUsersCtrl'
+        })
+        // *******************ACCESS END**********************************
         .state('jagz', {
             url: "/jagz",
             templateUrl: "views/jagz.html",
@@ -590,10 +704,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
 
         .state('loginapp', {
-            url: "/login/:id",
+            url: "/login/:id/:accessLevel",
             templateUrl: "views/login.html",
             controller: 'LoginCtrl'
-        });
+        })
+
 
     $urlRouterProvider.otherwise("/dashboard");
     $locationProvider.html5Mode(isproduction);
