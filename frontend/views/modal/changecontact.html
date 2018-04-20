@@ -12,7 +12,7 @@
         <p class="m-clear">Email us at: <a href="mailto:info@sfanow.in">info@sfanow.in</a></p>
       </li>
       <li>
-        <p>Call: <a class="" href="tel:7045684365">7045684365</a> / <a class="" href="tel:7045684366">7045684366</a> / <a class="" href="tel:7045684367">7045684367</a></p>
+        <p>Call: <span ng-repeat="infono in infoNoArr track by $index" class="infono-config"><a href="tel:{{infono}}">{{infono}}</a> <span class="infono-seperator"> / </span></span></p>
       </li>
     </ul>
   </div>

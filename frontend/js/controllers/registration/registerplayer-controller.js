@@ -66,6 +66,7 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
     $scope.venue = data.venue;
     $scope.infoId = data.infoId;
     $scope.infoNo = data.infoNo;
+    $scope.infoNoArr = data.infoNoArr;
   });
   $scope.logoutCandidate = function () {
     loginService.logoutCandidate(function (data) {

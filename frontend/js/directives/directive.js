@@ -694,6 +694,36 @@ myApp.directive('img', function ($compile, $parse) {
         };
     })
 
+    .directive('specialDigit', function () {
+        return {
+            require: 'ngModel',
+            restrict: 'A',
+            link: function (scope, element, attr, ctrl) {
+                var digits;
+
+                function inputValue(val) {
+                    if (val) {
+                        if (attr.type == "tel") {
+                            digits = val.replace(/[^0-9\+\\!@#$%^*_+-=,<>'"]/g, '');
+                        } else {
+                            digits = val.replace(/[^0-9\-\\!@#$%^*_+-=,<>'"]/g, '');
+                        }
+
+
+                        if (digits !== val) {
+                            ctrl.$setViewValue(digits);
+                            ctrl.$render();
+                        }
+                        // return parseInt(digits, 10);
+                        return digits;
+                    }
+                    return undefined;
+                }
+                ctrl.$parsers.push(inputValue);
+            }
+        };
+    })
+
     .directive('inputDate', function ($compile, $parse) {
         return {
             restrict: 'E',

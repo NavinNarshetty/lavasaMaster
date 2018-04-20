@@ -17,6 +17,7 @@ myApp.service('configService', function ($http, TemplateService, $state, toastr,
                         all.venue = allData.data.venue;
                         all.infoId = allData.data.infoId;
                         all.infoNo = allData.data.infoNo;
+                        all.infoNoArr = allData.data.infoNoArr;
                         all.date = allData.data.date;
                         all.sports = allData.data.sports;
                         if (allData.data.type == 'school') {

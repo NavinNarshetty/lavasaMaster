@@ -1713,6 +1713,7 @@ myApp.controller('PaymentSuccessCtrl', function ($scope, TemplateService, Naviga
         $scope.sfaCity = data.sfaCity;
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;
+        $scope.infoNoArr = data.infoNoArr;
     });
 
     if ($stateParams.type == 'player') {

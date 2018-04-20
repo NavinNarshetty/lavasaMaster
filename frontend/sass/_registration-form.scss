@@ -1,4 +1,14 @@
 // OLD PAGES OVERRIDE
+.infono-config{
+  .infono-seperator{
+    display: inline;
+  }
+  &:last-child{
+    .infono-seperator{
+      display: none;
+    }
+  }
+}
 .btn-greenupgrade{
   border: none;
   margin-left: 5px;
