@@ -51,7 +51,7 @@ var models = {
                 } else {
                     var productinfo = "College Registration to SFA";
                 }
-                var hash = sha512(payukey + "|" + txnid + "|" + amount + "|" + productinfo + "|" + firstname + "|" + email + "|||||||||||" + payusalt);
+                var hash = sha512(payukey + "|" + txnid + "|" + amount + "|" + productinfo + "|" + UDF1 + "|" + email + "|||||||||||" + payusalt);
                 var hashtext = hash.toString('hex');
                 request.post({
                     url: payuurl,
@@ -60,7 +60,7 @@ var models = {
                         txnid: txnid,
                         amount: amount,
                         productinfo: productinfo,
-                        firstname: firstname,
+                        UDF1: firstname,
                         // surl: 'http://mumbaischool.sfanow.in/api/payU/successErrorSchool',
                         // furl: 'http://mumbaischool.sfanow.in/api/payU/successErrorSchool',
                         // surl: 'http://mumbaicollege.sfanow.in/api/payU/successErrorSchool',
@@ -403,7 +403,7 @@ var models = {
                 } else {
                     var productinfo = "College Registration to SFA";
                 }
-                var hash = sha512(payukey + "|" + txnid + "|" + amount + "|" + productinfo + "|" + firstname + "|" + email + "|||||||||||" + payusalt);
+                var hash = sha512(payukey + "|" + txnid + "|" + amount + "|" + productinfo + "|" + UDF1 + "|" + email + "|||||||||||" + payusalt);
                 var hashtext = hash.toString('hex');
                 request.post({
                     url: payuurl,
@@ -412,7 +412,7 @@ var models = {
                         txnid: txnid,
                         amount: amount,
                         productinfo: productinfo,
-                        firstname: firstname,
+                        UDF1: firstname,
                         // surl: 'http://mumbaischool.sfanow.in/api/payU/successUpgradeErrorSchool',
                         // furl: 'http://mumbaischool.sfanow.in/api/payU/successUpgradeErrorSchool',
                         // surl: 'http://mumbaicollege.sfanow.in/api/payU/successUpgradeErrorSchool',
