@@ -154,7 +154,7 @@
                 <br> Kindly Contact us on
                 <span class="infono-config" ng-repeat="infono in infoNoArr track by $index" >
                   <a href="tel:{{infono}}">{{infono}}</a>
-                  <span class="infono-seperator"> / </span>
+                  <span class="infono-seperator"  ng-class="{'hide':(infoNoArr.length-1) == $index}"> / </span>
                 </span>
                  or Email us at:
                 <a href="mailto:info@sfanow.in">info@sfanow.in</a>.</p>
