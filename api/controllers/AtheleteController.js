@@ -111,6 +111,17 @@ var controller = {
         }
     },
 
+    getOneBySfaIdStatus: function (req, res) {
+        if (req.body) {
+            Athelete.getOneBySfaIdStatus(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
+
     generateExcelOld: function (req, res) {
         res.connection.setTimeout(200000000);
         req.connection.setTimeout(200000000);

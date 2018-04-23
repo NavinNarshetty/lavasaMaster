@@ -122,7 +122,16 @@ var model = {
             var matchObj = {
                 athlete: {
                     $exists: true
-                }
+                },
+                $or: [{
+                    paymentMode: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    PayuId: {
+                        $exists: false,
+                    }
+                }]
             };
             var Search = Model.find(matchObj)
                 .order(options)
@@ -255,7 +264,16 @@ var model = {
             var matchObj = {
                 school: {
                     $exists: true
-                }
+                },
+                $or: [{
+                    paymentMode: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    PayuId: {
+                        $exists: false,
+                    }
+                }]
             };
 
             var Search = Model.find(matchObj)

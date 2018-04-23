@@ -382,6 +382,29 @@ var model = {
         });
     },
 
+    getOneBySfaIdStatus: function (data, callback) {
+        Athelete.findOne({ //finds one with refrence to id
+            sfaId: data.sfaId,
+            $or: [{
+                registrationFee: {
+                    $ne: "online PAYU"
+                }
+            }, {
+                paymentStatus: {
+                    $ne: "Pending"
+                }
+            }]
+        }).exec(function (err, athleteInfo) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(athleteInfo)) {
+                callback("Data is empty", null);
+            } else {
+                callback(null, athleteInfo);
+            }
+        });
+    },
+
     getSearchAggregatePipeline: function (data) {
         var pipeline = [ // Stage 1
             {
