@@ -204,6 +204,12 @@ var model = {
                                 data: found
                             });
                         } else {
+                            if (transactData.athlete) {
+                                data.athlete = true;
+                            } else {
+                                data.athlete = false;
+                            }
+                            data.package = transactData.package;
                             callback(null, transactData);
                         }
                     });
@@ -305,6 +311,44 @@ var model = {
                         }
                     }
                 },
+                function (transactData, callback) {
+                    if (data.athlete) {
+                        var matchObj = {
+                            $set: {
+                                package: data.package
+                            }
+                        };
+                        Athelete.update({
+                            _id: data.athlete
+                        }, matchObj).exec(
+                            function (err, data3) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(err, null);
+                                } else if (data3) {
+                                    callback(null, data)
+                                }
+                            });
+                    } else {
+                        var matchObj = {
+                            $set: {
+                                package: data.package
+                            }
+                        };
+                        Registration.update({
+                            _id: data.school
+                        }, matchObj).exec(
+                            function (err, data3) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(err, null);
+                                } else if (data3) {
+                                    callback(null, data)
+                                }
+                            });
+                    }
+
+                }
             ],
             function (err, complete) {
                 if (err) {

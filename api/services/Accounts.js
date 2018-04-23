@@ -597,47 +597,6 @@ var model = {
                         });
                     }
                 },
-                function (accountsData, callback) {
-                    if (accountsData.error) {
-                        callback(null, accountsData);
-                    } else {
-                        if (data.athlete) {
-                            var matchObj = {
-                                $set: {
-                                    package: data.package
-                                }
-                            };
-                            Athelete.update({
-                                _id: data.athlete
-                            }, matchObj).exec(
-                                function (err, data3) {
-                                    if (err) {
-                                        console.log(err);
-                                        callback(err, null);
-                                    } else if (data3) {
-                                        callback(null, data)
-                                    }
-                                });
-                        } else {
-                            var matchObj = {
-                                $set: {
-                                    package: data.package
-                                }
-                            };
-                            Registration.update({
-                                _id: data.school
-                            }, matchObj).exec(
-                                function (err, data3) {
-                                    if (err) {
-                                        console.log(err);
-                                        callback(err, null);
-                                    } else if (data3) {
-                                        callback(null, data)
-                                    }
-                                });
-                        }
-                    }
-                }
                 // //need to check for duplicate mail
                 // function (data, callback) {
                 //     if (data.athlete) {
