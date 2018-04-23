@@ -129,7 +129,7 @@ var model = {
                     }
                 }, {
                     PayuId: {
-                        $exists: false,
+                        $exists: true,
                     }
                 }]
             };
