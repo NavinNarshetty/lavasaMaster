@@ -58,15 +58,15 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
       if (data.value == true) {
         $scope.formData = data.data;
         $scope.checkRegistration = {
-          sfaID : $scope.formData.sfaID
+          sfaID: $scope.formData.sfaID
         }
-        $scope.checkUrl = 'Registration/getOneBySfaId';
-        NavigationService.apiCallWithData($scope.checkUrl, $scope.checkRegistration, function(data){
+        $scope.checkUrl = 'Registration/getOneBySfaIdStatus';
+        NavigationService.apiCallWithData($scope.checkUrl, $scope.checkRegistration, function (data) {
           console.log("da", data);
           if (data.value == true) {
             // toastr.error("You have already completed STEP 1 for SFA Championship 2018-19.  Kindly proceed to STEP 2 (Sports Registration) if you have received a confirmation email. For further queries kindly call us on 7045684365/66/67.","Error");
-            toastr.error("You have already completed STEP 1.  Kindly proceed to STEP 2. if you have received a confirmation email. For any queries contact us.","Error");
-            $state.go('registerplayer',{
+            toastr.error("You have already completed STEP 1.  Kindly proceed to STEP 2. if you have received a confirmation email. For any queries contact us.", "Error");
+            $state.go('registerplayer', {
               type: 'school'
             })
           } else {
@@ -730,13 +730,13 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
     $scope.passwordMatch = false;
     if (confirmPasswordValue && confirmPasswordValue != undefined) {
       if (confirmPasswordValue.length >= 8) {
-          if (confirmPasswordValue != setPasswordValue) {
-              $scope.passwordError = "Entered passwords do not match";
-              $scope.showConfirm = true;
-          } else {
-              $scope.passwordMatch = true;
-              $scope.showConfirm = false;
-          }
+        if (confirmPasswordValue != setPasswordValue) {
+          $scope.passwordError = "Entered passwords do not match";
+          $scope.showConfirm = true;
+        } else {
+          $scope.passwordMatch = true;
+          $scope.showConfirm = false;
+        }
       }
     } else {
       $scope.passwordError = "Enter Confirm Password";

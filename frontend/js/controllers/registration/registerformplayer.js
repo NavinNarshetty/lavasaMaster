@@ -27,108 +27,108 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
     });
 
     // getEditAthlete
-    $scope.getEditAthlete = function(){
-      $scope.getAthleteUrl = 'Athelete/getAthlete';
-      $scope.getAthleteFormData = {
-        _id: $scope.formId
-      }
-      NavigationService.apiCallWithDataMaster($scope.getAthleteUrl, $scope.getAthleteFormData, function(data){
-        console.log("getAth", data);
-        if (data.value == true) {
-          $scope.formData = data.data;
-          $scope.checkRegistration = {
-            sfaId: $scope.formData.sfaId
-          }
-          NavigationService.getOneBySfaId($scope.checkRegistration, function(data){
-            console.log("sfaid",data);
-            if (data.data.value == true) {
-              // toastr.error("You have already completed STEP 1 for SFA Championship 2018-19.  Kindly proceed to STEP 2 (Sports Registration) if you have received a confirmation email. For further queries kindly call us on 7045684365/66/67.","Error");
-              toastr.error("You have already completed STEP 1.  Kindly proceed to STEP 2. if you have received a confirmation email. For any queries contact us.","Error");
-              $timeout(function () {
-                $state.go('registerplayer',{
-                  type: 'player'
-                })
-              }, 500);
-            } else {
-              $scope.refreshChangeSchool("");
-              $scope.formData.password = "";
-              $scope.formData.standard = "";
-              $scope.formData.termsAndCondition = false;
-              $scope.age = $filter('ageYearFilter')($scope.formData.dob);
-              $scope.mobileNo = $scope.formData.mobile;
-              $scope.editMobile = false;
-              $scope.showMobileOtpSuccess = false;
-              $scope.formData.smsOTP = "";
-              $scope.emailId = $scope.formData.email;
-              $scope.editEmail = false;
-              $scope.formData.emailOTP = "";
-              $scope.showEmailOtpSuccess = false;
-              if ($scope.formData.dob != undefined || formData.dob != null) {
-                $scope.dob = $filter('englishNumeralDateOne')($scope.formData.dob);
-                $scope.editDob = true;
-              } else {
-                $scope.dob = '';
-                $scope.editDob = false;
-              }
-              $scope.formData.package = "";
-              $scope.formData.registrationFee = "";
-              $scope.formData.ageProof = "";
-              $scope.formData.status = "Pending";
-              $scope.formData.verifyCount = 0;
-              $scope.formData.paymentStatus = "Pending";
-              $scope.formData.selectedEvent = 0;
-              delete $scope.formData.year;
-              delete $scope.formData.atheleteID;
-              delete $scope.formData.remarks;
-              delete $scope.formData.verifiedDate;
-              delete $scope.formData.accessToken;
-              delete $scope.formData.createdAt;
-              delete $scope.formData.updatedAt;
-              delete $scope.formData.receiptId;
-              delete $scope.formData._id;
-              delete $scope.formData._v;
-              if ($scope.formData.photograph) {
-                delete $scope.formData.photograph;
-              }
-              if ($scope.formData.atheleteSchoolIdImage) {
-                delete $scope.formData.atheleteSchoolIdImage;
-              }
-              if ($scope.formData.birthImage) {
-                delete $scope.formData.birthImage;
-              }
-              if ($scope.formData.photoImage) {
-                delete $scope.formData.photoImage;
-              }
-            }
-          });
-        } else {
-          console.log("Error in ath get", data);
+    $scope.getEditAthlete = function () {
+        $scope.getAthleteUrl = 'Athelete/getAthlete';
+        $scope.getAthleteFormData = {
+            _id: $scope.formId
         }
-      });
+        NavigationService.apiCallWithDataMaster($scope.getAthleteUrl, $scope.getAthleteFormData, function (data) {
+            console.log("getAth", data);
+            if (data.value == true) {
+                $scope.formData = data.data;
+                $scope.checkRegistration = {
+                    sfaId: $scope.formData.sfaId
+                }
+                NavigationService.getOneBySfaIdStatus($scope.checkRegistration, function (data) {
+                    console.log("sfaid", data);
+                    if (data.data.value == true) {
+                        // toastr.error("You have already completed STEP 1 for SFA Championship 2018-19.  Kindly proceed to STEP 2 (Sports Registration) if you have received a confirmation email. For further queries kindly call us on 7045684365/66/67.","Error");
+                        toastr.error("You have already completed STEP 1.  Kindly proceed to STEP 2. if you have received a confirmation email. For any queries contact us.", "Error");
+                        $timeout(function () {
+                            $state.go('registerplayer', {
+                                type: 'player'
+                            })
+                        }, 500);
+                    } else {
+                        $scope.refreshChangeSchool("");
+                        $scope.formData.password = "";
+                        $scope.formData.standard = "";
+                        $scope.formData.termsAndCondition = false;
+                        $scope.age = $filter('ageYearFilter')($scope.formData.dob);
+                        $scope.mobileNo = $scope.formData.mobile;
+                        $scope.editMobile = false;
+                        $scope.showMobileOtpSuccess = false;
+                        $scope.formData.smsOTP = "";
+                        $scope.emailId = $scope.formData.email;
+                        $scope.editEmail = false;
+                        $scope.formData.emailOTP = "";
+                        $scope.showEmailOtpSuccess = false;
+                        if ($scope.formData.dob != undefined || formData.dob != null) {
+                            $scope.dob = $filter('englishNumeralDateOne')($scope.formData.dob);
+                            $scope.editDob = true;
+                        } else {
+                            $scope.dob = '';
+                            $scope.editDob = false;
+                        }
+                        $scope.formData.package = "";
+                        $scope.formData.registrationFee = "";
+                        $scope.formData.ageProof = "";
+                        $scope.formData.status = "Pending";
+                        $scope.formData.verifyCount = 0;
+                        $scope.formData.paymentStatus = "Pending";
+                        $scope.formData.selectedEvent = 0;
+                        delete $scope.formData.year;
+                        delete $scope.formData.atheleteID;
+                        delete $scope.formData.remarks;
+                        delete $scope.formData.verifiedDate;
+                        delete $scope.formData.accessToken;
+                        delete $scope.formData.createdAt;
+                        delete $scope.formData.updatedAt;
+                        delete $scope.formData.receiptId;
+                        delete $scope.formData._id;
+                        delete $scope.formData._v;
+                        if ($scope.formData.photograph) {
+                            delete $scope.formData.photograph;
+                        }
+                        if ($scope.formData.atheleteSchoolIdImage) {
+                            delete $scope.formData.atheleteSchoolIdImage;
+                        }
+                        if ($scope.formData.birthImage) {
+                            delete $scope.formData.birthImage;
+                        }
+                        if ($scope.formData.photoImage) {
+                            delete $scope.formData.photoImage;
+                        }
+                    }
+                });
+            } else {
+                console.log("Error in ath get", data);
+            }
+        });
     }
     // getEditAthlete END
 
     // FLAGS SET FOR CREATE EDIT
     if ($scope.formFlag === 'edit') {
-      if ($stateParams.id) {
-        $scope.formId = $stateParams.id;
-        $scope.getEditAthlete();
-        console.log("Edit Id", $scope.formFlag, $scope.formId);
-      } else {
-        console.log("Edit no Id");
-        toastr.error("No Player ID Found", "Error")
-        $state.go('registerplayer', {
-          type: 'player'
-        });
-      }
+        if ($stateParams.id) {
+            $scope.formId = $stateParams.id;
+            $scope.getEditAthlete();
+            console.log("Edit Id", $scope.formFlag, $scope.formId);
+        } else {
+            console.log("Edit no Id");
+            toastr.error("No Player ID Found", "Error")
+            $state.go('registerplayer', {
+                type: 'player'
+            });
+        }
     } else if ($scope.formFlag === 'create') {
-      console.log("Create", $scope.formFlag);
+        console.log("Create", $scope.formFlag);
     } else {
-      console.log("Other Flag");
-      toastr.error("Error");
-      $state.go('registerplayer', {
-        type: 'player'
-      });
+        console.log("Other Flag");
+        toastr.error("Error");
+        $state.go('registerplayer', {
+            type: 'player'
+        });
     }
     // FLAGS SET FOR CREATE EDIT END
 
@@ -150,14 +150,14 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
     }
     // VIEW PACKAGE TABLE END
     // CHECK REFUND
-    $scope.checkRefund = function(){
-      if ($scope.formData.refundAmount) {
-        if ($scope.formData.refundAmount >= $scope.formData.amountPaid) {
-          $scope.formData.amountPaid = 0;
-        } else {
-          $scope.formData.amountPaid = $scope.formData.amountPaid - $scope.formData.refundAmount;
+    $scope.checkRefund = function () {
+        if ($scope.formData.refundAmount) {
+            if ($scope.formData.refundAmount >= $scope.formData.amountPaid) {
+                $scope.formData.amountPaid = 0;
+            } else {
+                $scope.formData.amountPaid = $scope.formData.amountPaid - $scope.formData.refundAmount;
+            }
         }
-      }
     }
     // CHECK REFUND END
     // SET PAYMENT TABLE
@@ -185,7 +185,7 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
                     $scope.formData.igstAmt = n.igstAmt;
                     $scope.formData.amountPaid = $scope.formData.amountToPay + $scope.formData.igstAmt;
                     if ($scope.formData.refundAmount) {
-                      $scope.checkRefund();
+                        $scope.checkRefund();
                     }
                 }
                 if (n.cgstPercent && n.sgstPercent) {
@@ -195,7 +195,7 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
                     $scope.formData.sgstAmt = n.sgstAmt;
                     $scope.formData.amountPaid = $scope.formData.amountToPay + $scope.formData.cgstAmt + $scope.formData.sgstAmt;
                     if ($scope.formData.refundAmount) {
-                      $scope.checkRefund();
+                        $scope.checkRefund();
                     }
                     console.log($scope.formData.amountPaid, $scope.formData.amountToPay);
                 }
@@ -243,52 +243,52 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
     // CALCULATE DISCOUNT END
     // APPLY PROMOCODE
     $scope.validatePromoCode = function (promo) {
-      if (promo.code !="") {
-        NavigationService.validatePromoCode(promo, function (data) {
-            data = data.data;
-            console.log("dta", data);
-            if (data.value == true) {
-                console.log("promo", data);
-                $scope.promoCode.code = data.data.code;
-                $scope.promoDetails = data.data;
-                $scope.calculateDiscount($scope.promoDetails);
-            } else {
-              if (data.error) {
-                toastr.error(data.error, "Error");
-              } else {
-                console.log("Promo Apply failed", data);
-              }
-            }
-        })
-      } else {
-        toastr.error("Please enter code.");
-      }
+        if (promo.code != "") {
+            NavigationService.validatePromoCode(promo, function (data) {
+                data = data.data;
+                console.log("dta", data);
+                if (data.value == true) {
+                    console.log("promo", data);
+                    $scope.promoCode.code = data.data.code;
+                    $scope.promoDetails = data.data;
+                    $scope.calculateDiscount($scope.promoDetails);
+                } else {
+                    if (data.error) {
+                        toastr.error(data.error, "Error");
+                    } else {
+                        console.log("Promo Apply failed", data);
+                    }
+                }
+            })
+        } else {
+            toastr.error("Please enter code.");
+        }
     }
     // APPLY PROMOCODE
     // CHECK CHANGE
-    $scope.checkChange = function(field){
-      if ($scope.formFlag == 'edit') {
-        switch (field) {
-          case 'mobile':
-            if ($scope.formData.mobile != $scope.mobileNo) {
-              $scope.editMobile = true;
-              $scope.showMobileOtpSuccess = true;
-            } else {
-              $scope.editMobile = false;
-              $scope.showMobileOtpSuccess = false;
+    $scope.checkChange = function (field) {
+        if ($scope.formFlag == 'edit') {
+            switch (field) {
+                case 'mobile':
+                    if ($scope.formData.mobile != $scope.mobileNo) {
+                        $scope.editMobile = true;
+                        $scope.showMobileOtpSuccess = true;
+                    } else {
+                        $scope.editMobile = false;
+                        $scope.showMobileOtpSuccess = false;
+                    }
+                    break;
+                case 'email':
+                    if ($scope.formData.email != $scope.emailId) {
+                        $scope.editEmail = true;
+                        $scope.showEmailOtpSuccess = true;
+                    } else {
+                        $scope.editEmail = false;
+                        $scope.showEmailOtpSuccess = false;
+                    }
+                    break;
             }
-          break;
-          case 'email':
-            if ($scope.formData.email != $scope.emailId) {
-              $scope.editEmail = true;
-              $scope.showEmailOtpSuccess = true;
-            } else {
-              $scope.editEmail = false;
-              $scope.showEmailOtpSuccess = false;
-            }
-          break;
         }
-      }
     };
     // CHECK CHANGE END
     $scope.changeitSchoolId = function (err, data) {
@@ -508,7 +508,7 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
             $scope.showTerm = false;
         }
         if ($scope.formFlag === 'create') {
-          formdata.sfaId = $scope.sfaId;
+            formdata.sfaId = $scope.sfaId;
         }
         formdata.age = $scope.age;
         formdata.school = $scope.schoolname;
@@ -557,7 +557,7 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
         // console.log($scope.url);
         // console.log(formdata);
         if (formAthlete.$valid && $scope.showTerm === false) {
-          console.log("showTerm", $scope.showTerm);
+            console.log("showTerm", $scope.showTerm);
             if ($scope.showEmailOtpSuccess === false && $scope.showMobileOtpSuccess === false) {
                 $scope.isDisabled = true;
                 // console.log('google', formdata);
@@ -727,25 +727,27 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
             // console.log("sfa 1", data);
             $scope.schoolList = data.data.results;
             if ($scope.formFlag === 'edit') {
-              var findSchool = _.find($scope.schoolList, {'_id': $scope.formData.school});
-              if (findSchool == undefined || findSchool == '' || findSchool == {}) {
-                console.log("SC not in list");
-                $scope.editSchoolData = {
-                  _id: $scope.formData.school
+                var findSchool = _.find($scope.schoolList, {
+                    '_id': $scope.formData.school
+                });
+                if (findSchool == undefined || findSchool == '' || findSchool == {}) {
+                    console.log("SC not in list");
+                    $scope.editSchoolData = {
+                        _id: $scope.formData.school
+                    }
+                    $scope.urlGetSschool = 'school/getOne';
+                    NavigationService.apiCallWithData($scope.urlGetSschool, $scope.editSchoolData, function (data) {
+                        console.log("one", data);
+                        if (data.value == true) {
+                            $scope.schoolList.push(data.data);
+                            $scope.searchChangeSchool($scope.formData.school);
+                        } else {
+                            console.log("Old School Not Found");
+                        }
+                    })
+                } else {
+                    console.log("Old school in schoollist");
                 }
-                $scope.urlGetSschool = 'school/getOne';
-                NavigationService.apiCallWithData($scope.urlGetSschool, $scope.editSchoolData, function(data){
-                  console.log("one", data);
-                  if (data.value == true) {
-                    $scope.schoolList.push(data.data);
-                    $scope.searchChangeSchool($scope.formData.school);
-                  } else {
-                    console.log("Old School Not Found");
-                  }
-                })
-              } else {
-                console.log("Old school in schoollist");
-              }
             }
         });
     };
@@ -790,12 +792,12 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
         $scope.show = 0;
     };
 
-    $scope.deleteCertificate = function (data, className, index){
-      console.log("cert", className, data, index);
-      $("." + className + " input").val("");
-      delete $scope.formData.sportLevel[index].certificateImage;
-      $scope.show = 0;
-      console.log("del", $scope.formData.sportLevel[index].certificateImage, className, $scope.show);
+    $scope.deleteCertificate = function (data, className, index) {
+        console.log("cert", className, data, index);
+        $("." + className + " input").val("");
+        delete $scope.formData.sportLevel[index].certificateImage;
+        $scope.show = 0;
+        console.log("del", $scope.formData.sportLevel[index].certificateImage, className, $scope.show);
     }
 
     $scope.addSportForm = function () {
@@ -920,11 +922,11 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
             templateUrl: "views/modal/error.html"
         });
     };
-    $scope.closeModal = function(){
-      $state.go('registerplayer',{
-        type: 'player'
-      });
-      $scope.modalInstances.$dismiss();
+    $scope.closeModal = function () {
+        $state.go('registerplayer', {
+            type: 'player'
+        });
+        $scope.modalInstances.$dismiss();
     }
 
     $scope.openErrModal = function () {
@@ -1040,24 +1042,24 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
         $scope.showConfirm = true;
         $scope.passwordMatch = false;
         if (confirm && confirm != undefined) {
-          if (confirm.length >= 8) {
-              if (confirm != $scope.formData.password) {
-                  $scope.passwordError = "Entered passwords do not match";
-                  $scope.showConfirm = true;
-              } else {
-                  $scope.passwordMatch = true;
-                  $scope.showConfirm = false;
-              }
-          }
+            if (confirm.length >= 8) {
+                if (confirm != $scope.formData.password) {
+                    $scope.passwordError = "Entered passwords do not match";
+                    $scope.showConfirm = true;
+                } else {
+                    $scope.passwordMatch = true;
+                    $scope.showConfirm = false;
+                }
+            }
         } else {
-          $scope.passwordError = "Enter Confirm Password";
+            $scope.passwordError = "Enter Confirm Password";
         }
     }
     // CHECK PASSWORD END
     // CLEAR PASSWORD
-    $scope.clearPassword = function(){
-      $scope.formData.confirmPassword = "";
-      $scope.checkPassword($scope.formData.confirmPassword);
+    $scope.clearPassword = function () {
+        $scope.formData.confirmPassword = "";
+        $scope.checkPassword($scope.formData.confirmPassword);
     }
     // CLEAR PASSWORD END
 });

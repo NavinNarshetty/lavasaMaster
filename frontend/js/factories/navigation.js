@@ -1062,8 +1062,8 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
                                 var match1, match2;
 
                                 if (!($filter('firstcapitalize')(round.name, {
-                                    column1: true
-                                }) === 'Third Place' && key == 2)) {
+                                        column1: true
+                                    }) === 'Third Place' && key == 2)) {
                                     console.log(round.name, "No Third Place");
                                     if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2] && knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar]) {
                                         match1 = knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar];
@@ -1179,6 +1179,13 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
         getOneBySfaId: function (formData, callback) {
             $http({
                 url: adminUrl2 + 'Athelete/getOneBySfaId',
+                method: 'POST',
+                data: formData
+            }).then(callback);
+        },
+        getOneBySfaIdStatus: function (formData, callback) {
+            $http({
+                url: adminUrl2 + 'Athelete/getOneBySfaIdStatus',
                 method: 'POST',
                 data: formData
             }).then(callback);
