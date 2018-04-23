@@ -150,12 +150,13 @@
             <!-- && !searchSfaObj.sfaId -->
             <p ng-if="!showRegisteredCredentials && !noContact">An OTP will be sent to your registered Mobile Number & Email Id</p>
             <div class="register-step-error" ng-show="noContact">
-              <!-- ng-if="!showRegisteredCredentials && noEmailMobile == true && !searchSfaObj.sfaId.email && !searchSfaObj.sfaId.mobile && searchSfaObj.sfaId._id" -->
               <p >Your Mobile Number & Email Id does not exist.
                 <br> Kindly Contact us on
-                <a class="" href="tel:7045684365">7045684365</a> /
-                <a class="" href="tel:7045684366">7045684366</a> /
-                <a class="" href="tel:7045684367">7045684367</a> or Email us at:
+                <span class="infono-config" ng-repeat="infono in infoNoArr track by $index" >
+                  <a href="tel:{{infono}}">{{infono}}</a>
+                  <span class="infono-seperator"  ng-class="{'hide':(infoNoArr.length-1) == $index}"> / </span>
+                </span>
+                 or Email us at:
                 <a href="mailto:info@sfanow.in">info@sfanow.in</a>.</p>
             </div>
             <div class="" ng-if="showRegisteredCredentials">

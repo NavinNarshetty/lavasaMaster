@@ -9,7 +9,12 @@
               <p ng-if="form == 'register'">STEP 1 OF THE REGISTRATION PROCESS WILL BE COMPLETED ONCE YOU RECEIVE A CONFIRMATION EMAIL. You can then proceed to <b>SPORTS REGISTRATION (STEP 2)</b></p>
               <p ng-if="form == 'upgrade'">Thank you for upgrading your package.</p>
               <p>Kindly Note: In case SFA does not receive the payment within 4 working days your registration will stand CANCELLED.</p>
-              <p>For any further queries kindly call us on <a class="" href="tel:7045684365">7045684365</a> / <a class="" href="tel:7045684366">7045684366</a> / <a class="" href="tel:7045684367">7045684367</a> or email us at <a href="mailto:info@sfanow.in">info@sfanow.in</a></p>
+              <p>For any further queries kindly call us on
+                <span ng-repeat="infono in infoNoArr track by $index" class="infono">
+                  <a href="tel:{{infono}}">{{infono}}</a>
+                  <span class="infono-seperator" ng-class="{'hide':(infoNoArr.length-1) == $index}"> / </span>
+                </span>
+                 or email us at <a href="mailto:info@sfanow.in">info@sfanow.in</a></p>
               <!-- <button class="btn btn-primary" ng-disabled="isDisabled1 == true" ng-click="redirectTo()">OK</button> -->
               <button class="btn btn-primary" ui-sref="registerplayer({type: pageType})" ng-if="form == 'register'">Go To Register</button>
               <button class="btn btn-primary" ui-sref="sports-selection" ng-if="form == 'upgrade'">Go To Sport Selection</button>
