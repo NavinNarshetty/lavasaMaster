@@ -897,8 +897,9 @@
             <!-- PAYU -->
             <div class="formregister-mtb20" ng-if="formData.registrationFee == 'online PAYU'">
               Selecting this option will enable you to pay the registration fee of
-              <span ng-if="formData.amountToPay">Rs formData.amountToPay (+GST)</span>
-              <span ng-if="!formData.amountToPay">amount of selected package</span>
+              <span ng-if="formData.amountToPay">Rs {{formData.amountToPay}} (+GST)</span>
+              <span ng-if="!formData.amountToPay" class="r-titillium-web-semibold">
+                <strong>amount of selected package</span>
               via one of the following methods: 1) Credit Card 2) Debit Card 3) Net Banking
             </div>
             <!-- PAYU END -->
@@ -907,8 +908,8 @@
               <div class="formregister-mtb20">
                 <p class="r-titillium-web-semibold text-uppercase">PAYMENT TO BE MADE WITHIN 4 DAYS.</p>
                 <p>Selecting this option will enable you to pay the registration fee of
-                  <span ng-if="formData.amountToPay">Rs formData.amountToPay (+GST)</span>
-                  <span ng-if="!formData.amountToPay">amount of selected package</span> by Cash/ Cheque/ Demand Draft in favour of
+                  <span ng-if="formData.amountToPay">Rs {{formData.amountToPay}} (+GST)</span>
+                  <span ng-if="!formData.amountToPay" class="r-titillium-web-semibold">amount of selected package</span> by Cash/ Cheque/ Demand Draft in favour of
                   <span class="r-titillium-web-semibold">'SFA Sporting Services Pvt Ltd'</span> which is to be couriered/ hand delivered
                   <span class="r-titillium-web-semibold">WITHIN 4 WORKING DAYS</span> to:</p>
               </div>
