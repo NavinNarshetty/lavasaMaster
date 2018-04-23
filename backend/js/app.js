@@ -678,7 +678,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
 
         // ***************ABOUT CHAMPIONSHIP END**********
-        // *******************ACCESS END**********************************
+        // *******************ACCESS Starts**********************************
         .state('noaccess', {
             url: "/no-access",
             templateUrl: "views/content/access/noaccess.html",

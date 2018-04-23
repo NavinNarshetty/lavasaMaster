@@ -1,3 +1,4 @@
+// Below Function is Used in ConfirmAthSwmCtrl and ConfirmFencingCtrl
 var selectPicker = function (team, toastr, sT, sN, $filter, $scope, $uibModal, userDetails, userType) {
     var howMuchSelectPicker;
     var id;
@@ -31,10 +32,6 @@ var selectPicker = function (team, toastr, sT, sN, $filter, $scope, $uibModal, u
             break;
     }
 
-    console.log("howMuchSelectPicker,id", howMuchSelectPicker, id);
-    console.log("userDetails", userDetails);
-    console.log("userType", userType);
-
     setTimeout(function () {
         for (i = 1; i <= howMuchSelectPicker; i++) {
             _.each(team, function (n, k) {
@@ -45,6 +42,7 @@ var selectPicker = function (team, toastr, sT, sN, $filter, $scope, $uibModal, u
                     if ((team[k].packageCount - team[k].registeredSportCount) < e.target.selectedOptions.length) {
                         toastr.error("Max Reached", "Error Messege");
                     }
+
                     // if(team[k].selectLimit==1 && e.target.selectedOptions.length==1){
                     //     if($.jStorage.get('userType')=="school"){
                     //         toastr.info("Sfa Id " + team[k].sfaId +" Can Only Participate In One Event. As per "+ $filter('getPronoun')(team[k].gender)+" Package", "Upgrade Package");
@@ -52,13 +50,13 @@ var selectPicker = function (team, toastr, sT, sN, $filter, $scope, $uibModal, u
                     //         toastr.info("You Can Only Participate in One Event");                    
                     //     }
                     // }
-
-                    if (team[k].selectLimit == e.target.selectedOptions.length) {
+                    console.log("(team[k].packageCount - team[k].registeredSportCount)",(team[k].packageCount - team[k].registeredSportCount));
+                    console.log("e.target.selectedOptions.length",e.target.selectedOptions.length);
+                    console.log((team[k].packageCount - team[k].registeredSportCount) < e.target.selectedOptions.length);
+                    if ((team[k].packageCount - team[k].registeredSportCount) <= e.target.selectedOptions.length) {
                         if ($.jStorage.get('userType') == "school") {
                             toastr.info("Sfa Id " + team[k].sfaId + " Can Only Participate In " + team[k].selectLimit + " Event. As per Selected Package", "Upgrade Package");
                         } else {
-                            // for athelete
-                            // toastr.info("You Can Only Participate in " + team[k].selectLimit + " Event sukshaaaa");
                             // SHOW UPGRADE POPUP
                             $scope.upgrade = {};
                             if (userType == 'athlete') {
@@ -68,14 +66,17 @@ var selectPicker = function (team, toastr, sT, sN, $filter, $scope, $uibModal, u
                             }
                             $scope.upgrade.id = userDetails._id;
                             $scope.upgrade.package = userDetails.package;
-                            $uibModal.open({
-                                animation: true,
-                                scope: $scope,
-                                // backdrop: 'static',
-                                // keyboard: false,
-                                templateUrl: 'views/modal/upgradepackage-modal.html',
-                                windowClass: 'modal-upgradepackage'
-                            });
+                            if((sN=="Athletics" && team[k].selectLimit<2)||sN!="Athletics"){
+                                $uibModal.open({
+                                    animation: true,
+                                    scope: $scope,
+                                    // backdrop: 'static',
+                                    // keyboard: false,
+                                    templateUrl: 'views/modal/upgradepackage-modal.html',
+                                    windowClass: 'modal-upgradepackage'
+                                });
+
+                            }
                             // SHOW UPGRADE POPUP END
                         }
                     }
