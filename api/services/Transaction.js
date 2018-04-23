@@ -315,6 +315,23 @@ var model = {
             });
     },
 
+    deleteUpdateTransaction: function (data, found, callback) {
+        var len = found.accounts.transaction.length;
+        len--;
+        Transaction.remove({
+            _id: found.accounts.transaction[len]
+        }).exec(function (err, transactData) {
+            if (err || _.isEmpty(transactData)) {
+                callback(null, {
+                    error: "no data found",
+                    data: found
+                });
+            } else {
+                callback(null, transactData);
+            }
+        });
+    },
+
     saveCashTransaction: function (data, callback) {
         var finaloutstanding = 0;
         var paymentStatusFinal;
@@ -580,6 +597,7 @@ var model = {
                     callback(null, complete);
                 }
             });
-    }
+    },
+
 };
 module.exports = _.assign(module.exports, exports, model);

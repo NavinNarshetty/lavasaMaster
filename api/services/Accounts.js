@@ -896,19 +896,35 @@ var model = {
                                         });
                                     },
                                     function (found, callback) {
-                                        data.athlete = true;
-                                        Transaction.saveUpdateTransaction(data, found, function (err, vData) {
-                                            if (err || _.isEmpty(vData)) {
-                                                callback(null, {
-                                                    error: "no data found",
-                                                    data: found
-                                                });
-                                            } else {
-                                                console.log("vData", vData.package);
-                                                found.packageNew = vData.package;
-                                                callback(null, found);
-                                            }
-                                        });
+                                        if (data.success == true) {
+                                            data.athlete = true;
+                                            Transaction.saveUpdateTransaction(data, found, function (err, vData) {
+                                                if (err || _.isEmpty(vData)) {
+                                                    callback(null, {
+                                                        error: "no data found",
+                                                        data: found
+                                                    });
+                                                } else {
+                                                    console.log("vData", vData.package);
+                                                    found.packageNew = vData.package;
+                                                    callback(null, found);
+                                                }
+                                            });
+                                        } else {
+                                            data.athlete = true;
+                                            Transaction.deleteUpdateTransaction(data, found, function (err, vData) {
+                                                if (err || _.isEmpty(vData)) {
+                                                    callback(null, {
+                                                        error: "no data found",
+                                                        data: found
+                                                    });
+                                                } else {
+                                                    console.log("vData", vData.package);
+                                                    found.packageNew = vData.package;
+                                                    callback(null, found);
+                                                }
+                                            });
+                                        }
                                     },
                                 ],
                                 function (err, complete) {
