@@ -2400,7 +2400,7 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
             window.location = 'http://localhost:8082/#/sports-selection/' + 'school/' + $scope.constraints.schoolId;
         }
 
-        // window.location = 'http://sfa5.wohlig.co.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+
 
         //  window.location = 'http://localhost:8080/#/sports-selection/' + 'school/' + $scope.constraints.schoolId;
 
@@ -2606,7 +2606,7 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
     $scope.transferToWebsite = function (id) {
         $scope.constraints = {};
         $scope.constraints.athleteId = base64Service.encode(id);
-        // window.location = 'http://sfa5.wohlig.co.in/sports-selection/' + 'athlete/' + $scope.constraints.athleteId;
+
         if (window.location.origin == 'http://mumbaischool.sfanow.in') {
             window.location = 'http://mumbaischool.sfanow.in/sports-selection/' + 'athlete/' + $scope.constraints.athleteId;
         } else if (window.location.origin == 'http://mumbaicollege.sfanow.in') {
@@ -2833,7 +2833,7 @@ myApp.controller('AthletepayustatusCtrl', function ($scope, TemplateService, Nav
     $scope.transferToWebsite = function (id) {
         $scope.constraints = {};
         $scope.constraints.athleteId = base64Service.encode(id);
-        // window.location = 'http://sfa5.wohlig.co.in/sports-selection/' + 'athlete/' + $scope.constraints.athleteId;
+
         if (window.location.origin == 'http://mumbaischool.sfanow.in') {
             window.location = 'http://mumbaischool.sfanow.in/sports-selection/' + 'athlete/' + $scope.constraints.athleteId;
         } else if (window.location.origin == 'http://mumbaicollege.sfanow.in') {

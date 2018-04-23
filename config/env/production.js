@@ -27,7 +27,6 @@ module.exports = {
 
   port: 1337,
   // port: 878,
-  // realHost: "http://sfa2.wohlig.co.in",
   // realHost: "http://mumbaischool.sfanow.in",
   // realHost: "http://mumbaicollege.sfanow.in",
   // realHost: "http://hyderabadschool.sfanow.in",
@@ -43,7 +42,6 @@ module.exports = {
   // realHost: "http://testahmedabadschool.sfanow.in",
   // realHost: "http://testahmedabadcollege.sfanow.in",
 
-  // realHost: "https://sfa.wohlig.co.in",
   // emails: ["chintan@wohlig.com", "raj@wohlig.com", "supriya.bhartiya@wohlig.com", "rahi.shah@sfanow.in", "shiva.singh@sfanow.in", "sunil.rathod@sfanow.in", "venkatesh.rathod@sfanow.in", "neeraj.jaiswal@sfanow.in", "rahul.singh@sfanow.in", "datateam@sfanow.in", "akshay.singh@sfanow.in"]
   accessLevels: [{
     name: "Super Admin",
