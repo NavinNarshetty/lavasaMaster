@@ -215,6 +215,23 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'CreateMatchWeightCtrl'
         })
         // CREATE MATCHES END
+        // MATCH CENTERS
+        .state('matchcenter-raquet', {
+            url: "/matchcenter/raquet",
+            templateUrl: tempateURL,
+            controller: 'MatchCenterRaquetCtrl'
+        })
+        .state('matchcenter-doubles', {
+            url: "/matchcenter/doubles",
+            templateUrl: tempateURL,
+            controller: 'MatchCenterDoublesCtrl'
+        })
+        .state('matchcenter-team', {
+            url: "/matchcenter/team",
+            templateUrl: tempateURL,
+            controller: 'MatchCenterTeamCtrl'
+        })
+        // MATCH CENTERS END
         .state('form', {
             url: "/form",
             templateUrl: tempateURL,

@@ -87,4 +87,5 @@ module.exports = [
   'digital/js/controllers/creatematchheats-controller.js',
   'digital/js/controllers/creatematchweight-controller.js',
   'digital/js/controllers/addweight-controller.js',
+  'digital/js/controllers/matchcenter.js',
 ];

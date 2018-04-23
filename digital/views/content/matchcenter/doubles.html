@@ -1,0 +1,124 @@
+<div class="printpage-mc-raquet">
+  <!-- HEADER -->
+  <div class="matchstart-header">
+    <!-- HEADER LOGO  -->
+    <div class="matchcenter-sporticon">
+      <img ng-src="{{match.sportName|sporticon:'icon'}}" alt="{{match.sportName}}" title="{{match.sportName}}" class="img-responsive">
+    </div>
+    <!-- HEADER LOGO END -->
+    <!-- HEADER CONTENT  -->
+    <div class="matchcenter-heading">
+      <span class="pull-right">{{match.matchId}}</span>
+      <p class="m-clear"><span>{{match.sport.sportslist.sportsListSubCategory.name}} Badminton</span> - <span>{{match.sport.ageGroup.name}}U-14</span> <span>{{match.sport.gender}} Male</span> <span>{{match.round}} Round  2</span></p>
+    </div>
+    <!-- HEADER CONTENT END  -->
+  </div>
+  <!-- HEADER END -->
+  <!-- CONTENT -->
+  <div class="matchcenter-content">
+    <!-- WINNER -->
+    <div class="matchwinner">
+      <p>Match Winner: <span class="matchwinner-title"> {{match.winnerName}}Raj Shah </span></p>
+    </div>
+    <!-- WINNER END -->
+    <!-- OVERVIEW -->
+    <div class="match-overview">
+      <div class="matchoverview-table">
+        <table>
+          <!-- <thead>
+            <tr>
+              <th>Player Name</th>
+              <th>
+                <div class="text-center">
+                  SET 1
+                </div>
+              </th>
+              <th>
+                <div class="text-center">
+                  SET 1
+                </div>
+              </th>
+            </tr>
+          </thead> -->
+          <tbody>
+            <tr>
+              <td>
+                <label for="">
+                  PLAYER NAME
+                </label>
+              </td>
+              <td ng-repeat="set in match.resultsRacquet.players[0].sets track by $index">
+                <div class="text-center">
+                  <label for="">SET {{$index+1}}</label>
+                </div>
+              </td>
+              <!-- <td>
+                <div class="text-center">
+                  SET 1
+                </div>
+              </td> -->
+            </tr>
+            <tr ng-repeat="player in match.resultsRacquet.players track by $index ">
+              <td>
+                <div class="matchoverview-playername">
+                  {{player.fullName}}
+                </div>
+              </td>
+              <td ng-repeat="set in player.sets track by $index">
+                <div class="match-pointholder">
+                  {{set.point}}
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- OVERVIEW END -->
+    <!-- MATCH SCORES -->
+    <div class="matchcenter-row clearfix">
+      <div class="col-50" ng-repeat="player in match.resultsRacquet.players track by $index ">
+        <div class="player-card">
+          <p class="m-clear">{{player.fullName}}</p>
+          <p>{{player.sfaId}}</p>
+        </div>
+        <div class="player-scorecard clearfix" ng-repeat="set in player.sets track by $index">
+          <label>SET {{$index+1}}</label>
+          <div class="scoreholder"  ng-if="match.sport.sportslist.name=='Tennis Singles'">
+            <label>ACE</label>
+            <div class="match-pointholder">
+              {{set.ace}}
+            </div>
+          </div>
+          <div class="scoreholder">
+            <label>WINNER</label>
+            <div class="match-pointholder">
+              {{set.winner}}
+            </div>
+          </div>
+          <div class="scoreholder">
+            <label>Unforced Error</label>
+            <div class="match-pointholder">
+              {{set.unforcedError}}
+            </div>
+          </div>
+          <div class="scoreholder" ng-if="currentMatch.sport.sportslist.name=='Badminton Singles' || currentMatch.sport.sportslist.name == 'Table Tennis Singles' || currentMatch.sport.sportslist.name == 'Squash'">
+            <label>Service Error</label>
+            <div class="match-pointholder">
+              {{set.serviceError}}
+            </div>
+          </div>
+          <div class="scoreholder" ng-if="currentMatch.sport.sportslist.name=='Tennis Singles'">
+            <label>Double Faults</label>
+            <div class="match-pointholder">
+              {{set.doubleFaults}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- MATCH SCORES END -->
+  </div>
+  <!-- CONTENT END -->
+</div>
+<!-- <pre>{{match|json}}</pre> -->
