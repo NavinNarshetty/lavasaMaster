@@ -11,7 +11,9 @@
         <!-- GUIDELINES SECTION -->
         <section class="form-card">
           <div class="formregister-mtb20">
-            <p class="formregister-heading text-uppercase">Registration for SFA Championship <span>2018-2019</span> <span>Mumbai</span> is a 2-Step Process</p>
+            <p class="formregister-heading text-uppercase">Registration for SFA Championship
+              <span>2018-2019</span>
+              <span>Mumbai</span> is a 2-Step Process</p>
             <!-- STEP 1 -->
             <p class="m-clear formregister-heading">STEP 1: Player Registration</p>
             <p>Select a package, fill personal details and make payment.</br>
@@ -56,17 +58,21 @@
                   <div class="">
                     <div class="upgradepackage-radioholder">
                       <label for="packageRadio{{$index}}" class="sfa-radiobox" ng-repeat="package in packages| orderBy:'order' track by $index">
-                        <input type="radio" name="packageRadio" id="packageRadio{{$index}}" value="{{package._id}}" class="form-control" ng-model="formData.package" ng-change="setPackageDetails()" required>
+                        <input type="radio" name="packageRadio" id="packageRadio{{$index}}" value="{{package._id}}" class="form-control" ng-model="formData.package"
+                          ng-change="setPackageDetails()" required>
                         <span class="sfa-radio"></span>
                         <div class="upgradepackage-radiocontent" ng-class="{'package-radio-blue': package.color == 'blue', 'package-radio-green': package.color == 'green', 'package-radio-red': package.color == 'red', 'package-radio-yellow': package.color == 'yellow'}">
-                          <span class="upgradepackage-radioprice"><span class="upgradepackage-radioinr fa fa-inr"></span>{{package.finalPrice}}</span>
+                          <span class="upgradepackage-radioprice">
+                            <span class="upgradepackage-radioinr fa fa-inr"></span>{{package.finalPrice}}</span>
                           <span class="upgradepackage-radioname">{{package.name}}</span>
                         </div>
                       </label>
                     </div>
                     <p class="">Kindly Note: These prices are part of the EARLY BIRD OFFER valid for the first 7500 registrations. </p>
                     <div class="">
-                      <button type="button" class="btn formregister-link" ng-click="viewPackage()">Click Here to <span ng-show="!showPackageDetail">View</span><span ng-show="showPackageDetail">Hide</span> Package Details</button>
+                      <button type="button" class="btn formregister-link" ng-click="viewPackage()">Click Here to
+                        <span ng-show="!showPackageDetail">View</span>
+                        <span ng-show="showPackageDetail">Hide</span> Package Details</button>
                     </div>
                     <div class="registerform-packagetable" ng-show="showPackageDetail">
                       <sfa-package-table user="athlete" caption="hello" cashback="true"></sfa-package-table>
@@ -130,8 +136,8 @@
                 <div class="form-group">
                   <label for="" class="control-label col-sm-2">*{{type|firstcapitalize}} Landline No:</label>
                   <div class="col-sm-9">
-                    <input type="text" name="schoolContact" placeholder="Enter Landline Number" class="form-control" minlength="10" maxlength="11" ng-model="formData.atheleteSchoolContact"
-                      only-Digits required>
+                    <input type="text" name="schoolContact" placeholder="Enter Landline Number" class="form-control" minlength="10" maxlength="11"
+                      ng-model="formData.atheleteSchoolContact" only-Digits required>
                     <div class="label label-danger pull-right" ng-if="formAthlete.schoolContact.$invalid && formAthlete.schoolContact.$touched">Please Enter Your {{type | firstcapitalize}} Contact</div>
                   </div>
                 </div>
@@ -148,8 +154,8 @@
                   <div class="registerform-uploadimageholder">
                     <div class="register-imageplace" ng-if="show==1 && formData.atheleteSchoolIdImage">
                       <a fancybox href="{{formData.atheleteSchoolIdImage |serverimage2}}">
-                          <img ng-src="{{formData.atheleteSchoolIdImage |serverimage2}}" class="img-responsive">
-                        </a>
+                        <img ng-src="{{formData.atheleteSchoolIdImage |serverimage2}}" class="img-responsive">
+                      </a>
                     </div>
                   </div>
                   <div class="hover-img" ng-if="show==1 && formData.atheleteSchoolIdImage" ng-click="removeImage(formData.atheleteSchoolIdImage, 'schoolId')">
@@ -170,8 +176,8 @@
                   <div class="form-group has-feedback" ng-class="{'has-success': passwordMatch}">
                     <label class="control-label col-sm-4">*Create Password:</label>
                     <div class="col-sm-8">
-                      <input type="password" placeholder="Minimum 8 Characters" name="athletePassword" minlength="8" ng-model="formData.password" ng-change="clearPassword()"
-                        class="form-control" required>
+                      <input type="password" placeholder="Minimum 8 Characters" name="athletePassword" minlength="8" ng-model="formData.password"
+                        ng-change="clearPassword()" class="form-control" required>
                       <span class="fa fa-check form-control-feedback" ng-show="passwordMatch"></span>
                       <div class="label label-danger pull-right" ng-if="formAthlete.athletePassword.$invalid && formAthlete.athletePassword.$touched">Please Enter Password with 8 characters</div>
                     </div>
@@ -179,8 +185,9 @@
                   <div class="form-group has-feedback" ng-class="{'has-success': passwordMatch}">
                     <label class="control-label col-sm-4">*Confirm Password:</label>
                     <div class="col-sm-8">
-                      <input type="password" name="athletePasswordConfirm" minlength="8" class="form-control" ng-model="formData.confirmPassword" placeholder="Re-enter Password to Confirm Password"
-                        ng-change="checkPassword(formData.confirmPassword);" required>
+                      <input type="password" name="athletePasswordConfirm" minlength="8" class="form-control" ng-model="formData.confirmPassword"
+                        placeholder="Re-enter Password to Confirm Password" ng-change="checkPassword(formData.confirmPassword);"
+                        required>
                       <span class="fa fa-check form-control-feedback" ng-show="passwordMatch"></span>
                       <!-- <div class="label label-success pull-right" ng-if="!showConfirm && formData.confirmPassword.length>0"><i class="fa fa-check"></i> Passwords matched</div> -->
                       <div class="label label-danger pull-right" ng-if="formAthlete.athletePasswordConfirm.$invalid && formAthlete.athletePasswordConfirm.$touched || showConfirm">{{passwordError}}</div>
@@ -203,7 +210,7 @@
               <div class="form-group" ng-if="formFlag === 'edit'">
                 <label for="sfaid" class="control-label col-sm-2">*SFA ID:</label>
                 <div class="col-sm-4">
-                  <input type="text" name="sfaid" placeholder="SFA ID" class="form-control" ng-model="formData.sfaId" ng-readonly="formFlag === 'edit'" >
+                  <input type="text" name="sfaid" placeholder="SFA ID" class="form-control" ng-model="formData.sfaId" ng-readonly="formFlag === 'edit'">
                 </div>
               </div>
               <!-- FIRST NAME END -->
@@ -211,7 +218,8 @@
               <div class="form-group">
                 <label for="firstName" class="control-label col-sm-2">*First Name:</label>
                 <div class="col-sm-10">
-                  <input type="text" name="firstName" placeholder="Enter Your First Name" class="form-control" ng-model="formData.firstName" ng-readonly="formFlag === 'edit'" capitalize only-alpha required>
+                  <input type="text" name="firstName" placeholder="Enter Your First Name" class="form-control" ng-model="formData.firstName"
+                    ng-readonly="formFlag === 'edit'" capitalize only-alpha required>
                   <div class="label label-danger pull-right" ng-if="formAthlete.firstName.$invalid && formAthlete.firstName.$touched">Please Enter Your First Name</div>
                 </div>
               </div>
@@ -220,7 +228,8 @@
               <div class="form-group">
                 <label for="middleName" class="control-label col-sm-2">Middle Name:</label>
                 <div class="col-sm-10">
-                  <input type="text" name="middleName" placeholder="Enter Your Middle Name" class="form-control" ng-model="formData.middleName" ng-readonly="formFlag === 'edit'" capitalize only-alpha>
+                  <input type="text" name="middleName" placeholder="Enter Your Middle Name" class="form-control" ng-model="formData.middleName"
+                    ng-readonly="formFlag === 'edit'" capitalize only-alpha>
                 </div>
               </div>
               <!-- MIDDLE NAME END -->
@@ -228,7 +237,8 @@
               <div class="form-group">
                 <label for="surname" class="control-label col-sm-2">*Surname:</label>
                 <div class="col-sm-10">
-                  <input type="text" name="surname" placeholder="Enter Your Surname" class="form-control" ng-model="formData.surname" capitalize ng-readonly="formFlag === 'edit'" only-alpha required>
+                  <input type="text" name="surname" placeholder="Enter Your Surname" class="form-control" ng-model="formData.surname" capitalize
+                    ng-readonly="formFlag === 'edit'" only-alpha required>
                   <div class="label label-danger pull-right" ng-if="formAthlete.surname.$invalid && formAthlete.surname.$touched">Please Enter Your Surname</div>
                 </div>
               </div>
@@ -238,13 +248,15 @@
                 <label for="radio04" class="control-label col-sm-2">*Gender:</label>
                 <div class="col-sm-8">
                   <label for="radio04" class="sfa-radiobox">
-                    <input type="radio" name="radio1" id="radio04" value="male" class="form-control" ng-model="formData.gender" ng-disabled="formFlag == 'edit'" required>
+                    <input type="radio" name="radio1" id="radio04" value="male" class="form-control" ng-model="formData.gender" ng-disabled="formFlag == 'edit'"
+                      required>
                     <span class="sfa-radio"></span>
                     <span class="sfa-radio-disabled"></span>
                     Male
                   </label>
                   <label for="radio03" class="sfa-radiobox">
-                    <input type="radio" name="radio1" id="radio03" value="female" class="form-control" ng-model="formData.gender" ng-disabled="formFlag == 'edit'" required>
+                    <input type="radio" name="radio1" id="radio03" value="female" class="form-control" ng-model="formData.gender" ng-disabled="formFlag == 'edit'"
+                      required>
                     <span class="sfa-radio"></span>
                     <span class="sfa-radio-disabled"></span>
                     Female
@@ -260,21 +272,21 @@
                     <label for="gradestd" class="control-label col-sm-4">*Grade/ Standard:</label>
                     <div class="col-sm-8">
                       <select class="form-control" name="gradestd" ng-model="formData.standard" required>
-                          <option style="display:none"></option>
-                          <option>Jr. KG </option>
-                          <option>Sr. KG </option>
-                          <option>1 </option>
-                          <option>2 </option>
-                          <option>3 </option>
-                          <option>4 </option>
-                          <option>5 </option>
-                          <option>6 </option>
-                          <option>7 </option>
-                          <option>8 </option>
-                          <option>9 </option>
-                          <option>10 </option>
-                          <option>11 </option>
-                          <option>12 </option>
+                        <option style="display:none"></option>
+                        <option>Jr. KG </option>
+                        <option>Sr. KG </option>
+                        <option>1 </option>
+                        <option>2 </option>
+                        <option>3 </option>
+                        <option>4 </option>
+                        <option>5 </option>
+                        <option>6 </option>
+                        <option>7 </option>
+                        <option>8 </option>
+                        <option>9 </option>
+                        <option>10 </option>
+                        <option>11 </option>
+                        <option>12 </option>
                       </select>
                       <div class="label label-danger pull-right" ng-if="formAthlete.gradestd.$invalid && formAthlete.gradestd.$touched">Select Grade/Standard</div>
                     </div>
@@ -289,15 +301,15 @@
                         <label class="control-label col-sm-6">Blood Group:</label>
                         <div class="col-sm-6">
                           <select class="sfa-drop2 sfa4 blood-mob2 sf-list form-control" ng-model="formData.bloodGroup">
-                              <option style="display:none"></option>
-                              <option>AB - </option>
-                              <option>AB + </option>
-                              <option>A - </option>
-                              <option>A + </option>
-                              <option>B -</option>
-                              <option>B + </option>
-                              <option>O - </option>
-                              <option>O + </option>
+                            <option style="display:none"></option>
+                            <option>AB - </option>
+                            <option>AB + </option>
+                            <option>A - </option>
+                            <option>A + </option>
+                            <option>B -</option>
+                            <option>B + </option>
+                            <option>O - </option>
+                            <option>O + </option>
                           </select>
                         </div>
                       </div>
@@ -323,8 +335,8 @@
                   <div class="registerform-uploadimageholder " ng-if="show==1 && formData.photograph">
                     <div class="register-imageplace">
                       <a fancybox href="{{formData.photograph |serverimage2}}">
-                          <img ng-src="{{formData.photograph |serverimage2}} " class="img-responsive">
-                        </a>
+                        <img ng-src="{{formData.photograph |serverimage2}} " class="img-responsive">
+                      </a>
                     </div>
                   </div>
                   <div class="hover-img " ng-if="show==1 && formData.photograph">
@@ -401,12 +413,12 @@
                     <label for="" class="control-label col-sm-4">*Upload Age Proof:</label>
                     <div class="col-sm-8" ng-init="show=0">
                       <select class="sfa-drop2 sf-list sfa-mob2 label-two form-control" name="ageProof " ng-model="formData.ageProof" required>
-                          <option style="display:none "></option>
-                          <option>Aadhar Card with DD/MM/YYYY format preferred</option>
-                          <option value="aadharAge">Aadhar Card with year + Photo ID with DD/MM/YYYY format preferred</option>
-                          <option value="birthCert">Birth Certificate + Photo ID</option>
-                          <option>PAN Card</option>
-                          <option>Passport</option>
+                        <option style="display:none "></option>
+                        <option>Aadhar Card with DD/MM/YYYY format preferred</option>
+                        <option value="aadharAge">Aadhar Card with year + Photo ID with DD/MM/YYYY format preferred</option>
+                        <option value="birthCert">Birth Certificate + Photo ID</option>
+                        <option>PAN Card</option>
+                        <option>Passport</option>
                       </select>
                       <!-- IMAGE 1 UPLOAD -->
                       <div class="dirctive-op upload5 Upload-Age" ng-init="showBirthImg = 0;showPhotoImg = 0">
@@ -431,8 +443,8 @@
                         <div class="registerform-uploadimageholder ">
                           <div class="register-imageplace registerform-imgholder-float">
                             <a fancybox href="{{formData.birthImage |serverimage2}}">
-                                <img ng-src="{{formData.birthImage |serverimage2}} " class="img-responsive">
-                              </a>
+                              <img ng-src="{{formData.birthImage |serverimage2}} " class="img-responsive">
+                            </a>
                           </div>
                         </div>
                         <div class="label label-info text-uppercase" ng-if="formData.ageProof == 'aadharAge' || formData.ageProof =='birthCert'">Image 1</div>
@@ -451,10 +463,10 @@
                           </div>
                           <div class="register-imageplace ">
                             <a fancybox href="{{formData.birthImage |serverimage2}}">
-                                    <img ng-src="{{formData.birthImage |serverimage2}} " class="img-responsive">
-                                  </a>
+                              <img ng-src="{{formData.birthImage |serverimage2}} " class="img-responsive">
+                            </a>
                           </div>
-                          <div class="label label-info text-uppercase" ng-if="(formData.ageProof == 'aadharAge' || formData.ageProof =='birthCert') && showBirthImg == 1 && formData.birthImage" >Image 1</div>
+                          <div class="label label-info text-uppercase" ng-if="(formData.ageProof == 'aadharAge' || formData.ageProof =='birthCert') && showBirthImg == 1 && formData.birthImage">Image 1</div>
                         </div>
                         <!-- BIRTH IMAGE DISPLAY END -->
                         <!-- PHOTO IMAGE DISPLAY -->
@@ -465,8 +477,8 @@
                           </div>
                           <div class="register-imageplace ">
                             <a fancybox href="{{formData.photoImage |serverimage2}}">
-                                    <img ng-src="{{formData.photoImage |serverimage2}} " class="img-responsive">
-                                  </a>
+                              <img ng-src="{{formData.photoImage |serverimage2}} " class="img-responsive">
+                            </a>
                           </div>
                           <div class="label label-info text-uppercase">Image 2</div>
                         </div>
@@ -506,10 +518,10 @@
                   <div class="yes-level sf-list ">
                     <label class="sportlevel ">Level:</label>
                     <select class="sfa-drop2 sfa-drop5 sf-list " ng-model="sportLevel.level " required>
-                       <option style="display:none "></option>
-                       <option>National</option>
-                       <option>State</option>
-                       <option>International</option>
+                      <option style="display:none "></option>
+                      <option>National</option>
+                      <option>State</option>
+                      <option>International</option>
                     </select>
                   </div>
                   <!-- <div class=" " ng-if="isCollege == false && sfaCity=='Mumbai'">
@@ -606,12 +618,13 @@
                       <div class="registerform-uploadimageholder" ng-if="show==1 && sportLevel.certificateImage">
                         <div class="register-imageplace ">
                           <a fancybox href="{{sportLevel.certificateImage |serverimage2}}">
-                                <img ng-src="{{sportLevel.certificateImage |serverimage2}} " class="img-responsive">
-                              </a>
+                            <img ng-src="{{sportLevel.certificateImage |serverimage2}} " class="img-responsive">
+                          </a>
                         </div>
                       </div>
                       <div class="hover-img " ng-if="show==1 && sportLevel.certificateImage">
-                        <img src="img/icon/x.png " alt="logo" ng-click="deleteCertificate(sportLevel.certificateImage, 'levelCertificate', $index) " class="img-responsive myicon ">
+                        <img src="img/icon/x.png " alt="logo" ng-click="deleteCertificate(sportLevel.certificateImage, 'levelCertificate', $index) "
+                          class="img-responsive myicon ">
                       </div>
                     </div>
                   </div>
@@ -666,8 +679,8 @@
                 <div class="col-sm-8">
                   <div class="input-group">
                     <span class="input-group-addon">*Email:</span>
-                    <input type="email" name="email1" ng-model="formData.email" ng-change="checkChange('email')" class="form-control bor-t sfa-drop" placeholder="Enter Email"
-                      required>
+                    <input type="email" name="email1" ng-model="formData.email" ng-change="checkChange('email')" class="form-control bor-t sfa-drop"
+                      placeholder="Enter Email" required>
                     <div class="input-group-btn" ng-if="formFlag == 'create' || editEmail == true">
                       <button type="button" class=" btn-default formregister-btn" ng-click="sendEmailOTP(formData.email)">Send OTP </button>
                     </div>
@@ -728,7 +741,7 @@
                 <div class="col-md-3 col-sm-3 col-xs-12">
                   <select class="sfa-drop2 form-control sf-list" name="city" ng-model="formData.city" ng-options="cities for cities in city"
                     required>
-                    </select>
+                  </select>
                   <div class="label label-danger pull-right" ng-if="formAthlete.city.$invalid && formAthlete.city.$touched">Select Your City</div>
                 </div>
                 <label class="control-label col-sm-2 col-xs-12">*Pin Code:</label>
@@ -748,13 +761,21 @@
               <div class="checkbox-custom hidden-xs">
                 <input type="checkbox" name="checkIhav" ng-checked="termsCheck(formData.termsAndCondition)" ng-model="formData.termsAndCondition"
                   id="test5" />
-                <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span>*I have carefully read and understood the <a href="https://storage.googleapis.com/sportsforall/termplayer.pdf#toolbar=0" fancybox class="fancybox.iframe " title="Click here"><strong>Terms & Conditions</strong></a>  of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all
-                of them.
-                    </label>
+                <label for="test5" class="sf-list custom-a" style="padding-left: 20px;">
+                  <span></span>*I have carefully read and understood the
+                  <a href="https://storage.googleapis.com/sportsforall/termplayer.pdf#toolbar=0" fancybox class="fancybox.iframe " title="Click here">
+                    <strong>Terms & Conditions</strong>
+                  </a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all
+                  of them.
+                </label>
 
                 <div class="visible-xs">
-                  <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span>*I have carefully read and understood the <a href="https://storage.googleapis.com/sportsforall/termplayer.pdf#toolbar=0" target="_new" class="" title="Click here"><strong>Terms & Conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all
-                  of them.
+                  <label for="test5" class="sf-list custom-a" style="padding-left: 20px;">
+                    <span></span>*I have carefully read and understood the
+                    <a href="https://storage.googleapis.com/sportsforall/termplayer.pdf#toolbar=0" target="_new" class="" title="Click here">
+                      <strong>Terms & Conditions</strong>
+                    </a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to
+                    all of them.
                   </label>
                 </div>
 
@@ -766,8 +787,12 @@
               <div class="checkbox-custom visible-xs">
                 <input type="checkbox" name="checkIhav" ng-checked="termsCheck(formData.termsAndCondition)" ng-model="formData.termsAndCondition"
                   id="test5" />
-                <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span>*Tick the box to accept all <a href="https://storage.googleapis.com/sportsforall/termplayer.pdf#toolbar=0" target="_new" class="" title="Click here"><strong>Terms & Conditions</strong></a>
-                  </label>
+                <label for="test5" class="sf-list custom-a" style="padding-left: 20px;">
+                  <span></span>*Tick the box to accept all
+                  <a href="https://storage.googleapis.com/sportsforall/termplayer.pdf#toolbar=0" target="_new" class="" title="Click here">
+                    <strong>Terms & Conditions</strong>
+                  </a>
+                </label>
                 <div class="label label-danger pull-right" ng-show="showTerm">Please accept terms and condition</div>
               </div>
               <!-- CHECKBOX MOBILE END -->
@@ -784,25 +809,25 @@
                       <label class="col-md-2 col-sm-2 col-xs-12 sf-list"> *Relation:</label>
                       <div class="col-md-8 col-sm-8 col-xs-12 sf-list">
                         <label for="{{'radio02'+$index}}" class="sfa-radiobox">
-                                  <input ng-model="x.relation" type="radio" id="{{'radio02'+$index}}" name="radio99" value="mother" required>
-                                  <span class="sfa-radio"></span>
-                                  Mother
-                                </label>
+                          <input ng-model="x.relation" type="radio" id="{{'radio02'+$index}}" name="radio99" value="mother" required>
+                          <span class="sfa-radio"></span>
+                          Mother
+                        </label>
                         <label for="{{'radio09'+$index}}" class="sfa-radiobox">
-                                  <input ng-model="x.relation" type="radio" id="{{'radio09'+$index}}" name="radio99" value="father" required>
-                                  <span class="sfa-radio"></span>
-                                  Father
-                                </label>
+                          <input ng-model="x.relation" type="radio" id="{{'radio09'+$index}}" name="radio99" value="father" required>
+                          <span class="sfa-radio"></span>
+                          Father
+                        </label>
                         <label for="{{'radio10'+$index}}" class="sfa-radiobox">
-                                  <input ng-model="x.relation" type="radio" id="{{'radio10'+$index}}" name="radio99" value="guardian" required>
-                                  <span class="sfa-radio"></span>
-                                  Guardian
-                                </label>
+                          <input ng-model="x.relation" type="radio" id="{{'radio10'+$index}}" name="radio99" value="guardian" required>
+                          <span class="sfa-radio"></span>
+                          Guardian
+                        </label>
                         <label for="{{'radio41'+$index}}" class="sfa-radiobox">
-                                  <input ng-model="x.relation" type="radio" id="{{'radio41'+$index}}" name="radio99" value="coach" required>
-                                  <span class="sfa-radio"></span>
-                                  Coach
-                                </label>
+                          <input ng-model="x.relation" type="radio" id="{{'radio41'+$index}}" name="radio99" value="coach" required>
+                          <span class="sfa-radio"></span>
+                          Coach
+                        </label>
                       </div>
                     </div>
                   </div>
@@ -880,7 +905,9 @@
               <div class="formregister-mtb20">
                 <p class="r-titillium-web-semibold text-uppercase">PAYMENT TO BE MADE WITHIN 4 DAYS.</p>
                 <p>Selecting this option will enable you to pay the registration fee of Rs 399/ 599/ 899/ 1999 (+GST) by Cash/
-                  Cheque/ Demand Draft in favour of <span class="r-titillium-web-semibold">'SFA Sporting Services Pvt Ltd'</span>                  which is to be couriered/ hand delivered <span class="r-titillium-web-semibold">WITHIN 4 WORKING DAYS</span>                  to:</p>
+                  Cheque/ Demand Draft in favour of
+                  <span class="r-titillium-web-semibold">'SFA Sporting Services Pvt Ltd'</span> which is to be couriered/ hand delivered
+                  <span class="r-titillium-web-semibold">WITHIN 4 WORKING DAYS</span> to:</p>
               </div>
               <div class="formregister-mtb20">
                 <p class="r-titillium-web-semibold">17A, Raviraj House, 6th Floor, Saraswati Road, Off Linking Road, Santacruz (West) - 400054</p>
@@ -897,7 +924,9 @@
                         <tr>
                           <td>
                             <div class="text-left">
-                              Registration Fees - <span>{{formData.packageName}}</span></td>
+                              Registration Fees -
+                              <span>{{formData.packageName}}</span>
+                          </td>
                           </div>
                           <td>
                             <span>{{formData.amountToPay}}</span>
@@ -916,7 +945,9 @@
                               <button type="button" class="formregister-link" ng-show="promoApplied" ng-click="setPackageDetails()">Remove</button>
                             </div>
                           </td>
-                          <td>- <span>{{formData.discount}}</span></td>
+                          <td>-
+                            <span>{{formData.discount}}</span>
+                          </td>
                         </tr>
                         <!-- PROMO CODE END -->
                         <!-- IF IGST -->
@@ -935,7 +966,7 @@
                         <tr ng-if="formData.cgstAmt != ''">
                           <td>
                             <div class="text-left">
-                              +CST@{{formData.cgstPercent}}%
+                              +CGST@{{formData.cgstPercent}}%
                             </div>
                           </td>
                           <td>
@@ -946,7 +977,7 @@
                         <!-- IF SGST  -->
                         <tr ng-if="formData.sgstAmt != ''">
                           <td>
-                            <div class="text-left">+GST@{{formData.sgstPercent}}%</div>
+                            <div class="text-left">+SGST@{{formData.sgstPercent}}%</div>
                           </td>
                           <td>
                             <span>{{formData.sgstAmt}}</span>
@@ -960,7 +991,9 @@
                               <label for="" class="display-block">Refund Amount</label>
                             </div>
                           </td>
-                          <td>- <span>{{formData.refundAmount}}</span></td>
+                          <td>-
+                            <span>{{formData.refundAmount}}</span>
+                          </td>
                         </tr>
                         <!-- REFUND END -->
                         <tr>
