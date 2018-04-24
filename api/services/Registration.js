@@ -364,7 +364,7 @@ var model = {
                                             var institutionType = complete[0].institutionType.toUpperCase();
                                             var prefixType = institutionType.charAt(0);
                                             prefixCity = 'J';
-                                            prefixType = 'G';
+                                            prefixType = 'GS';
                                             console.log("prefixCity", prefixCity);
                                             Registration.find({
                                                 "status": 'Verified'

@@ -297,14 +297,15 @@ var model = {
                         } else if (_.isEmpty(team)) {
                             if (mainData.property.sfaCity == 'Mumbai') {
                                 var year = new Date().getFullYear().toString().substr(2, 2);
-                                var teamid = "M" + "T" + year + 1;
+                                var teamid = "JG" + "T" + year + 1;
                                 callback(null, teamid);
                             } else if (mainData.property.sfaCity == "Hyderabad") {
                                 var year = new Date().getFullYear().toString().substr(2, 2);
-                                var teamid = "H" + "T" + year + 1;
+                                var teamid = "JG" + "T" + year + 1;
                                 callback(null, teamid);
                             } else {
                                 var city = mainData.property.sfaCity.substr(0, 1);
+                                city = 'JG';
                                 var year = new Date().getFullYear().toString().substr(2, 2);
                                 var teamid = city + "T" + year + 1;
                                 callback(null, teamid);
@@ -313,18 +314,19 @@ var model = {
                             if (mainData.property.sfaCity == 'Mumbai') {
                                 // console.log("autoID", team.autoID);
                                 var year = new Date().getFullYear().toString().substr(2, 2);
-                                var teamid = "M" + "T" + year + ++team.autoID;
+                                var teamid = "JG" + "T" + year + ++team.autoID;
                                 // console.log("teamid", teamid);
                                 callback(null, teamid);
                             } else if (mainData.property.sfaCity == "Hyderabad") {
                                 // console.log("autoID", team.autoID);
                                 var year = new Date().getFullYear().toString().substr(2, 2);
-                                var teamid = "H" + "T" + year + ++team.autoID;
+                                var teamid = "JG" + "T" + year + ++team.autoID;
                                 // console.log("teamid", teamid);
                                 callback(null, teamid);
                             } else {
                                 // console.log("autoID", team.autoID);
                                 var city = mainData.property.sfaCity.substr(0, 1);
+                                city = 'JG';
                                 var year = new Date().getFullYear().toString().substr(2, 2);
                                 var teamid = city + "T" + year + ++team.autoID;
                                 // console.log("teamid", teamid);
