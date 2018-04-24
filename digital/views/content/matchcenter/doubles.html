@@ -1,4 +1,11 @@
 <div class="printpage-mc-raquet">
+  <!-- TITLE -->
+  <div class="matchcenter-title">
+    <div class="matchcenter-header">
+      Motilal Oswal JITO National Games, 2018 (Mumbai Zone)
+    </div>
+  </div>
+  <!-- TITLE END -->
   <!-- HEADER -->
   <div class="matchstart-header">
     <!-- HEADER LOGO  -->
@@ -9,7 +16,7 @@
     <!-- HEADER CONTENT  -->
     <div class="matchcenter-heading">
       <span class="pull-right">{{match.matchId}}</span>
-      <p class="m-clear"><span>{{match.sport.sportslist.sportsListSubCategory.name}} Badminton</span> - <span>{{match.sport.ageGroup.name}}U-14</span> <span>{{match.sport.gender}} Male</span> <span>{{match.round}} Round  2</span></p>
+      <p class="m-clear"><span>{{match.sport.sportslist.sportsListSubCategory.name}}</span> - <span>{{match.sport.ageGroup.name}}</span> <span>{{match.sport.gender}} </span> <span>{{match.round}}</span></p>
     </div>
     <!-- HEADER CONTENT END  -->
   </div>
@@ -18,53 +25,32 @@
   <div class="matchcenter-content">
     <!-- WINNER -->
     <div class="matchwinner">
-      <p>Match Winner: <span class="matchwinner-title"> {{match.winnerName}}Raj Shah </span></p>
+      <p>Match Winner: <label class="matchwinner-title"> {{match.winner.schoolName}}</label></p>
     </div>
     <!-- WINNER END -->
     <!-- OVERVIEW -->
     <div class="match-overview">
       <div class="matchoverview-table">
         <table>
-          <!-- <thead>
-            <tr>
-              <th>Player Name</th>
-              <th>
-                <div class="text-center">
-                  SET 1
-                </div>
-              </th>
-              <th>
-                <div class="text-center">
-                  SET 1
-                </div>
-              </th>
-            </tr>
-          </thead> -->
           <tbody>
             <tr>
               <td>
-                <label for="">
-                  PLAYER NAME
-                </label>
+                <label for="">Team</label>
               </td>
-              <td ng-repeat="set in match.resultsRacquet.players[0].sets track by $index">
+              <td ng-repeat="set in match.resultsRacquet.teams[0].sets track by $index">
                 <div class="text-center">
                   <label for="">SET {{$index+1}}</label>
                 </div>
               </td>
-              <!-- <td>
-                <div class="text-center">
-                  SET 1
-                </div>
-              </td> -->
             </tr>
-            <tr ng-repeat="player in match.resultsRacquet.players track by $index ">
+            <tr ng-repeat="team in match.resultsRacquet.teams track by $index ">
               <td>
                 <div class="matchoverview-playername">
-                  {{player.fullName}}
+                  <label class="m-clear">{{team.teamId}}</label>
+                  <p class="m-clear">{{team.schoolName}}</p>
                 </div>
               </td>
-              <td ng-repeat="set in player.sets track by $index">
+              <td ng-repeat="set in team.sets track by $index">
                 <div class="match-pointholder">
                   {{set.point}}
                 </div>
@@ -77,14 +63,18 @@
     <!-- OVERVIEW END -->
     <!-- MATCH SCORES -->
     <div class="matchcenter-row clearfix">
-      <div class="col-50" ng-repeat="player in match.resultsRacquet.players track by $index ">
+      <div class="col-50" ng-repeat="team in match.resultsRacquet.teams track by $index ">
         <div class="player-card">
-          <p class="m-clear">{{player.fullName}}</p>
-          <p>{{player.sfaId}}</p>
+          <label class="m-clear">{{team.schoolName}}</label>
+          <label>{{team.teamId}}</label>
+          <div class="teamplayer-card" ng-repeat= "player in team.players track by $index">
+            <p class="m-clear"><span>{{player.sfaId}}</span> - <span>{{player.fullName}}</span></p>
+          </div>
         </div>
-        <div class="player-scorecard clearfix" ng-repeat="set in player.sets track by $index">
+
+        <div class="player-scorecard clearfix" ng-repeat="set in team.sets track by $index">
           <label>SET {{$index+1}}</label>
-          <div class="scoreholder"  ng-if="match.sport.sportslist.name=='Tennis Singles'">
+          <div class="scoreholder"  ng-if="match.sport.sportslist.name=='Tennis Doubles'">
             <label>ACE</label>
             <div class="match-pointholder">
               {{set.ace}}
@@ -102,13 +92,13 @@
               {{set.unforcedError}}
             </div>
           </div>
-          <div class="scoreholder" ng-if="currentMatch.sport.sportslist.name=='Badminton Singles' || currentMatch.sport.sportslist.name == 'Table Tennis Singles' || currentMatch.sport.sportslist.name == 'Squash'">
+          <div class="scoreholder" ng-if="match.sport.sportslist.name=='Badminton Doubles' || match.sport.sportslist.name == 'Table Tennis Doubles' || match.sport.sportslist.name == 'Squash'">
             <label>Service Error</label>
             <div class="match-pointholder">
               {{set.serviceError}}
             </div>
           </div>
-          <div class="scoreholder" ng-if="currentMatch.sport.sportslist.name=='Tennis Singles'">
+          <div class="scoreholder" ng-if="match.sport.sportslist.name=='Tennis Doubles'">
             <label>Double Faults</label>
             <div class="match-pointholder">
               {{set.doubleFaults}}

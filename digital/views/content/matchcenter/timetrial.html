@@ -1,0 +1,103 @@
+<div class="printpage-mc-raquet">
+  <!-- TITLE -->
+  <div class="matchcenter-title">
+    <div class="matchcenter-header">
+      Motilal Oswal JITO National Games, 2018 (Mumbai Zone)
+    </div>
+  </div>
+  <!-- TITLE END -->
+  <!-- HEADER -->
+  <div class="matchstart-header">
+    <!-- HEADER LOGO  -->
+    <div class="matchcenter-sporticon">
+      <img ng-src="{{match.sportName|sporticon:'icon'}}" alt="{{match.sportName}}" title="{{match.sportName}}" class="img-responsive">
+    </div>
+    <!-- HEADER LOGO END -->
+    <!-- HEADER CONTENT  -->
+    <div class="matchcenter-heading">
+      <span class="pull-right">{{match.matchId}}</span>
+      <p class="m-clear"><span>{{match.sport.sportslist.sportsListSubCategory.name}}</span> - <span>{{match.sport.ageGroup.name}}</span> <span>{{match.sport.gender}} </span> <span>{{match.round}} </span></p>
+    </div>
+    <!-- HEADER CONTENT END  -->
+  </div>
+  <!-- HEADER END -->
+  <!-- CONTENT -->
+  <div class="matchcenter-content">
+    <div class="match-overview text-center">
+      <label for="">{{match.sport.sportslist.name}}</label>
+    </div>
+    <div class="matchcenter-timetrial-table">
+      <table>
+        <tr>
+          <td>
+            <label for="">Lane No</label>
+          </td>
+          <td ng-if="eventName === 'Swimming 4x50m Medley Relay'|| eventName==='Swimming 4x50m Freestyle Relay'">
+            <label for="">Team</label>
+          </td>
+          <td ng-if="eventName!='Swimming 4x50m Medley Relay' && eventName!='Swimming 4x50m Freestyle Relay'">
+            <label for="">Name</label>
+          </td>
+          <td ng-if="eventName!='Swimming 4x50m Medley Relay' && eventName!='Swimming 4x50m Freestyle Relay'">
+            <label for="">School</label>
+          </td>
+          <td class="text-center">
+            <label for="">Position</label>
+          </td>
+          <td class="text-center">
+            <label for="">Time</label>
+          </td>
+        </tr>
+        <!-- FOR INDIVIDUAL -->
+        <tr ng-repeat="player in match.resultHeat.players track by $index" ng-if="match.opponentsSingle.length>0">
+          <td>
+            <div class="text-center">{{player.laneNo}}</div>
+          </td>
+          <td>
+            <div class="text-capitalize">{{player.sfaId}} - {{player.fullname}}</div>
+          </td>
+          <td>
+            <div class="text-capitalize">
+              {{player.schoolname}}
+            </div>
+          </td>
+          <td>
+            <div class="text-capitalize text-center">
+              <span> {{player.result}}</span>
+              <span ng-if="!player.result">-</span>
+            </div>
+          </td>
+          <td>
+            <div class="text-capitalize text-center">
+              <span>{{player.time}}</span>
+              <span ng-if="!player.time">-</span>
+            </div>
+          </td>
+        </tr>
+        <!-- FOR INDIVIDUAL END -->
+        <tr ng-repeat="team in match.resultHeat.teams track by $index" ng-if="match.opponentsTeam.length>0">
+          <td>
+            <div class="text-center">{{team.laneNo}}</div>
+          </td>
+          <td>
+            <div class="text-capitalize">
+              {{match.opponentsTeam[$index].teamId}} - {{match.opponentsTeam[$index].schoolName}}
+            </div>
+          </td>
+          <td>
+            <div class="text-center">
+              {{team.result}}
+            </div>
+          </td>
+          <td>
+            <div class="text-center">
+              {{team.time}}
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <!-- CONTENT END -->
+</div>
+<!-- <pre>{{match|json}}</pre> -->

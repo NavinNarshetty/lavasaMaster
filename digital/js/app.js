@@ -231,6 +231,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'MatchCenterTeamCtrl'
         })
+        .state('matchcenter-timetrial', {
+            url: "/matchcenter/timetrial",
+            templateUrl: tempateURL,
+            controller: 'MatchCenterTimeTrialCtrl'
+        })
         // MATCH CENTERS END
         .state('form', {
             url: "/form",

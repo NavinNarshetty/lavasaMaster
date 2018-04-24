@@ -398,6 +398,13 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization, $
             callback(data)
           });
         },
+        apiCallWithData: function (url, formData, callback) {
+            $http.post(adminurl + url, formData).then(function (data) {
+                data = data.data;
+                callback(data);
+
+            });
+        },
 
         Boolean: function (str) {
             if (str == 'true' || str || str === true) {
