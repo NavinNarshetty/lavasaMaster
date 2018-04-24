@@ -119,25 +119,112 @@ var model = {
             count: maxRow
         };
         if (data.keyword == "") {
-            var matchObj = {
-                athlete: {
-                    $exists: true
+            Accounts.aggregate([{
+                    $lookup: {
+                        "from": "atheletes",
+                        "localField": "athlete",
+                        "foreignField": "_id",
+                        "as": "athlete"
+                    }
                 },
-                $or: [{
-                    paymentMode: {
-                        $ne: "online PAYU"
+
+                // Stage 2
+                {
+                    $unwind: {
+                        path: "$athlete",
+                    }
+                },
+
+                // Stage 3
+                {
+                    $lookup: {
+                        "from": "transactions",
+                        "localField": "transaction",
+                        "foreignField": "_id",
+                        "as": "transaction"
+                    }
+                },
+
+                // Stage 4
+                {
+                    $match: {
+
+                        $or: [{
+                                transaction: {
+                                    $gt: 1
+                                }
+                            },
+                            {
+                                "transaction.paymentMode": {
+                                    $ne: "online PAYU"
+                                }
+                            }, {
+                                "transaction.paymentStatus": {
+                                    $ne: "Pending"
+                                }
+                            }
+                        ]
+
+                    }
+                },
+                {
+                    $sort: {
+                        "createdAt": -1
                     }
                 }, {
-                    PayuId: {
-                        $exists: true,
+                    $skip: options.start
+                },
+                {
+                    $limit: options.count
+                }
+            ], function (err, returnReq) {
+                console.log("returnReq : ", returnReq);
+                if (err) {
+                    console.log(err);
+                    callback(null, err);
+                } else {
+                    if (_.isEmpty(returnReq)) {
+                        var count = returnReq.length;
+                        console.log("count", count);
+
+                        var data = {};
+                        data.options = options;
+
+                        data.results = returnReq;
+                        data.total = count;
+                        callback(null, data);
+                    } else {
+                        var count = returnReq.length;
+                        console.log("count", count);
+
+                        var data = {};
+                        data.options = options;
+
+                        data.results = returnReq;
+                        data.total = count;
+                        callback(null, data);
                     }
-                }]
-            };
-            var Search = Model.find(matchObj)
-                .order(options)
-                .deepPopulate("athlete athlete.school transaction")
-                .keyword(options)
-                .page(options, callback);
+                }
+            });
+            // var matchObj = {
+            //     athlete: {
+            //         $exists: true
+            //     },
+            //     $or: [{
+            //         paymentMode: {
+            //             $ne: "online PAYU"
+            //         }
+            //     }, {
+            //         PayuId: {
+            //             $exists: false
+            //         }
+            //     }]
+            // };
+            // var Search = Model.find(matchObj)
+            //     .order(options)
+            //     .deepPopulate("athlete athlete.school transaction")
+            //     .keyword(options)
+            //     .page(options, callback);
         } else {
             Accounts.aggregate(
                 [{
@@ -261,26 +348,116 @@ var model = {
             count: maxRow
         };
         if (data.keyword == "") {
-            var matchObj = {
-                school: {
-                    $exists: true
-                },
-                $or: [{
-                    paymentMode: {
-                        $ne: "online PAYU"
-                    }
-                }, {
-                    PayuId: {
-                        $exists: false,
-                    }
-                }]
-            };
+            Accounts.aggregate(
+                [{
+                        $lookup: {
+                            "from": "registrations",
+                            "localField": "school",
+                            "foreignField": "_id",
+                            "as": "school"
+                        }
+                    },
+                    // Stage 2
+                    {
+                        $unwind: {
+                            path: "$school",
+                        }
+                    },
+                    // Stage 3
+                    // Stage 3
+                    {
+                        $lookup: {
+                            "from": "transactions",
+                            "localField": "transaction",
+                            "foreignField": "_id",
+                            "as": "transaction"
+                        }
+                    },
 
-            var Search = Model.find(matchObj)
-                .order(options)
-                .deepPopulate("school transaction")
-                .keyword(options)
-                .page(options, callback);
+                    // Stage 4
+                    {
+                        $match: {
+
+                            $or: [{
+                                    transaction: {
+                                        $gt: 1
+                                    }
+                                },
+                                {
+                                    "transaction.paymentMode": {
+                                        $ne: "online PAYU"
+                                    }
+                                }, {
+                                    "transaction.paymentStatus": {
+                                        $ne: "Pending"
+                                    }
+                                }
+                            ]
+
+                        }
+                    },
+                    {
+                        $sort: {
+                            "createdAt": -1
+                        }
+                    },
+                    {
+                        $skip: options.start
+                    },
+                    {
+                        $limit: options.count
+                    }
+                ],
+                function (err, returnReq) {
+                    console.log("returnReq : ", returnReq);
+                    if (err) {
+                        console.log(err);
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(returnReq)) {
+                            var count = returnReq.length;
+                            console.log("count", count);
+
+                            var data = {};
+                            data.options = options;
+
+                            data.results = returnReq;
+                            data.total = count;
+                            callback(null, data);
+                        } else {
+                            var count = returnReq.length;
+                            console.log("count", count);
+
+                            var data = {};
+                            data.options = options;
+
+                            data.results = returnReq;
+                            data.total = count;
+                            callback(null, data);
+
+                        }
+                    }
+                });
+            // var matchObj = {
+            //     school: {
+            //         $exists: true
+            //     },
+            //     $or: [{
+            //         paymentMode: {
+            //             $ne: "online PAYU"
+            //         }
+            //     }, {
+            //         PayuId: {
+            //             $exists: false,
+            //         }
+            //     }]
+            // };
+
+            // var Search = Model.find(matchObj)
+            //     .order(options)
+            //     .deepPopulate("school transaction")
+            //     .keyword(options)
+            //     .page(options, callback);
         } else {
             Accounts.aggregate(
                 [{
