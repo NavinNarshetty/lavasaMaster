@@ -380,9 +380,15 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
         // console.log('Value', $scope.isSchoolAdded(formdata));
         // $scope.isSchoolAdded(formdata);
 
-        formdata.firstName = $filter('firstcapitalize')(formdata.firstName,{column1:true});
-        formdata.middleName = $filter('firstcapitalize')(formdata.middleName,{column1:true});
-        formdata.surname = $filter('firstcapitalize')(formdata.surname,{Column1:true});
+        formdata.firstName = $filter('firstcapitalize')(formdata.firstName, {
+            column1: true
+        });
+        formdata.middleName = $filter('firstcapitalize')(formdata.middleName, {
+            column1: true
+        });
+        formdata.surname = $filter('firstcapitalize')(formdata.surname, {
+            Column1: true
+        });
 
         var isFormValid = function (form) {
             if (!form.atheleteSchoolIdImage) {
@@ -1295,7 +1301,7 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
             delete formdata.affiliatedBoards;
         }
 
-        $scope.url = "registration/saveRegistrationForm";
+        $scope.url = "registration/save";
         // console.log($scope.url);
         // console.log('final data', formdata);
         if (formvalid.$valid && $scope.showTerm === false && $scope.showTeamSports === false) {

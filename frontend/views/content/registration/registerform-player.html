@@ -20,7 +20,8 @@
               <div class="form-group">
                 <label for="selectSchoolName" class="control-label col-sm-2">*{{type | firstcapitalize}} Name</label>
                 <div class="col-sm-10">
-                  <ui-select class="" name="selectSchoolName" id="selectSchoolName" theme="bootstrap" ng-model="formData.school" ng-change="searchChangeSchool($select.selected._id)">
+                  <ui-select class="" name="selectSchoolName" id="selectSchoolName" theme="bootstrap" ng-model="formData.school" ng-change="searchChangeSchool($select.selected._id)"
+                    ng-required="true">
                     <ui-select-match allow-clear="true" placeholder="Select/Search your {{type}}">
                       {{$select.selected.name}}
                     </ui-select-match>
@@ -28,6 +29,7 @@
                       <span ng-bind-html="item.name"></span>
                     </ui-select-choices>
                   </ui-select>
+                  <div class="label label-danger pull-right" ng-if="(formAthlete.selectSchoolName.$invalid && formAthlete.selectSchoolName.$touched) && !showSchool">Select Your {{type | firstcapitalize}}</div>
                 </div>
               </div>
               <!-- SCHOOL NAME END -->
@@ -40,16 +42,16 @@
               <div class="form-group" ng-if="formFlag === 'edit'">
                 <label for="sfaid" class="control-label col-sm-2">*SFA ID:</label>
                 <div class="col-sm-4">
-                  <input type="text" name="sfaid" placeholder="SFA ID" class="form-control" ng-model="formData.sfaId" ng-readonly="formFlag === 'edit'">
+                  <input type="text" name="sfaid" placeholder="SFA ID" class="form-control" ng-model="formData.sfaId">
                 </div>
               </div>
               <!-- FIRST NAME END -->
               <!-- FIRST NAME  -->
               <div class="form-group">
-                <label for="firstName" class="control-label col-sm-2">*First Name:</label>
+                <label for="firstName" class="control-label col-sm-2">First Name:</label>
                 <div class="col-sm-10">
                   <input type="text" name="firstName" placeholder="Enter Your First Name" class="form-control" ng-model="formData.firstName"
-                    ng-readonly="formFlag === 'edit'" capitalize only-alpha required>
+                    capitalize only-alpha required>
                   <div class="label label-danger pull-right" ng-if="formAthlete.firstName.$invalid && formAthlete.firstName.$touched">Please Enter Your First Name</div>
                 </div>
               </div>
@@ -59,34 +61,31 @@
                 <label for="middleName" class="control-label col-sm-2">Middle Name:</label>
                 <div class="col-sm-10">
                   <input type="text" name="middleName" placeholder="Enter Your Middle Name" class="form-control" ng-model="formData.middleName"
-                    ng-readonly="formFlag === 'edit'" capitalize only-alpha>
+                    capitalize only-alpha>
                 </div>
               </div>
               <!-- MIDDLE NAME END -->
               <!-- SURNAME -->
               <div class="form-group">
-                <label for="surname" class="control-label col-sm-2">*Surname:</label>
+                <label for="surname" class="control-label col-sm-2">Surname:</label>
                 <div class="col-sm-10">
                   <input type="text" name="surname" placeholder="Enter Your Surname" class="form-control" ng-model="formData.surname" capitalize
-                    ng-readonly="formFlag === 'edit'" only-alpha required>
-                  <div class="label label-danger pull-right" ng-if="formAthlete.surname.$invalid && formAthlete.surname.$touched">Please Enter Your Surname</div>
+                    only-alpha required>
                 </div>
               </div>
               <!-- SURNAME END -->
               <!-- GENDER -->
               <div class="form-group">
-                <label for="radio04" class="control-label col-sm-2">*Gender:</label>
+                <label for="radio04" class="control-label col-sm-2">Gender:</label>
                 <div class="col-sm-8">
                   <label for="radio04" class="sfa-radiobox">
-                    <input type="radio" name="radio1" id="radio04" value="male" class="form-control" ng-model="formData.gender" ng-disabled="formFlag == 'edit'"
-                      required>
+                    <input type="radio" name="radio1" id="radio04" value="male" class="form-control" ng-model="formData.gender" required>
                     <span class="sfa-radio"></span>
                     <span class="sfa-radio-disabled"></span>
                     Male
                   </label>
                   <label for="radio03" class="sfa-radiobox">
-                    <input type="radio" name="radio1" id="radio03" value="female" class="form-control" ng-model="formData.gender" ng-disabled="formFlag == 'edit'"
-                      required>
+                    <input type="radio" name="radio1" id="radio03" value="female" class="form-control" ng-model="formData.gender" required>
                     <span class="sfa-radio"></span>
                     <span class="sfa-radio-disabled"></span>
                     Female
@@ -100,10 +99,9 @@
                 <!-- DOB -->
                 <div class="col-sm-6">
                   <div class="form-group">
-                    <label for="" class="control-label col-sm-4">*Date Of Birth</label>
+                    <label for="" class="control-label col-sm-4">Date Of Birth</label>
                     <div class="col-sm-8">
-                      <input-date class="bor-t date-month sf-list " ng-model="formData.dob" isDisabled="formFlag == 'edit' && (formData.dob != undefined || formData.dob != '')"></input-date>
-                      <div class="label label-danger pull-right " ng-if="formAthlete.dob.$invalid && formAthlete.dob.$touched ">Please Enter Date of birth</div>
+                      <input-date class="bor-t date-month sf-list " ng-model="formData.dob"></input-date>
                     </div>
                   </div>
                 </div>
@@ -118,14 +116,39 @@
                 <!-- AGE END -->
               </div>
               <!-- DOB END  -->
+              <div class="form-group">
+                <!-- MOBILE -->
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="" class="control-label col-sm-4">Mobile No.:</label>
+                    <div class="col-sm-8">
+                      <input type="text" name="mobile1" placeholder="Enter Mobile No." class="form-control sfa-drop" minlength="10" maxlength="10"
+                        ng-model="formData.mobile" only-Digits>
+                    </div>
+                  </div>
+                </div>
+                <!-- MOBILE END -->
+
+                <!-- EMAIL -->
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="" class="control-label col-sm-4">Email:</label>
+                    <div class="col-sm-8">
+                      <input type="email" name="email1" ng-model="formData.email" ng-change="checkChange('email')" class="form-control bor-t sfa-drop"
+                        placeholder="Enter Email">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- EMAIL END -->
             </div>
             <!-- ATHLETE DETAILS END -->
           </section>
           <!-- PERSONAL DETAILS END -->
 
           <!-- CONTACT DETAILS -->
-          <div class="section-tab"> Contact Details </div>
-          <section class="form-card ">
+          <div class="section-tab hide"> Contact Details </div>
+          <section class="form-card hide">
             <p>Kindly ensure that the details provided are correct. A OneTime Password (OTP) will be sent to the entered mobile
               no. & email ID. These contact details will be used for all Championship related communication i.e. draws &
               schedules, change in dates, etc.</p>
@@ -137,23 +160,9 @@
                   <div class="input-group">
                     <span class="input-group-addon">*Mobile No.:</span>
                     <input type="text" name="mobile1" placeholder="Enter Mobile No." class="form-control sfa-drop" minlength="10" maxlength="10"
-                      ng-model="formData.mobile" ng-change="checkChange('mobile')" only-Digits required>
-                    <div class="input-group-btn" ng-if="formFlag == 'create' || editMobile == true">
-                      <button type="button" class="btn-default formregister-btn" ng-click="sendMobileOTP(formData.mobile)">Send OTP </button>
-                    </div>
+                      ng-model="formData.mobile" only-Digits>
                   </div>
-                  <div class="label label-danger pull-right" ng-if="formAthlete.mobile1.$invalid && formAthlete.mobile1.$touched">Please Enter Your Mobile No.</div>
-                </div>
-                <div class="col-sm-4 col-xs-12" ng-if="formFlag == 'create' || editMobile == true">
-                  <div class="form-group">
-                    <label class="control-label col-sm-6 col-xs-6">*Enter OTP:</label>
-                    <div class="col-sm-6 col-xs-6">
-                      <input type="text" ng-model="formData.smsOTP" placeholder="OTP" ng-change="checkMobileOTP(formData.smsOTP)" class="sfa-drop form-control"
-                        required>
-                    </div>
-                    <div ng-if="formAthlete.mobile.$invalid && formAthlete.mobile.$touched" class="label label-danger pull-right" ng-show="showMobileOtpSuccess">Please Enter Correct Mobile OTP</div>
-                    <div ng-if="!(formAthlete.mobile.$invalid && formAthlete.mobile.$touched)" class="label label-danger pull-right" ng-show="showMobileOtpSuccess">Please Enter Correct Mobile OTP</div>
-                  </div>
+
                 </div>
               </div>
               <!-- MOBILE END -->
@@ -163,22 +172,7 @@
                   <div class="input-group">
                     <span class="input-group-addon">*Email:</span>
                     <input type="email" name="email1" ng-model="formData.email" ng-change="checkChange('email')" class="form-control bor-t sfa-drop"
-                      placeholder="Enter Email" required>
-                    <div class="input-group-btn" ng-if="formFlag == 'create' || editEmail == true">
-                      <button type="button" class=" btn-default formregister-btn" ng-click="sendEmailOTP(formData.email)">Send OTP </button>
-                    </div>
-                  </div>
-                  <div class="label label-danger pull-right" ng-if="formAthlete.email1.$invalid && formAthlete.email1.$touched">Please Enter Your Email Id</div>
-                </div>
-                <div class="col-sm-4 col-xs-12" ng-if="formFlag == 'create' || editEmail == true">
-                  <div class="form-group">
-                    <label for="" class="control-label col-sm-6 col-xs-6">*Enter OTP:</label>
-                    <div class="col-sm-6 col-xs-6">
-                      <input type="text" ng-model="formData.emailOTP" placeholder="OTP" ng-change="checkEmailOTP(formData.emailOTP)" class="sfa-drop form-control"
-                        required>
-                    </div>
-                    <div ng-if="!(formAthlete.email1.$invalid && formAthlete.email1.$touched)" class="label label-danger pull-right" ng-show="showEmailOtpSuccess">Please Enter Correct Email OTP</div>
-                    <div ng-if="formAthlete.email1.$invalid && formAthlete.email1.$touched" class="label label-danger pull-right" ng-show="showEmailOtpSuccess">Please Enter Correct Email OTP</div>
+                      placeholder="Enter Email">
                   </div>
                 </div>
               </div>
@@ -188,7 +182,7 @@
           </section>
           <!-- CONTACT DETAILS END -->
           <section class="registerform-submitsec formregister-mtb20 text-center">
-            <button class="btn formregister-btn" ng-disabled="isDisabled" type="submit">Accept & Submit</button>
+            <button class="btn formregister-btn" type="submit">Accept & Submit</button>
           </section>
         </form>
         <!-- FORM START END -->

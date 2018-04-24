@@ -271,8 +271,8 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'FormathleteCtrl'
         })
 
-        .state('formregisS', {
-            url: "/formregisS",
+        .state('formregis', {
+            url: "/formregis",
             templateUrl: tempateURL,
             controller: 'FormregisCtrl'
         })
@@ -301,7 +301,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         //SPORTS REGISTRATION MODULE
 
         .state('sports-registration', {
-            url: "/sports-registrationS",
+            url: "/sports-registration",
             templateUrl: tempateURL,
             controller: 'SportsRegistrationCtrl'
         })
@@ -547,8 +547,8 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'UpgradePackageCtrl'
         })
-        // NEW REGISTRATION PAGES
-        ;
+    // NEW REGISTRATION PAGES
+    ;
     // if (window.location.origin != "http://testmumbaischool.sfanow.in") {
     if (window.location.origin == "http://mumbaischool.sfanow.in") {
         $urlRouterProvider.otherwise("/championship");

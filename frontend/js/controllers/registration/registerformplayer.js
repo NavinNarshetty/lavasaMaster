@@ -49,9 +49,30 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
             Column1: true
         });
 
+
+
+        var isSchoolAdded = function (form) {
+            console.log('enter', form);
+            if (form.school || (form.atheleteSchoolName && form.atheleteSchoolLocality && form.atheleteSchoolContact)) {
+                // console.log('enter true');
+                return true;
+            } else {
+                toastr.error('Please Enter School', 'Error');
+
+
+            }
+        };
+        if (!isSchoolAdded(formdata)) {
+            return;
+        }
+        if (formdata.school && formdata.schoolName) {
+            formdata.school = "";
+        }
+
         formdata.age = $scope.age;
         formdata.school = $scope.schoolname;
         formdata.registrationFee = 'cash';
+
 
 
         $scope.url = "Athelete/save";
@@ -65,80 +86,10 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
             }
         });
 
-
-
     };
 
-    $scope.checkMobileOTP = function (otp) {
-        if (otp == 'asfa') {
-            $scope.mobileOtp = 'asfa';
-            if (_.isEqual($scope.mobileOtp, otp)) {
-                // console.log("mobile OTP verified");
-                $scope.showMobileOtpSuccess = false;
-            } else {
-                $scope.showMobileOtpSuccess = true;
-            }
-        } else if (otp != undefined) {
-            // console.log("opt", $scope.mobileOtp, otp);
-            // console.log(typeof otp, typeof $scope.mobileOtp);
-            var otpCheck = otp.toString();
-            // console.log("length", otpCheck.length);
-            if (otpCheck.length == 4) {
 
-                if (_.isEqual($scope.mobileOtp, otpCheck)) {
-                    // console.log("email OTP verified");
-                    $scope.showMobileOtpSuccess = false;
-                } else {
-                    $scope.showMobileOtpSuccess = true;
-                }
-            } else if (otpCheck.length == 3) {
-                otpCheck = "0" + otpCheck;
-                // console.log("otpCheck", otpCheck);
-                if (_.isEqual($scope.mobileOtp, otpCheck)) {
-                    // console.log("email OTP verified");
-                    $scope.showMobileOtpSuccess = false;
 
-                } else {
-                    $scope.showMobileOtpSuccess = true;
-                }
-            }
-        }
-    };
-    $scope.checkEmailOTP = function (otp) {
-        if (otp == 'asfa') {
-            $scope.emailOtp = 'asfa';
-            if (_.isEqual($scope.emailOtp, otp)) {
-                // console.log("email OTP verified");
-                $scope.showEmailOtpSuccess = false;
-            } else {
-                // console.log("Incorrect OTP!");
-                $scope.showEmailOtpSuccess = true;
-            }
-        } else if (otp != undefined) {
-            // console.log("opt", $scope.emailOtp, otp);
-            // console.log(typeof otp, typeof $scope.emailOtp);
-
-            var otpCheck = otp.toString();
-            // console.log("length", otpCheck.length);
-            if (otpCheck.length == 4) {
-                if (_.isEqual($scope.emailOtp, otpCheck)) {
-                    // console.log("email OTP verified");
-                    $scope.showEmailOtpSuccess = false;
-                } else {
-                    $scope.showEmailOtpSuccess = true;
-                }
-            } else if (otpCheck.length == 3) {
-                otpCheck = "0" + otpCheck;
-                // console.log("otpCheck", otpCheck);
-                if (_.isEqual($scope.emailOtp, otpCheck)) {
-                    // console.log("email OTP verified");
-                    $scope.showEmailOtpSuccess = false;
-                } else {
-                    $scope.showEmailOtpSuccess = true;
-                }
-            }
-        }
-    };
 
     $scope.ageCalculate = function (birthday) {
         var ageDifMs = Date.now() - birthday.getTime();
@@ -147,26 +98,7 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
         return $scope.age;
     };
 
-    $scope.sendMobileOTP = function (mobile) {
-        var formData = {};
-        // console.log("form", formData);
-        $scope.url = "athelete/generateMobileOTP";
-        // console.log($scope.url);
-        formData.mobile = mobile;
-        NavigationService.apiCallWithData($scope.url, formData, function (data) {
-            $scope.mobileOtp = data.data;
-        });
-    };
-    $scope.sendEmailOTP = function (email) {
-        var formData = {};
-        // console.log("form", email);
-        $scope.url = "athelete/generateEmailOTP";
-        // console.log($scope.url);
-        formData.email = email;
-        NavigationService.apiCallWithData($scope.url, formData, function (data) {
-            $scope.emailOtp = data.data;
-        });
-    };
+
     //search filter
     $scope.refreshChange = function (paramData) {
         NavigationService.getAtheleteSFA(paramData, function (data) {
