@@ -1,5 +1,9 @@
 @media print{
   // CODE START
+  @page {
+  size: auto;  /* auto is the initial value */
+  margin: 0mm; /* this affects the margin in the printer settings */
+  }
   .pull-right{
     float: right;
   }
@@ -27,9 +31,10 @@
     float: left;
   }
   .printpage-mc-raquet{
-    width: 700px;
-    min-height: 600px;
-    // border: 1px solid #000;
+    width: 600px;
+    #print-btnholder{
+      display: none;
+    }
     .matchcenter-title{
       display: block;
       padding: 10px;
@@ -100,6 +105,7 @@
       // border-top: 1px solid #a0a0a0;
       border-bottom: 1px solid #a0a0a0;
       text-transform: uppercase;
+      break-inside: avoid;
       label{
         display: block;
       }
@@ -111,7 +117,7 @@
       width: 33%;
       float: left;
       label{
-        font-size: 10px;
+        font-size: 9px;
       }
     }
     .teamplayer-card{

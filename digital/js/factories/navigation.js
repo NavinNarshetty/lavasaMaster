@@ -405,6 +405,10 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization, $
 
             });
         },
+        setIsColg: function (data) {
+            $.jStorage.set("IsColg", data);
+        },
+
 
         Boolean: function (str) {
             if (str == 'true' || str || str === true) {

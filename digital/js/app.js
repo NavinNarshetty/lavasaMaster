@@ -217,12 +217,12 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         // CREATE MATCHES END
         // MATCH CENTERS
         .state('matchcenter-raquet', {
-            url: "/matchcenter/raquet",
+            url: "/matchcenter/raquet/:id",
             templateUrl: tempateURL,
             controller: 'MatchCenterRaquetCtrl'
         })
         .state('matchcenter-doubles', {
-            url: "/matchcenter/doubles",
+            url: "/matchcenter/doubles/:id",
             templateUrl: tempateURL,
             controller: 'MatchCenterDoublesCtrl'
         })
@@ -232,7 +232,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'MatchCenterTeamCtrl'
         })
         .state('matchcenter-timetrial', {
-            url: "/matchcenter/timetrial",
+            url: "/matchcenter/timetrial/:id",
             templateUrl: tempateURL,
             controller: 'MatchCenterTimeTrialCtrl'
         })

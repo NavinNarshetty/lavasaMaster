@@ -1,8 +1,14 @@
-<div class="printpage-mc-raquet">
+<div class="" id="printSection">
+  <div class="printpage-mc-raquet">
+    <!-- PRINT -->
+    <div class="" id="print-btnholder">
+      <button type="button" class="btn btn-blueoutline" ng-click="printFunction()">Print</button>
+    </div>
+    <!-- PRINT END -->
   <!-- TITLE -->
   <div class="matchcenter-title">
     <div class="matchcenter-header">
-      Motilal Oswal JITO National Games, 2018 (Mumbai Zone)
+      {{eventName}}
     </div>
   </div>
   <!-- TITLE END -->
@@ -107,5 +113,6 @@
     <!-- MATCH SCORES END -->
   </div>
   <!-- CONTENT END -->
+</div>
 </div>
 <!-- <pre>{{match|json}}</pre> -->

@@ -1,8 +1,29 @@
 // RAQUET MATCH CENTER
+.raquet-printbutton {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+.btn-printheat{
+  right: 65px;
+}
 .col-50{
   width: 50%;
   padding: 0 10px;
   float: left;
+}
+#print-btnholder {
+  margin: 10px 0;
+  text-align: right;
+}
+.btn-blueoutline {
+  padding: 6px 20px;
+  border: 1px solid $brand-primary;
+  background: transparent;
+  color: $brand-primary;
+  &:hover{
+    color: $brand-primary;;
+  }
 }
 .printpage-mc-raquet{
   width: 700px;
