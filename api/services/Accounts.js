@@ -175,12 +175,52 @@ var model = {
                         }
                     }
                 },
+                // {
+                //     $match: {
+                //         $or: [{
+                //             $nor: [{
+                //                 paymentMode: {
+                //                     $eq: "online PAYU"
+                //                 }
+                //             }, {
+                //                 PayuId: {
+                //                     $exists: true,
+                //                     $not: {
+                //                         $size: 0
+                //                     }
+                //                 }
+                //             }]
+                //         }, {
+                //             $nor: [{
+                //                 paymentMode: {
+                //                     $ne: "online PAYU"
+                //                 }
+                //             }, {
+                //                 PayuId: {
+                //                     $exists: true,
+                //                     $size: 0
+                //                 }
+                //             }]
+                //         }]
+                //     }
+                // },
                 {
                     $match: {
-                        $or: [{
-                            $nor: [{
+                        $nor: [{
+                            $and: [{
+                                paymentMode: {
+                                    $ne: "online PAYU"
+                                }
+                            }, {
                                 paymentMode: {
                                     $eq: "online PAYU"
+                                }
+                            }]
+                        }, {
+                            $and: [{
+                                PayuId: {
+                                    $exists: true,
+                                    $size: 0
                                 }
                             }, {
                                 PayuId: {
@@ -190,21 +230,11 @@ var model = {
                                     }
                                 }
                             }]
-                        }, {
-                            $nor: [{
-                                paymentMode: {
-                                    $ne: "online PAYU"
-                                }
-                            }, {
-                                PayuId: {
-                                    $exists: true,
-                                    $size: 0
-                                }
-                            }]
+
                         }]
+
                     }
                 },
-
                 {
                     $sort: {
                         "createdAt": -1
