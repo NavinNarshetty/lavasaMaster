@@ -16,12 +16,11 @@
             <div class="widget-title ">
               <div class="pull-right">
                 <form class="search-form mr-form ">
-                  <input type="text " ng-change="searchInTable(search)" placeholder="Search Here...
+                  <input type="text " placeholder="Search Here...
                                " ng-model="search" />
                 </form>
-                <a class="btn btn-success" ng-click="loginPopup('','excel')">Excel Export</a>
               </div>
-              <h3>List of Old School<span class="tableTotal ">(Total : {{totalItems}}) </span></h3>
+              <h3>List of Users<span class="tableTotal ">(Total : {{items.length}}) </span></h3>
             </div>
             <div class="table-responsive ">
               <!--<div class="table-responsive " ng-show="totalItems>0 ">-->
@@ -42,7 +41,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr ng-repeat="item in items">
+                  <tr ng-repeat="item in items | filter:search">
                     <!--<tr>-->
                     <!--<tr>-->
                     <!--<td>{{$index + 1}}</td>-->
@@ -70,11 +69,6 @@
             <div class="tableData " ng-show="totalItems===0 ">
               <h5>No data found</h5>
             </div>
-            <div class="tableData " ng-show="totalItems===undefined ">
-              <h5>Loading Data</h5>
-            </div>
-            <ul ng-if="totalItems" ng-change="viewTable();" uib-pagination total-items="totalItems" items-per-page="maxRow" ng-model="formData.page"
-              max-size="template.pageMax" class="pagination-sm" boundary-links="true " force-ellipses="true "></ul>
           </div>
         </div>
       </div>
