@@ -582,159 +582,163 @@ var model = {
     },
 
     email: function (data, callback) {
-        Password.find().exec(function (err, userdata) {
-            // console.log("userdata", userdata);
-            if (err) {
-                console.log(err);
-                callback(err, null);
-            } else if (userdata && userdata.length > 0) {
-                if (data.filename && data.filename !== "") {
-                    request.post({
-                        url: requrl + "config/emailReader/",
-                        json: data
-                    }, function (err, http, body) {
-                        console.log("body : ", body);
-                        if (err) {
-                            console.log(err);
-                            callback(err, null);
-                        } else {
-                            if (body && body.value !== false) {
-                                var helper = require('sendgrid').mail;
-                                var name = 'No-reply';
-                                from_email = new helper.Email(data.from, name);
-                                to_email = new helper.Email(data.email);
-                                subject = data.subject;
-                                content = new helper.Content("text/html", body);
-                                mail = new helper.Mail(from_email, subject, to_email, content);
-                                // console.log("api_key", userdata[0].name);
-                                var sg = require('sendgrid')(userdata[0].name);
-                                var request = sg.emptyRequest({
-                                    method: 'POST',
-                                    path: '/v3/mail/send',
-                                    body: mail.toJSON()
-                                });
+        callback(null,"Skip This");
+        // Password.find().exec(function (err, userdata) {
+        //     // console.log("userdata", userdata);
+        //     if (err) {
+        //         console.log(err);
+        //         callback(err, null);
+        //     } else if (userdata && userdata.length > 0) {
+        //         if (data.filename && data.filename !== "") {
+        //             request.post({
+        //                 url: requrl + "config/emailReader/",
+        //                 json: data
+        //             }, function (err, http, body) {
+        //                 console.log("body : ", body);
+        //                 if (err) {
+        //                     console.log(err);
+        //                     callback(err, null);
+        //                 } else {
+        //                     if (body && body.value !== false) {
+        //                         var helper = require('sendgrid').mail;
+        //                         var name = 'No-reply';
+        //                         from_email = new helper.Email(data.from, name);
+        //                         to_email = new helper.Email(data.email);
+        //                         subject = data.subject;
+        //                         content = new helper.Content("text/html", body);
+        //                         mail = new helper.Mail(from_email, subject, to_email, content);
+        //                         // console.log("api_key", userdata[0].name);
+        //                         var sg = require('sendgrid')(userdata[0].name);
+        //                         var request = sg.emptyRequest({
+        //                             method: 'POST',
+        //                             path: '/v3/mail/send',
+        //                             body: mail.toJSON()
+        //                         });
 
-                                sg.API(request, function (error, response) {
-                                    if (error) {
-                                        callback(null, error);
-                                        console.log('Error response received');
-                                    } else {
-                                        callback(null, response);
-                                    }
-                                });
-                            } else {
-                                callback({
-                                    message: "Error while sending mail."
-                                }, null);
-                            }
-                        }
-                    });
-                } else {
-                    callback({
-                        message: "Please provide params"
-                    }, null);
-                }
-            } else {
-                callback({
-                    message: "No api keys found"
-                }, null);
-            }
-        });
+        //                         sg.API(request, function (error, response) {
+        //                             if (error) {
+        //                                 callback(null, error);
+        //                                 console.log('Error response received');
+        //                             } else {
+        //                                 callback(null, response);
+        //                             }
+        //                         });
+        //                     } else {
+        //                         callback({
+        //                             message: "Error while sending mail."
+        //                         }, null);
+        //                     }
+        //                 }
+        //             });
+        //         } else {
+        //             callback({
+        //                 message: "Please provide params"
+        //             }, null);
+        //         }
+        //     } else {
+        //         callback({
+        //             message: "No api keys found"
+        //         }, null);
+        //     }
+        // });
     },
 
     emailTo: function (data, callback) {
-        Password.find().exec(function (err, userdata) {
-            if (err) {
-                console.log(err);
-                callback(err, null);
-            } else if (userdata && userdata.length > 0) {
-                if (data.filename && data.filename !== "") {
-                    //console.log("filename ", data.filename);
-                    request.post({
-                        url: requrl + "config/emailReader/",
-                        json: data
-                    }, function (err, http, body) {
-                        console.log("body : ", body);
-                        if (err) {
-                            console.log(err);
-                            callback(err, null);
-                        } else {
-                            // console.log('email else');
-                            if (body && body.value !== false) {
-                                var sg = require('sendgrid')(userdata[0].name);
 
-                                var request = sg.emptyRequest({
-                                    method: 'POST',
-                                    path: '/v3/mail/send',
-                                    body: {
-                                        personalizations: [{
-                                            to: data.email1,
-                                            cc: data.cc1,
-                                            bcc: data.bcc1,
-                                            subject: data.subject
-                                        }],
-                                        from: {
-                                            email: data.from,
-                                            name: "No-reply"
-                                        },
+        callback(null,"Skip This");
+        // Password.find().exec(function (err, userdata) {
+        //     if (err) {
+        //         console.log(err);
+        //         callback(err, null);
+        //     } else if (userdata && userdata.length > 0) {
+        //         if (data.filename && data.filename !== "") {
+        //             //console.log("filename ", data.filename);
+        //             request.post({
+        //                 url: requrl + "config/emailReader/",
+        //                 json: data
+        //             }, function (err, http, body) {
+        //                 console.log("body : ", body);
+        //                 if (err) {
+        //                     console.log(err);
+        //                     callback(err, null);
+        //                 } else {
+        //                     // console.log('email else');
+        //                     if (body && body.value !== false) {
+        //                         var sg = require('sendgrid')(userdata[0].name);
 
-                                        content: [{
-                                            type: 'text/html',
-                                            value: body,
-                                        }],
-                                    },
-                                });
+        //                         var request = sg.emptyRequest({
+        //                             method: 'POST',
+        //                             path: '/v3/mail/send',
+        //                             body: {
+        //                                 personalizations: [{
+        //                                     to: data.email1,
+        //                                     cc: data.cc1,
+        //                                     bcc: data.bcc1,
+        //                                     subject: data.subject
+        //                                 }],
+        //                                 from: {
+        //                                     email: data.from,
+        //                                     name: "No-reply"
+        //                                 },
 
-                                sg.API(request, function (error, response) {
-                                    if (error) {
-                                        callback(null, error);
-                                        console.log('Error response received');
-                                    } else {
-                                        // console.log(response.statusCode)
-                                        // console.log(response.body)
-                                        // console.log(response.headers)
-                                        callback(null, response);
-                                    }
-                                });
-                            } else {
-                                callback({
-                                    message: "Error while sending mail."
-                                }, null);
-                            }
-                        }
-                    });
-                } else {
-                    callback({
-                        message: "Please provide params"
-                    }, null);
-                }
-            } else {
-                callback({
-                    message: "No api keys found"
-                }, null);
-            }
-        });
+        //                                 content: [{
+        //                                     type: 'text/html',
+        //                                     value: body,
+        //                                 }],
+        //                             },
+        //                         });
+
+        //                         sg.API(request, function (error, response) {
+        //                             if (error) {
+        //                                 callback(null, error);
+        //                                 console.log('Error response received');
+        //                             } else {
+        //                                 // console.log(response.statusCode)
+        //                                 // console.log(response.body)
+        //                                 // console.log(response.headers)
+        //                                 callback(null, response);
+        //                             }
+        //                         });
+        //                     } else {
+        //                         callback({
+        //                             message: "Error while sending mail."
+        //                         }, null);
+        //                     }
+        //                 }
+        //             });
+        //         } else {
+        //             callback({
+        //                 message: "Please provide params"
+        //             }, null);
+        //         }
+        //     } else {
+        //         callback({
+        //             message: "No api keys found"
+        //         }, null);
+        //     }
+        // });
     },
 
     sendSms: function (data, callback) {
-        if (data.mobile) {
-            request.get({
-                // url: "http://api-alerts.solutionsinfini.com/v3/?method=sms&api_key=A2673b52d60295c217f83efd42a6ab576&to=" + data.mobile + "&sender=TAGBOS&message=" + data.content + "&format=json"
-                url: "http://api-alerts.solutionsinfini.com/v3/?method=sms&api_key=A585fda4adf7602034258066781832097&to=" + data.mobile + "&sender=SFANOW&message=" + data.content + "&format=json"
-            }, function (err, http, body) {
-                if (err) {
-                    console.log(err);
-                    callback(err, null);
-                } else {
-                    console.log("body", body);
-                    callback(null, body);
-                }
-            });
-        } else {
-            callback({
-                message: "Mobile number not found"
-            }, null);
-        }
+        callback(null,"Skip This");
+        // if (data.mobile) {
+        //     request.get({
+        //         // url: "http://api-alerts.solutionsinfini.com/v3/?method=sms&api_key=A2673b52d60295c217f83efd42a6ab576&to=" + data.mobile + "&sender=TAGBOS&message=" + data.content + "&format=json"
+        //         url: "http://api-alerts.solutionsinfini.com/v3/?method=sms&api_key=A585fda4adf7602034258066781832097&to=" + data.mobile + "&sender=SFANOW&message=" + data.content + "&format=json"
+        //     }, function (err, http, body) {
+        //         if (err) {
+        //             console.log(err);
+        //             callback(err, null);
+        //         } else {
+        //             console.log("body", body);
+        //             callback(null, body);
+        //         }
+        //     });
+        // } else {
+        //     callback({
+        //         message: "Mobile number not found"
+        //     }, null);
+        // }
     },
 
     downloadFromUrl: function (url, callback) {
