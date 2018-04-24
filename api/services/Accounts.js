@@ -148,10 +148,9 @@ var model = {
                 // Stage 4
                 {
                     $match: {
-
                         $or: [{
                                 transaction: {
-                                    $gt: 1
+                                    $gt: 0
                                 }
                             },
                             {
@@ -164,7 +163,6 @@ var model = {
                                 }
                             }
                         ]
-
                     }
                 },
                 {
@@ -1996,7 +1994,6 @@ var model = {
         str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) : '';
         return str;
     },
-
 
 };
 module.exports = _.assign(module.exports, exports, model);

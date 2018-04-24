@@ -272,6 +272,7 @@ var model = {
                                     totalToPay: found.accounts.outstandingAmount,
                                     outstandingAmount: 0,
                                     upgradePaymentStatus: "Paid",
+                                    upgrade: false,
 
                                 }
                             };
@@ -295,7 +296,8 @@ var model = {
                                     upgradePaymentStatus: "Paid",
                                     totalPaid: found.accounts.outstandingAmount,
                                     totalToPay: found.accounts.outstandingAmount,
-                                    outstandingAmount: 0
+                                    outstandingAmount: 0,
+                                    upgrade: false,
                                 }
                             };
                             Accounts.update({
@@ -362,18 +364,90 @@ var model = {
     deleteUpdateTransaction: function (data, found, callback) {
         var len = found.accounts.transaction.length;
         len--;
-        Transaction.remove({
-            _id: found.accounts.transaction[len]
-        }).exec(function (err, transactData) {
-            if (err || _.isEmpty(transactData)) {
-                callback(null, {
-                    error: "no data found",
-                    data: found
+        async.waterfall([
+            function (callback) {
+                Transaction.findOne({
+                    _id: found.accounts.transaction[len]
+                }).exec(function (err, transactData) {
+                    if (err || _.isEmpty(transactData)) {
+                        callback(null, {
+                            error: "no data found",
+                            data: found
+                        });
+                    } else {
+                        found.accounts.amountPaid = found.accounts.amountPaid + transactData.amountPaid;
+                        if (transactData.amountPaid <= found.accounts.outstandingAmount) {
+                            found.accounts.outstandingAmount = found.accounts.outstandingAmount - transactData.amountPaid;
+                        } else {
+                            found.accounts.outstandingAmount = 0;
+                        }
+                        var matchObj = {
+                            $set: {
+                                outstandingAmount: found.accounts.outstandingAmount,
+                                amountPaid: found.accounts.amountPaid
+                            }
+                        };
+                        Accounts.update({
+                            _id: found.accounts._id
+                        }, matchObj).exec(
+                            function (err, data3) {
+                                if (err) {
+                                    callback(null, {
+                                        error: "accounts not updated",
+                                        data: transactData
+                                    });
+                                } else if (data3) {
+                                    callback(null, transactData);
+                                }
+                            });
+                    }
                 });
-            } else {
-                callback(null, transactData);
+            },
+            function (transactData, callback) {
+                if (transactData.error) {
+                    callback(null, transactData);
+                } else {
+                    Transaction.remove({
+                        _id: found.accounts.transaction[len]
+                    }).exec(function (err, transactData) {
+                        if (err || _.isEmpty(transactData)) {
+                            callback(null, {
+                                error: "no data found",
+                                data: found
+                            });
+                        } else {
+                            callback(null, transactData);
+                        }
+                    });
+                }
+            },
+            function (transactData, callback) {
+                if (transactData.error) {
+                    callback(null, transactData);
+                } else {
+                    len--;
+                    Transaction.findOne({
+                        _id: found.accounts.transaction[len]
+                    }).exec(function (err, transactData) {
+                        if (err || _.isEmpty(transactData)) {
+                            callback(null, {
+                                error: "no data found",
+                                data: found
+                            });
+                        } else {
+                            callback(null, transactData);
+                        }
+                    });
+                }
             }
-        });
+        ], function (err, complete) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, complete);
+            }
+        })
+
     },
 
     saveCashTransaction: function (data, callback) {
@@ -540,7 +614,9 @@ var model = {
                                             cgst: data.cgst,
                                             sgst: data.sgst,
                                             remarks: data.remarks,
-                                            outstandingAmount: finaloutstanding
+                                            outstandingAmount: finaloutstanding,
+                                            upgrade: false,
+
                                         }
                                     };
                                     Accounts.update({
@@ -576,7 +652,8 @@ var model = {
                                             cgst: data.cgst,
                                             sgst: data.sgst,
                                             remarks: data.remarks,
-                                            outstandingAmount: finaloutstanding
+                                            outstandingAmount: finaloutstanding,
+                                            upgrade: false,
                                         }
                                     };
                                     Accounts.update({
