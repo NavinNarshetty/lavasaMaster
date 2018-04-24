@@ -34,6 +34,19 @@
             "url": ""
         },
         {
+            "name": "eventName",
+            "type": "text",
+            "tableRef": "eventName",
+            "placeholder": "Enter Event Name",
+            "id": "eventName",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "url": ""
+        },
+        {
             "name": "fromMonth",
             "type": "text",
             "tableRef": "fromMonth",

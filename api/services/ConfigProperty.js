@@ -1,6 +1,7 @@
 var schema = new Schema({
     year: String,
     eventYear: String,
+    eventName: String,
     fromMonth: String,
     toMonth: String,
     date: String,
@@ -119,6 +120,7 @@ var model = {
                     finalData.state = property[0].state;
                     finalData.year = property[0].year;
                     finalData.eventYear = property[0].eventYear;
+                    finalData.eventName = property[0].eventName;
                     finalData.toMonth = property[0].toMonth;
                     finalData.fromMonth = property[0].fromMonth;
                     finalData.sfaCity = property[0].sfaCity;
