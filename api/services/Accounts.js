@@ -146,25 +146,65 @@ var model = {
                 },
 
                 // Stage 4
+                // {
+                //     $match: {
+                //         $or: [{
+                //                 transaction: {
+                //                     $gt: 0
+                //                 }
+                //             },
+                //             {
+                //                 "transaction.paymentMode": {
+                //                     $ne: "online PAYU"
+                //                 }
+                //             }, {
+                //                 "transaction.paymentStatus": {
+                //                     $ne: "Pending"
+                //                 }
+                //             }
+                //         ]
+                //     }
+                // },
+                {
+                    $match: {
+                        transaction: {
+                            $exists: true,
+                            $not: {
+                                $size: 0
+                            }
+                        }
+                    }
+                },
                 {
                     $match: {
                         $or: [{
-                                transaction: {
-                                    $gt: 0
+                            $nor: [{
+                                paymentMode: {
+                                    $eq: "online PAYU"
                                 }
-                            },
-                            {
-                                "transaction.paymentMode": {
+                            }, {
+                                PayuId: {
+                                    $exists: true,
+                                    $not: {
+                                        $size: 0
+                                    }
+                                }
+                            }]
+                        }, {
+                            $nor: [{
+                                paymentMode: {
                                     $ne: "online PAYU"
                                 }
                             }, {
-                                "transaction.paymentStatus": {
-                                    $ne: "Pending"
+                                PayuId: {
+                                    $exists: true,
+                                    $size: 0
                                 }
-                            }
-                        ]
+                            }]
+                        }]
                     }
                 },
+
                 {
                     $sort: {
                         "createdAt": -1
