@@ -615,7 +615,7 @@ var model = {
                                             sgst: data.sgst,
                                             remarks: data.remarks,
                                             outstandingAmount: finaloutstanding,
-                                            upgrade: false,
+                                            // upgrade: false,
 
                                         }
                                     };
@@ -653,7 +653,7 @@ var model = {
                                             sgst: data.sgst,
                                             remarks: data.remarks,
                                             outstandingAmount: finaloutstanding,
-                                            upgrade: false,
+                                            // upgrade: false,
                                         }
                                     };
                                     Accounts.update({
