@@ -1884,6 +1884,8 @@ var model = {
                     } else {
                         var len = found.transaction.length;
                         len--;
+                        console.log("len", len);
+                        console.log("found", found);
                         Transaction.findOne({
                             _id: found.transaction[len]._id
                         }).lean().sort({
@@ -1896,6 +1898,7 @@ var model = {
                                 });
                             } else {
                                 if (transactData.paymentMode == "online PAYU" && transactData.paymentStatus == "Pending") {
+                                    console.log("transactData", transactData);
                                     Transaction.remove({
                                         _id: found.transaction[len]._id
                                     }).exec(function (err, transactData) {
@@ -1921,6 +1924,8 @@ var model = {
                     } else {
                         var len = found.transaction.length;
                         len--;
+                        console.log("len", len);
+
                         Transaction.findOne({
                             _id: found.transaction[len]._id
                         }).lean().sort({
@@ -1940,8 +1945,8 @@ var model = {
                                         sgst: found.sgstAmount,
                                         igst: found.igstAmount,
                                     }
-
                                 };
+                                console.log("matchObj", matchObj);
                                 Accounts.update({
                                     athlete: data.athlete
                                 }, matchObj).exec(
@@ -2002,6 +2007,8 @@ var model = {
                     } else {
                         var len = found.transaction.length;
                         len--;
+                        console.log("len", len);
+                        console.log("found", found);
                         Transaction.findOne({
                             _id: found.transaction[len]._id
                         }).lean().sort({
@@ -2013,6 +2020,7 @@ var model = {
                                     data: transactData
                                 });
                             } else {
+                                console.log("transactData", transactData);
                                 if (transactData.paymentMode == "online PAYU" && transactData.paymentStatus == "Pending") {
                                     Transaction.remove({
                                         _id: found.transaction[len]._id
@@ -2039,6 +2047,7 @@ var model = {
                     } else {
                         var len = found.transaction.length;
                         len--;
+                        console.log("len1", len);
                         Transaction.findOne({
                             _id: found.transaction[len]._id
                         }).lean().sort({
@@ -2060,6 +2069,7 @@ var model = {
                                     }
 
                                 };
+                                console.log("matchObj", matchObj);
                                 Accounts.update({
                                     school: data.school
                                 }, matchObj).exec(
