@@ -2020,6 +2020,7 @@ var model = {
                                         }
                                     };
                                     console.log("matchObj", matchObj);
+
                                     Accounts.update({
                                         athlete: data.athlete
                                     }, matchObj).exec(
@@ -2027,22 +2028,27 @@ var model = {
                                             if (err) {
                                                 callback(err, null);
                                             } else if (data3) {
-                                                var matchObj = {
-                                                    $set: {
-                                                        package: transactData.package,
-                                                    }
-                                                };
-                                                Athelete.update({
-                                                    _id: data.athlete
-                                                }, matchObj).exec(
-                                                    function (err, data3) {
-                                                        if (err) {
-                                                            console.log(err);
-                                                            callback(err, null);
-                                                        } else if (data3) {
-                                                            callback(null, data3);
+                                                if (transactData.paymentMode != "online PAYU" && transactData.paymentStatus != "Pending") {
+                                                    var matchObj = {
+                                                        $set: {
+                                                            package: transactData.package,
                                                         }
-                                                    });
+                                                    };
+                                                    Athelete.update({
+                                                        _id: data.athlete,
+
+                                                    }, matchObj).exec(
+                                                        function (err, data3) {
+                                                            if (err) {
+                                                                console.log(err);
+                                                                callback(err, null);
+                                                            } else if (data3) {
+                                                                callback(null, data3);
+                                                            }
+                                                        });
+                                                } else {
+                                                    callback(null, transactData);
+                                                }
                                             }
                                         });
                                 }
