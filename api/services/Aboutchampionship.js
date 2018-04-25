@@ -3,6 +3,7 @@ var schema = new Schema({
     title: String,
     mediaType: String,
     mediaLink: String,
+    mobileBannerLink: String,
     mediaSource: String,
     contentData: String,
     buttonData: [{

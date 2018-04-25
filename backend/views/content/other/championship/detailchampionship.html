@@ -31,7 +31,7 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label for="">Banner Type</label>
-                  <select name="mediatype" id="mediatype" ng-model="formData.mediaType" class="form-control">
+                  <select name="mediatype" id="mediatype" ng-model="formData.mediaType" ng-change="mediaTypeChange(formData.mediaType)" class="form-control">
                     <option value="image">Image</option>
                     <option value="video">Video</option>
                   </select>
@@ -68,6 +68,13 @@
                     <b>Banner Size-1920 x 600 only</b>
                   </span>
                   <upload-image ng-model="formData.mediaLink"></upload-image>
+                </div>
+                <div class="form-group">
+                  <label>Mobile Image</label>
+                  <span>
+                    <b>Mobile Banner 768 x 1024 only</b>
+                    <upload-image ng-model="formData.mobileBannerLink"></upload-image>
+                  </span>
                 </div>
               </div>
               <!-- IMAGE LINK END -->

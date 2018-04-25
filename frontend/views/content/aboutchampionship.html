@@ -11,12 +11,19 @@
 
     <!-- BANNER HOLDER-->
     <div class="aboutchampionship-page-bannerholder">
-      <!-- IMAGE -->
-      <div class="about-championship-page-image" style="background-image:url('{{championshipData.mediaLink | serverimage}}')" ng-if="championshipData.mediaType=='image'">
+      <!-- IMAGE DESKTOP-->
+      <div class="about-championship-page-image hidden-xs" style="background-image:url('{{championshipData.mediaLink | serverimage}}')"
+        ng-if="championshipData.mediaType=='image'">
 
       </div>
-      <!-- IMAGE END -->
+      <!-- IMAGE DESKTOP END -->
 
+      <!-- IMAGE MOBILE -->
+      <div class="about-championship-page-image visible-xs" style="background-image:url('{{championshipData.mobileBannerLink | serverimage}}')"
+        ng-if="championshipData.mediaType=='image'">
+
+      </div>
+      <!-- IMAGE MOBILE END -->
       <!-- VIDEO -->
 
       <div class="aboutchampionship-page-video" ng-if="championshipData.mediaType=='video'">

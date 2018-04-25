@@ -129,5 +129,13 @@ myApp.controller('DetailAboutChampionshipCtrl', function ($scope, TemplateServic
   $scope.getDetailConfig();
   // GET DETAIL CONFIG END
   // CODE END
+
+  $scope.mediaTypeChange = function (data) {
+    console.log(data);
+    if (data) {
+      delete $scope.formData.mediaLink;
+      delete $scope.formData.mobileBannerLink;
+    }
+  }
 });
 // DETAIL CHAMPIONSHIP END
