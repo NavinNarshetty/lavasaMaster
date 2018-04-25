@@ -538,6 +538,7 @@ var controller = {
         if (req) {
             if (data.status == "success") {
                 console.log('yes success');
+                param.success = true;
                 Accounts.updateAthletePaymentStatus(param, function (err, data) {
                     if (err) {
                         console.log('amount not match issue');
@@ -674,6 +675,7 @@ var controller = {
         console.log(data.status != "success");
         if (req) {
             if (data.status == "success") {
+                param.success = true;
                 console.log('yes success');
                 Accounts.updateSchoolPaymentStatus(param, function (err, data) {
                     if (err) {
@@ -717,6 +719,7 @@ var controller = {
                 });
 
             } else {
+                param.success = false;
                 var id = (req.query.id);
                 console.log('some errror');
                 Registration.remove({
