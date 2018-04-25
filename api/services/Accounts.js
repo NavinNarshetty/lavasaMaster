@@ -1946,10 +1946,13 @@ var model = {
                         callback(null, found);
                     } else {
                         var len = found.transaction.length;
-                        len--;
+                        len - 2;
                         console.log("len", len);
                         var transaction = [];
-                        transaction.push(found.transaction[len]);
+                        while (len >= 0) {
+                            transaction.push(found.transaction[len]);
+                            len--;
+                        }
                         Transaction.findOne({
                             _id: found.transaction[len]
                         }).lean().sort({
@@ -2071,9 +2074,13 @@ var model = {
                         callback(null, found);
                     } else {
                         var len = found.transaction.length;
-                        len--;
+                        len - 2;
                         var transaction = [];
-                        transaction.push(found.transaction[len]);
+                        while (len >= 0) {
+                            transaction.push(found.transaction[len]);
+                            len--;
+                        }
+
                         console.log("len1", len);
                         Transaction.findOne({
                             _id: found.transaction[len]
