@@ -95,11 +95,11 @@ module.exports = {
         });
     },
     gfsToUpload: function (req,res){
-        gfs.files.find().toArray(function (err, files) {
+        gfs.files.find().skip(0).limit(25).toArray(function (err, files) {
                 if (err) {
-                    res.callback(err, null);
+                    callback(err, null);
                 } else if (_.isEmpty(files)) {
-                    res.callback(null, []);
+                    callback(null, []);
                 } else {
                     _.each(files,function(n){
                         var fileObj = {};
@@ -110,15 +110,12 @@ module.exports = {
                                 res.callback(err, null);
                             } else if (_.isEmpty(file)) {
                                 res.callback(null, []);
-                                // console.log('Empty');
                             } else {
-                                console.log('success');
-                                //res.callback(null, file);
+                                res.callback(null, file);
                             }
                         });
                     });
-                res.callback(null,'Successfully Uploaded');
-            }
-        });
+                }
+            });
     }
 };

@@ -197,8 +197,6 @@ var model = {
         } else {
             imageStream.pipe(writestream);
         }
-
-
     },
 
     oldReadUploaded: function (filename, width, height, style, res) {
