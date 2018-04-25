@@ -272,7 +272,7 @@ var model = {
                                     totalToPay: found.accounts.outstandingAmount,
                                     outstandingAmount: 0,
                                     upgradePaymentStatus: "Paid",
-                                    upgrade: false,
+                                    // upgrade: false,
 
                                 }
                             };
@@ -297,7 +297,7 @@ var model = {
                                     totalPaid: found.accounts.outstandingAmount,
                                     totalToPay: found.accounts.outstandingAmount,
                                     outstandingAmount: 0,
-                                    upgrade: false,
+                                    // upgrade: false,
                                 }
                             };
                             Accounts.update({
