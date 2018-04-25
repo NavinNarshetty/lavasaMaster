@@ -858,6 +858,29 @@ var model = {
                     } else {
                         callback(null, data);
                     }
+                },
+                function (data, callback) {
+                    if (data.athlete && data.registrationFee == "cash") {
+                        var found = {};
+                        found._id = data.athlete;
+                        Accounts.updateAthleteMailAndSms(found, function (err, mailData) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                callback(null, found);
+                            }
+                        });
+                    } else if (data.school && data.registrationFee == "cash") {
+                        var found = {};
+                        found._id = data.school;
+                        Accounts.updateSchoolMailAndSms(found, function (err, mailData) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                callback(null, found);
+                            }
+                        });
+                    }
                 }
             ],
             function (err, complete) {
