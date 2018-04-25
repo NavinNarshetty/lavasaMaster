@@ -1948,7 +1948,8 @@ var model = {
                         var len = found.transaction.length;
                         len--;
                         console.log("len", len);
-
+                        var transaction = [];
+                        transaction.push(found.transaction[len]);
                         Transaction.findOne({
                             _id: found.transaction[len]
                         }).lean().sort({
@@ -1967,6 +1968,7 @@ var model = {
                                         cgst: found.cgstAmount,
                                         sgst: found.sgstAmount,
                                         igst: found.igstAmount,
+                                        transaction: transaction,
                                     }
                                 };
                                 console.log("matchObj", matchObj);
@@ -2070,6 +2072,8 @@ var model = {
                     } else {
                         var len = found.transaction.length;
                         len--;
+                        var transaction = [];
+                        transaction.push(found.transaction[len]);
                         console.log("len1", len);
                         Transaction.findOne({
                             _id: found.transaction[len]
@@ -2089,6 +2093,7 @@ var model = {
                                         cgst: found.cgstAmount,
                                         sgst: found.sgstAmount,
                                         igst: found.igstAmount,
+                                        transaction: transaction
                                     }
 
                                 };
