@@ -106,7 +106,7 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
     $scope.formData.paymentMode = player.athleteData.paymentMode;
     $scope.formData.remarks = player.athleteData.remarks;
     $scope.formData.transactions = player.athleteData.transaction;
-
+    $scope.upgradePaymentstatus = player.athleteData.upgradePaymentStatus;
     var upgradePackage = player.athlete.package;
     console.log(upgradePackage, "check for package");
 
@@ -223,6 +223,21 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
     });
   }
   // GENERATE EXCEL END
+
+  // DELETE TRANSACTION
+  $scope.deleteTransaction = function (data) {
+    $scope.url = "Account/removeTransactionAndUpdateAthlete"
+    $scope.transactionData = {};
+    $scopr.transactionData._id = data;
+    NavigationService.apiCall($scope.url, $scope.transactionData, function (data) {
+      if (data.value) {
+        toastr.success('Deleted success', 'Deleted');
+      } else {
+        toastr.error('Something went wrong', 'Error');
+      }
+    })
+  }
+  // DELETE TRANSACTION END
   $scope.athleteAccountData = {
     payementMode: 'Online,Cash,Online,Cash',
     packagea: '2000',

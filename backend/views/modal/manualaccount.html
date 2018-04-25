@@ -148,7 +148,11 @@
                     Status
                   </div>
                 </th>
-
+                <th>
+                  <div class="text-capitalize">
+                    Action
+                  </div>
+                </th>
               </thead>
               <tbody>
                 <tr ng-repeat="packageDetail in formData.transactions track by $index" ng-class="{'highligh-tablerow':packageDetail.currentAthletePackage===true}">
@@ -239,11 +243,13 @@
                   <!-- STATUS END -->
 
 
-                  <td class="hide">
-                    <span class="text-center" ng-click="deleteRow(formData,$index,isDelete)">
+                  <td class="text-center" style="vertical-align: middle;">
+                    <span class="text-center" ng-if="upgradePaymentstatus==='Pending' && packageDetail.paymentStatus ==='Pending' && packageDetail.paymentMode==='online PAYU'"
+                      ng-click="deleteTransaction(formData.athleteId)">
                       <i class="fa btn btn-danger fa-trash" aria-hidden="true"></i>
                     </span>
                   </td>
+                  <!-- <pre>{{formData.transactions.upgradePaymentStatus, packageDetail.paymentStatus,packageDetail.paymentMode}}</pre> -->
                 </tr>
               </tbody>
             </table>
