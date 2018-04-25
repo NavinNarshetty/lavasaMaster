@@ -22,6 +22,28 @@ var controller = {
     }
   },
 
+  removeTransactionAndUpdateAthlete: function (req, res) {
+    if (req.body) {
+      Accounts.removeTransactionAndUpdateAthlete(req.body, res.callback);
+    } else {
+      res.json({
+        "data": "Body not Found",
+        "value": false
+      });
+    }
+  },
+
+  removeTransactionAndUpdateSchool: function (req, res) {
+    if (req.body) {
+      Accounts.removeTransactionAndUpdateSchool(req.body, res.callback);
+    } else {
+      res.json({
+        "data": "Body not Found",
+        "value": false
+      });
+    }
+  },
+
   generateAthleteExcel: function (req, res) {
     if (req.body) {
       Accounts.generateAthleteExcel(req.body, res);
