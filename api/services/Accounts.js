@@ -1963,11 +1963,11 @@ var model = {
                             } else {
                                 var matchObj = {
                                     $set: {
-                                        outstandingAmount: found.outstandingAmount,
-                                        totalPaid: found.amountPaid,
-                                        cgst: found.cgstAmount,
-                                        sgst: found.sgstAmount,
-                                        igst: found.igstAmount,
+                                        outstandingAmount: transactData.outstandingAmount,
+                                        totalPaid: transactData.amountPaid,
+                                        cgst: transactData.cgstAmount,
+                                        sgst: transactData.sgstAmount,
+                                        igst: transactData.igstAmount,
                                         transaction: transaction,
                                     }
                                 };
@@ -2088,11 +2088,11 @@ var model = {
                             } else {
                                 var matchObj = {
                                     $set: {
-                                        outstandingAmount: found.outstandingAmount,
-                                        totalPaid: found.amountPaid,
-                                        cgst: found.cgstAmount,
-                                        sgst: found.sgstAmount,
-                                        igst: found.igstAmount,
+                                        outstandingAmount: transactData.outstandingAmount,
+                                        totalPaid: transactData.amountPaid,
+                                        cgst: transactData.cgstAmount,
+                                        sgst: transactData.sgstAmount,
+                                        igst: transactData.igstAmount,
                                         transaction: transaction
                                     }
 
