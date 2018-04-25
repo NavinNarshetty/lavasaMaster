@@ -1887,7 +1887,7 @@ var model = {
                         console.log("len", len);
                         console.log("found", found);
                         Transaction.findOne({
-                            _id: found.transaction[len]._id
+                            _id: found.transaction[len]
                         }).lean().sort({
                             createdAt: -1
                         }).exec(function (err, transactData) {
@@ -1900,7 +1900,7 @@ var model = {
                                 if (transactData.paymentMode == "online PAYU" && transactData.paymentStatus == "Pending") {
                                     console.log("transactData", transactData);
                                     Transaction.remove({
-                                        _id: found.transaction[len]._id
+                                        _id: found.transaction[len]
                                     }).exec(function (err, transactData) {
                                         if (err || _.isEmpty(transactData)) {
                                             callback(null, {
@@ -1927,7 +1927,7 @@ var model = {
                         console.log("len", len);
 
                         Transaction.findOne({
-                            _id: found.transaction[len]._id
+                            _id: found.transaction[len]
                         }).lean().sort({
                             createdAt: -1
                         }).exec(function (err, transactData) {
@@ -2010,7 +2010,7 @@ var model = {
                         console.log("len", len);
                         console.log("found", found);
                         Transaction.findOne({
-                            _id: found.transaction[len]._id
+                            _id: found.transaction[len]
                         }).lean().sort({
                             createdAt: -1
                         }).exec(function (err, transactData) {
@@ -2023,7 +2023,7 @@ var model = {
                                 console.log("transactData", transactData);
                                 if (transactData.paymentMode == "online PAYU" && transactData.paymentStatus == "Pending") {
                                     Transaction.remove({
-                                        _id: found.transaction[len]._id
+                                        _id: found.transaction[len]
                                     }).exec(function (err, transactData) {
                                         if (err || _.isEmpty(transactData)) {
                                             callback(null, {
@@ -2049,7 +2049,7 @@ var model = {
                         len--;
                         console.log("len1", len);
                         Transaction.findOne({
-                            _id: found.transaction[len]._id
+                            _id: found.transaction[len]
                         }).lean().sort({
                             createdAt: -1
                         }).exec(function (err, transactData) {
