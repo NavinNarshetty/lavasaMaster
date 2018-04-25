@@ -1946,9 +1946,13 @@ var model = {
                         callback(null, found);
                     } else {
                         var len = found.transaction.length;
-                        len--;
+                        len - 2;
                         console.log("len", len);
-
+                        var transaction = [];
+                        while (len >= 0) {
+                            transaction.push(found.transaction[len]);
+                            len--;
+                        }
                         Transaction.findOne({
                             _id: found.transaction[len]
                         }).lean().sort({
@@ -1962,11 +1966,12 @@ var model = {
                             } else {
                                 var matchObj = {
                                     $set: {
-                                        outstandingAmount: found.outstandingAmount,
-                                        totalPaid: found.amountPaid,
-                                        cgst: found.cgstAmount,
-                                        sgst: found.sgstAmount,
-                                        igst: found.igstAmount,
+                                        outstandingAmount: transactData.outstandingAmount,
+                                        totalPaid: transactData.amountPaid,
+                                        cgst: transactData.cgstAmount,
+                                        sgst: transactData.sgstAmount,
+                                        igst: transactData.igstAmount,
+                                        transaction: transaction,
                                     }
                                 };
                                 console.log("matchObj", matchObj);
@@ -2069,7 +2074,13 @@ var model = {
                         callback(null, found);
                     } else {
                         var len = found.transaction.length;
-                        len--;
+                        len - 2;
+                        var transaction = [];
+                        while (len >= 0) {
+                            transaction.push(found.transaction[len]);
+                            len--;
+                        }
+
                         console.log("len1", len);
                         Transaction.findOne({
                             _id: found.transaction[len]
@@ -2084,11 +2095,12 @@ var model = {
                             } else {
                                 var matchObj = {
                                     $set: {
-                                        outstandingAmount: found.outstandingAmount,
-                                        totalPaid: found.amountPaid,
-                                        cgst: found.cgstAmount,
-                                        sgst: found.sgstAmount,
-                                        igst: found.igstAmount,
+                                        outstandingAmount: transactData.outstandingAmount,
+                                        totalPaid: transactData.amountPaid,
+                                        cgst: transactData.cgstAmount,
+                                        sgst: transactData.sgstAmount,
+                                        igst: transactData.igstAmount,
+                                        transaction: transaction
                                     }
 
                                 };
