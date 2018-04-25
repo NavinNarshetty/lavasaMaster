@@ -676,7 +676,7 @@ var model = {
         async.waterfall([
                 function (callback) {
                     if (data.athlete) {
-                        Transaction.removeTransactionAndUpdateAthlete(data, found, function (err, vData) {
+                        Accounts.removeTransactionAndUpdateAthlete(data, function (err, vData) {
                             if (err || _.isEmpty(vData)) {
                                 callback(null, {
                                     error: "no data found",
@@ -687,7 +687,7 @@ var model = {
                             }
                         });
                     } else {
-                        Transaction.removeTransactionAndUpdateSchool(data, found, function (err, vData) {
+                        Accounts.removeTransactionAndUpdateSchool(data, function (err, vData) {
                             if (err || _.isEmpty(vData)) {
                                 callback(null, {
                                     error: "no data found",
