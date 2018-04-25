@@ -101,11 +101,12 @@ myApp.controller('RacquetScoreCtrl', function($scope, TemplateService, Navigatio
     // DESTROY AUTO SAVE END
     // MATCH COMPLETE
     $scope.completePopup = function(){
-      if($scope.match.resultsRacquet.matchPhoto.length == 0){
-        toastr.error('Please upload match photo.', 'Data Incomplete');
-      } else if ($scope.match.resultsRacquet.scoreSheet.length == 0) {
-        toastr.error('Please upload scoresheet.', 'Data Incomplete');
-      } else if(!$scope.match.resultsRacquet.winner.player){
+      // if($scope.match.resultsRacquet.matchPhoto.length == 0){
+      //   toastr.error('Please upload match photo.', 'Data Incomplete');
+      // } else if ($scope.match.resultsRacquet.scoreSheet.length == 0) {
+      //   toastr.error('Please upload scoresheet.', 'Data Incomplete');
+      // } else
+      if(!$scope.match.resultsRacquet.winner.player){
         toastr.error('Please select a winner.', 'Data Incomplete');
       } else {
       var modalCompleteMatch;
