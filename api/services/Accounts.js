@@ -119,25 +119,180 @@ var model = {
             count: maxRow
         };
         if (data.keyword == "") {
-            var matchObj = {
-                athlete: {
-                    $exists: true
+            Accounts.aggregate([{
+                    $lookup: {
+                        "from": "atheletes",
+                        "localField": "athlete",
+                        "foreignField": "_id",
+                        "as": "athlete"
+                    }
                 },
-                $or: [{
-                    paymentMode: {
-                        $ne: "online PAYU"
+
+                // Stage 2
+                {
+                    $unwind: {
+                        path: "$athlete",
+                    }
+                },
+
+                // Stage 3
+                {
+                    $lookup: {
+                        "from": "transactions",
+                        "localField": "transaction",
+                        "foreignField": "_id",
+                        "as": "transaction"
+                    }
+                },
+
+                // Stage 4
+                // {
+                //     $match: {
+                //         $or: [{
+                //                 transaction: {
+                //                     $gt: 0
+                //                 }
+                //             },
+                //             {
+                //                 "transaction.paymentMode": {
+                //                     $ne: "online PAYU"
+                //                 }
+                //             }, {
+                //                 "transaction.paymentStatus": {
+                //                     $ne: "Pending"
+                //                 }
+                //             }
+                //         ]
+                //     }
+                // },
+                {
+                    $match: {
+                        transaction: {
+                            $exists: true,
+                            $not: {
+                                $size: 0
+                            }
+                        }
+                    }
+                },
+                // {
+                //     $match: {
+                //         $or: [{
+                //             $nor: [{
+                //                 paymentMode: {
+                //                     $eq: "online PAYU"
+                //                 }
+                //             }, {
+                //                 PayuId: {
+                //                     $exists: true,
+                //                     $not: {
+                //                         $size: 0
+                //                     }
+                //                 }
+                //             }]
+                //         }, {
+                //             $nor: [{
+                //                 paymentMode: {
+                //                     $ne: "online PAYU"
+                //                 }
+                //             }, {
+                //                 PayuId: {
+                //                     $exists: true,
+                //                     $size: 0
+                //                 }
+                //             }]
+                //         }]
+                //     }
+                // },
+                {
+                    $match: {
+                        $nor: [{
+                            $and: [{
+                                paymentMode: {
+                                    $ne: "online PAYU"
+                                }
+                            }, {
+                                paymentMode: {
+                                    $eq: "online PAYU"
+                                }
+                            }]
+                        }, {
+                            $and: [{
+                                PayuId: {
+                                    $exists: true,
+                                    $size: 0
+                                }
+                            }, {
+                                PayuId: {
+                                    $exists: true,
+                                    $not: {
+                                        $size: 0
+                                    }
+                                }
+                            }]
+
+                        }]
+
+                    }
+                },
+                {
+                    $sort: {
+                        "createdAt": -1
                     }
                 }, {
-                    PayuId: {
-                        $exists: true,
+                    $skip: options.start
+                },
+                {
+                    $limit: options.count
+                }
+            ], function (err, returnReq) {
+                console.log("returnReq : ", returnReq);
+                if (err) {
+                    console.log(err);
+                    callback(null, err);
+                } else {
+                    if (_.isEmpty(returnReq)) {
+                        var count = returnReq.length;
+                        console.log("count", count);
+
+                        var data = {};
+                        data.options = options;
+
+                        data.results = returnReq;
+                        data.total = count;
+                        callback(null, data);
+                    } else {
+                        var count = returnReq.length;
+                        console.log("count", count);
+
+                        var data = {};
+                        data.options = options;
+
+                        data.results = returnReq;
+                        data.total = count;
+                        callback(null, data);
                     }
-                }]
-            };
-            var Search = Model.find(matchObj)
-                .order(options)
-                .deepPopulate("athlete athlete.school transaction")
-                .keyword(options)
-                .page(options, callback);
+                }
+            });
+            // var matchObj = {
+            //     athlete: {
+            //         $exists: true
+            //     },
+            //     $or: [{
+            //         paymentMode: {
+            //             $ne: "online PAYU"
+            //         }
+            //     }, {
+            //         PayuId: {
+            //             $exists: false
+            //         }
+            //     }]
+            // };
+            // var Search = Model.find(matchObj)
+            //     .order(options)
+            //     .deepPopulate("athlete athlete.school transaction")
+            //     .keyword(options)
+            //     .page(options, callback);
         } else {
             Accounts.aggregate(
                 [{
@@ -261,26 +416,116 @@ var model = {
             count: maxRow
         };
         if (data.keyword == "") {
-            var matchObj = {
-                school: {
-                    $exists: true
-                },
-                $or: [{
-                    paymentMode: {
-                        $ne: "online PAYU"
-                    }
-                }, {
-                    PayuId: {
-                        $exists: false,
-                    }
-                }]
-            };
+            Accounts.aggregate(
+                [{
+                        $lookup: {
+                            "from": "registrations",
+                            "localField": "school",
+                            "foreignField": "_id",
+                            "as": "school"
+                        }
+                    },
+                    // Stage 2
+                    {
+                        $unwind: {
+                            path: "$school",
+                        }
+                    },
+                    // Stage 3
+                    // Stage 3
+                    {
+                        $lookup: {
+                            "from": "transactions",
+                            "localField": "transaction",
+                            "foreignField": "_id",
+                            "as": "transaction"
+                        }
+                    },
 
-            var Search = Model.find(matchObj)
-                .order(options)
-                .deepPopulate("school transaction")
-                .keyword(options)
-                .page(options, callback);
+                    // Stage 4
+                    {
+                        $match: {
+
+                            $or: [{
+                                    transaction: {
+                                        $gt: 1
+                                    }
+                                },
+                                {
+                                    "transaction.paymentMode": {
+                                        $ne: "online PAYU"
+                                    }
+                                }, {
+                                    "transaction.paymentStatus": {
+                                        $ne: "Pending"
+                                    }
+                                }
+                            ]
+
+                        }
+                    },
+                    {
+                        $sort: {
+                            "createdAt": -1
+                        }
+                    },
+                    {
+                        $skip: options.start
+                    },
+                    {
+                        $limit: options.count
+                    }
+                ],
+                function (err, returnReq) {
+                    console.log("returnReq : ", returnReq);
+                    if (err) {
+                        console.log(err);
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(returnReq)) {
+                            var count = returnReq.length;
+                            console.log("count", count);
+
+                            var data = {};
+                            data.options = options;
+
+                            data.results = returnReq;
+                            data.total = count;
+                            callback(null, data);
+                        } else {
+                            var count = returnReq.length;
+                            console.log("count", count);
+
+                            var data = {};
+                            data.options = options;
+
+                            data.results = returnReq;
+                            data.total = count;
+                            callback(null, data);
+
+                        }
+                    }
+                });
+            // var matchObj = {
+            //     school: {
+            //         $exists: true
+            //     },
+            //     $or: [{
+            //         paymentMode: {
+            //             $ne: "online PAYU"
+            //         }
+            //     }, {
+            //         PayuId: {
+            //             $exists: false,
+            //         }
+            //     }]
+            // };
+
+            // var Search = Model.find(matchObj)
+            //     .order(options)
+            //     .deepPopulate("school transaction")
+            //     .keyword(options)
+            //     .page(options, callback);
         } else {
             Accounts.aggregate(
                 [{
@@ -426,71 +671,6 @@ var model = {
             });
     },
 
-    upgradeAccount1: function (data, callback) {
-        if (data.athlete) {
-            Accounts.findOne({
-                athlete: data.athlete
-            }).lean().exec(function (err, accountsData) {
-                if (err) {
-                    callback(err, null);
-                } else if (_.isEmpty(accountsData)) {
-                    callback(null, accountsData);
-                } else {
-
-                    var matchObj = {
-                        $set: {
-                            sgst: data.sgstAmt,
-                            cgst: data.cgstAmt,
-                            igst: data.igstAmt,
-                            discount: data.discount,
-                            outstandingAmount: data.amountPaid,
-                            upgradePackage: data.package
-                        }
-                    };
-                    Accounts.update({
-                        athlete: data.athlete
-                    }, matchObj).exec(
-                        function (err, data3) {
-                            if (err) {
-                                callback(err, null);
-                            } else if (data3) {
-                                callback(null, data);
-                            }
-                        });
-                }
-            });
-        } else {
-            Accounts.findOne({
-                school: data.school
-            }).lean().exec(function (err, accountsData) {
-                if (err) {
-                    callback(err, null);
-                } else if (_.isEmpty(accountsData)) {
-                    var matchObj = {
-                        $set: {
-                            sgst: data.sgstAmt,
-                            cgst: data.cgstAmt,
-                            igst: data.igstAmt,
-                            discount: data.discount,
-                            outstandingAmount: data.amountPaid,
-                            upgradePackage: data.package
-                        }
-                    };
-                    Accounts.update({
-                        school: data.school
-                    }, matchObj).exec(
-                        function (err, data3) {
-                            if (err) {
-                                callback(err, null);
-                            } else if (data3) {
-                                callback(null, data);
-                            }
-                        });
-                }
-            });
-        }
-    },
-
     upgradeAccount: function (data, callback) {
         // console.log("data", data);
         async.waterfall([
@@ -615,29 +795,6 @@ var model = {
                         });
                     }
                 },
-                // //need to check for duplicate mail
-                // function (data, callback) {
-                //     if (data.athlete) {
-                //         var found = {};
-                //         found._id = data.athlete;
-                //         Accounts.updateAthleteMailAndSms(found, function (err, mailData) {
-                //             if (err) {
-                //                 callback(err, null);
-                //             } else {
-                //                 callback(null, mailData);
-                //             }
-                //         });
-                //     } else {
-                //         found._id = data.school;
-                //         Accounts.updateScoolMailAndSms(found, function (err, mailData) {
-                //             if (err) {
-                //                 callback(err, null);
-                //             } else {
-                //                 callback(null, mailData);
-                //             }
-                //         });
-                //     }
-                // }
             ],
             function (err, complete) {
                 if (err) {
@@ -645,200 +802,6 @@ var model = {
                 } else {
                     callback(null, complete);
                 }
-            });
-    },
-
-    updateAthletePaymentStatusOld: function (data, callback) {
-        async.waterfall([
-                function (callback) {
-                    Athelete.findOne({ //finds one with refrence to id
-                        firstName: data.firstName,
-                        surname: data.surname,
-                        email: data.email,
-                    }).lean().exec(function (err, found) {
-                        if (err) {
-                            callback(err, null);
-                        } else if (_.isEmpty(found)) {
-                            console.log("empty in Athelete found");
-                            callback(null, "Data is empty");
-                        } else {
-                            async.waterfall([
-                                    function (callback) {
-                                        Accounts.findOne({
-                                            athlete: found._id
-                                        }).lean().exec(function (err, accountsData) {
-                                            if (err || _.isEmpty(accountsData)) {
-                                                callback(null, {
-                                                    error: "no data found",
-                                                    data: found
-                                                });
-                                            } else {
-                                                found.accounts = accountsData;
-                                                callback(null, found);
-                                            }
-                                        });
-                                    },
-                                    function (found, callback) {
-                                        data.athlete = true;
-                                        Transaction.saveUpdateTransaction(data, found, function (err, vData) {
-                                            if (err || _.isEmpty(vData)) {
-                                                callback(null, {
-                                                    error: "no data found",
-                                                    data: found
-                                                });
-                                            } else {
-                                                console.log("vData", vData.package);
-                                                found.packageNew = vData.package;
-                                                callback(null, found);
-                                            }
-                                        });
-                                    },
-                                ],
-                                function (err, complete) {
-                                    if (err) {
-                                        callback(err, callback);
-                                    } else {
-                                        callback(null, complete);
-                                    }
-                                });
-                        }
-                    });
-                },
-                function (found, callback) {
-                    if (found.error) {
-                        callback(null, found);
-                    } else {
-                        console.log("found in update", found);
-
-                        var matchObj = {
-                            $set: {
-                                package: found.packageNew
-                            }
-                        };
-                        Athelete.update({
-                            _id: found._id
-                        }, matchObj).exec(
-                            function (err, data3) {
-                                if (err) {
-                                    console.log(err);
-                                    callback(err, null);
-                                } else if (data3) {
-                                    callback(null, data3)
-                                }
-                            });
-                    }
-                },
-            ],
-            function (err, data2) {
-                if (err) {
-                    console.log(err);
-                    callback(err, null);
-                } else {
-                    callback(null, data2);
-                }
-
-            });
-    },
-
-    updateSchoolPaymentStatusOld: function (data, callback) {
-        async.waterfall([
-                function (callback) {
-                    ConfigProperty.find().lean().exec(function (err, property) {
-                        if (err) {
-                            callback(err, null);
-                        } else {
-                            if (_.isEmpty(property)) {
-                                callback(null, []);
-                            } else {
-                                callback(null, property);
-                            }
-                        }
-                    });
-                },
-                function (property, callback) {
-                    console.log("inside update", data);
-                    Registration.findOne({ //finds one with refrence to id
-                        schoolName: data.schoolName
-                    }).exec(function (err, found) {
-                        if (err) {
-                            callback(err, null);
-                        } else if (_.isEmpty(found)) {
-                            callback(null, "Data is empty");
-                        } else {
-                            async.waterfall([
-                                    function (callback) {
-                                        Accounts.findOne({
-                                            school: found._id
-                                        }).lean().exec(function (err, accountsData) {
-                                            if (err || _.isEmpty(accountsData)) {
-                                                callback(null, {
-                                                    error: "no data found",
-                                                    data: found
-                                                });
-                                            } else {
-                                                found.accounts = accountsData;
-                                                callback(null, found);
-                                            }
-                                        });
-                                    },
-                                    function (found, callback) {
-                                        data.school = true;
-                                        Transaction.saveUpdateTransaction(data, found, function (err, vData) {
-                                            if (err || _.isEmpty(vData)) {
-                                                callback(null, {
-                                                    error: "no data found",
-                                                    data: found
-                                                });
-                                            } else {
-                                                found.packageNew = vData.package;
-                                                callback(null, found);
-                                            }
-                                        });
-                                    },
-                                    function (found, callback) {
-                                        if (found.error) {
-                                            callback(null, found);
-                                        } else {
-                                            var matchObj = {
-                                                $set: {
-                                                    package: found.packageNew
-                                                }
-                                            };
-                                            console.log("found in update", found);
-                                            Registration.update({
-                                                _id: found._id
-                                            }, matchObj).exec(
-                                                function (err, data3) {
-                                                    callback(err, data3);
-                                                    if (err) {
-                                                        callback(err, null);
-                                                    } else {
-                                                        callback(null, data3);
-                                                    }
-                                                });
-                                        }
-                                    }
-                                ],
-                                function (err, complete) {
-                                    if (err) {
-                                        callback(err, callback);
-                                    } else {
-                                        callback(null, complete);
-                                    }
-                                });
-
-                        }
-                    });
-                }
-            ],
-            function (err, data2) {
-                if (err) {
-                    console.log(err);
-                    callback(err, null);
-                } else {
-                    callback(null, data2);
-                }
-
             });
     },
 
@@ -1819,7 +1782,6 @@ var model = {
         str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) : '';
         return str;
     },
-
 
 };
 module.exports = _.assign(module.exports, exports, model);

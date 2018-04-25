@@ -388,28 +388,40 @@ myApp.factory('NavigationService', function ($http, $state) {
     }], admin)
 
     var sportsOps = [{
-        name: "View School",
+        name: "School",
         classis: "",
-        sref: "#/school",
+        sref: "#/schoolOps",
         icon: "phone"
     }, {
-        name: "View Athlete",
+        name: "Athlete",
         classis: "",
-        sref: "#/athlete",
+        sref: "#/athleteOps",
         icon: "phone"
     }];
 
     var accounts = [{
-        name: "Athletes Account",
-        classis: "",
-        sref: "#/athleteaccount",
-        icon: "phone"
-    }, {
-        name: "Schools Account",
-        classis: "",
-        sref: "#/schoolaccount",
-        icon: "phone"
-    }]
+        name: "Sports Ops",
+        classis: "activeColor",
+        sref: "",
+        icon: "phone",
+        subnav: sportsOps
+        },{
+            name: "Accounts",
+            classis: "activeColor",
+            sref: "",
+            icon: "phone",
+            subnav: [{
+                name: "Athletes",
+                classis: "",
+                sref: "#/athleteaccount",
+                icon: "phone"
+            }, {
+                name: "Schools",
+                classis: "",
+                sref: "#/schoolaccount",
+                icon: "phone"
+            }]  
+        }];
 
     var volunteers = admin;
 
