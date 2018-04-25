@@ -1884,7 +1884,7 @@ var model = {
                     } else {
                         var len = found.transaction.length;
                         len--;
-                        Trasaction.findOne({
+                        Transaction.findOne({
                             _id: found.transaction[len]._id
                         }).lean().sort({
                             createdAt: -1
@@ -1921,7 +1921,7 @@ var model = {
                     } else {
                         var len = found.transaction.length;
                         len--;
-                        Trasaction.findOne({
+                        Transaction.findOne({
                             _id: found.transaction[len]._id
                         }).lean().sort({
                             createdAt: -1
@@ -2002,7 +2002,7 @@ var model = {
                     } else {
                         var len = found.transaction.length;
                         len--;
-                        Trasaction.findOne({
+                        Transaction.findOne({
                             _id: found.transaction[len]._id
                         }).lean().sort({
                             createdAt: -1
@@ -2039,7 +2039,7 @@ var model = {
                     } else {
                         var len = found.transaction.length;
                         len--;
-                        Trasaction.findOne({
+                        Transaction.findOne({
                             _id: found.transaction[len]._id
                         }).lean().sort({
                             createdAt: -1
