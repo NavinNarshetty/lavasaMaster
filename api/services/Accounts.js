@@ -880,6 +880,8 @@ var model = {
                                 callback(null, found);
                             }
                         });
+                    } else {
+                        callback(null, data);
                     }
                 }
             ],
