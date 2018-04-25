@@ -49,8 +49,11 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
       $scope.totalItems = data.data.total;
       $scope.maxRow = data.data.options.count;
       _.each($scope.items, function (key) {
-        console.log(key._id, "key in array");
+        console.log(key.athlete, "key in array");
         key.athleteData = {};
+        $scope.athletePackage = key.athlete.package;
+        key.currentAthletePackage = _.find(key.transaction, ['package', $scope.athletePackage])
+        // console.log($scope.currentAthletePackage, "check this");
         // key.athleteData = $scope.getAthleteAccountDetails(key._id)
         $scope.getOneUrl = "Accounts/getAccount";
         $scope.getOneConstraints = {}
@@ -64,6 +67,7 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
           }
         });
       })
+      console.log($scope.items, "after each");
     });
   }
   $scope.viewTable();
