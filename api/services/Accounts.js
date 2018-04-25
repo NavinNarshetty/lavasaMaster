@@ -1949,7 +1949,22 @@ var model = {
                                         if (err) {
                                             callback(err, null);
                                         } else if (data3) {
-                                            callback(null, found);
+                                            var matchObj = {
+                                                $set: {
+                                                    package: found.package,
+                                                }
+                                            };
+                                            Athelete.update({
+                                                _id: data.athlete
+                                            }, matchObj).exec(
+                                                function (err, data3) {
+                                                    if (err) {
+                                                        console.log(err);
+                                                        callback(err, null);
+                                                    } else if (data3) {
+                                                        callback(null, data3);
+                                                    }
+                                                });
                                         }
                                     });
                             }
@@ -2052,7 +2067,22 @@ var model = {
                                         if (err) {
                                             callback(err, null);
                                         } else if (data3) {
-                                            callback(null, found);
+                                            var matchObj = {
+                                                $set: {
+                                                    package: found.package,
+                                                }
+                                            };
+                                            Registration.update({
+                                                _id: data.school
+                                            }, matchObj).exec(
+                                                function (err, data3) {
+                                                    if (err) {
+                                                        console.log(err);
+                                                        callback(err, null);
+                                                    } else if (data3) {
+                                                        callback(null, data3);
+                                                    }
+                                                });
                                         }
                                     });
                             }
