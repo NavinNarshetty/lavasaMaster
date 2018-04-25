@@ -1889,7 +1889,8 @@ var model = {
     },
 
     removeTransactionAndUpdateAthlete: function (data, callback) {
-        async.waterfall([function (callback) {
+        async.waterfall([
+                function (callback) {
                     Accounts.findOne({
                         athlete: data.athlete
                     }).lean().exec(function (err, found) {
@@ -1990,6 +1991,12 @@ var model = {
                                 transaction.push(found.transaction[i]);
                                 i++;
                             }
+
+                            if (transaction.length == 1) {
+                                var upgrade = false
+                            } else {
+                                var upgrade = true;
+                            }
                             Transaction.findOne({
                                 _id: found.transaction[len]
                             }).lean().sort({
@@ -2009,6 +2016,7 @@ var model = {
                                             sgst: transactData.sgstAmount,
                                             igst: transactData.igstAmount,
                                             transaction: transaction,
+                                            upgrade: upgrade
                                         }
                                     };
                                     console.log("matchObj", matchObj);
@@ -2021,7 +2029,7 @@ var model = {
                                             } else if (data3) {
                                                 var matchObj = {
                                                     $set: {
-                                                        package: found.package,
+                                                        package: transactData.package,
                                                     }
                                                 };
                                                 Athelete.update({
@@ -2049,6 +2057,11 @@ var model = {
                                 transaction.push(found.transaction[i]);
                                 i++;
                             }
+                            if (transaction.length == 1) {
+                                var upgrade = false
+                            } else {
+                                var upgrade = true;
+                            }
                             Transaction.findOne({
                                 _id: found.transaction[len]
                             }).lean().sort({
@@ -2068,6 +2081,7 @@ var model = {
                                             sgst: transactData.sgstAmount,
                                             igst: transactData.igstAmount,
                                             transaction: transaction,
+                                            upgrade: upgrade,
                                         }
                                     };
                                     console.log("matchObj", matchObj);
@@ -2080,7 +2094,7 @@ var model = {
                                             } else if (data3) {
                                                 var matchObj = {
                                                     $set: {
-                                                        package: found.package,
+                                                        package: transactData.package,
                                                     }
                                                 };
                                                 Athelete.update({
@@ -2112,7 +2126,8 @@ var model = {
     },
 
     removeTransactionAndUpdateSchool: function (data, callback) {
-        async.waterfall([function (callback) {
+        async.waterfall([
+                function (callback) {
                     Accounts.findOne({
                         school: data.school
                     }).lean().exec(function (err, found) {
@@ -2130,105 +2145,210 @@ var model = {
                     if (found.error) {
                         callback(null, found);
                     } else {
-                        var len = found.transaction.length;
-                        len--;
-                        console.log("len", len);
-                        console.log("found", found);
-                        Transaction.findOne({
-                            _id: found.transaction[len]
-                        }).lean().sort({
-                            createdAt: -1
-                        }).exec(function (err, transactData) {
-                            if (err || _.isEmpty(transactData)) {
-                                callback(null, {
-                                    error: "no data found",
-                                    data: transactData
-                                });
-                            } else {
-                                console.log("transactData", transactData);
-                                if (transactData.paymentMode == "online PAYU" && transactData.paymentStatus == "Pending") {
-                                    Transaction.remove({
-                                        _id: found.transaction[len]
-                                    }).exec(function (err, transactData) {
-                                        if (err || _.isEmpty(transactData)) {
-                                            callback(null, {
-                                                error: "no data found",
-                                                data: found
-                                            });
-                                        } else {
-                                            callback(null, found);
-                                        }
+                        if (data.transactionId) {
+                            Transaction.findOne({
+                                _id: data.transactionId
+                            }).lean().sort({
+                                createdAt: -1
+                            }).exec(function (err, transactData) {
+                                if (err || _.isEmpty(transactData)) {
+                                    callback(null, {
+                                        error: "no data found",
+                                        data: transactData
                                     });
                                 } else {
-                                    callback(null, found);
+                                    if (transactData.paymentMode == "online PAYU" && transactData.paymentStatus == "Pending") {
+                                        console.log("transactData", transactData);
+                                        Transaction.remove({
+                                            _id: data.transactionId
+                                        }).exec(function (err, transactData) {
+                                            if (err || _.isEmpty(transactData)) {
+                                                callback(null, {
+                                                    error: "no data found",
+                                                    data: found
+                                                });
+                                            } else {
+                                                callback(null, found);
+                                            }
+                                        });
+                                    } else {
+                                        callback(null, found);
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        } else {
+                            var len = found.transaction.length;
+                            len--;
+                            console.log("len", len);
+                            console.log("found", found);
+                            Transaction.findOne({
+                                _id: found.transaction[len]
+                            }).lean().sort({
+                                createdAt: -1
+                            }).exec(function (err, transactData) {
+                                if (err || _.isEmpty(transactData)) {
+                                    callback(null, {
+                                        error: "no data found",
+                                        data: transactData
+                                    });
+                                } else {
+                                    if (transactData.paymentMode == "online PAYU" && transactData.paymentStatus == "Pending") {
+                                        console.log("transactData", transactData);
+                                        Transaction.remove({
+                                            _id: found.transaction[len]
+                                        }).exec(function (err, transactData) {
+                                            if (err || _.isEmpty(transactData)) {
+                                                callback(null, {
+                                                    error: "no data found",
+                                                    data: found
+                                                });
+                                            } else {
+                                                callback(null, found);
+                                            }
+                                        });
+                                    } else {
+                                        callback(null, found);
+                                    }
+                                }
+                            });
+                        }
                     }
                 },
                 function (found, callback) {
                     if (found.error) {
                         callback(null, found);
                     } else {
-                        var len = found.transaction.length;
-                        len = len - 2;
-                        var transaction = [];
-                        while (len >= 0) {
-                            transaction.push(found.transaction[len]);
-                            len--;
-                        }
-
-                        console.log("len1", len);
-                        Transaction.findOne({
-                            _id: found.transaction[len]
-                        }).lean().sort({
-                            createdAt: -1
-                        }).exec(function (err, transactData) {
-                            if (err || _.isEmpty(transactData)) {
-                                callback(null, {
-                                    error: "no data found",
-                                    data: transactData
-                                });
-                            } else {
-                                var matchObj = {
-                                    $set: {
-                                        outstandingAmount: transactData.outstandingAmount,
-                                        totalPaid: transactData.amountPaid,
-                                        cgst: transactData.cgstAmount,
-                                        sgst: transactData.sgstAmount,
-                                        igst: transactData.igstAmount,
-                                        transaction: transaction
-                                    }
-
-                                };
-                                console.log("matchObj", matchObj);
-                                Accounts.update({
-                                    school: data.school
-                                }, matchObj).exec(
-                                    function (err, data3) {
-                                        if (err) {
-                                            callback(err, null);
-                                        } else if (data3) {
-                                            var matchObj = {
-                                                $set: {
-                                                    package: found.package,
-                                                }
-                                            };
-                                            Registration.update({
-                                                _id: data.school
-                                            }, matchObj).exec(
-                                                function (err, data3) {
-                                                    if (err) {
-                                                        console.log(err);
-                                                        callback(err, null);
-                                                    } else if (data3) {
-                                                        callback(null, data3);
-                                                    }
-                                                });
-                                        }
-                                    });
+                        if (data.transactionId) {
+                            var len = found.transaction.length;
+                            len = len - 2;
+                            console.log("len", len);
+                            var transaction = [];
+                            var i = 0;
+                            while (i <= len) {
+                                transaction.push(found.transaction[i]);
+                                i++;
                             }
-                        });
+                            if (transaction.length == 1) {
+                                var upgrade = false
+                            } else {
+                                var upgrade = true;
+                            }
+                            Transaction.findOne({
+                                _id: found.transaction[len]
+                            }).lean().sort({
+                                createdAt: -1
+                            }).exec(function (err, transactData) {
+                                if (err || _.isEmpty(transactData)) {
+                                    callback(null, {
+                                        error: "no data found",
+                                        data: transactData
+                                    });
+                                } else {
+                                    var matchObj = {
+                                        $set: {
+                                            outstandingAmount: transactData.outstandingAmount,
+                                            totalPaid: transactData.amountPaid,
+                                            cgst: transactData.cgstAmount,
+                                            sgst: transactData.sgstAmount,
+                                            igst: transactData.igstAmount,
+                                            transaction: transaction,
+                                            upgrade: upgrade,
+                                        }
+                                    };
+                                    console.log("matchObj", matchObj);
+                                    Accounts.update({
+                                        school: data.school
+                                    }, matchObj).exec(
+                                        function (err, data3) {
+                                            if (err) {
+                                                callback(err, null);
+                                            } else if (data3) {
+                                                var matchObj = {
+                                                    $set: {
+                                                        package: transactData.package,
+                                                    }
+                                                };
+                                                Registration.update({
+                                                    _id: data.school
+                                                }, matchObj).exec(
+                                                    function (err, data3) {
+                                                        if (err) {
+                                                            console.log(err);
+                                                            callback(err, null);
+                                                        } else if (data3) {
+                                                            callback(null, data3);
+                                                        }
+                                                    });
+                                            }
+                                        });
+                                }
+                            });
+                        } else {
+                            var len = found.transaction.length;
+                            len = len - 2;
+                            console.log("len", len);
+                            var transaction = [];
+                            var i = 0;
+                            while (i <= len) {
+                                transaction.push(found.transaction[i]);
+                                i++;
+                            }
+                            if (transaction.length == 1) {
+                                var upgrade = false
+                            } else {
+                                var upgrade = true;
+                            }
+                            Transaction.findOne({
+                                _id: found.transaction[len]
+                            }).lean().sort({
+                                createdAt: -1
+                            }).exec(function (err, transactData) {
+                                if (err || _.isEmpty(transactData)) {
+                                    callback(null, {
+                                        error: "no data found",
+                                        data: transactData
+                                    });
+                                } else {
+                                    var matchObj = {
+                                        $set: {
+                                            outstandingAmount: transactData.outstandingAmount,
+                                            totalPaid: transactData.amountPaid,
+                                            cgst: transactData.cgstAmount,
+                                            sgst: transactData.sgstAmount,
+                                            igst: transactData.igstAmount,
+                                            transaction: transaction,
+                                            upgrade: upgrade
+                                        }
+                                    };
+                                    console.log("matchObj", matchObj);
+                                    Accounts.update({
+                                        school: data.school
+                                    }, matchObj).exec(
+                                        function (err, data3) {
+                                            if (err) {
+                                                callback(err, null);
+                                            } else if (data3) {
+                                                var matchObj = {
+                                                    $set: {
+                                                        package: transactData.package,
+                                                    }
+                                                };
+                                                Registration.update({
+                                                    _id: data.school
+                                                }, matchObj).exec(
+                                                    function (err, data3) {
+                                                        if (err) {
+                                                            console.log(err);
+                                                            callback(err, null);
+                                                        } else if (data3) {
+                                                            callback(null, data3);
+                                                        }
+                                                    });
+                                            }
+                                        });
+                                }
+                            });
+                        }
                     }
                 }
             ],
