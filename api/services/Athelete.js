@@ -3677,6 +3677,28 @@ var model = {
                 } else {
                     obj.BIB = "NO";
                 }
+                if (n.Document_Status) {
+                    obj.Document_Status = n.Document_Status;
+                } else {
+                    obj.Document_Status = "";
+                }
+                if (n.Photo_ID) {
+                    obj.Photo_ID = n.Photo_ID;
+                } else {
+                    obj.Photo_ID = "";
+                }
+
+                if (n.School_Id) {
+                    obj.School_Id = n.School_Id;
+                } else {
+                    obj.School_Id = "";
+                }
+
+                if (n.Age_Proof) {
+                    obj.Age_Proof = n.Age_Proof;
+                } else {
+                    obj.Age_Proof = "";
+                }
                 excelData.push(obj);
             });
             Config.generateExcelOld("Athlete", excelData, res);
@@ -3923,6 +3945,28 @@ var model = {
             obj["STATUS"] = athleteData.status;
             obj["PAYMENT MODE"] = athleteData.registrationFee;
             obj["PAYMENT STATUS"] = athleteData.paymentStatus;
+            if (athleteData.Document_Status) {
+                obj.Document_Status = athleteData.Document_Status;
+            } else {
+                obj.Document_Status = "";
+            }
+            if (athleteData.Photo_ID) {
+                obj.Photo_ID = athleteData.Photo_ID;
+            } else {
+                obj.Photo_ID = "";
+            }
+
+            if (athleteData.School_Id) {
+                obj.School_Id = athleteData.School_Id;
+            } else {
+                obj.School_Id = "";
+            }
+
+            if (athleteData.Age_Proof) {
+                obj.Age_Proof = athleteData.Age_Proof;
+            } else {
+                obj.Age_Proof = "";
+            }
             singleData.push(obj);
         });
         callback(null, singleData);
