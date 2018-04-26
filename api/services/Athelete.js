@@ -3502,6 +3502,28 @@ var model = {
                         } else {
                             obj.BIB = "NO";
                         }
+                        if (n.Document_Status) {
+                            obj.Document_Status = n.Document_Status;
+                        } else {
+                            obj.Document_Status = "";
+                        }
+                        if (n.Photo_ID) {
+                            obj.Photo_ID = n.Photo_ID;
+                        } else {
+                            obj.Photo_ID = "";
+                        }
+
+                        if (n.School_Id) {
+                            obj.School_Id = n.School_Id;
+                        } else {
+                            obj.School_Id = "";
+                        }
+
+                        if (n.Age_Proof) {
+                            obj.Age_Proof = n.Age_Proof;
+                        } else {
+                            obj.Age_Proof = "";
+                        }
                         excelData.push(obj);
                     });
                     Config.generateExcel("Athlete", excelData, res);
