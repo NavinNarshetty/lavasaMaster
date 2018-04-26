@@ -244,8 +244,8 @@
 
 
                   <td class="text-center" style="vertical-align: middle;">
-                    <span class="text-center" ng-if="upgradePaymentstatus==='Pending' && packageDetail.paymentStatus ==='Pending' && packageDetail.paymentMode==='online PAYU'"
-                      ng-click="deleteTransaction(formData.athleteId)">
+                    <span class="text-center" ng-if="upgradePaymentstatus==='Pending' && packageDetail.paymentStatus ==='Pending' && packageDetail.paymentMode==='online PAYU' && $index=== formData.transactions.length - 1"
+                      ng-click="deleteTransaction(formData.athleteId,packageDetail._id)">
                       <i class="fa btn btn-danger fa-trash" aria-hidden="true"></i>
                     </span>
                   </td>

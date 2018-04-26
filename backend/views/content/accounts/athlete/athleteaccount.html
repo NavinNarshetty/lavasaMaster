@@ -62,8 +62,13 @@
                         </p>
                       </div>
                       <div class="col-md-2">
+                        <span class="ban-transaction" ng-repeat="extraTransaction in player.transaction">
+                          <i class="fa fa-eraser" ng-if="extraTransaction.paymentStatus ==='Pending' && extraTransaction.paymentMode==='online PAYU' && player.athleteData.upgradePaymentStatus==='Pending'"></i>
+                        </span>
                         <span class="athleteaccount-upgraded pull-right label  text-right" ng-class="{'label-success':player.currentAthletePackage.paymentStatus==='Paid','label-danger':player.currentAthletePackage.paymentStatus==='Pending'}"
-                          ng-if="player.upgrade">Upgraded</span>
+                          ng-if="player.upgrade">Upgraded
+                        </span>
+
                       </div>
                     </div>
 

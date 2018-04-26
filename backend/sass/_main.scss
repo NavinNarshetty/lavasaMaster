@@ -1651,6 +1651,12 @@
  .override-select {
      border: none;
      border-radius: 20px;
+ }
+
+ .ban-transaction {
+     margin-left: 5px;
+     font-size: 12px;
+     color: red;
  } //  OVERRIDE SELECT END
  // COMMON CLASS END
  @import "fancybox-override";

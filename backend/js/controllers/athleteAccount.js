@@ -110,6 +110,7 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
     var upgradePackage = player.athlete.package;
     console.log(upgradePackage, "check for package");
 
+
     if (player.athleteData.transaction.length) {
       _.each(player.athleteData.transaction, function (key) {
         if (key.package._id == upgradePackage) {
@@ -130,6 +131,8 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
       scope: $scope,
       windowClass: 'accounts-modal'
     });
+
+    console.log($scope.modalInstance, "modal");
   }
   // MODAL END
 
@@ -225,17 +228,20 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
   // GENERATE EXCEL END
 
   // DELETE TRANSACTION
-  $scope.deleteTransaction = function (data) {
-    $scope.url = "Account/removeTransactionAndUpdateAthlete"
+  $scope.deleteTransaction = function (data, transactionID) {
+    $scope.url = "Accounts/removeTransactionAndUpdateAthlete"
     $scope.transactionData = {};
-    $scopr.transactionData._id = data;
+    $scope.transactionData.athlete = data;
+    $scope.transactionData.transactionId = transactionID;
     NavigationService.apiCall($scope.url, $scope.transactionData, function (data) {
       if (data.value) {
         toastr.success('Deleted success', 'Deleted');
       } else {
         toastr.error('Something went wrong', 'Error');
       }
-    })
+    });
+    $scope.modalInstance.rendered();
+    $scope.viewTable();
   }
   // DELETE TRANSACTION END
   $scope.athleteAccountData = {
