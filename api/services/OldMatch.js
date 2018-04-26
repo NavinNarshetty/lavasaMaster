@@ -483,7 +483,7 @@ var model = {
                             } else {
                                 var final = {};
                                 var result = ResultInitialize.getResultVar(matchData.sportsName, matchData.sportType);
-                                console.log("result", matchData[result.resultVar]);
+                                console.log("result******", result, "-------------", matchData);
                                 if (!(matchData[result.resultVar] == '')) {
                                     final.result = result;
                                     final.score = matchData[result.resultVar];
@@ -494,7 +494,7 @@ var model = {
                                         final.resultName = result.resultVar;
                                         final.nextData = nextData;
                                         ResultInitialize.getMyResult(matchData.sportsName, matchData, function (err, complete) {
-                                            console.log("complete", complete, "teams", complete[result.resultVar].teams);
+                                            console.log("teams results", nextData.oldmatch[result.resultVar]);
                                             matchData[result.resultVar] = complete[result.resultVar];
                                             if (nextData.oldmatch[result.resultVar]) {
                                                 complete[result.resultVar].teams[0].teamResults = nextData.oldmatch[result.resultVar].teams[0].teamResults;

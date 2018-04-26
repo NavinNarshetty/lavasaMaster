@@ -136,7 +136,7 @@ var model = {
     },
 
     getTeamTemplate: function (sportName, team) {
-        // console.log("getTeamTemplate", team);
+        console.log("getTeamTemplate", team);
         var format = {
             teamId: team.teamId,
             team: team._id,
@@ -251,8 +251,6 @@ var model = {
         })
 
         return format;
-
-
     },
 
     getHeatTemplate: function (sportName, team) {
@@ -287,8 +285,10 @@ var model = {
 
     initializeTeamAndPlayers: function (sportName, resultSportname, match) {
         _.each(match.teams, function (team, tk) {
+            console.log("team", team, "tk", tk);
             resultSportname.teams[tk] = ResultInitialize.getTeamTemplate(sportName, team);
         });
+        console.log("resultSportname", resultSportname);
         return resultSportname;
     },
 
@@ -347,6 +347,7 @@ var model = {
                 case "Basketball":
                     returnResult.resultBasketball = format;
                     returnResult.resultBasketball = ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultBasketball, match);
+                    console.log("returnResult", returnResult);
                     return returnResult;
 
                 case "Football":
@@ -518,6 +519,7 @@ var model = {
     getMyResult: function (sportName, match, callback) {
         console.log('get My Result', sportName, match);
         var template = ResultInitialize.getResultTemplate(sportName, match);
+        console.log('get My template', template);
         callback(null, template);
     },
 
