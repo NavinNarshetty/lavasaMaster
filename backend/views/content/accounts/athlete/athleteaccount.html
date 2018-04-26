@@ -21,6 +21,10 @@
                 <h3>List of Athletes
                   <span class="tableTotal ">(Total : {{totalItems}}) </span>
                 </h3>
+                <p>
+                  <strong>
+                    <span class="fa fa-eraser"></span> indicates you have to delete extra entry </strong>
+                </p>
               </div>
             </div>
             <div class="col-md-5">
@@ -47,7 +51,9 @@
                           <span>{{player.athlete.middleName}}</span>
                           <span>{{player.athlete.surname}}</span>
                         </h4>
-                        <p class="athleteaccount-school text-left text-capitalize m-clear">{{player.athlete.school.name }} </p>
+
+                        <p class="athleteaccount-school  r-titillium-web-regular text-left text-capitalize m-clear" ng-if="player.athlete.atheleteSchoolName">{{player.athlete.atheleteSchoolName }} </p>
+                        <p class="athleteaccount-school  r-titillium-web-regular text-left text-capitalize m-clear" ng-if="player.athleteData.athlete.school.name">{{player.athleteData.athlete.school.name }} </p>
                       </div>
                       <div class="col-md-4">
                         <p class="m-clear">

@@ -49,7 +49,7 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
       $scope.totalItems = data.data.total;
       $scope.maxRow = data.data.options.count;
       _.each($scope.items, function (key) {
-        console.log(key.athlete, "key in array");
+        // console.log(key.athlete, "key in array");
         key.athleteData = {};
         $scope.athletePackage = key.athlete.package;
         key.currentAthletePackage = _.find(key.transaction, ['package', $scope.athletePackage])
@@ -60,7 +60,7 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
         $scope.getOneConstraints._id = {}
         $scope.getOneConstraints._id = key._id;
         NavigationService.apiCall($scope.getOneUrl, $scope.getOneConstraints, function (data) {
-          console.log(data, "new api call")
+          // console.log(data, "new api call")
           key.athleteData = data.data;
           if (data.data.display) {
             key.displayData = data.data.display;
@@ -108,13 +108,14 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
     $scope.formData.transactions = player.athleteData.transaction;
     $scope.upgradePaymentstatus = player.athleteData.upgradePaymentStatus;
     var upgradePackage = player.athlete.package;
+    $scope.shouldCallApi = false;
     console.log(upgradePackage, "check for package");
 
 
     if (player.athleteData.transaction.length) {
       _.each(player.athleteData.transaction, function (key) {
         if (key.package._id == upgradePackage) {
-          console.log("key i am in value")
+          // console.log("key i am in value")
           key.currentAthletePackage = true;
         } else {
           key.currentAthletePackage = false;
@@ -125,14 +126,14 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
     $scope.modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
       templateUrl: 'views/modal/manualaccount.html',
-      // backdrop: 'static',
+      backdrop: 'static',
       keyboard: false,
       size: 'lg',
       scope: $scope,
       windowClass: 'accounts-modal'
     });
 
-    console.log($scope.modalInstance, "modal");
+    // console.log($scope.modalInstance, "modal");
   }
   // MODAL END
 
@@ -228,21 +229,37 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
   // GENERATE EXCEL END
 
   // DELETE TRANSACTION
-  $scope.deleteTransaction = function (data, transactionID) {
+  $scope.deleteTransaction = function (data, transactionID, index) {
+    // console.log(index, "index value");
+
+    $scope.formData.transactions.splice(index, 1);
     $scope.url = "Accounts/removeTransactionAndUpdateAthlete"
     $scope.transactionData = {};
     $scope.transactionData.athlete = data;
     $scope.transactionData.transactionId = transactionID;
     NavigationService.apiCall($scope.url, $scope.transactionData, function (data) {
       if (data.value) {
+        $scope.shouldCallApi = true;
         toastr.success('Deleted success', 'Deleted');
       } else {
         toastr.error('Something went wrong', 'Error');
       }
     });
-    $scope.modalInstance.rendered();
-    $scope.viewTable();
+    // $scope.modalInstance.rendered();
+    // $scope.viewTable();
   }
+
+  $scope.closeAccount = function () {
+    console.log($scope.shouldCallApi, "close button");
+    if ($scope.shouldCallApi === true) {
+      $scope.modalInstance.close();
+      $scope.viewTable();
+    } else {
+      $scope.modalInstance.close();
+    }
+
+  }
+
   // DELETE TRANSACTION END
   $scope.athleteAccountData = {
     payementMode: 'Online,Cash,Online,Cash',

@@ -162,9 +162,9 @@
                   <td>
                     <div class="form-group m-clear">
                       <input name="datefield" ui-date="dateOptions" ng-model="packageDetail.dateOfTransaction" class="form-control" ng-required="true"
-                        placeholder="Enter Event Date" required ng-readonly="packageDetail.paymentMode==='online PAYU' || packageDetail.currentAthletePackage===false">
+                        placeholder="Enter Event Date" ng-readonly="packageDetail.paymentMode==='online PAYU' || packageDetail.currentAthletePackage===false">
                     </div>
-                    <div class="label label-danger pull-right" ng-if="accountForm.datefield.$invalid && accountForm.datefield.$touched">Please Enter End Date *</div>
+                    <!-- <div class="label label-danger pull-right" ng-if="accountForm.datefield.$invalid && accountForm.datefield.$touched">Please Enter End Date *</div> -->
                   </td>
                   <!-- DATE  END -->
                   <!--MODE OF PAYMENT  -->
@@ -215,7 +215,7 @@
                       <input type="text" placeholder="Enter Recipt no" name="reciptno" class="form-control" ng-model="packageDetail.receiptId"
                         ng-list required ng-readonly="packageDetail.paymentMode==='online PAYU' || packageDetail.currentAthletePackage===false">
                     </div>
-                    <div class="label label-danger pull-right" ng-if="accountForm.reciptno.$invalid && accountForm.reciptno.$touched">Please Enter Valid Recipt No *</div>
+                    <!-- <div class="label label-danger pull-right" ng-if="accountForm.reciptno.$invalid && accountForm.reciptno.$touched">Please Enter Valid Recipt No *</div> -->
                   </td>
                   <!-- RECIPT NO END -->
 
@@ -223,8 +223,8 @@
                   <td>
                     <div class="form-group m-clear">
                       <input type="text" placeholder="Enter checkNo" name="checkNo" class="form-control" ng-model="packageDetail.checkNo" ng-list
-                        required ng-readonly="packageDetail.paymentMode==='online PAYU' || packageDetail.currentAthletePackage===false">
-                      <div class="label label-danger pull-right" ng-if="accountForm.reciptno.$invalid && accountForm.reciptno.$touched">Please Enter Valid Recipt No *</div>
+                        ng-readonly="packageDetail.paymentMode==='online PAYU' || packageDetail.currentAthletePackage===false">
+                      <!-- <div class="label label-danger pull-right" ng-if="accountForm.reciptno.$invalid && accountForm.reciptno.$touched">Please Enter Valid Recipt No *</div> -->
                     </div>
 
                   </td>
@@ -245,7 +245,7 @@
 
                   <td class="text-center" style="vertical-align: middle;">
                     <span class="text-center" ng-if="upgradePaymentstatus==='Pending' && packageDetail.paymentStatus ==='Pending' && packageDetail.paymentMode==='online PAYU' && $index=== formData.transactions.length - 1"
-                      ng-click="deleteTransaction(formData.athleteId,packageDetail._id)">
+                      ng-click="deleteTransaction(formData.athleteId,packageDetail._id,$index)">
                       <i class="fa btn btn-danger fa-trash" aria-hidden="true"></i>
                     </span>
                   </td>
@@ -254,7 +254,7 @@
               </tbody>
             </table>
             <div class="form-group">
-              <label for="note1" class="label label-info">Note : Highlighted row in table is current package of athlete</label>
+              <label for="note1" class="">Note : Highlighted row in table is current package of athlete</label>
             </div>
           </div>
         </div>
@@ -270,5 +270,5 @@
 </div>
 <div class="modal-footer">
   <button class="btn btn-success btn-outline btn-small" type="button" ng-click="saveTable(formData)">Save</button>
-  <button type="submit" class="btn btn-danger btn-small" ng-click="$dismiss()">Close</button>
+  <button type="submit" class="btn btn-danger btn-small" ng-click="closeAccount()">Close</button>
 </div>
