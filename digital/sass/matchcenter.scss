@@ -47,6 +47,11 @@
     left: -5px;
   }
 }
+.match-overview{
+  .winner-dot:before{
+    top: 4px;
+  }
+}
 .printpage-mc-raquet{
   width: 700px;
   min-height: 600px;
