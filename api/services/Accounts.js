@@ -856,13 +856,14 @@ var model = {
                                 }
                             });
                     } else {
-                        callback(null, data);
+                        callback(null, accountsData);
                     }
                 },
-                function (data, callback) {
+                function (accountsData, callback) {
                     if (data.athlete && data.registrationFee == "cash") {
                         var found = {};
                         found._id = data.athlete;
+                        console.log("towards mails", found);
                         Accounts.updateAthleteMailAndSms(found, function (err, mailData) {
                             if (err) {
                                 callback(err, null);
@@ -1641,6 +1642,7 @@ var model = {
     },
 
     updateAthleteMailAndSms: function (found, callback) {
+        console.log("went inside mail athlete");
         async.waterfall([
                 function (callback) {
                     ConfigProperty.find().lean().exec(function (err, property) {
@@ -1664,6 +1666,7 @@ var model = {
                                 console.log(err);
                                 callback(err, null);
                             } else if (athleteData) {
+                                console.log("athleteData", athleteData);
                                 callback(null, property, athleteData);
                             }
                         });
