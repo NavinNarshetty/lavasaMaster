@@ -2076,6 +2076,7 @@ var model = {
                             }).lean().sort({
                                 createdAt: -1
                             }).exec(function (err, transactData) {
+                                console.log("transactData after delete", transactData);
                                 if (err || _.isEmpty(transactData)) {
                                     callback(null, {
                                         error: "no data found",
