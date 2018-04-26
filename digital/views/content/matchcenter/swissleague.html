@@ -1,0 +1,105 @@
+<div class="" id="printSection">
+  <div class="printpage-mc-raquet">
+  <!-- PRINT -->
+  <div class="" id="print-btnholder">
+    <button type="button" class="btn btn-blueoutline" ng-click="printFunction()">Print</button>
+  </div>
+  <!-- PRINT END -->
+  <!-- TITLE -->
+  <div class="matchcenter-title">
+    <div class="matchcenter-header">
+      {{eventName}}
+    </div>
+  </div>
+  <!-- TITLE END -->
+  <!-- HEADER -->
+  <div class="matchstart-header">
+    <!-- HEADER LOGO  -->
+    <div class="matchcenter-sporticon">
+      <img ng-src="{{match.sportName|sporticon:'icon'}}" alt="{{match.sportName}}" title="{{match.sportName}}" class="img-responsive">
+    </div>
+    <!-- HEADER LOGO END -->
+    <!-- HEADER CONTENT  -->
+    <div class="matchcenter-heading">
+      <span class="pull-right">{{match.matchId}}</span>
+      <p class="m-clear"><span>{{match.sport.sportslist.sportsListSubCategory.name}}</span> - <span>{{match.sport.ageGroup.name}}</span> <span>{{match.sport.gender}} </span> <span>{{match.round}} </span></p>
+    </div>
+    <!-- HEADER CONTENT END  -->
+  </div>
+  <!-- HEADER END -->
+  <!-- CONTENT -->
+  <div class="matchcenter-content">
+    <div class="match-overview text-right">
+      <span class="winner-dot">: Match Winner</span>
+    </div>
+    <div class="matchcenter-timetrial-table">
+      <table>
+        <tr>
+          <td>
+            <label for="">Standing</label>
+          </td>
+          <td>
+            <label for="">Name</label>
+          </td>
+          <td>
+            <label for="">Points</label>
+          </td>
+          <td>
+            <label for="">Standing</label>
+          </td>
+          <td>
+            <label for="">Name</label>
+          </td>
+          <td>
+            <label for="">Points</label>
+          </td>
+        </tr>
+        <tr ng-repeat="round in matchs track by $index">
+          <td>
+            <div class="text-center">
+              <span>{{round.resultSwiss.players[0].rank}}</span>
+              <span ng-if="round.resultSwiss.players[0].rank == undefined">-</span>
+            </div>
+          </td>
+          <td>
+            <div class="text-capitalize" ng-class="{'winner-dot':round.resultSwiss.players[0].isWinner}">
+              <span ng-if="round.resultSwiss.players[0]"></span>{{round.resultSwiss.players[0].fullName}}
+            </div>
+          </td>
+          <td>
+            <div class="text-center">
+              <span>{{round.resultSwiss.players[0].score}}</span>
+              <span ng-if="round.resultSwiss.players[0].score == undefined">-</span>
+            </div>
+          </td>
+          <td>
+            <div class="text-center">
+              <span ng-if="round.resultSwiss.players[1]">
+                <span>{{round.resultSwiss.players[1].rank}}</span>
+                <span ng-if="round.resultSwiss.players[1].rank == undefined">-</span>
+              </span>
+            </div>
+          </td>
+          <td>
+            <div class="text-capitalize" ng-class="{'winner-dot':round.resultSwiss.players[1].isWinner}">
+              <span ng-if="round.resultSwiss.players[1]">{{round.resultSwiss.players[1].fullName}}</span>
+              <span ng-if="!round.resultSwiss.players[1]"> - </span>
+            </div>
+          </td>
+          <td>
+            <div class="text-center" >
+              <span ng-if="round.resultSwiss.players[1]">
+                <span>{{round.resultSwiss.players[1].score}}</span>
+                <span ng-if="round.resultSwiss.players[1].score == undefined">-</span>
+              </span>
+            </div>
+          </td>
+
+        </tr>
+      </table>
+    </div>
+  </div>
+  <!-- CONTENT END -->
+</div>
+</div>
+<!-- <pre>{{match|json}}</pre> -->

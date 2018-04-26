@@ -236,6 +236,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'MatchCenterTimeTrialCtrl'
         })
+        .state('matchcenter-swissleague', {
+            url: "/matchcenter/swissleague/:id/:round",
+            templateUrl: tempateURL,
+            controller: 'MatchCenterSwissLeagueCtrl'
+        })
         // MATCH CENTERS END
         .state('form', {
             url: "/form",

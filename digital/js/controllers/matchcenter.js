@@ -2,7 +2,7 @@
 myApp.controller('MatchCenterRaquetCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, knockoutService, $rootScope, configService) {
   $scope.template = TemplateService.getHTML("content/matchcenter/raquet.html");
   TemplateService.title = "Match Center Raquet"; //This is the Title of the Website
-  // TemplateService.header = ""; //TO HIDE HEADER
+  TemplateService.header = ""; //TO HIDE HEADER
   $scope.navigation = NavigationService.getNavigation();
   // CODE STARTS HERE
   // VARIABLES
@@ -58,7 +58,7 @@ myApp.controller('MatchCenterRaquetCtrl', function ($scope, TemplateService, Nav
 myApp.controller('MatchCenterDoublesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, knockoutService, $rootScope, configService) {
   $scope.template = TemplateService.getHTML("content/matchcenter/doubles.html");
   TemplateService.title = "Match Center Doubles"; //This is the Title of the Website
-  // TemplateService.header = ""; //TO HIDE HEADER
+  TemplateService.header = ""; //TO HIDE HEADER
   $scope.navigation = NavigationService.getNavigation();
   // CODE STARTS HERE
   // VARIABLES
@@ -110,7 +110,7 @@ myApp.controller('MatchCenterDoublesCtrl', function ($scope, TemplateService, Na
 myApp.controller('MatchCenterTeamCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, knockoutService, $rootScope, configService) {
   $scope.template = TemplateService.getHTML("content/matchcenter/team.html");
   TemplateService.title = "Match Center Team Sports"; //This is the Title of the Website
-  // TemplateService.header = ""; //TO HIDE HEADER
+  TemplateService.header = ""; //TO HIDE HEADER
   $scope.navigation = NavigationService.getNavigation();
   // CODE STARTS HERE
   // VARIABLES
@@ -190,3 +190,69 @@ myApp.controller('MatchCenterTimeTrialCtrl', function ($scope, TemplateService, 
   // CODE ENDS HERE
 });
 // *********************TIMETRIAL END********************************
+
+// *********************SWISS LEAGUE START******************************
+myApp.controller('MatchCenterSwissLeagueCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, knockoutService, $rootScope, configService) {
+  $scope.template = TemplateService.getHTML("content/matchcenter/swissleague.html");
+  TemplateService.title = "Match Center Time Trials"; //This is the Title of the Website
+  TemplateService.header = ""; //TO HIDE HEADER
+  $scope.navigation = NavigationService.getNavigation();
+  // CODE STARTS HERE
+  // VARIABLES
+  $scope.matchData = {};
+  $scope.match = {};
+  $scope.matchs = {};
+  $scope.matchData ={
+    sport: $stateParams.id,
+    round: $stateParams.round
+  }
+  // VARIABLES END
+  // FUNCTIONS
+  // PRINT FUNCTION
+  $scope.printFunction = function (printSectionId) {
+    window.print();
+    $timeout(function () {
+      window.close();
+    }, 300);
+  };
+  // PRINT FUNCTION END
+  // FUNCTIONS END
+  // API CALLS
+  // GET CONFIG
+  configService.getDetail(function (data) {
+    $scope.eventName = data.eventName;
+  })
+  // GET CONFIG END
+  // GET MATCH
+  $scope.getOneMatch = function () {
+    $scope.getUrl = "Match/getAllQualifyingPerRound";
+    NavigationService.apiCallWithData($scope.getUrl, $scope.matchData, function (data) {
+      if (data.value == true) {
+        $scope.matchs = data.data;
+        $scope.match.round = $scope.matchData.round;
+        $scope.match.sport = $scope.matchs[0].sport;
+        $scope.match.sportName = $scope.match.sport.sportslist.sportsListSubCategory.name;
+        _.each($scope.matchs, function(n, nkey){
+          _.each(n.resultSwiss.players, function(m, mkey){
+            var ath = _.find(n.opponentsSingle, ['_id', m.id]);
+            m.fullName = ath.athleteId.firstName + ' ' + ath.athleteId.surname;
+            if (m.id == n.resultSwiss.winner.player) {
+              m.isWinner = true;
+            }
+            // console.log("m", nkey, m);
+          });
+          // console.log("n", n);
+        });
+        console.log("match",$scope.matchs, $scope.match);
+        $timeout(function () {
+          $scope.printFunction();
+        }, 900);
+      }
+    });
+  }
+  $scope.getOneMatch();
+  // GET MATCH END
+  // API CALLS END
+  // CODE ENDS HERE
+});
+// *********************SWISS LEAGUE END********************************
