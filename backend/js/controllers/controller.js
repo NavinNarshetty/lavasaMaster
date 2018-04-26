@@ -2425,7 +2425,7 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
     // FOR SPORTOPS START
     if ($state.current.name == "schoolOps") {
         $scope.jSchoolops = $.jStorage.get('schoolOps');
-        if (($.jStorage.get("accessLevel")=="Admin") && ($.jStorage.get('schoolOps') == null)) {
+        if (($.jStorage.get("accessLevel") == "Admin") && ($.jStorage.get('schoolOps') == null)) {
             excelService.loginPayuPopup($scope);
         }
     }
@@ -2650,7 +2650,7 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
     // for SPORTOPS LOGIN
     $scope.jAtheletOps = $.jStorage.get('athleteOps');
     if ($state.current.name == "athleteOps") {
-        if (($.jStorage.get("accessLevel")=="Admin") && ($.jStorage.get('athleteOps') == null)) {
+        if (($.jStorage.get("accessLevel") == "Admin") && ($.jStorage.get('athleteOps') == null)) {
             excelService.loginPayuPopup($scope);
         }
     }
@@ -6243,6 +6243,43 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
             $(window).scrollTop(0);
         });
+
+        var index;
+        var probhitUrls = [];
+        var allowedUrls = [];
+        var accessLevel = $.jStorage.get("accessLevel");
+        var currentPath = $location.path();
+        currentPath = _.split(currentPath, '/')[1];
+
+        console.log("currentPath", currentPath);
+        switch (accessLevel) {
+            case "Super Admin":
+                break;
+
+            case "Admin":
+                probhitUrls = ["users"];
+                index = probhitUrls.indexOf(currentPath);
+                if (index != -1) {
+                    $state.go('dashboard');
+                }
+                break;
+
+            case "Sports Ops":
+                var allowedUrls = ["schoolOps", "athleteOps", "viewSchool", "viewAthlete"];
+                index = allowedUrls.indexOf(currentPath);
+                if (index == -1) {
+                    $state.go('dashboard');
+                }
+                break;
+
+            case "Accounts":
+                var allowedUrls = ["schoolOps", "athleteOps", "viewSchool", "viewAthlete", "athleteaccount", "schoolaccount"];
+                index = allowedUrls.indexOf(currentPath);
+                if (index == -1) {
+                    $state.go('dashboard');
+                }
+                break;
+        }
 
     })
 
