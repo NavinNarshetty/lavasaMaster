@@ -406,31 +406,31 @@ var model = {
 
                             switch (award.award.awardType) {
                                 case "max":
-                                    pdfObj.filename = "sportMaxAwardAthlete";
+                                    pdfObj.filename = "e-special-awards/sportMaxAwardAthlete";
                                     pdfObj.totalSportsReg = award.sports.length;
                                     pdfObj.heading = basePath + "max.png"; //url to get Heading of Certificate
                                     break;
                                 case "strong":
-                                    pdfObj.filename = "schoolStrongAward";
+                                    pdfObj.filename = "e-special-awards/schoolStrongAward";
                                     pdfObj.heading = basePath + "strong.png";
                                     break;
                                 case "boost":
-                                    pdfObj.filename = "schoolBoostAward";
+                                    pdfObj.filename = "e-special-awards/schoolBoostAward";
                                     pdfObj.heading = basePath + "boost.png";
                                     pdfObj.boostDetail = award.boostDetail;
                                     break;
                                 case "coach":
-                                    pdfObj.filename = "schoolMasterCoachAward";
+                                    pdfObj.filename = "e-special-awards/schoolMasterCoachAward";
                                     pdfObj.heading = basePath + "coach.png";
                                     pdfObj.coachName = award.coachName;
                                     break;
                                 case "rising":
-                                    pdfObj.filename = "risingStar";
+                                    pdfObj.filename = "e-special-awards/risingStar";
                                     pdfObj.newFilename = award.award.name + "_" + award.sports[0].name + ".pdf";
                                     pdfObj.heading = basePath + "rising.png";
                                     break;
                                 case "champion":
-                                    pdfObj.filename = "championsAward";
+                                    pdfObj.filename = "e-special-awards/championsAward";
                                     pdfObj.heading = basePath + "champion.png";
                                     break;
                             }
@@ -549,7 +549,7 @@ var model = {
                                     break;
                                 case "champion":
                                     Result.getMedalsSchool(" ", function (err, data) {
-                                        console.log("getMedalsSchool data",data);
+                                        console.log("getMedalsSchool data", data);
                                         if (err) {
                                             callback(err, null);
                                         } else {

@@ -1673,7 +1673,7 @@ var model = {
                                 emailData.packageName = n.packageName;
                                 emailData.featureDetail = features;
                                 emailData.packageOrder = n.packageOrder;
-                                emailData.filename = "individual-sport/athleteindividual.ejs";
+                                emailData.filename = "e-individual-sport/athleteindividual.ejs";
                                 emailData.subject = "SFA: Individual Sport Selection";
                                 console.log(null, emailData);
                                 Config.email(emailData, function (err, emailRespo) {
@@ -1809,7 +1809,7 @@ var model = {
                                 emailData.ruleUrl = property[0].ruleUrl;
                                 emailData.type = property[0].institutionType;
                                 emailData.endDate = property[0].endDate;
-                                emailData.filename = "individual-sport/schoolindividual.ejs";
+                                emailData.filename = "e-individual-sport/schoolindividual.ejs";
                                 emailData.subject = "SFA: Individual Sport Selection List";
                                 Config.email(emailData, function (err, emailRespo) {
                                     if (err) {
@@ -1956,7 +1956,7 @@ var model = {
                                 emailData.packageName = n.packageName;
                                 emailData.featureDetail = features;
                                 emailData.packageOrder = n.packageOrder;
-                                emailData.filename = "individual-sport/athleteindividual.ejs";
+                                emailData.filename = "e-individual-sport/athleteindividual.ejs";
                                 emailData.subject = "SFA: Individual Sport Selection";
                                 Config.email(emailData, function (err, emailRespo) {
                                     if (err) {

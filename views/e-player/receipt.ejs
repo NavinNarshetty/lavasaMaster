@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>
+    </title>
+    <style>
+        @font-face {
+            font-family: 'TitilliumWeb-Bold';
+            src: url("../views/font/TitilliumWeb-Bold.ttf");
+        }
+
+        @font-face {
+            font-family: 'TitilliumWeb-LightItalic';
+            src: url("../views/font/TitilliumWeb-LightItalic.ttf");
+        }
+
+        @font-face {
+            font-family: 'TitilliumWeb-Regular';
+            src: url("../views/font/TitilliumWeb-Regular.ttf");
+        }
+
+        TitilliumWeb-ExtraLightItalic.ttf .body {
+            color: #000;
+            font-family: TitilliumWeb-Regular;
+        }
+
+        .img-responsive {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .inline-block {
+            display: inline-block;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .list-inline>li {
+            display: inline-block;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        .color-primary {
+            color: #0a1a72;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .sfa-bold {
+            font-family: TitilliumWeb-Bold
+        }
+
+        .m-clear {
+            margin: 0px;
+        }
+
+        .mtb8 {
+            margin: 8px 0px;
+        }
+
+        table {
+            width: 600px;
+            margin: 0 auto;
+        }
+
+        tr,
+        td,
+        span,
+        p {
+            color: #000;
+        }
+
+        .equal-div {
+            width: 50%;
+            float: left;
+            position: relative;
+            min-height: 1px;
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+
+        .emailer-table table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #000;
+        }
+
+        .emailer-table th {
+            border: 1px solid #000;
+            text-align: left;
+            padding: 3px 10px;
+        }
+
+        .emailer-table td {
+            border-left: 1px solid black;
+            text-align: left;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <thead>
+            <!-- LOGO AND HEADER  -->
+            <tr>
+                <td>
+                    <div class="text-center">
+                        <img src="https://storage.googleapis.com/emailers-images/logo.png" class="img-responsive" style="margin: 0 auto;">
+                    </div>
+                    <div class="text-center" style="margin:30px 0px;">
+                        <h2 class="color-primary" style="margin:0;;font-family:TitilliumWeb-Bold;text-transform: uppercase">
+                            <%=ddFavour%>
+                        </h2>
+                    </div>
+                </td>
+            </tr>
+            <!-- LOGO AND HEADER END -->
+
+        </thead>
+
+        <tbody>
+            <!-- INVOICE ID -->
+            <tr>
+                <td>
+
+                    <div class="inline-block" style="margin: 0px 15px;">
+                        <p class="mtb8">
+                            <span class="bold">CIN :</span>
+                            <span>U74999MH2015PTC268781</span>
+                        </p>
+                        <p class="mtb8">
+                            <span class="bold">RECIEPT NO :</span>
+                            <span>
+                                <%=receiptNo%>
+                            </span>
+                        </p>
+                        <p class="mtb8">
+                            <span class="bold">SAC :</span>
+                            <span>999651</span>
+                        </p>
+                    </div>
+
+                    <div class="inline-block" style="margin: 0px 15px;">
+                        <p class="mtb8">
+                            <span class="bold">GST IN :</span>
+                            <span>27AAWCS2792J1ZG</span>
+                        </p>
+                        <p class="mtb8">
+                            <span class="bold">PAN NO :</span>
+                            <span>AAWCS22792J</span>
+                        </p>
+                        <p class="mtb8">
+                            <span class="bold">TAN N0 :</span>
+                            <span>MUMS84804G</span>
+                        </p>
+                        <p class="mtb8">
+                            <span class="bold">DATED :
+                            </span>
+                            <span>
+                                <%=registrationDate%>
+                            </span>
+                        </p>
+                    </div>
+                </td>
+            </tr>
+            <!-- INVOICE ID END -->
+
+            <!-- INVOICE TABLE -->
+            <tr>
+                <td>
+                    <h4 class="text-center color-primary sfa" style="font-family: TitilliumWeb-Bold;">INVOICE/RECEIPT</h4>
+                    <div class="emailer-table">
+                        <table class="sfa-bold">
+                            <tr>
+                                <th>Particulars </th>
+                                <th>Amount</th>
+                            </tr>
+                            <!-- <tr>
+                                <td>Account :</td>
+                                <td></td>
+                            </tr> -->
+
+                            <!-- PACKAGE NAME -->
+                            <tr>
+                                <td>SFA Championship Registration Fees
+                                    <br>
+                                    <%=packageName%>
+                                </td>
+                                <td>
+                                    <%=amountWithoutTax%>
+                                </td>
+                            </tr>
+
+                            <!-- PACAKAGE NAME END -->
+
+
+                            <%if(city == 'Mumbai'){%>
+                                <tr>
+                                    <td style="padding: 0 10px;">CGST @
+                                        <%=cgstPercent%>%</td>
+                                    <td style="padding: 0 10px;">
+                                        <%=cgstAmount%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0 10px 60px;">SGST @
+                                        <%=sgstPercent%>% </td>
+                                    <td style="padding: 0 10px 60px;">
+                                        <%=sgstAmount%>
+                                    </td>
+                                </tr>
+                                <%} else if(city == 'Hyderabad'){%>
+                                    <tr>
+                                        <td style="padding: 0 10px 60px;">IGST @
+                                            <%=igstPercent%>% </td>
+                                        <td style="padding: 0 10px 60px;">
+                                            <%=igstAmount%>
+                                        </td>
+                                    </tr>
+                                    <%} else if(city == 'Ahmedabad'){%>
+                                        <tr>
+                                            <td style="padding: 0 10px 60px;">IGST @
+                                                <%=igstPercent%>% </td>
+                                            <td style="padding: 0 10px 60px;">
+                                                <%=igstAmount%>
+                                            </td>
+                                        </tr>
+                                        <%}%>
+
+                                            <!-- UPGRADE  -->
+                                            <%if(upgrade){%>
+                                                <tr>
+                                                    <td style="padding: 5px 10px 15px 10px;">
+                                                        Less: SFA
+                                                        <%=eventYear%> Resigtration Fee Paid
+                                                    </td>
+                                                    <td style="padding: 5px 10px 15px 10px;">
+                                                        <%=prevPaidAmount%>
+                                                    </td>
+                                                </tr>
+                                                <%} else {%>
+                                                    <%}%>
+                                                        <!-- UPGRADE END -->
+
+                                                        <!-- DISCOUNT  -->
+                                                        <%if(discount){%>
+                                                            <tr>
+                                                                <td style="padding: 5px 10px 15px 10px;">
+                                                                    Discount
+                                                                </td>
+                                                                <td style="padding: 5px 10px 15px 10px;">
+                                                                    <%=discount%>
+                                                                </td>
+                                                            </tr>
+                                                            <%} else {%>
+                                                                <%}%>
+                                                                    <!-- DISCOUNT END -->
+
+                                                                    <!-- REGISTRATION FEE  RECEIVED -->
+                                                                    <tr>
+                                                                        <td>Registration fees received from
+                                                                            <br>
+                                                                            <%=firstName%>
+                                                                                <%=surname%>
+                                                                        </td>
+                                                                        <td>
+
+                                                                        </td>
+                                                                    </tr>
+                                                                    <!-- REGISTERTATION FEE RECIVED FROM END-->
+
+                                                                    <!-- MODE OF PAYEMENT -->
+                                                                    <tr>
+                                                                        <td>
+                                                                            Mode of Payment
+                                                                            <br>
+                                                                            <%=paymentMode%>
+                                                                        </td>
+                                                                        <td></td>
+                                                                    </tr>
+
+                                                                    <!-- MODE OF PAYEMENT  -->
+
+                                                                    <!-- TRANSACTION DETAILS -->
+                                                                    <tr>
+                                                                        <td style="padding:5px 10px 15px 10px;">
+                                                                            <b>Transaction Details</b>
+                                                                            <br>
+                                                                            <span>
+                                                                                <%=transactionId%>
+                                                                            </span>
+                                                                        </td>
+                                                                        <td style="padding:5px 10px 15px 10px;"></td>
+                                                                    </tr>
+                                                                    <!-- TRANSACTION DETAILS -->
+
+                                                                    <!-- AMOUNTS -->
+                                                                    <tr>
+                                                                        <td style="padding:0 10px 15px 10px;">
+                                                                            <b>Amount (In Words) :</b>
+                                                                            <br>INR
+                                                                            <span>
+                                                                                <%=amountToWords%>
+                                                                            </span>
+                                                                        </td>
+                                                                        <td style="padding: 0 10px 0px 10px;border-top: 1px solid black;">
+                                                                            <i class="fa fa-inr" aria-hidden="true"></i>
+                                                                            <%=athleteAmount%>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <!--AMOUNTS END  -->
+                                                                    <!-- INVOICE TABLE END -->
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>
+                    <div class="blue-footer text-center" style="background:#0a1a72;font-family: TitilliumWeb-Regular; color: #fff">
+                        <%if(infoId == 'info@sfanow.in'){%>
+                            <p style="padding: 3px 0;">
+                                <%=cityAddress%>
+                                    <br>www.sfanow.in I
+                                    <%=infoId%> Contact :
+                                        <%=infoNo%>
+                            </p>
+                            <%} else if(infoId == 'info.hyd@sfanow.in'){%>
+                                <p style="padding: 3px 0;">Head Office:
+                                    <%=cityAddress%>
+                                        <br>www.sfanow.in I
+                                        <%=infoId%> Contact :
+                                            <%=infoNo%>
+                                </p>
+                                <%}%>
+
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+
+</html>

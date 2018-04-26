@@ -1588,7 +1588,7 @@ var model = {
                                 emailData.packageOrder = schoolData.package.order;
                                 emailData.featureDetail = features;
                                 emailData.flag = emailData.type;
-                                emailData.filename = "player-school/upgrade.ejs";
+                                emailData.filename = "e-player-school/upgrade.ejs";
                                 emailData.subject = "SFA: Thank you for upgrading your package for SFA " + emailData.city + " " + emailData.eventYear;
                                 // console.log("emaildata", emailData);
                                 Config.email(emailData, function (err, emailRespo) {
@@ -1712,7 +1712,7 @@ var model = {
                                 emailData.packageOrder = athleteData.package.order;
                                 emailData.featureDetail = features;
                                 emailData.flag = emailData.type;
-                                emailData.filename = "player-school/upgrade.ejs";
+                                emailData.filename = "e-player-school/upgrade.ejs";
                                 emailData.subject = "SFA: Thank you for upgrading your package for SFA " + emailData.city + " " + emailData.eventYear;
                                 // console.log("emaildata", emailData);
                                 Config.email(emailData, function (err, emailRespo) {
@@ -1852,7 +1852,7 @@ var model = {
                 }, {
                     email: "admin@sfanow.in"
                 }];
-                emailData.filename = "player/receipt.ejs";
+                emailData.filename = "e-player/receipt.ejs";
                 emailData.subject = "SFA: Your Payment Receipt as an Athlete for SFA " + emailData.city + " " + emailData.eventYear + ".";
                 console.log("emaildata", emailData);
                 Config.emailTo(emailData, function (err, emailRespo) {

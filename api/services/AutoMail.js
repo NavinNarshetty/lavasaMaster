@@ -59,7 +59,7 @@ var model = {
                             emailData.cityAddress = data.property.cityAddress;
                             emailData.ddFavour = data.property.ddFavour;
                             emailData.type = "athelete";
-                            emailData.filename = "athleteAutoMail.ejs";
+                            emailData.filename = "e-mails/athleteAutoMail.ejs";
                             emailData.subject = "SFA: Sports Registration Now Open";
                             console.log("complete", emailData);
                             Config.emailTo(emailData, function (err, emailRespo) {
@@ -143,7 +143,7 @@ var model = {
                             emailData.infoNo = data.property.infoNo;
                             emailData.cityAddress = data.property.cityAddress;
                             emailData.ddFavour = data.property.ddFavour;
-                            emailData.filename = "athleteAutoMail.ejs";
+                            emailData.filename = "e-mails/athleteAutoMail.ejs";
                             emailData.subject = "SFA: Sports Registration Now Open";
                             Config.emailTo(emailData, function (err, emailRespo) {
                                 if (err) {
