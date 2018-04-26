@@ -321,7 +321,7 @@ var model = {
                             }
                         };
                         Athelete.update({
-                            _id: data.athlete
+                            _id: transactData.athlete
                         }, matchObj).exec(
                             function (err, data3) {
                                 if (err) {
@@ -338,7 +338,7 @@ var model = {
                             }
                         };
                         Registration.update({
-                            _id: data.school
+                            _id: transactData.school
                         }, matchObj).exec(
                             function (err, data3) {
                                 if (err) {
