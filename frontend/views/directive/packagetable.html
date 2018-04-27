@@ -7,7 +7,7 @@
           Features
         </div>
       </th>
-      <th class="package-tabheader" ng-class="{'package-tabhead-gold': package.color == 'gold','package-tabhead-silver': package.color == 'silver','package-tabhead-bronze': package.color == 'bronze','package-tabhead-blue': package.color == 'blue', 'package-tabhead-green': package.color == 'green', 'package-tabhead-red': package.color == 'red', 'package-tabhead-yellow': package.color == 'yellow'}" ng-repeat = "package in packages | orderBy:'order' track by $index" >
+      <th class="package-tabheader" ng-class="{'package-tabhead-gold': package.color == 'gold','package-tabhead-silver': package.color == 'silver','package-tabhead-bronze': package.color == 'bronze','package-tabhead-blue': package.color == 'blue', 'package-tabhead-green': package.color == 'green', 'package-tabhead-red': package.color == 'red', 'package-tabhead-yellow': package.color == 'yellow'}" ng-repeat = "package in packages | orderBy:'order' track by $index"  style="background-image: url({{package.headerImg}});">
         <div >
           <div class="package-headtab" ng-if="package.header">
             <span>{{package.header}}</span>
@@ -76,7 +76,7 @@
     <div uib-accordion-group class="panel-default" is-open="package.open" ng-repeat="package in packages | orderBy:'order' track by $index">
       <!-- HEADING -->
       <uib-accordion-heading class="clearfix">
-        <div class="package-accordionhead" ng-class="{'package-tabhead-gold': package.color == 'gold','package-tabhead-silver': package.color == 'silver','package-tabhead-bronze': package.color == 'bronze','package-tabhead-blue': package.color == 'blue', 'package-tabhead-green': package.color == 'green', 'package-tabhead-red': package.color == 'red', 'package-tabhead-yellow': package.color == 'yellow'}">
+        <div class="package-accordionhead" ng-class="{'package-tabhead-gold': package.color == 'gold','package-tabhead-silver': package.color == 'silver','package-tabhead-bronze': package.color == 'bronze','package-tabhead-blue': package.color == 'blue', 'package-tabhead-green': package.color == 'green', 'package-tabhead-red': package.color == 'red', 'package-tabhead-yellow': package.color == 'yellow'}" style="background-image: url({{package.headerImg}});">
           <!-- ARROW -->
           <div class="packageaccordion-arrow">
             <i class="fa " ng-class="{'fa-caret-up': package.open, 'fa-caret-down': !package.open}"></i>
