@@ -7,7 +7,8 @@
     "urlFields": [
         "ConfigProperty"
     ],
-    "fields": [{
+    "fields": [
+        {
             "name": "Year",
             "type": "text",
             "tableRef": "year",
@@ -58,7 +59,8 @@
                 ""
             ],
             "url": ""
-        }, {
+        },
+        {
             "name": "Event Date",
             "type": "text",
             "tableRef": "date",
@@ -262,6 +264,84 @@
             "tableRef": "sports",
             "placeholder": "Enter Sport",
             "id": "sports",
+            "onView": true,
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "multiple",
+            "dropDown": [
+                "Archery",
+                "Athletics",
+                "Badminton",
+                "Basketball",
+                "Boxing",
+                "Carrom",
+                "Chess",
+                "Fencing",
+                "Football",
+                "Handball",
+                "Hockey",
+                "Judo",
+                "Kabaddi",
+                "Karate",
+                "Kho Kho",
+                "Sport MMA",
+                "Shooting",
+                "Squash",
+                "Swimming",
+                "Table Tennis",
+                "Taekwondo",
+                "Tennis",
+                "Throwball",
+                "Volleyball",
+                "Water Polo",
+                "Wrestling"
+            ]
+        },
+        {
+            "name": "Individual Sport",
+            "type": "tags",
+            "tableRef": "individualSports",
+            "placeholder": "Enter Individual Sport",
+            "id": "individualSports",
+            "onView": true,
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "multiple",
+            "dropDown": [
+                "Archery",
+                "Athletics",
+                "Badminton",
+                "Basketball",
+                "Boxing",
+                "Carrom",
+                "Chess",
+                "Fencing",
+                "Football",
+                "Handball",
+                "Hockey",
+                "Judo",
+                "Kabaddi",
+                "Karate",
+                "Kho Kho",
+                "Sport MMA",
+                "Shooting",
+                "Squash",
+                "Swimming",
+                "Table Tennis",
+                "Taekwondo",
+                "Tennis",
+                "Throwball",
+                "Volleyball",
+                "Water Polo",
+                "Wrestling"
+            ]
+        },
+        {
+            "name": "Team Sport",
+            "type": "tags",
+            "tableRef": "teamSports",
+            "placeholder": "Enter Team Sport",
+            "id": "teamSports",
             "onView": true,
             "url": "",
             "dropDownField": "",
@@ -972,7 +1052,8 @@
             "url": ""
         }
     ],
-    "action": [{
+    "action": [
+        {
             "name": "submit",
             "action": "submitConfigProperty",
             "stateName": {

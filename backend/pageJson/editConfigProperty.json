@@ -7,7 +7,8 @@
     "urlFields": [
         "_id"
     ],
-    "fields": [{
+    "fields": [
+        {
             "name": "Year",
             "type": "text",
             "tableRef": "year",
@@ -268,6 +269,94 @@
                 ""
             ],
             "id": "sports",
+            "onView": true,
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "multiple",
+            "dropDown": [
+                "Archery",
+                "Athletics",
+                "Badminton",
+                "Basketball",
+                "Boxing",
+                "Carrom",
+                "Chess",
+                "Fencing",
+                "Football",
+                "Handball",
+                "Hockey",
+                "Judo",
+                "Kabaddi",
+                "Karate",
+                "Kho Kho",
+                "Sport MMA",
+                "Shooting",
+                "Squash",
+                "Swimming",
+                "Table Tennis",
+                "Taekwondo",
+                "Tennis",
+                "Throwball",
+                "Volleyball",
+                "Water Polo",
+                "Wrestling"
+            ]
+        },
+        {
+            "name": " Individual Sport",
+            "type": "tags",
+            "tableRef": "individualSports",
+            "placeholder": "Enter Individual Sport",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "id": "individualSports",
+            "onView": true,
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "multiple",
+            "dropDown": [
+                "Archery",
+                "Athletics",
+                "Badminton",
+                "Basketball",
+                "Boxing",
+                "Carrom",
+                "Chess",
+                "Fencing",
+                "Football",
+                "Handball",
+                "Hockey",
+                "Judo",
+                "Kabaddi",
+                "Karate",
+                "Kho Kho",
+                "Sport MMA",
+                "Shooting",
+                "Squash",
+                "Swimming",
+                "Table Tennis",
+                "Taekwondo",
+                "Tennis",
+                "Throwball",
+                "Volleyball",
+                "Water Polo",
+                "Wrestling"
+            ]
+        },
+        {
+            "name": "Team Sport",
+            "type": "tags",
+            "tableRef": "teamSports",
+            "placeholder": "Enter Team Sport",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "id": "Team sports",
             "onView": true,
             "url": "",
             "dropDownField": "",
@@ -978,7 +1067,8 @@
             "url": ""
         }
     ],
-    "action": [{
+    "action": [
+        {
             "name": "submit",
             "action": "submitConfigProperty",
             "stateName": {

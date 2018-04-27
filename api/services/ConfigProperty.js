@@ -80,6 +80,14 @@ var schema = new Schema({
         type: String,
 
     }],
+    individualSports: [{
+        type: String,
+
+    }],
+    teamSports: [{
+        type: String,
+
+    }],
     goldMedal: Number,
     silverMedal: Number,
     bronzeMedal: Number,
@@ -131,6 +139,8 @@ var model = {
                     finalData.ddFavour = property[0].ddFavour;
                     finalData.additionalFee = property[0].additionalFee;
                     finalData.sports = property[0].sports;
+                    finalData.teamSports = property[0].teamSports;
+                    finalData.individualSports = property[0].individualSports;
                     finalData.goldMedal = property[0].goldMedal;
                     finalData.silverMedal = property[0].silverMedal;
                     finalData.bronzeMedal = property[0].bronzeMedal;
