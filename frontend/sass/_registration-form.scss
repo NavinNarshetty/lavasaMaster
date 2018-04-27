@@ -521,6 +521,7 @@
   background-color: $package-bggrey;
   color: $sport-dark-grey;
   font-style: italic;
+  text-align: center;
 }
 
 .package-cashbackholder {
@@ -581,8 +582,57 @@
   @include transform(translateX(-50%));
 }
 
+.package-tabhead-gold {
+  background-color: gold;
+  color: #fff;
+  .upgradepackage-radioprice{
+    color: #fff;
+  }
+  .upgradepackage-radioname {
+    color: gold;
+  }
+  .package-headtab {
+    background-color: gold;
+    color: gold;
+  }
+}
+
+.package-tabhead-silver {
+  background-color: silver;
+  color: #fff;
+  .upgradepackage-radioprice{
+    color: #fff;
+  }
+  .upgradepackage-radioname {
+    color: silver;
+  }
+  .package-headtab {
+    background-color: silver;
+    color: silver;
+  }
+}
+
+.package-tabhead-bronze {
+  background-color: red;
+  color: #fff;
+  .upgradepackage-radioprice{
+    color: #fff;
+  }
+  .upgradepackage-radioname {
+    color: red;
+  }
+  .package-headtab {
+    background-color: red;
+    color: red;
+  }
+}
+
 .package-tabhead-blue {
   background-color: tint($sport-lightblue, 15%);
+  color: #fff;
+  .upgradepackage-radioprice{
+    color: #fff;
+  }
   .upgradepackage-radioname {
     color: shade($sport-lightblue, 30%);
   }
@@ -594,6 +644,10 @@
 
 .package-tabhead-green {
   background-color: tint($sport-success, 15%);
+  color: #fff;
+  .upgradepackage-radioprice{
+    color: #fff;
+  }
   .upgradepackage-radioname {
     color: shade($sport-success, 30%);
   }
@@ -605,6 +659,10 @@
 
 .package-tabhead-red {
   background-color: tint($sport-danger, 15%);
+  color: #fff;
+  .upgradepackage-radioprice{
+    color: #fff;
+  }
   .upgradepackage-radioname {
     color: shade($sport-danger, 30%);
   }
@@ -616,6 +674,10 @@
 
 .package-tabhead-yellow {
   background-color: tint($sport-warning, 15%);
+  color: #fff;
+  .upgradepackage-radioprice{
+    color: #fff;
+  }
   .upgradepackage-radioname {
     color: shade($sport-warning, 30%);
   }
@@ -673,6 +735,69 @@
   }
 }
 // PACKAGE TABLE END
+// PACKAGE ACCORDION
+.package-accordionholder{
+  .panel{
+    border: none;
+    // border: 1px solid;
+    box-shadow: none;
+  }
+  .panel-heading{
+    padding: 0;
+    border-radius: 0px;
+    background-color: transparent;
+  }
+  .panel-body{
+    padding: 5px 2px;
+  }
+  .upgradepackage-radiocontent{
+    margin: 0;
+  }
+  .panel-group .panel-heading + .panel-collapse > .panel-body, .panel-group .panel-heading + .panel-collapse > .list-group{
+    border: none;
+  }
+  .panel-group .panel + .panel{
+    margin-top: 10px;
+  }
+  .package-tableholder{
+    padding: 0;
+    margin: 0;
+    .table{
+      margin: 0;
+      tbody{
+        box-shadow: none;
+      }
+    }
+  }
+}
+.package-accordionhead {
+  padding: 5px 10px;
+  border-radius: 10px;
+  position: relative;
+  background-position: 50% 50%;
+  background-size: cover;
+  .upgradepackage-offer, .upgradepackage-offeramount, .upgradepackage-radioprice, .upgradepackage-tax, .upgradepackage-radioname{
+    line-height: 1;
+  }
+  .packageaccordion-arrow {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #757575;
+    border-radius: 100%;
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    color: #757575;
+    background: rgba(255,255,255,0.6);
+    text-align: center;
+    i{
+      font-size: 28px;
+      line-height: 1;
+    }
+    @include transform(translateY(-50%));
+  }
+}
+// PACKAGE ACCORDION END
 .upgradepackage-header{
   margin-bottom: 10px;
   font-size: 18px;
@@ -686,5 +811,9 @@
   background-color: $sport-primary;
   color: #fff;
   border: none !important;
+}
+.registeraccordion-note{
+  font-size: 12px;
+  font-style: italic;
 }
 // UPGRADE PACKAGE PAGE END

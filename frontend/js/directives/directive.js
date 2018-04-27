@@ -946,6 +946,7 @@ myApp.directive('img', function ($compile, $parse) {
             },
             templateUrl: 'views/directive/packagetable.html',
             link: function ($scope, attrs) {
+                $scope.oneAtATime = true;
                 $scope.packages = [];
                 $scope.features = [];
                 $scope.formPackage = {

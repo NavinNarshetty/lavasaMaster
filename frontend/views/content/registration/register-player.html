@@ -39,11 +39,16 @@
               <h4 class="d-fjalla-one text-uppercase m-clear">Quick Details About SFA Championship {{eventYear}}</h4>
             </uib-accordion-heading>
             <div class="register-accordioncontent">
-              <div class="register-contentholder" ng-if="sports.length>0">
-                <label class="display-block">Sports:</label>
-                <span class="register-sportlist" ng-repeat="sport in sports track by $index"> {{sport}}
-                  <span class="register-seperator">|</span>
+              <div class="register-contentholder" ng-if="individualSports.length>0">
+                <label class="display-block">Individual Sports:</label>
+                <span class="register-sportlist" ng-repeat="sport in individualSports track by $index"> {{sport}}<span class="register-seperator">,</span>
                 </span>
+              </div>
+              <div class="register-contentholder" ng-if="teamSports.length>0">
+                <label class="display-block">Team Sports:</label>
+                <span class="register-sportlist" ng-repeat="sport in teamSports track by $index"> {{sport}}<span class="register-seperator">,</span>
+                </span>
+                <p class="registeraccordion-note">All sports are conducted under the aegis of certfied sport governing bodies.</p>
               </div>
               <div class="register-contentholder register-contentdate" ng-if="sfaDates">
                 <label for="">Dates:</label>
@@ -55,7 +60,7 @@
                   <span class="register-seperator">|</span>
                 </span>
               </div>
-              <div class="register-contentholder">
+              <div class="register-contentholder registeraccordion-links">
                 <ul class="list-inline">
                   <li>
                     <a class="registeraccordion-links" target="_new" ui-sref="aboutchampionship">About Championship</a>
@@ -94,7 +99,7 @@
     <!-- REGISTER FORM  -->
     <section class="registerplayer-form">
       <div class="registerform-btnholder">
-        <button class="btn btn-mainregister" ng-click="registerOpen();" ng-class="{'active': showForm}">Click Here To Register For SFA Mumbai 2018-19</button>
+        <button class="btn btn-mainregister" ng-click="registerOpen();" ng-class="{'active': showForm}">Click Here To Register <span class="hidden-xs">For SFA Mumbai 2018-19</span></button>
       </div>
       <div class="registerform-holder" ng-show="showForm">
         <p class="registerform-intro">All

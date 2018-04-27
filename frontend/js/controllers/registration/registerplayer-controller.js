@@ -62,6 +62,8 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
     $scope.isCollege = data.isCollege;
     $scope.type = data.type;
     $scope.sports = data.sports;
+    $scope.individualSports = data.individualSports;
+    $scope.teamSports = data.teamSports;
     $scope.sfaDates = data.date;
     $scope.venue = data.venue;
     $scope.infoId = data.infoId;

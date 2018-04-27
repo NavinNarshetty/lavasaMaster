@@ -421,6 +421,32 @@
   .package-featurehead{
     font-size: 30px !important;
   }
+  // PACKAGE ACCORDION
+  .packagetable-caption{
+    padding: 5px;
+    font-size: 11px;
+  }
+  .package-cashbackholder{
+    padding: 5px;
+    padding-right: 35px;
+    span {
+      font-size: 10px;
+      line-height: 1;
+    }
+  }
+  .package-cash30{
+    width: 20px;
+  }
+  .package-cashbadge{
+    width: 50px;
+    top: -2px;
+    right: -15px;
+  }
+  .btn-goodie{
+    padding: 5px 10px;
+    font-size: 10px;
+  }
+  // PACKAGE ACCORDION END
   //  UPGRADE PAGE END
   // REGISTER LANDING
   .registerplayer-accordion{
@@ -437,7 +463,7 @@
   .btn-mainregister{
     margin: 0 auto;
     display: block;
-    font-size: 11px;
+    font-size: 14px;
   }
   .registerplayer-title{
     line-height: 1;
@@ -475,7 +501,7 @@
     }
   }
   .registerform-holder{
-    padding: 10px;
+    padding: 10px 0;
     .registerform-intro{
       font-size: 14px;
     }
@@ -487,16 +513,40 @@
       padding-left: 0;
     }
   }
+  .registerform1-uiselect{
+    .ui-select-toggle{
+      height: auto;
+      padding: 5px;
+    }
+    .ui-select-placeholder{
+      font-size: 10px;
+    }
+    .ui-select-match-text{
+      font-size: 10px;
+    }
+    .ui-select-toggle > .caret{
+      right: 5px;
+    }
+    .ui-select-choices-row > span{
+      padding: 5px;
+      padding-right: 0;
+      font-size: 12px;
+    }
+  }
   .btn-registerstep{
     width: 100%;
   }
   .registerstep-btnholder{
-    width: 90%;
+    width: 100%;
   }
   .registerform-step1{
     padding: 10px 0;
     .input-group{
-      width: 90%;
+      width: 100%;
+      .btn{
+        padding: 5px;
+        font-size: 12px;
+      }
     }
   }
   .registerform-step2{
@@ -515,6 +565,11 @@
   }
   .registercount-item{
     display: inline-block;
+  }
+  .registeraccordion-links{
+    li{
+      display: block;
+    }
   }
   // REGISTER LANDING END.
   // FORGOT PASSWORD MODAL
