@@ -380,9 +380,15 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
         // console.log('Value', $scope.isSchoolAdded(formdata));
         // $scope.isSchoolAdded(formdata);
 
-        formdata.firstName = $filter('firstcapitalize')(formdata.firstName,{column1:true});
-        formdata.middleName = $filter('firstcapitalize')(formdata.middleName,{column1:true});
-        formdata.surname = $filter('firstcapitalize')(formdata.surname,{Column1:true});
+        formdata.firstName = $filter('firstcapitalize')(formdata.firstName, {
+            column1: true
+        });
+        formdata.middleName = $filter('firstcapitalize')(formdata.middleName, {
+            column1: true
+        });
+        formdata.surname = $filter('firstcapitalize')(formdata.surname, {
+            Column1: true
+        });
 
         var isFormValid = function (form) {
             if (!form.atheleteSchoolIdImage) {
@@ -1717,20 +1723,31 @@ myApp.controller('PaymentSuccessCtrl', function ($scope, TemplateService, Naviga
     });
 
     if ($stateParams.type == 'player') {
-      $scope.pageType = 'player';
+        $scope.pageType = 'player';
     } else if ($stateParams.type == 'school') {
-      $scope.pageType = 'school';
+        $scope.pageType = 'school';
     } else {
-      $state.go('registerplayer', {
-        type: 'school'
-      })
+        $state.go('registerplayer', {
+            type: 'school'
+        })
     }
 
     if ($stateParams.form == 'register') {
-      $scope.form = 'register';
+        $scope.form = 'register';
     } else if ($stateParams.form == 'upgrade') {
-      $scope.form = 'upgrade';
+        $scope.form = 'upgrade';
     }
+
+    $scope.autoTimeoutClick = function () {
+        console.log("click");
+        $state.go('registerplayer', {
+            type: $scope.pageType
+        })
+    }
+
+    $timeout(function () {
+        $scope.autoTimeoutClick();
+    }, 10000)
 
     // fbq('track', 'CompleteRegistration');
     // GoogleAdWordsService.sendRegisterCustomerConversion();
@@ -1747,7 +1764,7 @@ myApp.controller('PaymentSuccessCtrl', function ($scope, TemplateService, Naviga
 
 });
 
-myApp.controller('SorryAtheleteCtrl', function ($scope, TemplateService, NavigationService, $timeout) {
+myApp.controller('SorryAtheleteCtrl', function ($scope, TemplateService, $state, NavigationService, $timeout) {
     //Used to name the .html file
 
     $scope.template = TemplateService.getHTML("content/sorryAthelete.html");
@@ -1755,79 +1772,101 @@ myApp.controller('SorryAtheleteCtrl', function ($scope, TemplateService, Navigat
     $scope.navigation = NavigationService.getNavigation();
 
 
-    window.setTimeout(function () {
+    $scope.autoTimeoutClick = function () {
+        console.log("click");
+        $state.go('registerplayer', {
+            type: 'player'
+        })
+    }
 
-        // Move to a new location or you can do something else
-        // window.location.href = adminUrl2 + "/formathlete";
+    $timeout(function () {
+        $scope.autoTimeoutClick();
+    }, 4000)
 
-        if (window.location.host == "testmumbaischool.sfanow.in") {
-            window.location.href = "http://testmumbaischool.sfanow.in/formathlete";
-        } else if (window.location.host == "testmumbaicollege.sfanow.in") {
-            window.location.href = "http://testmumbaicollege.sfanow.in/formathlete";
-        } else if (window.location.host == "testahmedabadschool.sfanow.in") {
-            window.location.href = "http://testahmedabadschool.sfanow.in/formathlete";
-        } else if (window.location.host == "testahmedabadcollege.sfanow.in") {
-            window.location.href = "http://testahmedabadcollege.sfanow.in/formathlete";
-        } else if (window.location.host == "testhyderabadcollege.sfanow.in") {
-            window.location.href = "http://testhyderabadcollege.sfanow.in/formathlete";
-        } else if (window.location.host == "testhyderabadschool.sfanow.in") {
-            window.location.href = "http://testhyderabadschool.sfanow.in/formathlete";
-        } else if (window.location.host == "mumbaischool.sfanow.in") {
-            window.location.href = "http://mumbaischool.sfanow.in/formathlete";
-        } else if (window.location.host == "mumbaicollege.sfanow.in") {
-            window.location.href = "http://mumbaicollege.sfanow.in/formathlete";
-        } else if (window.location.host == "ahmedabadschool.sfanow.in") {
-            window.location.href = "http://ahmedabadschool.sfanow.in/formathlete";
-        } else if (window.location.host == "ahmedabadcollege.sfanow.in") {
-            window.location.href = "http://ahmedabadcollege.sfanow.in/formathlete";
-        } else if (window.location.host == "hyderabadcollege.sfanow.in") {
-            window.location.href = "http://hyderabadcollege.sfanow.in/formathlete";
-        } else if (window.location.host == "hyderabadschool.sfanow.in") {
-            window.location.href = "http://hyderabadschool.sfanow.in/formathlete";
-        } else if (window.location.host == "localhost:8081") {
-            window.location.href = "http://localhost:8081/formathlete";
-        }
-    }, 5000);
+    // window.setTimeout(function () {
+
+    //     // Move to a new location or you can do something else
+    //     // window.location.href = adminUrl2 + "/formathlete";
+
+    //     if (window.location.host == "testmumbaischool.sfanow.in") {
+    //         window.location.href = "http://testmumbaischool.sfanow.in/formathlete";
+    //     } else if (window.location.host == "testmumbaicollege.sfanow.in") {
+    //         window.location.href = "http://testmumbaicollege.sfanow.in/formathlete";
+    //     } else if (window.location.host == "testahmedabadschool.sfanow.in") {
+    //         window.location.href = "http://testahmedabadschool.sfanow.in/formathlete";
+    //     } else if (window.location.host == "testahmedabadcollege.sfanow.in") {
+    //         window.location.href = "http://testahmedabadcollege.sfanow.in/formathlete";
+    //     } else if (window.location.host == "testhyderabadcollege.sfanow.in") {
+    //         window.location.href = "http://testhyderabadcollege.sfanow.in/formathlete";
+    //     } else if (window.location.host == "testhyderabadschool.sfanow.in") {
+    //         window.location.href = "http://testhyderabadschool.sfanow.in/formathlete";
+    //     } else if (window.location.host == "mumbaischool.sfanow.in") {
+    //         window.location.href = "http://mumbaischool.sfanow.in/formathlete";
+    //     } else if (window.location.host == "mumbaicollege.sfanow.in") {
+    //         window.location.href = "http://mumbaicollege.sfanow.in/formathlete";
+    //     } else if (window.location.host == "ahmedabadschool.sfanow.in") {
+    //         window.location.href = "http://ahmedabadschool.sfanow.in/formathlete";
+    //     } else if (window.location.host == "ahmedabadcollege.sfanow.in") {
+    //         window.location.href = "http://ahmedabadcollege.sfanow.in/formathlete";
+    //     } else if (window.location.host == "hyderabadcollege.sfanow.in") {
+    //         window.location.href = "http://hyderabadcollege.sfanow.in/formathlete";
+    //     } else if (window.location.host == "hyderabadschool.sfanow.in") {
+    //         window.location.href = "http://hyderabadschool.sfanow.in/formathlete";
+    //     } else if (window.location.host == "localhost:8081") {
+    //         window.location.href = "http://localhost:8081/formathlete";
+    //     }
+    // }, 5000);
 
 });
 
-myApp.controller('PaymentFailureCtrl', function ($scope, TemplateService, NavigationService, $timeout) {
+myApp.controller('PaymentFailureCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
     //Used to name the .html file
 
     $scope.template = TemplateService.getHTML("content/paymentFailure.html");
     TemplateService.title = "Payment Failure";
     $scope.navigation = NavigationService.getNavigation();
 
-    window.setTimeout(function () {
-        // Move to a new location or you can do something else
-        // window.location.href = adminUrl2 + "/formregis";
-        if (window.location.host == "testmumbaischool.sfanow.in") {
-            window.location.href = "http://testmumbaischool.sfanow.in/formregis";
-        } else if (window.location.host == "testmumbaicollege.sfanow.in") {
-            window.location.href = "http://testmumbaicollege.sfanow.in/formregis";
-        } else if (window.location.host == "testahmedabadschool.sfanow.in") {
-            window.location.href = "http://testahmedabadschool.sfanow.in/formregis";
-        } else if (window.location.host == "testahmedabadcollege.sfanow.in") {
-            window.location.href = "http://testahmedabadcollege.sfanow.in/formregis";
-        } else if (window.location.host == "testhyderabadcollege.sfanow.in") {
-            window.location.href = "http://testhyderabadcollege.sfanow.in/formregis";
-        } else if (window.location.host == "testhyderabadschool.sfanow.in") {
-            window.location.href = "http://testhyderabadschool.sfanow.in/formregis";
-        } else if (window.location.host == "mumbaischool.sfanow.in") {
-            window.location.href = "http://mumbaischool.sfanow.in/formregis";
-        } else if (window.location.host == "mumbaicollege.sfanow.in") {
-            window.location.href = "http://mumbaicollege.sfanow.in/formregis";
-        } else if (window.location.host == "ahmedabadschool.sfanow.in") {
-            window.location.href = "http://ahmedabadschool.sfanow.in/formregis";
-        } else if (window.location.host == "ahmedabadcollege.sfanow.in") {
-            window.location.href = "http://ahmedabadcollege.sfanow.in/formregis";
-        } else if (window.location.host == "hyderabadcollege.sfanow.in") {
-            window.location.href = "http://hyderabadcollege.sfanow.in/formregis";
-        } else if (window.location.host == "hyderabadschool.sfanow.in") {
-            window.location.href = "http://hyderabadschool.sfanow.in/formregis";
-        } else if (window.location.host == "localhost:8081") {
-            window.location.href = "http://localhost:8081/formregis";
-        }
-    }, 5000);
+    $scope.autoTimeoutClick = function () {
+        console.log("click");
+        $state.go('registerplayer', {
+            type: 'school'
+        })
+    }
+
+    $timeout(function () {
+        $scope.autoTimeoutClick();
+    }, 4000)
+
+    // window.setTimeout(function () {
+    //     // Move to a new location or you can do something else
+    //     // window.location.href = adminUrl2 + "/formregis";
+    //     if (window.location.host == "testmumbaischool.sfanow.in") {
+    //         window.location.href = "http://testmumbaischool.sfanow.in/formregis";
+    //     } else if (window.location.host == "testmumbaicollege.sfanow.in") {
+    //         window.location.href = "http://testmumbaicollege.sfanow.in/formregis";
+    //     } else if (window.location.host == "testahmedabadschool.sfanow.in") {
+    //         window.location.href = "http://testahmedabadschool.sfanow.in/formregis";
+    //     } else if (window.location.host == "testahmedabadcollege.sfanow.in") {
+    //         window.location.href = "http://testahmedabadcollege.sfanow.in/formregis";
+    //     } else if (window.location.host == "testhyderabadcollege.sfanow.in") {
+    //         window.location.href = "http://testhyderabadcollege.sfanow.in/formregis";
+    //     } else if (window.location.host == "testhyderabadschool.sfanow.in") {
+    //         window.location.href = "http://testhyderabadschool.sfanow.in/formregis";
+    //     } else if (window.location.host == "mumbaischool.sfanow.in") {
+    //         window.location.href = "http://mumbaischool.sfanow.in/formregis";
+    //     } else if (window.location.host == "mumbaicollege.sfanow.in") {
+    //         window.location.href = "http://mumbaicollege.sfanow.in/formregis";
+    //     } else if (window.location.host == "ahmedabadschool.sfanow.in") {
+    //         window.location.href = "http://ahmedabadschool.sfanow.in/formregis";
+    //     } else if (window.location.host == "ahmedabadcollege.sfanow.in") {
+    //         window.location.href = "http://ahmedabadcollege.sfanow.in/formregis";
+    //     } else if (window.location.host == "hyderabadcollege.sfanow.in") {
+    //         window.location.href = "http://hyderabadcollege.sfanow.in/formregis";
+    //     } else if (window.location.host == "hyderabadschool.sfanow.in") {
+    //         window.location.href = "http://hyderabadschool.sfanow.in/formregis";
+    //     } else if (window.location.host == "localhost:8081") {
+    //         window.location.href = "http://localhost:8081/formregis";
+    //     }
+    // }, 5000);
 
 });

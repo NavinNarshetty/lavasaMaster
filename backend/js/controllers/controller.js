@@ -2427,7 +2427,7 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
         $scope.jSchoolops = $.jStorage.get('schoolOps');
         if (($.jStorage.get("accessLevel") == "Admin") && ($.jStorage.get('schoolOps') == null)) {
             excelService.loginPayuPopup($scope);
-        } else if (($.jStorage.get("accessLevel") == "Accounts" || $.jStorage.get("accessLevel") == "Sports Ops") && ($.jStorage.get('schoolOps') == null)) {
+        } else if (($.jStorage.get("accessLevel") !== "Admin") && ($.jStorage.get('schoolOps') == null)) {
             $.jStorage.set('schoolOps', 'school in ops');
         }
     }
@@ -2654,7 +2654,7 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
     if ($state.current.name == "athleteOps") {
         if (($.jStorage.get("accessLevel") == "Admin") && ($.jStorage.get('athleteOps') == null)) {
             excelService.loginPayuPopup($scope);
-        } else if (($.jStorage.get("accessLevel") == "Accounts" || $.jStorage.get("accessLevel") == "Sports Ops") && ($.jStorage.get('athleteOps') == null)) {
+        } else if (($.jStorage.get("accessLevel") !== "Admin") && ($.jStorage.get('athleteOps') == null)) {
             $.jStorage.set('athleteOps', 'athlete in ops');
         }
     }
