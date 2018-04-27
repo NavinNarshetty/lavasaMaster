@@ -7,7 +7,7 @@
           Features
         </div>
       </th>
-      <th class="package-tabheader" ng-class="{'package-tabhead-gold': package.color == 'gold','package-tabhead-silver': package.color == 'silver','package-tabhead-bronze': package.color == 'bronze','package-tabhead-blue': package.color == 'blue', 'package-tabhead-green': package.color == 'green', 'package-tabhead-red': package.color == 'red', 'package-tabhead-yellow': package.color == 'yellow'}" ng-repeat = "package in packages | orderBy:'order' track by $index"  style="background-image: url({{package.headerImg}});">
+      <th class="package-tabheader" ng-class="{'package-tabhead-gold': package.color == 'gold','package-tabhead-silver': package.color == 'silver','package-tabhead-bronze': package.color == 'bronze','package-tabhead-blue': package.color == 'blue', 'package-tabhead-green': package.color == 'green', 'package-tabhead-red': package.color == 'red', 'package-tabhead-yellow': package.color == 'yellow'}" ng-repeat = "package in packages | orderBy:'order' track by $index"  style="background-image: url({{package.headerImg|serverimage2}});">
         <div >
           <div class="package-headtab" ng-if="package.header">
             <span>{{package.header}}</span>
@@ -35,8 +35,9 @@
         </td>
         <td ng-repeat="detail in feature.featureDetails|orderBy: 'packageName.order' track by $index">
           <div class="upgradepackage-td">
-              <div class="" ng-if="detail.featureType == 'checkbox'">
-                <span class="fa" ng-class="{'fa-check sport-success': detail.featureCheck == true, 'fa-times sport-danger': detail.featureCheck == false}"></span>
+              <div class="upgradepackage-featute-check" ng-if="detail.featureType == 'checkbox'">
+                <img src="img/medal-icon/tick-green.png" alt="Yes" class="img-responsive" ng-if="detail.featureCheck">
+                <img src="img/medal-icon/cross-red.png" alt="No" class="img-responsive" ng-if="!detail.featureCheck">
               </div>
               <div class="" ng-if="detail.featureType == 'text'">
                 <p class="m-clear">{{detail.featureText}}</p>
@@ -76,7 +77,7 @@
     <div uib-accordion-group class="panel-default" is-open="package.open" ng-repeat="package in packages | orderBy:'order' track by $index">
       <!-- HEADING -->
       <uib-accordion-heading class="clearfix">
-        <div class="package-accordionhead" ng-class="{'package-tabhead-gold': package.color == 'gold','package-tabhead-silver': package.color == 'silver','package-tabhead-bronze': package.color == 'bronze','package-tabhead-blue': package.color == 'blue', 'package-tabhead-green': package.color == 'green', 'package-tabhead-red': package.color == 'red', 'package-tabhead-yellow': package.color == 'yellow'}" style="background-image: url({{package.headerImg}});">
+        <div class="package-accordionhead" ng-class="{'package-tabhead-gold': package.color == 'gold','package-tabhead-silver': package.color == 'silver','package-tabhead-bronze': package.color == 'bronze','package-tabhead-blue': package.color == 'blue', 'package-tabhead-green': package.color == 'green', 'package-tabhead-red': package.color == 'red', 'package-tabhead-yellow': package.color == 'yellow'}" style="background-image: url({{package.headerImg|serverimage2}});">
           <!-- ARROW -->
           <div class="packageaccordion-arrow">
             <i class="fa " ng-class="{'fa-caret-up': package.open, 'fa-caret-down': !package.open}"></i>
@@ -113,9 +114,10 @@
               </td>
               <td ng-repeat="detail in feature.featureDetails|orderBy: 'packageName.order' track by $index" ng-if="detail.packageName._id == package._id">
                 <div class="upgradepackage-td">
-                    <div class="" ng-if="detail.featureType == 'checkbox'">
-                      <span class="fa" ng-class="{'fa-check sport-success': detail.featureCheck == true, 'fa-times sport-danger': detail.featureCheck == false}"></span>
-                    </div>
+                  <div class="upgradepackage-featute-check" ng-if="detail.featureType == 'checkbox'">
+                    <img src="img/medal-icon/tick-green.png" alt="Yes" class="img-responsive" ng-if="detail.featureCheck">
+                    <img src="img/medal-icon/cross-red.png" alt="No" class="img-responsive" ng-if="!detail.featureCheck">
+                  </div>
                     <div class="" ng-if="detail.featureType == 'text'">
                       <p class="m-clear">{{detail.featureText}}</p>
                     </div>
