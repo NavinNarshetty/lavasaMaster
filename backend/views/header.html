@@ -4,12 +4,18 @@
             <!--<img src="/../frontend/img/logo.png" alt="Absolute" height="40">-->
             <span>SFA ADMIN</span>
         </a>
-        <div class="menu-options"><span class="menu-action"><i></i></span></div>
+        <div class="menu-options">
+            <span class="menu-action">
+                <i></i>
+            </span>
+        </div>
     </div>
     <div class="quick-links">
         <ul>
             <li>
-                <a title="Logout" class="show-stats red-skin" ui-sref="login" tooltip-placement="left" uib-tooltip="Logout"><i class="fa fa-power-off"></i></a>
+                <a title="Logout" class="show-stats red-skin" ng-click="logout()" tooltip-placement="left" uib-tooltip="Logout">
+                    <i class="fa fa-power-off"></i>
+                </a>
             </li>
         </ul>
     </div>

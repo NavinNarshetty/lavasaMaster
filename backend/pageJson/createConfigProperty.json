@@ -7,8 +7,7 @@
     "urlFields": [
         "ConfigProperty"
     ],
-    "fields": [
-        {
+    "fields": [{
             "name": "Year",
             "type": "text",
             "tableRef": "year",
@@ -311,18 +310,12 @@
                 "Archery",
                 "Athletics",
                 "Badminton",
-                "Basketball",
                 "Boxing",
                 "Carrom",
                 "Chess",
                 "Fencing",
-                "Football",
-                "Handball",
-                "Hockey",
                 "Judo",
-                "Kabaddi",
                 "Karate",
-                "Kho Kho",
                 "Sport MMA",
                 "Shooting",
                 "Squash",
@@ -330,9 +323,6 @@
                 "Table Tennis",
                 "Taekwondo",
                 "Tennis",
-                "Throwball",
-                "Volleyball",
-                "Water Polo",
                 "Wrestling"
             ]
         },
@@ -347,32 +337,15 @@
             "dropDownField": "",
             "dropDownType": "multiple",
             "dropDown": [
-                "Archery",
-                "Athletics",
-                "Badminton",
                 "Basketball",
-                "Boxing",
-                "Carrom",
-                "Chess",
-                "Fencing",
                 "Football",
                 "Handball",
                 "Hockey",
-                "Judo",
                 "Kabaddi",
-                "Karate",
                 "Kho Kho",
-                "Sport MMA",
-                "Shooting",
-                "Squash",
-                "Swimming",
-                "Table Tennis",
-                "Taekwondo",
-                "Tennis",
                 "Throwball",
                 "Volleyball",
-                "Water Polo",
-                "Wrestling"
+                "Water Polo"
             ]
         },
         {
@@ -1052,8 +1025,7 @@
             "url": ""
         }
     ],
-    "action": [
-        {
+    "action": [{
             "name": "submit",
             "action": "submitConfigProperty",
             "stateName": {

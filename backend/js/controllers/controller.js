@@ -2427,6 +2427,8 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
         $scope.jSchoolops = $.jStorage.get('schoolOps');
         if (($.jStorage.get("accessLevel") == "Admin") && ($.jStorage.get('schoolOps') == null)) {
             excelService.loginPayuPopup($scope);
+        } else if (($.jStorage.get("accessLevel") == "Accounts" || $.jStorage.get("accessLevel") == "Sports Ops") && ($.jStorage.get('schoolOps') == null)) {
+            $.jStorage.set('schoolOps', 'school in ops');
         }
     }
     $scope.submit = function (login) {
@@ -2652,6 +2654,8 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
     if ($state.current.name == "athleteOps") {
         if (($.jStorage.get("accessLevel") == "Admin") && ($.jStorage.get('athleteOps') == null)) {
             excelService.loginPayuPopup($scope);
+        } else if (($.jStorage.get("accessLevel") == "Accounts" || $.jStorage.get("accessLevel") == "Sports Ops") && ($.jStorage.get('athleteOps') == null)) {
+            $.jStorage.set('athleteOps', 'athlete in ops');
         }
     }
 
@@ -2973,6 +2977,13 @@ myApp.controller('ViewAthleteCtrl', function ($scope, TemplateService, Navigatio
     $scope.menutitle = NavigationService.makeactive("View Athlete");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    if ($.jStorage.get("accessLevel")) {
+        var accesslevel = $.jStorage.get("accessLevel");
+    }
+    if ($.jStorage.get('athleteOps')) {
+        $scope.jAtheletOps = $.jStorage.get('athleteOps');
+    }
+
     $scope.getOneAthleteById = function () {
         // $scope.url = 'Athelete/getOne';
         $scope.url = 'Athelete/getOneAthlete';
@@ -3066,6 +3077,15 @@ myApp.controller('ViewSchoolCtrl', function ($scope, TemplateService, Navigation
     $scope.menutitle = NavigationService.makeactive("View School");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+
+    if ($.jStorage.get("accessLevel")) {
+        var accesslevel = $.jStorage.get("accessLevel");
+    }
+
+    if ($.jStorage.get('schoolOps')) {
+        $scope.jSchoolops = $.jStorage.get('schoolOps');
+    }
+
     $scope.getOneSchoolById = function () {
         $scope.url = 'Registration/getOne';
         $scope.constraints = {};
@@ -6259,9 +6279,19 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
             case "Admin":
                 probhitUrls = ["users"];
                 index = probhitUrls.indexOf(currentPath);
+
                 if (index != -1) {
                     $state.go('dashboard');
                 }
+
+                if ($.jStorage.get('athleteOps') && currentPath !== 'viewAthlete' && currentPath !== 'athleteOps') {
+                    $.jStorage.set('athleteOps', null);
+                }
+
+                if ($.jStorage.get('schoolOps') && currentPath !== 'viewSchool' && currentPath !== 'schoolOps') {
+                    $.jStorage.set('schoolOps', null);
+                }
+
                 break;
 
             case "Sports Ops":
@@ -6281,6 +6311,15 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
                 break;
         }
 
+        $scope.logout = function () {
+            if (accessLevel == 'Sports Ops' || accessLevel == 'Accounts') {
+                $.jStorage.set('athleteOps', null);
+                $.jStorage.set('schoolOps', null);
+                $state.go("login");
+            } else {
+                $state.go("login");
+            }
+        }
     })
 
     .controller('languageCtrl', function ($scope, TemplateService, $translate, $rootScope) {
