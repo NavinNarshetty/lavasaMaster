@@ -480,7 +480,7 @@ var model = {
             filename: filename
         });
         readstream.on('error', function (err) {
-            res.json({
+            callback({
                 value: false,
                 error: err
             });
@@ -580,7 +580,7 @@ var model = {
     },
 
     email: function (data, callback) {
-        callback(null,"Skip This");
+        callback(null, "Skip This");
         // Password.find().exec(function (err, userdata) {
         //     // console.log("userdata", userdata);
         //     if (err) {
@@ -643,7 +643,7 @@ var model = {
 
     emailTo: function (data, callback) {
 
-        callback(null,"Skip This");
+        callback(null, "Skip This");
         // Password.find().exec(function (err, userdata) {
         //     if (err) {
         //         console.log(err);
@@ -718,7 +718,7 @@ var model = {
     },
 
     sendSms: function (data, callback) {
-        callback(null,"Skip This");
+        callback(null, "Skip This");
         // if (data.mobile) {
         //     request.get({
         //         // url: "http://api-alerts.solutionsinfini.com/v3/?method=sms&api_key=A2673b52d60295c217f83efd42a6ab576&to=" + data.mobile + "&sender=TAGBOS&message=" + data.content + "&format=json"
