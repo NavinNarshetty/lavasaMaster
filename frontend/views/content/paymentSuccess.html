@@ -1,25 +1,47 @@
 <div class="paymentsuccess-page">
-  <div>
-      <!--<img src="frontend/img/thankyou.jpg" alt="" class="img-responsive">-->
-  </div>
-  <div class="container">
-      <div class="row">
-          <div class="mtb text-center">
-              <p ng-if="form == 'register'">Thank You for filling out the {{pageType}} registration form for SFA Championship 2018-19, {{sfaCity}}.</p>
-              <p ng-if="form == 'register'">STEP 1 OF THE REGISTRATION PROCESS WILL BE COMPLETED ONCE YOU RECEIVE A CONFIRMATION EMAIL. You can then proceed to <b>SPORTS REGISTRATION (STEP 2)</b></p>
-              <p ng-if="form == 'upgrade'">Thank you for upgrading your package.</p>
-              <p>Kindly Note: In case SFA does not receive the payment within 4 working days your registration will stand CANCELLED.</p>
-              <p>For any further queries kindly call us on
-                <span ng-repeat="infono in infoNoArr track by $index" class="infono">
-                  <a href="tel:{{infono}}">{{infono}}</a>
-                  <span class="infono-seperator" ng-class="{'hide':(infoNoArr.length-1) == $index}"> / </span>
-                </span>
-                 or email us at <a href="mailto:info@sfanow.in">info@sfanow.in</a></p>
-              <!-- <button class="btn btn-primary" ng-disabled="isDisabled1 == true" ng-click="redirectTo()">OK</button> -->
-              <button class="btn btn-primary" ui-sref="registerplayer({type: pageType})" ng-if="form == 'register'">Go To Register</button>
-              <button class="btn btn-primary" ui-sref="sports-selection" ng-if="form == 'upgrade'">Go To Sport Selection</button>
-          </div>
-      </div>
+    <div>
+        <!--<img src="frontend/img/thankyou.jpg" alt="" class="img-responsive">-->
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 c0l-sm-10 col-sm-offset-1 col-xs-12">
+                <div class="paymentsuccess-content">
+                    <p ng-if="form == 'register'">Thank You for filling out the {{pageType}} registration form for SFA Championship 2018-19, {{sfaCity}}.</p>
 
-  </div>
+                    <ul class="paymentsuccess-steps" ng-if="form == 'register'">
+                        <li class="r-titillium-web-bold text-uppercase">
+                            STEP 1 OF THE REGISTRATION PROCESS WILL BE COMPLETED ONCE YOU RECEIVE A CONFIRMATION EMAIL.
+                        </li>
+                        <li class="r-titillium-web-bold text-uppercase">
+                            You can then proceed to SPORTS REGISTRATION (STEP 2)
+                        </li>
+                    </ul>
+                    <p class="hide" ng-if="form == 'register'">STEP 1 OF THE REGISTRATION PROCESS WILL BE COMPLETED ONCE YOU RECEIVE A CONFIRMATION EMAIL. You can then
+                        proceed to
+                        <b>SPORTS REGISTRATION (STEP 2)</b>
+                    </p>
+                    <p ng-if="form == 'upgrade'">Thank you for upgrading your package.</p>
+                    <p>Kindly Note: In case SFA does not receive the payment within 4 working days your registration will stand
+                        CANCELLED.
+                    </p>
+                    <p>For any further queries kindly call us on
+                        <span ng-repeat="infono in infoNoArr track by $index" class="infono">
+                            <a href="tel:{{infono}}">{{infono}}</a>
+                            <span class="infono-seperator" ng-class="{'hide':(infoNoArr.length-1) == $index}"> / </span>
+                        </span>
+                        or email us at
+                        <a href="mailto:info@sfanow.in">info@sfanow.in</a>
+                    </p>
+                    <!-- <button class="btn btn-primary" ng-disabled="isDisabled1 == true" ng-click="redirectTo()">OK</button> -->
+                    <div class="paymentsuccess-button text-center">
+                        <button class="btn btn-primary text-uppercase" ui-sref="registerplayer({type: pageType})" ng-if="form == 'register'">Go To Register</button>
+                        <button class="btn btn-primary text-uppercase" ui-sref="sports-selection" ng-if="form == 'upgrade'">Go To Sport Selection</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
 </div>

@@ -1,48 +1,48 @@
 // OLD PAGES OVERRIDE
-.infono-config{
-  .infono-seperator{
+.infono-config {
+  .infono-seperator {
     display: inline;
   }
-  &:last-child{
-    .infono-seperator{
+  &:last-child {
+    .infono-seperator {
       display: none;
     }
   }
 }
-.btn-greenupgrade{
+
+.btn-greenupgrade {
   border: none;
   margin-left: 5px;
   background-color: #00FFAD;
   color: $sport-dark-grey;
   font-weight: 700;
   text-transform: capitalize;
-
-  &:active, &:focus, &:hover, &.active{
+  &:active,
+  &:focus,
+  &:hover,
+  &.active {
     border: none;
     background-color: #00FFAD;
     color: $sport-dark-grey;
     outline: 0px;
   }
 }
-.paymentsuccess-page{
-  min-height: 70vh;
-  padding: 50px 0;
-}
+
 // UPGRADE PACKAGE MODAL
-.modal-upgradepackage{
-  .modal-dialog{
+.modal-upgradepackage {
+  .modal-dialog {
     margin-top: 100px;
   }
-  .modal-content{
+  .modal-content {
     border-radius: 0px;
     box-shadow: none;
   }
-  .forgotpassword-modal{
+  .forgotpassword-modal {
     padding: 20px 30px;
     position: relative;
     text-align: center;
   }
-  .forgotpassword-modalclose{
+  .forgotpassword-modalclose {
     width: 30px;
     height: 30px;
     padding: 5px;
@@ -51,17 +51,18 @@
     right: -30px;
     cursor: pointer;
   }
-  .forgotmodal-title{
+  .forgotmodal-title {
     margin-bottom: 20px;
     font-size: 18px;
     color: $brand-primary;
     text-transform: uppercase;
   }
-  .upgradepackage-modalcontent{
+  .upgradepackage-modalcontent {
     width: 80%;
     margin: 0 auto;
   }
 }
+
 // UPGRADE PACKAGE MODAL END
 // OLD PAGES OVERRIDE END
 // CUSTOM RADIO BUTTON
@@ -100,14 +101,14 @@
       @include transform(translate(-50%, -50%));
     }
   }
-  .sfa-radio-disabled{
+  .sfa-radio-disabled {
     display: none;
     position: absolute;
     top: -5px;
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: rgba(255,255,255,0.6);
+    background-color: rgba(255, 255, 255, 0.6);
     cursor: not-allowed;
     z-index: 5;
   }
@@ -118,19 +119,16 @@
     cursor: pointer;
     opacity: 0;
     z-index: 1;
-  }
-  // HIGHLIGHT ON HOVER
+  } // HIGHLIGHT ON HOVER
   &:hover {
     input~.sfa-radio {
       background-color: #f5f5f5;
     }
-  }
-  // HIGHLIGHT ON HOVER END
+  } // HIGHLIGHT ON HOVER END
   // DISABLED
-  input:disabled~.sfa-radio-disabled{
+  input:disabled~.sfa-radio-disabled {
     display: block;
-  }
-  // DISABLED END
+  } // DISABLED END
   input:checked~.sfa-radio:after {
     display: block;
   }
@@ -215,8 +213,8 @@
     background-color: transparent;
     color: $register-base;
   }
-  .ui-select-container{
-    .glyphicon-remove:before{
+  .ui-select-container {
+    .glyphicon-remove:before {
       content: '\f00d';
       font: normal normal normal 14px/1 FontAwesome;
       color: $sport-primary;
@@ -373,19 +371,21 @@
   font-size: 12px;
 }
 
-.registerform-imgholder-float{
+.registerform-imgholder-float {
   padding: 10px;
   margin: 5px;
   float: left;
   position: relative;
 }
-.registerform-imgcross{
+
+.registerform-imgcross {
   width: 20px;
   height: 20px;
   position: absolute;
   top: 0;
   right: 0;
 }
+
 // UPGRADE PACKAGE PAGE
 .upgradepackage-page {
   min-height: 100vh;
@@ -563,7 +563,7 @@
   .upgradepackage-radioinr {
     margin-top: 4px;
   }
-  .upgradepackage-radiocontent{
+  .upgradepackage-radiocontent {
     margin: 0;
   }
 }
@@ -648,43 +648,53 @@
   text-transform: uppercase;
   @extend .d-fjalla-one;
 }
+
 // PACKAGE FEATURE LOGO
-.upgradepackage-featuretext{
+.upgradepackage-featuretext {
   width: calc(100% - 65px);
   display: inline-block;
   vertical-align: middle;
 }
-.upgradepackage-featurelogo{
+
+.upgradepackage-featurelogo {
   width: 60px;
   height: auto;
   display: inline-block;
   vertical-align: middle;
 }
+
 // PACKAGE FEATURE LOGO END
-.btn-goodie{
+.btn-goodie {
   padding: 5px 30px;
   border-radius: 5px;
   background-color: $sport-primary;
   color: #fff;
   font-style: normal;
   text-transform: uppercase;
-  &:active, &:focus, &:hover{
+  &:active,
+  &:focus,
+  &:hover {
     color: #fff;
   }
 }
+
 // PACKAGE TABLE END
-.upgradepackage-header{
+.upgradepackage-header {
   margin-bottom: 10px;
   font-size: 18px;
   color: $sport-primary;
   @extend .r-titillium-web-semibold;
 }
-.upgradepackage-payment, .upgradepackage-paymentmode{
+
+.upgradepackage-payment,
+.upgradepackage-paymentmode {
   margin: 40px 0;
 }
-.upgrade-payment-blue{
+
+.upgrade-payment-blue {
   background-color: $sport-primary;
   color: #fff;
   border: none !important;
 }
+
 // UPGRADE PACKAGE PAGE END

@@ -2231,3 +2231,35 @@ $sport-table-grey:#efeeee !default;
 }
 
 // ABOUT CHAMPIONSHIP END
+// SORRY ATHLETE , FALIURE,SUCCESS
+.sorryathlete-page,
+.paymentfailure-page,
+.paymentsuccess-page {
+  min-height: calc(100vh - 50vh);
+  padding: 50px 0px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  .sorry-athletecontent,
+  .paymentfaiure-content,
+  .paymentsuccess-content {
+    border: 1px solid #e1e1e1;
+    padding: 15px;
+    box-shadow: 0 0 10px $sport-grey-year;
+  }
+}
+
+.paymentsuccess-page {
+  .paymentsuccess-content {
+    ul {
+      padding: 0px 20px 0px;
+    }
+    .paymentsuccess-steps {
+      li {
+        margin: 8px 0px;
+      }
+    }
+  }
+}
+
+// SORRY ATHLETE, FALIURE,SUCCESS END
