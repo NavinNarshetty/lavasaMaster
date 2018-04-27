@@ -1588,7 +1588,7 @@ var model = {
                                 emailData.packageOrder = schoolData.package.order;
                                 emailData.featureDetail = features;
                                 emailData.flag = emailData.type;
-                                emailData.filename = "player-school/upgrade.ejs";
+                                emailData.filename = "e-player-school/upgrade.ejs";
                                 emailData.subject = "SFA: Thank you for upgrading your package for SFA " + emailData.city + " " + emailData.eventYear;
                                 // console.log("emaildata", emailData);
                                 Config.email(emailData, function (err, emailRespo) {
@@ -1712,7 +1712,7 @@ var model = {
                                 emailData.packageOrder = athleteData.package.order;
                                 emailData.featureDetail = features;
                                 emailData.flag = emailData.type;
-                                emailData.filename = "player-school/upgrade.ejs";
+                                emailData.filename = "e-player-school/upgrade.ejs";
                                 emailData.subject = "SFA: Thank you for upgrading your package for SFA " + emailData.city + " " + emailData.eventYear;
                                 // console.log("emaildata", emailData);
                                 Config.email(emailData, function (err, emailRespo) {
@@ -1852,7 +1852,7 @@ var model = {
                 }, {
                     email: "admin@sfanow.in"
                 }];
-                emailData.filename = "player/receipt.ejs";
+                emailData.filename = "e-player/receipt.ejs";
                 emailData.subject = "SFA: Your Payment Receipt as an Athlete for SFA " + emailData.city + " " + emailData.eventYear + ".";
                 console.log("emaildata", emailData);
                 Config.emailTo(emailData, function (err, emailRespo) {
@@ -1969,10 +1969,16 @@ var model = {
                                                     data: found
                                                 });
                                             } else {
+                                                found.paymentType = transactData.paymentMode;
+                                                found.paymentStatus = transactData.paymentStatus;
+                                                found.remove = true;
                                                 callback(null, found);
                                             }
                                         });
                                     } else {
+                                        found.paymentType = transactData.paymentMode;
+                                        found.paymentStatus = transactData.paymentStatus;
+                                        found.remove = false;
                                         callback(null, found);
                                     }
                                 }
@@ -2056,15 +2062,88 @@ var model = {
                                         });
                                 }
                             });
-                        } else {
+                        } else if (found.paymentType == "online PAYU" && found.paymentStatus == "Pending") {
                             var len = found.transaction.length;
                             len = len - 2;
                             console.log("len", len);
                             var transaction = [];
+
                             var i = 0;
                             while (i <= len) {
                                 transaction.push(found.transaction[i]);
                                 i++;
+                            }
+
+                            if (transaction.length == 1) {
+                                var upgrade = false
+                            } else {
+                                var upgrade = true;
+                            }
+                            Transaction.findOne({
+                                _id: found.transaction[len]
+                            }).lean().sort({
+                                createdAt: -1
+                            }).exec(function (err, transactData) {
+                                console.log("transactData after delete", transactData);
+                                if (err || _.isEmpty(transactData)) {
+                                    callback(null, {
+                                        error: "no data found",
+                                        data: transactData
+                                    });
+                                } else {
+                                    var matchObj = {
+                                        $set: {
+                                            outstandingAmount: transactData.outstandingAmount,
+                                            totalPaid: transactData.amountPaid,
+                                            cgst: transactData.cgstAmount,
+                                            sgst: transactData.sgstAmount,
+                                            igst: transactData.igstAmount,
+                                            transaction: transaction,
+                                            upgrade: upgrade,
+                                        }
+                                    };
+                                    console.log("matchObj", matchObj);
+                                    Accounts.update({
+                                        athlete: data.athlete
+                                    }, matchObj).exec(
+                                        function (err, data3) {
+                                            if (err) {
+                                                callback(err, null);
+                                            } else if (data3) {
+                                                var matchObj = {
+                                                    $set: {
+                                                        package: transactData.package,
+                                                    }
+                                                };
+                                                Athelete.update({
+                                                    _id: data.athlete
+                                                }, matchObj).exec(
+                                                    function (err, data3) {
+                                                        if (err) {
+                                                            console.log(err);
+                                                            callback(err, null);
+                                                        } else if (data3) {
+                                                            callback(null, data3);
+                                                        }
+                                                    });
+                                            }
+                                        });
+                                }
+                            });
+                        } else {
+                            var len = found.transaction.length;
+                            len = len - 1;
+                            console.log("len", len);
+                            var transaction = [];
+
+                            if (found.remove == true) {
+                                var i = 0;
+                                while (i <= len) {
+                                    transaction.push(found.transaction[i]);
+                                    i++;
+                                }
+                            } else {
+                                transaction = found.transaction;
                             }
                             if (transaction.length == 1) {
                                 var upgrade = false
@@ -2076,6 +2155,7 @@ var model = {
                             }).lean().sort({
                                 createdAt: -1
                             }).exec(function (err, transactData) {
+                                console.log("transactData after delete", transactData);
                                 if (err || _.isEmpty(transactData)) {
                                     callback(null, {
                                         error: "no data found",

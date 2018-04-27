@@ -1930,7 +1930,7 @@ var model = {
                 }, {
                     email: "admin@sfanow.in"
                 }];
-                emailData.filename = "player/receipt.ejs";
+                emailData.filename = "e-player/receipt.ejs";
                 emailData.subject = "SFA: Your Payment Receipt as an Athlete for SFA " + emailData.city + " " + emailData.eventYear + ".";
                 console.log("emaildata", emailData);
                 Config.emailTo(emailData, function (err, emailRespo) {
@@ -1985,7 +1985,7 @@ var model = {
         emailData.eventYear = data.eventYear;
         emailData.email = data.email;
         emailData.otp = emailOtp;
-        emailData.filename = "player-school/emailOtp.ejs";
+        emailData.filename = "e-player-school/emailOtp.ejs";
         emailData.subject = "SFA: Your Email OTP (One time Password) for SFA registration is";
         console.log("emaildata", emailData);
 
@@ -2230,7 +2230,7 @@ var model = {
                                 emailData.packageOrder = package.order;
                                 emailData.featureDetail = features;
                                 emailData.registrationFee = data.registrationFee;
-                                emailData.filename = "player/playerRegistration.ejs";
+                                emailData.filename = "e-player/playerRegistration.ejs";
                                 emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.year;
                                 console.log("emaildata", emailData);
                                 Config.email(emailData, function (err, emailRespo) {
@@ -2375,7 +2375,7 @@ var model = {
                                 emailData.packageOrder = package.order;
                                 emailData.featureDetail = features;
                                 emailData.registrationFee = data.registrationFee;
-                                emailData.filename = "player/playerRegistration.ejs";
+                                emailData.filename = "e-player/playerRegistration.ejs";
                                 emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.eventYear;
                                 console.log("emaildata", emailData);
 
@@ -2484,7 +2484,7 @@ var model = {
                                 emailData.packageOrder = data.package.order;
                                 emailData.featureDetail = features;
                                 emailData.flag = 'athlete';
-                                emailData.filename = "player-school/verification.ejs";
+                                emailData.filename = "e-player-school/verification.ejs";
                                 emailData.subject = "SFA: You are now a verified Athlete for SFA " + emailData.city + " " + emailData.eventYear;
                                 console.log("emaildata", emailData);
                                 Config.email(emailData, function (err, emailRespo) {
@@ -2570,7 +2570,7 @@ var model = {
                                 emailData.year = property[0].year;
                                 emailData.eventYear = property[0].eventYear;
                                 emailData.type = property[0].institutionType;
-                                emailData.filename = "player-school/rejection.ejs";
+                                emailData.filename = "e-player-school/rejection.ejs";
                                 emailData.subject = "SFA: Rejection of Your Application for SFA " + emailData.city + " " + emailData.eventYear;
                                 console.log("emaildata", emailData);
                                 Config.email(emailData, function (err, emailRespo) {
@@ -2719,7 +2719,7 @@ var model = {
                                 emailData.packageOrder = data.package.order;
                                 emailData.featureDetail = features;
                                 emailData.registrationFee = data.registrationFee;
-                                emailData.filename = "player/playerRegistration.ejs";
+                                emailData.filename = "e-player/playerRegistration.ejs";
                                 emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.eventYear + ".";
                                 console.log("emaildata", emailData);
 
@@ -2869,7 +2869,7 @@ var model = {
                                 emailData.packageOrder = package.order;
                                 emailData.featureDetail = features;
                                 emailData.registrationFee = data.registrationFee;
-                                emailData.filename = "player/playerRegistration.ejs";
+                                emailData.filename = "e-player/playerRegistration.ejs";
                                 emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.eventYear + ".";
                                 console.log("emaildata", emailData);
                                 Config.email(emailData, function (err, emailRespo) {
@@ -3502,6 +3502,28 @@ var model = {
                         } else {
                             obj.BIB = "NO";
                         }
+                        if (n.Document_Status) {
+                            obj.Document_Status = n.Document_Status;
+                        } else {
+                            obj.Document_Status = "";
+                        }
+                        if (n.Photo_ID) {
+                            obj.Photo_ID = n.Photo_ID;
+                        } else {
+                            obj.Photo_ID = "";
+                        }
+
+                        if (n.School_Id) {
+                            obj.School_Id = n.School_Id;
+                        } else {
+                            obj.School_Id = "";
+                        }
+
+                        if (n.Age_Proof) {
+                            obj.Age_Proof = n.Age_Proof;
+                        } else {
+                            obj.Age_Proof = "";
+                        }
                         excelData.push(obj);
                     });
                     Config.generateExcel("Athlete", excelData, res);
@@ -3655,6 +3677,28 @@ var model = {
                 } else {
                     obj.BIB = "NO";
                 }
+                if (n.Document_Status) {
+                    obj.Document_Status = n.Document_Status;
+                } else {
+                    obj.Document_Status = "";
+                }
+                if (n.Photo_ID) {
+                    obj.Photo_ID = n.Photo_ID;
+                } else {
+                    obj.Photo_ID = "";
+                }
+
+                if (n.School_Id) {
+                    obj.School_Id = n.School_Id;
+                } else {
+                    obj.School_Id = "";
+                }
+
+                if (n.Age_Proof) {
+                    obj.Age_Proof = n.Age_Proof;
+                } else {
+                    obj.Age_Proof = "";
+                }
                 excelData.push(obj);
             });
             Config.generateExcelOld("Athlete", excelData, res);
@@ -3707,7 +3751,7 @@ var model = {
                                     emailData.athleteAmount = data.property.totalAmountAthlete;
                                     emailData.name = data1.firstName;
                                     emailData.email = data1.email;
-                                    emailData.filename = "reminders/paymentRegistration.ejs";
+                                    emailData.filename = "e-reminders/paymentRegistration.ejs";
                                     emailData.subject = "SFA: Your Payment Reminder for SFA " + emailData.city + " " + emailData.eventYear;
                                     console.log("emaildata", emailData);
                                     Config.email(emailData, function (err, emailRespo) {
@@ -3742,7 +3786,7 @@ var model = {
                                     emailData.athleteAmount = data.property.totalAmountAthlete;
                                     emailData.name = data1.firstName;
                                     emailData.email = data1.email;
-                                    emailData.filename = "reminders/paymentRegistration.ejs";
+                                    emailData.filename = "e-reminders/paymentRegistration.ejs";
                                     emailData.subject = "SFA: Your Payment Reminder for SFA " + emailData.city + " " + emailData.eventYear;
                                     console.log("emaildata", emailData);
 
@@ -3901,6 +3945,28 @@ var model = {
             obj["STATUS"] = athleteData.status;
             obj["PAYMENT MODE"] = athleteData.registrationFee;
             obj["PAYMENT STATUS"] = athleteData.paymentStatus;
+            if (athleteData.Document_Status) {
+                obj.Document_Status = athleteData.Document_Status;
+            } else {
+                obj.Document_Status = "";
+            }
+            if (athleteData.Photo_ID) {
+                obj.Photo_ID = athleteData.Photo_ID;
+            } else {
+                obj.Photo_ID = "";
+            }
+
+            if (athleteData.School_Id) {
+                obj.School_Id = athleteData.School_Id;
+            } else {
+                obj.School_Id = "";
+            }
+
+            if (athleteData.Age_Proof) {
+                obj.Age_Proof = athleteData.Age_Proof;
+            } else {
+                obj.Age_Proof = "";
+            }
             singleData.push(obj);
         });
         callback(null, singleData);
@@ -4657,7 +4723,7 @@ var model = {
                         "mobile": data.mobile,
                         "content": "OTP Athlete: Your Email OTP (One time Password) for SFA registration is ",
                         "from": "info@sfanow.in",
-                        "filename": "player-school/emailOtp.ejs",
+                        "filename": "e-player-school/emailOtp.ejs",
                         "subject": "SFA: Your Email OTP (One time Password) for SFA registration is"
                     };
                     ConfigProperty.find().lean().exec(function (err, property) {
@@ -4830,7 +4896,7 @@ var model = {
                                     emailData.sfaId = n.sfaId;
                                     emailData.password = n.password;
                                     emailData.email = data1.email;
-                                    emailData.filename = "reminders/sportRegistrationReminder.ejs";
+                                    emailData.filename = "e-reminders/sportRegistrationReminder.ejs";
                                     emailData.subject = "SFA: Your Sport Registration Reminder for SFA " + emailData.city + " " + emailData.eventYear;
                                     console.log("emaildata", emailData);
                                     Config.email(emailData, function (err, emailRespo) {

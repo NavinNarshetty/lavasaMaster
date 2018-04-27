@@ -58,7 +58,8 @@
                 ""
             ],
             "url": ""
-        }, {
+        },
+        {
             "name": "Event Date",
             "type": "text",
             "tableRef": "date",
@@ -293,6 +294,58 @@
                 "Volleyball",
                 "Water Polo",
                 "Wrestling"
+            ]
+        },
+        {
+            "name": "Individual Sport",
+            "type": "tags",
+            "tableRef": "individualSports",
+            "placeholder": "Enter Individual Sport",
+            "id": "individualSports",
+            "onView": true,
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "multiple",
+            "dropDown": [
+                "Archery",
+                "Athletics",
+                "Badminton",
+                "Boxing",
+                "Carrom",
+                "Chess",
+                "Fencing",
+                "Judo",
+                "Karate",
+                "Sport MMA",
+                "Shooting",
+                "Squash",
+                "Swimming",
+                "Table Tennis",
+                "Taekwondo",
+                "Tennis",
+                "Wrestling"
+            ]
+        },
+        {
+            "name": "Team Sport",
+            "type": "tags",
+            "tableRef": "teamSports",
+            "placeholder": "Enter Team Sport",
+            "id": "teamSports",
+            "onView": true,
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "multiple",
+            "dropDown": [
+                "Basketball",
+                "Football",
+                "Handball",
+                "Hockey",
+                "Kabaddi",
+                "Kho Kho",
+                "Throwball",
+                "Volleyball",
+                "Water Polo"
             ]
         },
         {

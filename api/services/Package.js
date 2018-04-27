@@ -14,10 +14,11 @@ var schema = new Schema({
     description: String,
     color: {
         type: String,
-        enum: ["blue", "green", "red", "yellow"]
+        enum: ["blue", "green", "red", "yellow", "silver", "gold", "bronze"]
     },
     header: String,
-    packageUser: String
+    packageUser: String,
+    headerImg: String
 });
 
 schema.plugin(deepPopulate, {});

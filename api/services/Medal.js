@@ -447,7 +447,7 @@ var model = {
     getCertificate: function (athlete, finalCallback) {
         var regSports = [];
         var pdfObj = {};
-        pdfObj.filename = "certificate";
+        pdfObj.filename = "e-certificate/certificate";
         async.waterfall([
 
             //getAthlete Details

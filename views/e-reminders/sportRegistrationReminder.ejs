@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>
+    </title>
+    <style>
+        @font-face {
+            font-family: 'TitilliumWeb-Bold';
+            src: url("../font/TitilliumWeb-Bold.ttf");
+        }
+
+        @font-face {
+            font-family: 'TitilliumWeb-Regular';
+            src: url("../font/TitilliumWeb-Regular.ttf");
+        }
+
+        .body {
+            color: #000;
+            font-family: TitilliumWeb-Regular;
+        }
+
+        .img-responsive {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .inline-block {
+            display: inline-block;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .list-inline>li {
+            display: inline-block;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        .color-primary {
+            color: #0a1a72;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .sfa-bold {
+            font-family: TitilliumWeb-Bold
+        }
+
+        .m-clear {
+            margin: 0px;
+        }
+
+        a {
+            text-decoration: none;
+
+        }
+
+        a:hover {
+            text-decoration: underline !important;
+        }
+
+        table {
+            width: 600px;
+            margin: 0 auto;
+        }
+
+        tr,
+        td,
+        span,
+        p {
+            color: #000;
+        }
+
+        h2:before {
+            content: '';
+            width: 100px;
+            height: 0px;
+            color: #00aaff;
+            top: 50%;
+            display: block;
+            border-bottom: 1px solid #00aaff;
+            left: 100px;
+            position: absolute;
+            -ms-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+
+        h2:after {
+            content: '';
+            width: 100px;
+            height: 0px;
+            color: #00aaff;
+            top: 50%;
+            display: block;
+            border-bottom: 1px solid #00aaff;
+            right: 0px;
+            position: absolute;
+            -ms-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <thead>
+            <tr>
+                <td>
+                    <div class="logo text-center" style="margin-top: 30px;">
+                        <img src="https://storage.googleapis.com/emailers-images/logo.png" class="img-responsive" style="margin: 0 auto;">
+                        <br>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center">
+                    <span style="font-family: TitilliumWeb-Regular;color:#0a1a72;font-size: 20px;">SPORTS REGISTRATIONS </span>
+                    <h2 style="margin:10px;position: relative;font-family: TitilliumWeb-Bold;color:#00aaff;font-size: 27px;">SFA MUMBAI 2017 </h2>
+                </td>
+
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>
+                    <div class="main-div" style="padding: 0px 54px; text-align: justify; font-family: TitilliumWeb-Regular;font-size: 17px;">
+
+                        <!-- COMMON TEXT -->
+                        <p class="sfa-bold">YOUR REGISTRATION IS NOT COMPLETE </p>
+
+                        <p>REGISTRATIONS FOR SFA CHAMPIONSHIP
+                            <%=eventYear%>,
+                                <%=city%> IS 2 STEP PROCESS. YOU WILL BE ABLE TO ACCESS SPORTS REGISTRATION (STEP 2) VIA YOUR SFA ID
+                                    & PASSWORD.</p>
+
+                        <p>Dear Sir/Madam, you successfully have completed
+                            <%=flag%> registration (STEP 1) for SFA Championship
+                                <%=eventYear%>,
+                                    <%=city%>. </p>
+
+                        <p>You can now complete your sports registration for all your teams/players (STEP 2) to ensure participation
+                            at SFA Championship
+                            <%=eventYear%>,
+                                <%=city%> by clicking
+                                    <!-- CHANGE AS PER FLAG FOR LINK -->
+                                    <%if(flag === 'school' || flag === 'college')%>
+                                        <a href="<%=schoolUrl%>" target="_new">
+                                            <%=schoolUrl%>
+                                        </a>
+                                        <%} else {%>
+                                            <a href="<%=playerUrl%>" target="_new">
+                                                <%=playerUrl%>
+                                            </a>
+                                            <%}%>
+                                                <!-- CHANGE AS PER FLAG FOR LINK END-->
+                                                here using your SFA ID & Password which are as follows: </p>
+
+                        <ol type="1">
+                            <li class="sfa-bold">SFA ID :
+                                <%=sfaId%>
+                            </li>
+                            <li class="sfa-bold">Password :
+                                <%=password%>
+                            </li>
+                        </ol>
+
+                        <!-- COMMON TEXT END -->
+
+                        <!-- TEXT TO BE CHANGED AS PER THE UPGRADE/REGISTRATION -->
+
+                        <!-- REGARDS -->
+                        <p style="font-family:TitilliumWeb-Bold; font-weight: bold;">Regards,
+                            <br>Team SFA</p>
+                        <!-- REGARDS END -->
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>
+                    <div class="blue-footer" style="background:#0a1a72;font-family: TitilliumWeb-Regular;">
+                        <ul class="list-inline" style="padding: 8px 35px;font-size: 16px;font-weight: bold">
+                            <li>
+                                <img src="https://storage.googleapis.com/emailers-images/g1.png" alt="">
+                            </li>
+                            <li style="vertical-align: top;padding-left: 0;">
+                                <a href="" style="color:#fff;text-decoration: none;">www.sfanow.in</a>
+                            </li>
+                            <li>
+                                <img src="https://storage.googleapis.com/emailers-images/g2.png" alt="">
+                            </li>
+                            <li style="vertical-align: top;padding-left: 0;">
+                                <a href="" style="color:#fff;text-decoration: none;">/sportsforallnow</a>
+                            </li>
+                            <li>
+                                <img src="https://storage.googleapis.com/emailers-images/g3.png" alt="">
+                            </li>
+                            <li style="vertical-align: top;padding-left: 0;">
+                                <a href="" style="color:#fff;text-decoration: none;">/sfanow</a>
+                            </li>
+                            <li>
+                                <img src="https://storage.googleapis.com/emailers-images/g4.png" alt="">
+                            </li>
+                            <li style="vertical-align: top;padding-left: 0;">
+                                <a href="" style="color:#fff;text-decoration: none;">/sfanow </a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+
+</html>

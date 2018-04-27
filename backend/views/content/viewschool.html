@@ -62,9 +62,8 @@
                                         <!-- ngIf: model && !isMultiple -->
                                         <div class="img-box">
                                             <a href="{{school.schoolLogo|uploadpath}}" fancybox-box>
-                                            <img ng-src="{{school.schoolLogo|uploadpath}}"
-                                                    class="img-responsive uploadingImage img-thumbnail">
-                                                    </a>
+                                                <img ng-src="{{school.schoolLogo|uploadpath}}" class="img-responsive uploadingImage img-thumbnail">
+                                            </a>
                                         </div>
 
 
@@ -195,7 +194,7 @@
                                                             <td>
                                                                 <div class="img-box">
                                                                     <a href="{{data.photograph|uploadpath}}" fancybox-box>
-                                                                         <img ng-src="{{data.photograph|uploadpath}}" class="img-responsive uploadingImage img-thumbnail">
+                                                                        <img ng-src="{{data.photograph|uploadpath}}" class="img-responsive uploadingImage img-thumbnail">
                                                                     </a>
                                                                 </div>
                                                             </td>
@@ -355,8 +354,11 @@
                                             <input type="text" name="remarks" ng-model="school.remarks" class="form-control " readonly>
                                             <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid Remarks</div>-->
                                         </div>
-                                        <div class="text-center mt20 odd-even-button">
+                                        <div class="text-center mt20 odd-even-button" ng-if="!jSchoolops">
                                             <button class="btn btn-default" type="submit" ui-sref="school">Back</button>
+                                        </div>
+                                        <div class="text-center mt20 odd-even-button" ng-if="jSchoolops">
+                                            <button class="btn btn-default" type="submit" ui-sref="schoolOps">Back</button>
                                         </div>
                                     </div>
                                     </detail-field>

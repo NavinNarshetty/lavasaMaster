@@ -54,7 +54,9 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="">Upload Image ID<span ng-show="type.size" class="">(250 x 250)</span></label>
+                                    <label class="">Upload Image ID
+                                        <span ng-show="type.size" class="">(250 x 250)</span>
+                                    </label>
                                     <div class="form-group">
                                         <!-- <label for="exampleInputEmail1" style="margin:5px;">Image Upload</label> -->
                                         <!-- ngIf: model && !isMultiple -->
@@ -120,7 +122,9 @@
                                             <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched &amp;&amp; type.required">Please enter valid Blood Group</div>-->
                                         </div>
                                         <div class="form-group">
-                                            <label class="">Photograph<span ng-show="type.size" class="">(250 x 250)</span></label>
+                                            <label class="">Photograph
+                                                <span ng-show="type.size" class="">(250 x 250)</span>
+                                            </label>
                                             <div class="form-group">
                                                 <div class="img-box">
                                                     <a href="{{athlete.photograph|uploadpath}}" fancybox-box>
@@ -137,12 +141,16 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="">Age<span ng-show="type.size" class="">(250 x 250)</span></label>
+                                            <label class="">Age
+                                                <span ng-show="type.size" class="">(250 x 250)</span>
+                                            </label>
                                             <input type="text" name="mobile" class="form-control" ng-model="athlete.age" readonly>
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="">Age Proof<span ng-show="type.size" class="">(250 x 250)</span></label>
+                                            <label class="">Age Proof
+                                                <span ng-show="type.size" class="">(250 x 250)</span>
+                                            </label>
                                             <div class="form-group">
                                                 <div class="img-box">
                                                     <a href="{{athlete.birthImage|uploadpath}}" fancybox-box>
@@ -153,7 +161,9 @@
                                         </div>
 
                                         <div class="form-group" ng-if="athlete.photoImage">
-                                            <label class="">Photo ID<span ng-show="type.size" class="">(250 x 250)</span></label>
+                                            <label class="">Photo ID
+                                                <span ng-show="type.size" class="">(250 x 250)</span>
+                                            </label>
                                             <div class="form-group">
                                                 <div class="img-box">
                                                     <a href="{{athlete.photoImage|uploadpath}}" fancybox-box>
@@ -263,12 +273,14 @@
                                                             <!-- <td>{{data.sport}}</td> -->
                                                             <td>
                                                                 <div class="form-group">
-                                                                    <label class="">Certificate<span ng-show="type.size" class="">(250 x 250)</span></label>
+                                                                    <label class="">Certificate
+                                                                        <span ng-show="type.size" class="">(250 x 250)</span>
+                                                                    </label>
                                                                     <div class="form-group">
                                                                         <div class="img-box">
                                                                             <a href="{{data.certificateImage|uploadpath}}" fancybox-box>
-                                                                            <img ng-src="{{data.certificateImage|uploadpath}}" class="img-responsive uploadingImage img-thumbnail">
-                                                                        </a>
+                                                                                <img ng-src="{{data.certificateImage|uploadpath}}" class="img-responsive uploadingImage img-thumbnail">
+                                                                            </a>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -433,8 +445,7 @@
                                                     <td ng-if="displayData.package1.date">
                                                         <div>
 
-                                                            <span>Registered Date</span> {{displayData.package1.date | date
-                                                            }}
+                                                            <span>Registered Date</span> {{displayData.package1.date | date }}
                                                             <span>Payment Date</span> {{displayData.package1.dateOfTransaction
                                                             | date}}
 
@@ -442,8 +453,7 @@
                                                     </td>
                                                     <td ng-if="displayData.package2.date">
                                                         <div>
-                                                            <span>Registered Date</span> {{displayData.package2.date | date
-                                                            }}
+                                                            <span>Registered Date</span> {{displayData.package2.date | date }}
                                                             <span>Payment Date</span> {{displayData.package2.dateOfTransaction
                                                             | date}}
 
@@ -451,16 +461,14 @@
                                                     </td>
                                                     <td ng-if="displayData.package3.date">
                                                         <div>
-                                                            <span>Registered Date</span> {{displayData.package3.date | date
-                                                            }}
+                                                            <span>Registered Date</span> {{displayData.package3.date | date }}
                                                             <span>Payment Date</span> {{displayData.package3.dateOfTransaction
                                                             | englishNumeralCustomDate}}
                                                         </div>
                                                     </td>
                                                     <td ng-if="displayData.package4.date">
                                                         <div>
-                                                            <span>Registered Date</span> {{displayData.package4.date | date
-                                                            }}
+                                                            <span>Registered Date</span> {{displayData.package4.date | date }}
                                                             <span>Payment Date</span> {{displayData.package4.dateOfTransaction
                                                             | englishNumeralCustomDate}}
                                                         </div>
@@ -497,12 +505,16 @@
                                                     </td>
                                                     <td>
                                                         <div>
-                                                            <span ng-repeat="idData in displayData.receiptId track by $index"> {{idData}}<span ng-if="$index < displayData.receiptId.length-1">,</span></span>
+                                                            <span ng-repeat="idData in displayData.receiptId track by $index"> {{idData}}
+                                                                <span ng-if="$index < displayData.receiptId.length-1">,</span>
+                                                            </span>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div>
-                                                            <span ng-repeat="idData in displayData.payuId track by $index"> {{idData}}<span ng-if="$index < displayData.payuId.length-1">,</span></span>
+                                                            <span ng-repeat="idData in displayData.payuId track by $index"> {{idData}}
+                                                                <span ng-if="$index < displayData.payuId.length-1">,</span>
+                                                            </span>
                                                         </div>
                                                     </td>
                                                 </tbody>
@@ -517,9 +529,18 @@
                                 <button class="btn btn-default" type="submit" ng-click="saveData(data)">Save</button>
                                 <button class="btn btn-default" ng-click="onCancel(json.json.action[1].stateName)">Cancel</button>
                             </div>-->
-                            <div class="text-center mt20 odd-even-button">
+                            <div class="text-center mt20 odd-even-button" ng-if="!jAtheletOps">
                                 <button class="btn btn-default" type="submit" ui-sref="athlete">Back</button>
                             </div>
+                            <div class="text-center mt20 odd-even-button" ng-if="jAtheletOps">
+                                <button class="btn btn-default" type="submit" ui-sref="athleteOps">Back</button>
+                            </div>
+                            <!-- <div class="text-center mt20 odd-even-button" ng-if="accesslevel!=='Sports Ops' || accesslevel!=='Accounts' || !$scope.athleteOps">
+                                <button class="btn btn-default" type="submit" ui-sref="athlete">Back</button>
+                            </div>
+                            <div class="text-center mt20 odd-even-button" ng-if="accesslevel=='Sports Ops' || accesslevel=='Accounts' || $scope.athleteOps">
+                                <button class="btn btn-default" type="submit" ui-sref="athleteOps">Back</button>
+                            </div> -->
                     </form>
                     </div>
                 </div>

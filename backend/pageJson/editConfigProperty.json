@@ -302,6 +302,68 @@
             ]
         },
         {
+            "name": " Individual Sport",
+            "type": "tags",
+            "tableRef": "individualSports",
+            "placeholder": "Enter Individual Sport",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "id": "individualSports",
+            "onView": true,
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "multiple",
+            "dropDown": [
+                "Archery",
+                "Athletics",
+                "Badminton",
+                "Boxing",
+                "Carrom",
+                "Chess",
+                "Fencing",
+                "Judo",
+                "Karate",
+                "Sport MMA",
+                "Shooting",
+                "Squash",
+                "Swimming",
+                "Table Tennis",
+                "Taekwondo",
+                "Tennis",
+                "Wrestling"
+            ]
+        },
+        {
+            "name": "Team Sport",
+            "type": "tags",
+            "tableRef": "teamSports",
+            "placeholder": "Enter Team Sport",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "id": "Team sports",
+            "onView": true,
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "multiple",
+            "dropDown": [
+                "Basketball",
+                "Football",
+                "Handball",
+                "Hockey",
+                "Kabaddi",
+                "Kho Kho",
+                "Throwball",
+                "Volleyball",
+                "Water Polo"
+            ]
+        },
+        {
             "name": "Total Sport",
             "type": "number",
             "tableRef": "totalSport",

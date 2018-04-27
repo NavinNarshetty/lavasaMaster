@@ -263,7 +263,7 @@ var model = {
                                 emailData.infoNo = property[0].infoNo;
                                 emailData.cityAddress = property[0].cityAddress;
                                 emailData.ddFavour = property[0].ddFavour;
-                                emailData.filename = "atheleteOnlinePaymentAdditional.ejs";
+                                emailData.filename = "e-mails/atheleteOnlinePaymentAdditional.ejs";
                                 emailData.subject = "SFA: Thank you for payment for SFA " + emailData.city + " " + emailData.type + " " + emailData.eventYear + ".";
                                 console.log("emaildata", emailData);
                                 Config.email(emailData, function (err, emailRespo) {
@@ -552,24 +552,23 @@ var model = {
             // Stage 5
             {
                 $match: {
-                    $or: [
-                        {
+                    $or: [{
                             "feeType": {
-                             $regex: data.keyword,
-                             $options:"i"
-                            } 
+                                $regex: data.keyword,
+                                $options: "i"
+                            }
                         },
                         {
                             "athleteId.sfaId": {
-                             $regex: data.keyword,
-                             $options:"i"
-                            } 
+                                $regex: data.keyword,
+                                $options: "i"
+                            }
                         },
                         {
                             "athleteId.sfaId": {
-                             $regex: data.keyword,
-                             $options:"i"
-                            } 
+                                $regex: data.keyword,
+                                $options: "i"
+                            }
                         },
                         {
                             "athleteId.surname": {
