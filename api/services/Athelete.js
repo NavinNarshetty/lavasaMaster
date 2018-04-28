@@ -1278,6 +1278,7 @@ var model = {
                 }
             });
     },
+
     //genarate sfa when status changes to verified and sfaid is blank
     generateAtheleteSfaID: function (data, callback) {
         //find and first time atheleteID idea is for string id generation if required
@@ -1739,6 +1740,114 @@ var model = {
                                         });
                                 }
 
+                            });
+                    }
+                },
+            ],
+            function (err, data2) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
+                    callback(null, data2);
+                }
+
+            });
+    },
+
+    updatePaymentStatusBackend: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    ConfigProperty.find().lean().exec(function (err, property) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(property)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, property);
+                            }
+                        }
+                    });
+                },
+                function (property, callback) {
+                    Athelete.findOne({ //finds one with refrence to id
+                        firstName: data.firstName,
+                        surname: data.surname,
+                        email: data.email,
+                    }).lean().deepPopulate("package coupon").exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            console.log("empty in Athelete found");
+                            callback(null, "Data is empty");
+                        } else {
+                            async.waterfall([
+                                    function (callback) {
+                                        Accounts.findOne({
+                                            athlete: found._id
+                                        }).lean().exec(function (err, accountsData) {
+                                            if (err || _.isEmpty(accountsData)) {
+                                                callback(null, {
+                                                    error: "no data found",
+                                                    data: found
+                                                });
+                                            } else {
+                                                found.accounts = accountsData;
+                                                callback(null, found);
+                                            }
+                                        });
+                                    },
+                                    function (found, callback) {
+                                        data.athlete = true;
+                                        Transaction.saveTransaction(data, found, function (err, vData) {
+                                            if (err || _.isEmpty(vData)) {
+                                                callback(null, {
+                                                    error: "no data found",
+                                                    data: found
+                                                });
+                                            } else {
+                                                callback(null, found);
+                                            }
+                                        });
+
+                                    },
+                                ],
+                                function (err, complete) {
+                                    if (err) {
+                                        callback(err, callback);
+                                    } else {
+                                        callback(null, complete);
+                                    }
+                                });
+                        }
+                    });
+                },
+                function (found, callback) {
+                    if (found.error) {
+                        callback(null, found);
+                    } else {
+                        console.log("found in update", found);
+                        var matchObj = {
+                            $set: {
+                                paymentStatus: "Paid",
+                                transactionID: data.transactionid
+                            }
+                        };
+                        Athelete.update({
+                            _id: found._id
+                        }, matchObj).exec(
+                            function (err, data3) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(err, null);
+                                } else if (data3) {
+                                    if (_.isEmpty(data3)) {
+                                        callback(null, []);
+                                    } else {
+                                        callback(null, data3);
+                                    }
+                                }
                             });
                     }
                 },

@@ -22,9 +22,21 @@ var controller = {
             });
         }
     },
+
     getOneBySfaId: function (req, res) {
         if (req.body) {
             Registration.getOneBySfaId(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
+
+    updatePaymentStatusBackend: function (req, res) {
+        if (req.body) {
+            Registration.updatePaymentStatusBackend(req.body, res.callback);
         } else {
             res.json({
                 value: false,

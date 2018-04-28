@@ -3052,7 +3052,7 @@ myApp.controller('EditAthleteCtrl', function ($scope, TemplateService, Navigatio
     $scope.saveData = function (data) {
         console.log(" $scope.school", data);
         if (data) {
-            $scope.url = "Athelete/save";
+            $scope.url = "Athelete/updatePaymentStatusBackend";
             console.log(data);
             NavigationService.apiCall($scope.url, data, function (data) {
                 console.log("data.value", data);
@@ -3117,7 +3117,7 @@ myApp.controller('EditSchoolCtrl', function ($scope, TemplateService, Navigation
     $scope.saveData = function (data) {
         console.log(" $scope.school", data);
         if (data) {
-            $scope.url = "Registration/save";
+            $scope.url = "Registration/updatePaymentStatusBackend";
             console.log(data);
             NavigationService.apiCall($scope.url, data, function (data) {
                 console.log("data.value", data);

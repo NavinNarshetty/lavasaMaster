@@ -51,6 +51,17 @@ var controller = {
         }
     },
 
+    updatePaymentStatusBackend: function (req, res) {
+        if (req.body) {
+            Athelete.updatePaymentStatusBackend(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
+
     delete: function (req, res) {
         if (req.body) {
             Athelete.delete(req.body, res.callback);

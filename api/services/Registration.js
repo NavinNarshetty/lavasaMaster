@@ -1022,6 +1022,111 @@ var model = {
             });
     },
 
+    updatePaymentStatusBackend: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    ConfigProperty.find().lean().exec(function (err, property) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(property)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, property);
+                            }
+                        }
+                    });
+                },
+                function (property, callback) {
+                    console.log("inside update", data);
+                    Registration.findOne({ //finds one with refrence to id
+                        schoolName: data.schoolName
+                    }).lean().deepPopulate("package").exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            callback(null, "Data is empty");
+                        } else {
+                            console.log("inside found", found);
+                            async.waterfall([
+                                    function (callback) {
+                                        Accounts.findOne({
+                                            school: found._id
+                                        }).lean().exec(function (err, accountsData) {
+                                            if (err || _.isEmpty(accountsData)) {
+                                                callback(null, {
+                                                    error: "no data found",
+                                                    data: found
+                                                });
+                                            } else {
+                                                found.accounts = accountsData;
+                                                callback(null, found);
+                                            }
+                                        });
+                                    },
+                                    function (found, callback) {
+                                        data.school = true;
+                                        console.log("data------", data, "found------", found);
+                                        Transaction.saveTransaction(data, found, function (err, vData) {
+                                            if (err || _.isEmpty(vData)) {
+                                                callback(null, {
+                                                    error: "no data found",
+                                                    data: found
+                                                });
+                                            } else {
+                                                callback(null, found);
+                                            }
+                                        });
+                                    },
+                                    function (found, callback) {
+                                        if (found.error) {
+                                            callback(null, found);
+                                        } else {
+                                            console.log("found in update", found);
+                                            var matchObj = {
+                                                $set: {
+                                                    paymentStatus: "Paid",
+                                                    transactionID: data.transactionid
+                                                }
+                                            };
+                                            Registration.update({
+                                                _id: found._id
+                                            }, matchObj).exec(
+                                                function (err, data3) {
+                                                    if (err) {
+                                                        callback(err, null);
+                                                    } else if (_.isEmpty(data3)) {
+                                                        callback(null, data3);
+                                                    } else {
+                                                        callback(null, data3);
+                                                    }
+                                                });
+                                        }
+                                    }
+                                ],
+                                function (err, complete) {
+                                    if (err) {
+                                        callback(err, callback);
+                                    } else {
+                                        callback(null, complete);
+                                    }
+                                });
+
+                        }
+                    });
+                }
+            ],
+            function (err, data2) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
+                    callback(null, data2);
+                }
+
+            });
+    },
+
     updatePaymentStatusOld: function (data, callback) {
         var matchObj = {
             $set: {
