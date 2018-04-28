@@ -1,3 +1,5 @@
+var MaxImageSize = 1600;
+
 var schema = new Schema({
     name: {
         type: String,
@@ -475,7 +477,37 @@ var model = {
         return dataObj;
     },
 
+    uploadFindOne: function (filename, callback) {
+        Upload.findOne({
+            _id: filename
+        }, function (err, data) {
+            if (err || _.isEmpty(data)) {
+                callback(err);
+            } else {
+                callback(data);
+            }
+        });
+    },
+
     importGS: function (filename, callback) {
+        // async.waterfall([
+        //     function (callback) {
+        //         Config.uploadFindOne(filename, function (uploadData) {
+        //             console.log('enter', uploadData);
+        //             if (uploadData) {
+        //                 callback(null, uploadData);
+        //             } else {
+        //                 callback(null, 'Not found');
+        //             }
+        //         });
+        //     },
+        //     function (uploadData, callback) {
+        //         console.log('hi', uploadData);
+
+        //     }
+        // ], function (err, result) {
+        //     // result now equals 'done'
+        // });
         var readstream = gfs.createReadStream({
             filename: filename
         });
