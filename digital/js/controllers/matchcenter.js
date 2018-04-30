@@ -177,9 +177,28 @@ myApp.controller('MatchCenterTimeTrialCtrl', function ($scope, TemplateService, 
         $scope.match.matchId = $scope.matchData.matchId;
         $scope.match.sportName = $scope.match.sport.sportslist.sportsListSubCategory.name;
         $scope.sport = $scope.match.sport.sportslist.name;
+        if ($scope.match.opponentsSingle.length>0) {
+          _.each($scope.match.opponentsSingle,function(n, nkey){
+            var ath = _.find($scope.match.resultHeat.players, ['id', n._id]);
+            n.fullName = n.athleteId.firstName +  " " + n.athleteId.surname;
+            n.laneNo = ath.laneNo;
+            n.time = ath.time;
+            n.result = ath.result;
+            console.log("n", n);
+          });
+        } else if ($scope.match.opponentsTeam.length>0) {
+          _.each($scope.match.opponentsTeam,function(n, nkey){
+            var ath = _.find($scope.match.resultHeat.teams, ['id', n._id]);
+            n.fullName = n.athleteId.firstName +  " " + n.athleteId.surname;
+            n.laneNo = ath.laneNo;
+            n.time = ath.time;
+            n.result = ath.result;
+            console.log("n", n);
+          });
+        }
         console.log("match", $scope.match);
         $timeout(function () {
-          $scope.printFunction();
+          // $scope.printFunction();
         }, 900);
       }
     });

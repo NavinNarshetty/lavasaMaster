@@ -45,7 +45,7 @@
             <label for="">Name</label>
           </td>
           <td ng-if="sport!='Swimming 4x50m Medley Relay' && sport!='Swimming 4x50m Freestyle Relay'">
-            <label for="">School</label>
+            <label for="">Chapter</label>
           </td>
           <td class="text-center">
             <label for="">Position</label>
@@ -55,16 +55,16 @@
           </td>
         </tr>
         <!-- FOR INDIVIDUAL -->
-        <tr ng-repeat="player in match.resultHeat.players track by $index" ng-if="match.opponentsSingle.length>0">
+        <tr ng-repeat="player in match.opponentsSingle track by $index" ng-if="match.opponentsSingle.length>0">
           <td>
             <div class="text-center">{{player.laneNo}}</div>
           </td>
           <td>
-            <div class="text-capitalize">{{player.sfaId}} - {{player.fullname}}</div>
+            <div class="text-capitalize">{{player.athleteId.sfaId}} - {{player.fullName}}</div>
           </td>
           <td>
             <div class="text-capitalize">
-              {{player.schoolname}}
+              {{player.athleteId.school.name}}
             </div>
           </td>
           <td>
@@ -81,7 +81,7 @@
           </td>
         </tr>
         <!-- FOR INDIVIDUAL END -->
-        <tr ng-repeat="team in match.resultHeat.teams track by $index" ng-if="match.opponentsTeam.length>0">
+        <tr ng-repeat="team in match.opponentsTeam track by $index" ng-if="match.opponentsTeam.length>0">
           <td>
             <div class="text-center">{{team.laneNo}}</div>
           </td>
