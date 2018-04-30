@@ -446,6 +446,9 @@
     padding: 5px 10px;
     font-size: 10px;
   }
+  .upgradepackage-featute-check{
+    width: 15px;
+  }
   // PACKAGE ACCORDION END
   //  UPGRADE PAGE END
   // REGISTER LANDING
@@ -461,6 +464,7 @@
     }
   }
   .btn-mainregister{
+    width: 100%;
     margin: 0 auto;
     display: block;
     font-size: 14px;
@@ -539,6 +543,14 @@
   .registerstep-btnholder{
     width: 100%;
   }
+  .registerform-step1-holder{
+    padding: 15px 5px;
+    &.active{
+      &:after{
+        display: none;
+      }
+    }
+  }
   .registerform-step1{
     padding: 10px 0;
     .input-group{
@@ -570,6 +582,13 @@
     li{
       display: block;
     }
+  }
+  .registerplayer-questionitem{
+    height: 90px;
+    overflow: hidden;
+  }
+  .registerplayer-questionitem-full{
+    height: auto;
   }
   // REGISTER LANDING END.
   // FORGOT PASSWORD MODAL

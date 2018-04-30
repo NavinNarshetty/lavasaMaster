@@ -2962,6 +2962,7 @@ $tickerDuration: 60s;
 }
 .btn-mainregister{
   // width: 50%;
+  padding: 6px 30px;
   border: none;
   box-shadow: 4px 4px 5px 0 $sport-darkgrey;
   display: inline-block;
@@ -2969,6 +2970,8 @@ $tickerDuration: 60s;
   color: #fff;
   font-size: 18px;
   text-transform: uppercase;
+  animation: blinkregister 2s infinite;
+  -webkit-animation: blinkregister 2s infinite;
   &:active, &.active, &:hover, &:focus{
     box-shadow: 4px 4px 5px 0 $sport-darkgrey;
     color: #fff;
@@ -3068,6 +3071,22 @@ $tickerDuration: 60s;
     // }
   }
 }
+.registerform-step1-holder{
+  padding: 15px;
+  &.active{
+    background-color: rgba(0, 170, 255, 0.3);
+    position: relative;
+    &:after{
+      content: '';
+      border-right: 10px solid transparent;
+      border-bottom: 10px solid rgba(0, 170, 255, 0.3);
+      border-left: 10px solid transparent;
+      position: absolute;
+      top: -10px;
+      left: 40%;
+    }
+  }
+}
 .registerform-step2{
   padding: 40px 30px;
   &.active{
@@ -3165,3 +3184,36 @@ $tickerDuration: 60s;
 }
 // CHANGE DETAILS MODAL END
 // REGISTRATION PAGES END
+// ANIMATIONS
+// blinkregister
+/* Chrome, Safari, Opera */
+@-webkit-keyframes blinkregister {
+    0% {
+        background-color: $sport-primary;
+        color: #fff;
+        // transition: all 0.3s ease;
+    }
+    50% {
+      background-color: #fff;
+      color: $sport-primary;
+      // transition: all 0.3s ease;
+    }
+}
+/* Chrome, Safari, Opera END */
+
+/* Standard syntax */
+@keyframes blinkregister {
+  0% {
+      background-color: $sport-primary;
+      color: #fff;
+      // transition: all 0.3s ease;
+  }
+  50% {
+    background-color: #fff;
+    color: $sport-primary;
+    // transition: all 0.3s ease;
+  }
+}
+/* Standard syntax END */
+// blinkregister
+// ANIMATIONS END

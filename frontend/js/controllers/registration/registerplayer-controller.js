@@ -42,7 +42,7 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
   // SET FLAG END
   $scope.oneAtATime = true;
   $scope.questionLimit = {
-    value: 2,
+    value: 1,
     more: true
   };
   $scope.banners = $scope.questionList = $scope.testimonials = $scope.counts = $scope.gallery = [];
@@ -467,7 +467,7 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
   // FORM END
   // QUESTIONS SECTION
   $scope.moreQuestions = function () {
-    if ($scope.questionLimit.value == 2) {
+    if ($scope.questionLimit.value == 1) {
       $scope.questionLimit = {
         value: $scope.questionList.length,
         more: false
@@ -475,7 +475,7 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
       $scope.questionLimit = $scope.questionList.length;
     } else {
       $scope.questionLimit = {
-        value: 2,
+        value: 1,
         more: true
       };
     }

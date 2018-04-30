@@ -116,7 +116,8 @@
         </ul>
         <!-- STEP BUTTONS END -->
         <!-- STEP 1 FORM -->
-        <div class="" ng-show="stepTab == 1">
+        <div class="registerform-step1-holder" ng-show="stepTab == 1" ng-class="{'active': stepTab == 1}">
+          <p class="visible-xs">Step 1</p>
           <div class="registerstep-btnholder">
             <ul class="list-unstyled">
               <li>
@@ -243,7 +244,7 @@
       <div class="registerplayer-questionlist">
         <ul class="list-unstyled">
           <li ng-repeat="question in questionList|limitTo:questionLimit.value track by $index">
-            <div class="registerplayer-questionitem" ng-bind-html="question.question"></div>
+            <div class="registerplayer-questionitem" ng-bind-html="question.question" ng-class="{'registerplayer-questionitem-full': !questionLimit.more}"></div>
           </li>
         </ul>
       </div>
