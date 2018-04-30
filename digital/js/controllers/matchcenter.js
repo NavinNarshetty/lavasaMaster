@@ -198,7 +198,7 @@ myApp.controller('MatchCenterTimeTrialCtrl', function ($scope, TemplateService, 
         }
         console.log("match", $scope.match);
         $timeout(function () {
-          // $scope.printFunction();
+          $scope.printFunction();
         }, 900);
       }
     });
