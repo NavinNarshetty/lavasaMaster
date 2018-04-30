@@ -288,12 +288,12 @@ myApp.controller('RacquetDoublesScoreCtrl', function ($scope, TemplateService, N
   }
   $scope.deleteSet = function (index) {
     console.log(index, 'index che');
-    _.each($scope.match.resultsRacquet.players, function (n) {
+    _.each($scope.match.resultsRacquet.teams, function (n) {
       if (n.sets.length > 1) {
         // delete n.sets[index];
         n.sets.splice(index, 1);
         $scope.setLength = [];
-        _.each($scope.match.resultsRacquet.players[0].sets, function (n, key) {
+        _.each($scope.match.resultsRacquet.teams[0].sets, function (n, key) {
           $scope.setLength[key] = {
             setShow: true
           }
