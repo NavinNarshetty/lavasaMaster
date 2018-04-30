@@ -102,7 +102,7 @@ var model = {
 
     },
 
-    olduploadFile: function (filename, callback) {
+    uploadFile: function (filename, callback) {
         var id = mongoose.Types.ObjectId();
         var extension = filename.split(".").pop();
         extension = extension.toLowerCase();
@@ -153,7 +153,7 @@ var model = {
 
     },
 
-    uploadFile: function (filename, callback) {
+    newUploadFile: function (filename, callback) {
         var id = mongoose.Types.ObjectId();
         var extension = filename.split(".").pop();
         extension = extension.toLowerCase();
@@ -201,7 +201,7 @@ var model = {
         }
     },
 
-    oldReadUploaded: function (filename, width, height, style, res) {
+    readUploaded: function (filename, width, height, style, res) {
         res.set({
             'Cache-Control': 'public, max-age=31557600',
             'Expires': new Date(Date.now() + 345600000).toUTCString()
@@ -321,7 +321,7 @@ var model = {
         //error handling, e.g. file does not exist
     },
 
-    readUploaded: function (filename, width, height, style, res) {
+    newReadUploaded: function (filename, width, height, style, res) {
         res.set({
             'Cache-Control': 'public, max-age=31557600',
             'Expires': new Date(Date.now() + 345600000).toUTCString()
@@ -438,25 +438,25 @@ var model = {
         //error handling, e.g. file does not exist
     },
 
-    readAttachment: function (filename, callback) {
-        console.log("filename", filename);
-        var readstream = gfs.createReadStream({
-            filename: filename
-        });
-        readstream.on('error', function (err) {
+    // readAttachment: function (filename, callback) {
+    //     console.log("filename", filename);
+    //     var readstream = gfs.createReadStream({
+    //         filename: filename
+    //     });
+    //     readstream.on('error', function (err) {
 
-            callback(err, false);
-        });
-        var buf;
-        var bufs = [];
-        readstream.on('data', function (d) {
-            bufs.push(d);
-        });
-        readstream.on('end', function () {
-            buf = Buffer.concat(bufs);
-            callback(null, buf);
-        });
-    },
+    //         callback(err, false);
+    //     });
+    //     var buf;
+    //     var bufs = [];
+    //     readstream.on('data', function (d) {
+    //         bufs.push(d);
+    //     });
+    //     readstream.on('end', function () {
+    //         buf = Buffer.concat(bufs);
+    //         callback(null, buf);
+    //     });
+    // },
 
     tempReadUploaded: function (filename, width, height, style, res) {
         res.send();
