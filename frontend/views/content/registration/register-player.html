@@ -106,12 +106,14 @@
           <span ng-if="pageType == 'player'">players</span>
           <span ng-if="pageType == 'school'">schools</span> must complete the following two step registration process</p>
         <!-- STEP BUTTONS -->
-        <ul class="list-inline">
+        <ul class="list-inline register-stepbtns clearfix">
           <li>
-            <button class="btn btn-registerstep" ng-click="showStep(1) ;formData={}" ng-class="{'active': stepTab == 1}">Step 1: Registration & Verification</button>
+            <button class="btn btn-registerstep hidden-xs" ng-click="showStep(1) ;formData={}" ng-class="{'active': stepTab == 1}">Step 1: Registration & Verification</button>
+            <div class="btn btn-registerstep visible-xs" ng-click="showStep(1) ;formData={}" ng-class="{'active': stepTab == 1}"><span class="text-underline">Step 1:</span> </br>Registration & Verification</div>
           </li>
           <li>
-            <button class="btn btn-registerstep" ng-click="showStep(2);formData={}" ng-class="{'active': stepTab == 2}">Step 2: Sports Registration</button>
+            <button class="btn btn-registerstep hidden-xs" ng-click="showStep(2);formData={}" ng-class="{'active': stepTab == 2}">Step 2: Sports Registration</button>
+            <button class="btn btn-registerstep visible-xs" ng-click="showStep(2);formData={}" ng-class="{'active': stepTab == 2}"><span class="text-underline">Step 2:</span> </br>Sports Registration</button>
           </li>
         </ul>
         <!-- STEP BUTTONS END -->
