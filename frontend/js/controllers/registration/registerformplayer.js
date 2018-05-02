@@ -750,6 +750,7 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
         if ($scope.formData.atheleteSchoolContact) {
           delete $scope.formData.atheleteSchoolContact;
         }
+        $scope.goto();
     };
     $scope.refreshChangeSchool = function (paramData) {
         NavigationService.getSchoolSFA(paramData, function (data) {
@@ -849,6 +850,8 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
         if ($scope.oneClick === false) {
             $scope.showSchool = !$scope.showSchool;
             $scope.oneClick = true;
+        } else {
+          $scope.oneClick = false;
         }
     };
 
