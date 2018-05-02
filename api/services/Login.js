@@ -234,7 +234,7 @@ var model = {
     },
 
     forgotPassword: function (data, callback) {
-        var sfatype = data.sfaid.charAt(1);
+        var sfatype = data.sfaid.charAt(2);
         console.log(sfatype, data);
         if (data.type == "school" && sfatype == 'S') {
             Registration.findOne({

@@ -58,41 +58,41 @@ myApp.controller('SportsRegistrationCtrl', function ($scope, selectService, Temp
                     if (formData.sfaid) {
                         if ($scope.type == 'school') {
                             // console.log('enter school');
-                            if (formData.sfaid.charAt(1) == "S" && formData.type == "athlete") {
+                            if (formData.sfaid.charAt(2) == "S" && formData.type == "athlete") {
                                 toastr.error('Only Athlete Can Log In.', 'Login Message');
                             } else {
-                                if (formData.sfaid.charAt(1) == "A" && formData.type == "school") {
+                                if (formData.sfaid.charAt(2) == "A" && formData.type == "school") {
                                     toastr.error('Only School Can Log In.', 'Login Message');
                                 } else {
-                                    if (formData.sfaid.charAt(1) == "C" && formData.type == "school") {
+                                    if (formData.sfaid.charAt(2) == "C" && formData.type == "school") {
                                         toastr.error('Only School Can Log In.', 'Login Message');
                                     }
                                 }
                             }
-                            if (formData.sfaid.charAt(1) == "S" && formData.type == "school") {
+                            if (formData.sfaid.charAt(2) == "S" && formData.type == "school") {
                                 $scope.loginFunction(formData);
                             } else {
-                                if (formData.sfaid.charAt(1) == "A" && formData.type == "athlete") {
+                                if (formData.sfaid.charAt(2) == "A" && formData.type == "athlete") {
                                     $scope.loginFunction(formData);
                                 }
                             }
                         } else {
                             // console.log('enter');
-                            if (formData.sfaid.charAt(1) == "C" && formData.type == "athlete") {
+                            if (formData.sfaid.charAt(2) == "C" && formData.type == "athlete") {
                                 toastr.error('Only Athlete Can Log In.', 'Login Message');
                             } else {
-                                if (formData.sfaid.charAt(1) == "A" && formData.type == "school") {
+                                if (formData.sfaid.charAt(2) == "A" && formData.type == "school") {
                                     toastr.error('Only College Can Log In.', 'Login Message');
                                 } else {
-                                    if (formData.sfaid.charAt(1) == "S" && formData.type == "school") {
+                                    if (formData.sfaid.charAt(2) == "S" && formData.type == "school") {
                                         toastr.error('Only College Can Log In.', 'Login Message');
                                     }
                                 }
                             }
-                            if (formData.sfaid.charAt(1) == "C" && formData.type == "school") {
+                            if (formData.sfaid.charAt(2) == "C" && formData.type == "school") {
                                 $scope.loginFunction(formData);
                             } else {
-                                if (formData.sfaid.charAt(1) == "A" && formData.type == "athlete") {
+                                if (formData.sfaid.charAt(2) == "A" && formData.type == "athlete") {
                                     $scope.loginFunction(formData);
                                 }
                             }
