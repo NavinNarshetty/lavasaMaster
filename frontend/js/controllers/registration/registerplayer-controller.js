@@ -507,8 +507,8 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
         console.log("content success", data.data.results);
         if (data.data.results.length > 0) {
           $scope.banners = data.data.results[0].banner;
-          $scope.ageEventPdf = $sce.trustAsResourceUrl($filter('uploadpathTwo')(data.data.results[0].ageEventPdf));
-          console.log("pdf", $scope.ageEventPdf);
+          // $scope.ageEventPdf = $sce.trustAsResourceUrl($filter('uploadpathTwo')(data.data.results[0].ageEventPdf));
+          // console.log("pdf", $scope.ageEventPdf);
           $scope.gallery = data.data.results[0].gallery;
           $scope.counts = data.data.results[0].eventCount;
           if ($scope.pageType == 'player') {

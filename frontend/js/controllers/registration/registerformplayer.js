@@ -741,6 +741,15 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
     $scope.searchChangeSchool = function (paramData) {
         // console.log("changekeyword", paramData);
         $scope.schoolname = paramData;
+        if ($scope.formData.atheleteSchoolName) {
+          delete $scope.formData.atheleteSchoolName;
+        }
+        if ($scope.formData.atheleteSchoolLocality) {
+          delete $scope.formData.atheleteSchoolLocality;
+        }
+        if ($scope.formData.atheleteSchoolContact) {
+          delete $scope.formData.atheleteSchoolContact;
+        }
     };
     $scope.refreshChangeSchool = function (paramData) {
         NavigationService.getSchoolSFA(paramData, function (data) {
