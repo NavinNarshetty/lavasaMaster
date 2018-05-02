@@ -439,11 +439,25 @@
   text-transform: uppercase;
   @extend .d-fjalla-one;
 }
+.package-radio-gold{
+  .upgradepackage-radioname {
+    color: #b4911f;
+  }
+}
+.package-radio-silver{
+  .upgradepackage-radioname {
+    color: #9c9c9c;
+  }
 
+}
+.package-radio-bronze{
+  .upgradepackage-radioname {
+    color: #967057;
+  }
+}
 .package-radio-blue {
   .upgradepackage-radioname {
     color: tint($sport-lightblue, 15%);
-    ;
   }
 }
 
@@ -834,3 +848,47 @@
   font-style: italic;
 }
 // UPGRADE PACKAGE PAGE END
+// PACKAGE SELECTION MODAL
+.packageselection-modal{
+  .modal-content{
+    border-radius: 0;
+    margin-top: 50px;
+    position: relative;
+  }
+  .modal-close{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    cursor: pointer;
+  }
+}
+.package-selectmodal{
+  padding: 20px 0;
+  background-color: $sport-primary;
+  background-image: url('../img/medal-icon/bg-packagemodal.jpg');
+  background-position: 50% 50%;
+  background-size: cover;
+  color: #fff;
+}
+.packageselect-content{
+  position: relative;
+  img{
+    margin: 0 auto;
+  }
+}
+.packageselect-btnholder{
+  // margin: 20px 0;
+  text-align: center;
+}
+.btn-packageselect{
+  border: 1px solid #fff;
+  background-color: transparent;
+  color: #fff;
+  text-transform: uppercase;
+  &:active, &:focus, &:hover{
+    color: #fff;
+  }
+}
+// PACKAGE SELECTION MODAL END
