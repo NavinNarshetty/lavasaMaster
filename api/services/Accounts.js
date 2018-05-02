@@ -94,6 +94,263 @@ module.exports = mongoose.model('Accounts', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
+    getSearchAggregatePipeline: function (data) {
+        var pipeline = [ // Stage 1
+            {
+                $lookup: {
+                    "from": "atheletes",
+                    "localField": "athlete",
+                    "foreignField": "_id",
+                    "as": "athlete"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$athlete",
+                }
+            },
+
+            // Stage 3
+            {
+                $lookup: {
+                    "from": "transactions",
+                    "localField": "transaction",
+                    "foreignField": "_id",
+                    "as": "transaction"
+                }
+            },
+            {
+                $match: {
+                    transaction: {
+                        $exists: true,
+                        $not: {
+                            $size: 0
+                        }
+                    }
+                }
+            },
+            {
+                $match: {
+                    $nor: [{
+                        $and: [{
+                            paymentMode: {
+                                $ne: "online PAYU"
+                            }
+                        }, {
+                            paymentMode: {
+                                $eq: "online PAYU"
+                            }
+                        }]
+                    }, {
+                        $and: [{
+                            PayuId: {
+                                $exists: true,
+                                $size: 0
+                            }
+                        }, {
+                            PayuId: {
+                                $exists: true,
+                                $not: {
+                                    $size: 0
+                                }
+                            }
+                        }]
+
+                    }]
+
+                }
+            },
+            {
+                $sort: {
+                    "createdAt": -1
+                }
+            },
+        ];
+        return pipeline;
+    },
+
+    getSearchAggregatePipelineAthlete: function (data) {
+        var pipeline = [ // Stage 1
+            {
+                $lookup: {
+                    "from": "atheletes",
+                    "localField": "athlete",
+                    "foreignField": "_id",
+                    "as": "athlete"
+                }
+            },
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$athlete",
+                }
+            },
+            {
+                $lookup: {
+                    "from": "transactions",
+                    "localField": "transaction",
+                    "foreignField": "_id",
+                    "as": "transaction"
+                }
+            },
+            // Stage 3
+            {
+                $match: {
+
+                    $or: [{
+                        "athlete.firstName": {
+                            $regex: data.keyword,
+                            $options: "i"
+                        }
+                    }, {
+                        "athlete.middleName": {
+                            $regex: data.keyword,
+                            $options: "i"
+                        }
+                    }, {
+                        "athlete.surname": {
+                            $regex: data.keyword,
+                            $options: "i"
+                        }
+                    }, {
+                        "athlete.sfaId": {
+                            $regex: data.keyword,
+                            $options: "i"
+                        }
+                    }]
+
+                }
+            },
+            {
+                $sort: {
+                    "createdAt": -1
+                }
+            }
+        ];
+        return pipeline;
+    },
+
+    getAggregatePipelineSchool: function (data) {
+        var pipeline = [ // Stage 1
+            {
+                $lookup: {
+                    "from": "registrations",
+                    "localField": "school",
+                    "foreignField": "_id",
+                    "as": "school"
+                }
+            },
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$school",
+                }
+            },
+            // Stage 3
+            // Stage 3
+            {
+                $lookup: {
+                    "from": "transactions",
+                    "localField": "transaction",
+                    "foreignField": "_id",
+                    "as": "transaction"
+                }
+            },
+
+            // Stage 4
+            {
+                $match: {
+
+                    $or: [{
+                            transaction: {
+                                $gt: 1
+                            }
+                        },
+                        {
+                            "transaction.paymentMode": {
+                                $ne: "online PAYU"
+                            }
+                        }, {
+                            "transaction.paymentStatus": {
+                                $ne: "Pending"
+                            }
+                        }
+                    ]
+
+                }
+            },
+            {
+                $sort: {
+                    "createdAt": -1
+                }
+            }
+        ];
+        return pipeline;
+    },
+
+    getFilterAggregatePipelineSchool: function (data) {
+        var pipeline = [ // Stage 1
+            {
+                $lookup: {
+                    "from": "atheletes",
+                    "localField": "athlete",
+                    "foreignField": "_id",
+                    "as": "athlete"
+                }
+            },
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$athlete",
+                }
+            },
+            {
+                $lookup: {
+                    "from": "transactions",
+                    "localField": "transaction",
+                    "foreignField": "_id",
+                    "as": "transaction"
+                }
+            },
+            // Stage 3
+            {
+                $match: {
+
+                    $or: [{
+                        "athlete.firstName": {
+                            $regex: data.keyword,
+                            $options: "i"
+                        }
+                    }, {
+                        "athlete.middleName": {
+                            $regex: data.keyword,
+                            $options: "i"
+                        }
+                    }, {
+                        "athlete.surname": {
+                            $regex: data.keyword,
+                            $options: "i"
+                        }
+                    }, {
+                        "athlete.sfaId": {
+                            $regex: data.keyword,
+                            $options: "i"
+                        }
+                    }]
+
+                }
+            },
+            {
+                $sort: {
+                    "createdAt": -1
+                }
+            }
+        ];
+        return pipeline;
+    },
+
     getAthleteAccount: function (data, callback) {
         var Model = this;
         var Const = this(data);
@@ -119,273 +376,70 @@ var model = {
             count: maxRow
         };
         if (data.keyword == "") {
-            Accounts.aggregate([{
-                    $lookup: {
-                        "from": "atheletes",
-                        "localField": "athlete",
-                        "foreignField": "_id",
-                        "as": "athlete"
-                    }
-                },
-
-                // Stage 2
-                {
-                    $unwind: {
-                        path: "$athlete",
-                    }
-                },
-
-                // Stage 3
-                {
-                    $lookup: {
-                        "from": "transactions",
-                        "localField": "transaction",
-                        "foreignField": "_id",
-                        "as": "transaction"
-                    }
-                },
-
-                // Stage 4
-                // {
-                //     $match: {
-                //         $or: [{
-                //                 transaction: {
-                //                     $gt: 0
-                //                 }
-                //             },
-                //             {
-                //                 "transaction.paymentMode": {
-                //                     $ne: "online PAYU"
-                //                 }
-                //             }, {
-                //                 "transaction.paymentStatus": {
-                //                     $ne: "Pending"
-                //                 }
-                //             }
-                //         ]
-                //     }
-                // },
-                {
-                    $match: {
-                        transaction: {
-                            $exists: true,
-                            $not: {
-                                $size: 0
+            var count = 0;
+            var pipeLine = Accounts.getSearchAggregatePipeline(data);
+            var newPipeLine = _.cloneDeep(pipeLine);
+            Accounts.aggregate(pipeLine, function (err, matchData) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    newPipeLine.push({
+                        $skip: options.start
+                    }, {
+                        $limit: options.count
+                    });
+                    Accounts.aggregate(newPipeLine, function (err, returnReq) {
+                        if (err) {
+                            console.log(err);
+                            callback(err, "error in mongoose");
+                        } else {
+                            if (_.isEmpty(returnReq)) {
+                                callback(null, []);
+                            } else {
+                                count = matchData.length;
+                                console.log("count", count);
+                                var data = {};
+                                data.options = options;
+                                data.results = returnReq;
+                                data.total = count;
+                                callback(null, data);
                             }
                         }
-                    }
-                },
-                // {
-                //     $match: {
-                //         $or: [{
-                //             $nor: [{
-                //                 paymentMode: {
-                //                     $eq: "online PAYU"
-                //                 }
-                //             }, {
-                //                 PayuId: {
-                //                     $exists: true,
-                //                     $not: {
-                //                         $size: 0
-                //                     }
-                //                 }
-                //             }]
-                //         }, {
-                //             $nor: [{
-                //                 paymentMode: {
-                //                     $ne: "online PAYU"
-                //                 }
-                //             }, {
-                //                 PayuId: {
-                //                     $exists: true,
-                //                     $size: 0
-                //                 }
-                //             }]
-                //         }]
-                //     }
-                // },
-                {
-                    $match: {
-                        $nor: [{
-                            $and: [{
-                                paymentMode: {
-                                    $ne: "online PAYU"
-                                }
-                            }, {
-                                paymentMode: {
-                                    $eq: "online PAYU"
-                                }
-                            }]
-                        }, {
-                            $and: [{
-                                PayuId: {
-                                    $exists: true,
-                                    $size: 0
-                                }
-                            }, {
-                                PayuId: {
-                                    $exists: true,
-                                    $not: {
-                                        $size: 0
-                                    }
-                                }
-                            }]
-
-                        }]
-
-                    }
-                },
-                {
-                    $sort: {
-                        "createdAt": -1
-                    }
-                }, {
-                    $skip: options.start
-                },
-                {
-                    $limit: options.count
-                }
-            ], function (err, returnReq) {
-                console.log("returnReq : ", returnReq);
-                if (err) {
-                    console.log(err);
-                    callback(null, err);
-                } else {
-                    if (_.isEmpty(returnReq)) {
-                        var count = returnReq.length;
-                        console.log("count", count);
-
-                        var data = {};
-                        data.options = options;
-
-                        data.results = returnReq;
-                        data.total = count;
-                        callback(null, data);
-                    } else {
-                        var count = returnReq.length;
-                        console.log("count", count);
-
-                        var data = {};
-                        data.options = options;
-
-                        data.results = returnReq;
-                        data.total = count;
-                        callback(null, data);
-                    }
+                    });
                 }
             });
-            // var matchObj = {
-            //     athlete: {
-            //         $exists: true
-            //     },
-            //     $or: [{
-            //         paymentMode: {
-            //             $ne: "online PAYU"
-            //         }
-            //     }, {
-            //         PayuId: {
-            //             $exists: false
-            //         }
-            //     }]
-            // };
-            // var Search = Model.find(matchObj)
-            //     .order(options)
-            //     .deepPopulate("athlete athlete.school transaction")
-            //     .keyword(options)
-            //     .page(options, callback);
         } else {
-            Accounts.aggregate(
-                [{
-                        $lookup: {
-                            "from": "atheletes",
-                            "localField": "athlete",
-                            "foreignField": "_id",
-                            "as": "athlete"
-                        }
-                    },
-                    // Stage 2
-                    {
-                        $unwind: {
-                            path: "$athlete",
-                        }
-                    },
-                    {
-                        $lookup: {
-                            "from": "transactions",
-                            "localField": "transaction",
-                            "foreignField": "_id",
-                            "as": "transaction"
-                        }
-                    },
-                    // Stage 3
-                    {
-                        $match: {
-
-                            $or: [{
-                                "athlete.firstName": {
-                                    $regex: data.keyword,
-                                    $options: "i"
-                                }
-                            }, {
-                                "athlete.middleName": {
-                                    $regex: data.keyword,
-                                    $options: "i"
-                                }
-                            }, {
-                                "athlete.surname": {
-                                    $regex: data.keyword,
-                                    $options: "i"
-                                }
-                            }, {
-                                "athlete.sfaId": {
-                                    $regex: data.keyword,
-                                    $options: "i"
-                                }
-                            }]
-
-                        }
-                    },
-                    {
-                        $sort: {
-                            "createdAt": -1
-                        }
-                    }, {
+            var pipeLine = Accounts.getSearchAggregatePipelineAthlete(data);
+            var newPipeLine = _.cloneDeep(pipeLine);
+            Accounts.aggregate(pipeLine, function (err, matchData) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    newPipeLine.push({
                         $skip: options.start
-                    },
-                    {
+                    }, {
                         $limit: options.count
-                    }
-                ],
-                function (err, returnReq) {
-                    console.log("returnReq : ", returnReq);
-                    if (err) {
-                        console.log(err);
-                        callback(null, err);
-                    } else {
-                        if (_.isEmpty(returnReq)) {
-                            var count = returnReq.length;
-                            console.log("count", count);
-
-                            var data = {};
-                            data.options = options;
-
-                            data.results = returnReq;
-                            data.total = count;
-                            callback(null, data);
+                    });
+                    Accounts.aggregate(newPipeLine, function (err, returnReq) {
+                        if (err) {
+                            console.log(err);
+                            callback(err, "error in mongoose");
                         } else {
-                            var count = returnReq.length;
-                            console.log("count", count);
-
-                            var data = {};
-                            data.options = options;
-
-                            data.results = returnReq;
-                            data.total = count;
-                            callback(null, data);
-
+                            if (_.isEmpty(returnReq)) {
+                                callback(null, []);
+                            } else {
+                                count = matchData.length;
+                                console.log("count", count);
+                                var data = {};
+                                data.options = options;
+                                data.results = returnReq;
+                                data.total = count;
+                                callback(null, data);
+                            }
                         }
-                    }
-                });
+                    });
+                }
+            });
 
         }
     },
@@ -416,190 +470,71 @@ var model = {
             count: maxRow
         };
         if (data.keyword == "") {
-            Accounts.aggregate(
-                [{
-                        $lookup: {
-                            "from": "registrations",
-                            "localField": "school",
-                            "foreignField": "_id",
-                            "as": "school"
-                        }
-                    },
-                    // Stage 2
-                    {
-                        $unwind: {
-                            path: "$school",
-                        }
-                    },
-                    // Stage 3
-                    // Stage 3
-                    {
-                        $lookup: {
-                            "from": "transactions",
-                            "localField": "transaction",
-                            "foreignField": "_id",
-                            "as": "transaction"
-                        }
-                    },
-
-                    // Stage 4
-                    {
-                        $match: {
-
-                            $or: [{
-                                    transaction: {
-                                        $gt: 1
-                                    }
-                                },
-                                {
-                                    "transaction.paymentMode": {
-                                        $ne: "online PAYU"
-                                    }
-                                }, {
-                                    "transaction.paymentStatus": {
-                                        $ne: "Pending"
-                                    }
-                                }
-                            ]
-
-                        }
-                    },
-                    {
-                        $sort: {
-                            "createdAt": -1
-                        }
-                    },
-                    {
+            var count = 0;
+            var pipeLine = Accounts.getAggregatePipelineSchool(data);
+            var newPipeLine = _.cloneDeep(pipeLine);
+            Accounts.aggregate(pipeLine, function (err, matchData) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    newPipeLine.push({
                         $skip: options.start
-                    },
-                    {
+                    }, {
                         $limit: options.count
-                    }
-                ],
-                function (err, returnReq) {
-                    console.log("returnReq : ", returnReq);
-                    if (err) {
-                        console.log(err);
-                        callback(null, err);
-                    } else {
-                        if (_.isEmpty(returnReq)) {
-                            var count = returnReq.length;
-                            console.log("count", count);
-
-                            var data = {};
-                            data.options = options;
-
-                            data.results = returnReq;
-                            data.total = count;
-                            callback(null, data);
+                    });
+                    Accounts.aggregate(newPipeLine, function (err, returnReq) {
+                        if (err) {
+                            console.log(err);
+                            callback(err, "error in mongoose");
                         } else {
-                            var count = returnReq.length;
-                            console.log("count", count);
-
-                            var data = {};
-                            data.options = options;
-
-                            data.results = returnReq;
-                            data.total = count;
-                            callback(null, data);
-
+                            if (_.isEmpty(returnReq)) {
+                                callback(null, []);
+                            } else {
+                                count = matchData.length;
+                                // console.log("count", count);
+                                var data = {};
+                                data.options = options;
+                                data.results = returnReq;
+                                data.total = count;
+                                callback(null, data);
+                            }
                         }
-                    }
-                });
-            // var matchObj = {
-            //     school: {
-            //         $exists: true
-            //     },
-            //     $or: [{
-            //         paymentMode: {
-            //             $ne: "online PAYU"
-            //         }
-            //     }, {
-            //         PayuId: {
-            //             $exists: false,
-            //         }
-            //     }]
-            // };
-
-            // var Search = Model.find(matchObj)
-            //     .order(options)
-            //     .deepPopulate("school transaction")
-            //     .keyword(options)
-            //     .page(options, callback);
+                    });
+                }
+            });
         } else {
-            Accounts.aggregate(
-                [{
-                        $lookup: {
-                            "from": "registrations",
-                            "localField": "school",
-                            "foreignField": "_id",
-                            "as": "school"
-                        }
-                    },
-                    // Stage 2
-                    {
-                        $unwind: {
-                            path: "$school",
-                        }
-                    },
-                    // Stage 3
-                    {
-                        $match: {
-                            $or: [{
-                                "school.schoolName": {
-                                    $regex: data.keyword,
-                                    $options: "i"
-                                }
-                            }, {
-                                "school.sfaID": {
-                                    $regex: data.keyword,
-                                    $options: "i"
-                                }
-                            }]
-                        }
-                    },
-                    {
-                        $sort: {
-                            "createdAt": -1
-                        }
-                    },
-                    {
+            var count = 0;
+            var pipeLine = Accounts.getFilterAggregatePipelineSchool(data);
+            var newPipeLine = _.cloneDeep(pipeLine);
+            Accounts.aggregate(pipeLine, function (err, matchData) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    newPipeLine.push({
                         $skip: options.start
-                    },
-                    {
+                    }, {
                         $limit: options.count
-                    }
-                ],
-                function (err, returnReq) {
-                    console.log("returnReq : ", returnReq);
-                    if (err) {
-                        console.log(err);
-                        callback(null, err);
-                    } else {
-                        if (_.isEmpty(returnReq)) {
-                            var count = returnReq.length;
-                            console.log("count", count);
-
-                            var data = {};
-                            data.options = options;
-
-                            data.results = returnReq;
-                            data.total = count;
-                            callback(null, data);
+                    });
+                    Accounts.aggregate(newPipeLine, function (err, returnReq) {
+                        if (err) {
+                            console.log(err);
+                            callback(err, "error in mongoose");
                         } else {
-                            var count = returnReq.length;
-                            console.log("count", count);
-
-                            var data = {};
-                            data.options = options;
-
-                            data.results = returnReq;
-                            data.total = count;
-                            callback(null, data);
-
+                            if (_.isEmpty(returnReq)) {
+                                callback(null, []);
+                            } else {
+                                count = matchData.length;
+                                console.log("count", count);
+                                var data = {};
+                                data.options = options;
+                                data.results = returnReq;
+                                data.total = count;
+                                callback(null, data);
+                            }
                         }
-                    }
-                });
+                    });
+                }
+            });
         }
     },
 
