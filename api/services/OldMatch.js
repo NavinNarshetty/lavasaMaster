@@ -497,28 +497,30 @@ var model = {
                                             console.log("teams results", nextData.oldmatch[result.resultVar]);
                                             matchData[result.resultVar] = complete[result.resultVar];
                                             if (nextData.oldmatch[result.resultVar]) {
-                                                complete[result.resultVar].teams[0].teamResults = nextData.oldmatch[result.resultVar].teams[0].teamResults;
-                                                complete[result.resultVar].teams[0].noShow = nextData.oldmatch[result.resultVar].teams[0].noShow;
-                                                complete[result.resultVar].teams[0].walkover = nextData.oldmatch[result.resultVar].teams[0].walkover;
-                                                var count = 0;
-                                                _.each(nextData.oldmatch[result.resultVar].teams[0].players, function (n) {
-                                                    complete[result.resultVar].teams[0].players[count].isPlaying = n.isPlaying;
-                                                    complete[result.resultVar].teams[0].players[count].noShow = n.noShow;
-                                                    complete[result.resultVar].teams[0].players[count].walkover = n.walkover;
-                                                    complete[result.resultVar].teams[0].players[count].playerPoints = n.playerPoints;
-                                                    count++;
-                                                });
-                                                complete[result.resultVar].teams[1].teamResults = nextData.oldmatch[result.resultVar].teams[1].teamResults;
-                                                complete[result.resultVar].teams[1].noShow = nextData.oldmatch[result.resultVar].teams[0].noShow;
-                                                complete[result.resultVar].teams[1].walkover = nextData.oldmatch[result.resultVar].teams[0].walkover;
-                                                var j = 0;
-                                                _.each(nextData.oldmatch[result.resultVar].teams[1].players, function (n) {
-                                                    complete[result.resultVar].teams[1].players[j].isPlaying = n.isPlaying;
-                                                    complete[result.resultVar].teams[1].players[j].noShow = n.noShow;
-                                                    complete[result.resultVar].teams[1].players[j].walkover = n.walkover;
-                                                    complete[result.resultVar].teams[1].players[j].playerPoints = n.playerPoints;
-                                                    j++;
-                                                });
+                                                if (nextData.oldmatch[result.resultVar].teams) {
+                                                    complete[result.resultVar].teams[0].teamResults = nextData.oldmatch[result.resultVar].teams[0].teamResults;
+                                                    complete[result.resultVar].teams[0].noShow = nextData.oldmatch[result.resultVar].teams[0].noShow;
+                                                    complete[result.resultVar].teams[0].walkover = nextData.oldmatch[result.resultVar].teams[0].walkover;
+                                                    var count = 0;
+                                                    _.each(nextData.oldmatch[result.resultVar].teams[0].players, function (n) {
+                                                        complete[result.resultVar].teams[0].players[count].isPlaying = n.isPlaying;
+                                                        complete[result.resultVar].teams[0].players[count].noShow = n.noShow;
+                                                        complete[result.resultVar].teams[0].players[count].walkover = n.walkover;
+                                                        complete[result.resultVar].teams[0].players[count].playerPoints = n.playerPoints;
+                                                        count++;
+                                                    });
+                                                    complete[result.resultVar].teams[1].teamResults = nextData.oldmatch[result.resultVar].teams[1].teamResults;
+                                                    complete[result.resultVar].teams[1].noShow = nextData.oldmatch[result.resultVar].teams[0].noShow;
+                                                    complete[result.resultVar].teams[1].walkover = nextData.oldmatch[result.resultVar].teams[0].walkover;
+                                                    var j = 0;
+                                                    _.each(nextData.oldmatch[result.resultVar].teams[1].players, function (n) {
+                                                        complete[result.resultVar].teams[1].players[j].isPlaying = n.isPlaying;
+                                                        complete[result.resultVar].teams[1].players[j].noShow = n.noShow;
+                                                        complete[result.resultVar].teams[1].players[j].walkover = n.walkover;
+                                                        complete[result.resultVar].teams[1].players[j].playerPoints = n.playerPoints;
+                                                        j++;
+                                                    });
+                                                }
                                             }
                                             var placeholder = {};
                                             placeholder[result.resultVar] = complete[result.resultVar];
