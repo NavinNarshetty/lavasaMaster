@@ -544,6 +544,7 @@
      }
  }
  .btn-registerstep{
+   min-height: 75px;
    text-align: center;
    word-wrap: break-word;
    white-space: normal;
@@ -591,7 +592,7 @@
  .registercount-item{
    display: inline-block;
  }
- .registeraccordion-links{
+ .registeraccordion-linksholder{
    li{
      display: block;
    }

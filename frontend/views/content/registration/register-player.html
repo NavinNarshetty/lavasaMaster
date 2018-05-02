@@ -36,7 +36,7 @@
                 <span ng-if='s.open'>Less</span>
                 <i class="fa " ng-class="{'fa-chevron-up': s.open, 'fa-chevron-down': !s.open}"></i>
               </span>
-              <h4 class="d-fjalla-one text-uppercase m-clear">Quick Details About Championship</h4>
+              <h4 class="d-fjalla-one text-capitalize m-clear">The Ultimate Interschool Championship</h4>
             </uib-accordion-heading>
             <div class="register-accordioncontent">
               <div class="register-contentholder" ng-if="individualSports.length>0">
@@ -60,7 +60,7 @@
                   <span class="register-seperator">|</span>
                 </span>
               </div>
-              <div class="register-contentholder registeraccordion-links">
+              <div class="register-contentholder registeraccordion-linksholder">
                 <ul class="list-inline">
                   <li>
                     <a class="registeraccordion-links" target="_new" ui-sref="aboutchampionship">About Championship</a>
@@ -136,7 +136,7 @@
             <div class="input-group">
               <!-- <input type="text" class="form-control" placeholder="SFA ID"> -->
               <ui-select name="playername" class="registerform1-uiselect" ng-model="searchSfaObj.sfaId" theme="bootstrap" ng-change="checkSearchChange(searchSfaObj.sfaId)" required>
-                <ui-select-match placeholder="Search by Sfa ID and Name" allow-clear="true" title="{{$select.selected.fullName}}">{{$select.selected.fullName}}</ui-select-match>
+                <ui-select-match placeholder="Search by Sfa ID/Name" allow-clear="true" title="{{$select.selected.fullName}}">{{$select.selected.fullName}}</ui-select-match>
                 <ui-select-choices repeat="player as player in masterData | filter: $select.search" refresh="masterSearchSFA($select.search)"
                   refresh-delay="300">
                   <div>
