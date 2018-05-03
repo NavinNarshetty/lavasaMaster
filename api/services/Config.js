@@ -482,7 +482,9 @@ var model = {
             _id: filename
         }, function (err, data) {
             if (err || _.isEmpty(data)) {
-                callback(err);
+                callback({
+                    error: "no data found"
+                });
             } else {
                 callback(data);
             }
@@ -490,40 +492,58 @@ var model = {
     },
 
     importGS: function (filename, callback) {
-        // async.waterfall([
-        //     function (callback) {
-        //         Config.uploadFindOne(filename, function (uploadData) {
-        //             console.log('enter', uploadData);
-        //             if (uploadData) {
-        //                 callback(null, uploadData);
-        //             } else {
-        //                 callback(null, 'Not found');
-        //             }
-        //         });
-        //     },
-        //     function (uploadData, callback) {
-        //         console.log('hi', uploadData);
-
-        //     }
-        // ], function (err, result) {
-        //     // result now equals 'done'
-        // });
-        var readstream = gfs.createReadStream({
-            filename: filename
-        });
-        readstream.on('error', function (err) {
-            callback({
-                value: false,
-                error: err
-            });
-        });
-        var buffers = [];
-        readstream.on('data', function (buffer) {
-            buffers.push(buffer);
-        });
-        readstream.on('end', function () {
-            var buffer = Buffer.concat(buffers);
-            callback(null, Config.import(buffer));
+        async.waterfall([
+            function (callback) {
+                ConfigProperty.findOne().lean().exec(function (err, property) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(property)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, property);
+                        }
+                    }
+                });
+            },
+            function (property, callback) {
+                const Storage = require('@google-cloud/storage');
+                const projectId = 'future-oasis-145313';
+                const storage = new Storage({
+                    projectId: projectId,
+                    keyFilename: property.keyfileName
+                });
+                Config.uploadFindOne(filename, function (uploadData) {
+                    console.log('enter', uploadData);
+                    if (uploadData) {
+                        var bucket = storage.bucket(global.storageBucket);
+                        var readstream = bucket.file(uploadData.storageName).createReadStream();
+                        readstream.on('error', function (err) {
+                            callback({
+                                value: false,
+                                error: err
+                            });
+                        });
+                        var buffers = [];
+                        readstream.on('data', function (buffer) {
+                            buffers.push(buffer);
+                        });
+                        readstream.on('end', function () {
+                            var buffer = Buffer.concat(buffers);
+                            // console.log("buffer", buffers);
+                            callback(null, Config.import(buffer));
+                        });
+                    } else {
+                        callback(null, 'Not found');
+                    }
+                });
+            }
+        ], function (err, complete) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, complete);
+            }
         });
     },
 
