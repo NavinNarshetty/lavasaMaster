@@ -217,7 +217,7 @@ var model = {
                                 } else {
                                     var result = ResultInitialize.getResultVar(matchData.sportsCategory, matchData.sportType);
                                 }
-                                console.log("matchData[result.resultVar]***", matchData[result.resultVar]);
+                                console.log("matchData[result.resultVar]***", result, "************", nextData);
                                 if (!(matchData[result.resultVar] == '')) {
                                     console.log("result***", result);
                                     final.result = result;
@@ -225,13 +225,11 @@ var model = {
                                     final.nextData = nextData;
                                     callback(null, final);
                                 } else {
-                                    console.log("result----", result.resultVar);
+                                    console.log("matchData[result.resultVar]------", result, "-------------", nextData);
                                     if (result.resultVar != "resultHeat") {
                                         final.resultName = result.resultVar;
                                         final.nextData = nextData;
                                         ResultInitialize.getMyResult(matchData.sportsName, matchData, function (err, complete) {
-                                            console.log("complete", complete, "nextData", nextData);
-                                            matchData[result.resultVar] = complete[result.resultVar];
                                             // if (nextData.oldmatch[result.resultVar]) {
                                             //     complete[result.resultVar].players[0].teamResults = nextData.oldmatch[result.resultVar].players[0].teamResults;
                                             //     complete[result.resultVar].players[0].noShow = nextData.oldmatch[result.resultVar].players[0].noShow;
@@ -276,15 +274,30 @@ var model = {
                                         final.resultName = result.resultVar;
                                         final.nextData = nextData;
                                         ResultInitialize.getMyResult(matchData.sportsCategory, matchData, function (err, complete) {
-                                            console.log("complete", complete, "players", complete[result.resultVar].players);
+                                            // console.log("complete", complete, "players", complete[result.resultVar].players);
                                             matchData[result.resultVar] = complete[result.resultVar];
                                             if (nextData.oldmatch[result.resultVar]) {
                                                 var i = 0;
                                                 _.each(nextData.oldmatch[result.resultVar].players, function (n) {
-                                                    complete[result.resultVar].players[i].time = n.time;
-                                                    complete[result.resultVar].players[i].result = n.result;
-                                                    complete[result.resultVar].players[i].laneNo = n.laneNo;
-                                                    i++;
+                                                    console.log("n", n);
+                                                    if (n != null) {
+                                                        if (n.time) {
+                                                            complete[result.resultVar].players[i].time = n.time;
+                                                        } else {
+                                                            complete[result.resultVar].players[i].time = 0;
+                                                        }
+                                                        if (n.result != '') {
+                                                            complete[result.resultVar].players[i].result = n.result;
+                                                        } else {
+                                                            complete[result.resultVar].players[i].result = 0;
+                                                        }
+                                                        if (n.laneNo != '') {
+                                                            complete[result.resultVar].players[i].laneNo = n.laneNo;
+                                                        } else {
+                                                            complete[result.resultVar].players[i].laneNo = 0;
+                                                        }
+                                                        i++;
+                                                    }
                                                 });
                                             }
                                             var placeholder = {};
@@ -516,6 +529,7 @@ var model = {
                                                         j++;
                                                     });
                                                 }
+                                                //need to add winner
                                             }
                                             var placeholder = {};
                                             placeholder[result.resultVar] = complete[result.resultVar];

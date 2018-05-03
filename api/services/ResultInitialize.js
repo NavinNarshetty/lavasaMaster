@@ -507,6 +507,11 @@ var model = {
                     ResultInitialize.initializeHeat(sportName, returnResult.resultHeat, match);
                     return returnResult;
 
+                case "Swimming":
+                    returnResult.resultHeat = formatHeat;
+                    ResultInitialize.initializeHeat(sportName, returnResult.resultHeat, match);
+                    return returnResult;
+
                 case "Archery":
                     returnResult.resultknockout = formatKnockout;
                     ResultInitialize.initializeHeat(sportName, returnResult.resultknockout, match);
