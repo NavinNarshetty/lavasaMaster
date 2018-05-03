@@ -879,6 +879,7 @@
   position: relative;
   img{
     margin: 0 auto;
+    @include transform(scale(1.1));
   }
 }
 .packageselect-btnholder{
