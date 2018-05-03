@@ -10,6 +10,13 @@
       right: 0;
     }
   }
+  .formregister-addschool{
+    .x-img{
+      padding: 5px;
+      top: -15px;
+      right: 0;
+    }
+  }
   //  PHOTO VIDEO POPUP
   .photovideo-modal{
     .modal-lg{
@@ -643,5 +650,12 @@
      right: -10px;
    }
  }
+ // PACKAGE SELECTION MODAL
+ .packageselection-modal{
+   .modal-dialog{
+     width: auto;
+   }
+ }
+ // PACKAGE SELECTION MODAL END
  // END CODE
 }
