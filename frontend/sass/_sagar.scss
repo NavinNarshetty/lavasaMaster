@@ -2970,12 +2970,14 @@ $tickerDuration: 60s;
   color: #fff;
   font-size: 18px;
   text-transform: uppercase;
-  animation: blinkregister 2s infinite;
-  -webkit-animation: blinkregister 2s infinite;
   &:active, &.active, &:hover, &:focus{
     box-shadow: 4px 4px 5px 0 $sport-darkgrey;
     color: #fff;
   }
+}
+.btn-mainregister-blink{
+  animation: blinkregister 2s infinite;
+  -webkit-animation: blinkregister 2s infinite;
 }
 .registerform-holder {
   padding: 20px;
