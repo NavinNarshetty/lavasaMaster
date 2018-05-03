@@ -54,8 +54,20 @@
   }
   .printpage-mc-raquet{
     width: 600px;
+    margin-top: -30px;
     #print-btnholder{
       display: none;
+    }
+    .matchcenter-sfaholder{
+      display: block;
+      text-align: center;
+    }
+    .matchcenter-sfalogo{
+      width: 35px;
+      margin: 0px auto;
+    }
+    .matchcenter-sfatext{
+      font-size: 12px;
     }
     .matchcenter-title{
       display: block;
