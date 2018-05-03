@@ -2227,10 +2227,16 @@ var model = {
                                                     data: found
                                                 });
                                             } else {
+                                                found.paymentType = transactData.paymentMode;
+                                                found.paymentStatus = transactData.paymentStatus;
+                                                found.remove = true;
                                                 callback(null, found);
                                             }
                                         });
                                     } else {
+                                        found.paymentType = transactData.paymentMode;
+                                        found.paymentStatus = transactData.paymentStatus;
+                                        found.remove = false;
                                         callback(null, found);
                                     }
                                 }
@@ -2252,6 +2258,7 @@ var model = {
                                 transaction.push(found.transaction[i]);
                                 i++;
                             }
+
                             if (transaction.length == 1) {
                                 var upgrade = false
                             } else {
@@ -2262,6 +2269,79 @@ var model = {
                             }).lean().sort({
                                 createdAt: -1
                             }).exec(function (err, transactData) {
+                                if (err || _.isEmpty(transactData)) {
+                                    callback(null, {
+                                        error: "no data found",
+                                        data: transactData
+                                    });
+                                } else {
+                                    var matchObj = {
+                                        $set: {
+                                            outstandingAmount: transactData.outstandingAmount,
+                                            totalPaid: transactData.amountPaid,
+                                            cgst: transactData.cgstAmount,
+                                            sgst: transactData.sgstAmount,
+                                            igst: transactData.igstAmount,
+                                            transaction: transaction,
+                                            upgrade: upgrade
+                                        }
+                                    };
+                                    console.log("matchObj", matchObj);
+
+                                    Accounts.update({
+                                        school: data.school
+                                    }, matchObj).exec(
+                                        function (err, data3) {
+                                            if (err) {
+                                                callback(err, null);
+                                            } else if (data3) {
+                                                if (transactData.paymentMode != "online PAYU" && transactData.paymentStatus != "Pending") {
+                                                    var matchObj = {
+                                                        $set: {
+                                                            package: transactData.package,
+                                                        }
+                                                    };
+                                                    Registration.update({
+                                                        _id: data.school,
+                                                    }, matchObj).exec(
+                                                        function (err, data3) {
+                                                            if (err) {
+                                                                console.log(err);
+                                                                callback(err, null);
+                                                            } else if (data3) {
+                                                                callback(null, data3);
+                                                            }
+                                                        });
+                                                } else {
+                                                    callback(null, transactData);
+                                                }
+                                            }
+                                        });
+                                }
+                            });
+                        } else if (found.paymentType == "online PAYU" && found.paymentStatus == "Pending") {
+                            var len = found.transaction.length;
+                            len = len - 2;
+                            console.log("len", len);
+                            var transaction = [];
+
+                            var i = 0;
+                            while (i <= len) {
+                                transaction.push(found.transaction[i]);
+                                i++;
+                            }
+
+                            if (transaction.length == 1) {
+                                var upgrade = false
+                            } else {
+                                var upgrade = true;
+                            }
+                            Transaction.findOne({
+                                _id: found.transaction[len]
+                            }).lean().sort({
+                                createdAt: -1
+                            }).exec(function (err, transactData) {
+                                console.log("transactData after delete", transactData);
                                 if (err || _.isEmpty(transactData)) {
                                     callback(null, {
                                         error: "no data found",
@@ -2292,7 +2372,7 @@ var model = {
                                                         package: transactData.package,
                                                     }
                                                 };
-                                                Registration.update({
+                                                Athelete.update({
                                                     _id: data.school
                                                 }, matchObj).exec(
                                                     function (err, data3) {
@@ -2309,13 +2389,18 @@ var model = {
                             });
                         } else {
                             var len = found.transaction.length;
-                            len = len - 2;
+                            len = len - 1;
                             console.log("len", len);
                             var transaction = [];
-                            var i = 0;
-                            while (i <= len) {
-                                transaction.push(found.transaction[i]);
-                                i++;
+
+                            if (found.remove == true) {
+                                var i = 0;
+                                while (i <= len) {
+                                    transaction.push(found.transaction[i]);
+                                    i++;
+                                }
+                            } else {
+                                transaction = found.transaction;
                             }
                             if (transaction.length == 1) {
                                 var upgrade = false
@@ -2327,6 +2412,7 @@ var model = {
                             }).lean().sort({
                                 createdAt: -1
                             }).exec(function (err, transactData) {
+                                console.log("transactData after delete", transactData);
                                 if (err || _.isEmpty(transactData)) {
                                     callback(null, {
                                         error: "no data found",
@@ -2341,7 +2427,7 @@ var model = {
                                             sgst: transactData.sgstAmount,
                                             igst: transactData.igstAmount,
                                             transaction: transaction,
-                                            upgrade: upgrade
+                                            upgrade: upgrade,
                                         }
                                     };
                                     console.log("matchObj", matchObj);
@@ -2357,7 +2443,7 @@ var model = {
                                                         package: transactData.package,
                                                     }
                                                 };
-                                                Registration.update({
+                                                Athelete.update({
                                                     _id: data.school
                                                 }, matchObj).exec(
                                                     function (err, data3) {
