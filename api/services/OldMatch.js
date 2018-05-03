@@ -132,42 +132,48 @@ var model = {
                     OldIndividualSport.getSportId(n.sport, function (err, complete) {
                         if (err || _.isEmpty(complete)) {
                             var err = "Error found in Rules";
-                            callback(err, null);
+                            callback(null, {
+                                error: err,
+                                data: n
+                            });
                         } else {
                             callback(null, complete);
                         }
                     });
                 },
                 function (complete, callback) {
-                    var final = {};
-                    final.sportData = complete;
-                    final.opponentsSingle = [];
-                    async.eachSeries(n.opponentsSingle, function (single, callback) {
-                        console.log("single", single)
-                        IndividualSport.find({
-                            oldId: single
-                        }).lean().exec(function (err, found) {
-                            console.log("found***", found);
+                    console.log("complete", complete);
+                    if (complete.error) {
+                        callback(null, complete);
+                    } else {
+                        var final = {};
+                        final.sportData = complete;
+                        final.opponentsSingle = [];
+                        async.eachSeries(n.opponentsSingle, function (single, callback) {
+                            console.log("single", single)
+                            IndividualSport.findOne({
+                                oldId: single
+                            }).lean().exec(function (err, found) {
+                                // console.log("found***", found);
+                                if (err) {
+                                    callback(err, null);
+                                } else {
+                                    final.opponentsSingle.push(found._id);
+                                    callback(null, final);
+                                }
+                            });
+                        }, function (err, complete) {
                             if (err) {
-                                callback(err, null);
-                            } else if (_.isEmpty(found)) {
-                                callback(null, []);
+                                callback(null, {
+                                    error: "error found",
+                                    data: data
+                                });
                             } else {
-                                final.opponentsSingle.push(found[0]._id);
+                                console.log("final", final);
                                 callback(null, final);
                             }
                         });
-                    }, function (err) {
-                        if (err) {
-                            callback(null, {
-                                error: "error found",
-                                data: data
-                            });
-                        } else {
-                            console.log("final", final);
-                            callback(null, final);
-                        }
-                    });
+                    }
                 },
                 function (final, callback) {
                     var formData = {};
@@ -178,23 +184,6 @@ var model = {
                     formData.round = n.round;
                     formData.incrementalId = n.incrementalId;
                     formData.matchId = n.matchId;
-                    // if (n.resultHeat) {
-                    //     formData.resultHeat = n.resultHeat;
-                    // } else if (n.resultKnockout) {
-                    //     formData.resultKnockout = n.resultKnockout;
-                    // } else if (n.resultsCombat) {
-                    //     formData.resultsCombat = n.resultsCombat;
-                    // } else if (n.resultsRacquet) {
-                    //     formData.resultsRacquet = n.resultsRacquet;
-                    // } else if (n.resultQualifyingRound) {
-                    //     formData.resultQualifyingRound = n.resultQualifyingRound;
-                    // } else if (n.resultFencing) {
-                    //     formData.resultFencing = n.resultFencing;
-                    // } else if (n.resultSwiss) {
-                    //     formData.resultSwiss = n.resultSwiss;
-                    // } else if (n.resultShooting) {
-                    //     formData.resultShooting = n.resultShooting;
-                    // }
                     formData.opponentsSingle = final.opponentsSingle;
                     // console.log("formData", formData);
                     Match.saveData(formData, function (err, complete) {
@@ -215,7 +204,7 @@ var model = {
                     var param = {};
                     param.matchId = nextData.match.matchId;
                     Match.getOne(param, function (err, matchData) {
-                        console.log("matchData", nextData.match.matchId);
+                        // console.log("matchData", nextData);
                         if (err) {
                             callback(err, null);
                         } else {
@@ -223,19 +212,25 @@ var model = {
                                 callback(null, []);
                             } else {
                                 var final = {};
-                                var result = ResultInitialize.getResultVar(matchData.sportsName, matchData.sportType);
-                                console.log("result", matchData[result.resultVar]);
+                                if (matchData.sportType != "Aquatics Sports") {
+                                    var result = ResultInitialize.getResultVar(matchData.sportsName, matchData.sportType);
+                                } else {
+                                    var result = ResultInitialize.getResultVar(matchData.sportsCategory, matchData.sportType);
+                                }
+                                console.log("matchData[result.resultVar]***", matchData[result.resultVar]);
                                 if (!(matchData[result.resultVar] == '')) {
+                                    console.log("result***", result);
                                     final.result = result;
                                     final.score = matchData[result.resultVar];
                                     final.nextData = nextData;
                                     callback(null, final);
                                 } else {
+                                    console.log("result----", result.resultVar);
                                     if (result.resultVar != "resultHeat") {
                                         final.resultName = result.resultVar;
                                         final.nextData = nextData;
                                         ResultInitialize.getMyResult(matchData.sportsName, matchData, function (err, complete) {
-                                            console.log("complete", complete, "players", complete[result.resultVar].players);
+                                            console.log("complete", complete, "nextData", nextData);
                                             matchData[result.resultVar] = complete[result.resultVar];
                                             // if (nextData.oldmatch[result.resultVar]) {
                                             //     complete[result.resultVar].players[0].teamResults = nextData.oldmatch[result.resultVar].players[0].teamResults;

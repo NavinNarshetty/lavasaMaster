@@ -382,6 +382,11 @@ var model = {
                         } else {
                             finalData.resultsCombat = found.resultsCombat;
                         }
+                        if (_.isEmpty(found.resultHeat)) {
+                            finalData.resultHeat = "";
+                        } else {
+                            finalData.resultHeat = found.resultHeat;
+                        }
                         if (_.isEmpty(found.resultThrowball)) {
                             finalData.resultThrowball = "";
                         } else {
