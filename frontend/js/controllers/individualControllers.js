@@ -2,6 +2,8 @@
 var selectPicker = function (team, toastr, sT, sN, $filter, $scope, $uibModal, userDetails, userType) {
     var howMuchSelectPicker;
     var id;
+    var flag = false;
+    var openNow = false;
     switch (sT) {
         case "K":
 
@@ -36,51 +38,89 @@ var selectPicker = function (team, toastr, sT, sN, $filter, $scope, $uibModal, u
         for (i = 1; i <= howMuchSelectPicker; i++) {
             _.each(team, function (n, k) {
                 var tp = id + i + "_" + k;
-                console.log(tp);
-                $(tp).on('changed.bs.select', function (e) {
-                    console.log("hit");
-                    if ((team[k].packageCount - team[k].registeredSportCount) < e.target.selectedOptions.length) {
-                        toastr.error("Max Reached", "Error Messege");
-                    }
 
-                    // if(team[k].selectLimit==1 && e.target.selectedOptions.length==1){
-                    //     if($.jStorage.get('userType')=="school"){
-                    //         toastr.info("Sfa Id " + team[k].sfaId +" Can Only Participate In One Event. As per "+ $filter('getPronoun')(team[k].gender)+" Package", "Upgrade Package");
-                    //     }else{
-                    //         toastr.info("You Can Only Participate in One Event");                    
-                    //     }
-                    // }
-                    console.log("(team[k].packageCount - team[k].registeredSportCount)",(team[k].packageCount - team[k].registeredSportCount));
-                    console.log("e.target.selectedOptions.length",e.target.selectedOptions.length);
-                    console.log((team[k].packageCount - team[k].registeredSportCount) < e.target.selectedOptions.length);
-                    if ((team[k].packageCount - team[k].registeredSportCount) <= e.target.selectedOptions.length) {
-                        if ($.jStorage.get('userType') == "school") {
-                            toastr.info("Sfa Id " + team[k].sfaId + " Can Only Participate In " + team[k].selectLimit + " Event. As per Selected Package", "Upgrade Package");
-                        } else {
-                            // SHOW UPGRADE POPUP
-                            $scope.upgrade = {};
-                            if (userType == 'athlete') {
-                                $scope.upgrade.userType = 'player';
+                var data_id = "." + tp.substring(1);
+                console.log("data_id", data_id);
+
+                $(data_id).find("[data-original-index]").click(function (e) {
+
+                    setTimeout(function () {
+                        console.log($(data_id).find(".selected").length);
+                        //functionality to detect max Limit is reached and modal should get open when limit is exceeded
+                        // e.g.: if (selectLimit=2) then open modal on third selection 
+                        if (((team[k].packageCount - team[k].registeredSportCount) == $(data_id).find(".selected").length)) {
+                            if (flag) {
+                                openNow = true;
                             } else {
-                                $scope.upgrade.userType = 'school';
+                                flag = true;
                             }
-                            $scope.upgrade.id = userDetails._id;
-                            $scope.upgrade.package = userDetails.package;
-                            if((sN=="Athletics" && team[k].selectLimit<2)||sN!="Athletics"){
-                                $uibModal.open({
-                                    animation: true,
-                                    scope: $scope,
-                                    // backdrop: 'static',
-                                    // keyboard: false,
-                                    templateUrl: 'views/modal/upgradepackage-modal.html',
-                                    windowClass: 'modal-upgradepackage'
-                                });
-
-                            }
-                            // SHOW UPGRADE POPUP END
+                        } else {
+                            flag = false;
+                            openNow = false;
                         }
-                    }
+                        //ends here
+
+                        if ((team[k].packageCount - team[k].registeredSportCount) <= $(data_id).find(".selected").length) {
+                            if ($.jStorage.get('userType') == "school") {
+                                toastr.info("Sfa Id " + team[k].sfaId + " Can Only Participate In " + team[k].selectLimit + " Event. As per Selected Package", "Upgrade Package");
+                            } else {
+                                // SHOW UPGRADE POPUP
+                                $scope.upgrade = {};
+                                if (userType == 'athlete') {
+                                    $scope.upgrade.userType = 'player';
+                                } else {
+                                    $scope.upgrade.userType = 'school';
+                                }
+                                $scope.upgrade.id = userDetails._id;
+                                $scope.upgrade.package = userDetails.package;
+
+                                // if(team[k].hasOnlyLimitOne){
+                                //     if($(data_id).find(".selected").length>1){
+                                //         $(e.currentTarget).removeClass('selected');
+                                //         $(e.currentTarget).find("[aria-selected]").attr("aria-selected","false");
+                                //         var nameArr = $(data_id+' ul li a[aria-selected=true]').find('span:first').map(function(e,k){return $(this).text()}).get();
+                                //         var nameStr = nameArr.join(", ");
+                                        
+                                //         $(data_id+' button').find("span:first").text(nameStr);
+                                //         team[k].sport.pop();
+                                //         $uibModal.open({
+                                //             animation: true,
+                                //             scope: $scope,
+                                //             templateUrl: 'views/modal/upgradepackage-modal.html',
+                                //             windowClass: 'modal-upgradepackage'
+                                //         });
+                                //     }else{                                        
+                                //         var nameArr = $(data_id+' ul li a[aria-selected=true]').find('span:first').map(function(e,k){return $(this).text()}).get();
+                                //         var nameStr = nameArr.join(", ");
+                                //         $(data_id+' button').find("span:first").text(nameStr);
+                                //         console.log("nameStr",nameStr);
+                                //     }
+                                // }else{
+                                    if (((sN == "Athletics" && team[k].selectLimit < 2) || sN != "Athletics") && openNow) {
+                                        $uibModal.open({
+                                            animation: true,
+                                            scope: $scope,
+                                            templateUrl: 'views/modal/upgradepackage-modal.html',
+                                            windowClass: 'modal-upgradepackage'
+                                        });
+                                    }
+                                // }
+                            }
+                        }
+                        // else{
+                        //     console.log("-------------");
+                            
+                        //         if(team[k].hasOnlyLimitOne){
+                        //             team[k].sport=[];
+                        //         }
+                            
+                        // }
+
+
+
+                    }, 50);
                 });
+
             });
         }
 
@@ -644,6 +684,8 @@ myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, Navigat
             $('.selectpicker').selectpicker("refresh")
             $('.bs-searchbox input[type="text"]').attr('placeholder', 'Search Event');
         }, 200);
+        var selectPickerClone = selectPicker(selectService.team, toastr, selectService.sportType, selectService.sportName, $filter, $scope, $uibModal, $.jStorage.get("userDetails"), $.jStorage.get("userType"));
+
     }
     $timeout(function () {
         $('.selectpicker').selectpicker("refresh")

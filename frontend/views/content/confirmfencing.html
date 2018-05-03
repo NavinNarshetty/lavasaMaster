@@ -137,7 +137,7 @@
                               </td> -->
 
                                 <!-- Events Column For Fencing -->
-                                <td ng-if="st=='Fencing'">
+                                <td ng-if="st=='Fencing'" class="selectpicker_1_{{$index}}">
                                   <div class="override-fencingselect sfa-btsselect">
                                     <select id="selectpicker_1_{{$index}}" class="selectpicker form-control" multiple ng-init="selectService.isValidSelection(athelete)"
                                       ng-model="athelete.sport" ng-required="" ng-options="event.data[0].sport as event._id  for event in athelete.events"

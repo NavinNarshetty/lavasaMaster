@@ -223,7 +223,6 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                 i.data = _.filter(i.data, function (j) {
                     var startDate = moment(j.fromAge);
                     var endDate = moment(j.toAge);
-                    console.log("----");
                     if ((j.gender == athelete.gender) && birthdate.isBetween(startDate, endDate, null, '[]')) {
                         return true;
                     } else {
@@ -231,11 +230,9 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                     }
                 });
             });
-            console.log("event", event);
             event = _.reject(event, function (n) {
                 return n.data.length == 0;
             });
-            console.log("event", event);
             return event;
         }
 
@@ -658,7 +655,6 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
     };
 
     this.isValidSelection = function (athelete, whichSelectTag, scopes) {
-        console.log("this.sportType", this.sportType);
         switch (this.sportType) {
 
 
@@ -669,7 +665,6 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                 if (athelete.event2Weights) {
                     var obj = _.find(weights.data, function (n) {
                         if (!n.weight) {
-                            console.log("n", n);
                             return n;
                         }
                     });
