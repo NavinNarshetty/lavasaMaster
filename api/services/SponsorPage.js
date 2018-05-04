@@ -2,6 +2,7 @@ var schema = new Schema({
     name: String,
     city: String,
     headerImage: String,
+    footerImage: String,
     content: String,
     sponsorType: String,
     logoCaption: String,
