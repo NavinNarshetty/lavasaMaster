@@ -1,6 +1,6 @@
 <footer ng-controller="footerctrl">
   <section ng-if="hideFooter">
-    <div class="footer-slider" ng-if="selectedCity != 'hyderabad'">
+    <div class="footer-slider hide" ng-if="selectedCity != 'hyderabad'">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
@@ -38,7 +38,7 @@
         </div>
       </div>
     </div>
-    <div class="footer-slider" ng-if="selectedCity == 'hyderabad'">
+    <div class="footer-slider hide" ng-if="selectedCity == 'hyderabad'">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
@@ -74,6 +74,56 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    <!-- SPONSOR ROW -->
+    <div class="footer-slider">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <!-- SPONSER HEAD -->
+            <div class="sponser-head">
+              <p class="color-grey2 text-up font-semi text-c text-uppercase">{{sponsorData[0]._id}}</p>
+            </div>
+            <!-- SPONSER HEAD END -->
+          </div>
+          <!-- SPONSER IMAGE HODER -->
+          <div class="sponser-card-holder">
+            <div class="col-md-2 col-sm-4 col-xs-6" ng-repeat="image in sponsorData[0].info track by $index">
+              <div class="card-holder" ng-class="{'custom-cursor-sponsor':image.insidePage==='false'}">
+                <div class="" ng-click="goSponsor(image)">
+                  <img ng-src="{{image.footerImage | serverimage2}}" alt="" class="img-responsive">
+                </div>
+                <p class="color-grey2 f12 font-bold mt10 text-center text-up">{{image.logoCaption}}</p>
+              </div>
+            </div>
+          </div>
+          <!-- SPONSER IMAGE HODER END -->
+        </div>
+        <!-- SPONSOR ROW END -->
+
+        <!-- PARTNER ROW -->
+        <div class="row">
+          <!-- PARTNER HEAD -->
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <p class="color-grey2 text-up font-semi text-c text-uppercase">{{sponsorData[1]._id}}</p>
+          </div>
+          <!-- PARTNER HEAD -->
+
+          <!-- PARTNER_IMAGE HODER -->
+          <div class="partner-card-holder">
+            <div class="col-md-2 col-sm-4 col-xs-6" ng-repeat="image in sponsorData[1].info track by $index">
+              <div class="card-holder" ng-class="{'custom-cursor-sponsor':image.insidePage==='false'}">
+                <div class="" ng-click="goSponsor(image)">
+                  <img ng-src="{{image.footerImage | serverimage2}}" alt="" class="img-responsive m-clear-auto">
+                </div>
+                <p class="color-grey2 f12 font-bold mt10 text-center text-up">{{image.logoCaption}}</p>
+              </div>
+            </div>
+          </div>
+          <!-- PARTNER_IMAGE HOLDER END -->
+        </div>
+        <!-- PARTNER ROW END -->
       </div>
     </div>
   </section>
@@ -122,10 +172,10 @@
                       {{detail.name}}
                     </a>
                     <a style="color:#27b465" href="{{linkForAll}}liveupdates" target="_new" ng-if="detail.live">
-                        {{detail.name}}
+                      {{detail.name}}
                     </a>
                     <a style="color:#27b465" href="{{registerSchool}}/{{detail.link}}" target="_new" ng-if="detail.score">
-                        {{detail.name}}
+                      {{detail.name}}
                     </a>
                   </li>
                 </ul>
@@ -178,9 +228,15 @@
                   <li>
                     <span class="footer-header-color">Previous Profile</span>
                   </li>
-                  <li><a href="{{linkForAll}}students">ATHLETES</a></li>
-                  <li><a href="{{linkForAll}}school">SCHOOLS</a></li>
-                  <li><a href="{{linkForAll}}team">TEAMS</a></li>
+                  <li>
+                    <a href="{{linkForAll}}students">ATHLETES</a>
+                  </li>
+                  <li>
+                    <a href="{{linkForAll}}school">SCHOOLS</a>
+                  </li>
+                  <li>
+                    <a href="{{linkForAll}}team">TEAMS</a>
+                  </li>
 
 
 
@@ -239,8 +295,8 @@
                 </li> -->
                 <li>
                   <a href="{{linkForAll}}media-gallery" target="_new">
-                      SCHOOL
-                    </a>
+                    SCHOOL
+                  </a>
                 </li>
                 <li hidden>
                   <a href="{{registerCollege}}/media-gallery" target="_new">
@@ -262,8 +318,8 @@
                 </li> -->
                 <li>
                   <a href="{{linkForAll}}media-press" target="_new">
-                      SCHOOL
-                    </a>
+                    SCHOOL
+                  </a>
                 </li>
                 <li hidden>
                   <a href="{{registerCollege}}/media-press" target="_new">
@@ -350,9 +406,9 @@
         <div class="col-md-12">
           <div class="di">
             <p class="color-white m-clear">Disclaimer:</p>
-            <p class="di-inline color-white"> All material available on this website is intellectual property and copyrighted content of SFA Sporting Services Pvt Ltd.,
-              unless otherwise indicated. Unauthorized use and/or duplication of this material without written permission
-              from this site’s author and/or owner is strictly prohibited</p>
+            <p class="di-inline color-white"> All material available on this website is intellectual property and copyrighted content of SFA Sporting Services
+              Pvt Ltd., unless otherwise indicated. Unauthorized use and/or duplication of this material without written
+              permission from this site’s author and/or owner is strictly prohibited</p>
           </div>
         </div>
       </div>
