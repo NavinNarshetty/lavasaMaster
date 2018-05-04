@@ -495,6 +495,7 @@ myApp.controller('ConfirmFencingCtrl', function ($scope, TemplateService, Naviga
     // }, 200);
 
     $scope.selectEvent = function (ath, whichSelectTag, justClicked) {
+        console.log("$scope.selectLimit",$scope.selectLimit);
         if ($scope.selectLimit == 1) {
             if (whichSelectTag == "Fen1" && (ath.fen1flag == false && ath.fen2flag == false)) {
                 ath.fen1flag = true;
@@ -588,8 +589,42 @@ myApp.controller('ConfirmKarateCtrl', function ($scope, TemplateService, Navigat
             }
         });
     };
+
+    $scope.selectEvent = function (ath, whichSelectTag, justClicked) {
+        console.log("$scope.selectLimit",$scope.selectLimit);
+        if ($scope.selectLimit == 1) {
+            if (whichSelectTag == "E1" && (ath.e1flag == false && ath.e2flag == false)) {
+                ath.e1flag = true;
+            } else if (whichSelectTag == "E2" && (ath.e1flag == false && ath.e2flag == false)) {
+                ath.e2flag = true;
+            }
+            if (ath.e1flag && (whichSelectTag == "E1")) {
+                console.log("1");
+                ath.sport[1] = "";
+            } else if (ath.e2flag && (whichSelectTag == "E2")) {
+                console.log("2");
+                ath.sport[0] = "";
+            } else if (ath.e1flag && (whichSelectTag == "E2")) {
+                console.log("3");
+                ath.sport[1] = "";
+                toastr.error("Max Reached", "Error Messege");
+            } else if (ath.e2flag && (whichSelectTag == "E1")) {
+                console.log("4");
+                if (justClicked.eventName == "Indian Bow") {
+                    toastr.error("Only 1 Event Is Left As Per Your Package");
+                    ath.sport[1] = "";
+                } else {
+                    ath.sport[0] = "";
+                    toastr.error("Max Reached", "Error Messege");
+                }
+
+            }
+            ath.disableEvent2 = true;
+        }
+
+    };
+
     $scope.isValidSelection = function (athelete, E) {
-        console.log("athlete", athelete);
         $scope.selectService.isValidSelection(athelete, E, $scope);
     };
 

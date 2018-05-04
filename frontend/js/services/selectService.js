@@ -70,6 +70,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
             var isApplicable = true;
             switch (sT) {
                 case "K":
+                console.log("athelete",ath);
                     if (ath.eventKata.length <= 1 && ath.eventKumite.length <= 1) {
                         ath.checked = false;
                         toastr.error("Not Applicable");
@@ -157,7 +158,11 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
 
             switch (sT) {
                 case "K":
-
+                    ath.e1flag = false;
+                    ath.e2flag = false;
+                    ath.informTitle = "Select Event"
+                    ath.selectLimit = ath.packageCount - ath.registeredSportCount;
+                    ath.maxOptionsText = "Upgrade Your Package";
                     break;
                 case "FA":
                     // console.log(ath);
@@ -674,7 +679,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                         arr[1] = null;
                     }
                 }
-                athelete.isValidSelection = (arr.length == 0 || ((!arr[0] || arr[0] && arr[0].data && arr[0].data[0].sport == null) && ((arr[1] && !arr[1].sport) || (arr[1] && arr[1].sport == null)))) ? false : ((arr.length >= 1 && arr[0] && arr[0].data && arr[0].data[0] && arr[0].data[0].sport != null) || ((arr.length >= 1 && (!arr[0] || arr[0] && arr[0].data[0].sport == null)) && (arr.length >= 1 && arr[1] && arr[1].sport != null)) || ((arr.length >= 1 && arr[0] && arr[0].data[0] && arr[0].data[0].sport != null) && (arr.length >= 1 && arr[1] && arr[1].sport != null))) ? true : false;
+                athelete.isValidSelection = (arr.length == 0 || ((!arr[0] || arr[0] && arr[0].data && arr[0].data[0].sport == null) && ((arr[1] && !arr[1].sport) || (arr[1] && arr[1].sport == null)))) ? false : ((arr.length >= 1 && arr[0] && arr[0].data && arr[0].data[0] && arr[0].data[0].sport != null) || ((arr.length >= 1 && (!arr[0] || arr[0] && arr[0].data && arr[0].data[0].sport == null)) && (arr.length >= 1 && arr[1] && arr[1].sport != null)) || ((arr.length >= 1 && arr[0] && arr[0].data && arr[0].data[0] && arr[0].data[0].sport != null) && (arr.length >= 1 && arr[1] && arr[1].sport != null))) ? true : false;
 
                 var currentSelected = _.map(athelete.sport, function (n, k) {
                     if (k == 0) {
@@ -691,7 +696,8 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                 currentSelected = _.compact(currentSelected).length;
 
                 var allowedAsPerPackage = (((athelete.package.eventCount - athelete.selectedEvent) - currentSelected) > 0) ? true : false;
-                if (athelete.package.eventCount - athelete.selectedEvent < 2) {
+                console.log("allowedAsPerPackage",allowedAsPerPackage,athelete.sport);
+                if ((athelete.package.eventCount - athelete.selectedEvent) < 2) {
                     if (allowedAsPerPackage) {
                         if (whichSelectTag == 'E1') {
                             athelete.disableEvent2 = false;
@@ -717,47 +723,52 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
 
 
                         if (whichSelectTag == 'E1') {
-                            console.log("upgrade", scopes.upgrade);
-                            athelete.sport[1] = null;
-                            athelete.disableEvent2 = true;
-                            athelete.informTitle2 = "Upgrade Package To Add More";
-                            if ($.jStorage.get("userType") == 'athlete') {
-                                // SHOW UPGRADE POPUP
-                                scopes.upgrade.package = athelete.package;
-                                scopes.modalInstance = $uibModal.open({
-                                    animation: true,
-                                    scope: scopes,
-                                    // backdrop: 'static',
-                                    // keyboard: false,
-                                    templateUrl: 'views/modal/upgradepackage-modal.html',
-                                    windowClass: 'modal-upgradepackage'
-                                });
-                                // SHOW UPGRADE POPUP END
-                            } else {
-                                toastr.info("Sfa Id " + athelete.sfaId + " Can Only Participate In " + (athelete.package.eventCount - athelete.selectedEvent) + " Event. As per Selected Package");
-
-                            }
-
-                        } else {
-                            athelete.sport[0] = null;
-                            athelete.disableEvent1 = true;
-                            athelete.informTitle1 = "Upgrade Package To Add More";
-                            if ($.jStorage.get("userType") == 'athlete') {
-                                if (scopes) {
+                            if(athelete.sport[1] && athelete.sport[1].sport){
+                                console.log("first",athelete.sport);
+                                athelete.sport[0] = null;
+                                athelete.disableEvent1 = true;
+                                athelete.informTitle1 = "Upgrade Package To Add More";
+                                if ($.jStorage.get("userType") == 'athlete') {
+                                    // SHOW UPGRADE POPUP
                                     scopes.upgrade.package = athelete.package;
                                     scopes.modalInstance = $uibModal.open({
                                         animation: true,
                                         scope: scopes,
-                                        // backdrop: 'static',
-                                        // keyboard: false,
                                         templateUrl: 'views/modal/upgradepackage-modal.html',
                                         windowClass: 'modal-upgradepackage'
                                     });
+                                    // SHOW UPGRADE POPUP END
+                                } else {
+                                    toastr.info("Sfa Id " + athelete.sfaId + " Can Only Participate In " + (athelete.package.eventCount - athelete.selectedEvent) + " Event. As per Selected Package");
                                 }
-                            } else {
-                                toastr.info("Sfa Id " + athelete.sfaId + " Can Only Participate In " + (athelete.package.eventCount - athelete.selectedEvent) + " Event. As per Selected Package");
-
                             }
+
+                        } else {
+                            if(athelete.sport[0] && athelete.sport[0].data && !_.isEmpty(athelete.sport[0].data) && athelete.sport[0].data[0].sport){
+                                console.log("second before",athelete.sport[1]); 
+                                athelete.event2Weights=null;
+                                athelete.sport[1] = null;
+
+                                console.log("second after",athelete.sport[1]);
+                                console.log("second after",athelete.sport);
+                                
+                                
+                                athelete.disableEvent2 = true;
+                                athelete.informTitle2 = "Upgrade Package To Add More";
+                                if ($.jStorage.get("userType") == 'athlete') {                                
+                                    if (scopes) {
+                                        scopes.upgrade.package = athelete.package;
+                                        scopes.modalInstance = $uibModal.open({
+                                            animation: true,
+                                            scope: scopes,
+                                            templateUrl: 'views/modal/upgradepackage-modal.html',
+                                            windowClass: 'modal-upgradepackage'
+                                        });
+                                    }
+                                } else {
+                                    toastr.info("Sfa Id " + athelete.sfaId + " Can Only Participate In " + (athelete.package.eventCount - athelete.selectedEvent) + " Event. As per Selected Package");
+                                }
+                            }                           
                         }
                     }
                 }
@@ -768,14 +779,8 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                 if (this.sportName == 'Fencing') {
                     var arr = _.compact(athelete.sport);
                     athelete.isValidSelection = arr.length > 0;
-                    console.log("this.sportName im in", this.sportName);
                 } else if (this.sportName == 'Archery') {
-
-                    console.log("athelete.sport", athelete.sport);
-                    console.log("this.sportName im in else", this.sportName);
-
                     var allowedAsPerPackage = (((athelete.package.eventCount - athelete.selectedEvent) - _.compact(athelete.sport).length) < 0) ? true : false;
-                    console.log("allowedAsPerPackage", allowedAsPerPackage, ((athelete.package.eventCount - athelete.selectedEvent) - _.compact(athelete.sport).length));
                     if (allowedAsPerPackage) {
                         athelete.sport[1] = {}; //last added
                         athelete.disableEvent2 = true;
@@ -798,8 +803,6 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                                 scopes.modalInstance = $uibModal.open({
                                     animation: true,
                                     scope: scopes,
-                                    // backdrop: 'static',
-                                    // keyboard: false,
                                     templateUrl: 'views/modal/upgradepackage-modal.html',
                                     windowClass: 'modal-upgradepackage'
                                 });

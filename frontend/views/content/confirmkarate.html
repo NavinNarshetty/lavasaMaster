@@ -9,25 +9,6 @@
       </div>
     </div>
     <div class="row">
-      <!-- <div class="col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-10 col-xs-12">
-        <div class="pull-right sp-tab-right">
-          <div class="">
-            <div class="display-inline">
-              <p class="mb0">SFA ID:</p>
-              <p class="mb0" ng-if="detail.userType === 'school'">{{type | firstcapitalize}} Name:</p>
-              <p class="mb0" ng-if="detail.userType === 'athlete'">Athlete Name:</p>
-            </div>
-            <div class="display-inline">
-              <p class="mb0">&nbsp;{{detail.sfaIdObj}}</p>
-              <p class="mb0" ng-if="detail.userType === 'school'">&nbsp;{{detail.schoolName}}</p>
-              <p class="mb0" ng-if="detail.userType === 'athlete'">&nbsp;{{detail.firstName}}&nbsp&nbsp{{detail.surname}}</p>
-            </div>
-          </div>
-          <ul class="list-inline">
-            <li ng-click="logoutCandidate();" ng-if="detail.isLoggedIn"><a>Logout</a></li>
-          </ul>
-        </div>
-      </div> -->
       <div ng-include="'views/content/profile-details.html'"></div>
     </div>
     <div class="row">
@@ -96,31 +77,21 @@
                                 <td ng-if="!athelete.middleName">{{athelete.sfaId+' - '+athelete.firstName+' '+athelete.surname}}</td>
                                 <td>{{athelete.gender | firstcapitalize}}</td>
                                 <td>
-                                  <!--event 1 selection starts-->
-                                  <!--athelete.sport[athelete.sport.length]-->
-                                  <!--ng-init="athelete.sport[0]=athelete.eventKata[1].sport"-->
+                                  <!--Event 1 selection-->
                                   <select class="form-control" ng-init="selectService.isValidSelection(athelete)" ng-model="athelete.sport[0]" ng-options="event1 as event1._id | formatEvent:'Kata'  for event1 in athelete.eventKata | orderBy:'_id' track by event1._id"
-                                    ng-change="isValidSelection(athelete,'E1')" ng-disabled="athelete.disableEvent1" title="{{athelete.informTitle1}}">
+                                    ng-change="isValidSelection(athelete,'E1');selectEvent(athelete,'E1',event1)" ng-disabled="athelete.disableEvent1" title="{{athelete.informTitle1}}">
                                   </select>
-                                  <!--event 1 selection ends-->
-
                                 </td>
                                 <td>
-                                  <!--event 2 selection starts-->
-                                  <!--ng-init="athelete.event2Weights=athelete.eventKumite[0]"-->
+                                  <!--Event 2 selection-->
                                   <select class="form-control" ng-init="selectService.isValidSelection(athelete)" ng-model="athelete.event2Weights" ng-options="event2 as event2._id | formatEvent:'Kumite' for event2 in athelete.eventKumite | orderBy:'_id' track by event2._id"
-                                    ng-change="isValidSelection(athelete,'E2')" ng-disabled="athelete.disableEvent2" title="{{athelete.informTitle2}}">
+                                    ng-change="isValidSelection(athelete,'E2');selectEvent(athelete,'E2',event2)" ng-disabled="athelete.disableEvent2" title="{{athelete.informTitle2}}">
                                   </select>
-                                  <!--event 2 selection ends-->
                                 </td>
                                 <td class="hide">
-                                  <!--weight selection starts-->
                                   <select class="form-control" ng-init="selectService.isValidSelection(athelete)" ng-model="athelete.sport[1]" placeholder="Select Kumite First"
                                     ng-options="weights as weights.weight for weights in athelete.event2Weights.data" ng-change="selectService.isValidSelection(athelete)">
-                                    <!--<option value="">First Select Kumite</option>-->
                                   </select>
-                                  <!--weight selection ends-->
-
                                 </td>
                               </tr>
                             </tbody>
@@ -154,7 +125,6 @@
                               <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="tel" only-Digits class="form-control text-center" ng-model="formData.nominatedContactDetails" placeholder="Enter Contact Details"
                                   name="nominatedContactDetails" id="nominatedContactDetails">
-                                <!-- maxlength="11" minlength="7" -->
                               </div>
                               <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" class="form-control text-center" ng-model="formData.nominatedEmailId" placeholder="Enter Email Id" name="nominatedEmailId"
@@ -166,9 +136,6 @@
                         <div class="collapse hide" id="collapseExample" ng-if="detail.userType === 'school'">
                           <div class="">
                             <div class="form-group">
-                              <!--<div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="text" class="form-control" ng-model="nominatedName" placeholder="Enter Athlete Name" name="nominatedName" id="nominatedName">
-                              </div>-->
                               <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" class="form-control text-center" ng-model="formData.nominatedSchoolName" placeholder="Enter {{type | firstcapitalize}} Name"
                                   name="nominatedSchoolName" id="nominatedSchoolName">
@@ -176,11 +143,9 @@
                               <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="tel" only-Digits class="form-control text-center" ng-model="formData.nominatedContactDetails" placeholder="Enter Contact Details"
                                   name="nominatedContactDetails" id="nominatedContactDetails">
-                                <!-- maxlength="11" minlength="7" -->
                               </div>
                             </div>
                             <div class="form-group">
-                              <!--<div class="col-md-6 col-sm-6 col-xs-12">-->
                               <div class="col-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-12">
                                 <input type="text" class="form-control text-center" ng-model="formData.nominatedEmailId" placeholder="Enter Email Id" name="nominatedEmailId"
                                   id="nominatedEmailId">
