@@ -490,25 +490,99 @@ var model = {
         return dataObj;
     },
 
-    importGS: function (filename, callback) {
-        var readstream = gfs.createReadStream({
-            filename: filename
-        });
-        readstream.on('error', function (err) {
-            res.json({
-                value: false,
-                error: err
-            });
-        });
-        var buffers = [];
-        readstream.on('data', function (buffer) {
-            buffers.push(buffer);
-        });
-        readstream.on('end', function () {
-            var buffer = Buffer.concat(buffers);
-            callback(null, Config.import(buffer));
+    uploadFindOne: function (filename, callback) {
+        Upload.findOne({
+            _id: filename
+        }, function (err, data) {
+            if (err || _.isEmpty(data)) {
+                callback({
+                    error: "no data found"
+                });
+            } else {
+                callback(data);
+            }
         });
     },
+
+    importGS: function (filename, callback) {
+        async.waterfall([
+            function (callback) {
+                ConfigProperty.findOne().lean().exec(function (err, property) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(property)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, property);
+                        }
+                    }
+                });
+            },
+            function (property, callback) {
+                console.log(property);
+                var Storage = require('@google-cloud/storage');
+                var projectId = 'future-oasis-145313';
+                var storage = new Storage({
+                    projectId: projectId,
+                    keyFilename: property.keyfileName
+                });
+                Config.uploadFindOne(filename, function (uploadData) {
+                    console.log('enter', uploadData);
+                    if (uploadData) {
+                        console.log('entering', uploadData);
+                        var bucket = storage.bucket(global.storageBucket);
+                        var readstream = bucket.file(uploadData.storageName).createReadStream();
+                        console.log('enters', readstream);
+                        readstream.on('error', function (err) {
+                            callback({
+                                value: false,
+                                error: err
+                            });
+                        });
+                        var buffers = [];
+                        readstream.on('data', function (buffer) {
+                            buffers.push(buffer);
+                            console.log('data', buffers);
+                        });
+                        readstream.on('end', function () {
+                            var buffer = Buffer.concat(buffers);
+                            console.log("buffer", buffers);
+                            callback(null, Config.import(buffer));
+                        });
+                    } else {
+                        callback(null, 'Not found');
+                    }
+                });
+            }
+        ], function (err, complete) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, complete);
+            }
+        });
+    },
+
+    // importGS: function (filename, callback) {
+    //     var readstream = gfs.createReadStream({
+    //         filename: filename
+    //     });
+    //     readstream.on('error', function (err) {
+    //         res.json({
+    //             value: false,
+    //             error: err
+    //         });
+    //     });
+    //     var buffers = [];
+    //     readstream.on('data', function (buffer) {
+    //         buffers.push(buffer);
+    //     });
+    //     readstream.on('end', function () {
+    //         var buffer = Buffer.concat(buffers);
+    //         callback(null, Config.import(buffer));
+    //     });
+    // },
 
     generateExcel: function (name, found, res) {
         name = _.kebabCase(name);
