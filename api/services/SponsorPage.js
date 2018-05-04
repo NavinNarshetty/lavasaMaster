@@ -60,7 +60,8 @@ var model = {
                             "sponsorType": "$sponsorType",
                             "headerImage": "$headerImage",
                             "footerImage": "$footerImage",
-                            "insidePage": "$insidePage"
+                            "insidePage": "$insidePage",
+                            "logoCaption": "$logoCaption"
                         }
                     }
                 }
