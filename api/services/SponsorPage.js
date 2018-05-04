@@ -59,6 +59,7 @@ var model = {
                             "city": "$city",
                             "sponsorType": "$sponsorType",
                             "headerImage": "$headerImage",
+                            "footerImage": "$footerImage",
                             "insidePage": "$insidePage"
                         }
                     }
