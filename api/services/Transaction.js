@@ -111,7 +111,11 @@ var model = {
                     param.sgstAmount = found.accounts.sgst;
                     param.cgstAmount = found.accounts.cgst;
                     param.igstAmount = found.accounts.igst;
-                    param.PayuId = data.transactionid;
+                    if (data.transactionid) {
+                        param.PayuId = data.transactionid;
+                    } else {
+                        param.PayuId = data.transactionID;
+                    }
                     param.paymentStatus = "Paid";
                     var receipt = [];
                     var temp = "SFA" + found.receiptId;

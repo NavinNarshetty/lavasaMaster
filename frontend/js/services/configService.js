@@ -20,6 +20,8 @@ myApp.service('configService', function ($http, TemplateService, $state, toastr,
                         all.infoNoArr = allData.data.infoNoArr;
                         all.date = allData.data.date;
                         all.sports = allData.data.sports;
+                        all.individualSports = allData.data.individualSports;
+                        all.teamSports = allData.data.teamSports;
                         if (allData.data.type == 'school') {
                             all.isCollege = false;
                             all.type = allData.data.type;

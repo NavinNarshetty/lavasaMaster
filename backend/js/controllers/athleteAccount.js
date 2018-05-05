@@ -63,6 +63,8 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
           // console.log(data, "new api call")
           key.athleteData = data.data;
           if (data.data.display) {
+            data.data.display.payuId = _.uniq(data.data.display.payuId);
+            data.data.display.receiptId = _.uniq(data.data.display.receiptId);
             key.displayData = data.data.display;
           }
         });

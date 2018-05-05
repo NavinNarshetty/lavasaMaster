@@ -36,14 +36,19 @@
                 <span ng-if='s.open'>Less</span>
                 <i class="fa " ng-class="{'fa-chevron-up': s.open, 'fa-chevron-down': !s.open}"></i>
               </span>
-              <h4 class="d-fjalla-one text-uppercase m-clear">Quick Details About SFA Championship {{eventYear}}</h4>
+              <h4 class="d-fjalla-one text-capitalize m-clear">The Ultimate Interschool Championship</h4>
             </uib-accordion-heading>
             <div class="register-accordioncontent">
-              <div class="register-contentholder" ng-if="sports.length>0">
-                <label class="display-block">Sports:</label>
-                <span class="register-sportlist" ng-repeat="sport in sports track by $index"> {{sport}}
-                  <span class="register-seperator">|</span>
+              <div class="register-contentholder" ng-if="individualSports.length>0">
+                <label class="display-block">Individual Sports:</label>
+                <span class="register-sportlist" ng-repeat="sport in individualSports track by $index"> {{sport}}<span class="register-seperator">,</span>
                 </span>
+              </div>
+              <div class="register-contentholder" ng-if="teamSports.length>0">
+                <label class="display-block">Team Sports:</label>
+                <span class="register-sportlist" ng-repeat="sport in teamSports track by $index"> {{sport}}<span class="register-seperator">,</span>
+                </span>
+                <p class="registeraccordion-note">All sports are conducted under the aegis of certfied sport governing bodies.</p>
               </div>
               <div class="register-contentholder register-contentdate" ng-if="sfaDates">
                 <label for="">Dates:</label>
@@ -55,7 +60,7 @@
                   <span class="register-seperator">|</span>
                 </span>
               </div>
-              <div class="register-contentholder">
+              <div class="register-contentholder registeraccordion-linksholder">
                 <ul class="list-inline">
                   <li>
                     <a class="registeraccordion-links" target="_new" ui-sref="aboutchampionship">About Championship</a>
@@ -64,7 +69,7 @@
                     <a class="registeraccordion-links" target="_new" ui-sref="championshipschedule">Championship Schedule</a>
                   </li>
                   <li>
-                    <a href="{{ageEventPdf}}" target="_new" class="registeraccordion-links">Age & Event Categories</a>
+                    <a href="https://storage.googleapis.com/sportsforall/age-event.pdf" target="_new" class="registeraccordion-links">Age & Event Categories</a>
                   </li>
                   <li>
                     <a class="registeraccordion-links" ui-sref="faq" target="_new">FAQs</a>
@@ -94,24 +99,26 @@
     <!-- REGISTER FORM  -->
     <section class="registerplayer-form">
       <div class="registerform-btnholder">
-        <button class="btn btn-mainregister" ng-click="registerOpen();" ng-class="{'active': showForm}">Click Here To Register For SFA Mumbai 2018-19</button>
+        <button class="btn btn-mainregister" ng-click="registerOpen();" ng-class="{'active': showForm, 'btn-mainregister-blink': !showForm}">Click Here To Register <span class="hidden-xs">For SFA Mumbai 2018-19</span></button>
       </div>
       <div class="registerform-holder" ng-show="showForm">
         <p class="registerform-intro">All
           <span ng-if="pageType == 'player'">players</span>
           <span ng-if="pageType == 'school'">schools</span> must complete the following two step registration process</p>
         <!-- STEP BUTTONS -->
-        <ul class="list-inline">
+        <ul class="list-inline register-stepbtns clearfix">
           <li>
-            <button class="btn btn-registerstep" ng-click="showStep(1) ;formData={}" ng-class="{'active': stepTab == 1}">Step 1: Registration & Verification</button>
+            <button class="btn btn-registerstep hidden-xs" ng-click="showStep(1) ;formData={}" ng-class="{'active': stepTab == 1}">Step 1: Registration & Verification</button>
+            <div class="btn btn-registerstep visible-xs" ng-click="showStep(1) ;formData={}" ng-class="{'active': stepTab == 1}"><span class="text-underline">Step 1:</span> </br>Registration & Verification</div>
           </li>
           <li>
-            <button class="btn btn-registerstep" ng-click="showStep(2);formData={}" ng-class="{'active': stepTab == 2}">Step 2: Sports Registration</button>
+            <button class="btn btn-registerstep hidden-xs" ng-click="showStep(2);formData={}" ng-class="{'active': stepTab == 2}">Step 2: Sports Registration</button>
+            <button class="btn btn-registerstep visible-xs" ng-click="showStep(2);formData={}" ng-class="{'active': stepTab == 2}"><span class="text-underline">Step 2:</span> </br>Sports Registration</button>
           </li>
         </ul>
         <!-- STEP BUTTONS END -->
         <!-- STEP 1 FORM -->
-        <div class="" ng-show="stepTab == 1">
+        <div class="registerform-step1-holder" ng-show="stepTab == 1" ng-class="{'active': stepTab == 1}">
           <div class="registerstep-btnholder">
             <ul class="list-unstyled">
               <li>
@@ -128,7 +135,7 @@
             <div class="input-group">
               <!-- <input type="text" class="form-control" placeholder="SFA ID"> -->
               <ui-select name="playername" class="registerform1-uiselect" ng-model="searchSfaObj.sfaId" theme="bootstrap" ng-change="checkSearchChange(searchSfaObj.sfaId)" required>
-                <ui-select-match placeholder="Search by Sfa ID and Name" allow-clear="true" title="{{$select.selected.fullName}}">{{$select.selected.fullName}}</ui-select-match>
+                <ui-select-match placeholder="Search by Sfa ID/Name" allow-clear="true" title="{{$select.selected.fullName}}">{{$select.selected.fullName}}</ui-select-match>
                 <ui-select-choices repeat="player as player in masterData | filter: $select.search" refresh="masterSearchSFA($select.search)"
                   refresh-delay="300">
                   <div>
@@ -238,7 +245,7 @@
       <div class="registerplayer-questionlist">
         <ul class="list-unstyled">
           <li ng-repeat="question in questionList|limitTo:questionLimit.value track by $index">
-            <div class="registerplayer-questionitem" ng-bind-html="question.question"></div>
+            <div class="registerplayer-questionitem" ng-bind-html="question.question" ng-class="{'registerplayer-questionitem-full': !questionLimit.more}"></div>
           </li>
         </ul>
       </div>

@@ -1747,7 +1747,7 @@ myApp.controller('PaymentSuccessCtrl', function ($scope, TemplateService, Naviga
 
     $timeout(function () {
         $scope.autoTimeoutClick();
-    }, 10000)
+    }, 4000)
 
     // fbq('track', 'CompleteRegistration');
     // GoogleAdWordsService.sendRegisterCustomerConversion();

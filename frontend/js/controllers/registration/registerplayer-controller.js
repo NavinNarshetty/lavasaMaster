@@ -42,7 +42,7 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
   // SET FLAG END
   $scope.oneAtATime = true;
   $scope.questionLimit = {
-    value: 2,
+    value: 1,
     more: true
   };
   $scope.banners = $scope.questionList = $scope.testimonials = $scope.counts = $scope.gallery = [];
@@ -62,6 +62,8 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
     $scope.isCollege = data.isCollege;
     $scope.type = data.type;
     $scope.sports = data.sports;
+    $scope.individualSports = data.individualSports;
+    $scope.teamSports = data.teamSports;
     $scope.sfaDates = data.date;
     $scope.venue = data.venue;
     $scope.infoId = data.infoId;
@@ -465,7 +467,7 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
   // FORM END
   // QUESTIONS SECTION
   $scope.moreQuestions = function () {
-    if ($scope.questionLimit.value == 2) {
+    if ($scope.questionLimit.value == 1) {
       $scope.questionLimit = {
         value: $scope.questionList.length,
         more: false
@@ -473,7 +475,7 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
       $scope.questionLimit = $scope.questionList.length;
     } else {
       $scope.questionLimit = {
-        value: 2,
+        value: 1,
         more: true
       };
     }
@@ -505,8 +507,8 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
         console.log("content success", data.data.results);
         if (data.data.results.length > 0) {
           $scope.banners = data.data.results[0].banner;
-          $scope.ageEventPdf = $sce.trustAsResourceUrl($filter('uploadpathTwo')(data.data.results[0].ageEventPdf));
-          console.log("pdf", $scope.ageEventPdf);
+          // $scope.ageEventPdf = $sce.trustAsResourceUrl($filter('uploadpathTwo')(data.data.results[0].ageEventPdf));
+          // console.log("pdf", $scope.ageEventPdf);
           $scope.gallery = data.data.results[0].gallery;
           $scope.counts = data.data.results[0].eventCount;
           if ($scope.pageType == 'player') {

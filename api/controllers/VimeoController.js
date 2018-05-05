@@ -132,5 +132,18 @@ var controller = {
 
     },
 
+    getVideoDataFromVimeo: function (req, res) {
+        if (req.body) {
+            Vimeo.getVideoDataFromVimeo(req.body, res.callback);
+        } else {
+            res.callback(null, {
+                "data": "Please provide parameters",
+                "value": false
+            });
+        }
+
+
+    },
+
 };
 module.exports = _.assign(module.exports, controller);

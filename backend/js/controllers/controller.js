@@ -2427,7 +2427,7 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
         $scope.jSchoolops = $.jStorage.get('schoolOps');
         if (($.jStorage.get("accessLevel") == "Admin") && ($.jStorage.get('schoolOps') == null)) {
             excelService.loginPayuPopup($scope);
-        } else if (($.jStorage.get("accessLevel") == "Accounts" || $.jStorage.get("accessLevel") == "Sports Ops") && ($.jStorage.get('schoolOps') == null)) {
+        } else if (($.jStorage.get("accessLevel") !== "Admin") && ($.jStorage.get('schoolOps') == null)) {
             $.jStorage.set('schoolOps', 'school in ops');
         }
     }
@@ -2654,7 +2654,7 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
     if ($state.current.name == "athleteOps") {
         if (($.jStorage.get("accessLevel") == "Admin") && ($.jStorage.get('athleteOps') == null)) {
             excelService.loginPayuPopup($scope);
-        } else if (($.jStorage.get("accessLevel") == "Accounts" || $.jStorage.get("accessLevel") == "Sports Ops") && ($.jStorage.get('athleteOps') == null)) {
+        } else if (($.jStorage.get("accessLevel") !== "Admin") && ($.jStorage.get('athleteOps') == null)) {
             $.jStorage.set('athleteOps', 'athlete in ops');
         }
     }
@@ -3052,7 +3052,7 @@ myApp.controller('EditAthleteCtrl', function ($scope, TemplateService, Navigatio
     $scope.saveData = function (data) {
         console.log(" $scope.school", data);
         if (data) {
-            $scope.url = "Athelete/save";
+            $scope.url = "Athelete/updatePaymentStatusBackend";
             console.log(data);
             NavigationService.apiCall($scope.url, data, function (data) {
                 console.log("data.value", data);
@@ -3117,7 +3117,7 @@ myApp.controller('EditSchoolCtrl', function ($scope, TemplateService, Navigation
     $scope.saveData = function (data) {
         console.log(" $scope.school", data);
         if (data) {
-            $scope.url = "Registration/save";
+            $scope.url = "Registration/updatePaymentStatusBackend";
             console.log(data);
             NavigationService.apiCall($scope.url, data, function (data) {
                 console.log("data.value", data);

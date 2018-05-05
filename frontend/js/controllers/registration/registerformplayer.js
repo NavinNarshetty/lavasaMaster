@@ -165,6 +165,17 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
 
         _.each($scope.packages, function (n) {
             if (n._id == $scope.formData.package) {
+              // SET POPUP
+              if (n.order > 1 ) {
+                $scope.modalPackage = $uibModal.open({
+                  animation: true,
+                  scope: $scope,
+                  size: 'md',
+                  templateUrl: 'views/modal/packagegoodie-selection.html',
+                  windowClass: "packageselection-modal"
+                });
+              }
+              // SET POPUP END
                 console.log("select", n);
                 $scope.showPaymentTab = true;
                 $scope.promoApplied = false;
@@ -203,6 +214,15 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
         })
     }
     // SET PAYMENT TABLE END
+    // UPGRADE TO TOP PACKAGE
+    $scope.upgradeTop = function(){
+      var topPack = _.find($scope.packages, {'order': 1});
+      console.log(topPack);
+      $scope.formData.package = topPack._id;
+      $scope.setPackageDetails();
+      $scope.modalPackage.close();
+    }
+    // UPGRADE TO TOP PACKAGE END
     // CALCULATE TAX
     $scope.calculateTax = function () {
         if ($scope.formData.igstPercent) {
@@ -721,6 +741,16 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
     $scope.searchChangeSchool = function (paramData) {
         // console.log("changekeyword", paramData);
         $scope.schoolname = paramData;
+        if ($scope.formData.atheleteSchoolName) {
+          delete $scope.formData.atheleteSchoolName;
+        }
+        if ($scope.formData.atheleteSchoolLocality) {
+          delete $scope.formData.atheleteSchoolLocality;
+        }
+        if ($scope.formData.atheleteSchoolContact) {
+          delete $scope.formData.atheleteSchoolContact;
+        }
+        $scope.goto();
     };
     $scope.refreshChangeSchool = function (paramData) {
         NavigationService.getSchoolSFA(paramData, function (data) {
@@ -820,6 +850,8 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
         if ($scope.oneClick === false) {
             $scope.showSchool = !$scope.showSchool;
             $scope.oneClick = true;
+        } else {
+          $scope.oneClick = false;
         }
     };
 

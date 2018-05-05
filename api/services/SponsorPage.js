@@ -2,6 +2,7 @@ var schema = new Schema({
     name: String,
     city: String,
     headerImage: String,
+    footerImage: String,
     content: String,
     sponsorType: String,
     logoCaption: String,
@@ -58,7 +59,9 @@ var model = {
                             "city": "$city",
                             "sponsorType": "$sponsorType",
                             "headerImage": "$headerImage",
-                            "insidePage": "$insidePage"
+                            "footerImage": "$footerImage",
+                            "insidePage": "$insidePage",
+                            "logoCaption": "$logoCaption"
                         }
                     }
                 }

@@ -39,11 +39,11 @@
                 <div class="form-group">
                   <label>Sponsor Type</label>
                   <select name="sponsortype" class="form-control" ng-model="formData.sponsorType" placeholder="Enter Video Type" required>
-                           <option value="Supported By">Supported By</option>
-                           <option value="Sponsor">Sponsor</option>
-                           <option value="Partner">Partner</option>
-                           <option value="Sponsor &amp; Partner">Sponsor & Partner</option>
-                    </select>
+                    <option value="Supported By">Supported By</option>
+                    <option value="Sponsor">Sponsor</option>
+                    <option value="Partner">Partner</option>
+                    <option value="Sponsor &amp; Partner">Sponsor & Partner</option>
+                  </select>
                   <div class="error-msg" ng-if="sponsorForm.sponsortype.$invalid && sponsorForm.sponsortype.$touched">Please Enter Valid Type *</div>
                 </div>
               </div>
@@ -53,9 +53,9 @@
                 <div class="form-group">
                   <label>Sponsor Inside Type</label>
                   <select name="sponsortypes" class="form-control" ng-model="formData.insidePage" placeholder="Enter Type" required>
-                             <option value=true>Yes</option>
-                             <option value=false>No</option>
-                      </select>
+                    <option value=true>Yes</option>
+                    <option value=false>No</option>
+                  </select>
                   <div class="error-msg" ng-if="sponsorForm.sponsortypes.$invalid && sponsorForm.sponsortypes.$touched">Please Enter Valid Type *</div>
                 </div>
               </div>
@@ -96,12 +96,29 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label>Sponsor Image <span style="color:#ea5249;">(Note:image size should be 300x300 only *)</span> <span ng-show="type.required">*</span></label>
+                  <label>Sponsor Image
+                    <span style="color:#ea5249;">(Note:image size should be 300x300 only *)</span>
+                    <span ng-show="type.required">*</span>
+                  </label>
                   <upload-image ng-model="formData.headerImage" inobj></upload-image>
                 </div>
               </div>
             </div>
             <!-- HEADER IMAGE END -->
+
+            <!-- FOOTER IMAGE -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Sponsor Footer Image
+                    <span style="color:#ea5249;">(Note:image size should be 139x85 only *)</span>
+                    <span ng-show="type.required">*</span>
+                  </label>
+                  <upload-image ng-model="formData.footerImage" inobj></upload-image>
+                </div>
+              </div>
+            </div>
+            <!-- FOOTER IMAGE END -->
 
             <!-- CONTENT TEXTANGULAR -->
             <div class="row">
@@ -143,8 +160,8 @@
                   <div class="form-group">
                     <label>Video Type</label>
                     <select name="videotype" class="form-control" ng-model="formData.video.videotype" placeholder="Enter Video Type">
-                           <option value="vimeo">vimeo</option>
-                           <option value="youtube">youtube</option>
+                      <option value="vimeo">vimeo</option>
+                      <option value="youtube">youtube</option>
                     </select>
                     <div class="error-msg" ng-if="sponsorForm.videotype.$invalid && sponsorForm.videotype.$touched">Please Enter Valid Type *</div>
                   </div>
@@ -156,7 +173,10 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label>Video Banner Image <span style="color:#ea5249;">(Note:image size should be 1920x600 only *)</span> <span ng-show="type.required">*</span></label>
+                    <label>Video Banner Image
+                      <span style="color:#ea5249;">(Note:image size should be 1920x600 only *)</span>
+                      <span ng-show="type.required">*</span>
+                    </label>
                     <upload-image ng-model="formData.video.videoimage" inobj></upload-image>
                   </div>
                 </div>
@@ -172,7 +192,8 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label>Gallery Images</label> -<span style="color:#ea5249;">Image size(400 X 300)</span>
+                  <label>Gallery Images</label> -
+                  <span style="color:#ea5249;">Image size(400 X 300)</span>
                   <upload-image ng-model="formData.gallery" multiple inobj></upload-image>
                 </div>
               </div>
@@ -189,7 +210,9 @@
                     <table class="table">
                       <thead>
                         <tr>
-                          <th>Image <span style="color:#ea5249;">Image size(400 X 300)</span> </th>
+                          <th>Image
+                            <span style="color:#ea5249;">Image size(400 X 300)</span>
+                          </th>
                           <th>Video Link</th>
                           <th>Type</th>
                           <th>Action</th>
@@ -211,8 +234,8 @@
                             <div class="form-group">
                               <!-- <input type="text" placeholder="Video Type" class="form-control" ng-model="content.vtype"> -->
                               <select name="videotype" class="form-control" ng-model="content.vtype" placeholder="Enter Video Type">
-                                  <option value="vimeo">vimeo</option>
-                                  <option value="youtube">youtube</option>
+                                <option value="vimeo">vimeo</option>
+                                <option value="youtube">youtube</option>
                               </select>
                             </div>
                           </td>

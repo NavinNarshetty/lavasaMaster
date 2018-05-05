@@ -1,4 +1,5 @@
-<div class="package-tableholder table-responsive" ng-if="packages.length>0">
+<!-- TABLE FOR DESKTOP -->
+<div class="package-tableholder table-responsive hidden-xs" ng-if="packages.length>0">
   <table class="table">
     <thead>
       <th class="package-tabheader package-featurehead">
@@ -6,15 +7,18 @@
           Features
         </div>
       </th>
-      <th class="package-tabheader" ng-class="{'package-tabhead-blue': package.color == 'blue', 'package-tabhead-green': package.color == 'green', 'package-tabhead-red': package.color == 'red', 'package-tabhead-yellow': package.color == 'yellow'}" ng-repeat = "package in packages | orderBy:'order' track by $index" >
-        <div >
+      <th class="package-tabheader" ng-class="{'package-tabhead-gold': package.color == 'gold','package-tabhead-silver': package.color == 'silver','package-tabhead-bronze': package.color == 'bronze','package-tabhead-blue': package.color == 'blue', 'package-tabhead-green': package.color == 'green', 'package-tabhead-red': package.color == 'red', 'package-tabhead-yellow': package.color == 'yellow'}"
+        ng-repeat="package in packages | orderBy:'order' track by $index" style="background-image: url({{package.headerImg|serverimage2}});">
+        <div>
           <div class="package-headtab" ng-if="package.header">
             <span>{{package.header}}</span>
           </div>
           <div class="upgradepackage-radiocontent">
             <span class="upgradepackage-offer" ng-if="package.price != ''">Early Bird Offer</span>
-            <span class="upgradepackage-offeramount" ng-if="package.price != ''">( <i class="fa fa-inr"></i> {{package.price}})</span>
-            <span class="upgradepackage-radioprice"><span class="upgradepackage-radioinr fa fa-inr"></span>{{package.finalPrice}}</span>
+            <span class="upgradepackage-offeramount" ng-if="package.price != ''">(
+              <i class="fa fa-inr"></i> {{package.price}})</span>
+            <span class="upgradepackage-radioprice">
+              <span class="upgradepackage-radioinr fa fa-inr"></span>{{package.finalPrice}}</span>
             <span class="upgradepackage-tax">+taxes</span>
             <span class="upgradepackage-radioname">{{package.name}}</span>
           </div>
@@ -34,12 +38,13 @@
         </td>
         <td ng-repeat="detail in feature.featureDetails|orderBy: 'packageName.order' track by $index">
           <div class="upgradepackage-td">
-              <div class="" ng-if="detail.featureType == 'checkbox'">
-                <span class="fa" ng-class="{'fa-check sport-success': detail.featureCheck == true, 'fa-times sport-danger': detail.featureCheck == false}"></span>
-              </div>
-              <div class="" ng-if="detail.featureType == 'text'">
-                <p class="m-clear">{{detail.featureText}}</p>
-              </div>
+            <div class="upgradepackage-featute-check" ng-if="detail.featureType == 'checkbox'">
+              <img src="img/medal-icon/tick-green.png" alt="Yes" class="img-responsive" ng-if="detail.featureCheck">
+              <img src="img/medal-icon/cross-red.png" alt="No" class="img-responsive" ng-if="!detail.featureCheck">
+            </div>
+            <div class="" ng-if="detail.featureType == 'text'">
+              <p class="m-clear">{{detail.featureText}}</p>
+            </div>
           </div>
         </td>
       </tr>
@@ -48,19 +53,24 @@
       <!-- CAPTION TEXT -->
       <div class="packagetable-caption">
         <div class="text-center" ng-if="user == 'athlete'">
-          <a href="https://storage.googleapis.com/sportsforall/goodiebags.pdf" target="_new"><button class="btn btn-goodie">View Goodie Bag And Other Package Details</button></a>
+          <a href="https://storage.googleapis.com/sportsforall/goodiebags.pdf" target="_new">
+            <button class="btn btn-goodie" type="button">View Goodie Bag And Other Package Details</button>
+          </a>
         </div>
         <p class="m-clear">*An event category refers to -Sport + age group + gender + event/ weight category (if applicable)</p>
-        <p class="m-clear">E.g. Swimming Male U-10 | 50m Freestyle | Athletics Female U-14 Long Jump. <a href="">Click here to view the list of Event Categories</a></p>
+        <p class="m-clear">E.g. Swimming Male U-10 | 50m Freestyle | Athletics Female U-14 Long Jump.
+          <a href="https://storage.googleapis.com/sportsforall/age-event.pdf"
+            target="_new" class="text-underline">Click here to view the list of Event Categories</a>
+        </p>
       </div>
       <!-- CAPTION TEXT END -->
       <!-- CAPTION CASHBACK  -->
       <div class="package-cashbackholder" ng-show="cashback">
         <div class="package-cash30">
-          <img src="img/medal-icon/badge-cash30.png" alt="30 Day Money Back Guarantee" title="30 Day Money Back Guarantee"  class="img-responsive">
+          <img src="img/medal-icon/badge-cash30.png" alt="30 Day Money Back Guarantee" title="30 Day Money Back Guarantee" class="img-responsive">
         </div>
         <span>You can cancel your registration within 30 days of purchasing an offer package</span>
-        <div class="package-cashbadge" >
+        <div class="package-cashbadge">
           <img src="img/medal-icon/badge-moneyback.png" alt="30 Day Money Back Guarantee" title="30 Day Money Back Guarantee" class="img-responsive">
         </div>
       </div>
@@ -68,3 +78,96 @@
     </caption>
   </table>
 </div>
+<!-- TABLE FOR DESKTOP END -->
+<!-- ACCORDION FOR MOBILE -->
+<div class="package-accordionholder visible-xs" ng-if="packages.length>0">
+  <uib-accordion close-others="oneAtATime">
+    <div uib-accordion-group class="panel-default" is-open="package.open" ng-repeat="package in packages | orderBy:'order' track by $index">
+      <!-- HEADING -->
+      <uib-accordion-heading class="clearfix">
+        <div class="package-accordionhead" ng-class="{'package-tabhead-gold': package.color == 'gold','package-tabhead-silver': package.color == 'silver','package-tabhead-bronze': package.color == 'bronze','package-tabhead-blue': package.color == 'blue', 'package-tabhead-green': package.color == 'green', 'package-tabhead-red': package.color == 'red', 'package-tabhead-yellow': package.color == 'yellow'}"
+          style="background-image: url({{package.headerImg|serverimage2}});">
+          <!-- ARROW -->
+          <div class="packageaccordion-arrow">
+            <i class="fa " ng-class="{'fa-caret-up': package.open, 'fa-caret-down': !package.open}"></i>
+          </div>
+          <!-- ARROW END -->
+          <!-- CONTENT -->
+          <!-- <div class="package-headtab" ng-if="package.header">
+            <span>{{package.header}}</span>
+          </div> -->
+          <div class="upgradepackage-radiocontent">
+            <span class="upgradepackage-offer" ng-if="package.price != ''">Early Bird Offer</span>
+            <span class="upgradepackage-offeramount" ng-if="package.price != ''">(
+              <i class="fa fa-inr"></i> {{package.price}})</span>
+            <span class="upgradepackage-radioprice">
+              <span class="upgradepackage-radioinr fa fa-inr"></span>{{package.finalPrice}}</span>
+            <span class="upgradepackage-tax">+taxes</span>
+            <span class="upgradepackage-radioname">{{package.name}}</span>
+          </div>
+          <!-- {{package.name}} -->
+          <!-- CONTENT END -->
+        </div>
+      </uib-accordion-heading>
+      <!-- HEADING END -->
+      <!-- TABLE -->
+      <div class="package-tableholder">
+        <table class="table">
+          <tbody>
+            <tr ng-repeat="feature in features track by $index">
+              <td>
+                <div class="upgradepackage-td text-left ">
+                  <div class="" ng-class="{'upgradepackage-featuretext': feature.featureLogo}">{{feature.featureName}}</div>
+                  <div class="upgradepackage-featurelogo" ng-if="feature.featureLogo">
+                    <img ng-src="{{feature.featureLogo|serverimage2}}" alt="Feature Sponsor | Sports For All" title="Feature Sponsor" class="img-responsive">
+                  </div>
+                </div>
+              </td>
+              <td ng-repeat="detail in feature.featureDetails|orderBy: 'packageName.order' track by $index" ng-if="detail.packageName._id == package._id">
+                <div class="upgradepackage-td">
+                  <div class="upgradepackage-featute-check" ng-if="detail.featureType == 'checkbox'">
+                    <img src="img/medal-icon/tick-green.png" alt="Yes" class="img-responsive" ng-if="detail.featureCheck">
+                    <img src="img/medal-icon/cross-red.png" alt="No" class="img-responsive" ng-if="!detail.featureCheck">
+                  </div>
+                  <div class="" ng-if="detail.featureType == 'text'">
+                    <p class="m-clear">{{detail.featureText}}</p>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+          <caption align="bottom" class="packagetable-captionholder">
+            <!-- CAPTION TEXT -->
+            <div class="packagetable-caption">
+              <div class="text-center " ng-if="user == 'athlete'">
+                <a href="https://storage.googleapis.com/sportsforall/goodiebags.pdf" target="_new">
+                  <button class="btn btn-goodie">View Goodie Bag And Other Package Details</button>
+                </a>
+              </div>
+              <p class="m-clear">*An event category refers to- </br>Sport + age group + gender + event/ weight category</p>
+              <p class="m-clear">E.g. Swimming Male U-10 | 50m Freestyle | Athletics Female U-14 Long Jump. </br>
+                <a href="https://storage.googleapis.com/sportsforall/age-event.pdf"
+                  target="_new" class="text-underline">Click here to view the list of Event Categories</a>
+              </p>
+            </div>
+            <!-- CAPTION TEXT END -->
+            <!-- CAPTION CASHBACK  -->
+            <div class="package-cashbackholder" ng-show="cashback">
+              <div class="package-cash30">
+                <img src="img/medal-icon/badge-cash30.png" alt="30 Day Money Back Guarantee" title="30 Day Money Back Guarantee" class="img-responsive">
+              </div>
+              <span>You can cancel your registration within 30 days of purchasing an offer package</span>
+              <div class="package-cashbadge">
+                <img src="img/medal-icon/badge-moneyback.png" alt="30 Day Money Back Guarantee" title="30 Day Money Back Guarantee" class="img-responsive">
+              </div>
+            </div>
+            <!-- CAPTION CASHBACK END -->
+          </caption>
+
+        </table>
+      </div>
+      <!-- TABLE END -->
+    </div>
+  </uib-accordion>
+</div>
+<!-- ACCORDION FOR MOBILE END -->

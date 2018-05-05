@@ -439,11 +439,25 @@
   text-transform: uppercase;
   @extend .d-fjalla-one;
 }
+.package-radio-gold{
+  .upgradepackage-radioname {
+    color: #b4911f;
+  }
+}
+.package-radio-silver{
+  .upgradepackage-radioname {
+    color: #9c9c9c;
+  }
 
+}
+.package-radio-bronze{
+  .upgradepackage-radioname {
+    color: #967057;
+  }
+}
 .package-radio-blue {
   .upgradepackage-radioname {
     color: tint($sport-lightblue, 15%);
-    ;
   }
 }
 
@@ -521,6 +535,7 @@
   background-color: $package-bggrey;
   color: $sport-dark-grey;
   font-style: italic;
+  text-align: center;
 }
 
 .package-cashbackholder {
@@ -555,6 +570,8 @@
   border-right: 2px solid #fff !important;
   position: relative;
   background-color: $sport-table-grey;
+  background-position: 50% 50%;
+  background-size: cover;
   color: #fff;
   .upgradepackage-radioprice {
     color: #fff;
@@ -581,8 +598,60 @@
   @include transform(translateX(-50%));
 }
 
+.package-tabhead-gold {
+  background-color: #edd685;
+  background-image: url('../img/medal-icon/package-bg-gold.png');
+  color: #606060;
+  .upgradepackage-radioprice{
+    color: #606060;
+  }
+  .upgradepackage-radioname {
+    color: #b4911f;
+  }
+  .package-headtab {
+    background-color: #d9c88f;
+    color: #b4911f;
+  }
+}
+
+.package-tabhead-silver {
+  background-color: #d7d7d7;
+  background-image: url('../img/medal-icon/package-bg-silver.png');
+  color: #606060;
+  .upgradepackage-radioprice{
+    color: #606060;
+  }
+  .upgradepackage-radioname {
+    color: #9c9c9c;
+  }
+  .package-headtab {
+    background-color: #d7d7d7;
+    color: #9c9c9c;
+  }
+}
+
+.package-tabhead-bronze {
+  background-color: #d49873;
+  background-image: url('../img/medal-icon/package-bg-bronze.png');
+  color: #606060;
+  .upgradepackage-radioprice{
+    color: #606060;
+  }
+  .upgradepackage-radioname {
+    color: #967057;
+  }
+  .package-headtab {
+    background-color: #d49873;
+    color: #967057;
+  }
+}
+
 .package-tabhead-blue {
   background-color: tint($sport-lightblue, 15%);
+  color: #fff;
+  .upgradepackage-radioprice{
+    color: #fff;
+  }
   .upgradepackage-radioname {
     color: shade($sport-lightblue, 30%);
   }
@@ -594,6 +663,10 @@
 
 .package-tabhead-green {
   background-color: tint($sport-success, 15%);
+  color: #fff;
+  .upgradepackage-radioprice{
+    color: #fff;
+  }
   .upgradepackage-radioname {
     color: shade($sport-success, 30%);
   }
@@ -605,6 +678,10 @@
 
 .package-tabhead-red {
   background-color: tint($sport-danger, 15%);
+  color: #fff;
+  .upgradepackage-radioprice{
+    color: #fff;
+  }
   .upgradepackage-radioname {
     color: shade($sport-danger, 30%);
   }
@@ -616,6 +693,10 @@
 
 .package-tabhead-yellow {
   background-color: tint($sport-warning, 15%);
+  color: #fff;
+  .upgradepackage-radioprice{
+    color: #fff;
+  }
   .upgradepackage-radioname {
     color: shade($sport-warning, 30%);
   }
@@ -648,7 +729,10 @@
   text-transform: uppercase;
   @extend .d-fjalla-one;
 }
-
+.upgradepackage-featute-check{
+  width: 20px;
+  margin: 0 auto;
+}
 // PACKAGE FEATURE LOGO
 .upgradepackage-featuretext {
   width: calc(100% - 65px);
@@ -679,7 +763,70 @@
 }
 
 // PACKAGE TABLE END
-.upgradepackage-header {
+// PACKAGE ACCORDION
+.package-accordionholder{
+  .panel{
+    border: none;
+    // border: 1px solid;
+    box-shadow: none;
+  }
+  .panel-heading{
+    padding: 0;
+    border-radius: 0px;
+    background-color: transparent;
+  }
+  .panel-body{
+    padding: 5px 2px;
+  }
+  .upgradepackage-radiocontent{
+    margin: 0;
+  }
+  .panel-group .panel-heading + .panel-collapse > .panel-body, .panel-group .panel-heading + .panel-collapse > .list-group{
+    border: none;
+  }
+  .panel-group .panel + .panel{
+    margin-top: 10px;
+  }
+  .package-tableholder{
+    padding: 0;
+    margin: 0;
+    .table{
+      margin: 0;
+      tbody{
+        box-shadow: none;
+      }
+    }
+  }
+}
+.package-accordionhead {
+  padding: 5px 10px;
+  border-radius: 10px;
+  position: relative;
+  background-position: 50% 50%;
+  background-size: cover;
+  .upgradepackage-offer, .upgradepackage-offeramount, .upgradepackage-radioprice, .upgradepackage-tax, .upgradepackage-radioname{
+    line-height: 1;
+  }
+  .packageaccordion-arrow {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #757575;
+    border-radius: 100%;
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    color: #757575;
+    background: rgba(255,255,255,0.6);
+    text-align: center;
+    i{
+      font-size: 28px;
+      line-height: 1;
+    }
+    @include transform(translateY(-50%));
+  }
+}
+// PACKAGE ACCORDION END
+.upgradepackage-header{
   margin-bottom: 10px;
   font-size: 18px;
   color: $sport-primary;
@@ -696,5 +843,57 @@
   color: #fff;
   border: none !important;
 }
-
+.registeraccordion-note{
+  font-size: 12px;
+  font-style: italic;
+}
 // UPGRADE PACKAGE PAGE END
+// PACKAGE SELECTION MODAL
+.packageselection-modal{
+  .modal-dialog{
+    width: 800px;
+  }
+  .modal-content{
+    border-radius: 0;
+    margin-top: 30px;
+    position: relative;
+  }
+  .modal-close{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    cursor: pointer;
+  }
+}
+.package-selectmodal{
+  padding: 20px 0;
+  background-color: $sport-primary;
+  background-image: url('../img/medal-icon/bg-packagemodal.jpg');
+  background-position: 50% 50%;
+  background-size: cover;
+  color: #fff;
+}
+.packageselect-content{
+  position: relative;
+  overflow: hidden;
+  img{
+    margin: 0 auto;
+    @include transform(scale(1.1));
+  }
+}
+.packageselect-btnholder{
+  // margin: 20px 0;
+  text-align: center;
+}
+.btn-packageselect{
+  border: 1px solid #fff;
+  background-color: transparent;
+  color: #fff;
+  text-transform: uppercase;
+  &:active, &:focus, &:hover{
+    color: #fff;
+  }
+}
+// PACKAGE SELECTION MODAL END

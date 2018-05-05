@@ -70,6 +70,8 @@ myApp.controller('schoolAccountCtrl', function ($scope, TemplateService, Navigat
           NavigationService.apiCall($scope.getOneUrl, $scope.getOneConstraints, function (data) {
             key.schoolData = data.data;
             if (data.data.display) {
+              data.data.display.payuId = _.uniq(data.data.display.payuId);
+              data.data.display.receiptId = _.uniq(data.data.display.receiptId);
               key.displayData = data.data.display;
             }
             // console.log("getOne", key.schoolData);
