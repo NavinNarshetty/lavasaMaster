@@ -1204,36 +1204,65 @@ var model = {
                     var count = 0;
                     var Captain;
                     var GoalKeeper;
-                    _.each(mainData.studentTeam, function (n) {
-                        var name;
-                        if (n.studentId) {
-                            if (n.studentId.middleName) {
-                                name = n.studentId.firstName + " " + n.studentId.middleName + " " + n.studentId.surname;
-                            } else {
-                                name = n.studentId.firstName + " " + n.studentId.surname;
-                            }
-                            name = n.studentId.sfaId + " - " + name + " - " + n.studentId.mobile;
-                            if (n.isCaptain == true) {
-                                Captain = name;
-                            }
 
-                            if (n.isGoalKeeper == true) {
-                                GoalKeeper = name;
-                            }
-                            if (count == 0) {
-                                StudentTeam = name;
+                    if (mainData.studentTeam) {
+                        _.each(mainData.studentTeam, function (n) {
+                            var name;
+                            if (n.studentId) {
+                                if (n.studentId.middleName) {
+                                    name = n.studentId.firstName + " " + n.studentId.middleName + " " + n.studentId.surname;
+                                } else {
+                                    name = n.studentId.firstName + " " + n.studentId.surname;
+                                }
+                                name = n.studentId.sfaId + " - " + name + " - " + n.studentId.mobile;
+                                if (n.isCaptain == true) {
+                                    Captain = name;
+                                }
+
+                                if (n.isGoalKeeper == true) {
+                                    GoalKeeper = name;
+                                }
+                                if (count == 0) {
+                                    StudentTeam = name;
+                                } else {
+                                    StudentTeam = StudentTeam + " , " + name;
+                                }
+                                count++;
+                                obj.All_Players = StudentTeam;
+                                obj.Captain = Captain;
+                                obj.GoalKeeper = GoalKeeper;
                             } else {
-                                StudentTeam = StudentTeam + " , " + name;
+                                obj.All_Players = "";
+                                obj.Captain = "";
+                                obj.GoalKeeper = "";
                             }
-                            count++;
-                            obj.All_Players = StudentTeam;
-                            obj.Captain = Captain;
-                            obj.GoalKeeper = GoalKeeper;
-                        } else {
-                            obj.All_Players = "";
-                            obj.Captain = "";
-                            obj.GoalKeeper = "";
-                        }
+                            obj.createdBy = mainData.createdBy;
+
+                            if (mainData.nominatedSchoolName) {
+                                obj.nominatedSchoolName = mainData.nominatedSchoolName;
+                            } else {
+                                obj.nominatedSchoolName = "";
+                            }
+                            if (mainData.nominatedContactDetails) {
+                                obj.nominatedContactDetails = mainData.nominatedContactDetails;
+                            } else {
+                                obj.nominatedContactDetails = "";
+                            }
+                            if (mainData.nominatedEmailId) {
+                                obj.nominatedEmailId = mainData.nominatedEmailId;
+                            } else {
+                                obj.nominatedEmailId = "";
+                            }
+                            if (mainData.isVideoAnalysis) {
+                                obj.isVideoAnalysis = mainData.isVideoAnalysis;
+                            } else {
+                                obj.isVideoAnalysis = "";
+                            }
+                        });
+                    } else {
+                        obj.All_Players = "";
+                        obj.Captain = "";
+                        obj.GoalKeeper = "";
                         obj.createdBy = mainData.createdBy;
 
                         if (mainData.nominatedSchoolName) {
@@ -1256,7 +1285,8 @@ var model = {
                         } else {
                             obj.isVideoAnalysis = "";
                         }
-                    });
+
+                    }
                     obj["Total Athlete Count"] = mainData.studentTeam.length;
                     excelData.push(obj);
                 });
