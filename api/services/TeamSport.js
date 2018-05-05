@@ -1205,7 +1205,7 @@ var model = {
                     var Captain;
                     var GoalKeeper;
 
-                    if (mainData.studentTeam) {
+                    if (mainData.studentTeam.length >= 1) {
                         _.each(mainData.studentTeam, function (n) {
                             var name;
                             if (n.studentId) {
