@@ -15276,6 +15276,8 @@ var model = {
                     videoType: data.videoType
                 }
             };
+        } else {
+            matchObj = {};
         }
         var updateObj = {};
         var updateObj1 = {};
@@ -15312,7 +15314,7 @@ var model = {
                                 } else if (!_.isEmpty(found.opponentsTeam)) {
                                     data.isTeam = true;
                                 }
-                                console.log("data.isTeam", data, "matchObj", matchObj);
+                                console.log("data.isTeam", data, "found", found);
                                 data._id = found._id;
                                 data.found = found;
                                 callback(null, found);
