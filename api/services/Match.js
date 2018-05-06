@@ -4563,7 +4563,7 @@ var model = {
                                 sNo++;
                             }
                         }
-                        if(mainData.resultKumite.teams[0].teamResults.sets.length == 0){
+                        if (mainData.resultKumite.teams[0].teamResults.sets.length == 0) {
                             obj["SCORE 1"] = '';
                         }
                         // obj["DATA POINTS 1"] = mainData.resultKumite.teams[0].sets;
@@ -9232,7 +9232,7 @@ var model = {
                         }
                     } else if (mainData.resultKumite) {
                         if (mainData.resultKumite.winner) {
-                            if(mainData.resultKumite.teams[0].teamResults.sets.length > 0){
+                            if (mainData.resultKumite.teams[0].teamResults.sets.length > 0) {
                                 var i;
                                 var sNo = 1;
                                 for (i = 0; i < mainData.resultKumite.teams[0].teamResults.sets.length; i++) {
@@ -9242,7 +9242,7 @@ var model = {
                                         obj["TEAM 1 SCORE"] = obj["TEAM 1 SCORE"] + mainData.resultKumite.teams[0].teamResults.sets[i].points;
                                     }
                                 }
-                            }else{
+                            } else {
                                 obj["TEAM 1 SCORE"] = "";
                             }
                         } else {
@@ -15132,6 +15132,7 @@ var model = {
     },
 
     updateBackend: function (data, callback) {
+        console.log("data in param", data);
         if (data.resultsCombat) {
             var matchObj = {
                 $set: {
@@ -15311,7 +15312,7 @@ var model = {
                                 } else if (!_.isEmpty(found.opponentsTeam)) {
                                     data.isTeam = true;
                                 }
-                                // console.log("data.isTeam", data.isNoMatch);
+                                console.log("data.isTeam", data, "matchObj", matchObj);
                                 data._id = found._id;
                                 data.found = found;
                                 callback(null, found);
@@ -16967,7 +16968,7 @@ var model = {
     },
 
     updateResultImages: function (data, callback) {
-        if(data.resultHeat){
+        if (data.resultHeat) {
             var matchObj = {
                 $set: {
                     resultImages: data.resultImages,
@@ -17447,7 +17448,7 @@ var model = {
         return pipeline;
     },
 
-    
+
     getAllWinners: function (data, callback) {
         async.waterfall([
                 function (callback) {
@@ -17797,7 +17798,7 @@ var model = {
                 }
             });
     },
-    
+
     getResultVar: function (sportName, sportType) {
         if (sportName == "Shooting Air Pistol Team" || sportName == "Shooting Air Rifle Open Team" || sportName == "Shooting Air Rifle Peep Team") {
             return null;
