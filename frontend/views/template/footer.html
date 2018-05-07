@@ -90,11 +90,11 @@
             <!-- SPONSER HEAD END -->
           </div>
           <!-- SPONSER IMAGE HODER -->
-          <div class="sponser-card-holder sponser-list">
+          <div class="sponser-card-holder">
             <div class="col-md-2 col-sm-4 col-xs-6" ng-if="image.status == 'enable'" ng-repeat="image in sponsorData[0].info track by $index">
               <div class="card-holder" ng-class="{'custom-cursor-sponsor':image.insidePage==='false'}">
                 <div class="" ng-click="goSponsor(image)">
-                  <img ng-src="{{image.footerImage | serverimage2}}" alt="" class="img-responsive">
+                  <img ng-src="{{image.footerImage | serverimage2}}" alt="" class="img-responsive m-clear-auto">
                 </div>
                 <p class="color-grey2 f12 font-bold mt10 text-center text-up">{{image.logoCaption}}</p>
               </div>
@@ -113,7 +113,7 @@
           <!-- PARTNER HEAD -->
 
           <!-- PARTNER_IMAGE HODER -->
-          <div class="partner-card-holder sponser-list">
+          <div class="partner-card-holder">
             <div class="col-md-2 col-sm-4 col-xs-6" ng-if="image.status == 'enable'" ng-repeat="image in sponsorData[1].info track by $index">
               <div class="card-holder" ng-class="{'custom-cursor-sponsor':image.insidePage==='false'}">
                 <div class="" ng-click="goSponsor(image)">
