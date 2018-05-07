@@ -3,11 +3,9 @@ var year16 = '2016-17';
 var year17 = '2017-18';
 var year18 = '2018-19';
 var eventYear = '2018-19';
-// var year15 = '2015';
-// var year16 = '2016';
-// var eventYear = '2017';
 
-// For Test
+// For Test ALL CITY WISE LINK FOR SCHOOL COLLEGE OVERALL
+
 var serverType = 'test';
 var globalLinkSchoolRegister = "http://testmumbaischool.sfanow.in";
 var globalLinkCollegeRegister = "http://testmumbaicollege.sfanow.in";
@@ -19,14 +17,23 @@ var globalLinkForAll = "http://testmumbai.sfanow.in/";
 // var globalLinkCollegeRegister = "http://testahmedabadcollege.sfanow.in";
 // var globalLinkForAll = "http://testahmedabad.sfanow.in/";
 
-//For Live
+// For Test ALL CITY WISE LINK FOR SCHOOL COLLEGE OVERALL END
+
+
+//For Live ALL CITY WISE LINK FOR SCHOOL COLLEGE OVERALL
+
 // var serverType = 'live';
 // var globalLinkSchoolRegister = "http://mumbaischool.sfanow.in";
+// var globalLinkCollegeRegister = "http://mumbaicollege.sfanow.in";
+// var globalLinkForAll = "https://mumbai.sfanow.in/";
+// var globalLinkSchoolRegister = "http://mumbaischool.sfanow.in/2017";
 // var globalLinkCollegeRegister = "http://mumbaicollege.sfanow.in";
 // var globalLinkForAll = "https://mumbai.sfanow.in/";
 // var globalLinkSchoolRegister = "http://hyderabadschool.sfanow.in";
 // var globalLinkCollegeRegister = "http://hyderabadcollege.sfanow.in";
 // var globalLinkForAll = "https://hyderabad.sfanow.in/";
+
+//For Live ALL CITY WISE LINK FOR SCHOOL COLLEGE OVERALL END
 
 
 myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, NavigationService, errorService, toastr) {
@@ -330,6 +337,25 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
     $scope.linkForAll = globalLinkForAll;
     $scope.linkForAllSports = globalLinkForAll + "sport/";
     $scope.eventYear = eventYear;
+
+    $scope.getSponsor = function () {
+        NavigationService.getSponsor(function (data) {
+            $scope.sponsorData = data.data.data;
+            console.log($scope.sponsorData, "console")
+        });
+    };
+    $scope.getSponsor();
+
+    $scope.goSponsor = function (data) {
+        // console.log(data)
+        if (data.insidePage === "true") {
+            $state.go('individual-sponsor', {
+                id: data._id
+            })
+        } else {
+            // console.log("nothing")
+        }
+    };
 
     $scope.games = // JavaScript Document
         [
