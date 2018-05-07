@@ -36,7 +36,7 @@ var globalLinkForAll = "https://mumbai.sfanow.in/";
 //For Live ALL CITY WISE LINK FOR SCHOOL COLLEGE OVERALL END
 
 
-myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, NavigationService, errorService, toastr) {
+myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, NavigationService, errorService, toastr, configService) {
     $scope.template = TemplateService;
     $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
         $(window).scrollTop(0);
@@ -285,8 +285,7 @@ myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, Na
         $scope.selectedCity = 'mumbai';
     } else if (window.location.host == "hyderabadschool.sfanow.in" || window.location.host == "hyderabadcollege.sfanow.in") {
         $scope.selectedCity = 'hyderabad';
-    } else
-    if (window.location.host == "ahmedabadschool.sfanow.in" || window.location.host == "ahmedabadcollege.sfanow.in") {
+    } else if (window.location.host == "ahmedabadschool.sfanow.in" || window.location.host == "ahmedabadcollege.sfanow.in") {
         $scope.selectedCity = 'ahmedabad';
     }
 
@@ -300,6 +299,39 @@ myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, Na
     $scope.linkForAllSports = globalLinkForAll + "sport/";
     $scope.eventYear = eventYear;
     NavigationService.updateUserDetailsJstorage();
+
+    //CONFIG PROPERTY
+    // configService.getDetail(function (data) {
+    //     $scope.year = data.year;
+    // });
+    //CONFIG PROPERTY END
+
+    //MAKE DYNAMIC DEPENDING ON YEAR
+    // if ($scope.year) {
+    //     $scope.heads = [];
+    //     while ($scope.year >= '2017') {
+    //         if ($scope.year == '2017') {
+    //             $scope.heads.push({
+    //                 athlete: $scope.year + ' ATHLETES',
+    //                 school: $scope.year + ' SCHOOLS',
+    //                 team: $scope.year + ' TEAMS'
+    //             });
+    //             $scope.year = '2016';
+    //             console.log('YEAR', $scope.heads);
+    //         } else {
+    //             if ($scope.year >= '2017') {
+    //                 $scope.heads.push({
+    //                     athlete: $scope.year + ' ATHLETES',
+    //                     school: $scope.year + ' SCHOOLS',
+    //                     team: $scope.year + ' TEAMS'
+    //                 });
+    //                 --$scope.year;
+    //                 console.log('YEAR MANY', $scope.heads);
+    //             }
+    //         }
+    //     }
+    // }
+    //MAKE DYNAMIC DEPENDING ON YEAR END
 
 });
 

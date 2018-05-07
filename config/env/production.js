@@ -25,8 +25,8 @@ module.exports = {
    * Set the port in the production environment to 80                        *
    ***************************************************************************/
 
-  port: 1337,
-  // port: 878,
+  // port: 1337,
+  port: 878,
   realHost: "http://mumbaischool.sfanow.in",
   // realHost: "http://mumbaischool.sfanow.in/2017",
   // realHost: "http://mumbaicollege.sfanow.in",

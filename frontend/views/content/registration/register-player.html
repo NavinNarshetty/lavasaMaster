@@ -41,12 +41,14 @@
             <div class="register-accordioncontent">
               <div class="register-contentholder" ng-if="individualSports.length>0">
                 <label class="display-block">Individual Sports:</label>
-                <span class="register-sportlist" ng-repeat="sport in individualSports track by $index"> {{sport}}<span class="register-seperator">,</span>
+                <span class="register-sportlist" ng-repeat="sport in individualSports track by $index"> {{sport}}
+                  <span class="register-seperator">,</span>
                 </span>
               </div>
               <div class="register-contentholder" ng-if="teamSports.length>0">
                 <label class="display-block">Team Sports:</label>
-                <span class="register-sportlist" ng-repeat="sport in teamSports track by $index"> {{sport}}<span class="register-seperator">,</span>
+                <span class="register-sportlist" ng-repeat="sport in teamSports track by $index"> {{sport}}
+                  <span class="register-seperator">,</span>
                 </span>
                 <p class="registeraccordion-note">All sports are conducted under the aegis of certfied sport governing bodies.</p>
               </div>
@@ -66,7 +68,8 @@
                     <a class="registeraccordion-links" target="_new" ui-sref="aboutchampionship">About Championship</a>
                   </li>
                   <li>
-                    <a class="registeraccordion-links" target="_new" ui-sref="championshipschedule">Championship Schedule</a>
+                    <a class="" style="text-transform: uppercase">Championship Schedule</a>
+                    <!-- <a class="registeraccordion-links" target="_new" ui-sref="championshipschedule">Championship Schedule</a> -->
                   </li>
                   <li>
                     <a href="https://storage.googleapis.com/sportsforall/age-event.pdf" target="_new" class="registeraccordion-links">Age & Event Categories</a>
@@ -99,7 +102,9 @@
     <!-- REGISTER FORM  -->
     <section class="registerplayer-form">
       <div class="registerform-btnholder">
-        <button class="btn btn-mainregister" ng-click="registerOpen();" ng-class="{'active': showForm, 'btn-mainregister-blink': !showForm}">Click Here To Register <span class="hidden-xs">For SFA Mumbai 2018-19</span></button>
+        <button class="btn btn-mainregister" ng-click="registerOpen();" ng-class="{'active': showForm, 'btn-mainregister-blink': !showForm}">Click Here To Register
+          <span class="hidden-xs">For SFA {{sfaCity}} {{eventYear}}</span>
+        </button>
       </div>
       <div class="registerform-holder" ng-show="showForm">
         <p class="registerform-intro">All
@@ -109,11 +114,15 @@
         <ul class="list-inline register-stepbtns clearfix">
           <li>
             <button class="btn btn-registerstep hidden-xs" ng-click="showStep(1) ;formData={}" ng-class="{'active': stepTab == 1}">Step 1: Registration & Verification</button>
-            <div class="btn btn-registerstep visible-xs" ng-click="showStep(1) ;formData={}" ng-class="{'active': stepTab == 1}"><span class="text-underline">Step 1:</span> </br>Registration & Verification</div>
+            <div class="btn btn-registerstep visible-xs" ng-click="showStep(1) ;formData={}" ng-class="{'active': stepTab == 1}">
+              <span class="text-underline">Step 1:</span>
+              </br>Registration & Verification</div>
           </li>
           <li>
             <button class="btn btn-registerstep hidden-xs" ng-click="showStep(2);formData={}" ng-class="{'active': stepTab == 2}">Step 2: Sports Registration</button>
-            <button class="btn btn-registerstep visible-xs" ng-click="showStep(2);formData={}" ng-class="{'active': stepTab == 2}"><span class="text-underline">Step 2:</span> </br>Sports Registration</button>
+            <button class="btn btn-registerstep visible-xs" ng-click="showStep(2);formData={}" ng-class="{'active': stepTab == 2}">
+              <span class="text-underline">Step 2:</span>
+              </br>Sports Registration</button>
           </li>
         </ul>
         <!-- STEP BUTTONS END -->
@@ -134,7 +143,8 @@
             <p>Kindly Enter</p>
             <div class="input-group">
               <!-- <input type="text" class="form-control" placeholder="SFA ID"> -->
-              <ui-select name="playername" class="registerform1-uiselect" ng-model="searchSfaObj.sfaId" theme="bootstrap" ng-change="checkSearchChange(searchSfaObj.sfaId)" required>
+              <ui-select name="playername" class="registerform1-uiselect" ng-model="searchSfaObj.sfaId" theme="bootstrap" ng-change="checkSearchChange(searchSfaObj.sfaId)"
+                required>
                 <ui-select-match placeholder="Search by Sfa ID/Name" allow-clear="true" title="{{$select.selected.fullName}}">{{$select.selected.fullName}}</ui-select-match>
                 <ui-select-choices repeat="player as player in masterData | filter: $select.search" refresh="masterSearchSFA($select.search)"
                   refresh-delay="300">
@@ -157,13 +167,13 @@
             <!-- && !searchSfaObj.sfaId -->
             <p ng-if="!showRegisteredCredentials && !noContact">An OTP will be sent to your registered Mobile Number & Email Id</p>
             <div class="register-step-error" ng-show="noContact">
-              <p >Your Mobile Number & Email Id does not exist.
+              <p>Your Mobile Number & Email Id does not exist.
                 <br> Kindly Contact us on
-                <span class="infono-config" ng-repeat="infono in infoNoArr track by $index" >
+                <span class="infono-config" ng-repeat="infono in infoNoArr track by $index">
                   <a href="tel:{{infono}}">{{infono}}</a>
-                  <span class="infono-seperator"  ng-class="{'hide':(infoNoArr.length-1) == $index}"> / </span>
+                  <span class="infono-seperator" ng-class="{'hide':(infoNoArr.length-1) == $index}"> / </span>
                 </span>
-                 or Email us at:
+                or Email us at:
                 <a href="mailto:info@sfanow.in">info@sfanow.in</a>.</p>
             </div>
             <div class="" ng-if="showRegisteredCredentials">
