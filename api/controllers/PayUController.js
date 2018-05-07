@@ -2,6 +2,7 @@ module.exports = _.cloneDeep(require("sails-wohlig-controller"));
 var controller = {
 
     schoolPayment: function (req, res) {
+        // console.log(req);
         if (req) {
             ConfigProperty.find().lean().exec(function (err, property) {
                 if (err) {
