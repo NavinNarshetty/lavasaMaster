@@ -713,13 +713,13 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
         name: 'school',
         school: true,
         detail: [{
-            name: '2017 Athlete',
+            name: '2018 Athlete',
             link: 'students'
         }, {
-            name: '2017 school',
+            name: '2018 school',
             link: 'school'
         }, {
-            name: '2017 teams',
+            name: '2018 teams',
             link: 'team'
         }]
     }]
@@ -728,13 +728,13 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
         name: 'college',
         // mainLink: 'http://mumbaicollege.sfanow.in',
         detail: [{
-            name: '2017 Athlete',
+            name: '2018 Athlete',
             link: 'students'
         }, {
-            name: '2017 college',
+            name: '2018 college',
             link: 'school'
         }, {
-            name: '2017 teams',
+            name: '2018 teams',
             link: 'team'
         }]
     }]
