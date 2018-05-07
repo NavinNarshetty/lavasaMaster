@@ -21,10 +21,7 @@ module.exports = {
     //   connection: 'someMongodbServer'
     // }
     port: 1337,
-    // realHost: "http://mumbaischool.sfanow.in",
     realHost: "http://wohlig.io:1337",
-    // realHost: "http://testhyderabadschool.sfanow.in",
-    // realHost: "https://sfabackend.sfanow.in",
 
     accessLevels: [{
         name: "Super Admin",

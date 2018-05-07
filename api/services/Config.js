@@ -10,6 +10,7 @@ schema.plugin(timestamps);
 module.exports = mongoose.model('Config', schema);
 // var requrl = "http://wohlig.io:1337/api/";
 // var requrl = "http://mumbaischool.sfanow.in/api/";
+// var requrl = "http://mumbaischool.sfanow.in/2017/api/";
 // var requrl = "http://mumbaicollege.sfanow.in/api/";
 // var requrl = "http://hyderabadschool.sfanow.in/api/";
 // var requrl = "http://hyderabadcollege.sfanow.in/api/";

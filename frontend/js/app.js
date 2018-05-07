@@ -547,11 +547,12 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'UpgradePackageCtrl'
         })
-        // NEW REGISTRATION PAGES
-        ;
-    // if (window.location.origin != "http://testmumbaischool.sfanow.in") {
-    if (window.location.origin == "http://mumbaischool.sfanow.in") {
+    // NEW REGISTRATION PAGES
+    ;
+    if (window.location.href == "http://mumbaischool.sfanow.in/2017") {
         $urlRouterProvider.otherwise("/championship");
+    } else if (window.location.origin == "http://mumbaischool.sfanow.in" && window.location.href != "http://mumbaischool.sfanow.in/2017") {
+        $urlRouterProvider.otherwise("/aboutchampionship");
     } else if (window.location.origin == "http://mumbaicollege.sfanow.in") {
         $urlRouterProvider.otherwise("/register");
     } else if (window.location.origin == "http://hyderabadschool.sfanow.in") {
