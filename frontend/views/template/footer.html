@@ -1,5 +1,6 @@
 <footer ng-controller="footerctrl">
   <section ng-if="hideFooter">
+    <!-- OLD SPONSORS -->
     <div class="footer-slider hide" ng-if="selectedCity != 'hyderabad'">
       <div class="container">
         <div class="row">
@@ -76,6 +77,7 @@
         </div>
       </div>
     </div>
+    <!-- OLD SPONSORS END-->
     <!-- SPONSOR ROW -->
     <div class="footer-slider">
       <div class="container">
@@ -90,7 +92,7 @@
           <!-- SPONSER IMAGE HODER -->
           <div class="sponser-card-holder">
             <div class="col-md-2 col-sm-4 col-xs-6" ng-repeat="image in sponsorData[0].info track by $index">
-              <div class="card-holder" ng-class="{'custom-cursor-sponsor':image.insidePage==='false'}">
+              <div class="card-holder" ng-if="image.status == 'enable'" ng-class="{'custom-cursor-sponsor':image.insidePage==='false'}">
                 <div class="" ng-click="goSponsor(image)">
                   <img ng-src="{{image.footerImage | serverimage2}}" alt="" class="img-responsive">
                 </div>
@@ -113,7 +115,7 @@
           <!-- PARTNER_IMAGE HODER -->
           <div class="partner-card-holder">
             <div class="col-md-2 col-sm-4 col-xs-6" ng-repeat="image in sponsorData[1].info track by $index">
-              <div class="card-holder" ng-class="{'custom-cursor-sponsor':image.insidePage==='false'}">
+              <div class="card-holder" ng-if="image.status == 'enable'" ng-class="{'custom-cursor-sponsor':image.insidePage==='false'}">
                 <div class="" ng-click="goSponsor(image)">
                   <img ng-src="{{image.footerImage | serverimage2}}" alt="" class="img-responsive m-clear-auto">
                 </div>

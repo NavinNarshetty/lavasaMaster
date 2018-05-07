@@ -9,6 +9,7 @@ var schema = new Schema({
     logoLink: String,
     logoName: String,
     insidePage: String,
+    status: String,
     video: {
         link: String,
         videotype: String,
@@ -61,6 +62,7 @@ var model = {
                             "headerImage": "$headerImage",
                             "footerImage": "$footerImage",
                             "insidePage": "$insidePage",
+                            "status": "$status",
                             "logoCaption": "$logoCaption"
                         }
                     }

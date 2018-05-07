@@ -62,8 +62,20 @@
               <!-- SPONSOR INSIDE PAGE END -->
             </div>
             <div class="row">
+              <!-- STATUS -->
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="status">Status</label>
+                  <select name="status" id="status" ng-model="formData.status" class="form-control">
+                    <option value="enable">Enable</option>
+                    <option value="disable">Disable</option>
+                  </select>
+                </div>
+              </div>
+              <!-- STATUS END -->
+
               <!-- LOGO NAME -->
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <div class="form-group">
                   <label>Logo Caption</label>
                   <input type="text" name="caption" ng-model="formData.logoCaption" class="form-control" placeholder="Enter Name">
@@ -71,8 +83,9 @@
                 </div>
               </div>
               <!-- LOGO NAME END -->
+
               <!-- LOGO LINK -->
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <div class="form-group">
                   <label>Logo Link</label>
                   <input type="text" name="link" ng-model="formData.logoLink" class="form-control" placeholder="Enter Name">
@@ -80,15 +93,15 @@
                 </div>
               </div>
               <!-- LOGO LINK END -->
+
               <!-- LOGO LINK NAME -->
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <div class="form-group">
                   <label>Logo Link Name</label>
                   <input type="text" name="linkName" ng-model="formData.logoName" class="form-control" placeholder="Enter Name">
                   <div class="error-msg" ng-if="sponsorForm.linkName.$invalid && sponsorForm.linkName.$touched">Please Enter Valid Link Name *</div>
                 </div>
               </div>
-
               <!-- LOGO LINK NAME END -->
             </div>
 
