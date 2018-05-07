@@ -45,8 +45,8 @@
       <!-- SPONSER IMAGE HODER -->
       <div class="sponser-card-holder">
         <h4 class="text-center text-uppercase">{{update}}</h4>
-        <div class="col-md-2 col-sm-4 col-xs-6" ng-repeat="image in sponsorData[0].info track by $index">
-          <div class="sponser-image-holder" ng-if="image.status == 'enable'" ng-click="goSponsor(image)" ng-class="{'custom-cursor-sponsor':image.insidePage==='false'}">
+        <div class="col-md-2 col-sm-4 col-xs-6" ng-if="image.status == 'enable'" ng-repeat="image in sponsorData[0].info track by $index">
+          <div class="sponser-image-holder" ng-click="goSponsor(image)" ng-class="{'custom-cursor-sponsor':image.insidePage==='false'}">
             <img ng-src="{{image.headerImage | serverimage2}}" alt="" class="img-responsive">
           </div>
         </div>
@@ -66,8 +66,8 @@
       <!-- PARTNER_IMAGE HODER -->
       <div class="partner-card-holder">
         <h4 class="text-center text-uppercase">{{update}}</h4>
-        <div class="col-md-2 col-sm-4 col-xs-6" ng-repeat="image in sponsorData[1].info track by $index">
-          <div class="partner-image-holder" ng-if="image.status == 'enable'" ng-click="goSponsor(image)" ng-class="{'custom-cursor-sponsor':image.insidePage==='false'}">
+        <div class="col-md-2 col-sm-4 col-xs-6" ng-if="image.status == 'enable'" ng-repeat="image in sponsorData[1].info track by $index">
+          <div class="partner-image-holder" ng-click="goSponsor(image)" ng-class="{'custom-cursor-sponsor':image.insidePage==='false'}">
             <img ng-src="{{image.headerImage | serverimage2 }}" alt="" class="img-responsive">
           </div>
         </div>
