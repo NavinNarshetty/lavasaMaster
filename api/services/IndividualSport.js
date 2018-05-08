@@ -1327,7 +1327,7 @@ var model = {
                         data.sfaid = '-';
                         data.email = found.email;
                         data.mobile = found.mobile;
-                        callback(null, data, found);
+                        callback(null, data);
                     } else {
                         IndividualSport.getschoolSfa(found, function (err, schoolsfa) {
                             if (err) {

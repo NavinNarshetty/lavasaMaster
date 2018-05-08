@@ -4,7 +4,7 @@ var request = require('request');
 var generator = require('generate-password');
 
 
-var development = true;
+// var development = true;
 if (development) {
     var payukey = "gtKFFx";
     var payusalt = "eCwWELxi";
