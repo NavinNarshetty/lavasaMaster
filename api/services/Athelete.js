@@ -4857,8 +4857,8 @@ var model = {
                                 emailObj.city = property[0].sfaCity;
                                 emailObj.year = property[0].year;
                                 emailObj.eventYear = property[0].eventYear;
-                                emailData.infoNo = property[0].infoNo;
-                                emailData.infoNoArr = property[0].infoNoArr;
+                                emailObj.infoNo = property[0].infoNo;
+                                emailObj.infoNoArr = property[0].infoNoArr;
                                 emailObj.cityAddress = property[0].cityAddress;
                                 emailObj.ddFavour = property[0].ddFavour;
                                 Config.email(emailObj, callback);
