@@ -476,8 +476,8 @@ var model = {
         //                     emailObj.city = data.property.sfaCity;
         //                     emailObj.year = data.property.year;
         //                     emailObj.eventYear = data.property.eventYear;
-        //                     emailData.infoNo = data.property.infoNo;
-        //                     emailData.infoNoArr = data.property.infoNoArr;
+        //                     emailObj.infoNo = data.property.infoNo;
+        //                     emailObj.infoNoArr = data.property.infoNoArr;
         //                     emailObj.cityAddress = data.property.cityAddress;
         //                     emailObj.ddFavour = data.property.ddFavour;
         //                     Config.email(emailObj, callback);
@@ -564,8 +564,8 @@ var model = {
         //                     emailObj.city = data.property.sfaCity;
         //                     emailObj.year = data.property.year;
         //                     emailObj.eventYear = data.property.eventYear;
-        //                     emailData.infoNo = data.property.infoNo;
-        // emailData.infoNoArr = data.property.infoNoArr;
+        //                     emailObj.infoNo = data.property.infoNo;
+        // emailObj.infoNoArr = data.property.infoNoArr;
         //                     emailObj.cityAddress = data.property.cityAddress;
         //                     emailObj.ddFavour = data.property.ddFavour;
         //                     Config.email(emailObj, callback);
@@ -654,8 +654,8 @@ var model = {
                                 emailObj.city = data.property.sfaCity;
                                 emailObj.year = data.property.year;
                                 emailObj.eventYear = data.property.eventYear;
-                                emailData.infoNo = data.property.infoNo;
-                                emailData.infoNoArr = data.property.infoNoArr;
+                                emailObj.infoNo = data.property.infoNo;
+                                emailObj.infoNoArr = data.property.infoNoArr;
                                 emailObj.cityAddress = data.property.cityAddress;
                                 emailObj.ddFavour = data.property.ddFavour;
                                 Config.email(emailObj, callback);
@@ -745,8 +745,8 @@ var model = {
                                 emailObj.city = data.property.sfaCity;
                                 emailObj.year = data.property.year;
                                 emailObj.eventYear = data.property.eventYear;
-                                emailData.infoNo = data.property.infoNo;
-                                emailData.infoNoArr = data.property.infoNoArr;
+                                emailObj.infoNo = data.property.infoNo;
+                                emailObj.infoNoArr = data.property.infoNoArr;
                                 emailObj.cityAddress = data.property.cityAddress;
                                 emailObj.ddFavour = data.property.ddFavour;
                                 Config.email(emailObj, callback);
