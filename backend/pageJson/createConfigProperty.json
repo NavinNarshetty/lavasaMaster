@@ -60,6 +60,32 @@
             "url": ""
         },
         {
+            "name": "From Date",
+            "type": "date",
+            "tableRef": "fromDate",
+            "placeholder": "Enter From Date",
+            "id": "fromDate",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "url": ""
+        },
+        {
+            "name": "To Date",
+            "type": "date",
+            "tableRef": "toDate",
+            "placeholder": "Enter To Date",
+            "id": "toDate",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "url": ""
+        },
+        {
             "name": "Event Date",
             "type": "text",
             "tableRef": "date",

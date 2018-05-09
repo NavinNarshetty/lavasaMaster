@@ -3,6 +3,8 @@ var schema = new Schema({
     eventYear: String,
     fromMonth: String,
     toMonth: String,
+    fromDate: Date,
+    toDate: Date,
     date: String,
     venue: [{
         type: String,
@@ -127,8 +129,10 @@ var model = {
                     finalData.state = property[0].state;
                     finalData.year = property[0].year;
                     finalData.eventYear = property[0].eventYear;
-                    finalData.toMonth = property[0].toMonth;
                     finalData.fromMonth = property[0].fromMonth;
+                    finalData.fromDate = property[0].fromDate;
+                    finalData.toDate = property[0].toDate;
+                    finalData.toMonth = property[0].toMonth;
                     finalData.sfaCity = property[0].sfaCity;
                     finalData.amount = property[0].totalAmountType;
                     finalData.athleteAmount = property[0].totalAmountAthlete;
