@@ -594,7 +594,7 @@ var model = {
             }, {
                 school: data._id
             }]
-        }, 'outstandingAmount upgradePaymentStatus totalPaid totalToPay igst cgst sgst athlete school transaction').lean().deepPopulate("athlete school transaction").exec(
+        }, 'outstandingAmount upgradePaymentStatus refundAmount totalPaid totalToPay igst cgst sgst athlete school transaction').lean().deepPopulate("athlete school transaction").exec(
             function (err, found) {
                 if (err) {
                     callback(err, null);
