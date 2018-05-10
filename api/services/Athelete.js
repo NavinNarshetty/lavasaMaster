@@ -122,6 +122,7 @@ var schema = new Schema({
     Photo_ID: Boolean,
     School_Id: Boolean,
     Age_Proof: Boolean,
+    refundAmount: Number
 });
 
 schema.plugin(deepPopulate, {
