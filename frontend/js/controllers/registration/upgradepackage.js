@@ -190,7 +190,7 @@ myApp.controller('UpgradePackageCtrl', function ($scope, $stateParams, TemplateS
         }
         console.log("ath", $scope.detail);
         $scope.formData.outstandingAmount = $scope.detail.outstandingAmount;
-        $scope.formData.totalPaid = $scope.detail.totalPaid || 0;
+        $scope.formData.totalPaid = $scope.detail.totalPaid + $scope.detail.refundAmount || 0;
         $scope.formData.totalToPay = $scope.detail.totalToPay || 0;
         var len = $scope.detail.transaction.length;
         if (len > 0) {
