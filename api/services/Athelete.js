@@ -122,6 +122,7 @@ var schema = new Schema({
     Photo_ID: Boolean,
     School_Id: Boolean,
     Age_Proof: Boolean,
+    refundAmount: Number
 });
 
 schema.plugin(deepPopulate, {
@@ -1916,6 +1917,7 @@ var model = {
                             emailData.from = property[0].infoId;
                             emailData.infoId = property[0].infoId;
                             emailData.infoNo = property[0].infoNo;
+                            emailData.infoNoArr = property[0].infoNoArr;
                             emailData.cityAddress = property[0].cityAddress;
                             emailData.ddFavour = property[0].ddFavour;
                             emailData.email1 = [{
@@ -1997,8 +1999,9 @@ var model = {
                 var emailData = {};
                 emailData.city = final.property.sfaCity;
                 emailData.type = final.property.institutionType;
-                emailData.infoNo = final.property.infoNo;
                 emailData.infoId = final.property.infoId;
+                emailData.infoNo = final.property.infoNo;
+                emailData.infoNoArr = final.property.infoNoArr;
                 emailData.ddFavour = final.property.ddFavour;
                 emailData.cityAddress = final.property.cityAddress;
                 emailData.upgrade = false;
@@ -2332,6 +2335,7 @@ var model = {
                                 emailData.infoId = property[0].infoId;
                                 emailData.playerUrl = property[0].playerUrl;
                                 emailData.infoNo = property[0].infoNo;
+                                emailData.infoNoArr = property[0].infoNoArr;
                                 emailData.cityAddress = property[0].cityAddress;
                                 emailData.ddFavour = property[0].ddFavour;
                                 emailData.amount = accountData.totalPaid;
@@ -2476,6 +2480,7 @@ var model = {
                                 emailData.eventYear = property[0].eventYear;
                                 emailData.infoId = property[0].infoId;
                                 emailData.infoNo = property[0].infoNo;
+                                emailData.infoNoArr = property[0].infoNoArr;
                                 emailData.playerUrl = property[0].playerUrl;
                                 emailData.cityAddress = property[0].cityAddress;
                                 emailData.ddFavour = property[0].ddFavour;
@@ -2577,6 +2582,7 @@ var model = {
                                 emailData.from = property[0].infoId;
                                 emailData.infoId = property[0].infoId;
                                 emailData.infoNo = property[0].infoNo;
+                                emailData.infoNoArr = property[0].infoNoArr;
                                 emailData.cityAddress = property[0].cityAddress;
                                 emailData.ddFavour = property[0].ddFavour;
                                 emailData.email = data.email;
@@ -2669,6 +2675,7 @@ var model = {
                                 emailData.from = property[0].infoId;
                                 emailData.infoId = property[0].infoId;
                                 emailData.infoNo = property[0].infoNo;
+                                emailData.infoNoArr = property[0].infoNoArr;
                                 emailData.cityAddress = property[0].cityAddress;
                                 emailData.ddFavour = property[0].ddFavour;
                                 emailData.email = data.email;
@@ -2814,6 +2821,7 @@ var model = {
                                 emailData.from = property[0].infoId;
                                 emailData.infoId = property[0].infoId;
                                 emailData.infoNo = property[0].infoNo;
+                                emailData.infoNoArr = property[0].infoNoArr;
                                 emailData.cityAddress = property[0].cityAddress;
                                 emailData.ddFavour = property[0].ddFavour;
                                 emailData.email = data.email;
@@ -2964,6 +2972,7 @@ var model = {
                                 emailData.from = property[0].infoId;
                                 emailData.infoId = property[0].infoId;
                                 emailData.infoNo = property[0].infoNo;
+                                emailData.infoNoArr = property[0].infoNoArr;
                                 emailData.cityAddress = property[0].cityAddress;
                                 emailData.ddFavour = property[0].ddFavour;
                                 emailData.email = data.email;
@@ -3851,6 +3860,7 @@ var model = {
                                     }
                                     emailData.player = true;
                                     emailData.infoNo = data.property.infoNo;
+                                    emailData.infoNoArr = data.property.infoNoArr;
                                     emailData.cityAddress = data.property.cityAddress;
                                     emailData.ddFavour = data.property.ddFavour;
                                     emailData.city = data.property.sfaCity;
@@ -3886,6 +3896,7 @@ var model = {
                                     emailData.from = data.property.infoId;
                                     emailData.infoId = data.property.infoId;
                                     emailData.infoNo = data.property.infoNo;
+                                    emailData.infoNoArr = data.property.infoNoArr;
                                     emailData.cityAddress = data.property.cityAddress;
                                     emailData.ddFavour = data.property.ddFavour;
                                     emailData.city = data.property.sfaCity;
@@ -4848,6 +4859,7 @@ var model = {
                                 emailObj.year = property[0].year;
                                 emailObj.eventYear = property[0].eventYear;
                                 emailObj.infoNo = property[0].infoNo;
+                                emailObj.infoNoArr = property[0].infoNoArr;
                                 emailObj.cityAddress = property[0].cityAddress;
                                 emailObj.ddFavour = property[0].ddFavour;
                                 Config.email(emailObj, callback);
@@ -4995,6 +5007,7 @@ var model = {
                                     }
                                     // emailData.player = true;
                                     emailData.infoNo = data.property.infoNo;
+                                    emailData.infoNoArr = data.property.infoNoArr;
                                     emailData.cityAddress = data.property.cityAddress;
                                     emailData.ddFavour = data.property.ddFavour;
                                     emailData.city = data.property.sfaCity;

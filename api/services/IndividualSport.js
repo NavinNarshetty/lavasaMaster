@@ -1327,7 +1327,7 @@ var model = {
                         data.sfaid = '-';
                         data.email = found.email;
                         data.mobile = found.mobile;
-                        callback(null, data, found);
+                        callback(null, data);
                     } else {
                         IndividualSport.getschoolSfa(found, function (err, schoolsfa) {
                             if (err) {
@@ -1668,6 +1668,7 @@ var model = {
                                 emailData.eventYear = property[0].eventYear;
                                 emailData.infoId = property[0].infoId;
                                 emailData.infoNo = property[0].infoNo;
+                                emailData.infoNoArr = property[0].infoNoArr;
                                 emailData.cityAddress = property[0].cityAddress;
                                 emailData.ddFavour = property[0].ddFavour;
                                 emailData.packageName = n.packageName;
@@ -1793,6 +1794,7 @@ var model = {
                                 emailData.from = property[0].infoId;
                                 emailData.infoId = property[0].infoId;
                                 emailData.infoNo = property[0].infoNo;
+                                emailData.infoNoArr = property[0].infoNoArr;
                                 emailData.cityAddress = property[0].cityAddress;
                                 emailData.ddFavour = property[0].ddFavour;
                                 emailData.email = data.email;
@@ -1951,6 +1953,7 @@ var model = {
                                 emailData.ruleUrl = property[0].ruleUrl;
                                 emailData.infoId = property[0].infoId;
                                 emailData.infoNo = property[0].infoNo;
+                                emailData.infoNoArr = property[0].infoNoArr;
                                 emailData.cityAddress = property[0].cityAddress;
                                 emailData.ddFavour = property[0].ddFavour;
                                 emailData.packageName = n.packageName;

@@ -2372,10 +2372,10 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
         console.log(id);
         $scope.constraints = {};
         $scope.constraints.schoolId = base64Service.encode(id);
-        if (window.location.href == "http://testmumbaischool.sfanow.in/2017/backend/#/school") {
+        if (window.location.href == "http://mumbaischool.sfanow.in/2017/backend/#/school") {
             window.location = 'http://mumbaischool.sfanow.in/2017/sports-selection/' + 'school/' + $scope.constraints.schoolId;
-        } else if (window.location.origin == "http://mumbaischool.sfanow.in" && window.location.href != "http://testmumbaischool.sfanow.in/2017/backend/#/school") {
-            window.location = 'http://mumbaischool.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+        } else if (window.location.origin == "https://mumbaischool.sfanow.in" && window.location.href != "http://mumbaischool.sfanow.in/2017/backend/#/school") {
+            window.location = 'https://mumbaischool.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
         } else if (window.location.origin == 'http://mumbaicollege.sfanow.in') {
             window.location = 'http://mumbaicollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
         } else if (window.location.origin == 'http://hyderabadschool.sfanow.in') {
@@ -2611,10 +2611,10 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
         $scope.constraints = {};
         $scope.constraints.athleteId = base64Service.encode(id);
 
-        if (window.location.href == "http://testmumbaischool.sfanow.in/2017/backend/#/athlete") {
+        if (window.location.href == "http://mumbaischool.sfanow.in/2017/backend/#/athlete") {
             window.location = 'http://mumbaischool.sfanow.in/2017/sports-selection/' + 'athlete/' + $scope.constraints.athleteId;
-        } else if (window.location.origin == "http://mumbaischool.sfanow.in" && window.location.href != "http://testmumbaischool.sfanow.in/2017/backend/#/athlete") {
-            window.location = 'http://mumbaischool.sfanow.in/sports-selection/' + 'athlete/' + $scope.constraints.athleteId;
+        } else if (window.location.origin == "https://mumbaischool.sfanow.in" && window.location.href != "http://mumbaischool.sfanow.in/2017/backend/#/athlete") {
+            window.location = 'https://mumbaischool.sfanow.in/sports-selection/' + 'athlete/' + $scope.constraints.athleteId;
         } else if (window.location.origin == 'http://mumbaicollege.sfanow.in') {
             window.location = 'http://mumbaicollege.sfanow.in/sports-selection/' + 'athlete/' + $scope.constraints.athleteId;
         } else if (window.location.origin == 'http://hyderabadschool.sfanow.in') {
@@ -2842,10 +2842,10 @@ myApp.controller('AthletepayustatusCtrl', function ($scope, TemplateService, Nav
         $scope.constraints = {};
         $scope.constraints.athleteId = base64Service.encode(id);
 
-        if (window.location.href == "http://testmumbaischool.sfanow.in/2017/backend/#/athlete") {
+        if (window.location.href == "http://mumbaischool.sfanow.in/2017/backend/#/athlete") {
             window.location = 'http://mumbaischool.sfanow.in/2017/sports-selection/' + 'athlete/' + $scope.constraints.athleteId;
-        } else if (window.location.origin == "http://mumbaischool.sfanow.in" && window.location.href != "http://testmumbaischool.sfanow.in/2017/backend/#/athlete") {
-            window.location = 'http://mumbaischool.sfanow.in/sports-selection/' + 'athlete/' + $scope.constraints.athleteId;
+        } else if (window.location.origin == "https://mumbaischool.sfanow.in" && window.location.href != "http://mumbaischool.sfanow.in/2017/backend/#/athlete") {
+            window.location = 'https://mumbaischool.sfanow.in/sports-selection/' + 'athlete/' + $scope.constraints.athleteId;
         } else if (window.location.origin == 'http://mumbaicollege.sfanow.in') {
             window.location = 'http://mumbaicollege.sfanow.in/sports-selection/' + 'athlete/' + $scope.constraints.athleteId;
         } else if (window.location.origin == 'http://hyderabadschool.sfanow.in') {
@@ -3240,10 +3240,10 @@ myApp.controller('SchoolpayustatuslCtrl', function ($scope, TemplateService, Nav
         console.log(id);
         $scope.constraints = {};
         $scope.constraints.schoolId = base64Service.encode(id);
-        if (window.location.href == "http://testmumbaischool.sfanow.in/2017/backend/#/school") {
+        if (window.location.href == "http://mumbaischool.sfanow.in/2017/backend/#/school") {
             window.location = 'http://mumbaischool.sfanow.in/2017/sports-selection/' + 'school/' + $scope.constraints.schoolId;
-        } else if (window.location.origin == "http://mumbaischool.sfanow.in" && window.location.href != "http://testmumbaischool.sfanow.in/2017/backend/#/school") {
-            window.location = 'http://mumbaischool.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+        } else if (window.location.origin == "https://mumbaischool.sfanow.in" && window.location.href != "http://mumbaischool.sfanow.in/2017/backend/#/school") {
+            window.location = 'https://mumbaischool.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
         } else if (window.location.origin == 'http://mumbaicollege.sfanow.in') {
             window.location = 'http://mumbaicollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
         } else if (window.location.origin == 'http://hyderabadschool.sfanow.in') {

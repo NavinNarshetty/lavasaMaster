@@ -159,22 +159,23 @@
                   </p>
                   <p>Click on the below mentioned link to log in with your SFA ID and Password.
                     <br>
-                    <a style="font-family:TitilliumWeb-Bold;color:#000;" href="http://mumbaischool.sfanow.in/sports-registration" target="_new">http://mumbaischool.sfanow.in/sports-registration</a>
+                    <a style="font-family:TitilliumWeb-Bold;color:#000;" href="https://mumbaischool.sfanow.in/sports-registration" target="_new">https://mumbaischool.sfanow.in/sports-registration</a>
                   </p>
                   <p style="margin-bottom: 0px;">Participate across any of the 25 disciplines of sports and help your school become the best for sports
                     in Mumbai.
                   </p>
                   <p style="margin-bottom: 0px;">For further details contact us on:
-                    <%=infoNo%> or email us at
-                      <%if(infoId == 'info@sfanow.in'){%>
-                        <a style="font-family:TitilliumWeb-Bold; color: #000; " href="mailto:info@sfanow.in ">
-                          <%=infoId%>
-                        </a>
-                        <%} else if(infoId == 'info.hyd@sfanow.in'){%>
-                          <a style="font-family:TitilliumWeb-Bold; color: #000; " href="mailto:info.hyd@sfanow.in ">
-                            <%=infoId%>
-                          </a>
-                          <%}%>
+                    <%_.each(infoNoArr,function(n,key){%>
+                      <a style="font-family:TitilliumWeb-Bold; color: #000;" href="tel:<%=n%>">
+                        <%=n%>
+                      </a>
+                      <%if((infoNoArr.length-1) !== key){%>
+                        <span>/</span>
+                        <%}%>
+                          <%})%> or email us at
+                            <a style="font-family:TitilliumWeb-Bold;color: #000;" href="mailto:<%=infoId%>">
+                              <%=infoId%>
+                            </a>
                   </p>
                   <p>Stay updated with the draws & schedules, workshops, exhibition matches, special days and all other announcements
                     with regards to SFA

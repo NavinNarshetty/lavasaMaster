@@ -316,6 +316,7 @@ var model = {
                                 emailData.eventYear = data.property.eventYear;
                                 emailData.infoId = data.property.infoId;
                                 emailData.infoNo = data.property.infoNo;
+                                emailData.infoNoArr = data.property.infoNoArr;
                                 emailData.cityAddress = data.property.cityAddress;
                                 emailData.ddFavour = data.property.ddFavour;
                                 emailData.password = newPassword;
@@ -380,6 +381,7 @@ var model = {
                                 emailData.eventYear = data.property.eventYear;
                                 emailData.infoId = data.property.infoId;
                                 emailData.infoNo = data.property.infoNo;
+                                emailData.infoNoArr = data.property.infoNoArr;
                                 emailData.cityAddress = data.property.cityAddress;
                                 emailData.ddFavour = data.property.ddFavour;
                                 emailData.password = newPassword;
@@ -475,6 +477,7 @@ var model = {
         //                     emailObj.year = data.property.year;
         //                     emailObj.eventYear = data.property.eventYear;
         //                     emailObj.infoNo = data.property.infoNo;
+        //                     emailObj.infoNoArr = data.property.infoNoArr;
         //                     emailObj.cityAddress = data.property.cityAddress;
         //                     emailObj.ddFavour = data.property.ddFavour;
         //                     Config.email(emailObj, callback);
@@ -562,6 +565,7 @@ var model = {
         //                     emailObj.year = data.property.year;
         //                     emailObj.eventYear = data.property.eventYear;
         //                     emailObj.infoNo = data.property.infoNo;
+        // emailObj.infoNoArr = data.property.infoNoArr;
         //                     emailObj.cityAddress = data.property.cityAddress;
         //                     emailObj.ddFavour = data.property.ddFavour;
         //                     Config.email(emailObj, callback);
@@ -651,6 +655,7 @@ var model = {
                                 emailObj.year = data.property.year;
                                 emailObj.eventYear = data.property.eventYear;
                                 emailObj.infoNo = data.property.infoNo;
+                                emailObj.infoNoArr = data.property.infoNoArr;
                                 emailObj.cityAddress = data.property.cityAddress;
                                 emailObj.ddFavour = data.property.ddFavour;
                                 Config.email(emailObj, callback);
@@ -741,6 +746,7 @@ var model = {
                                 emailObj.year = data.property.year;
                                 emailObj.eventYear = data.property.eventYear;
                                 emailObj.infoNo = data.property.infoNo;
+                                emailObj.infoNoArr = data.property.infoNoArr;
                                 emailObj.cityAddress = data.property.cityAddress;
                                 emailObj.ddFavour = data.property.ddFavour;
                                 Config.email(emailObj, callback);

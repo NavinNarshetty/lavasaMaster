@@ -27,7 +27,7 @@ module.exports = {
 
   // port: 1337,
   port: 878,
-  realHost: "http://mumbaischool.sfanow.in",
+  realHost: "https://mumbaischool.sfanow.in",
   // realHost: "http://mumbaischool.sfanow.in/2017",
   // realHost: "http://mumbaicollege.sfanow.in",
   // realHost: "http://hyderabadschool.sfanow.in",

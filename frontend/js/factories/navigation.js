@@ -1,6 +1,6 @@
 // var imgPath = adminurl + "upload/readFile";
 // var uploadUrl = adminurl + "upload/";
-var masterAdminUrl = "http://master.sfanow.in/api/";
+var masterAdminUrl = "https://master.sfanow.in/api/";
 var adminUrl2 = adminurl;
 var imgPath2 = adminUrl2 + "upload/readFile";
 var uploadUrl2 = adminUrl2 + "upload/";

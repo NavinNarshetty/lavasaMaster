@@ -594,7 +594,7 @@ var model = {
             }, {
                 school: data._id
             }]
-        }, 'outstandingAmount upgradePaymentStatus totalPaid totalToPay igst cgst sgst athlete school transaction').lean().deepPopulate("athlete school transaction").exec(
+        }, 'outstandingAmount upgradePaymentStatus refundAmount totalPaid totalToPay igst cgst sgst athlete school transaction').lean().deepPopulate("athlete school transaction").exec(
             function (err, found) {
                 if (err) {
                     callback(err, null);
@@ -1513,6 +1513,7 @@ var model = {
                                 emailData.email = schoolData.email;
                                 emailData.infoId = property[0].infoId;
                                 emailData.infoNo = property[0].infoNo;
+                                emailData.infoNoArr = property[0].infoNoArr;
                                 emailData.cityAddress = property[0].cityAddress;
                                 emailData.ddFavour = property[0].ddFavour;
                                 emailData.city = property[0].sfaCity;
@@ -1637,6 +1638,7 @@ var model = {
                                 emailData.email = athleteData.email;
                                 emailData.infoId = property[0].infoId;
                                 emailData.infoNo = property[0].infoNo;
+                                emailData.infoNoArr = property[0].infoNoArr;
                                 emailData.cityAddress = property[0].cityAddress;
                                 emailData.ddFavour = property[0].ddFavour;
                                 emailData.city = property[0].sfaCity;
@@ -1742,6 +1744,7 @@ var model = {
                 emailData.city = final.property.sfaCity;
                 emailData.type = final.property.institutionType;
                 emailData.infoNo = final.property.infoNo;
+                emailData.infoNoArr = final.property.infoNoArr;
                 emailData.infoId = final.property.infoId;
                 emailData.ddFavour = final.property.ddFavour;
                 emailData.cityAddress = final.property.cityAddress;

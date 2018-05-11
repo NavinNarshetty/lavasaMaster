@@ -32,10 +32,10 @@
         <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12 sp-main-tab">
             <div class="text-center">
                 <div class="display-inline step4-fullmob" ng-click="sptabchange('1');" ng-class="{'blue-active':sportsschool==true}">
-                    <div class="step4">Register for Sports</div>
+                    <div class="step4">Click here to Register for Sports</div>
                 </div>
                 <div class="display-inline step4-fullmob" ng-click="sptabchange('2')" ng-class="{'blue-active':sportsregistered==true}">
-                    <div class="step4">View and Edit Sports</div>
+                    <div class="step4">Click here to View and Edit Sports</div>
                 </div>
             </div>
             <div class="box-padd mb-50" ng-show="sportsschool">
@@ -51,7 +51,7 @@
                         <a href="mailto:info.hyd@sfanow.in" ng-if="sfaCity == 'Hyderabad'">info.hyd@sfanow.in</a> with the
                         following information:
                     </p>
-                    <p class="highlight">Sport, Gender, Age Group, Names of ALL team members(Should be from the same school), SFA IDs of all team
+                    <p class="highlight">Sport, Gender, Age Group, Names of ALL team members, Captain Name and Goal Keeper Name (Should be from the same school), SFA IDs of all team
                         members.
                     </p>
                     <p> We will respond to you within a maximum of 5 working days of receiving your email.
@@ -64,6 +64,10 @@
                     <p>Please note: Only athletes which have registered for SFA {{sfaCity}} {{eventYear}} will be available
                         in the selection box for all sports.
                     </p>
+                </div>
+                <div class="formregister-mtb20 " ng-if="userDetails.package.order > 1">
+                  To participate in more events and   enjoy a host of other benefits
+                  <button class="btn btn-greenupgrade" ui-sref="upgradepackage({type: upgrade.userType , id: upgrade.id})">Upgrade Package</button>
                 </div>
                 <div class="text-center sp-head-tab" ng-if="allSportsListSubCatArr.length == 0">
                     <h3>No Sports List Found For Selection.
@@ -84,10 +88,7 @@
 
                     </ul>
                 </div>
-                <div class="formregister-mtb20 text-right" ng-if="userDetails.package.order > 1">
-                  To participate in more events and   enjoy a host of other benefits
-                  <button class="btn btn-greenupgrade" ui-sref="upgradepackage({type: upgrade.userType , id: upgrade.id})">Upgrade Package</button>
-                </div>
+
             </div>
             <!-- REGISTERED SPORTS TAB -->
             <div class="box-padd mb-50" ng-show="sportsregistered">

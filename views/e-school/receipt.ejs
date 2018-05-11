@@ -327,16 +327,34 @@
                             <p style="padding: 3px 0;">
                                 <%=cityAddress%>
                                     <br>www.sfanow.in I
-                                    <%=infoId%> Contact :
-                                        <%=infoNo%>
+                                    <a style="font-family:TitilliumWeb-Bold;color: #000;" href="mailto:<%=infoId%>">
+                                        <%=infoId%>
+                                    </a> Contact :
+                                    <%_.each(infoNoArr,function(n,key){%>
+                                        <a style="font-family:TitilliumWeb-Bold; color: #000;" href="tel:<%=n%>">
+                                            <%=n%>
+                                        </a>
+                                        <%if((infoNoArr.length-1) !== key){%>
+                                            <span>/</span>
+                                            <%}%>
+                                                <%})%>
                             </p>
                             <%} else if(infoId == 'info.hyd@sfanow.in'){%>
                                 <p style="padding: 3px 0;">Head Office:
                                     <%=ddFavour%>,
                                         <%=cityAddress%>
                                             <br>www.sfanow.in I
-                                            <%=infoId%> Contact :
-                                                <%=infoNo%>
+                                            <a style="font-family:TitilliumWeb-Bold;color: #000;" href="mailto:<%=infoId%>">
+                                                <%=infoId%>
+                                            </a> Contact :
+                                            <%_.each(infoNoArr,function(n,key){%>
+                                                <a style="font-family:TitilliumWeb-Bold; color: #000;" href="tel:<%=n%>">
+                                                    <%=n%>
+                                                </a>
+                                                <%if((infoNoArr.length-1) !== key){%>
+                                                    <span>/</span>
+                                                    <%}%>
+                                                        <%})%>
                                 </p>
                                 <%}%>
 

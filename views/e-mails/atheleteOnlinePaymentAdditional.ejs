@@ -145,20 +145,24 @@
                         <p>We look forward to have you at the event.</p>
                         <p>All the Best!</p>
                         <p>Incase of any doubt please call us on
-                            <span style="font-family:TitilliumWeb-Bold;">
-                                <%=infoNo%>
-                            </span> or email us at
-                            <span style="font-family:TitilliumWeb-Bold;">
-                                <%=infoId%>
-                            </span>
+                            <%_.each(infoNoArr,function(n,key){%>
+                                <a style="font-family:TitilliumWeb-Bold; color: #000;" href="tel:<%=n%>">
+                                    <%=n%>
+                                </a>
+                                <%if((infoNoArr.length-1) !== key){%>
+                                    <span>/</span>
+                                    <%}%>
+                                        <%})%> or email us at
+                                            <a style="font-family:TitilliumWeb-Bold;color:#000;" href="mailto:<%=infoId%>">
+                                                <%=infoId%>
+                                            </a>
                         </p>
                         <br>
                         <p>Stay updated with the draws & schedules, workshops, exhibition matches, special days and all other
                             announcements with regards to SFA
                             <%=city%>
                                 <%=eventYear%>, by following us on Facebook:
-                                    <a href="https://www.facebook.com/sportsforallnow/" target="_new"
-                                        style="color:#000;text-decoration: none;">@sportsforallnow</a> | Twitter:
+                                    <a href="https://www.facebook.com/sportsforallnow/" target="_new" style="color:#000;text-decoration: none;">@sportsforallnow</a> | Twitter:
                                     <a href="https://twitter.com/sfanow" target="_new" style="color:#000;text-decoration: none;">@sfanow</a> | Instagram:
                                     <a href="https://www.instagram.com/sfanow/" target="_new" style="color:#000;text-decoration: none;">@sfanow</a>
                         </p>

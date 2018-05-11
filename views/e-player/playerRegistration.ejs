@@ -257,6 +257,26 @@
                                                 <p style="font-family:TitilliumWeb-Bold; font-weight: bold;">Regards,
                                                     <br>Team SFA</p>
                                                 <!-- REGARDS END -->
+                                                <!-- INFO PART -->
+                                                <p>For further queries kindly email us at
+                                                    <a class="sfa-bold bold" href="mailto:<%=infoId%>">
+                                                        <%=infoId%>
+                                                    </a> or call us on
+                                                    <%_.each(infoNoArr,function(n,key){%>
+                                                        <a style="font-family:TitilliumWeb-Bold; color: #000;" href="tel:<%=n%>">
+                                                            <%=n%>
+                                                        </a>
+                                                        <%if((infoNoArr.length-1) !== key){%>
+                                                            <span>/</span>
+                                                            <%}%>
+                                                                <%})%>
+                                                </p>
+                                                <!-- INFO PART END -->
+
+                                                <!-- REGARDS -->
+                                                <p style="font-family:TitilliumWeb-Bold; font-weight: bold;">Regards,
+                                                    <br>Team SFA</p>
+                                                <!-- REGARDS END -->
                     </div>
                 </td>
             </tr>

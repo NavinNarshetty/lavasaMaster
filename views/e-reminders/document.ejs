@@ -153,7 +153,7 @@
 
                         <p>Kindly request you to email us the following documents on
                             <a style="font-family:TitilliumWeb-Bold;color:#000;"
-                                href="mailto:info@sfanow.in"><%=infoId%></a> : </p>
+                                href="mailto:<%=infoId%>"><%=infoId%></a> : </p>
 
                         <ul type='circle'>
                             <li>Aadhar Card/Birth Certificate/Passport</li>
@@ -165,9 +165,14 @@
                             of your entry.</p>
 
                         <p>For further queries kindly call us on
-                            <span style="font-family:TitilliumWeb-Bold;">
-                                <%=infoNo%>
-                            </span>
+                            <%_.each(infoNoArr,function(n,key){%>
+                                <a style="font-family:TitilliumWeb-Bold; color: #000;" href="tel:<%=n%>">
+                                    <%=n%>
+                                </a>
+                                <%if((infoNoArr.length-1) !== key){%>
+                                    <span>/</span>
+                                    <%}%>
+                                        <%})%>
                         </p>
                     -->
 
