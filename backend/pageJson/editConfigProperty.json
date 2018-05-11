@@ -988,6 +988,32 @@
             "url": ""
         },
         {
+            "name": "Merchandise Price",
+            "type": "text",
+            "tableRef": "merchandisePrice",
+            "placeholder": "Select merchandise Price (600)",
+            "id": "merchandisePrice",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "url": ""
+        },
+        {
+            "name": "Smaaash Voucher",
+            "type": "text",
+            "tableRef": "smaaashPrice",
+            "placeholder": "Select Smaaash Voucher (300)",
+            "id": "smaaashPrice",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "url": ""
+        },
+        {
             "name": "Domain URL",
             "type": "text",
             "tableRef": "domainUrl",

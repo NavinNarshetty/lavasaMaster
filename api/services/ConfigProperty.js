@@ -69,7 +69,7 @@ var schema = new Schema({
     igstAmoutAdditional: Number,
     igstPercentAdditional: Number,
     reqUrl: String,
-    // domainUrl: String,
+    domainUrl: String,
     // paymentUrl: String,
     // backendUrl: String,
     // dbName: String,
@@ -100,7 +100,9 @@ var schema = new Schema({
     keyfileName: String,
     playerUrl: String,
     schoolUrl: String,
-    ruleUrl: String
+    ruleUrl: String,
+    merchandisePrice: String,
+    smaaashPrice: String
 
 });
 
@@ -154,6 +156,9 @@ var model = {
                     finalData.playerUrl = property[0].playerUrl;
                     finalData.schoolUrl = property[0].schoolUrl;
                     finalData.ruleUrl = property[0].ruleUrl;
+                    finalData.merchandisePrice = property[0].merchandisePrice;
+                    finalData.smaaashPrice = property[0].smaaashPrice;
+                    finalData.domainUrl = property[0].domainUrl;
 
                     callback(null, finalData);
                 }
