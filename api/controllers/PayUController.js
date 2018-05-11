@@ -139,7 +139,7 @@ var controller = {
 
                         // res.redirect("http://testahmedabadcollege.sfanow.in/paymentSuccess/register/school");
 
-                        res.redirect("http://mumbaischool.sfanow.in/paymentSuccess/register/school");
+                        res.redirect("https://mumbaischool.sfanow.in/paymentSuccess/register/school");
 
                         // res.redirect("http://mumbaischool.sfanow.in/2017/paymentSuccess/register/school");
 
@@ -172,7 +172,7 @@ var controller = {
                     } else if (_.isEmpty(data)) {
                         callback(null, "Data is empty");
                     } else {
-                        res.redirect("http://mumbaischool.sfanow.in/paymentFailure");
+                        res.redirect("https://mumbaischool.sfanow.in/paymentFailure");
 
                         // res.redirect("http://mumbaischool.sfanow.in/2017/paymentFailure");
 
@@ -238,7 +238,7 @@ var controller = {
                             data: "Invalid Request"
                         });
                     } else {
-                        res.redirect("http://mumbaischool.sfanow.in/paymentSuccess/register/player");
+                        res.redirect("https://mumbaischool.sfanow.in/paymentSuccess/register/player");
 
                         // res.redirect("http://mumbaischool.sfanow.in/2017/paymentSuccess/register/player");
 
@@ -292,7 +292,7 @@ var controller = {
                         callback(null, "Data is empty");
                     } else {
 
-                        // res.redirect("http://mumbaischool.sfanow.in/sorryAthelete");
+                        res.redirect("https://mumbaischool.sfanow.in/sorryAthelete");
 
                         // res.redirect("http://mumbaischool.sfanow.in/2017/sorryAthelete");
 
@@ -316,7 +316,7 @@ var controller = {
 
                         // res.redirect("http://testmumbaicollege.sfanow.in/sorryAthelete");
 
-                        res.redirect("http://testmumbaischool.sfanow.in/sorryAthelete");
+                        // res.redirect("http://testmumbaischool.sfanow.in/sorryAthelete");
 
                         // res.redirect("http://testmumbai2016.sfanow.in/sorryAthelete");
 
@@ -396,7 +396,7 @@ var controller = {
                             data: "Invalid Request"
                         });
                     } else {
-                        res.redirect("http://mumbaischool.sfanow.in/paymentSuccess/upgrade/player");
+                        res.redirect("https://mumbaischool.sfanow.in/paymentSuccess/upgrade/player");
 
                         // res.redirect("http://mumbaischool.sfanow.in/2017/paymentSuccess/upgrade/player");
 
@@ -440,7 +440,7 @@ var controller = {
                             data: "Invalid Request"
                         });
                     } else {
-                        // res.redirect("http://mumbaischool.sfanow.in/sorryAthelete");
+                        res.redirect("https://mumbaischool.sfanow.in/sorryAthelete");
 
                         // res.redirect("http://mumbaischool.sfanow.in/2017/sorryAthelete");
 
@@ -464,7 +464,7 @@ var controller = {
 
                         // res.redirect("http://testmumbaicollege.sfanow.in/sorryAthelete");
 
-                        res.redirect("http://testmumbaischool.sfanow.in/sorryAthelete");
+                        // res.redirect("http://testmumbaischool.sfanow.in/sorryAthelete");
 
                         // res.redirect("http://testmumbai2016.sfanow.in/sorryAthelete");
 
@@ -555,7 +555,7 @@ var controller = {
 
                         // res.redirect("http://testahmedabadcollege.sfanow.in/paymentSuccess/upgrade/school");
 
-                        res.redirect("http://mumbaischool.sfanow.in/paymentSuccess/upgrade/school");
+                        res.redirect("https://mumbaischool.sfanow.in/paymentSuccess/upgrade/school");
 
                         // res.redirect("http://mumbaischool.sfanow.in/2017/paymentSuccess/upgrade/school");
 
@@ -589,7 +589,7 @@ var controller = {
                     } else if (_.isEmpty(data)) {
                         callback(null, "Data is empty");
                     } else {
-                        res.redirect("http://mumbaischool.sfanow.in/paymentFailure");
+                        res.redirect("https://mumbaischool.sfanow.in/paymentFailure");
 
                         // res.redirect("http://mumbaischool.sfanow.in/2017/paymentFailure");
 

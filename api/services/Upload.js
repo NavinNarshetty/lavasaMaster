@@ -76,7 +76,7 @@ var model = {
     //             }
     //         });
     //     });
-    
+
     convertUploadObj: function (uploadObject) {
         var obj = {
             name: uploadObject.filename,
@@ -87,7 +87,7 @@ var model = {
         };
         return obj;
     },
-    
+
     findFile: function (fileObj, callback) {
         var obj;
         if (fileObj.file.indexOf(".") > 0) {
@@ -113,7 +113,7 @@ var model = {
             });
         }
     },
-    
+
     generateFile: function (data, fileObj, callback) {
         var resizeVal = {};
         if (fileObj.width && !_.isNaN(parseInt(fileObj.width))) {
@@ -221,23 +221,36 @@ var model = {
                             file.exists().then((data) => {
                                 // console.log("is ", gridFile.storageName, " exits ", data[0]);
                                 if (data[0] === false) {
-                                    console.log("is ", gridFile.storageName, " exits (before transfer)", data[0]);
-                                    var readstream = gfs.createReadStream({
+                                    gfs.exist({
                                         filename: gridFile.name
+                                    }, function (err, found) {
+                                        if (err) return handleError(err);
+                                        if (found) {
+                                            console.log('File exists', found);
+                                            console.log("is ", gridFile.storageName, " exits (before transfer)", data[0]);
+                                            var readstream = gfs.createReadStream({
+                                                filename: gridFile.name
+                                            });
+                                            var remoteWriteStream = myBucket.file(gridFile.name).createWriteStream();
+                                            remoteWriteStream.on('error', function (err) {
+                                                Upload.saveFileAsError(gridFile.name, function () {});
+                                                callback1(null, gridFile.name);
+                                                console.log(err);
+                                            });
+                                            remoteWriteStream.on('finish', function () {
+                                                callback1(null, {
+                                                    fileName: gridFile.name,
+                                                    status: "success"
+                                                });
+                                            });
+                                            readstream.pipe(remoteWriteStream);
+                                        } else {
+                                            console.log('File does not exist');
+                                            Upload.saveFileAsError(gridFile.name, function () {});
+                                            callback1(null, gridFile.name);
+                                            console.log(err);
+                                        }
                                     });
-                                    var remoteWriteStream = myBucket.file(gridFile.name).createWriteStream();
-                                    remoteWriteStream.on('error', function (err) {
-                                        Upload.saveFileAsError(gridFile.name, function () {});
-                                        callback1(null, gridFile.name);
-                                        console.log(err);
-                                    });
-                                    remoteWriteStream.on('finish', function () {
-                                        callback1(null, {
-                                            fileName: gridFile.name,
-                                            status: "success"
-                                        });
-                                    });
-                                    readstream.pipe(remoteWriteStream);
                                 } else {
                                     callback1();
                                 }

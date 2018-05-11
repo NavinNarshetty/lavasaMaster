@@ -1742,12 +1742,12 @@ myApp.controller('PaymentSuccessCtrl', function ($scope, TemplateService, Naviga
         console.log("click");
         $state.go('registerplayer', {
             type: $scope.pageType
-        })
-    }
+        });
+    };
 
     $timeout(function () {
         $scope.autoTimeoutClick();
-    }, 4000)
+    }, 4000);
 
     // fbq('track', 'CompleteRegistration');
     // GoogleAdWordsService.sendRegisterCustomerConversion();
@@ -1776,12 +1776,12 @@ myApp.controller('SorryAtheleteCtrl', function ($scope, TemplateService, $state,
         console.log("click");
         $state.go('registerplayer', {
             type: 'player'
-        })
-    }
+        });
+    };
 
     $timeout(function () {
         $scope.autoTimeoutClick();
-    }, 4000)
+    }, 4000);
 
     // window.setTimeout(function () {
 
@@ -1830,12 +1830,12 @@ myApp.controller('PaymentFailureCtrl', function ($scope, TemplateService, Naviga
         console.log("click");
         $state.go('registerplayer', {
             type: 'school'
-        })
-    }
+        });
+    };
 
     $timeout(function () {
         $scope.autoTimeoutClick();
-    }, 4000)
+    }, 4000);
 
     // window.setTimeout(function () {
     //     // Move to a new location or you can do something else

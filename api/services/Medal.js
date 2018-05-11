@@ -555,9 +555,9 @@ var model = {
                                 } else if (property[0].reqUrl == 'live') {
                                     if (property[0].sfaCity == 'Mumbai') {
                                         if (property[0].institutionType == 'school') {
-                                            pdfObj.tang = 'http://mumbaischool.sfanow.in/js/certificateFonts/Tangerine-Regular.ttf';
-                                            pdfObj.fjalla = 'http://mumbaischool.sfanow.in/js/certificateFonts/FjallaOne-Regular.ttf';
-                                            pdfObj.opens = 'http://mumbaischool.sfanow.in/js/certificateFonts/OpenSans-CondLight.ttf';
+                                            pdfObj.tang = 'https://mumbaischool.sfanow.in/js/certificateFonts/Tangerine-Regular.ttf';
+                                            pdfObj.fjalla = 'https://mumbaischool.sfanow.in/js/certificateFonts/FjallaOne-Regular.ttf';
+                                            pdfObj.opens = 'https://mumbaischool.sfanow.in/js/certificateFonts/OpenSans-CondLight.ttf';
                                         } else {
                                             pdfObj.tang = 'http://mumbaicollege.sfanow.in/js/certificateFonts/Tangerine-Regular.ttf';
                                             pdfObj.fjalla = 'http://mumbaicollege.sfanow.in/js/certificateFonts/FjallaOne-Regular.ttf';

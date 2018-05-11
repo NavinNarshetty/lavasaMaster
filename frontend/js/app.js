@@ -549,9 +549,9 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
     // NEW REGISTRATION PAGES
     ;
-    if (window.location.href == "http://mumbaischool.sfanow.in/2017") {
+    if (window.location.href == "https://mumbaischool.sfanow.in/2017") {
         $urlRouterProvider.otherwise("/championship");
-    } else if (window.location.origin == "http://mumbaischool.sfanow.in" && window.location.href != "http://mumbaischool.sfanow.in/2017") {
+    } else if (window.location.origin == "https://mumbaischool.sfanow.in" && window.location.href != "http://mumbaischool.sfanow.in/2017") {
         $urlRouterProvider.otherwise("/aboutchampionship");
     } else if (window.location.origin == "http://mumbaicollege.sfanow.in") {
         $urlRouterProvider.otherwise("/register");
