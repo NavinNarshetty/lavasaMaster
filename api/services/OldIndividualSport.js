@@ -24,7 +24,11 @@ var schema = new Schema({
 });
 
 schema.plugin(deepPopulate, {
-
+    populate: {
+        'athleteId': {
+            select: ''
+        }
+    }
 });
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
@@ -47,6 +51,7 @@ var model = {
                 });
             },
             function (property, callback) {
+                // console.log("config", property);
                 Event.findOne({
                     city: property.city,
                     year: property.year
@@ -61,12 +66,14 @@ var model = {
                 });
             },
             function (eventData, callback) {
-                OldIndividualSport.find().lean().exec(function (err, found) {
+                // console.log("event", eventData);
+                OldIndividualSport.find().lean().deepPopulate("athleteId").exec(function (err, found) {
                     if (err) {
                         callback(err, null);
                     } else if (_.isEmpty(found)) {
                         callback(null, []);
                     } else {
+                        console.log("found", found);
                         var final = {};
                         final.event = eventData._id;
                         final.individualData = found;
@@ -75,6 +82,7 @@ var model = {
                 });
             },
             function (final, callback) {
+                console.log("final", final);
                 OldIndividualSport.setIndividualSports(final, function (err, complete) {
                     if (err || _.isEmpty(complete)) {
                         var err = "Error found in Rules";
@@ -96,104 +104,129 @@ var model = {
     getSportId: function (data, callback) {
         var sportData = {};
         async.waterfall([
-            function (callback) {
-                var deepSearch = "sportslist.sportsListSubCategory.sportsListCategory sportslist.sportsListSubCategory.rules ageGroup weight sportslist.drawFormat";
-                OldSport.findOne({
-                    _id: data
-                }).lean().deepPopulate(deepSearch).exec(function (err, found) {
-                    if (err) {
-                        callback(err, null);
-                    } else {
-                        if (_.isEmpty(found)) {
-                            callback(null, []);
+                function (callback) {
+                    var deepSearch = "sportslist.sportsListSubCategory.sportsListCategory sportslist.sportsListSubCategory.rules ageGroup weight sportslist.drawFormat";
+                    OldSport.findOne({
+                        _id: data
+                    }).lean().deepPopulate(deepSearch).exec(function (err, found) {
+                        if (err || _.isEmpty(found)) {
+                            callback(null, {
+                                error: "empty or error"
+                            });
                         } else {
                             sportData.gender = found.gender;
                             callback(null, found);
                         }
-                    }
-                });
-            },
-            function (found, callback) {
-                SportsList.findOne({
-                    name: found.sportslist.name
-                }).lean().exec(function (err, sportslistData) {
-                    if (err) {
-                        callback(err, null);
-                    } else {
-                        sportData.sportslist = sportslistData._id;
+                    });
+                },
+                function (found, callback) {
+                    // console.log("found", found);
+                    if (found.error) {
                         callback(null, found);
-                    }
-                });
-            },
-            function (found, callback) {
-                AgeGroup.findOne({
-                    name: found.ageGroup.name
-                }).lean().exec(function (err, ageData) {
-                    if (err) {
-                        callback(err, null);
                     } else {
-                        sportData.ageGroup = ageData._id;
-                        callback(null, found);
+                        SportsList.findOne({
+                            name: found.sportslist.name
+                        }).lean().exec(function (err, sportslistData) {
+                            if (err || _.isEmpty(sportData)) {
+                                callback(null, {
+                                    error: "sportslist not found"
+                                });
+                            } else {
+                                // console.log("sportData", sportData);
+                                sportData.sportslist = sportslistData._id;
+                                callback(null, found);
+                            }
+                        });
                     }
-                });
-            },
-            function (found, callback) {
-                if (found.weight) {
-                    Weight.findOne({
-                        name: found.weight.name
-                    }).lean().exec(function (err, ageData) {
-                        if (err) {
-                            callback(err, null);
+                },
+                function (found, callback) {
+                    if (found.error) {
+                        callback(null, found);
+                    } else {
+                        AgeGroup.findOne({
+                            name: found.ageGroup.name
+                        }).lean().exec(function (err, ageData) {
+                            if (err || _.isEmpty(ageData)) {
+                                callback(ageData, null);
+                            } else {
+                                // console.log("sportData", ageData);
+                                sportData.ageGroup = ageData._id;
+                                callback(null, found);
+                            }
+                        });
+                    }
+                },
+                function (found, callback) {
+                    if (found.error) {
+                        callback(null, found);
+                    } else {
+                        // console.log("found.weight", found.weight);
+                        if (found.weight) {
+                            Weight.findOne({
+                                name: found.weight.name
+                            }).lean().exec(function (err, weightData) {
+                                // console.log("weightData out", weightData);
+                                if (err || _.isEmpty(weightData)) {
+                                    callback(null, weightData);
+                                } else {
+                                    // console.log("weightData", weightData);
+                                    sportData.weight = weightData._id;
+                                    callback(null, found);
+                                }
+                            });
                         } else {
-                            sportData.weight = ageData._id;
                             callback(null, found);
                         }
-                    });
-                } else {
-                    callback(null, found);
-                }
-            },
-            function (found, callback) {
-                if (sportData.weight) {
-                    var deepSearch = "sportslist.sportsListSubCategory";
-                    Sport.findOne({
-                        sportslist: sportData.sportslist,
-                        ageGroup: sportData.ageGroup,
-                        gender: sportData.gender,
-                        weight: sportData.weight
-                    }).lean().deepPopulate(deepSearch).exec(function (err, sport) {
-                        if (err) {
-                            callback(err, null);
+                    }
+                },
+                function (found, callback) {
+                    if (found.error) {
+                        callback(null, found);
+                    } else {
+                        if (sportData.weight) {
+                            var deepSearch = "sportslist.sportsListSubCategory";
+                            Sport.findOne({
+                                sportslist: sportData.sportslist,
+                                ageGroup: sportData.ageGroup,
+                                gender: sportData.gender,
+                                weight: sportData.weight
+                            }).lean().deepPopulate(deepSearch).exec(function (err, sport) {
+                                if (err) {
+                                    callback(err, null);
+                                } else {
+                                    // console.log("sport", sport, "sportData", sportData);
+                                    sportData.sport = sport._id;
+                                    sportData.sportsListSubCategory = sport.sportslist.sportsListSubCategory._id;
+                                    callback(null, sportData);
+                                }
+                            });
                         } else {
-                            sportData.sport = sport._id;
-                            sportData.sportsListSubCategory = sport.sportslist.sportsListSubCategory._id;
-                            callback(null, sportData);
+                            var deepSearch = "sportslist.sportsListSubCategory";
+                            Sport.findOne({
+                                sportslist: sportData.sportslist,
+                                ageGroup: sportData.ageGroup,
+                                gender: sportData.gender,
+                            }).lean().deepPopulate(deepSearch).exec(function (err, sport) {
+                                if (err) {
+                                    callback(err, null);
+                                } else {
+                                    // console.log("sport", sport, "sportData", sportData);
+                                    sportData.sport = sport._id;
+                                    sportData.sportsListSubCategory = sport.sportslist.sportsListSubCategory._id;
+                                    callback(null, sportData);
+                                }
+                            });
                         }
-                    });
-                } else {
-                    var deepSearch = "sportslist.sportsListSubCategory";
-                    Sport.findOne({
-                        sportslist: sportData.sportslist,
-                        ageGroup: sportData.ageGroup,
-                        gender: sportData.gender,
-                    }).lean().deepPopulate(deepSearch).exec(function (err, sport) {
-                        if (err) {
-                            callback(err, null);
-                        } else {
-                            sportData.sport = sport._id;
-                            sportData.sportsListSubCategory = sport.sportslist.sportsListSubCategory._id;
-                            callback(null, sportData);
-                        }
-                    });
+                    }
                 }
-            }
-        ], function (err, complete) {
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, complete);
-            }
-        });
+            ],
+            function (err, complete) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    callback(null, complete);
+                }
+            });
     },
 
     setsportId: function (data, callback) {
@@ -228,52 +261,72 @@ var model = {
     },
 
     setAthleteId: function (data, callback) {
-        Athelete.findOne({
-            oldId: data
-        }).lean().exec(function (err, found) {
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, found);
-            }
-        });
+        console.log("data", data);
+        if (data != null) {
+            Athelete.findOne({
+                sfaId: data.sfaId
+            }).lean().exec(function (err, found) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    console.log("athleteId", found);
+                    callback(null, found);
+                }
+            });
+        } else {
+            callback(null, data);
+        }
     },
 
     setIndividualSports: function (data, callback) {
-        async.eachSeries(data.individualData, function (n, callback) {
+        async.concatSeries(data.individualData, function (n, callback) {
+            console.log("n in each individual", n);
             async.waterfall([
                 function (callback) {
+                    var sport = {};
                     OldIndividualSport.setsportId(n.sport, function (err, complete) {
                         if (err || _.isEmpty(complete)) {
-                            var err = "Error found in Rules";
-                            callback(err, null);
+                            var err = "Error found in setsportId";
+                            callback(null, {
+                                error: err
+                            });
                         } else {
-                            n.sport = complete.sport;
-                            n.sportsListSubCategory = complete.sportsListSubCategory;
-                            callback(null, n);
+                            console.log("complete", complete);
+                            sport.sport = complete.sport;
+                            sport.sportsListSubCategory = complete.sportsListSubCategory;
+                            callback(null, sport);
                         }
                     });
                 },
-                function (n, callback) {
-                    OldIndividualSport.setAthleteId(n.athleteId, function (err, complete) {
-                        if (err || _.isEmpty(complete)) {
-                            var err = "Error found in Rules";
-                            callback(err, null);
+                function (sport, callback) {
+                    console.log("sport", sport, "n", n);
+                    var next = {};
+                    OldIndividualSport.setAthleteId(n.athleteId, function (err, athleteData) {
+                        if (athleteData != null) {
+                            console.log("complete", athleteData);
+                            next.athleteId = athleteData._id;
                         } else {
-                            n.athleteId = complete._id;
-                            n.oldId = n._id;
-                            callback(null, n);
+                            next.athleteId = null;
                         }
+                        next.oldId = n._id;
+                        next.sport = sport;
+                        console.log("n", next);
+                        callback(null, next);
                     });
                 },
-                function (n, callback) {
+                function (next, callback) {
+                    // console.log("formData n", n);
                     var formData = {};
-                    formData.oldId = n.oldId;
-                    formData.sport = n.sport;
-                    formData.sportsListSubCategory = n.sportsListSubCategory;
-                    formData.createdBy = n.createdBy;
-                    formData.athleteId = n.athleteId;
-                    formData.createdBy = n.createdBy;
+                    formData.oldId = next.oldId;
+                    formData.sport = next.sport.sport;
+                    formData.sportsListSubCategory = next.sport.sportsListSubCategory;
+                    formData.createdAt = next.createdAt;
+                    if (n.athleteId != null) {
+                        formData.athleteId = next.athleteId;
+                    } else {
+                        formData.athleteId = undefined;
+                    }
+                    formData.createdBy = next.createdBy;
                     formData.eventId = data.event;
                     console.log("formData", formData);
                     IndividualSport.saveData(formData, function (err, complete) {
@@ -294,14 +347,14 @@ var model = {
                     callback(null, complete);
                 }
             });
-        }, function (err) {
+        }, function (err, complete1) {
             if (err) {
                 callback(null, {
                     error: "error found",
-                    data: data
+                    data: complete1
                 });
             } else {
-                callback(null, data);
+                callback(null, complete1);
             }
         });
     },

@@ -150,13 +150,7 @@ var model = {
                 });
             },
             function (found, callback) {
-                // var result = found.sport.filter(
-                //     function (value) {
-                //         return ((value.sportslist.name === 'Handball') && (value.ageGroup.name === "U-10") && (value.gender == "male"));
-                //     }
-                // );
-                // console.log("filter result", result);
-                // callback(null, result);
+                console.log("found in sport:", found);
                 OldSport.saveSport(found, function (err, complete) {
                     if (err || _.isEmpty(complete)) {
                         var err = "Error found in sport";
@@ -503,14 +497,13 @@ var model = {
 
     saveAgeGroup: function (data, callback) {
         async.eachSeries(data, function (n, callback) {
-            // console.log("n", n);
+            console.log("n", n);
             if (n.ageGroup != null) {
                 var formData = {};
                 formData.name = n.ageGroup.name;
                 AgeGroup.findOne({
-                    name: formData.name
+                    name: n.ageGroup.name
                 }).lean().exec(function (err, found) {
-                    console.log("ageGroup", found);
                     if (err) {
                         callback(err, null);
                     } else {
@@ -901,6 +894,7 @@ var model = {
     saveSport: function (data, callback) {
         async.eachSeries(data.sport, function (n, callback) {
                 if (n.weight && n.weight != null) {
+                    console.log("n main ", n);
                     var pipeLine = OldSport.getAggregatePipeline();
                     var newPipeLine = _.cloneDeep(pipeLine);
                     newPipeLine.push(
@@ -935,7 +929,7 @@ var model = {
                                         } else {
                                             callback(null, complete);
                                         }
-                                    })
+                                    });
                                 }
                             });
                         } else {
@@ -969,72 +963,77 @@ var model = {
                         }
                     });
                 } else {
+                    console.log("n else", n);
                     var pipeLine = OldSport.getAggregatePipeline();
                     var newPipeLine = _.cloneDeep(pipeLine);
-                    newPipeLine.push(
-                        // Stage 6
-                        {
-                            $match: {
-                                "sportslist.name": n.sportslist.name,
-                                "ageGroup.name": n.ageGroup.name,
-                                "gender": n.gender
+                    if (n.sportslist != null) {
+                        newPipeLine.push(
+                            // Stage 6
+                            {
+                                $match: {
+                                    "sportslist.name": n.sportslist.name,
+                                    "ageGroup.name": n.ageGroup.name,
+                                    "gender": n.gender
+                                }
                             }
-                        }
-                    );
-                    Sport.aggregate(newPipeLine, function (err, singleData) {
-                        if (err) {
-                            callback(err, "error in mongoose");
-                        } else if (_.isEmpty(singleData)) {
-                            OldSport.getSportData(n, function (err, sportData) {
-                                if (err || _.isEmpty(sportData)) {
-                                    var err = "Error found in sport";
-                                    callback(err, null);
-                                } else {
-                                    var arr = [];
-                                    arr.push(data.event._id);
-                                    sportData.eventId = arr;
-                                    Sport.saveData(sportData, function (err, complete) {
-                                        if (err || _.isEmpty(complete)) {
-                                            callback(null, {
-                                                error: "Error",
-                                                success: complete
-                                            });
-                                        } else {
-                                            callback(null, complete);
-                                        }
-                                    })
-                                }
-                            });
-                        } else {
-                            var arr = [];
-                            arr.push(data.event._id);
-                            var mainArr = [].concat.apply([], [
-                                singleData[0].eventId,
-                                arr
-                            ]);
-                            mainArr = _.uniq(mainArr);
-                            console.log("mainArr", mainArr, "singleData", singleData[0]);
-                            var updateObj = {
-                                $set: {
-                                    eventId: mainArr
-                                }
-                            };
-                            Sport.update({
-                                _id: singleData[0]._id
-                            }, updateObj).exec(
-                                function (err, sportData) {
-                                    if (err) {
+                        );
+                        Sport.aggregate(newPipeLine, function (err, singleData) {
+                            if (err) {
+                                callback(err, "error in mongoose");
+                            } else if (_.isEmpty(singleData)) {
+                                OldSport.getSportData(n, function (err, sportData) {
+                                    if (err || _.isEmpty(sportData)) {
+                                        var err = "Error found in sport";
                                         callback(err, null);
                                     } else {
-                                        if (_.isEmpty(sportData)) {
-                                            callback(null, []);
-                                        } else {
-                                            callback(null, sportData);
-                                        }
+                                        var arr = [];
+                                        arr.push(data.event._id);
+                                        sportData.eventId = arr;
+                                        Sport.saveData(sportData, function (err, complete) {
+                                            if (err || _.isEmpty(complete)) {
+                                                callback(null, {
+                                                    error: "Error",
+                                                    success: complete
+                                                });
+                                            } else {
+                                                callback(null, complete);
+                                            }
+                                        });
                                     }
                                 });
-                        }
-                    });
+                            } else {
+                                var arr = [];
+                                arr.push(data.event._id);
+                                var mainArr = [].concat.apply([], [
+                                    singleData[0].eventId,
+                                    arr
+                                ]);
+                                mainArr = _.uniq(mainArr);
+                                console.log("mainArr", mainArr, "singleData", singleData[0]);
+                                var updateObj = {
+                                    $set: {
+                                        eventId: mainArr
+                                    }
+                                };
+                                Sport.update({
+                                    _id: singleData[0]._id
+                                }, updateObj).exec(
+                                    function (err, sportData) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            if (_.isEmpty(sportData)) {
+                                                callback(null, []);
+                                            } else {
+                                                callback(null, sportData);
+                                            }
+                                        }
+                                    });
+                            }
+                        });
+                    } else {
+                        callback(null, n);
+                    }
                 }
             },
             function (err) {
@@ -1051,6 +1050,7 @@ var model = {
     },
 
     getSportData: function (data, callback) {
+        console.log("data", data);
         var sportData = {};
         async.waterfall([
             function (callback) {
@@ -1102,7 +1102,7 @@ var model = {
                             if (_.isEmpty(found)) {
                                 callback(null, []);
                             } else {
-                                sportData.ageGroup = found._id;
+                                sportData.weight = found._id;
                                 callback(null, sportData);
                             }
                         }
@@ -1172,7 +1172,7 @@ var model = {
                 callback(null, complete);
             }
         });
-    }
+    },
 
 
 };

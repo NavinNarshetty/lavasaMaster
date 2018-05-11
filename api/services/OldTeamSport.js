@@ -104,42 +104,44 @@ var model = {
 
     setAllTeamSport: function (data, callback) {
         async.eachSeries(data.teamData, function (n, callback) {
+            var nextData = {};
             async.waterfall([
                 function (callback) {
-                    Sport.findOne({
-                        oldId: n.sport
-                    }).lean().exec(function (err, found) {
-                        if (err) {
+                    OldIndividualSport.getSportId(n.sport, function (err, complete) {
+                        if (err || _.isEmpty(complete)) {
+                            var err = "Error found in Rules";
                             callback(err, null);
-                        } else if (_.isEmpty(found)) {
-                            callback(null, []);
                         } else {
-                            n.sport = found._id;
-                            callback(null, n);
+                            console.log("complete", complete);
+                            nextData.sport = complete.sport;
+                            callback(null, nextData);
                         }
                     });
                 },
-                function (found, callback) {
+                function (nextData, callback) {
                     Registration.findOne({
                         oldId: n.school
                     }).lean().exec(function (err, schoolData) {
-                        if (err) {
-                            callback(err, null);
-                        } else if (_.isEmpty(schoolData)) {
-                            callback(null, []);
+                        if (err || _.isEmpty(schoolData)) {
+                            callback(null, {
+                                error: "school not found"
+                            });
                         } else {
-                            n.school = schoolData._id;
-                            callback(null, n);
+                            console.log("schoolData", schoolData);
+                            nextData.school = schoolData._id;
+                            nextData.schoolName = schoolData.schoolName;
+                            callback(null, nextData);
                         }
                     });
                 },
-                function (n, callback) {
+                function (nextData, callback) {
+                    console.log("n inside", n);
                     var formData = {};
                     formData.teamId = n.teamId;
-                    formData.sport = n.sport;
-                    formData.school = n.school;
+                    formData.sport = nextData.sport;
+                    formData.school = nextData.school;
                     formData.name = n.name;
-                    formData.schoolName = n.schoolName;
+                    formData.schoolName = nextData.schoolName;
                     formData.createdBy = n.createdBy;
                     formData.eventId = data.event;
                     formData.oldId = n._id;
@@ -168,27 +170,32 @@ var model = {
                     });
                 },
                 function (complete, callback) {
-                    var studentTeam = [];
-                    _.each(complete.studentTeam, function (n) {
-                        studentTeam.push(n._id);
-                    });
-                    updateObj = {
-                        $set: {
-                            studentTeam: studentTeam
-                        }
-                    };
-                    TeamSport.update({
-                        _id: complete.studentTeam[0].teamId
-                    }, updateObj).exec(
-                        function (err, teamData) {
-                            if (err) {
-                                callback(err, null);
-                            } else if (_.isEmpty(teamData)) {
-                                callback(null, []);
-                            } else {
-                                callback(null, teamData);
-                            }
+                    if (complete.studentTeam.length > 0) {
+                        console.log("complete", complete);
+                        var studentTeam = [];
+                        _.each(complete.studentTeam, function (n) {
+                            studentTeam.push(n._id);
                         });
+                        updateObj = {
+                            $set: {
+                                studentTeam: studentTeam
+                            }
+                        };
+                        TeamSport.update({
+                            _id: complete.studentTeam[0].teamId
+                        }, updateObj).exec(
+                            function (err, teamData) {
+                                if (err) {
+                                    callback(err, null);
+                                } else if (_.isEmpty(teamData)) {
+                                    callback(null, []);
+                                } else {
+                                    callback(null, teamData);
+                                }
+                            });
+                    } else {
+                        callback(null, complete);
+                    }
                 }
             ], function (err, complete) {
                 if (err) {

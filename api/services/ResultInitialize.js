@@ -16,28 +16,38 @@ var model = {
         console.log("sportName", sportName, "player", player, "flag", flag);
         if (flag == 'team') {
             if (sportName == "Badminton Doubles" || sportName == "Tennis Doubles" || sportName == "Table Tennis Doubles" || sportName == "Tennis Mixed Doubles" || sportName == "Squash Doubles") {
-                var format = {
-                    player: player.studentId._id,
-                    sfaId: player.studentId.sfaId,
-                    isPlaying: false,
-                    firstName: player.studentId.firstName,
-                    surname: player.studentId.surname,
-                    fullName: player.studentId.firstName + " " + player.studentId.surname
-                };
+                if (player.studentId != null) {
+                    var format = {
+                        player: player.studentId._id,
+                        sfaId: player.studentId.sfaId,
+                        isPlaying: false,
+                        firstName: player.studentId.firstName,
+                        surname: player.studentId.surname,
+                        fullName: player.studentId.firstName + " " + player.studentId.surname
+                    };
+                } else {
+                    var format = {};
+                }
             } else {
-                var format = {
-                    player: player.studentId._id,
-                    sfaId: player.studentId.sfaId,
-                    jerseyNo: "",
-                    isPlaying: false,
-                    noShow: false,
-                    walkover: false,
-                    color: "",
-                    playerPoints: {},
-                    firstName: player.studentId.firstName,
-                    surname: player.studentId.surname,
-                    fullName: player.studentId.firstName + " " + player.studentId.surname
-                };
+                if (player.studentId != null) {
+                    var format = {
+                        player: player.studentId._id,
+                        sfaId: player.studentId.sfaId,
+                        jerseyNo: "",
+                        isPlaying: false,
+                        noShow: false,
+                        walkover: false,
+                        color: "",
+                        playerPoints: {},
+                        firstName: player.studentId.firstName,
+                        surname: player.studentId.surname,
+                        fullName: player.studentId.firstName + " " + player.studentId.surname
+                    };
+                } else {
+                    var format = {
+                        playerPoints: {}
+                    };
+                }
             }
             switch (sportName) {
                 case "Basketball":
@@ -98,15 +108,19 @@ var model = {
             return format;
         } else if (flag == "indi") {
             console.log("inside indi");
-            var format = {
-                player: player._id,
-                sfaId: player.sfaId,
-                noShow: false,
-                walkover: false,
-                firstName: player.firstName,
-                surname: player.surname,
-                fullName: player.firstName + " " + player.surname
-            };
+            if (player != null) {
+                var format = {
+                    player: player._id,
+                    sfaId: player.sfaId,
+                    noShow: false,
+                    walkover: false,
+                    firstName: player.firstName,
+                    surname: player.surname,
+                    fullName: player.firstName + " " + player.surname
+                };
+            } else {
+                var format = {};
+            }
             switch (sportName) {
                 case "Boxing":
                 case "Judo":
@@ -137,17 +151,31 @@ var model = {
 
     getTeamTemplate: function (sportName, team) {
         console.log("getTeamTemplate", team);
-        var format = {
-            teamId: team.teamId,
-            team: team._id,
-            noShow: false,
-            walkover: false,
-            coach: "",
-            schoolName: team.schoolName,
-            teamResults: {},
-            players: [],
-            isDraw: false
-        };
+        if (sportName != "Kho Kho") {
+            var format = {
+                teamId: team.teamId,
+                team: team._id,
+                noShow: false,
+                walkover: false,
+                coach: "",
+                schoolName: team.schoolName,
+                teamResults: {},
+                players: [],
+                isDraw: false
+            };
+        } else {
+            var format = {
+                teamId: team.teamId,
+                team: team._id,
+                noShow: false,
+                walkover: false,
+                coach: "",
+                schoolName: team.schoolName,
+                sets: [],
+                players: [],
+                isDraw: false
+            };
+        }
         switch (sportName) {
             case "Basketball":
                 format.teamResults.quarterPoints = [{
@@ -230,6 +258,11 @@ var model = {
                     "points": ''
                 }];
                 format.teamResults.finalPoints = "";
+                break;
+            case "Kho Kho":
+                format.sets = [{
+                    "point": ''
+                }];
                 break;
             case "Badminton Doubles":
             case "Table Tennis Doubles":
@@ -329,6 +362,7 @@ var model = {
     },
 
     getResultTemplate: function (sportName, match) {
+        console.log("inside result template");
         if (match && match.teams && match.isTeam) {
             var format = {
                 "teams": [],
@@ -341,8 +375,9 @@ var model = {
             var formatHeat = {
                 "teams": []
             };
-            var returnResult = {};
 
+            var returnResult = {};
+            console.log("inside team", sportName);
             switch (sportName) {
                 case "Basketball":
                     returnResult.resultBasketball = format;
@@ -378,6 +413,7 @@ var model = {
                 case "Throwball":
                     returnResult.resultThrowball = format;
                     ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultThrowball, match);
+                    console.log("returnResult", returnResult);
                     return returnResult;
 
                 case "Water Polo":
@@ -417,6 +453,12 @@ var model = {
                 case "Swimming 4x50m Medley Relay":
                     returnResult.resultHeat = formatHeat;
                     ResultInitialize.initializeTeamHeat(sportName, returnResult.resultHeat, match);
+                    return returnResult;
+                case "Kho Kho":
+                    returnResult.resultsCombat = format;
+                    // console.log("sport", sportName, "resultCombat", returnResult.resultsCombat, "match", match);
+                    ResultInitialize.initializeTeamAndPlayers(sportName, returnResult.resultsCombat, match);
+                    // console.log("returnResult", returnResult);
                     return returnResult;
 
             }
@@ -516,13 +558,12 @@ var model = {
                     returnResult.resultknockout = formatKnockout;
                     ResultInitialize.initializeHeat(sportName, returnResult.resultknockout, match);
                     return returnResult;
-
             }
         }
     },
 
     getMyResult: function (sportName, match, callback) {
-        console.log('get My Result', sportName, match);
+        console.log('get My Result', sportName, "match", match);
         var template = ResultInitialize.getResultTemplate(sportName, match);
         console.log('get My template', template);
         callback(null, template);
@@ -722,6 +763,7 @@ var model = {
             },
             function (sport, callback) {
                 var result = ResultInitialize.getResultVar(sport.sportName, sport.sportType);
+                console.log("result", result);
                 ResultInitialize.getMyResult(sport.sportName, {}, function (err, complete) {
                     callback(null, complete);
                 });
