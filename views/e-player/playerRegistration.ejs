@@ -40,6 +40,7 @@
             display: inline-block;
             padding-left: 5px;
             padding-right: 5px;
+            vertical-align: middle;
         }
 
         .color-primary {
@@ -142,7 +143,7 @@
                     <div class="main-div" style="padding: 0px 54px; text-align: justify; font-family: TitilliumWeb-Regular;font-size: 17px;">
 
                         <!-- COMMON TEXT  EXCEPT FOR CASH ADDITION-->
-                        <p> Dear Sir/ Madam, thank you filling out the player registration form (STEP1) for SFA Championship
+                        <p> Dear Sir/ Madam, thank you for filling out the player registration form (STEP1) for SFA Championship
                             <%=eventYear%>,
                                 <%=city%>.</p>
 
@@ -167,14 +168,14 @@
 
 
                                     <p>
-                                        <span class="sfa-bold bold">YOUR REGISTRATION IS NOT CONFIRMED.</span>
-                                        You will receive an email confirming the status of registration within 2 working days basis
+                                        <span class="sfa-bold bold">YOUR REGISTRATION IS NOT YET CONFIRMED.</span>
+                                        You will receive an email confirming the status of registration within 2 working days basis successful
                                         <span class="sfa-bold bold">verification of documents</span> .
                                     </p>
                                     <p class="sfa-bold bold">REGISTRATIONS FOR SFA CHAMPIONSHIP
                                         <%=eventYear%>,
-                                            <%=city%> IS A 2 STEP PROCESS. YOU WILL BE ABLE TO ACCESS SPORTS REGISTRATION (STEP 2)
-                                                VIA YOUR SFA ID & PASSWORD ON SUCCESSFUL VERIFICATION
+                                            <%=city%> IS A 2 STEP PROCESS. YOU WILL BE ABLE TO COMPLETE YOUR SPORTS REGISTRATION (STEP
+                                                2) USING YOUR SFA ID & PASSWORD ON SUCCESSFUL VERIFICATION
                                     </p>
 
 
@@ -200,7 +201,7 @@
 
 
                                                 <!-- PACKAGE NAME TO BE DISPLAYED -->
-                                                <p>You have selected
+                                                <p>You are a
                                                     <span>
                                                         <%=packageName%>
                                                     </span> which entitles you to the following benefits: </p>
@@ -218,38 +219,44 @@
 
 
                                                 <!-- LINK TO BE ADDED -->
-                                                <p>
+                                                <!-- <p>
                                                     <a href="<%=playerUrl%>" target="_new">Click here to view details of various player registration packages.</a>
-                                                </p>
+                                                </p> -->
                                                 <!-- LINK TO BE ADDED END -->
 
 
                                                 <!-- PACKAGE DIV TO BE HIDE WHEN IT IS PAKAGE 3 -->
-                                                <%if(packageOrder !=1){%>
+                                                <!-- <%if(packageOrder !=1){%>
                                                     <p>In case you wish to upgrade your package, you can do the same via the
                                                         sports registration section (STEP 2)</p>
                                                     <%} else {%>
-                                                        <!-- DO NOTHING -->
-                                                        <%}%>
-                                                            <!-- PACKAGE DIV TO BE HIDE WHEN IT IS PAGAGE # END -->
+                                                        DO NOTHING   
+                                                        <%}%> -->
+                                                <!-- PACKAGE DIV TO BE HIDE WHEN IT IS PAGAGE # END -->
 
+                                                <!-- EVENT CATEGORY -->
+                                                <p>
+                                                    *An Event Category refers to: Sport + Age Group + Gender + Event/Weight Category (if applicable) Eg. Swimming Male U-10 50m
+                                                    Freestyle | Athletics Female U-14 Long Jump
+                                                </p>
+                                                <!-- EVENT CATEGORY END -->
 
-                                                            <!-- INFO PART -->
-                                                            <p>For further queries kindly email us at
-                                                                <a class="sfa-bold bold" href="mailto:
+                                                <!-- INFO PART -->
+                                                <p>For further queries kindly email us at
+                                                    <a class="sfa-bold bold" href="mailto:
                                                                     <%=infoId%>">
-                                                                    <%=infoId%>
-                                                                </a> or call us on
-                                                                <span class="sfa-bold bold">
-                                                                    <%=infoNo%>
-                                                                </span>
-                                                            </p>
-                                                            <!-- INFO PART END -->
+                                                        <%=infoId%>
+                                                    </a> or call us on
+                                                    <span class="sfa-bold bold">
+                                                        <%=infoNo%>
+                                                    </span>
+                                                </p>
+                                                <!-- INFO PART END -->
 
-                                                            <!-- REGARDS -->
-                                                            <p style="font-family:TitilliumWeb-Bold; font-weight: bold;">Regards,
-                                                                <br>Team SFA</p>
-                                                            <!-- REGARDS END -->
+                                                <!-- REGARDS -->
+                                                <p style="font-family:TitilliumWeb-Bold; font-weight: bold;">Regards,
+                                                    <br>Team SFA</p>
+                                                <!-- REGARDS END -->
                     </div>
                 </td>
             </tr>
@@ -258,29 +265,30 @@
             <tr>
                 <td>
                     <div class="blue-footer" style="background:#0a1a72;font-family: TitilliumWeb-Regular;">
-                        <ul class="list-inline" style="padding: 8px 35px;font-size: 16px;font-weight: bold">
+                        <p class="text-center" style="padding: 5px 0px;color: #fff;font-size: 14px;margin: 0px;">Follow us on our social media handles for all the latest updates on the SFA Championship 2018-19</p>
+                        <ul class="list-inline text-center" style="padding: 8px 0px;font-weight: bold;padding-bottom: 0px; margin: 0px;">
                             <li>
                                 <img src="https://storage.googleapis.com/emailers-images/g1.png" alt="">
                             </li>
-                            <li style="vertical-align: top;padding-left: 0;">
+                            <li style="vertical-align: middle;padding-left: 0;">
                                 <a href="" style="color:#fff;text-decoration: none;">www.sfanow.in</a>
                             </li>
                             <li>
                                 <img src="https://storage.googleapis.com/emailers-images/g2.png" alt="">
                             </li>
-                            <li style="vertical-align: top;padding-left: 0;">
+                            <li style="vertical-align: middle;padding-left: 0;">
                                 <a href="" style="color:#fff;text-decoration: none;">/sportsforallnow</a>
                             </li>
                             <li>
                                 <img src="https://storage.googleapis.com/emailers-images/g3.png" alt="">
                             </li>
-                            <li style="vertical-align: top;padding-left: 0;">
+                            <li style="vertical-align: middle;padding-left: 0;">
                                 <a href="" style="color:#fff;text-decoration: none;">/sfanow</a>
                             </li>
                             <li>
                                 <img src="https://storage.googleapis.com/emailers-images/g4.png" alt="">
                             </li>
-                            <li style="vertical-align: top;padding-left: 0;">
+                            <li style="vertical-align: middle;padding-left: 0;">
                                 <a href="" style="color:#fff;text-decoration: none;">/sfanow </a>
                             </li>
                         </ul>

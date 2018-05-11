@@ -182,73 +182,104 @@
             <tr>
                 <td>
                     <div class="main-div" style="padding: 0px 54px;text-align:justify;font-family:TitilliumWeb-Regular;font-size:17px;">
-                        <p>Congratulations! You are now verified for SFA Championship
-                            <%=eventYear%>,
-                                <%=city%>. Please find below your SFA ID and Password. This SFA ID and password will give you access
-                                    to the sports registration page (STEP 2): </p>
+                        <%if(flag === 'athlete'){%>
+                            <p>Dear Athlete,</p>
 
-                        <ol type='i'>
-                            <li>SFA ID:
-                                <%=sfaId%>
-                            </li>
-                            <li>Password:
-                                <%=password%> (To be kept confidential)</li>
-                        </ol>
-
-                        <%if(flag === 'school' || flag === 'college'){%>
-                            <!-- SCHOOL -->
-                            <p style="font-family:TitilliumWeb-Bold;font-weight:bold;">Click on the following to register players/teams from your
-                                <%=type%> (STEP 2) of the registration process:
-                                    <br>
-                                    <a href="<%=schoolUrl%>" target="_new">
-                                        <%=schoolUrl%>
-                                    </a>
-                            </p>
-
-                            <p style="font-family:TitilliumWeb-Bold;font-weight:bold;">KINDLY NOTE: TEAMS/PLAYERS WILL BE AVAILABLE FOR SELECTION IN ANY SPORT ONLY IF HE/SHE IS REGISTERED
-                                FOR SFA CHAMPIONSHIP
+                            <p>Congratulations! You have completed the player registration (STEP 1) process and are now verified
+                                for SFA Championship
                                 <%=eventYear%>,
-                                    <%=city%>.</p>
-                            <!-- SCHOOL END -->
-                            <%} else {%>
-                                <!-- PLAYER -->
-                                <p style="font-family:TitilliumWeb-Bold;font-weight:bold;">Click on the following to complete sports registration (STEP 2) of the registration process:
-                                    <br>
-                                    <a href="<%=playerUrl%>" target="_new">
-                                        <%=playerUrl%>
-                                    </a>
+                                    <%=city%>. Please find below your SFA ID and Password. This SFA ID and password will give you
+                                        access to the sports registration page (STEP 2): </p>
+                            <%} else if(flag==='school') {%>
+                                <p>Congratulations! You are now verified for SFA Championship
+                                    <%=eventYear%>,
+                                        <%=city%>. Please find below
+                                            <span style="font-family:TitilliumWeb-Bold;font-weight:bold;">School SFA ID</span> and
+                                            <span style="font-family:TitilliumWeb-Bold;font-weight:bold;">Password</span>This SFA ID and password will give you access to the sports registration
+                                            page (STEP 2):
                                 </p>
+                                <%}%>
 
-                                <p>You have selected
-                                    <%=packageName%> which entitles you to the following benefits:
-                                </p>
 
-                                <ul type='circle'>
-                                    <%_.each(featureDetail,function(features){%>
-                                        <li>
-                                            <%=features.featureName%>
+                                    <ol type='i'>
+                                        <li>SFA ID:
+                                            <%=sfaId%>
                                         </li>
-                                        <%})%>
-                                </ul>
+                                        <li>Password:
+                                            <%=password%> (To be kept confidential)</li>
+                                    </ol>
 
+                                    <%if(flag === 'school' || flag === 'college'){%>
+                                        <!-- SCHOOL -->
+                                        <p style="font-family:TitilliumWeb-Bold;font-weight:bold;">Click on the following to register players/teams from your
+                                            <%=type%> (STEP 2) of the registration process:
+                                                <br>
+                                                <a href="<%=schoolUrl%>" target="_new">
+                                                    <%=schoolUrl%>
+                                                </a>
+                                        </p>
 
-                                <%if(packageOrder !== 1){%>
-                                    <p>In case you wish to upgrade your package, you can do so via sports registration (STEP
-                                        2)
-                                    </p>
-                                    <%}%>
-                                        <!-- PLAYER END -->
-                                        <%}%>
-                                            <p>For further queries kindly email us at
-                                                <a style="font-family:TitilliumWeb-Bold;color:#000;" href="mailto:<%=infoId%>">
-                                                    <%=infoId%>
-                                                </a> or call us on
-                                                <span style="font-family:TitilliumWeb-Bold;">
-                                                    <%=infoNo%>
-                                                </span>
+                                        <p style="font-family:TitilliumWeb-Bold;font-weight:bold;">KINDLY NOTE: TEAMS/PLAYERS WILL BE AVAILABLE FOR SELECTION IN ANY SPORT ONLY IF HE/SHE
+                                            IS REGISTERED FOR SFA CHAMPIONSHIP
+                                            <%=eventYear%>,
+                                                <%=city%>.</p>
+
+                                        <p>We request you to support, empower and celebrate all athletes from your school by
+                                            means of giving them the opportunity to participate at the Ultimate Interschool
+                                            Championship. The more medals your athletes win, the higher you rise on our Ranking
+                                            Table, which eventually declares who the ‘Best School For Sport’ is. Good luck!</p>
+                                        <!-- SCHOOL END -->
+                                        <%} else {%>
+                                            <!-- PLAYER -->
+                                            <p style="font-family:TitilliumWeb-Bold;font-weight:bold;">Click here to complete your sports registration (STEP 2) process, using your
+                                                SFA ID AND password (*mentioned above)
+                                                <br>
+                                                <a href="<%=playerUrl%>" target="_new">
+                                                    <%=playerUrl%>
+                                                </a>
                                             </p>
-                                            <p style="font-family:TitilliumWeb-Bold;font-weight:bold;">Regards,
-                                                <br>Team SFA</p>
+
+                                            <p style="font-family:TitilliumWeb-Bold;font-weight:bold;">KINDLY NOTE: SPORTS REGISTRATION MUST BE COMPLETED WITHIN 48 HOURS OF RECEIVING
+                                                THIS EMAIL</p>
+
+                                            <!-- <p>You have selected
+                                                <%=packageName%> which entitles you to the following benefits:
+                                            </p> -->
+
+                                            <!-- <ul type='circle'>
+                                                <%_.each(featureDetail,function(features){%>
+                                                    <li>
+                                                        <%=features.featureName%>
+                                                    </li>
+                                                    <%})%>
+                                            </ul> -->
+
+
+                                            <%if(packageOrder !== 1){%>
+                                                <p>Participate in unlimited Sports events, meet with sporting superstars and
+                                                    get Official SFA Merchandise worth INR
+                                                    <%=merchandisePrice%> along with SMAAASH Vouchers worth INR
+                                                        <%=smaaashPrice%>/- by upgrading your package to a GOLD MEMBERSHIP! In case you wish
+                                                            to upgrade your package, you can do so via sports registration
+                                                            (STEP 2):
+                                                            <br>
+                                                            <a href="<%=playerUrl%>" target="_new">
+                                                                <%=playerUrl%>
+                                                            </a>
+                                                </p>
+                                                <%}%>
+                                                    <!-- PLAYER END -->
+                                                    <%}%>
+                                                        <p>For further queries kindly email us at
+                                                            <a style="font-family:TitilliumWeb-Bold;color:#000;" href="mailto:<%=infoId%>">
+                                                                <%=infoId%>
+                                                            </a> or call us on
+                                                            <span style="font-family:TitilliumWeb-Bold;">
+                                                                <%=infoNo%>
+                                                            </span>
+                                                        </p>
+                                                        <p style="font-family:TitilliumWeb-Bold;font-weight:bold;">Regards,
+                                                            <br>Team SFA</p>
                     </div>
                 </td>
             </tr>
@@ -257,35 +288,32 @@
         <tfoot>
             <tr>
                 <td>
-                    <div class="blue-footer" style="background:#0a1a72;font-family:TitilliumWeb-Regular;">
-                        <ul class="list-inline" style="padding: 8px 35px;font-size:16px;font-weight:bold">
+                    <div class="blue-footer" style="background:#0a1a72;font-family: TitilliumWeb-Regular;">
+                        <p class="text-center" style="padding: 5px 0px;color: #fff;font-size: 14px;margin: 0px;">Follow us on our social media handles for all the latest updates on the SFA Championship 2018-19</p>
+                        <ul class="list-inline text-center" style="padding: 8px 0px;font-weight: bold;padding-bottom: 0px; margin: 0px;">
                             <li>
-                                <img src="https://storage.googleapis.com/emailers-images/g1.png" alt=" ">
+                                <img src="https://storage.googleapis.com/emailers-images/g1.png" alt="">
                             </li>
-                            <li style="vertical-align: top;padding-left: 0; ">
-                                <a href=" " style="color:#fff;text-decoration:
-                                none; ">www.sfanow.in</a>
-                            </li>
-                            <li>
-                                <img src="https://storage.googleapis.com/emailers-images/g2.png" alt=" ">
-                            </li>
-                            <li style="vertical-align: top;padding-left: 0; ">
-                                <a href=" " style="color:#fff;text-decoration:
-                                none; ">/sportsforallnow</a>
+                            <li style="vertical-align: middle;padding-left: 0;">
+                                <a href="" style="color:#fff;text-decoration: none;">www.sfanow.in</a>
                             </li>
                             <li>
-                                <img src="https://storage.googleapis.com/emailers-images/g3.png" alt=" ">
+                                <img src="https://storage.googleapis.com/emailers-images/g2.png" alt="">
                             </li>
-                            <li style="vertical-align: top;padding-left: 0; ">
-                                <a href=" " style="color:#fff;text-decoration:
-                                none; ">/sfanow</a>
+                            <li style="vertical-align: middle;padding-left: 0;">
+                                <a href="" style="color:#fff;text-decoration: none;">/sportsforallnow</a>
                             </li>
                             <li>
-                                <img src="https://storage.googleapis.com/emailers-images/g4.png" alt=" ">
+                                <img src="https://storage.googleapis.com/emailers-images/g3.png" alt="">
                             </li>
-                            <li style="vertical-align: top;padding-left: 0; ">
-                                <a href=" " style="color:#fff;text-decoration:
-                                none; ">/sfanow </a>
+                            <li style="vertical-align: middle;padding-left: 0;">
+                                <a href="" style="color:#fff;text-decoration: none;">/sfanow</a>
+                            </li>
+                            <li>
+                                <img src="https://storage.googleapis.com/emailers-images/g4.png" alt="">
+                            </li>
+                            <li style="vertical-align: middle;padding-left: 0;">
+                                <a href="" style="color:#fff;text-decoration: none;">/sfanow </a>
                             </li>
                         </ul>
                     </div>

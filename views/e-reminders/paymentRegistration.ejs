@@ -141,8 +141,13 @@
                         <!-- COMMON TEXT -->
                         <p class="sfa-bold">REGISTRATIONS FOR SFA CHAMPIONSHIP
                             <%=eventYear%>,
-                                <%=city%> NAME IS 2 STEP PROCESS. YOU WILL BE ABLE TO ACCESS SPORTS REGISTRATION (STEP 2) VIA YOUR
-                                    SFA ID & PASSWORD.</p>
+                                <%=city%> NAME IS 2 STEP PROCESS. YOU WILL BE ABLE TO ACCESS SPORTS REGISTRATION (STEP 2) VIA
+                                    <%if(flag==='school'){%>
+                                        THE SCHOOL'S
+                                        <%} else {%>
+                                            YOUR
+                                            <%}%>
+                                                SFA ID & PASSWORD.</p>
 
                         <p> Dear Sir/Madam, we are unable to process your form for SFA Championship
                             <%=eventYear%>,
@@ -155,25 +160,25 @@
                             <!-- INSIDE PLAYER -->
                             <%if(upgrade){%>
                                 <!-- UPGRADE -->
-                                <p>Kindly request you to courier/hand deliver a payment of Rs. 599/899/1999 to complete the
-                                    upgrade process within 2 working days to:</p>
+                                <p>We request you to courier/hand deliver a payment of Rs. 599/899/1999 to complete the upgrade
+                                    process within 2 working days to:</p>
                                 <!-- UPGRADE END -->
                                 <%} else {%>
                                     <!-- REGISTRATION -->
-                                    <p>Kindly request you to courier/hand deliver a payment of Rs. 599/899/1999 to complete
-                                        the registration process within 2 working days to:</p>
+                                    <p>We request you to courier/hand deliver a payment of Rs. 599/899/1999 to complete the
+                                        registration process within 2 working days to:</p>
                                     <!-- REGISTRATION END-->
                                     <%}%>
                                         <%} else {%>
                                             <!-- INSIDE SCHOOL -->
                                             <%if(upgrade){%>
                                                 <!-- UPGRADE -->
-                                                <p>Kindly request you to courier/hand deliver a payment of Rs. 2,500/- (+GST)
-                                                    to complete the upgrade process within 2 working days to:</p>
+                                                <p>We request you to courier/hand deliver a payment of Rs. 2,950/- (+GST) to
+                                                    complete the upgrade process within 2 working days to:</p>
                                                 <!-- UPGRADE END -->
                                                 <%} else {%>
                                                     <!-- REGISTRATION -->
-                                                    <p>Kindly request you to courier/hand deliver a payment of Rs. 2,500/- (+GST)
+                                                    <p>We request you to courier/hand deliver a payment of Rs. 2,950/- (+GST)
                                                         to complete the registration process within 2 working days to:</p>
                                                     <!-- REGISTRATION END-->
                                                     <%}%>
@@ -209,29 +214,30 @@
             <tr>
                 <td>
                     <div class="blue-footer" style="background:#0a1a72;font-family: TitilliumWeb-Regular;">
-                        <ul class="list-inline" style="padding: 8px 35px;font-size: 16px;font-weight: bold">
+                        <p class="text-center" style="padding: 5px 0px;color: #fff;font-size: 14px;margin: 0px;">Follow us on our social media handles for all the latest updates on the SFA Championship 2018-19</p>
+                        <ul class="list-inline text-center" style="padding: 8px 0px;font-weight: bold;padding-bottom: 0px; margin: 0px;">
                             <li>
                                 <img src="https://storage.googleapis.com/emailers-images/g1.png" alt="">
                             </li>
-                            <li style="vertical-align: top;padding-left: 0;">
+                            <li style="vertical-align: middle;padding-left: 0;">
                                 <a href="" style="color:#fff;text-decoration: none;">www.sfanow.in</a>
                             </li>
                             <li>
                                 <img src="https://storage.googleapis.com/emailers-images/g2.png" alt="">
                             </li>
-                            <li style="vertical-align: top;padding-left: 0;">
+                            <li style="vertical-align: middle;padding-left: 0;">
                                 <a href="" style="color:#fff;text-decoration: none;">/sportsforallnow</a>
                             </li>
                             <li>
                                 <img src="https://storage.googleapis.com/emailers-images/g3.png" alt="">
                             </li>
-                            <li style="vertical-align: top;padding-left: 0;">
+                            <li style="vertical-align: middle;padding-left: 0;">
                                 <a href="" style="color:#fff;text-decoration: none;">/sfanow</a>
                             </li>
                             <li>
                                 <img src="https://storage.googleapis.com/emailers-images/g4.png" alt="">
                             </li>
-                            <li style="vertical-align: top;padding-left: 0;">
+                            <li style="vertical-align: middle;padding-left: 0;">
                                 <a href="" style="color:#fff;text-decoration: none;">/sfanow </a>
                             </li>
                         </ul>
