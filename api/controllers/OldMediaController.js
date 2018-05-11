@@ -23,6 +23,17 @@ var controller = {
         }
     },
 
+    getAllPressPhoto: function (req, res) {
+        if (req.body) {
+            OldMedia.getAllPressPhoto(req.body, res.callback);
+        } else {
+            res.json({
+                data: "Insufficient Data",
+                value: false
+            });
+        }
+    },
+
 
 };
 module.exports = _.assign(module.exports, controller);
