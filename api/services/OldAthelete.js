@@ -135,13 +135,13 @@ var model = {
     },
 
     saveAthleteOriginal: function (data, callback) {
-
         async.eachSeries(data, function (singleData, callback) {
             console.log("singleData", singleData);
             async.waterfall([
                 function (callback) {
                     Athelete.findOne({
-                        sfaId: singleData.sfaId
+                        sfaId: singleData.sfaId,
+                        status: "Verified"
                     }).lean().exec(function (err, found) {
                         if (err) {
                             callback(err, null);

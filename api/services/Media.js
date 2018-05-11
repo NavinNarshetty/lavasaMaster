@@ -101,17 +101,17 @@ var model = {
         function populatedExcel(matchObj) {
             Media.find(matchObj).lean().exec(function (err, medias) {
                 async.concatSeries(medias, function (singleMedia, callback) {
-                    var obj = {};
-                    obj.year = singleMedia.year;
-                    obj.folder = singleMedia.folder;
-                    obj.order = singleMedia.order;
-                    obj.imageorder = singleMedia.imageorder;
-                    obj.date = moment(singleMedia.date).format('DD-MM-YY');
-                    obj.mediatitle = singleMedia.mediatitle;
-                    obj.mediatype = singleMedia.mediatype;
-                    obj.medialink = singleMedia.medialink;
-                    callback(null, obj);
-                },
+                        var obj = {};
+                        obj.year = singleMedia.year;
+                        obj.folder = singleMedia.folder;
+                        obj.order = singleMedia.order;
+                        obj.imageorder = singleMedia.imageorder;
+                        obj.date = moment(singleMedia.date).format('DD-MM-YY');
+                        obj.mediatitle = singleMedia.mediatitle;
+                        obj.mediatype = singleMedia.mediatype;
+                        obj.medialink = singleMedia.medialink;
+                        callback(null, obj);
+                    },
                     function (err, allMedias) {
                         Config.generateExcel(name, allMedias, res);
                     });
@@ -248,20 +248,22 @@ var model = {
         };
 
         sendObj.options = options;
-       
+
 
         Media.find(matchObj).lean().skip(options.start).limit(options.count).exec(function (err, medias) {
-                if (err || _.isEmpty(data)) {
-                    callback(err, "Medias Not Found");
-                } else {
-                    sendObj.results = medias;
-                    Media.count(matchObj, function (err, count) {
-                        sendObj.total = count;
-                        callback(null, sendObj);
-                    });
-                   
-                }
-            });
-    }
+            if (err || _.isEmpty(data)) {
+                callback(err, "Medias Not Found");
+            } else {
+                sendObj.results = medias;
+                Media.count(matchObj, function (err, count) {
+                    sendObj.total = count;
+                    callback(null, sendObj);
+                });
+
+            }
+        });
+    },
+
+
 };
 module.exports = _.assign(module.exports, exports, model);
