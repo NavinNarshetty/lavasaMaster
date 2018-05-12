@@ -392,7 +392,7 @@ var model = {
                     function (saveData, callback) {
                         Athelete.findOne({
                             _id: saveData.studentId
-                        }).exec(function (err, found) { //finds all athelete
+                        }).deepPopulate("package").exec(function (err, found) { //finds all athelete
                             if (err) {
                                 callback(err, null);
                             } else if (_.isEmpty(found)) {
@@ -409,6 +409,7 @@ var model = {
                                 athleteInfo.firstName = found.firstName;
                                 athleteInfo.email = found.email;
                                 athleteInfo.sfaid = found.sfaId;
+                                athleteInfo.package = found.package;
                                 athleteInfo.isCaptain = n.isCaptain;
                                 athleteInfo.isGoalKeeper = n.isGoalKeeper;
                                 atheleteName.push(athleteInfo);
@@ -692,10 +693,13 @@ var model = {
                     emailData.infoId = data.property.infoId;
                     emailData.infoNo = data.property.infoNo;
                     emailData.infoNoArr = data.property.infoNoArr;
+                    emailData.merchandisePrice = data.property.merchandisePrice;
+                    emailData.smaaashPrice = data.property.smaaashPrice;
                     emailData.cityAddress = data.property.cityAddress;
                     emailData.ddFavour = data.property.ddFavour;
                     emailData.email = n.email;
                     emailData.name = n.firstName;
+                    emailData.packageOrder = n.package.order;
                     emailData.city = data.property.sfaCity;
                     if (data.property.sfaCity == 'Mumbai') {
                         emailData.urls = "https://mumbai.sfanow.in";

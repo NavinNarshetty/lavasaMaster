@@ -105,8 +105,8 @@
                             </div>
                             <div class="btn-common mt25">
                                 <!-- <button type="button" name="button" class="text-up btn-orange padd-btn" ui-sref="student-bio({'id':studentid})">athlete bio</button> -->
-                                <button type="button" name="button" class="text-up btn-orange padd-btn ml10" ng-if="certificate" ng-click="getCertificate(studentid);">Certificate</button>
-                                <button ng-if="specialAward" type="button" name="button" class="text-up btn-orange padd-btn ml10" ng-click="getSpecialAward(studentid)">Special Award</button>
+                                <!-- <button type="button" name="button" class="text-up btn-orange padd-btn ml10" ng-if="certificate" ng-click="getCertificate(studentid);">Certificate</button>
+                                <button ng-if="specialAward" type="button" name="button" class="text-up btn-orange padd-btn ml10" ng-click="getSpecialAward(studentid)">Special Award</button> -->
                             </div>
                         </div>
                     </div>
@@ -234,13 +234,14 @@
                                             == 'Qualifying Round') || (table.layout == 'Knockout') || (table.layout == 'Swiss League')
                                             || (table.layout == 'Heats') || (table.layout == 'League') || (table.layout == 'League cum Knockout')">{{stat.round || '-'}}</td>
                                         <td class="text-up" ng-if="table.layout == 'Qualifying Knockout' || table.layout == 'Knockout' || table.layout == 'League' || table.layout == 'League cum Knockout' || table.layout == 'Swiss League'">
-                                            <img src="img/sf-cup-mini.png" alt="" class="table-img" ng-if="stat.isAthleteWinner == false && stat.draw != true">{{stat.opponentName
-                                            || '-' | removeSchoolWithDash:stat.school}}
+                                            <img src="img/sf-cup-mini.png" alt="" class="table-img" ng-if="stat.isAthleteWinner == false && stat.draw != true">{{stat.opponentName || '-' | removeSchoolWithDash:stat.school}}
                                             <p>{{stat.school}}</p>
                                         </td>
                                         <td ng-if="table.layout != 'Swiss League'">
                                             <div ng-if="!stat.score.length">{{stat.score || '-'}}</div>
-                                            <div ng-if="stat.score.length>0"><span ng-repeat="score in stat.score track by $index">{{score || '  -  '}}</span></div>
+                                            <div ng-if="stat.score.length>0">
+                                                <span ng-repeat="score in stat.score track by $index">{{score || ' - '}}</span>
+                                            </div>
                                             <!-- score -->
                                             <!-- <div ng-if="table.layout == 'Knockout'">{{stat.score || '-'}}</div>
                                             <div ng-if="table.layout == 'League'">{{stat.score || '-'}}</div>
@@ -316,15 +317,15 @@
                                                     <a ng-if="stat.video != 'YTU' && stat.video != 'NA'" class="various fancybox.iframe" href="{{stat.video | linkvideo :stat.videoType}}"
                                                         rel="gallery1" fancybox>
 
-                                                            <img src="img/sf-play.png" alt="">
-                                                        </a>
+                                                        <img src="img/sf-play.png" alt="">
+                                                    </a>
 
                                                     <a ng-if="stat.video == 'NA'" ng-click="videoNA()">
-                                                            <img src="img/sf-play.png" alt="">
-                                                        </a>
+                                                        <img src="img/sf-play.png" alt="">
+                                                    </a>
                                                     <a ng-if="stat.video == 'YTU'" ng-click="videoYTU()">
-                                                            <img src="img/sf-play.png" alt="">
-                                                        </a>
+                                                        <img src="img/sf-play.png" alt="">
+                                                    </a>
                                                 </div>
                                             </div>
                                             <div ng-if="stat.position">{{stat.position}}</div>
