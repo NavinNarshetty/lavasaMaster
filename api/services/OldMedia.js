@@ -79,16 +79,36 @@ var model = {
                     }
                 });
             },
-            // function (final, callback) {
-            //     OldMatch.setIndividualMatch(final, function (err, complete) {
-            //         if (err || _.isEmpty(complete)) {
-            //             var err = "Error found in Rules";
-            //             callback(err, null);
-            //         } else {
-            //             callback(null, complete);
-            //         }
-            //     });
-            // }
+            function (final, callback) {
+                async.eachSeries(final.media, function (n, callback) {
+                    var formData = {};
+                    formData.eventId = final.event;
+                    formData.year = n.year;
+                    formData.folder = n.folder;
+                    formData.imageorder = n.imageorder;
+                    formData.medialink = n.medialink;
+                    formData.mediatype = n.mediatype;
+                    formData.mediatitle = n.mediatitle;
+                    formData.thumbnails = n.thumbnails;
+                    Media.saveData(formData, function (err, mediaData) {
+                        // console.log("mediaData", mediaData);
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(mediaData)) {
+                            callback("No media data found", null);
+                        } else {
+                            callback(null, mediaData);
+                        }
+                    });
+
+                }, function (err, completeLoop) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        callback(null, completeLoop);
+                    }
+                })
+            }
         ], function (err, complete) {
             if (err) {
                 callback(err, null);

@@ -38,7 +38,7 @@ module.exports = mongoose.model('OldGallery', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
-    getAllGallery: function (data, callback) {
+    getAllMedia: function (data, callback) {
         async.waterfall([
             function (callback) {
                 ConfigProperty.findOne().exec(function (err, property) {
@@ -66,7 +66,7 @@ var model = {
                 });
             },
             function (eventData, callback) {
-                OldMedia.find({}).lean().exec(function (err, found) {
+                OldGallery.find({}).lean().exec(function (err, found) {
                     if (err) {
                         callback(err, null);
                     } else if (_.isEmpty(found)) {
@@ -79,7 +79,36 @@ var model = {
                     }
                 });
             },
+            function (final, callback) {
+                async.eachSeries(final.media, function (n, callback) {
+                    var formData = {};
+                    formData.eventId = final.event;
+                    formData.year = n.year;
+                    formData.folder = n.folder;
+                    formData.imageorder = n.imageorder;
+                    formData.medialink = n.medialink;
+                    formData.mediatype = n.mediatype;
+                    formData.mediatitle = n.mediatitle;
+                    formData.thumbnails = n.thumbnails;
+                    Gallery.saveData(formData, function (err, mediaData) {
+                        // console.log("mediaData", mediaData);
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(mediaData)) {
+                            callback("No media data found", null);
+                        } else {
+                            callback(null, mediaData);
+                        }
+                    });
 
+                }, function (err, completeLoop) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        callback(null, completeLoop);
+                    }
+                })
+            }
         ], function (err, complete) {
             if (err) {
                 callback(err, null);

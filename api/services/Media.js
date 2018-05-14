@@ -4,41 +4,46 @@ var validators = require('mongoose-validators');
 var schema = new Schema({
     year: {
         type: String,
-        required: true
+        // required: true
     },
     folder: {
         type: String,
-        required: true
+        // required: true
     },
     order: {
         type: Number,
-        required: true
+        // required: true
     },
     imageorder: {
         type: Number,
-        required: true
+        // required: true
     },
     date: {
         type: Date,
-        required: true
+        // required: true
     },
     mediatitle: {
         type: String,
-        required: true
+        // required: true
     },
     mediatype: {
         type: String,
-        required: true
+        // required: true
     },
     medialink: {
         type: String,
-        required: true
+        // required: true
         // validate: [validators.matches(/\.(gif|jpg|jpeg|tiff|png)$/i)]
     },
     videotype: {
         type: String
     },
-    thumbnails: []
+    thumbnails: [],
+    eventId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Event',
+        index: true
+    }
 });
 
 schema.plugin(deepPopulate, {});
