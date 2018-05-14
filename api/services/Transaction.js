@@ -148,6 +148,7 @@ var model = {
                                     PayuId: payu,
                                     receiptId: transactData.receiptId,
                                     paymentMode: transactData.paymentMode,
+                                    coupon: data.coupon
                                 }
                             };
                             Accounts.update({
@@ -168,6 +169,7 @@ var model = {
                                     PayuId: payu,
                                     receiptId: transactData.receiptId,
                                     paymentMode: transactData.paymentMode,
+                                    coupon: data.coupon
                                 }
                             };
                             Accounts.update({

@@ -11,6 +11,11 @@ var schema = new Schema({
         ref: 'Registration',
         index: true
     },
+    coupon: {
+        type: Schema.Types.ObjectId,
+        ref: 'CouponCode',
+        index: true
+    },
     transaction: [{
         type: Schema.Types.ObjectId,
         ref: 'Transaction',
@@ -84,6 +89,9 @@ schema.plugin(deepPopulate, {
         },
         "transaction.package": {
             select: ''
+        },
+        "couponcode": {
+            select: ''
         }
     }
 });
@@ -109,6 +117,21 @@ var model = {
             {
                 $unwind: {
                     path: "$athlete",
+                }
+            },
+            {
+                $lookup: {
+                    "from": "couponcodes",
+                    "localField": "coupon",
+                    "foreignField": "_id",
+                    "as": "coupon"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$coupon",
                 }
             },
 
@@ -181,6 +204,21 @@ var model = {
                     "as": "athlete"
                 }
             },
+            {
+                $lookup: {
+                    "from": "couponcodes",
+                    "localField": "coupon",
+                    "foreignField": "_id",
+                    "as": "coupon"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$coupon",
+                }
+            },
             // Stage 2
             {
                 $unwind: {
@@ -242,6 +280,21 @@ var model = {
                     "as": "school"
                 }
             },
+            {
+                $lookup: {
+                    "from": "couponcodes",
+                    "localField": "coupon",
+                    "foreignField": "_id",
+                    "as": "coupon"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$coupon",
+                }
+            },
             // Stage 2
             {
                 $unwind: {
@@ -301,6 +354,21 @@ var model = {
                 }
             },
             // Stage 2
+            {
+                $lookup: {
+                    "from": "couponcodes",
+                    "localField": "coupon",
+                    "foreignField": "_id",
+                    "as": "coupon"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$coupon",
+                }
+            },
             {
                 $unwind: {
                     path: "$athlete",
@@ -541,7 +609,7 @@ var model = {
     getAccount: function (data, callback) {
         Accounts.findOne({
             _id: data._id
-        }).lean().deepPopulate('athlete school athlete.school transaction transaction.package').exec(
+        }).lean().deepPopulate('athlete school athlete.school transaction transaction.package couponcode').exec(
             function (err, found) {
                 if (err) {
                     callback(err, null);
