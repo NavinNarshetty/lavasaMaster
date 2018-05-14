@@ -101,6 +101,9 @@ var schema = new Schema({
     playerUrl: String,
     schoolUrl: String,
     ruleUrl: String,
+    playerProfile: String,
+    schoolProfile: String,
+    teamProfile: String,
     merchandisePrice: String,
     smaaashPrice: String
 
@@ -159,6 +162,9 @@ var model = {
                     finalData.merchandisePrice = property[0].merchandisePrice;
                     finalData.smaaashPrice = property[0].smaaashPrice;
                     finalData.domainUrl = property[0].domainUrl;
+                    finalData.playerProfile = property[0].playerProfile;
+                    finalData.schoolProfile = property[0].schoolProfile;
+                    finalData.teamProfile = property[0].teamProfile;
 
                     callback(null, finalData);
                 }

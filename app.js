@@ -26,9 +26,9 @@ mongoose = require('mongoose');
 
 // global["database"] = "sfanew";
 // global["database"] = "sfa1";
-// global["database"] = "live-sfa";
+global["database"] = "live-sfa";
 // global["database"] = "test-account";
-global["database"] = "test-sfa";
+// global["database"] = "test-sfa";
 // global["database"] = "livescoring";
 // global["database"] = "live-hyderabad";
 // global["database"] = "forMatches";

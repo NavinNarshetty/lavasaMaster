@@ -127,7 +127,7 @@ var controller = {
 
                         // res.redirect("http://testmumbai2016.sfanow.in/paymentSuccess/register/school");
 
-                        res.redirect("http://testmumbaischool.sfanow.in/paymentSuccess/register/school");
+                        // res.redirect("http://testmumbaischool.sfanow.in/paymentSuccess/register/school");
 
                         // res.redirect("http://testmumbaicollege.sfanow.in/paymentSuccess/register/school");
 
@@ -139,7 +139,7 @@ var controller = {
 
                         // res.redirect("http://testahmedabadcollege.sfanow.in/paymentSuccess/register/school");
 
-                        // res.redirect("https://mumbaischool.sfanow.in/paymentSuccess/register/school");
+                        res.redirect("https://mumbaischool.sfanow.in/paymentSuccess/register/school");
 
                         // res.redirect("http://mumbaischool.sfanow.in/2017/paymentSuccess/register/school");
 
@@ -172,7 +172,7 @@ var controller = {
                     } else if (_.isEmpty(data)) {
                         callback(null, "Data is empty");
                     } else {
-                        // res.redirect("https://mumbaischool.sfanow.in/paymentFailure");
+                        res.redirect("https://mumbaischool.sfanow.in/paymentFailure");
 
                         // res.redirect("http://mumbaischool.sfanow.in/2017/paymentFailure");
 
@@ -190,7 +190,7 @@ var controller = {
 
                         // res.redirect("http://testmumbai2016.sfanow.in/paymentFailure");
 
-                        res.redirect("http://testmumbaischool.sfanow.in/paymentFailure");
+                        // res.redirect("http://testmumbaischool.sfanow.in/paymentFailure");
 
                         // res.redirect("http://testmumbaicollege.sfanow.in/paymentFailure");
 
@@ -238,7 +238,7 @@ var controller = {
                             data: "Invalid Request"
                         });
                     } else {
-                        // res.redirect("https://mumbaischool.sfanow.in/paymentSuccess/register/player");
+                        res.redirect("https://mumbaischool.sfanow.in/paymentSuccess/register/player");
 
                         // res.redirect("http://mumbaischool.sfanow.in/2017/paymentSuccess/register/player");
 
@@ -256,7 +256,7 @@ var controller = {
 
                         // res.redirect("http://testmumbai2016.sfanow.in/paymentSuccess/register/player");
 
-                        res.redirect("http://testmumbaischool.sfanow.in/paymentSuccess/register/player");
+                        // res.redirect("http://testmumbaischool.sfanow.in/paymentSuccess/register/player");
 
                         // res.redirect("http://testmumbaicollege.sfanow.in/paymentSuccess/register/player");
 
@@ -396,7 +396,7 @@ var controller = {
                             data: "Invalid Request"
                         });
                     } else {
-                        // res.redirect("https://mumbaischool.sfanow.in/paymentSuccess/upgrade/player");
+                        res.redirect("https://mumbaischool.sfanow.in/paymentSuccess/upgrade/player");
 
                         // res.redirect("http://mumbaischool.sfanow.in/2017/paymentSuccess/upgrade/player");
 
@@ -414,7 +414,7 @@ var controller = {
 
                         // res.redirect("http://testmumbai2016.sfanow.in/paymentSuccess/upgrade/player");
 
-                        res.redirect("http://testmumbaischool.sfanow.in/paymentSuccess/upgrade/player");
+                        // res.redirect("http://testmumbaischool.sfanow.in/paymentSuccess/upgrade/player");
 
                         // res.redirect("http://testmumbaicollege.sfanow.in/paymentSuccess/upgrade/player");
 
@@ -543,7 +543,7 @@ var controller = {
 
                         // res.redirect("http://testmumbai2016.sfanow.in/paymentSuccess/upgrade/school");
 
-                        res.redirect("http://testmumbaischool.sfanow.in/paymentSuccess/upgrade/school");
+                        // res.redirect("http://testmumbaischool.sfanow.in/paymentSuccess/upgrade/school");
 
                         // res.redirect("http://testmumbaicollege.sfanow.in/paymentSuccess/upgrade/school");
 
@@ -555,7 +555,7 @@ var controller = {
 
                         // res.redirect("http://testahmedabadcollege.sfanow.in/paymentSuccess/upgrade/school");
 
-                        // res.redirect("https://mumbaischool.sfanow.in/paymentSuccess/upgrade/school");
+                        res.redirect("https://mumbaischool.sfanow.in/paymentSuccess/upgrade/school");
 
                         // res.redirect("http://mumbaischool.sfanow.in/2017/paymentSuccess/upgrade/school");
 
@@ -589,7 +589,7 @@ var controller = {
                     } else if (_.isEmpty(data)) {
                         callback(null, "Data is empty");
                     } else {
-                        // res.redirect("https://mumbaischool.sfanow.in/paymentFailure");
+                        res.redirect("https://mumbaischool.sfanow.in/paymentFailure");
 
                         // res.redirect("http://mumbaischool.sfanow.in/2017/paymentFailure");
 
@@ -607,7 +607,7 @@ var controller = {
 
                         // res.redirect("http://testmumbai2016.sfanow.in/paymentFailure");
 
-                        res.redirect("http://testmumbaischool.sfanow.in/paymentFailure");
+                        // res.redirect("http://testmumbaischool.sfanow.in/paymentFailure");
 
                         // res.redirect("http://testmumbaicollege.sfanow.in/paymentFailure");
 

@@ -988,6 +988,45 @@
             "url": ""
         },
         {
+            "name": "Player Profile",
+            "type": "text",
+            "tableRef": "playerProfile",
+            "placeholder": "Select Player Profile",
+            "id": "playerProfile",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "url": ""
+        },
+        {
+            "name": "School Profile",
+            "type": "text",
+            "tableRef": "schoolProfile",
+            "placeholder": "Select School Profile",
+            "id": "schoolProfile",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "url": ""
+        },
+        {
+            "name": "Team Profile",
+            "type": "text",
+            "tableRef": "teamProfile",
+            "placeholder": "Select Team Profile",
+            "id": "teamProfile",
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
+            "url": ""
+        },
+        {
             "name": "Merchandise Price",
             "type": "text",
             "tableRef": "merchandisePrice",
