@@ -1089,24 +1089,14 @@ var model = {
     generateAthleteExcel: function (data, res) {
         async.waterfall([
                 function (callback) {
-                    Accounts.find({
-                            athlete: {
-                                $exists: true
-                            }
-                        }).lean().sort({
-                            createdAt: -1
-                        })
-                        .deepPopulate("athlete athlete.school athlete.package transaction transaction.package")
-                        .exec(function (err, found) {
-                            if (err || _.isEmpty(found)) {
-                                callback(null, {
-                                    error: "no data found",
-                                    data: data
-                                });
-                            } else {
-                                callback(null, found);
-                            }
-                        });
+                    var pipeLine = Accounts.getSearchAggregatePipeline(data);
+                    Accounts.aggregate(pipeLine, function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            callback(null, found);
+                        }
+                    });
                 },
                 function (found, callback) {
                     async.concatSeries(found, function (mainData, callback) {
@@ -1136,12 +1126,14 @@ var model = {
                                 } else {
                                     obj["ATHLETE SCHOOL NAME"] = "";
                                 }
+
                                 currentPackName = mainData.athlete.package.name;
                                 packPrice = mainData.athlete.package.finalPrice;
                                 cgstPercent = mainData.athlete.package.cgstPercent;
                                 sgstPercent = mainData.athlete.package.sgstPercent;
                                 igstPercent = mainData.athlete.package.igstPercent;
                                 finalPrice = mainData.athlete.package.finalPrice;
+
 
                             } else {
                                 obj["SFA ID"] = " ";
@@ -1270,12 +1262,12 @@ var model = {
                             callback(null, singleData);
                         });
                 }
-
             ],
             function (err, complete) {
                 if (err) {
                     callback(err, null);
                 } else {
+                    // callback(null, complete);
                     Config.generateExcel("KnockoutIndividual", complete, res);
                 }
             })
@@ -1284,22 +1276,14 @@ var model = {
     generateSchoolExcel: function (data, res) {
         async.waterfall([
             function (callback) {
-                Accounts.find({
-                        school: {
-                            $exists: true
-                        }
-                    }).lean()
-                    .deepPopulate("school school.package transaction transaction.package")
-                    .exec(function (err, found) {
-                        if (err || _.isEmpty(found)) {
-                            callback(null, {
-                                error: "no data found",
-                                data: data
-                            });
-                        } else {
-                            callback(null, found);
-                        }
-                    });
+                var pipeLine = Accounts.getAggregatePipelineSchool(data);
+                Accounts.aggregate(pipeLine, function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        callback(null, found);
+                    }
+                });
             },
             function (found, callback) {
                 async.concatSeries(found, function (mainData, callback) {
