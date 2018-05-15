@@ -134,6 +134,9 @@ schema.plugin(deepPopulate, {
         },
         'package': {
             select: ''
+        },
+        'coupon': {
+            select: ''
         }
     }
 });

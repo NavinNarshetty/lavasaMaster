@@ -189,6 +189,20 @@ var model = {
             },
             {
                 $lookup: {
+                    "from": "couponcodes",
+                    "localField": "athlete.coupon",
+                    "foreignField": "_id",
+                    "as": "athlete.coupon"
+                }
+            },
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$athlete.coupon",
+                }
+            },
+            {
+                $lookup: {
                     "from": "transactions",
                     "localField": "transaction",
                     "foreignField": "_id",
