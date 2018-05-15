@@ -96,6 +96,9 @@ myApp.controller('athleteAccountCtrl', function ($scope, TemplateService, Naviga
     console.log("athlete", player);
 
     // ASSIGN VALUE IN MODAL
+    if (player.athlete.coupon) {
+      $scope.athleteCouponCode = player.athlete.coupon.code;
+    }
     $scope.formData.athleteId = player.athlete._id;
     $scope.formData._id = player._id;
     $scope.formData.cgst = player.athleteData.cgst;
