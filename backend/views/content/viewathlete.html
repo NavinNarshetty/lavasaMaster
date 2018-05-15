@@ -410,11 +410,11 @@
                                                             Discount
                                                         </div>
                                                     </th>
-                                                    <th>
+                                                    <!-- <th>
                                                         <div class="text-capitalize ">
                                                             Amt Due
                                                         </div>
-                                                    </th>
+                                                    </th> -->
                                                     <th>
                                                         <div class="text-capitalize ">
                                                             Amt Outstanding
@@ -445,7 +445,8 @@
                                                     <td ng-if="displayData.package1.date">
                                                         <div>
 
-                                                            <span>Registered Date</span> {{displayData.package1.date | date }}
+                                                            <span>Registered Date</span> {{displayData.package1.date | date
+                                                            }}
                                                             <span>Payment Date</span> {{displayData.package1.dateOfTransaction
                                                             | date}}
 
@@ -453,7 +454,8 @@
                                                     </td>
                                                     <td ng-if="displayData.package2.date">
                                                         <div>
-                                                            <span>Registered Date</span> {{displayData.package2.date | date }}
+                                                            <span>Registered Date</span> {{displayData.package2.date | date
+                                                            }}
                                                             <span>Payment Date</span> {{displayData.package2.dateOfTransaction
                                                             | date}}
 
@@ -461,23 +463,25 @@
                                                     </td>
                                                     <td ng-if="displayData.package3.date">
                                                         <div>
-                                                            <span>Registered Date</span> {{displayData.package3.date | date }}
+                                                            <span>Registered Date</span> {{displayData.package3.date | date
+                                                            }}
                                                             <span>Payment Date</span> {{displayData.package3.dateOfTransaction
                                                             | englishNumeralCustomDate}}
                                                         </div>
                                                     </td>
                                                     <td ng-if="displayData.package4.date">
                                                         <div>
-                                                            <span>Registered Date</span> {{displayData.package4.date | date }}
+                                                            <span>Registered Date</span> {{displayData.package4.date | date
+                                                            }}
                                                             <span>Payment Date</span> {{displayData.package4.dateOfTransaction
                                                             | englishNumeralCustomDate}}
                                                         </div>
                                                     </td>
-                                                    <td>
+                                                    <!-- <td>
                                                         <div>
                                                             {{displayData.AmountToPay}}
                                                         </div>
-                                                    </td>
+                                                    </td> -->
                                                     <td>
                                                         <div>
                                                             {{displayData.cgst + displayData.sgst}}

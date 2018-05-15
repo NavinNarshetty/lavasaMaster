@@ -11,6 +11,7 @@ var controller = {
       });
     }
   },
+
   getStatus: function (req, res) {
     if (req.body) {
       Accounts.getStatus(req.body, res.callback);
@@ -46,7 +47,7 @@ var controller = {
 
   generateAthleteExcel: function (req, res) {
     if (req.body) {
-      Accounts.generateAthleteExcel(req.body, res);
+      Accounts.generateAthleteExcel(req.body, res.callback);
     } else {
       res.json({
         "data": "Body not Found",
@@ -65,7 +66,6 @@ var controller = {
       });
     }
   },
-
 
   upgradeAccount: function (req, res) {
     if (req.body) {

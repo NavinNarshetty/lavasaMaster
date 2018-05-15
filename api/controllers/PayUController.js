@@ -292,7 +292,7 @@ var controller = {
                         callback(null, "Data is empty");
                     } else {
 
-                        res.redirect("https://mumbaischool.sfanow.in/sorryAthelete");
+                        // res.redirect("https://mumbaischool.sfanow.in/sorryAthelete");
 
                         // res.redirect("http://mumbaischool.sfanow.in/2017/sorryAthelete");
 
@@ -316,7 +316,7 @@ var controller = {
 
                         // res.redirect("http://testmumbaicollege.sfanow.in/sorryAthelete");
 
-                        // res.redirect("http://testmumbaischool.sfanow.in/sorryAthelete");
+                        res.redirect("http://testmumbaischool.sfanow.in/sorryAthelete");
 
                         // res.redirect("http://testmumbai2016.sfanow.in/sorryAthelete");
 
@@ -440,7 +440,7 @@ var controller = {
                             data: "Invalid Request"
                         });
                     } else {
-                        res.redirect("https://mumbaischool.sfanow.in/sorryAthelete");
+                        // res.redirect("https://mumbaischool.sfanow.in/sorryAthelete");
 
                         // res.redirect("http://mumbaischool.sfanow.in/2017/sorryAthelete");
 
@@ -464,7 +464,7 @@ var controller = {
 
                         // res.redirect("http://testmumbaicollege.sfanow.in/sorryAthelete");
 
-                        // res.redirect("http://testmumbaischool.sfanow.in/sorryAthelete");
+                        res.redirect("http://testmumbaischool.sfanow.in/sorryAthelete");
 
                         // res.redirect("http://testmumbai2016.sfanow.in/sorryAthelete");
 

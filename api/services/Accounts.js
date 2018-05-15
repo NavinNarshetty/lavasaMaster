@@ -11,6 +11,11 @@ var schema = new Schema({
         ref: 'Registration',
         index: true
     },
+    coupon: {
+        type: Schema.Types.ObjectId,
+        ref: 'CouponCode',
+        index: true
+    },
     transaction: [{
         type: Schema.Types.ObjectId,
         ref: 'Transaction',
@@ -84,6 +89,9 @@ schema.plugin(deepPopulate, {
         },
         "transaction.package": {
             select: ''
+        },
+        "couponcode": {
+            select: ''
         }
     }
 });
@@ -109,6 +117,21 @@ var model = {
             {
                 $unwind: {
                     path: "$athlete",
+                }
+            },
+            {
+                $lookup: {
+                    "from": "couponcodes",
+                    "localField": "coupon",
+                    "foreignField": "_id",
+                    "as": "coupon"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$coupon",
                 }
             },
 
@@ -179,6 +202,21 @@ var model = {
                     "localField": "athlete",
                     "foreignField": "_id",
                     "as": "athlete"
+                }
+            },
+            {
+                $lookup: {
+                    "from": "couponcodes",
+                    "localField": "coupon",
+                    "foreignField": "_id",
+                    "as": "coupon"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$coupon",
                 }
             },
             // Stage 2
@@ -256,6 +294,21 @@ var model = {
                     "as": "school"
                 }
             },
+            {
+                $lookup: {
+                    "from": "couponcodes",
+                    "localField": "coupon",
+                    "foreignField": "_id",
+                    "as": "coupon"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$coupon",
+                }
+            },
             // Stage 2
             {
                 $unwind: {
@@ -315,6 +368,21 @@ var model = {
                 }
             },
             // Stage 2
+            {
+                $lookup: {
+                    "from": "couponcodes",
+                    "localField": "coupon",
+                    "foreignField": "_id",
+                    "as": "coupon"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$coupon",
+                }
+            },
             {
                 $unwind: {
                     path: "$athlete",
@@ -555,7 +623,7 @@ var model = {
     getAccount: function (data, callback) {
         Accounts.findOne({
             _id: data._id
-        }).lean().deepPopulate('athlete school athlete.school transaction transaction.package').exec(
+        }).lean().deepPopulate('athlete school athlete.school transaction transaction.package couponcode').exec(
             function (err, found) {
                 if (err) {
                     callback(err, null);
@@ -1103,24 +1171,14 @@ var model = {
     generateAthleteExcel: function (data, res) {
         async.waterfall([
                 function (callback) {
-                    Accounts.find({
-                            athlete: {
-                                $exists: true
-                            }
-                        }).lean().sort({
-                            createdAt: -1
-                        })
-                        .deepPopulate("athlete athlete.school athlete.package transaction transaction.package")
-                        .exec(function (err, found) {
-                            if (err || _.isEmpty(found)) {
-                                callback(null, {
-                                    error: "no data found",
-                                    data: data
-                                });
-                            } else {
-                                callback(null, found);
-                            }
-                        });
+                    var pipeLine = Accounts.getSearchAggregatePipeline(data);
+                    Accounts.aggregate(pipeLine, function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            callback(null, found);
+                        }
+                    });
                 },
                 function (found, callback) {
                     async.concatSeries(found, function (mainData, callback) {
@@ -1150,12 +1208,14 @@ var model = {
                                 } else {
                                     obj["ATHLETE SCHOOL NAME"] = "";
                                 }
+
                                 currentPackName = mainData.athlete.package.name;
                                 packPrice = mainData.athlete.package.finalPrice;
                                 cgstPercent = mainData.athlete.package.cgstPercent;
                                 sgstPercent = mainData.athlete.package.sgstPercent;
                                 igstPercent = mainData.athlete.package.igstPercent;
                                 finalPrice = mainData.athlete.package.finalPrice;
+
 
                             } else {
                                 obj["SFA ID"] = " ";
@@ -1284,12 +1344,12 @@ var model = {
                             callback(null, singleData);
                         });
                 }
-
             ],
             function (err, complete) {
                 if (err) {
                     callback(err, null);
                 } else {
+                    // callback(null, complete);
                     Config.generateExcel("KnockoutIndividual", complete, res);
                 }
             })
@@ -1298,22 +1358,14 @@ var model = {
     generateSchoolExcel: function (data, res) {
         async.waterfall([
             function (callback) {
-                Accounts.find({
-                        school: {
-                            $exists: true
-                        }
-                    }).lean()
-                    .deepPopulate("school school.package transaction transaction.package")
-                    .exec(function (err, found) {
-                        if (err || _.isEmpty(found)) {
-                            callback(null, {
-                                error: "no data found",
-                                data: data
-                            });
-                        } else {
-                            callback(null, found);
-                        }
-                    });
+                var pipeLine = Accounts.getAggregatePipelineSchool(data);
+                Accounts.aggregate(pipeLine, function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        callback(null, found);
+                    }
+                });
             },
             function (found, callback) {
                 async.concatSeries(found, function (mainData, callback) {
@@ -1528,6 +1580,8 @@ var model = {
                                 emailData.infoId = property[0].infoId;
                                 emailData.infoNo = property[0].infoNo;
                                 emailData.infoNoArr = property[0].infoNoArr;
+                                emailData.merchandisePrice = property[0].merchandisePrice;
+                                emailData.smaaashPrice = property[0].smaaashPrice;
                                 emailData.cityAddress = property[0].cityAddress;
                                 emailData.ddFavour = property[0].ddFavour;
                                 emailData.city = property[0].sfaCity;
@@ -1653,6 +1707,8 @@ var model = {
                                 emailData.infoId = property[0].infoId;
                                 emailData.infoNo = property[0].infoNo;
                                 emailData.infoNoArr = property[0].infoNoArr;
+                                emailData.merchandisePrice = property[0].merchandisePrice;
+                                emailData.smaaashPrice = property[0].smaaashPrice;
                                 emailData.cityAddress = property[0].cityAddress;
                                 emailData.ddFavour = property[0].ddFavour;
                                 emailData.city = property[0].sfaCity;

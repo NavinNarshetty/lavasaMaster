@@ -10,6 +10,7 @@ var eventYear = '2018-19';
 // var globalLinkSchoolRegister = "http://testmumbaischool.sfanow.in";
 // var globalLinkCollegeRegister = "http://testmumbaicollege.sfanow.in";
 // var globalLinkForAll = "http://testmumbai.sfanow.in/";
+
 // var globalLinkSchoolRegister = "http://testhyderabadschool.sfanow.in";
 // var globalLinkCollegeRegister = "http://testhyderabadcollege.sfanow.in";
 // var globalLinkForAll = "http://testhyderabad.sfanow.in/";
@@ -26,6 +27,7 @@ var serverType = 'live';
 var globalLinkSchoolRegister = "https://mumbaischool.sfanow.in";
 var globalLinkCollegeRegister = "http://mumbaicollege.sfanow.in";
 var globalLinkForAll = "https://mumbai.sfanow.in/";
+
 // var globalLinkSchoolRegister = "http://mumbaischool.sfanow.in/2017";
 // var globalLinkCollegeRegister = "http://mumbaicollege.sfanow.in";
 // var globalLinkForAll = "https://mumbai.sfanow.in/";

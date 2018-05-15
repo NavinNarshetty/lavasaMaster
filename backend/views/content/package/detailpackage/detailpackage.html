@@ -44,6 +44,12 @@
                   <input type="number" ng-model="formData.order" name="order" class="form-control" placeholder="Enter Order" min="0" required>
                   <div class="error-msg" ng-if="detailForm.order.$invalid && detailForm.order.$touched">Please Enter Valid Order Number *</div>
                 </div>
+
+                <div class="form-group">
+                  <div class="">1. For Athlete Package order should be 1 to 10. In which for Team Sport Package order should be always
+                    4.
+                    <br> 2. For School Package order should be 11 to 20.</div>
+                </div>
                 <!-- ORDER END -->
 
                 <!-- PRICE -->
@@ -140,14 +146,14 @@
                 <div class="form-group">
                   <label>*Color</label>
                   <select name="selectcolor" class="form-control" ng-model="formData.color" placeholder="Enter Color" required>
-                   <option value="gold">Gold</option>
+                    <option value="gold">Gold</option>
                     <option value="silver">Silver</option>
                     <option value="bronze">Bronze</option>
                     <option value="blue">Blue</option>
-                  <option value="green">Green</option>
-                  <option value="red">Red</option>
-                   <option value="yellow">Yellow</option>
-                         </select>
+                    <option value="green">Green</option>
+                    <option value="red">Red</option>
+                    <option value="yellow">Yellow</option>
+                  </select>
                   <div class="error-msg" ng-if="detailForm.selectcolor.$invalid && detailForm.selectcolor.$touched">Please Enter Color *</div>
                 </div>
                 <!-- COLOR END -->

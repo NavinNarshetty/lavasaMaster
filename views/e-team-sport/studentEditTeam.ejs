@@ -259,7 +259,7 @@
                 </td>
             </tr>
 
-            <tr>
+            <!-- <tr>
                 <td>
                     <div style="padding: 0px 54px; color: #091a71; font-weight: 600">
                         <p style="margin-bottom: 0px;">We wish to see you with a strong contingent,</p>
@@ -267,7 +267,7 @@
                             <%=type%> is up there on the ranking table!</p>
                     </div>
                 </td>
-            </tr>
+            </tr> -->
 
             <tr>
                 <td>
@@ -298,21 +298,29 @@
                             All draws and schedules will be published on our website 15 days prior to start of the Championship
                         </li>
                         <li class="mg-bottom">
-                            <a href="<%=ruleUrl%><%=sportNameLink%>" target="_new">
-                                Click here to view the rules & regulations of
-                                <span style="font-weight: bold;">
-                                    <%=sportNameLink%>
-                                </span>
-                            </a>. Kindly note the rules & regulations are subject to change till the beginning of your sport
-                            at the Championship. We recommend that all players to view rules and regulations of their sport
+                            <!-- <a href="<%=ruleUrl%><%=sportNameLink%>" target="_new">
+                                    Click here to view the rules & regulations of
+                                    <span style="font-weight: bold;">
+                                        <%=sportNameLink%>
+                                    </span>
+                                </a>. -->
+                            Kindly note the rules & regulations are subject to change till the beginning of your sport at the Championship. We recommend
+                            that all players to view rules and regulations of their sport
                             <span style="font-weight: bold;">1</span> day prior to the Championship.
+                        </li>
+                        <li class="mg-bottom">
+                            Every medal that a player from your school wins, awards the school with certain number of points; 5 points for a Gold medal,
+                            3 points for a Silver medal and 1 point for a Bronze medal
+                        </li>
+                        <li class="mg-bottom">
+                            Your team’s performance contributes to your school’s overall medal tally, helping it feature on the SFA school sports ranking.
                         </li>
                     </ul>
                 </td>
             </tr>
 
             <!-- OLD KINDLY NOTE -->
-            <tr>
+            <!-- <tr>
                 <td>
                     <div style="padding: 0px 54px; ">
                         <%if(linkSportName != 'Athletics 4x50m Relay' && linkSportName != 'athletics 4x50m relay' && linkSportName != 'Athletics 4x100m Relay' && linkSportName != 'athletics 4x100m relay' && linkSportName != 'Athletics Medley Relay' && linkSportName != 'athletics medley relay' && linkSportName != 'Badminton Doubles' && linkSportName != 'badminton doubles' && linkSportName != 'Table Tennis Doubles' && linkSportName != 'table tennis doubles' && linkSportName != 'Tennis Mixed Doubles' && linkSportName != 'tennis mixed doubles' && linkSportName != 'Tennis Doubles' && linkSportName != 'tennis doubles' && linkSportName != 'Karate Team Kumite' && linkSportName != 'karate team kumite' && linkSportName != 'Swimming 4x50m Medley Relay' && linkSportName != 'swimming 4x50m medley relay' && linkSportName != 'Swimming 4x50m Freestyle Relay' && linkSportName != 'swimming 4x50m freestyle relay'){%>
@@ -356,8 +364,27 @@
                                                     <%}%>
                     </div>
                 </td>
-            </tr>
+            </tr> -->
             <!-- OLD KINDLY NOTE END-->
+            <tr>
+                <td>
+                    <div style="padding: 0px 54px;">
+                        <p>For further queries kindly email us at
+                            <a style="font-family:TitilliumWeb-Bold;color:#000;" href="mailto:<%=infoId%>">
+                                <%=infoId%>
+                            </a> or call us on
+                            <%_.each(infoNoArr,function(n,key){%>
+                                <a style="font-family:TitilliumWeb-Bold; color: #000;" href="tel:<%=n%>">
+                                    <%=n%>
+                                </a>
+                                <%if((infoNoArr.length-1) !== key){%>
+                                    <span>/</span>
+                                    <%}%>
+                                        <%})%>
+                        </p>
+                    </div>
+                </td>
+            </tr>
             <tr>
                 <td>
                     <div style="padding: 0px 54px; ">

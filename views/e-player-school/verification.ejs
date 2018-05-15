@@ -162,7 +162,7 @@
                                     <li>Complimentary access to digital statistics, record maintenance & certificates on www.sfanow.in</li>
                                 </ul>
 
-                                <%if(packageOrder !== 1){%>
+                                <%if(packageOrder !== 1 && packageOrder !== 11){%>
                                     <p>In case you wish to upgrade your package, you can do so via sports registration (STEP
                                         2)
                                     </p>
@@ -228,48 +228,42 @@
                                             means of giving them the opportunity to participate at the Ultimate Interschool
                                             Championship. The more medals your athletes win, the higher you rise on our Ranking
                                             Table, which eventually declares who the ‘Best School For Sport’ is. Good luck!</p>
+
+                                        <p>
+                                            In order to empower every school's sporting experience, SFA provides schools with a personalised sport profile that is fully
+                                            equipped with match statistics and records. Be sure to check your personal sporting
+                                            profile which is now LIVE on our portal:
+                                            <a href="<%=schoolProfile%>" target="_new">
+                                                <%=schoolProfile%>
+                                            </a>
+                                        </p>
                                         <!-- SCHOOL END -->
                                         <%} else {%>
                                             <!-- PLAYER -->
-                                            <p style="font-family:TitilliumWeb-Bold;font-weight:bold;">Click here to complete your sports registration (STEP 2) process, using your
+                                            <a style="font-family:TitilliumWeb-Bold;font-weight:bold;" href="<%=playerUrl%>" target="_new">Click here to complete your sports registration (STEP 2) process, using your
                                                 SFA ID AND password (*mentioned above)
-                                                <br>
-                                                <a href="<%=playerUrl%>" target="_new">
-                                                    <%=playerUrl%>
+                                            </a>
+                                            <br>
+                                            <p style="font-family:TitilliumWeb-Bold;font-weight:bold;">KINDLY NOTE: SPORTS REGISTRATION MUST BE COMPLETED WITHIN 48 HOURS OF RECEIVING
+                                                THIS EMAIL</p>
+
+                                            <p>
+                                                In order to empower every athlete's sporting experience, SFA provides athletes with a personalised sport profile that is
+                                                fully equipped with match statistics and records. Be sure to check your personal
+                                                sporting profile which is now LIVE on our portal:
+                                                <a href="<%=playerProfile%>" target="_new">
+                                                    <%=playerProfile%>
                                                 </a>
-                                                <%})%>
-                                                    </ul>
+                                            </p>
+                                            <%}%>
 
 
-                                                    <%if(packageOrder !== 1){%>
-                                                        <p>In case you wish to upgrade your package, you can do so via sports
-                                                            registration (STEP 2)
-                                                        </p>
-                                                        <%}%>
-                                                            <!-- PLAYER END -->
-                                                            <%}%>
-                                                                <p>For further queries kindly email us at
-                                                                    <a style="font-family:TitilliumWeb-Bold;color:#000;" href="mailto:<%=infoId%>">
-                                                                        <%=infoId%>
-                                                                    </a> or call us on
-                                                                    <%_.each(infoNoArr,function(n,key){%>
-                                                                        <a style="font-family:TitilliumWeb-Bold; color: #000;" href="tel:<%=n%>">
-                                                                            <%=n%>
-                                                                        </a>
-                                                                        <%if((infoNoArr.length-1) !== key){%>
-                                                                            <span>/</span>
-                                                                            <%}%>
-                                                                                <%})%>
-                                                                </p>
 
-                                                                <p style="font-family:TitilliumWeb-Bold;font-weight:bold;">KINDLY NOTE: SPORTS REGISTRATION MUST BE COMPLETED WITHIN
-                                                                    48 HOURS OF RECEIVING THIS EMAIL</p>
-
-                                                                <!-- <p>You have selected
+                                                <!-- <p>You have selected
                                                 <%=packageName%> which entitles you to the following benefits:
                                             </p> -->
 
-                                                                <!-- <ul type='circle'>
+                                                <!-- <ul type='circle'>
                                                 <%_.each(featureDetail,function(features){%>
                                                     <li>
                                                         <%=features.featureName%>
@@ -278,33 +272,38 @@
                                             </ul> -->
 
 
-                                                                <%if(packageOrder !== 1){%>
-                                                                    <p>Participate in unlimited Sports events, meet with sporting
-                                                                        superstars and get Official SFA Merchandise worth
-                                                                        INR
-                                                                        <%=merchandisePrice%> along with SMAAASH Vouchers worth INR
-                                                                            <%=smaaashPrice%>/- by upgrading your package to a GOLD MEMBERSHIP!
-                                                                                In case you wish to upgrade your package,
-                                                                                you can do so via sports registration (STEP
-                                                                                2):
-                                                                                <br>
-                                                                                <a href="<%=playerUrl%>" target="_new">
-                                                                                    <%=playerUrl%>
-                                                                                </a>
-                                                                    </p>
-                                                                    <%}%>
-                                                                        <!-- PLAYER END -->
+
+
+                                                <%if(packageOrder !== 1 && packageOrder !== 11){%>
+                                                    <p>Participate in unlimited Sports events, meet with sporting superstars
+                                                        and get Official SFA Merchandise worth INR
+                                                        <%=merchandisePrice%> along with SMAAASH Vouchers worth INR
+                                                            <%=smaaashPrice%>/- by upgrading your package to a GOLD MEMBERSHIP! In case you
+                                                                wish to upgrade your package, you can do so via sports registration
+                                                                (STEP 2):
+                                                                <br>
+                                                                <a href="<%=playerUrl%>" target="_new">
+                                                                    <%=playerUrl%>
+                                                                </a>
+                                                    </p>
+                                                    <%}%>
+                                                        <!-- PLAYER END -->
+                                                        <%}%>
+                                                            <p>For further queries kindly email us at
+                                                                <a style="font-family:TitilliumWeb-Bold;color:#000;" href="mailto:<%=infoId%>">
+                                                                    <%=infoId%>
+                                                                </a> or call us on
+                                                                <%_.each(infoNoArr,function(n,key){%>
+                                                                    <a style="font-family:TitilliumWeb-Bold; color: #000;" href="tel:<%=n%>">
+                                                                        <%=n%>
+                                                                    </a>
+                                                                    <%if((infoNoArr.length-1) !== key){%>
+                                                                        <span>/</span>
                                                                         <%}%>
-                                                                            <p>For further queries kindly email us at
-                                                                                <a style="font-family:TitilliumWeb-Bold;color:#000;" href="mailto:<%=infoId%>">
-                                                                                    <%=infoId%>
-                                                                                </a> or call us on
-                                                                                <span style="font-family:TitilliumWeb-Bold;">
-                                                                                    <%=infoNo%>
-                                                                                </span>
-                                                                            </p>
-                                                                            <p style="font-family:TitilliumWeb-Bold;font-weight:bold;">Regards,
-                                                                                <br>Team SFA</p>
+                                                                            <%})%>
+                                                            </p>
+                                                            <p style="font-family:TitilliumWeb-Bold;font-weight:bold;">Regards,
+                                                                <br>Team SFA</p>
                     </div>
                 </td>
             </tr>
@@ -320,25 +319,25 @@
                                 <img src="https://storage.googleapis.com/emailers-images/g1.png" alt="">
                             </li>
                             <li style="vertical-align: middle;padding-left: 0;">
-                                <a href="" style="color:#fff;text-decoration: none;">www.sfanow.in</a>
+                                <a href="www.sfanow.in" target="_new" style="color:#fff;text-decoration: none;">www.sfanow.in</a>
                             </li>
                             <li>
                                 <img src="https://storage.googleapis.com/emailers-images/g2.png" alt="">
                             </li>
                             <li style="vertical-align: middle;padding-left: 0;">
-                                <a href="" style="color:#fff;text-decoration: none;">/sportsforallnow</a>
+                                <a href="https://goo.gl/bSQ9CB" target="_new" style="color:#fff;text-decoration: none;">/sportsforallnow</a>
                             </li>
                             <li>
                                 <img src="https://storage.googleapis.com/emailers-images/g3.png" alt="">
                             </li>
                             <li style="vertical-align: middle;padding-left: 0;">
-                                <a href="" style="color:#fff;text-decoration: none;">/sfanow</a>
+                                <a href="https://twitter.com/sfanow" target="_new" style="color:#fff;text-decoration: none;">/sfanow</a>
                             </li>
                             <li>
                                 <img src="https://storage.googleapis.com/emailers-images/g4.png" alt="">
                             </li>
                             <li style="vertical-align: middle;padding-left: 0;">
-                                <a href="" style="color:#fff;text-decoration: none;">/sfanow </a>
+                                <a href="https://www.instagram.com/sfanow/" target="_new" style="color:#fff;text-decoration: none;">/sfanow </a>
                             </li>
                         </ul>
                     </div>
