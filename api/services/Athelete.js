@@ -1160,6 +1160,9 @@ var model = {
     saveAthleteData: function (data, callback) {
         async.waterfall([
                 function (callback) {
+                    if (data.coupon == "") {
+                        data.coupon = undefined;
+                    }
                     Athelete.saveData(data, function (err, athleteData) {
                         if (err || _.isEmpty(athleteData)) {
                             callback(null, {
@@ -1226,6 +1229,12 @@ var model = {
                             param.upgrade = false;
                             param.paymentMode = athleteData.registrationFee;
                             param.transaction = [];
+                            if (data.coupon == "") {
+                                param.coupon = undefined;
+                            } else {
+                                param.coupon = athleteData.coupon;
+                            }
+
                         } else {
                             var param = {};
                             param.athlete = athleteData._id;
@@ -1239,6 +1248,11 @@ var model = {
                             param.paymentMode = athleteData.registrationFee;
                             param.upgrade = false;
                             param.transaction = data.transaction;
+                            if (data.coupon == "") {
+                                param.coupon = undefined;
+                            } else {
+                                param.coupon = athleteData.coupon;
+                            }
                         }
                         Accounts.saveData(param, function (err, accountsData) {
                             if (err || _.isEmpty(accountsData)) {
