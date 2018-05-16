@@ -1,0 +1,75 @@
+<div class="heading-sec">
+  <div class="row">
+    <div class="col-md-4 column">
+      <div class="heading-profile">
+        <h2>PDF Upload</h2>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="panel-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="widget">
+        <div class="form-elements-sec">
+          <form name="detailForm" role="form" class="sec">
+            <div class="row">
+              <!-- AGE EVENT -->
+              <div class="col-md-12">
+                <label for="ageEvent">Age Event PDF</label>
+                <upload-image id="ageEvent" ng-model="formData.ageEvent" type="pdf" no-view></upload-image>
+                <div class="" ng-if="formData.ageEvent && formData.ageEvent != ''">
+                  <a class="btn btn-success" href="{{formData.ageEvent|uploadpath}}" target="_new" >View</a>
+                  <button class="btn btn-danger" ng-click="deleteFile('ageEvent')" >Delete</button>
+                </div>
+              </div>
+              <!-- AGE EVENT END -->
+              <!-- PACKAGE DETAILS -->
+              <div class="col-md-12">
+                <label for="packageDetails">Package Details</label>
+                <upload-image id="packageDetails" ng-model="formData.packageDetails" type="pdf" no-view></upload-image>
+                <div class="" ng-if="formData.packageDetails && formData.packageDetails != ''">
+                  <a class="btn btn-success" href="{{formData.packageDetails|uploadpath}}" target="_new" >View</a>
+                  <button class="btn btn-danger" ng-click="deleteFile('packageDetails')" >Delete</button>
+                </div>
+              </div>
+              <!-- PACKAGE DETAILS END -->
+              <!-- PLAYER TERMS -->
+              <div class="col-md-12 hide">
+                <label for="playerTerms">Player Terms</label>
+                <upload-image id="playerTerms" ng-model="formData.playerTerms" type="pdf" no-view></upload-image>
+                <div class="" ng-if="formData.playerTerms && formData.playerTerms != ''">
+                  <a class="btn btn-success" href="{{formData.playerTerms|uploadpath}}" target="_new" >View</a>
+                  <button class="btn btn-danger" ng-click="deleteFile('playerTerms')" >Delete</button>
+                </div>
+              </div>
+              <!-- PLAYER TERMS END -->
+              <!-- SCHOOL TERMS -->
+              <div class="col-md-12 hide">
+                <label for="schoolTerms">School Terms</label>
+                <upload-image id="schoolTerms" ng-model="formData.schoolTerms" type="pdf" no-view></upload-image>
+                <div class="" ng-if="formData.schoolTerms && formData.schoolTerms != ''">
+                  <a class="btn btn-success" href="{{formData.schoolTerms|uploadpath}}" target="_new" >View</a>
+                  <button class="btn btn-danger" ng-click="deleteFile('schoolTerms')" >Delete</button>
+                </div>
+              </div>
+              <!-- SCHOOL TERMS END -->
+            </div>
+            <!-- BUTTON -->
+            <section>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="text-center mt20 odd-even-button">
+                    <button class="btn btn-default" type="submit" ng-click="saveData(formData)">Save</button>
+                    <button class="btn btn-default">Cancel</button>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <!-- BUTTON END -->
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

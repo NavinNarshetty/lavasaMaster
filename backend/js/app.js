@@ -614,6 +614,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'DetailPlayerQuestionCtrl'
         })
+        .state('pdfupload', {
+            url: "/pdfupload",
+            templateUrl: "views/template.html",
+            controller: 'PdfUploadCtrl'
+        })
 
 
         // **********************PLAYER REGISTORION END ********************

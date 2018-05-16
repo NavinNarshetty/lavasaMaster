@@ -1429,7 +1429,15 @@ myApp.factory('NavigationService', function ($http, $filter, $window, $q, $timeo
                 callback(data);
             });
         },
-
+        getPdf: function(request, callback){
+          $http({
+            url: adminUrl2 + 'PdfPage/search',
+            method: 'POST',
+            data: request,
+          }).then(function(data){
+            callback(data);
+          });
+        },
         apiCallWithDataMaster: function (url, formData, callback) {
             $http.post(masterAdminUrl + url, formData).then(function (data) {
                 data = data.data;

@@ -340,6 +340,11 @@ myApp.factory('NavigationService', function ($http, $state) {
             classis: "activeColor",
             sref: "#/testimonial",
             icon: "phone",
+        },{
+            name: "PDF Uploads",
+            classis: "activeColor",
+            sref: "#/pdfupload",
+            icon: "phone",
         }]
     }, {
         name: "Packages",
@@ -420,7 +425,7 @@ myApp.factory('NavigationService', function ($http, $state) {
                 classis: "",
                 sref: "#/schoolaccount",
                 icon: "phone"
-            }]  
+            }]
         }];
 
     var volunteers = admin;

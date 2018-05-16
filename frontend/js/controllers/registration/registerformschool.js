@@ -95,6 +95,7 @@ myApp.controller('RegisterFormSchoolCtrl', function ($scope, $location, $timeout
             delete $scope.formData.receiptId;
             delete $scope.formData.createdAt;
             delete $scope.formData.updatedAt;
+            delete $scope.formData.transactionID;
           }
         });
       } else {

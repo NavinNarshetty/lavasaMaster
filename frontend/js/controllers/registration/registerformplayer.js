@@ -9,7 +9,7 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
         filter: {
             packageUser: 'athlete'
         }
-    }
+    };
     $scope.formFlag = $stateParams.flag;
     $scope.showPaymentTab = false;
     $scope.showPackageDetail = false;
@@ -74,8 +74,8 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
                         $scope.formData.registrationFee = "";
                         $scope.formData.ageProof = "";
                         $scope.formData.status = "Pending";
-                        $scope.formData.verifyCount = 0;
                         $scope.formData.paymentStatus = "Pending";
+                        $scope.formData.verifyCount = 0;
                         $scope.formData.selectedEvent = 0;
                         delete $scope.formData.year;
                         delete $scope.formData.atheleteID;
@@ -85,6 +85,7 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
                         delete $scope.formData.createdAt;
                         delete $scope.formData.updatedAt;
                         delete $scope.formData.receiptId;
+                        delete $scope.formData.transactionID;
                         delete $scope.formData._id;
                         delete $scope.formData._v;
                         if ($scope.formData.photograph) {
@@ -188,6 +189,7 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
                 $scope.formData.sgstAmt = '';
                 $scope.formData.igstPercent = '';
                 $scope.formData.igstAmt = '';
+                $scope.formData.coupon = '';
                 $scope.promoCode = {
                     code: ''
                 }
@@ -241,14 +243,14 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
     // CALCULATE TAX END
     // CALCULATE DISCOUNT
     $scope.calculateDiscount = function (promoDetail) {
-        console.log("in cALC");
-        // promoDetail.amount = 899;
+        console.log("in calc");
         if (promoDetail.amount) {
             if (promoDetail.amount >= $scope.formData.amountToPay) {
                 toastr.error("Sorry. This coupon code is not valid");
             } else {
                 $scope.formData.amountPaid = $scope.formData.amountToPay - promoDetail.amount;
                 $scope.formData.discount = promoDetail.amount;
+                $scope.formData.coupon = promoDetail._id;
                 $scope.calculateTax();
                 $scope.promoApplied = true;
             }
@@ -257,6 +259,7 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
             console.log(a);
             $scope.formData.discount = a;
             $scope.formData.amountPaid = $scope.formData.amountToPay - a;
+            $scope.formData.coupon = promoDetail._id;
             $scope.calculateTax();
         }
     }
