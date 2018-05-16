@@ -216,6 +216,9 @@ myApp.controller('PdfUploadCtrl', function ($scope, TemplateService, NavigationS
         console.log("data", data.data);
         data = data.data;
         $scope.formData = data.results[0];
+        TemplateService.scrollTo('heading-sec', 'class');
+      } else {
+        toastr.error("Error");
       }
     });
   }
