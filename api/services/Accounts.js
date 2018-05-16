@@ -127,6 +127,13 @@ var model = {
                     "as": "coupon"
                 }
             },
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$coupon",
+                    preserveNullAndEmptyArrays: true
+                }
+            },
 
             {
                 $lookup: {
@@ -140,15 +147,11 @@ var model = {
             {
                 $unwind: {
                     path: "$athlete.coupon",
+                    preserveNullAndEmptyArrays: true
                 }
             },
 
-            // Stage 2
-            {
-                $unwind: {
-                    path: "$coupon",
-                }
-            },
+
 
             // Stage 3
             {
@@ -232,6 +235,7 @@ var model = {
             {
                 $unwind: {
                     path: "$coupon",
+                    preserveNullAndEmptyArrays: true
                 }
             },
             // Stage 2
@@ -252,6 +256,7 @@ var model = {
             {
                 $unwind: {
                     path: "$athlete.coupon",
+                    preserveNullAndEmptyArrays: true
                 }
             },
             {
@@ -322,6 +327,7 @@ var model = {
             {
                 $unwind: {
                     path: "$coupon",
+                    preserveNullAndEmptyArrays: true
                 }
             },
             // Stage 2
@@ -396,6 +402,7 @@ var model = {
             {
                 $unwind: {
                     path: "$coupon",
+                    preserveNullAndEmptyArrays: true
                 }
             },
             {
