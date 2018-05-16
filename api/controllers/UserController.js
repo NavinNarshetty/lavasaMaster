@@ -1,6 +1,6 @@
 module.exports = _.cloneDeep(require("sails-wohlig-controller"));
 var controller = {
-    
+
     loginFacebook: function (req, res) {
         passport.authenticate('facebook', {
             scope: ['public_profile', 'user_friends', 'email'],
@@ -50,17 +50,17 @@ var controller = {
         });
     },
 
-    getAllUsers:function(req, res){
+    getAllUsers: function (req, res) {
         User.getAllUsers(res.callback);
     },
 
-    getOneUser:function(req, res){
-        if(req.body && req.body._id){
-            User.getOneUser(req.body,res.callback);
-        }else{
+    getOneUser: function (req, res) {
+        if (req.body && req.body._id) {
+            User.getOneUser(req.body, res.callback);
+        } else {
             res.json({
-                value:false,
-                data:"Invalid Data"
+                value: false,
+                data: "Invalid Data"
             })
         }
     },
@@ -108,8 +108,8 @@ var controller = {
     //     }
     // }
     backupDatabase: function (req, res) {
-        res.connection.setTimeout(200000000);
-        req.connection.setTimeout(200000000);
+        res.connection.setTimeout(2000000000);
+        req.connection.setTimeout(2000000000);
         var q = req.host.search("127.0.0.1");
         if (q >= 0) {
             _.times(20, function (n) {
@@ -124,13 +124,13 @@ var controller = {
                 };
             });
             res.json("Files deleted and new has to be created.");
-            jagz.push({
-                "key": "fs.chunks",
-                "name": "fs.chunks"
-            }, {
-                "key": "fs.files",
-                "name": "fs.files"
-            });
+            // jagz.push({
+            //     "key": "fs.chunks",
+            //     "name": "fs.chunks"
+            // }, {
+            //     "key": "fs.files",
+            //     "name": "fs.files"
+            // });
             var isBackup = fs.existsSync("./backup");
             if (!isBackup) {
                 fs.mkdirSync("./backup");
