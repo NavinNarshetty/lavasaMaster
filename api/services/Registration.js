@@ -365,6 +365,7 @@ var model = {
                         param.totalPaid = registerData.package.finalPrice + finalAmount;
                         param.upgrade = false;
                         param.transaction = [];
+                        param.coupon = undefined;
                     } else {
                         var param = {};
                         var finalAmount = 0;
@@ -386,6 +387,7 @@ var model = {
                         param.transaction = data.transaction;
                         param.outstandingAmount = registerData.package.finalPrice + finalAmount;
                         param.upgrade = false;
+                        param.coupon = undefined;
                     }
                     Accounts.saveData(param, function (err, accountsData) {
                         if (err || _.isEmpty(accountsData)) {

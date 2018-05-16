@@ -382,10 +382,15 @@ var model = {
         var pipeline = [ // Stage 1
             {
                 $lookup: {
-                    "from": "atheletes",
-                    "localField": "athlete",
+                    "from": "registrations",
+                    "localField": "school",
                     "foreignField": "_id",
-                    "as": "athlete"
+                    "as": "school"
+                }
+            },
+            {
+                $unwind: {
+                    path: "$athlete",
                 }
             },
             // Stage 2
@@ -402,14 +407,9 @@ var model = {
             {
                 $unwind: {
                     path: "$coupon",
-                    preserveNullAndEmptyArrays: true
                 }
             },
-            {
-                $unwind: {
-                    path: "$athlete",
-                }
-            },
+
             {
                 $lookup: {
                     "from": "transactions",
@@ -423,22 +423,12 @@ var model = {
                 $match: {
 
                     $or: [{
-                        "athlete.firstName": {
+                        "school.schoolName": {
                             $regex: data.keyword,
                             $options: "i"
                         }
                     }, {
-                        "athlete.middleName": {
-                            $regex: data.keyword,
-                            $options: "i"
-                        }
-                    }, {
-                        "athlete.surname": {
-                            $regex: data.keyword,
-                            $options: "i"
-                        }
-                    }, {
-                        "athlete.sfaId": {
+                        "school.sfaID": {
                             $regex: data.keyword,
                             $options: "i"
                         }
