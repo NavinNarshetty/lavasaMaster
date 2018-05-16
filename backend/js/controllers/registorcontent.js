@@ -50,7 +50,7 @@ myApp.controller('RegistorContentCtrl', function ($scope, TemplateService, Navig
 });
 // TABLE REGISTER CONTENT END
 
-// DETAIL REGISTER CONTENT 
+// DETAIL REGISTER CONTENT
 
 myApp.controller('DetailRegistorContentCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal, crudService) {
   //Used to name the .html file
@@ -167,3 +167,70 @@ myApp.controller('DetailRegistorContentCtrl', function ($scope, TemplateService,
 
 });
 // DETAIL REGISTER CONTENT  END
+
+// PDF PAGE
+myApp.controller('PdfUploadCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal, crudService) {
+  //Used to name the .html file
+  $scope.template = TemplateService.changecontent("player-registration/pdf-upload");
+  $scope.menutitle = NavigationService.makeactive("PDF Upload");
+  TemplateService.title = $scope.menutitle;
+  $scope.navigation = NavigationService.getnav();
+
+  // VARIABLES
+  $scope.formData = {};
+  var url = 'PdfPage';
+  $scope.form = {};
+  $scope.form.page = 1;
+  $scope.form.type = '';
+  $scope.form.keyword = '';
+  // VARIABLES END
+  // FUNCTIONS
+  // DELETE FILE
+  $scope.deleteFile = function(data){
+    switch (data) {
+      case 'ageEvent':
+        delete $scope.formData.ageEvent;
+      break;
+      case 'packageDetails':
+        delete $scope.formData.packageDetails;
+      break;
+      case 'playerTerms':
+        delete $scope.formData.playerTerms;
+      break;
+      case 'schoolTerms':
+        delete $scope.formData.schoolTerms;
+      break;
+    }
+    console.log("form", $scope.formData);
+  }
+  // DELETE FILE END
+  // FUNCTIONS END
+  // API CALLS
+  // VIEW
+  $scope.getData = function () {
+    $scope.url = "PdfPage/search";
+    $scope.formData.page = $scope.formData.page++;
+    NavigationService.apiCall($scope.url, $scope.form, function (data) {
+      console.log("data.value", data);
+      if (data.value == true) {
+        console.log("data", data.data);
+        data = data.data;
+        $scope.formData = data.results[0];
+        TemplateService.scrollTo('heading-sec', 'class');
+      } else {
+        toastr.error("Error");
+      }
+    });
+  }
+  $scope.getData();
+  // VIEW END
+  // SAVE FUNCTION
+  var state = 'pdfupload';
+  $scope.saveData = function (data) {
+    console.log("save", data);
+    crudService.saveData(data, url, state);
+  }
+  // SAVE FUNCTION END
+  // API CALLS END
+});
+// PDF PAGE END

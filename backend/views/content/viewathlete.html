@@ -345,7 +345,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="">Document Status</label>
-                                            <input type="text" name="pinCode" ng-model="athlete. Document_Status" class="form-control" readonly>
+                                            <input type="text" name="pinCode" ng-model="athlete.Document_Status" class="form-control" readonly>
                                             <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched &amp;&amp; type.required">Please enter valid Verification Status</div>-->
                                         </div>
                                         <div class="form-group">
@@ -477,11 +477,11 @@
                                                             | englishNumeralCustomDate}}
                                                         </div>
                                                     </td>
-                                                    <!-- <td>
+                                                    <td>
                                                         <div>
                                                             {{displayData.AmountToPay}}
                                                         </div>
-                                                    </td> -->
+                                                    </td>
                                                     <td>
                                                         <div>
                                                             {{displayData.cgst + displayData.sgst}}
@@ -492,11 +492,11 @@
                                                             {{ displayData.discount }}
                                                         </div>
                                                     </td>
-                                                    <td>
+                                                    <!-- <td>
                                                         <div>
                                                             {{displayData.AmountToPay}}
                                                         </div>
-                                                    </td>
+                                                    </td> -->
                                                     <td>
                                                         <div>
                                                             {{displayData.outstandingAmount}}
@@ -504,7 +504,7 @@
                                                     </td>
                                                     <td>
                                                         <div>
-                                                            {{displayData.verified}}
+                                                            {{athlete.status}}
                                                         </div>
                                                     </td>
                                                     <td>

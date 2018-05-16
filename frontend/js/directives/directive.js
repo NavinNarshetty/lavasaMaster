@@ -959,7 +959,7 @@ myApp.directive('img', function ($compile, $parse) {
                         featureUserType: $scope.user
                     }
                 }
-                // console.log("cashback", $scope.cashback);
+                $scope.formPdf = {};
 
                 NavigationService.getPackages($scope.formPackage, function (data) {
                     data = data.data;
@@ -980,6 +980,16 @@ myApp.directive('img', function ($compile, $parse) {
                     } else {
                         console.log("features search failed", data);
                     }
+                });
+                NavigationService.getPdf($scope.formPdf, function (data) {
+                  data = data.data;
+                  if (data.value == true) {
+                    var pdf = data.data.results[0];
+                    $scope.packageDetails = pdf.packageDetails;
+                    $scope.ageEvent = pdf.ageEvent;
+                  } else {
+                    console.log("Error in pdf", data);
+                  }
                 });
             }
         }

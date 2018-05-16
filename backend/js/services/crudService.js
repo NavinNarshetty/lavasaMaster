@@ -62,8 +62,11 @@ myApp.service('crudService', function ($http, TemplateService, $state, toastr, $
         } else {
           toastr.success("Data Saved Successfully", "Success");
         }
-        $state.go(state);
-
+        if ($state.current.name == state) {
+          $state.reload();
+        } else {
+          $state.go(state);
+        }
       } else {
         toastr.error("Something went wrong", "Error");
       }
@@ -78,7 +81,7 @@ myApp.service('crudService', function ($http, TemplateService, $state, toastr, $
     var getUrl = url + '/' + 'getOne'; // CONCAT FOR getONE URL
     // console.log(id, "check")
     var paraM = {};
-    paraM._id = id; //STATE PARAMS 
+    paraM._id = id; //STATE PARAMS
     NavigationService.apiCall(getUrl, paraM, function (data) {
       if (data.value) {
         var formData = {};

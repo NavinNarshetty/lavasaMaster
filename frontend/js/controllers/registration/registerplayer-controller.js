@@ -17,6 +17,7 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
   $scope.showSec2 = false;
   $scope.noEmailMobile = false;
   $scope.noContact = false;
+  $scope.formPdf = {};
 
   $scope.flag = $stateParams.type;
   // SET FLAG
@@ -496,6 +497,19 @@ myApp.controller('RegisterPlayerCtrl', function ($scope, TemplateService, Naviga
     // console.log("picslide",$scope.allGallery);
   };
   // GALLERY END
+  // GET PDFS
+  NavigationService.getPdf($scope.formPdf, function (data) {
+    data = data.data;
+    console.log("pdf", data);
+    if (data.value == true) {
+      var pdf = data.data.results[0];
+      $scope.packageDetails = pdf.packageDetails;
+      $scope.ageEvent = pdf.ageEvent;
+    } else {
+      console.log("Error in pdf", data);
+    }
+  });
+  // GET PDFS END
   // FUNCTIONS END
   // API CALLS
   // GET REGISTERATION CONTENT

@@ -90,7 +90,7 @@ schema.plugin(deepPopulate, {
         "transaction.package": {
             select: ''
         },
-        "couponcode": {
+        "coupon": {
             select: ''
         }
     }
@@ -127,13 +127,31 @@ var model = {
                     "as": "coupon"
                 }
             },
-
             // Stage 2
             {
                 $unwind: {
                     path: "$coupon",
+                    preserveNullAndEmptyArrays: true
                 }
             },
+
+            {
+                $lookup: {
+                    "from": "couponcodes",
+                    "localField": "athlete.coupon",
+                    "foreignField": "_id",
+                    "as": "athlete.coupon"
+                }
+            },
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$athlete.coupon",
+                    preserveNullAndEmptyArrays: true
+                }
+            },
+
+
 
             // Stage 3
             {
@@ -217,12 +235,28 @@ var model = {
             {
                 $unwind: {
                     path: "$coupon",
+                    preserveNullAndEmptyArrays: true
                 }
             },
             // Stage 2
             {
                 $unwind: {
                     path: "$athlete",
+                }
+            },
+            {
+                $lookup: {
+                    "from": "couponcodes",
+                    "localField": "athlete.coupon",
+                    "foreignField": "_id",
+                    "as": "athlete.coupon"
+                }
+            },
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$athlete.coupon",
+                    preserveNullAndEmptyArrays: true
                 }
             },
             {
@@ -293,6 +327,7 @@ var model = {
             {
                 $unwind: {
                     path: "$coupon",
+                    preserveNullAndEmptyArrays: true
                 }
             },
             // Stage 2
@@ -367,6 +402,7 @@ var model = {
             {
                 $unwind: {
                     path: "$coupon",
+                    preserveNullAndEmptyArrays: true
                 }
             },
             {
@@ -609,7 +645,7 @@ var model = {
     getAccount: function (data, callback) {
         Accounts.findOne({
             _id: data._id
-        }).lean().deepPopulate('athlete school athlete.school transaction transaction.package couponcode').exec(
+        }).lean().deepPopulate('athlete school athlete.school transaction transaction.package coupon').exec(
             function (err, found) {
                 if (err) {
                     callback(err, null);

@@ -134,6 +134,9 @@ schema.plugin(deepPopulate, {
         },
         'package': {
             select: ''
+        },
+        'coupon': {
+            select: ''
         }
     }
 });
@@ -3064,7 +3067,7 @@ var model = {
 
     },
 
-    excelFilterAthlete: function (data, callback) {
+    OLDexcelFilterAthlete: function (data, callback) {
         // console.log('insied filter', data);
         var maxRow = Config.maxRow;
 
@@ -3494,7 +3497,7 @@ var model = {
         }
     },
 
-    generateExcel: function (data, res) {
+    OLDgenerateExcel: function (data, res) {
         Athelete.excelFilterAthlete(data, function (err, complete) {
             if (err) {
                 callback(err, null);
@@ -3661,6 +3664,921 @@ var model = {
                             obj.Age_Proof = "";
                         }
                         excelData.push(obj);
+                    });
+                    Config.generateExcel("Athlete", excelData, res);
+                }
+            }
+        });
+    },
+
+    excelFilterAthlete: function (data, callback) {
+        // console.log('insied filter', data);
+        var maxRow = Config.maxRow;
+
+        var page = 1;
+        if (data.page) {
+            page = data.page;
+        }
+        var field = data.field;
+        var options = {
+            field: data.field,
+            filters: {
+                keyword: {
+                    fields: ['firstName', 'sfaId'],
+                    term: data.keyword
+                }
+            },
+            sort: {
+                asc: 'createdAt'
+            },
+            start: (page - 1) * maxRow,
+            count: maxRow
+        };
+        var matchObj = {};
+        if (data.type == "Date") {
+            if (data.endDate == data.startDate) {
+                matchObj = {
+                    createdAt: data.startDate,
+                    $or: [{
+                        registrationFee: {
+                            $ne: "online PAYU"
+                        }
+                    }, {
+                        paymentStatus: {
+                            $ne: "Pending"
+                        }
+                    }]
+                };
+
+            } else {
+                matchObj = {
+                    createdAt: {
+                        $gt: data.startDate,
+                        $lt: data.endDate,
+                    },
+                    $or: [{
+                        registrationFee: {
+                            $ne: "online PAYU"
+                        }
+                    }, {
+                        paymentStatus: {
+                            $ne: "Pending"
+                        }
+                    }]
+                };
+            }
+        } else if (data.type == "SFA-ID") {
+            matchObj = {
+                sfaId: {
+                    $regex: data.input,
+                    $options: "i"
+                },
+                $or: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }]
+            };
+        } else if (data.type == "UTM_Source") {
+            matchObj = {
+                utm_source: {
+                    $regex: data.input,
+                    $options: "i"
+                },
+                $or: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }]
+            };
+        } else if (data.type == "UTM_Campaign") {
+            matchObj = {
+                utm_campaign: {
+                    $regex: data.input,
+                    $options: "i"
+                },
+                $or: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }]
+            };
+        } else if (data.type == "UTM_Medium") {
+            matchObj = {
+                utm_medium: {
+                    $regex: data.input,
+                    $options: "i"
+                },
+                $or: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }]
+            };
+        } else if (data.type == "Athlete Name") {
+            matchObj = {
+                // $or: [{
+                //     firstName: {
+                //         $regex: data.input,
+                //         $options: "i"
+                //     }
+                // }, {
+                //     surname: {
+                //         $regex: data.input,
+                //         $options: "i"
+                //     }
+                // }, {
+                //     middleName: {
+                //         $regex: data.input,
+                //         $options: "i"
+                //     }
+                // }],
+                firstName: {
+                    $regex: data.input,
+                    $options: "i"
+
+                },
+                $or: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }]
+
+            };
+        } else if (data.type == "Payment Mode") {
+            if (data.input == "cash" || data.input == "Cash") {
+                matchObj = {
+                    'registrationFee': "cash",
+                };
+            } else if (data.input == "online" || data.input == "Online") {
+                matchObj = {
+                    'registrationFee': "online PAYU",
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                };
+
+            }
+            //-----------for sponsered--------- 
+            else if (data.input == "sponsor" || data.input == "Sponsor") {
+                matchObj = {
+                    'registrationFee': "Sponsor",
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                };
+
+            }
+            //-----------for sponsered---------
+            else {
+                var matchObj = {
+                    $or: [{
+                        registrationFee: {
+                            $ne: "online PAYU"
+                        }
+                    }, {
+                        paymentStatus: {
+                            $ne: "Pending"
+                        }
+                    }],
+                };
+
+            }
+
+        } else if (data.type == "Payment Status") {
+
+            if (data.input == "Paid" || data.input == "paid") {
+                matchObj = {
+                    'paymentStatus': "Paid",
+                };
+            } else if (data.input == "Pending" || data.input == "pending") {
+                matchObj = {
+                    'paymentStatus': "Pending",
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                };
+            } else {
+                var matchObj = {
+                    $or: [{
+                        registrationFee: {
+                            $ne: "online PAYU"
+                        }
+                    }, {
+                        paymentStatus: {
+                            $ne: "Pending"
+                        }
+                    }],
+
+                };
+            }
+        } else if (data.type == "Verified Status") {
+            matchObj = {
+                'status': {
+                    $regex: data.input,
+                    $options: "i"
+                },
+                $or: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }]
+
+            };
+        } else {
+            var matchObj = {
+                $or: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }],
+
+            };
+        }
+        if (data.type == "School Name") {
+            Athelete.aggregate(
+                [{
+                        $lookup: {
+                            "from": "packages",
+                            "localField": "package",
+                            "foreignField": "_id",
+                            "as": "package"
+                        }
+                    },
+                    // Stage 2
+                    {
+                        $unwind: {
+                            path: "$package",
+                            preserveNullAndEmptyArrays: true // optional
+                        }
+                    },
+                    {
+                        $lookup: {
+                            "from": "schools",
+                            "localField": "school",
+                            "foreignField": "_id",
+                            "as": "school"
+                        }
+                    },
+                    // Stage 2
+                    {
+                        $unwind: {
+                            path: "$school",
+                            preserveNullAndEmptyArrays: true // optional
+                        }
+                    },
+                    // Stage 3
+                    {
+                        $match: {
+
+                            $or: [{
+                                    "school.name": {
+                                        $regex: data.input
+                                    }
+                                },
+                                {
+                                    "atheleteSchoolName": {
+                                        $regex: data.input
+                                    }
+                                }
+                            ]
+
+                        }
+                    },
+                    // Stage 4
+                    {
+                        $match: {
+                            $or: [{
+                                registrationFee: {
+                                    $ne: "online PAYU"
+                                }
+                            }, {
+                                paymentStatus: {
+                                    $ne: "Pending"
+                                }
+                            }]
+                        }
+                    },
+                    {
+                        $sort: {
+                            "createdAt": -1
+
+                        }
+                    },
+                ],
+                function (err, returnReq) {
+                    console.log("returnReq : ", returnReq);
+                    if (err) {
+                        console.log(err);
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(returnReq)) {
+                            var count = returnReq.length;
+                            console.log("count", count);
+
+                            var data = {};
+                            data.options = options;
+
+                            data.results = returnReq;
+                            data.total = count;
+                            callback(null, returnReq);
+                        } else {
+                            var count = returnReq.length;
+                            console.log("count", count);
+
+                            var data = {};
+                            data.options = options;
+                            data.results = returnReq;
+                            data.total = count;
+                            callback(null, returnReq);
+
+                        }
+                    }
+                });
+        } else if (data.keyword !== "" && data.type !== "") {
+            Athelete.aggregate(
+                [{
+                        $match: {
+
+                            $or: [{
+                                    "firstName": {
+                                        $regex: data.keyword,
+                                        $options: "i"
+                                    }
+                                },
+                                {
+                                    "sfaId": data.keyword
+                                }
+                            ]
+                        }
+                    },
+                    // Stage 4
+                    {
+                        $match: {
+                            $or: [{
+                                registrationFee: {
+                                    $ne: "online PAYU"
+                                }
+                            }, {
+                                paymentStatus: {
+                                    $ne: "Pending"
+                                }
+                            }]
+                        }
+                    },
+                    {
+                        $lookup: {
+                            "from": "schools",
+                            "localField": "school",
+                            "foreignField": "_id",
+                            "as": "school"
+                        }
+                    },
+                    // Stage 2
+                    {
+                        $unwind: {
+                            path: "$school",
+                            preserveNullAndEmptyArrays: true // optional
+                        }
+                    },
+                    {
+                        $lookup: {
+                            "from": "packages",
+                            "localField": "package",
+                            "foreignField": "_id",
+                            "as": "package"
+                        }
+                    },
+                    // Stage 2
+                    {
+                        $unwind: {
+                            path: "$package",
+                            preserveNullAndEmptyArrays: true // optional
+                        }
+                    },
+                    {
+                        $sort: {
+                            "createdAt": -1
+
+                        }
+                    },
+                ],
+                function (err, returnReq) {
+                    console.log("returnReq : ", returnReq);
+                    if (err) {
+                        console.log(err);
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(returnReq)) {
+                            var count = returnReq.length;
+                            console.log("count", count);
+
+                            var data = {};
+                            data.options = options;
+
+                            data.results = returnReq;
+                            data.total = count;
+                            callback(null, returnReq);
+                        } else {
+                            var count = returnReq.length;
+                            callback(null, returnReq);
+
+                        }
+                    }
+                });
+        } else {
+            Athelete.find(matchObj).lean().deepPopulate("school package")
+                .sort({
+                    createdAt: -1
+                }).exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(found)) {
+                        callback(null, "Data is empty");
+                    } else {
+                        callback(null, found);
+                    }
+                });
+        }
+    },
+
+    generateExcel: function (data, res) {
+        Athelete.excelFilterAthlete(data, function (err, complete) {
+            if (err) {
+                res.callback(err, null);
+            } else {
+                if (_.isEmpty(complete)) {
+                    res.callback(null, complete);
+                } else {
+                    var excelData = [];
+                    var obj = {};
+                    async.eachSeries(complete, function (n, callback) {
+                        obj = {};
+                        async.waterfall([
+                            function (callback) {
+                                Accounts.findOne({
+                                    athlete: n._id
+                                }).lean().deepPopulate("coupon").exec(function (err, accountsData) {
+                                    if (err || _.isEmpty(accountsData)) {
+                                        callback(null, []);
+                                    } else {
+                                        callback(null, accountsData);
+                                    }
+                                });
+                            },
+                            function (prevRes, callback) {
+                                console.log("prevRes", prevRes);
+                                obj.sfaID = n.sfaId;
+                                obj.receiptNo = "SFA" + n.receiptId;
+                                obj.packageName = n.package.name;
+                                if (!_.isEmpty(prevRes)) {
+                                    console.log('-------');
+                                    obj["Registered Amount"] = prevRes.totalPaid;
+                                    obj["Amount Outstanding"] = prevRes.outstandingAmount;
+                                    obj.CGST = prevRes.cgst;
+                                    obj.SGST = prevRes.sgst;
+                                    obj.IGST = prevRes.igst;
+                                    obj.Discount = prevRes.discount;
+                                    if (prevRes.coupon) {
+                                        obj["Coupon Name"] = prevRes.coupon.name;
+                                    } else {
+                                        obj["Coupon Name"] = '';
+                                    }
+                                    obj["Payment Date"] = prevRes.updatedAt;
+                                } else {
+                                    obj["Registered Amount"] = 0;
+                                    obj["Amount Outstanding"] = 0;
+                                    obj.CGST = 0;
+                                    obj.SGST = 0;
+                                    obj.IGST = 0;
+                                    obj.Discount = 0;
+                                    obj["Coupon Name"] = '';
+                                    obj["Payment Date"] = '';
+                                }
+                                if (n.school !== null && !n.atheleteSchoolName) {
+                                    obj.school = n.school.name;
+                                } else {
+                                    obj.school = "";
+                                }
+                                if (n.atheleteSchoolName) {
+                                    obj.addedSchool = n.atheleteSchoolName;
+                                } else {
+                                    obj.addedSchool = "";
+                                }
+                                if (n.university) {
+                                    obj.university = n.university;
+                                } else {
+                                    obj.university = "";
+                                }
+                                if (n.faculty) {
+                                    obj.faculty = n.faculty;
+                                } else {
+                                    obj.faculty = "";
+                                }
+                                if (n.course) {
+                                    obj.course = n.course;
+                                } else {
+                                    obj.course = "";
+                                }
+                                if (n.year) {
+                                    obj.collegeYear = n.collegeYear;
+                                } else {
+                                    obj.collegeYear = "";
+                                }
+                                if (n.degree) {
+                                    obj.degree = n.degree;
+                                } else {
+                                    obj.degree = "";
+                                }
+                                var parentInfo;
+                                var countParent = 0;
+                                var levelInfo;
+                                var countLevel = 0;
+                                _.each(n.parentDetails, function (details) {
+                                    var name = details.name + details.surname;
+                                    var email = details.email;
+                                    var mobile = details.mobile;
+                                    var relation = details.relation;
+                                    if (countParent === 0) {
+                                        parentInfo = "{ Name:" + name + "," + "Relation:" + relation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
+                                    } else {
+                                        parentInfo = parentInfo + "{ Name:" + name + "," + "Relation:" + relation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
+                                    }
+                                    countParent++;
+                                    // console.log("parentDetails", parentInfo);
+                                });
+                                obj.parentDetails = parentInfo;
+                                _.each(n.sportLevel, function (details) {
+                                    var level = details.level;
+                                    var sport = details.sport;
+                                    if (countLevel === 0) {
+                                        levelInfo = "{ Level:" + level + "," + "Sport:" + sport + "}";
+                                    } else {
+                                        levelInfo = levelInfo + "{ Level:" + level + "," + "Sport:" + sport + "}";
+                                    }
+                                    countLevel++;
+                                });
+                                obj.sportLevel = levelInfo;
+                                var dateTime = moment.utc(n.createdAt).utcOffset("+05:30").format('YYYY-MM-DD HH:mm');
+                                obj.date = dateTime;
+                                obj.idProof = n.idProof;
+                                obj.surname = n.surname;
+                                obj.firstName = n.firstName;
+                                obj.middleName = n.middleName;
+                                obj.gender = n.gender;
+                                obj.standard = n.standard;
+                                obj.bloodGroup = n.bloodGroup;
+                                obj.photograph = n.photograph;
+                                obj.dob = n.dob;
+                                obj.age = n.age;
+                                obj.ageProof = n.ageProof;
+                                obj.photoImage = n.photoImage;
+                                obj.birthImage = n.birthImage;
+                                obj.playedTournaments = n.playedTournaments;
+                                obj.mobile = n.mobile;
+                                obj.email = n.email;
+                                obj.smsOTP = n.smsOTP;
+                                obj.emailOTP = n.emailOTP;
+                                obj.address = n.address;
+                                obj.addressLine2 = n.addressLine2;
+                                obj.state = n.state;
+                                obj.district = n.district;
+                                obj.city = n.city;
+                                obj.pinCode = n.pinCode;
+                                obj.status = n.status;
+                                obj.password = n.password;
+                                obj.year = n.year;
+                                obj.registrationFee = n.registrationFee;
+                                obj.paymentStatus = n.paymentStatus;
+                                obj.transactionID = n.transactionID;
+                                obj.remarks = n.remarks;
+
+
+
+                                // obj.utm_medium = n.utm_medium;
+                                // obj.utm_source = n.utm_source;
+                                // obj.utm_campaign = n.utm_campaign;
+                                if (n.utm_medium) {
+                                    obj.utm_medium = n.utm_medium;
+                                } else {
+                                    obj.utm_medium = "";
+                                }
+
+                                if (n.utm_campaign) {
+                                    obj.utm_campaign = n.utm_campaign;
+                                } else {
+                                    obj.utm_campaign = "";
+                                }
+                                if (n.utm_source) {
+                                    obj.utm_source = n.utm_source;
+                                } else {
+                                    obj.utm_source = "";
+                                }
+                                if (n.isBib == true) {
+                                    obj.BIB = "YES";
+                                } else {
+                                    obj.BIB = "NO";
+                                }
+                                if (n.Document_Status) {
+                                    obj.Document_Status = n.Document_Status;
+                                } else {
+                                    obj.Document_Status = "";
+                                }
+                                if (n.Photo_ID) {
+                                    obj.Photo_ID = n.Photo_ID;
+                                } else {
+                                    obj.Photo_ID = "";
+                                }
+
+                                if (n.School_Id) {
+                                    obj.School_Id = n.School_Id;
+                                } else {
+                                    obj.School_Id = "";
+                                }
+
+                                if (n.Age_Proof) {
+                                    obj.Age_Proof = n.Age_Proof;
+                                } else {
+                                    obj.Age_Proof = "";
+                                }
+                                excelData.push(obj);
+                                callback(null, excelData);
+                            }
+                        ], function (err, excelData) {
+                            callback();
+                        });
+                        // if (n.atheleteSchoolName) {
+                        //     obj.school = n.atheleteSchoolName;
+                        // } else {
+                        //     if (n.school !== null) {
+                        //         obj.school = n.school.name;
+                        //     } else {
+                        //         obj.school = "";
+                        //     }
+                        // }
+
+                    }, function (err) {
+                        if (err) {
+                            console.log(err);
+                            res.callback(err, null);
+                        } else {
+                            console.log(excelData);
+
+                            Config.generateExcel("Athlete", excelData, res);
+                        }
+                    });
+                }
+            }
+        });
+    },
+
+    EachgenerateExcel: function (data, res) {
+        Athelete.excelFilterAthlete(data, function (err, complete) {
+            if (err) {
+                res.callback(err, null);
+            } else {
+                if (_.isEmpty(complete)) {
+                    res.callback(null, complete);
+                } else {
+                    var excelData = [];
+                    _.each(complete, function (n, i) {
+                        var obj = {};
+                        async.waterfall([
+                            function (callback) {
+                                Accounts.findOne({
+                                    athlete: n._id
+                                }).lean().deepPopulate("coupon").exec(function (err, accountsData) {
+                                    if (err || _.isEmpty(accountsData)) {
+                                        callback(null, []);
+                                    } else {
+                                        callback(null, accountsData);
+                                    }
+                                });
+                            },
+                            function (prevRes, callback) {
+                                console.log("prevRes", prevRes);
+                                obj.sfaID = n.sfaId;
+                                obj.receiptNo = "SFA" + n.receiptId;
+                                obj.packageName = n.package.name;
+                                if (!_.isEmpty(prevRes)) {
+                                    console.log('-------');
+                                    obj["Registered Amount"] = prevRes.totalPaid;
+                                    obj["Amount Outstanding"] = prevRes.outstandingAmount;
+                                    obj.CGST = prevRes.cgst;
+                                    obj.SGST = prevRes.sgst;
+                                    obj.IGST = prevRes.igst;
+                                    obj.Discount = prevRes.discount;
+                                    if (prevRes.coupon) {
+                                        obj["Coupon Name"] = prevRes.coupon.name;
+                                    } else {
+                                        obj["Coupon Name"] = '';
+                                    }
+                                    obj["Payment Date"] = prevRes.updatedAt;
+                                } else {
+                                    obj["Registered Amount"] = 0;
+                                    obj["Amount Outstanding"] = 0;
+                                    obj.CGST = 0;
+                                    obj.SGST = 0;
+                                    obj.IGST = 0;
+                                    obj.Discount = 0;
+                                    obj["Coupon Name"] = '';
+                                    obj["Payment Date"] = '';
+                                }
+                                if (n.school !== null && !n.atheleteSchoolName) {
+                                    obj.school = n.school.name;
+                                } else {
+                                    obj.school = "";
+                                }
+                                if (n.atheleteSchoolName) {
+                                    obj.addedSchool = n.atheleteSchoolName;
+                                } else {
+                                    obj.addedSchool = "";
+                                }
+                                if (n.university) {
+                                    obj.university = n.university;
+                                } else {
+                                    obj.university = "";
+                                }
+                                if (n.faculty) {
+                                    obj.faculty = n.faculty;
+                                } else {
+                                    obj.faculty = "";
+                                }
+                                if (n.course) {
+                                    obj.course = n.course;
+                                } else {
+                                    obj.course = "";
+                                }
+                                if (n.year) {
+                                    obj.collegeYear = n.collegeYear;
+                                } else {
+                                    obj.collegeYear = "";
+                                }
+                                if (n.degree) {
+                                    obj.degree = n.degree;
+                                } else {
+                                    obj.degree = "";
+                                }
+                                var parentInfo;
+                                var countParent = 0;
+                                var levelInfo;
+                                var countLevel = 0;
+                                _.each(n.parentDetails, function (details) {
+                                    var name = details.name + details.surname;
+                                    var email = details.email;
+                                    var mobile = details.mobile;
+                                    var relation = details.relation;
+                                    if (countParent === 0) {
+                                        parentInfo = "{ Name:" + name + "," + "Relation:" + relation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
+                                    } else {
+                                        parentInfo = parentInfo + "{ Name:" + name + "," + "Relation:" + relation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
+                                    }
+                                    countParent++;
+                                    // console.log("parentDetails", parentInfo);
+                                });
+                                obj.parentDetails = parentInfo;
+                                _.each(n.sportLevel, function (details) {
+                                    var level = details.level;
+                                    var sport = details.sport;
+                                    if (countLevel === 0) {
+                                        levelInfo = "{ Level:" + level + "," + "Sport:" + sport + "}";
+                                    } else {
+                                        levelInfo = levelInfo + "{ Level:" + level + "," + "Sport:" + sport + "}";
+                                    }
+                                    countLevel++;
+                                });
+                                obj.sportLevel = levelInfo;
+                                var dateTime = moment.utc(n.createdAt).utcOffset("+05:30").format('YYYY-MM-DD HH:mm');
+                                obj.date = dateTime;
+                                obj.idProof = n.idProof;
+                                obj.surname = n.surname;
+                                obj.firstName = n.firstName;
+                                obj.middleName = n.middleName;
+                                obj.gender = n.gender;
+                                obj.standard = n.standard;
+                                obj.bloodGroup = n.bloodGroup;
+                                obj.photograph = n.photograph;
+                                obj.dob = n.dob;
+                                obj.age = n.age;
+                                obj.ageProof = n.ageProof;
+                                obj.photoImage = n.photoImage;
+                                obj.birthImage = n.birthImage;
+                                obj.playedTournaments = n.playedTournaments;
+                                obj.mobile = n.mobile;
+                                obj.email = n.email;
+                                obj.smsOTP = n.smsOTP;
+                                obj.emailOTP = n.emailOTP;
+                                obj.address = n.address;
+                                obj.addressLine2 = n.addressLine2;
+                                obj.state = n.state;
+                                obj.district = n.district;
+                                obj.city = n.city;
+                                obj.pinCode = n.pinCode;
+                                obj.status = n.status;
+                                obj.password = n.password;
+                                obj.year = n.year;
+                                obj.registrationFee = n.registrationFee;
+                                obj.paymentStatus = n.paymentStatus;
+                                obj.transactionID = n.transactionID;
+                                obj.remarks = n.remarks;
+
+
+
+                                // obj.utm_medium = n.utm_medium;
+                                // obj.utm_source = n.utm_source;
+                                // obj.utm_campaign = n.utm_campaign;
+                                if (n.utm_medium) {
+                                    obj.utm_medium = n.utm_medium;
+                                } else {
+                                    obj.utm_medium = "";
+                                }
+
+                                if (n.utm_campaign) {
+                                    obj.utm_campaign = n.utm_campaign;
+                                } else {
+                                    obj.utm_campaign = "";
+                                }
+                                if (n.utm_source) {
+                                    obj.utm_source = n.utm_source;
+                                } else {
+                                    obj.utm_source = "";
+                                }
+                                if (n.isBib == true) {
+                                    obj.BIB = "YES";
+                                } else {
+                                    obj.BIB = "NO";
+                                }
+                                if (n.Document_Status) {
+                                    obj.Document_Status = n.Document_Status;
+                                } else {
+                                    obj.Document_Status = "";
+                                }
+                                if (n.Photo_ID) {
+                                    obj.Photo_ID = n.Photo_ID;
+                                } else {
+                                    obj.Photo_ID = "";
+                                }
+
+                                if (n.School_Id) {
+                                    obj.School_Id = n.School_Id;
+                                } else {
+                                    obj.School_Id = "";
+                                }
+
+                                if (n.Age_Proof) {
+                                    obj.Age_Proof = n.Age_Proof;
+                                } else {
+                                    obj.Age_Proof = "";
+                                }
+                                excelData.push(obj);
+                                callback(null, excelData);
+                            }
+                        ], function (err, result) {
+                            // callback();
+                            excelData = result;
+                            // console.log(i, complete.length);
+                            // if (i == (complete.length - 1)) {
+                            //     console.log('Final', i, complete.length);
+                            //     // console.log(excelData);
+                            // }
+                        });
+                        // if (n.atheleteSchoolName) {
+                        //     obj.school = n.atheleteSchoolName;
+                        // } else {
+                        //     if (n.school !== null) {
+                        //         obj.school = n.school.name;
+                        //     } else {
+                        //         obj.school = "";
+                        //     }
+                        // }
                     });
                     Config.generateExcel("Athlete", excelData, res);
                 }
