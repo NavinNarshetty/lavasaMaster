@@ -113,7 +113,7 @@ var controller = {
         var q = req.host.search("127.0.0.1");
         if (q >= 0) {
             _.times(20, function (n) {
-                var name = moment().subtract(1 + n, "days").format("ddd-Do-MMM-YYYY");
+                var name = moment().subtract(5 + n, "days").format("ddd-Do-MMM-YYYY");
                 exec("cd backup && rm -rf " + name + "*", function (err, stdout, stderr) {});
             });
             var jagz = _.map(mongoose.models, function (Model, key) {
@@ -130,7 +130,7 @@ var controller = {
             // }, {
             //     "key": "fs.files",
             //     "name": "fs.files"
-            // });
+            // }); 
             var isBackup = fs.existsSync("./backup");
             if (!isBackup) {
                 fs.mkdirSync("./backup");

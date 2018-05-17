@@ -28,7 +28,10 @@ var selectPicker = function (team, toastr, sT, sN, $filter, $scope, $uibModal, u
 
             break;
         case "I":
-
+            if (sN == 'Tennis' || sN == 'Table Tennis') {
+                howMuchSelectPicker = 1;
+                id = "#selectpicker_";
+            }
             break;
         case "CT":
             break;
@@ -80,7 +83,7 @@ var selectPicker = function (team, toastr, sT, sN, $filter, $scope, $uibModal, u
                                 //         $(e.currentTarget).find("[aria-selected]").attr("aria-selected","false");
                                 //         var nameArr = $(data_id+' ul li a[aria-selected=true]').find('span:first').map(function(e,k){return $(this).text()}).get();
                                 //         var nameStr = nameArr.join(", ");
-                                        
+
                                 //         $(data_id+' button').find("span:first").text(nameStr);
                                 //         team[k].sport.pop();
                                 //         $uibModal.open({
@@ -96,24 +99,24 @@ var selectPicker = function (team, toastr, sT, sN, $filter, $scope, $uibModal, u
                                 //         console.log("nameStr",nameStr);
                                 //     }
                                 // }else{
-                                    if (((sN == "Athletics" && team[k].selectLimit < 2) || sN != "Athletics") && openNow) {
-                                        $uibModal.open({
-                                            animation: true,
-                                            scope: $scope,
-                                            templateUrl: 'views/modal/upgradepackage-modal.html',
-                                            windowClass: 'modal-upgradepackage'
-                                        });
-                                    }
+                                if (((sN == "Athletics" && team[k].selectLimit < 2) || sN != "Athletics") && openNow) {
+                                    $uibModal.open({
+                                        animation: true,
+                                        scope: $scope,
+                                        templateUrl: 'views/modal/upgradepackage-modal.html',
+                                        windowClass: 'modal-upgradepackage'
+                                    });
+                                }
                                 // }
                             }
                         }
                         // else{
                         //     console.log("-------------");
-                            
+
                         //         if(team[k].hasOnlyLimitOne){
                         //             team[k].sport=[];
                         //         }
-                            
+
                         // }
 
 
@@ -313,7 +316,7 @@ myApp.controller('IndividualSelectionCtrl', function ($scope, TemplateService, e
 });
 
 //Confirm-Individual // Individual (I-confirm2)
-myApp.controller('ConfirmIndividualCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, loginService, errorService, selectService, toastr, $stateParams, $filter, configService) {
+myApp.controller('ConfirmIndividualCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, loginService, errorService, selectService, toastr, $stateParams, $filter, $uibModal, configService) {
     //Used to name the .html file
     $scope.sportTab = $filter('firstcapitalize')($stateParams.name);
     $scope.template = TemplateService.getHTML("content/confirmindividual.html");
@@ -348,6 +351,11 @@ myApp.controller('ConfirmIndividualCtrl', function ($scope, TemplateService, Nav
                 $scope.config.weightsReq = true;
                 $scope.config.ageVar = 'athelete.ageSelected';
                 $scope.config.weightVar = 'athelete.sport';
+                $scope.config.selectAgeExpression = "age._id for age in athelete.ageGroups | orderBy:'_id' track by age._id";
+            } else if (st == 'Tennis' || st == 'Table Tennis') {
+                $scope.config.weightsReq = false;
+                $scope.config.ageVar = 'athelete.sport';
+                $scope.config.weightVar = '';
                 $scope.config.selectAgeExpression = "age._id for age in athelete.ageGroups | orderBy:'_id' track by age._id";
             } else {
                 $scope.config.weightsReq = false;
@@ -405,6 +413,20 @@ myApp.controller('ConfirmIndividualCtrl', function ($scope, TemplateService, Nav
         // console.log(team);
     };
 
+    $timeout(function () {
+        $('.selectpicker').selectpicker()
+        $('.bs-searchbox input[type="text"]').attr('placeholder', 'Search Event');
+    }, 200);
+
+    var selectPickerClone = selectPicker(selectService.team, toastr, selectService.sportType, selectService.sportName, $filter, $scope, $uibModal, $.jStorage.get("userDetails"), $.jStorage.get("userType"));
+
+    // $('selectpicker').on('hidden.bs.select', function (e) {
+    //     console.log("hidden", e);
+    // });
+
+    // $scope.isValidSelection = function (athelete, fen) {
+    //     $scope.selectService.isValidSelection(athelete, fen, $scope);
+    // };
 
 });
 
@@ -495,7 +517,7 @@ myApp.controller('ConfirmFencingCtrl', function ($scope, TemplateService, Naviga
     // }, 200);
 
     $scope.selectEvent = function (ath, whichSelectTag, justClicked) {
-        console.log("$scope.selectLimit",$scope.selectLimit);
+        console.log("$scope.selectLimit", $scope.selectLimit);
         if ($scope.selectLimit == 1) {
             if (whichSelectTag == "Fen1" && (ath.fen1flag == false && ath.fen2flag == false)) {
                 ath.fen1flag = true;
@@ -591,7 +613,7 @@ myApp.controller('ConfirmKarateCtrl', function ($scope, TemplateService, Navigat
     };
 
     $scope.selectEvent = function (ath, whichSelectTag, justClicked) {
-        console.log("$scope.selectLimit",$scope.selectLimit);
+        console.log("$scope.selectLimit", $scope.selectLimit);
         if ($scope.selectLimit == 1) {
             if (whichSelectTag == "E1" && (ath.e1flag == false && ath.e2flag == false)) {
                 ath.e1flag = true;

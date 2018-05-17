@@ -67,7 +67,7 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
                             _.each(tempObj.tempArr, function (sport) {
                                 // console.log("athlete", $scope.detail);
                                 if ($scope.detail.userType === "athlete" && !$scope.detail.mixAccess && $.jStorage.get("IsColg") === 'school' && (
-                                    sport.name === 'Water Polo' || sport.name === 'Athletics 4x100m Relay' || sport.name === 'Athletics 4x50m Relay' || sport.name === 'Athletics Medley Relay')) {
+                                        sport.name === 'Water Polo' || sport.name === 'Athletics 4x100m Relay' || sport.name === 'Athletics 4x50m Relay' || sport.name === 'Athletics Medley Relay')) {
                                     sport.isVisibleSport = true;
                                 } else {
                                     sport.isVisibleSport = false;
@@ -202,8 +202,9 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
     };
     // ===========removeThis========
     $scope.redirectTo = function (val) {
-        function redirect() {
+        function redirect(upgradeModal) {
             // console.log(val);
+            console.log('UPGRADE MODAL', upgradeModal);
             $scope.currentDate = new Date();
             // console.log($scope.currentDate, " $scope.currentDate ");
             $scope.currentDate = $scope.currentDate.setHours(0, 0, 0, 0);
@@ -224,11 +225,15 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
                             'gender': '',
                             'page': 1
                         }, function (data) {
-                            // console.log(data);
+                            console.log(data);
                             if (data.data.data._id) {
-                                $state.go('sports-rules', {
-                                    id: val._id
-                                });
+                                if (upgradeModal) {
+                                    $scope.showUpgradeModal();
+                                } else {
+                                    $state.go('sports-rules', {
+                                        id: val._id
+                                    });
+                                }
                             } else {
                                 toastr.error("You are already selected for this sport");
                             }
@@ -269,9 +274,13 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
                             }, function (data) {
                                 // console.log(data);
                                 if (data.data.data._id) {
-                                    $state.go('sports-rules', {
-                                        id: val._id
-                                    });
+                                    if (upgradeModal) {
+                                        $scope.showUpgradeModal();
+                                    } else {
+                                        $state.go('sports-rules', {
+                                            id: val._id
+                                        });
+                                    }
                                 } else {
                                     toastr.error("You are already selected for this sport");
                                 }
@@ -291,12 +300,17 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
 
             if (($.jStorage.get("userDetails").selectedEvent < $.jStorage.get("userDetails").package.eventCount)) {
                 if ($.jStorage.get("userDetails").package.order != 4) {
-                    redirect();
+                    $scope.showUpgrade = false;
+                    redirect($scope.showUpgrade);
                 } else {
                     if (val.isTeam && (val.sportsListCategory.name == "Team Sports" || val.name == "Water Polo")) {
-                        redirect();
+                        $scope.showUpgrade = false;
+                        redirect($scope.showUpgrade);
                     } else {
-                        $scope.showUpgradeModal();
+                        $scope.showUpgrade = true;
+                        redirect($scope.showUpgrade);
+                        // $scope.showUpgradeModal();
+
                         // toastr.error("Only Team Sports Can be Selected As Per Your Package");
                     }
                 }
@@ -304,12 +318,15 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
                 if ($scope.userDetails.package.order == 1) {
                     toastr.error("Maximum Sport Selected");
                 } else {
-                    $scope.showUpgradeModal();
+                    $scope.showUpgrade = true;
+                    redirect($scope.showUpgrade);
+                    // $scope.showUpgradeModal();
                 }
                 // toastr.error("Upgrade Your Package To Register Additional Sports", "Maximum Sport Selected");
             }
         } else {
-            redirect();
+            $scope.showUpgrade = false;
+            redirect($scope.showUpgrade);
         }
 
     };

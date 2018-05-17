@@ -70,7 +70,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
             var isApplicable = true;
             switch (sT) {
                 case "K":
-                console.log("athelete",ath);
+                    console.log("athelete", ath);
                     if (ath.eventKata.length <= 1 && ath.eventKumite.length <= 1) {
                         ath.checked = false;
                         toastr.error("Not Applicable");
@@ -201,7 +201,10 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
 
                     break;
                 case "I":
-
+                    if (sN == "Tennis" || sN == "Table Tennis") {
+                        ath.selectLimit = ath.packageCount - ath.registeredSportCount;
+                        ath.maxOptionsText = "Upgrade Your Package";
+                    }
                     break;
                 case "CT":
                     break;
@@ -219,6 +222,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
 
         var birthdate = moment(athelete.dob);
         var st = this.sportName;
+        console.log('ST', st);
 
         //Events are filtered as per age and weights
         function getAgeGroups(events) {
@@ -584,6 +588,17 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                         console.log("arr", arr);
                         n.sport = _.map(arr, 'sport');
                     });
+                } else if (st == 'Tennis' || st == 'Table Tennis') {
+                    this.findOverAllFormValidation();
+                    _.each(formData, function (m) {
+                        _.each(m.sport, function (n, index) {
+                            // console.log(index, index == 0 && n.data[0]);
+                            _.each(n, function (l) {
+                                m.sport[index] = l[0].sport;
+                            });
+                        });
+                        m.sport = _.compact(m.sport);
+                    });
                 } else {
                     this.findOverAllFormValidation();
                 }
@@ -612,6 +627,9 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
     };
 
     this.saveData = function (formData, data) {
+        console.log('+++++++++++++++++++++++++++++++++++++++++');
+        console.log(formData);
+        console.log(data);
         var accessToken = $.jStorage.get('userDetails').accessToken;
         var obj = {};
         _.each(formData, function (n) {
@@ -696,7 +714,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                 currentSelected = _.compact(currentSelected).length;
 
                 var allowedAsPerPackage = (((athelete.package.eventCount - athelete.selectedEvent) - currentSelected) > 0) ? true : false;
-                console.log("allowedAsPerPackage",allowedAsPerPackage,athelete.sport);
+                console.log("allowedAsPerPackage", allowedAsPerPackage, athelete.sport);
                 if ((athelete.package.eventCount - athelete.selectedEvent) < 2) {
                     if (allowedAsPerPackage) {
                         if (whichSelectTag == 'E1') {
@@ -723,8 +741,8 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
 
 
                         if (whichSelectTag == 'E1') {
-                            if(athelete.sport[1] && athelete.sport[1].sport){
-                                console.log("first",athelete.sport);
+                            if (athelete.sport[1] && athelete.sport[1].sport) {
+                                console.log("first", athelete.sport);
                                 athelete.sport[0] = null;
                                 athelete.disableEvent1 = true;
                                 athelete.informTitle1 = "Upgrade Package To Add More";
@@ -744,18 +762,18 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                             }
 
                         } else {
-                            if(athelete.sport[0] && athelete.sport[0].data && !_.isEmpty(athelete.sport[0].data) && athelete.sport[0].data[0].sport){
-                                console.log("second before",athelete.sport[1]); 
-                                athelete.event2Weights=null;
+                            if (athelete.sport[0] && athelete.sport[0].data && !_.isEmpty(athelete.sport[0].data) && athelete.sport[0].data[0].sport) {
+                                console.log("second before", athelete.sport[1]);
+                                athelete.event2Weights = null;
                                 athelete.sport[1] = null;
 
-                                console.log("second after",athelete.sport[1]);
-                                console.log("second after",athelete.sport);
-                                
-                                
+                                console.log("second after", athelete.sport[1]);
+                                console.log("second after", athelete.sport);
+
+
                                 athelete.disableEvent2 = true;
                                 athelete.informTitle2 = "Upgrade Package To Add More";
-                                if ($.jStorage.get("userType") == 'athlete') {                                
+                                if ($.jStorage.get("userType") == 'athlete') {
                                     if (scopes) {
                                         scopes.upgrade.package = athelete.package;
                                         scopes.modalInstance = $uibModal.open({
@@ -768,7 +786,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                                 } else {
                                     toastr.info("Sfa Id " + athelete.sfaId + " Can Only Participate In " + (athelete.package.eventCount - athelete.selectedEvent) + " Event. As per Selected Package");
                                 }
-                            }                           
+                            }
                         }
                     }
                 }

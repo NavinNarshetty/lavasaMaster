@@ -42,18 +42,6 @@
         "fieldsToSend": {
             "_id": "_id"
         }
-    }, {
-        "name": "delete",
-        "icon": "fa-trash",
-        "buttonClass": "btn-danger",
-        "type": "apiCallConfirm",
-        "title": "Delete User",
-        "content": "If you delete the user, then you'll have to manually delete the registred sport of the user. So are you sure you want to delete?",
-        "api": "athelete/delete",
-        "fieldsToSend": {
-            "name": "_id",
-            "value": "_id"
-        }
     }],
 
     "apiCall": {

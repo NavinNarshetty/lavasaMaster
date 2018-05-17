@@ -4,7 +4,9 @@
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="Heading">
           <h1 class="text-center school">Sports Registration Form</h1>
-          <h1 class="text-center text-uppercase checkTeam"><span>Check & Confirm</span></h1>
+          <h1 class="text-center text-uppercase checkTeam">
+            <span>Check & Confirm</span>
+          </h1>
         </div>
       </div>
     </div>
@@ -55,7 +57,9 @@
                   </div>
                   <div class="col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-10 col-xs-12">
                     <div class="col-md-1 col-sm-1 col-xs-12">
-                      <p class="note note-size"><strong>Note:</strong></p>
+                      <p class="note note-size">
+                        <strong>Note:</strong>
+                      </p>
                     </div>
                     <div class="col-md-11 col-sm-11 col-xs-12" ng-if="withWeight">
                       <p class="note">1. This refers to the weight category that you wish to participate in and does not guarantee participation
@@ -83,7 +87,8 @@
                               </th>
                               <th>SFA ID-Name</th>
                               <th>Gender</th>
-                              <th>Age Group</th>
+                              <th ng-if="st !== 'Tennis' && st !== 'Table Tennis'">Age Group</th>
+                              <th ng-if="st == 'Tennis' || st == 'Table Tennis'">Age Group Mul</th>
                               <th class="hide" ng-if="st == 'Judo' || st == 'Boxing' || st == 'Taekwondo' || st == 'Sport MMA' || st == 'Wrestling'">Weight Category</th>
                             </thead>
                             <tbody>
@@ -97,12 +102,23 @@
                                 <td ng-if="athelete.middleName">{{athelete.sfaId+' - '+athelete.firstName+' '+athelete.middleName+' '+athelete.surname}}</td>
                                 <td ng-if="!athelete.middleName">{{athelete.sfaId+' - '+athelete.firstName+' '+athelete.surname}}</td>
                                 <td>{{athelete.gender | firstcapitalize}}</td>
-                                <td>
+                                <td ng-if="st !== 'Tennis' && st !== 'Table Tennis'">
                                   <!--ageGroup column start-->
                                   <select class="form-control" ng-init="selectService.isValidSelection(athelete)" ng-model="athelete.sport[0]" ng-options="{{config.selectAgeExpression}}"
                                     ng-change="selectService.isValidSelection(athelete)">
                                   </select>
                                   <!--ageGroup column end-->
+                                </td>
+                                <td ng-if="st == 'Tennis' || st == 'Table Tennis'" class="selectpicker_1_{{$index}}">
+                                  <!--ageGroup column multiple start-->
+                                  <div class="override-fencingselect sfa-btsselect">
+                                    <select id="selectpicker_1_{{$index}}" class="selectpicker form-control" multiple ng-init="selectService.isValidSelection(athelete)"
+                                      ng-model="athelete.sport" ng-required="" ng-options="{{config.selectAgeExpression}}"
+                                      title="Select Event" ng-change="selectService.isValidSelection(athelete)" data-selected-text-format="count > 3"
+                                      data-size="5" data-dropup-auto="true" data-max-options="{{athelete.selectLimit}}" data-max-options-text="{{athelete.maxOptionsText}}">
+                                    </select>
+                                  </div>
+                                  <!--ageGroup column multiple end-->
                                 </td>
                                 <td class="hide" ng-if="st == 'Judo' || st == 'Boxing' || st == 'Taekwondo' || st == 'Sport MMA' || st == 'Wrestling'">
                                   <!--weights column start-->
@@ -125,7 +141,8 @@
                         <p class="">Get your match play analysed by top-level coaches using the latest video analysis technology.</p>
                         <div class="checkbox-custom">
                           <input type="checkbox" name="checkIhav" ng-model="formData.isVideoAnalysis" id="test5" />
-                          <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span>Click here to get more details about this service.</label>
+                          <label for="test5" class="sf-list custom-a" style="padding-left: 20px;">
+                            <span></span>Click here to get more details about this service.</label>
                         </div>
                       </div>
                     </div>
@@ -142,8 +159,8 @@
                           <div class="">
                             <div class="form-group">
                               <div class="col-md-6 col-sm-6 col-xs-12 hide">
-                                <input type="text" class="form-control text-center" ng-model="formData.nominatedName" placeholder="Enter Academy/Coach's Name" name="nominatedName"
-                                  id="nominatedName">
+                                <input type="text" class="form-control text-center" ng-model="formData.nominatedName" placeholder="Enter Academy/Coach's Name"
+                                  name="nominatedName" id="nominatedName">
                               </div>
                               <div class="col-md-12 col-sm-6 col-xs-12">
                                 <input type="text" class="form-control text-center" ng-model="formData.nominatedSchoolName" placeholder="Enter Academy Name"
@@ -193,7 +210,9 @@
                   </div>
                   <div class="col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-10 col-xs-12">
                     <div class="col-md-1 col-sm-1 col-xs-12">
-                      <p class="note note-size"><strong>Note:</strong></p>
+                      <p class="note note-size">
+                        <strong>Note:</strong>
+                      </p>
                     </div>
                     <div class="col-md-11 col-sm-11 col-xs-12" ng-if="detail.userType === 'school'">
                       <p class="note">Click ‘Confirm’ to register your athlete entry/entries. If you wish to make a change click ‘Edit’.
