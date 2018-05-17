@@ -145,7 +145,7 @@ var model = {
                 }
             },
             // Stage 3
-             {
+            {
                 $lookup: {
                     "from": "packages",
                     "localField": "package",
@@ -247,8 +247,8 @@ var model = {
                     preserveNullAndEmptyArrays: true // optional
                 }
             },
-             // Stage 3
-             {
+            // Stage 3
+            {
                 $lookup: {
                     "from": "packages",
                     "localField": "package",
@@ -263,7 +263,7 @@ var model = {
                     preserveNullAndEmptyArrays: true // optional
                 }
             },
-            
+
             // Stage 3
             {
                 $match: {
@@ -741,12 +741,60 @@ var model = {
         ];
         return pipeline;
     },
+
+    getStudentTeamPipeline1: function (data) {
+
+        var pipeline = [
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "sports",
+                    "localField": "sport",
+                    "foreignField": "_id",
+                    "as": "sport"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$sport",
+                }
+            },
+
+            // Stage 3
+            {
+                $lookup: {
+                    "from": "sportslists",
+                    "localField": "sport.sportslist",
+                    "foreignField": "_id",
+                    "as": "sport.sportslist"
+                }
+            },
+
+            // Stage 4
+            {
+                $unwind: {
+                    path: "$sport.sportslist",
+
+                }
+            },
+
+            // Stage 5
+            {
+                $match: {
+                    "studentId": objectid(data.athlete),
+                    "sport._id": objectid(data.sport)
+                }
+            },
+        ];
+        return pipeline;
+    },
     //For team
     getAthletePerSchool: function (data, callback) {
         console.log("data", data);
         // console.log("foundfront", found);
         async.waterfall([
-
                 function (callback) {
                     var pipeLine = Sport.getSportPipeLine();
                     var newPipeLine = _.cloneDeep(pipeLine);
@@ -842,7 +890,11 @@ var model = {
                         async.eachSeries(complete.results, function (n, callback) {
                                 data.athlete = n._id;
                                 // console.log("n", data.athlete);
-                                var pipeLine = Sport.getStudentTeamPipeline(data);
+                                if (data.sportName.includes("Tennis")) {
+                                    var pipeLine = Sport.getStudentTeamPipeline1(data);
+                                } else {
+                                    var pipeLine = Sport.getStudentTeamPipeline(data);
+                                }
                                 StudentTeam.aggregate(pipeLine, function (err, found) {
                                     if (err) {
                                         callback(err, "error in mongoose");
