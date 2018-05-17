@@ -322,9 +322,11 @@ var controller = {
                             });
                         },
                         function (verficationData, callback) {
-                            console.log("verficationData", verficationData);
-                            if (verficationData.status === 1) {
-                                param.transactionid = verficationData.transaction_details.mihpayid;
+                            var obj = JSON.parse(verficationData.body);
+                            console.log("obj", obj);
+                            console.log("obj.status", obj.status);
+                            if (obj.status === 1) {
+                                param.transactionid = obj.transaction_details[verficationData.txnid].mihpayid;
                                 Athelete.updatePaymentStatus(param, function (err, data) {
                                     if (err) {
                                         console.log('amount not match issue');

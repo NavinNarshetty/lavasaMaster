@@ -1658,7 +1658,7 @@ var model = {
                         if (err) {
                             callback(err, null);
                         } else if (_.isEmpty(found)) {
-                            console.log("empty in Athelete found");
+                            // console.log("empty in Athelete found");
                             callback(null, "Data is empty");
                         } else {
                             async.waterfall([
@@ -1705,7 +1705,7 @@ var model = {
                     if (found.error) {
                         callback(null, found);
                     } else {
-                        console.log("found in update", found);
+                        // console.log("found in update", found);
                         var matchObj = {
                             $set: {
                                 paymentStatus: "Paid",
@@ -2010,7 +2010,7 @@ var model = {
                     });
             },
             function (final, callback) {
-                console.log("final data------->", final);
+                // console.log("final data------->", final);
                 var len = final.accounts.transaction.length;
                 var temp = len;
                 len--;
@@ -2062,7 +2062,7 @@ var model = {
                 }];
                 emailData.filename = "e-player/receipt.ejs";
                 emailData.subject = "SFA: Your Payment Receipt as an Athlete for SFA " + emailData.city + " " + emailData.eventYear + ".";
-                console.log("emaildata", emailData);
+                // console.log("emaildata", emailData);
                 Config.emailTo(emailData, function (err, emailRespo) {
                     if (err) {
                         console.log(err);
@@ -2086,16 +2086,16 @@ var model = {
     generateMobileOTP: function (data, callback) {
         var mobileOtp = (Math.random() + "").substring(2, 6);
         var smsData = {};
-        console.log("mobileOtp", mobileOtp);
+        // console.log("mobileOtp", mobileOtp);
         smsData.mobile = data.mobile;
         smsData.content = "OTP Athlete: Your Mobile OTP (One time Password) for SFA registration is " + mobileOtp;
-        console.log("smsdata", smsData);
+        // console.log("smsdata", smsData);
         Config.sendSms(smsData, function (err, smsRespo) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err, null);
             } else if (smsRespo) {
-                console.log(smsRespo, "sms sent");
+                // console.log(smsRespo, "sms sent");
                 callback(null, mobileOtp);
             } else {
                 callback(null, "Invalid data");
@@ -2135,7 +2135,7 @@ var model = {
         console.log("getting inside", data);
         if (data.atheleteSchoolName) {
             if (data.registrationFee == "cash") {
-                console.log("cash or cheque payment mail");
+                // console.log("cash or cheque payment mail");
                 Athelete.unregistedCashPaymentMailSms(data, function (err, vData) {
                     if (err) {
                         callback(err, null);
@@ -2144,7 +2144,7 @@ var model = {
                     }
                 });
             } else if (data.registrationFee == "online PAYU") {
-                console.log("online payment mail");
+                // console.log("online payment mail");
                 Athelete.unregistedOnlinePaymentMailSms(data, function (err, vData) {
                     if (err) {
                         callback(err, null);
@@ -2227,7 +2227,7 @@ var model = {
                                         }
                                     });
                                 } else if (data.registrationFee == "online PAYU") {
-                                    console.log("online payment mail");
+                                    // console.log("online payment mail");
                                     Athelete.unregistedOnlinePaymentMailSms(data, function (err, vData) {
                                         if (err) {
                                             callback(err, null);
@@ -2860,11 +2860,11 @@ var model = {
                                 emailData.registrationFee = data.registrationFee;
                                 emailData.filename = "e-player/playerRegistration.ejs";
                                 emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.eventYear + ".";
-                                console.log("emaildata", emailData);
+                                // console.log("emaildata", emailData);
 
                                 Config.email(emailData, function (err, emailRespo) {
                                     if (err) {
-                                        console.log(err);
+                                        // console.log(err);
                                         callback(null, err);
                                     } else if (emailRespo) {
                                         callback(null, emailRespo);
@@ -2884,10 +2884,10 @@ var model = {
                                 console.log("smsdata", smsData);
                                 Config.sendSms(smsData, function (err, smsRespo) {
                                     if (err) {
-                                        console.log(err);
+                                        // console.log(err);
                                         callback(err, null);
                                     } else if (smsRespo) {
-                                        console.log(smsRespo, "sms sent");
+                                        // console.log(smsRespo, "sms sent");
                                         callback(null, smsRespo);
                                     } else {
                                         callback(null, "Invalid data");

@@ -90,7 +90,7 @@ var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
     saveTransaction: function (data, found, callback) {
-        console.log("data", data, "found", found);
+        // console.log("data", data, "found", found);
         async.waterfall([
                 function (callback) {
                     var param = {};
@@ -98,7 +98,7 @@ var model = {
                         param.athlete = found._id;
                         param.school = undefined;
                     } else {
-                        console.log("inside school");
+                        // console.log("inside school");
                         param.school = found._id;
                         param.athlete = undefined;
                     }
@@ -136,7 +136,7 @@ var model = {
                     if (transactData.error) {
                         callback(null, transactData);
                     } else {
-                        console.log("transactData", transactData);
+                        // console.log("transactData", transactData);
                         var transaction = [];
                         var payu = [];
                         transaction.push(transactData._id);

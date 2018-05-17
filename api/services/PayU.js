@@ -324,9 +324,10 @@ var models = {
             if (err) {
                 callback(err, null);
             } else {
-                // console.log("httpResponse", httpResponse);
-                // console.log("body", body);
-                callback(null, body);
+                var final = {};
+                final.body = body;
+                final.txnid = data.txnid;
+                callback(null, final);
             }
         });
     },
