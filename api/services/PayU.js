@@ -4,7 +4,7 @@ var request = require('request');
 var generator = require('generate-password');
 
 
-var development = false;
+var development = true;
 if (development) {
     var payukey = "gtKFFx";
     var payusalt = "eCwWELxi";
@@ -63,8 +63,8 @@ var models = {
                         productinfo: productinfo,
                         firstname: firstname,
                         udf1: udf1,
-                        // surl: 'https://mumbaischool.sfanow.in/api/payU/successErrorSchool',
-                        // furl: 'https://mumbaischool.sfanow.in/api/payU/successErrorSchool',
+                        surl: 'https://mumbaischool.sfanow.in/api/payU/successErrorSchool',
+                        furl: 'https://mumbaischool.sfanow.in/api/payU/successErrorSchool',
                         // surl: 'http://mumbaischool.sfanow.in/2017/api/payU/successErrorSchool',
                         // furl: 'http://mumbaischool.sfanow.in/2017/api/payU/successErrorSchool',
                         // surl: 'http://mumbaicollege.sfanow.in/api/payU/successErrorSchool',
@@ -83,8 +83,8 @@ var models = {
                         // furl: 'http://testmumbai2015.sfanow.in/api/payU/successErrorSchool',
                         // surl: 'http://testmumbai2016.sfanow.in/api/payU/successErrorSchool',
                         // furl: 'http://testmumbai2016.sfanow.in/api/payU/successErrorSchool',
-                        surl: 'http://testmumbaischool.sfanow.in/api/payU/successErrorSchool',
-                        furl: 'http://testmumbaischool.sfanow.in/api/payU/successErrorSchool',
+                        // surl: 'http://testmumbaischool.sfanow.in/api/payU/successErrorSchool',
+                        // furl: 'http://testmumbaischool.sfanow.in/api/payU/successErrorSchool',
                         // surl: 'http://testmumbaicollege.sfanow.in/api/payU/successErrorSchool',
                         // furl: 'http://testmumbaicollege.sfanow.in/api/payU/successErrorSchool',
                         // surl: 'http://testhyderabadschool.sfanow.in/api/payU/successErrorSchool',
@@ -113,90 +113,119 @@ var models = {
     },
 
     atheletePayment: function (found, callback) {
-        console.log("found", found);
-        Accounts.findOne({
-            athlete: found._id
-        }).lean().exec(function (err, accountsData) {
-            if (err) {
-                callback(null, {
-                    error: err,
-                    data: found
-                });
-            } else {
-                found.accounts = accountsData;
+        async.waterfall([
+            function (callback) {
                 var txnid = generator.generate({
                     length: 8,
                     numbers: true
                 });
-
-                var amount = found.accounts.totalPaid;
-                var firstname = found.firstName;
-                var lastname = found.surname;
-                var pincode = found.pinCode;
-                var city = found.city;
-                var country = "India";
-                var state = found.state;
-                var athleteAddress1 = found.address;
-                var athleteAddress2 = found.addressLine2;
-                var email = found.email;
-                var phone = found.mobile;
-                var productinfo = found.package.description;
-                var hash = sha512(payukey + "|" + txnid + "|" + amount + "|" + productinfo + "|" + firstname + "|" + email + "|||||||||||" + payusalt);
-                var hashtext = hash.toString('hex');
-                request.post({
-                    url: payuurl,
-                    form: {
-                        key: payukey,
+                var matchObj = {
+                    $set: {
                         txnid: txnid,
-                        amount: amount,
-                        productinfo: productinfo,
-                        firstname: firstname,
-                        lastname: lastname,
-                        email: email,
-                        // surl: 'https://mumbaischool.sfanow.in/api/payU/successErrorAthelete',
-                        // furl: 'https://mumbaischool.sfanow.in/api/payU/successErrorAthelete',
-                        // surl: 'http://mumbaischool.sfanow.in/2017/api/payU/successErrorAthelete',
-                        // furl: 'http://mumbaischool.sfanow.in/2017/api/payU/successErrorAthelete',
-                        // surl: 'http://mumbaicollege.sfanow.in/api/payU/successErrorAthelete',
-                        // furl: 'http://mumbaicollege.sfanow.in/api/payU/successErrorAthelete',
-                        // surl: 'http://hyderabadschool.sfanow.in/api/payU/successErrorAthelete',
-                        // furl: 'http://hyderabadschool.sfanow.in/api/payU/successErrorAthelete',
-                        // surl: 'http://hyderabadcollege.sfanow.in/api/payU/successErrorAthelete',
-                        // furl: 'http://hyderabadcollege.sfanow.in/api/payU/successErrorAthelete',
-                        // surl: 'http://ahmedabadschool.sfanow.in/api/payU/successErrorAthelete',
-                        // furl: 'http://ahmedabadschool.sfanow.in/api/payU/successErrorAthelete',
-                        // surl: 'http://ahmedabadcollege.sfanow.in/api/payU/successErrorAthelete',
-                        // furl: 'http://ahmedabadcollege.sfanow.in/api/payU/successErrorAthelete',
-                        phone: phone,
-                        // surl: 'http://testmumbai2015.sfanow.in/api/payU/successErrorAthelete',
-                        // furl: 'http://testmumbai2015.sfanow.in/api/payU/successErrorAthelete',
-                        // surl: 'http://testmumbai2016.sfanow.in/api/payU/successErrorAthelete',
-                        // furl: 'http://testmumbai2016.sfanow.in/api/payU/successErrorAthelete',
-                        surl: 'http://testmumbaischool.sfanow.in/api/payU/successErrorAthelete',
-                        furl: 'http://testmumbaischool.sfanow.in/api/payU/successErrorAthelete',
-                        // surl: 'http://testmumbaicollege.sfanow.in/api/payU/successErrorAthelete',
-                        // furl: 'http://testmumbaicollege.sfanow.in/api/payU/successErrorAthelete',
-                        // surl: 'http://testhyderabadschool.sfanow.in/api/payU/successErrorAthelete',
-                        // furl: 'http://testhyderabadschool.sfanow.in/api/payU/successErrorAthelete',
-                        // surl: 'http://testhyderabadcollege.sfanow.in/api/payU/successErrorAthelete',
-                        // furl: 'http://testhyderabadcollege.sfanow.in/api/payU/successErrorAthelete',
-                        // surl: 'http://testahmedabadschool.sfanow.in/api/payU/successErrorAthelete',
-                        // furl: 'http://testahmedabadschool.sfanow.in/api/payU/successErrorAthelete',
-                        // surl: 'http://testahmedabadcollege.sfanow.in/api/payU/successErrorAthelete',
-                        // furl: 'http://testahmedabadcollege.sfanow.in/api/payU/successErrorAthelete',
-                        // surl: 'http://wohlig.io:1337/api/payU/successErrorAthelete',
-                        // furl: 'http://wohlig.io:1337/api/payU/successErrorAthelete',
-                        hash: hashtext,
-                        address1: athleteAddress1,
-                        address2: athleteAddress2,
-                        state: state,
-                        country: country,
-                        zipcode: pincode,
-                        city: city
                     }
-                }, callback);
+                };
+                Athelete.update({
+                    _id: found._id
+                }, matchObj).exec(
+                    function (err, data3) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            found.txnid = txnid;
+                            callback(null, found);
+                        }
+                    });
+            },
+            function (found, callback) {
+                console.log("found", found);
+                Accounts.findOne({
+                    athlete: found._id
+                }).lean().exec(function (err, accountsData) {
+                    if (err) {
+                        callback(null, {
+                            error: err,
+                            data: found
+                        });
+                    } else {
+                        found.accounts = accountsData;
+                        var amount = found.accounts.totalPaid;
+                        var firstname = found.firstName;
+                        var txnid = found.txnid;
+                        var lastname = found.surname;
+                        var pincode = found.pinCode;
+                        var city = found.city;
+                        var country = "India";
+                        var state = found.state;
+                        var athleteAddress1 = found.address;
+                        var athleteAddress2 = found.addressLine2;
+                        var email = found.email;
+                        var phone = found.mobile;
+                        var productinfo = found.package.description;
+                        var hash = sha512(payukey + "|" + txnid + "|" + amount + "|" + productinfo + "|" + firstname + "|" + email + "|||||||||||" + payusalt);
+                        var hashtext = hash.toString('hex');
+                        request.post({
+                            url: payuurl,
+                            form: {
+                                key: payukey,
+                                txnid: txnid,
+                                amount: amount,
+                                productinfo: productinfo,
+                                firstname: firstname,
+                                lastname: lastname,
+                                email: email,
+                                // surl: 'https://mumbaischool.sfanow.in/api/payU/successErrorAthelete',
+                                // furl: 'https://mumbaischool.sfanow.in/api/payU/successErrorAthelete',
+                                // surl: 'http://mumbaischool.sfanow.in/2017/api/payU/successErrorAthelete',
+                                // furl: 'http://mumbaischool.sfanow.in/2017/api/payU/successErrorAthelete',
+                                // surl: 'http://mumbaicollege.sfanow.in/api/payU/successErrorAthelete',
+                                // furl: 'http://mumbaicollege.sfanow.in/api/payU/successErrorAthelete',
+                                // surl: 'http://hyderabadschool.sfanow.in/api/payU/successErrorAthelete',
+                                // furl: 'http://hyderabadschool.sfanow.in/api/payU/successErrorAthelete',
+                                // surl: 'http://hyderabadcollege.sfanow.in/api/payU/successErrorAthelete',
+                                // furl: 'http://hyderabadcollege.sfanow.in/api/payU/successErrorAthelete',
+                                // surl: 'http://ahmedabadschool.sfanow.in/api/payU/successErrorAthelete',
+                                // furl: 'http://ahmedabadschool.sfanow.in/api/payU/successErrorAthelete',
+                                // surl: 'http://ahmedabadcollege.sfanow.in/api/payU/successErrorAthelete',
+                                // furl: 'http://ahmedabadcollege.sfanow.in/api/payU/successErrorAthelete',
+                                phone: phone,
+                                // surl: 'http://testmumbai2015.sfanow.in/api/payU/successErrorAthelete',
+                                // furl: 'http://testmumbai2015.sfanow.in/api/payU/successErrorAthelete',
+                                // surl: 'http://testmumbai2016.sfanow.in/api/payU/successErrorAthelete',
+                                // furl: 'http://testmumbai2016.sfanow.in/api/payU/successErrorAthelete',
+                                // surl: 'http://testmumbaischool.sfanow.in/api/payU/successErrorAthelete',
+                                // furl: 'http://testmumbaischool.sfanow.in/api/payU/successErrorAthelete',
+                                // surl: 'http://testmumbaicollege.sfanow.in/api/payU/successErrorAthelete',
+                                // furl: 'http://testmumbaicollege.sfanow.in/api/payU/successErrorAthelete',
+                                // surl: 'http://testhyderabadschool.sfanow.in/api/payU/successErrorAthelete',
+                                // furl: 'http://testhyderabadschool.sfanow.in/api/payU/successErrorAthelete',
+                                // surl: 'http://testhyderabadcollege.sfanow.in/api/payU/successErrorAthelete',
+                                // furl: 'http://testhyderabadcollege.sfanow.in/api/payU/successErrorAthelete',
+                                // surl: 'http://testahmedabadschool.sfanow.in/api/payU/successErrorAthelete',
+                                // furl: 'http://testahmedabadschool.sfanow.in/api/payU/successErrorAthelete',
+                                // surl: 'http://testahmedabadcollege.sfanow.in/api/payU/successErrorAthelete',
+                                // furl: 'http://testahmedabadcollege.sfanow.in/api/payU/successErrorAthelete',
+                                surl: 'http://wohlig.io:1337/api/payU/successErrorAthelete',
+                                furl: 'http://wohlig.io:1337/api/payU/successErrorAthelete',
+                                hash: hashtext,
+                                address1: athleteAddress1,
+                                address2: athleteAddress2,
+                                state: state,
+                                country: country,
+                                zipcode: pincode,
+                                city: city
+                            }
+                        }, callback);
+                    }
+                });
             }
-        });
+        ], function (err, complete) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, complete);
+            }
+        })
+
     },
 
     additionalPayment: function (found, callback) {
@@ -234,8 +263,8 @@ var models = {
                 firstname: firstname,
                 lastname: lastname,
                 email: email,
-                // surl: 'https://mumbaischool.sfanow.in/api/payU/successError',
-                // furl: 'https://mumbaischool.sfanow.in/api/payU/successError',
+                surl: 'https://mumbaischool.sfanow.in/api/payU/successError',
+                furl: 'https://mumbaischool.sfanow.in/api/payU/successError',
                 // surl: 'http://mumbaischool.sfanow.in/2017/api/payU/successError',
                 // furl: 'http://mumbaischool.sfanow.in/2017/api/payU/successError',
                 // surl: 'http://mumbaicollege.sfanow.in/api/payU/successError',
@@ -253,8 +282,8 @@ var models = {
                 // furl: 'http://testmumbai2015.sfanow.in/api/payU/successError',
                 // surl: 'http://testmumbai2016.sfanow.in/api/payU/successError',
                 // furl: 'http://testmumbai2016.sfanow.in/api/payU/successError',
-                surl: 'http://testmumbaischool.sfanow.in/api/payU/successError',
-                furl: 'http://testmumbaischool.sfanow.in/api/payU/successError',
+                // surl: 'http://testmumbaischool.sfanow.in/api/payU/successError',
+                // furl: 'http://testmumbaischool.sfanow.in/api/payU/successError',
                 // surl: 'http://testmumbaicollege.sfanow.in/api/payU/successError',
                 // furl: 'http://testmumbaicollege.sfanow.in/api/payU/successError',
                 // surl: 'http://testhyderabadschool.sfanow.in/api/payU/successError',
@@ -274,6 +303,127 @@ var models = {
                 city: city
             }
         }, callback);
+    },
+    verification: function (data, callback) {
+        var payukey = "gtKFFx";
+        var payusalt = "eCwWELxi";
+        var payuurl = "https://test.payu.in/merchant/postservice.php?form=2";
+        var command = "verify_payment";
+        var var1 = data.txnid;
+        var hash = sha512(payukey + "|" + command + "|" + var1 + "|" + payusalt);
+        var hashtext = hash.toString('hex');
+        request.post({
+            url: payuurl,
+            form: {
+                key: payukey,
+                var1: var1,
+                command: command,
+                hash: hashtext,
+            }
+        }, function (err, httpResponse, body) {
+            if (err) {
+                callback(err, null);
+            } else {
+                // console.log("httpResponse", httpResponse);
+                // console.log("body", body);
+                callback(null, body);
+            }
+        });
+    },
+
+    cronAthletePayment: function (data, callback) {
+        Athelete.find({
+            txnid: {
+                $exists: true
+            },
+            regitrationFee: "online PAYU",
+            paymentStatus: "Pending"
+        }).lean().exec(function (err, athlete) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(athlete)) {
+                callback(null, []);
+            } else {
+                async.eachSeries(athlete, function (n, callback) {
+                    var now = moment(new Date()); //todays date
+                    var end = moment(n.createdAt); // another date
+                    var duration = moment.duration(now.diff(end));
+                    var dump = duration.hours();
+                    var hours = duration.asHours();
+                    console.log("hours", hours);
+                    if (hours <= 48) {
+                        async.waterfall([
+                            function (callback) {
+                                PayU.verification(n, function (err, verficationData) {
+                                    if (err) {
+                                        res.json({
+                                            value: false,
+                                            data: "Invalid Request"
+                                        });
+                                    } else {
+                                        callback(null, verficationData);
+                                    }
+                                });
+                            },
+                            function (verficationData, callback) {
+                                if (verficationData.status === 1) {
+                                    var param = {};
+                                    param.firstName = n.firstName;
+                                    param.surname = n.surname;
+                                    param.email = n.email;
+                                    param.transactionid = verficationData.transaction_details.mihpayid;
+                                    Athelete.updatePaymentStatus(param, function (err, data) {
+                                        if (err) {
+                                            console.log('amount not match issue');
+                                            res.json({
+                                                value: false,
+                                                data: "Invalid Request"
+                                            });
+                                        } else {
+                                            callback(null, "updated payment");
+                                        }
+                                    });
+                                } else {
+                                    callback(null, "not found httpResponse");
+                                }
+                            }
+                        ], function (err, complete) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                callback(null, complete);
+                            }
+                        });
+                    } else if (hours > 48 && athlete.regitrationFee == "online PAYU" && paymentStatus == "pending") {
+                        Athelete.remove({
+                            $or: [{
+                                firstName: athlete.firstName
+                            }, {
+                                surname: athlete.surname
+                            }, {
+                                email: athlete.email
+                            }, {
+                                _id: athlete._id
+                            }]
+                        }).exec(function (err, data) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (_.isEmpty(data)) {
+                                callback(null, "Data is empty");
+                            } else {
+                                callback(null, athlete);
+                            }
+                        });
+                    } else {
+                        callback(null, athlete);
+                    }
+                }, function (err) {
+                    callback(null, athlete);
+                });
+
+            }
+        });
+
     },
 
     //------------------------------------  PACKAGE UPGRADE PAYMENT --------------------------------
@@ -319,8 +469,8 @@ var models = {
                         firstname: firstname,
                         lastname: lastname,
                         email: email,
-                        // surl: 'https://mumbaischool.sfanow.in/api/payU/successUpgradeErrorAthelete',
-                        // furl: 'https://mumbaischool.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        surl: 'https://mumbaischool.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        furl: 'https://mumbaischool.sfanow.in/api/payU/successUpgradeErrorAthelete',
                         // surl: 'http://mumbaischool.sfanow.in/2017/api/payU/successUpgradeErrorAthelete',
                         // furl: 'http://mumbaischool.sfanow.in/2017/api/payU/successUpgradeErrorAthelete',
                         // surl: 'http://mumbaicollege.sfanow.in/api/payU/successUpgradeErrorAthelete',
@@ -338,8 +488,8 @@ var models = {
                         // furl: 'http://testmumbai2015.sfanow.in/api/payU/successUpgradeErrorAthelete',
                         // surl: 'http://testmumbai2016.sfanow.in/api/payU/successUpgradeErrorAthelete',
                         // furl: 'http://testmumbai2016.sfanow.in/api/payU/successUpgradeErrorAthelete',
-                        surl: 'http://testmumbaischool.sfanow.in/api/payU/successUpgradeErrorAthelete',
-                        furl: 'http://testmumbaischool.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        // surl: 'http://testmumbaischool.sfanow.in/api/payU/successUpgradeErrorAthelete',
+                        // furl: 'http://testmumbaischool.sfanow.in/api/payU/successUpgradeErrorAthelete',
                         // surl: 'http://testmumbaicollege.sfanow.in/api/payU/successUpgradeErrorAthelete',
                         // furl: 'http://testmumbaicollege.sfanow.in/api/payU/successUpgradeErrorAthelete',
                         // surl: 'http://testhyderabadschool.sfanow.in/api/payU/successUpgradeErrorAthelete',
@@ -410,8 +560,8 @@ var models = {
                         productinfo: productinfo,
                         firstname: firstname,
                         udf1: udf1,
-                        // surl: 'https://mumbaischool.sfanow.in/api/payU/successUpgradeErrorSchool',
-                        // furl: 'https://mumbaischool.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        surl: 'https://mumbaischool.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        furl: 'https://mumbaischool.sfanow.in/api/payU/successUpgradeErrorSchool',
                         // surl: 'http://mumbaischool.sfanow.in/2017/api/payU/successUpgradeErrorSchool',
                         // furl: 'http://mumbaischool.sfanow.in/2017/api/payU/successUpgradeErrorSchool',
                         // surl: 'http://mumbaicollege.sfanow.in/api/payU/successUpgradeErrorSchool',
@@ -430,8 +580,8 @@ var models = {
                         // furl: 'http://testmumbai2015.sfanow.in/api/payU/successUpgradeErrorSchool',
                         // surl: 'http://testmumbai2016.sfanow.in/api/payU/successUpgradeErrorSchool',
                         // furl: 'http://testmumbai2016.sfanow.in/api/payU/successUpgradeErrorSchool',
-                        surl: 'http://testmumbaischool.sfanow.in/api/payU/successUpgradeErrorSchool',
-                        furl: 'http://testmumbaischool.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        // surl: 'http://testmumbaischool.sfanow.in/api/payU/successUpgradeErrorSchool',
+                        // furl: 'http://testmumbaischool.sfanow.in/api/payU/successUpgradeErrorSchool',
                         // surl: 'http://testmumbaicollege.sfanow.in/api/payU/successUpgradeErrorSchool',
                         // furl: 'http://testmumbaicollege.sfanow.in/api/payU/successUpgradeErrorSchool',
                         // surl: 'http://testhyderabadschool.sfanow.in/api/payU/successUpgradeErrorSchool',
