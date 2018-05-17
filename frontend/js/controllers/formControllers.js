@@ -1870,3 +1870,33 @@ myApp.controller('PaymentFailureCtrl', function ($scope, TemplateService, Naviga
     // }, 5000);
 
 });
+
+
+// PAYMENT PENDING
+myApp.controller('PaymentPendingCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
+    //Used to name the .html file
+
+    $scope.template = TemplateService.getHTML("content/paymentPending.html");
+    TemplateService.title = "Payment Failure";
+    $scope.navigation = NavigationService.getNavigation();
+
+    if ($stateParams.type == 'player') {
+        $scope.pageType = 'player';
+    } else if ($stateParams.type == 'school') {
+        $scope.pageType = 'school';
+    }
+
+    $scope.autoTimeoutClick = function () {
+        console.log("click");
+        $state.go('registerplayer', {
+            type: $scope.pageType
+        });
+    };
+
+    $timeout(function () {
+        $scope.autoTimeoutClick();
+    }, 4000);
+
+
+
+});
