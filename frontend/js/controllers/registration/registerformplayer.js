@@ -779,6 +779,7 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
                         }
                     })
                 } else {
+                    $scope.searchChangeSchool($scope.formData.school);
                     console.log("Old school in schoollist");
                 }
             }
@@ -1073,7 +1074,7 @@ myApp.controller('RegisterFormPlayerCtrl', function ($scope, TemplateService, $e
     // CHECK PASSWORD
     $scope.checkPassword = function (confirm) {
         $scope.passwordError = "Minimum 8 characters";
-        console.log("pass", $scope.passwordError, confirm);
+        // console.log("pass", $scope.passwordError, confirm);
         $scope.showConfirm = true;
         $scope.passwordMatch = false;
         if (confirm && confirm != undefined) {
