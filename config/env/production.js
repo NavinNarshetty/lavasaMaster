@@ -71,11 +71,18 @@ module.exports = {
 };
 
 
-// var cron = require('node-cron');
+var cron = require('node-cron');
 
-// cron.schedule('*/2 * * * *', function () {
-//   console.log("Running Athlete Get Draws");
-//   Match.getDrawFormats({}, function () {
-//     console.log("Completed Crons");
-//   });
-// });
+cron.schedule('* */2 * * *', function () {
+  console.log("Running payment confirm payu");
+  PayU.cronAthletePayment({}, function (err, verficationData) {
+    if (err) {
+      res.json({
+        value: false,
+        data: "Invalid Request"
+      });
+    } else {
+      callback(null, verficationData);
+    }
+  });
+});

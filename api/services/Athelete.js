@@ -105,6 +105,7 @@ var schema = new Schema({
     transactionID: {
         type: String,
     },
+    txnid: String,
     university: String,
     faculty: String,
     degree: String,
